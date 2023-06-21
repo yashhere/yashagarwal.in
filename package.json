@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@fontsource/fira-code": "^4.5.13",
-    "@fontsource/inter": "^5.0.1",
+    "@fontsource/inter": "^5.0.3",
     "@heroicons/react": "^2.0.14",
     "@planetscale/database": "^1.7.0",
     "@prisma/client": "^4.16.0",

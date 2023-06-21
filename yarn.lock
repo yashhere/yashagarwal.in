@@ -316,10 +316,10 @@
   resolved "https://registry.npmjs.org/@fontsource/fira-code/-/fira-code-4.5.13.tgz"
   integrity sha512-T1IG6/2AXSwEKwlrEm3kyIL3RQTMblPyj68HgnBGl0IBGFxgS5LZ7StRdDo/QimJ4Tz6FQGHuy1Y/ShNxaUefA==
 
-"@fontsource/inter@^5.0.1":
-  version "5.0.1"
-  resolved "https://registry.npmjs.org/@fontsource/inter/-/inter-5.0.1.tgz"
-  integrity sha512-jezFhHp0HcVy2t6M6r89EcxkT30vx0ofGauveQWQ81j70N/wNDYs4zI+sedeend6zF9GXIEqpOTO2D1k7VQX4w==
+"@fontsource/inter@^5.0.3":
+  version "5.0.3"
+  resolved "https://registry.yarnpkg.com/@fontsource/inter/-/inter-5.0.3.tgz#30a1c0b974e29d72eddaec0c45655597ffa0bf80"
+  integrity sha512-JJvh5xht71F6e0E5r2+Ffu8g+CYAxMvnGJm9ZMg5IIjy8UwxLp+8C99TgPJupdEyBpEJv0wuMG2Rd183z/bV8g==
 
 "@grpc/grpc-js@^1.5.9":
   version "1.8.14"
