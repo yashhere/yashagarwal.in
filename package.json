@@ -13,7 +13,7 @@
     "copy-shiki": "cp node_modules/shiki/languages/* shiki/languages && cp node_modules/shiki/themes/* shiki/themes"
   },
   "dependencies": {
-    "@fontsource/fira-code": "^4.5.13",
+    "@fontsource/fira-code": "^5.0.3",
     "@fontsource/inter": "^5.0.1",
     "@heroicons/react": "^2.0.14",
     "@planetscale/database": "^1.7.0",

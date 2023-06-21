@@ -311,10 +311,10 @@
   resolved "https://registry.npmjs.org/@fal-works/esbuild-plugin-global-externals/-/esbuild-plugin-global-externals-2.1.2.tgz"
   integrity sha512-cEee/Z+I12mZcFJshKcCqC8tuX5hG3s+d+9nZ3LabqKF1vKdF41B92pJVCBggjAGORAeOzyyDDKrZwIkLffeOQ==
 
-"@fontsource/fira-code@^4.5.13":
-  version "4.5.13"
-  resolved "https://registry.npmjs.org/@fontsource/fira-code/-/fira-code-4.5.13.tgz"
-  integrity sha512-T1IG6/2AXSwEKwlrEm3kyIL3RQTMblPyj68HgnBGl0IBGFxgS5LZ7StRdDo/QimJ4Tz6FQGHuy1Y/ShNxaUefA==
+"@fontsource/fira-code@^5.0.3":
+  version "5.0.3"
+  resolved "https://registry.yarnpkg.com/@fontsource/fira-code/-/fira-code-5.0.3.tgz#175edf6ce0d2db0d33af28a9622354729e9ba21b"
+  integrity sha512-csSax2QNXYUzUc2UaIv08WfMwFOcWJWlqn5EkA5+hcnM9Kp0VhfFLEcJBEvhWHTZT7ySMvj7oePWSSWiVF3n1g==
 
 "@fontsource/inter@^5.0.1":
   version "5.0.1"
