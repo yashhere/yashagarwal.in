@@ -1,0 +1,65 @@
+---
+title: "Epidemic/Gossip Protocols"
+published: 2020-04-14T08:38:15+05:30
+status: "published"
+---
+
+Last week, while reading the book [Designing data-intensive applications](https://www.goodreads.com/book/show/34646879-designing-data-intensive-applications), I came across the term "Gossip Protocols." The title was quite intriguing; hence I search for it on Google. It turns out that it is a communication protocol. It is sometimes also called the "Epidemic Protocol."
+
+We are facing an ongoing pandemic called COVID-19. The term "Epidemic Protocol" caught my attention, and I started wondering how the knowledge of epidemics is going to be useful in computer systems. It turns out; these protocols try to emulate the spread of a virus to effectively communicate the information to all nodes in a distributed network.
+
+A virus spread quickly and robustly. Our goal in a distributed system is to spread the information/updates as quickly as possible without burdening the network. The epidemic protocols try to bring these ideas from epidemiology to distributed systems.
+
+I use both terms (Gossip and Epidemic) interchangeably in this post.
+
+## Analogy to a real epidemic
+Let' take a close look at how a virus spreads. I'll explain it using a small sample of five people. We assume that, initially, none of these people is infected. Now, because of some external factors, one of these (say $A$) got infected with the virus. We say that $A$ is ***infected***, and the remaining four people are ***susceptible*** to infection. $A$ followed the advice of doctors and isolated itself from the group. Now we say that $A$ is ***removed*** (either because he has the infection, but is not spreading it, or because he is recovered). 
+
+Now, let's extend this analogy to a network. In a network, we have multiple nodes. These nodes are classified using the terms -- infected, susceptible, and removed. The infected nodes try to spread some information by periodically selecting some peer nodes from the network. If a node is susceptible, that is, it does not know the said information, then after the selection and transmission of information by an infected node, the susceptible node also gets infected and starts spreading the information. A node is said to be removed, if it already knows the said information, but is not spreading it because, for example, all its peers already know the information, so there is no need to keep spreading it -- the so-called herd immunity).
+
+## Some theory
+The concept of the Gossip Protocol is not something new. The 1987 [paper](https://dl.acm.org/doi/10.1145/41840.41841) Epidemic algorithms for replicated database maintenance is considered seminal on this topic. The Gossip Protocols were initially used to maintain consistency in replicated databases for efficient data communication. Later, these protocols found their usage in other areas such as service discovery in a distributed environment and maintaining node memberships as well.
+
+Usually, these protocols work as follows -
+1. A node ($A$) in the network randomly selects another node with which it wants to share information. Here, the assumption is that each node in the network either maintains a list of all the other nodes or gets the information from a centralized server.
+2. On receipt of information, the receiving node ($B$) processes the information.
+3. In the next round of this process, both $A$ and $B$ again select nodes randomly and transmit the information.
+4. These steps repeat periodically until the information is disseminated to every node in the network.
+
+## Methods
+
+In the paper mentioned above, two schemes of epidemic protocols were analyzed -
+### Anti-entropy
+In this scheme, a node $p$ randomly contacts a random partner $q$ from the current population. The nodes $p$ and $q$ engage in information exchange to resolve any differences between them. The updates known to $p$ but not known to $q$ are transferred using different strategies (push, pull, and push-pull).
+    
+ As it turns out, anti-entropy requires significant network bandwidth, because it needs to send the complete database contents to other nodes for resolving any differences. There are many approaches, such as sharing checksums, Merkel trees, maintaining a recent update list, etc. that can be used to reduce the bandwidth requirements in the anti-entropy algorithm. These strategies allow the sending node to know what updates the receiving nodes require to become consistent.
+    
+ It can be proven that this algorithm guarantees the eventual dissemination of information. The number of updates sent in this scheme is not bounded, so there is no termination. 
+    
+ This scheme is equivalent to the SI model (simple epidemic) from epidemiology. The term SI stands for susceptible-infected (same as explained above). A node is always susceptible or infected.
+  
+### Rumor mongering
+As the name suggests, this scheme works similarly to how rumors spread. Initially, all nodes are ignorant of a rumor. When a node learns about some updates, it becomes a "hot rumor." While a node holds a hot rumor, it periodically chooses another node at random and pushes the rumor to the other site. When a node has tried to share a hot rumor with too many nodes that have already seen it, the node stops treating the rumor as hot and retains the update without propagating it further. Rumor-mongering requires very less network bandwidth because it needs to send only recent updates to other nodes.
+    
+The equivalent of this in epidemiology is the SIR model (complex epidemic), which stands for susceptible-infected-removed. A node can be susceptible or infected or removed.
+    
+Because of the removal of nodes, the number of messages transmitted in this algorithm is bounded. However, because of this, there is a slight chance that some updates might not reach all nodes. So it does not guarantee eventual consistency.
+        
+ There are two strategies to decide when a node should be removed - 
+ {/* TODO: - Random - Removed with probability $\frac{1}{k}$ after each unsuccessful attempt. */}
+ {/* TODO: - Counter - Removed after $k$ unnecessary contacts.  */}
+
+The analysis of gossip algorithms focuses on designing strategies on how to select the best peer group to share the information with.
+
+If you want to get started with this topic, here I recommend some papers that are quite fundamental when it comes to an understanding of how gossiping works:
+1. [Epidemic Algorithms For Replicated Database Maintenance](https://dl.acm.org/doi/10.1145/41840.41841)
+2. [Gossiping in Distributed Systems](https://www.distributed-systems.net/my-data/papers/2007.osr.pdf)
+3. [Randomized Rumor Spreading](http://archive.cone.informatik.uni-freiburg.de/pubs/rumor.pdf)
+4. [The Promise, and Limitations, of Gossip Protocols](https://research.cs.cornell.edu/projects/Quicksilver/public_pdfs/2007PromiseAndLimitations.pdf)
+5. [Gossip-based Protocols for Large-scale Distributed Systems](http://www.inf.u-szeged.hu/~jelasity/dr/doktori-mu.pdf) - Read the first chapter of this book to get a basic understanding of Gossip protocols)
+6. [A gossip protocol simulator](https://flopezluis.github.io/gossip-simulator/)
+---
+
+**P.S.** - This is my first attempt to read and summarize CS research papers. I have intentionally covered only a small part (first few pages) of the paper (first reference in the above list) here, as I am still figuring out the best way to read and summarise. I am confident that with time and practice, I will get better.
+
+If you find any scope of improvement in current content, please let me know through email or comment box below.

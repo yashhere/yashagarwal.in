@@ -1,0 +1,130 @@
+---
+title: "Custom Arch Linux setup with Openbox"
+published: 2016-06-09T10:20:36+00:00
+status: "published"
+---
+
+After my summer vacation started, I bought a new laptop, and the first thing I did was to install Arch Linux on it. After a standard arch installation procedure, I started putting together my desktop environment, beginning with ArchLinux and Openbox, and then piecing all pieces together to build a proper desktop environment. Building a desktop this way follows the Unix Methodology; have software that each does one thing well, and when you put them together, you get something amazing.
+
+When I first installed Arch, I had several choices. I tried `xfce` and `gnome` as my desktop environments. While both of them have their pros and cons, I ended up liking none. The sole reason was the dependencies; these two software bring with them. My only intention of installing Arch was to have something, which I control, not like Ubuntu, where you are forced to use the preinstalled software and when you try to uninstall something, you fear of breaking some other program.
+
+So I end up going the route of building something up from scratch using Openbox as a base. At this point, I have a fast, lightweight desktop that is exceptionally stable and is genuinely my desktop as I have built it from the ground up, choosing every application.
+
+![Openbox on ArchLinux](/posts/openbox_desktop.jpg "Openbox on ArchLinux")
+
+## Window Manager
+After the installation of Arch, the first thing I did was to install `openbox`, a tiling window manager. You may also try other window managers like `awesome`, `i3`, and `fluxbox`, etc. but I chose Openbox because it is used everywhere. Thus there is a plethora of information out there about customizing it.
+
+For our window manager to show up, it needs to be added either in a login manager or user's `~/.xinitrx` file. There is a default version of this file that contain some code which we may want to retain, so rather than making this file from scratch, copy the default version of the file to the user's home directory.
+
+```sh
+cp /etc/X11/xinit/xinitrc ~/.xinitrc
+```
+
+Now add the command `exec Openbox-session` to the end of the file. Remember that the system will ignore the lines following this command. An Openbox session should be able to be started by entering the command `startx`.
+
+An openbox session can be started automatically upon login using shell's startup script. Add following to the shell's startup script, `~/.bash_profile` for bash and `~/.zprofile` for zsh.
+
+```sh
+[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx
+```
+
+
+## Configuring Openbox
+
+Setting up openbox is quite simple. Four files make the basis of openbox configuration. They are `rc.xml`, `autostart`,  `menu.xml` and `environment`. These files controls everything about the window manager.
+
+- **rc.xml**: Determine the behavior and settings of overall Openbox session
+- **autostart**: Contains a list of applications to be launched with the window manager
+- **menu.xml**: It makes the right-click context menu of the desktop
+- **environment**: Can be used to export and set relevant environmental variables
+
+For the configuration of Openbox, it is necessary to create a local Openbox profile in the user's home directory. A global configuration file can be found in `/etc/xdg/openbox`, which is well documented, and copying the global configuration to the user's directory will give a good starting point to start customizing.
+
+```sh
+cp -R /etc/xdg/openbox ~/.config/
+```
+
+These files can be edited by hand, although some graphical tools are also available, use of these may be desired.
+
+
+## Themes and Appearance
+
+[obconf](https://www.archlinux.org/packages/community/x86_64/obconf/) and [lxappearance-obconf](https://www.archlinux.org/packages/community/x86_64/lxappearance-obconf/) can be used to configure appearance and theme of openbox session. There are quite a few themes available in [openbox-themes](https://www.archlinux.org/packages/community/any/openbox-themes/) package. My personal favorite is [Numix-themes](https://www.archlinux.org/packages/community/any/numix-themes/) and [Numix-icon-theme-git (AUR)](https://aur.archlinux.org/packages/numix-icon-theme-git/).
+
+To see changes after editing a configuration file, the Openbox needs to be refreshed. It can be done with the `reconfigure` command.
+
+```sh
+openbox --reconfigure
+```
+
+
+## Menus
+
+The type and behavior of Openbox menus, accessible by right-clicking the background, can be changed using `~/.config/openbox/menu.xml` file. Openbox provides two kinds of menus, `Static`, and `Dynamic` menus (Piped and Generators)
+
+Static menus are hardcoded in XML and is stored in the `menu.xml` file. Whenever you install a new application, you will have to update the XML file to update the menu manually. It is a viable solution if the apps are not installed on a day to day basis.
+
+Pipe menus are the sections of the Openbox menu that Openbox creates on the fly by running a generic script and using its plain text output as menu entries. This scheme can be used in different ways, like adding a mail checker in the menu or adding a weather forecast menu. You can check [openbox pipe menu page](http://openbox.org/wiki/Openbox:Pipemenus) for more information.
+
+Generators are the most convenient type of menus. These can be found in most desktop environments where applications show up in the menu automatically. If applications are being installed regularly, then this will probably be the preferred choice.
+
+
+### Static Menus
+The process of making these menus can be automated by static menu generator like [obmenu](https://www.archlinux.org/packages/?name=obmenu). It will generate static menus from installed applications by looking into certain directories. Others available tools are [menumaker](https://www.archlinux.org/packages/?name=menumaker), [obmenu](https://www.archlinux.org/packages/?name=obmenu) and [xdg-menu](https://www.archlinux.org/packages/?name=archlinux-xdg-menu).
+
+
+### Dynamic Menus
+Dynamic menus give the same kind of functionality most people are used to. So it was my preferred choice. They can be used to generate full, complex menus on the fly. One of the most popular application for generating dynamic menus is [obmenu-generator (AUR)](https://aur.archlinux.org/packages/obmenu-generator/). Though it is not officially connected to Openbox, it is widely used.
+
+In order to have [obmenu-generator (AUR)](https://aur.archlinux.org/packages/obmenu-generator/) make a menu on demand, the `menu.xml` file should contain the following code as the only entry.
+
+```sh
+<?xml version="1.0" encoding="UTF-8"?>
+<openbox_menu>
+    <menu id="root-menu" label="OpenBox 3" execute="/usr/bin/obmenu-generator"></menu>
+</openbox_menu>
+```
+
+
+## Panels and Taskbars
+
+You can get any panel like [xfce4-panel](https://www.archlinux.org/packages/extra/i686/xfce4-panel/) or the simple and customizable [tint2](https://www.archlinux.org/packages/?name=tint2). I chose tint2 because it very closely follows the openbox spirit of having easy customization with plain configuration files. tint2 package also containg a graphical tool `tint2conf` for customizing panel and you can obviously go right to the tint2 configuration file and edit it there. This also means it is easy to pick up your configuration file and move it to another computer, or restore an old configuration since it is as simple as pasting a text document in the right place. tint2 can also have sections for each individual desktop and has various small widget like programs that can be used with it such as a calendar, [gsimplecal](https://www.archlinux.org/packages/community/x86_64/gsimplecal/), a volume application, [volumeicon](https://www.archlinux.org/packages/?name=volumeicon), a battery indicator, [cbatticon](https://www.archlinux.org/packages/?name=cbatticon), a network indicator like [wicd](https://www.archlinux.org/packages/extra/any/wicd/) which also have a system tray icon and a mini task tray. To start tint2 with openbox, you need to add `tint2 &` to the `autostart` file.
+
+
+## File Manager
+
+Some file managers deeply integrate into desktop environments, and when installed with Openbox, they end up pulling multiple dependencies, which is certainly not desired. Our aim behind building an Openbox set up was to have minimum dependencies so that we can get a lightweight desktop. However, there are several file managers available that fit into the Openbox very well. In my choice, [pcmanfm](https://www.archlinux.org/packages/?name=pcmanfm) is the best choice here. pcmanfm is a lightweight and fast file manager with network and thrash support. pcmanfm can also manage desktop icons and wallpaper setting, although if you plan to use conky in your system, then you may not want pcmanfm to manage desktop for you. The reason is that pcmanfm treats desktop as a window, so when you switch to desktop, the conky hides behind the desktop window. To get the icons and wallpaper, you can use other standalone tools such as `idesk` and `feh` or `nitrogen`.
+To start pcmanfm is the desktop mode, add the following to the autostart file.
+
+```sh
+pcmanfm --desktop &
+```
+
+and to stop it for managing desktop
+
+```sh
+pcmanfm --desktop-off &
+```
+
+Many functions present in modern file managers require the installation of a few additional programs. `gvfs` gives you the ability to mount volumes and have trash control. It is not mandatory to have, but it allows on-demand `mounting` completely from within the file manager, as opposed to having to drop down to the command line. A disk-volume manager such as `udisks2` will also be wanted, and for auto-mounting removable disks, `udiskie` works well with Openbox. udiskie can be added to Openbox's autostart file like any other application.
+
+
+## Composition
+
+Openbox does not provide native support for composition, although having a compositor may prevent screen flickering and other distortion in applications like `oblogout`. Some options work great with Openbox. The one which I am using and quite happy with is `compton`. It can be used with or without any initial configuration, although there are a lot of different configuration options if you decide to customize the setup. To start compton in background with shadows, use this in `autostart` file.
+
+```sh
+compton -b -c &
+```
+
+
+## Wrapping up
+
+While setting up my desktop using Openbox ended up being much more work than I could have with typical desktop environments. But now I have a much more stable desktop, about which I know, what is running in my system, and that my system is not cluttered with any software that I never use.
+
+While it might not be for everybody having to configure every little bit of the desktop, I genuinely feel I have ended up with excellent user experience, and a system that is customized precisely to fit my needs.
+
+## References
+
+- [Arch Linux Wiki](https://wiki.archlinux.org/)
