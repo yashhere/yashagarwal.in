@@ -11,7 +11,6 @@ series:
 OPA. My approach might not be the most optimal one, but I am learning these technologies currently. Please give your
 valuable suggestions and be kind :)
 
-
 I have been learning the basics of microservices and Golang lately. On the work front, I got a chance to work on Go, gRPC, and Open
 Policy Agent as my first professional project. In this post, I will be demonstrating what I learned in the last few months.
 We will be implementing a simple gRPC based library service, which will be able to serve
@@ -36,10 +35,10 @@ OPA gives us the ability to define a fine-grained policy control mechanism. Howe
 using OPA is that it gives you the ability to decouple your services and the definition of policies from the enforcement
 of it.
 
-There are mainly two parts of OPA - 
+There are mainly two parts of OPA -
 
 1. A JSON document store where you can define anything from your users, access roles,
-permission levels, etc.
+   permission levels, etc.
 2. A policy is written in a declarative language. This policy gives you new derivative data from the original JSON document store evaluated by the policy. The declarative language is called Rego, and these policies are also documents that generate results according to the defined policy. The users query these results.
 
 This info will be sufficient for our use case. More info about it can be found at the official

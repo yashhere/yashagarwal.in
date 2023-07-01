@@ -1,10 +1,10 @@
 import {
   defineDocumentType,
   defineComputedFields,
-} from "contentlayer/source-files";
-import { Series } from "./series";
-import { Tag } from "./tag";
-import GithubSlugger from "github-slugger";
+} from "contentlayer/source-files"
+import { Series } from "./series"
+import { Tag } from "./tag"
+import GithubSlugger from "github-slugger"
 
 /** @type {import('contentlayer/source-files').ComputedFields} */
 const computedFields = defineComputedFields<"Post">({
@@ -15,28 +15,28 @@ const computedFields = defineComputedFields<"Post">({
   headings: {
     type: "json",
     resolve: async (doc) => {
-      const slugger = new GithubSlugger();
+      const slugger = new GithubSlugger()
 
       // https://stackoverflow.com/a/70802303
-      const regex = /\n\n(?<flag>#{1,6})\s+(?<content>.+)/g;
+      const regex = /\n\n(?<flag>#{1,6})\s+(?<content>.+)/g
 
       const headings = Array.from(doc.body.raw.matchAll(regex)).map(
         // @ts-ignore
         ({ groups }) => {
-          const flag = groups?.flag;
-          const content = groups?.content;
+          const flag = groups?.flag
+          const content = groups?.content
           return {
             heading: flag?.length,
             text: content,
             slug: content ? slugger.slug(content) : undefined,
-          };
-        }
-      );
+          }
+        },
+      )
 
-      return headings;
+      return headings
     },
   },
-});
+})
 
 export const Post = defineDocumentType(() => ({
   name: "Post",
@@ -62,4 +62,4 @@ export const Post = defineDocumentType(() => ({
     },
   },
   computedFields,
-}));
+}))

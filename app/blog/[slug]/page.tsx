@@ -1,26 +1,26 @@
-import "server-only";
+import "server-only"
 
-import { getPost, getSeries } from "@/lib/content";
-import { components } from "@/ui/mdx";
-import { TableOfContents } from "@/ui/post/table-of-contents";
-import { Series } from "@/ui/series";
-import { ViewCounter } from "@/ui/view-counter";
-import { allPosts } from "contentlayer/generated";
-import moment from "moment";
-import { getMDXComponent } from "next-contentlayer/hooks";
-import { Suspense } from "react";
-import { useRouter } from "next/router";
+import { getPost, getSeries } from "@/lib/content"
+import { components } from "@/ui/mdx"
+import { TableOfContents } from "@/ui/post/table-of-contents"
+import { Series } from "@/ui/series"
+import { Metrics } from "@/ui/metrics"
+import { allPosts } from "contentlayer/generated"
+import moment from "moment"
+import { getMDXComponent } from "next-contentlayer/hooks"
+import { Suspense } from "react"
+import { useRouter } from "next/router"
 
 export async function generateStaticParams() {
   return allPosts
     .filter((p) => p.status != "draft")
     .map((p) => {
-      slug: p.slug;
-    });
+      slug: p.slug
+    })
 }
 
 export async function generateMetadata({ params }) {
-  const post = await getPost(params.slug);
+  const post = await getPost(params.slug)
 
   return {
     title: `${post.title} | Yash Agarwal`,
@@ -35,15 +35,16 @@ export async function generateMetadata({ params }) {
       card: "summary_large_image",
       creator: "@yash__here",
     },
-  };
+  }
 }
 
 const Page = async ({ params }: { params: { slug: string } }) => {
-  const { slug } = params;
+  const { slug } = params
 
-  const post: NonNullable<ReturnType<typeof getPost>> = getPost(slug);
-  const Content = getMDXComponent(post.body.code);
+  const post: NonNullable<ReturnType<typeof getPost>> = getPost(slug)
+  const Content = getMDXComponent(post.body.code)
 
+  console.log("YASH: inside blog slug page")
   return (
     <>
       <div className="space-y-2">
@@ -53,8 +54,8 @@ const Page = async ({ params }: { params: { slug: string } }) => {
           </h1>
           <div className="mt-2 flex space-x-1 text-xs text-black/60 sm:text-lg font-body font-semibold">
             <p>{moment(post.published).format("MMM DD, YYYY")}</p>
-            {/* <p>&middot;</p> */}
-            {/* TODO: <ViewCounter slug={slug} track={true} /> */}
+            <p>&middot;</p>
+            <Metrics slug={slug} track />
           </div>
         </section>
 
@@ -81,7 +82,7 @@ const Page = async ({ params }: { params: { slug: string } }) => {
         </Suspense>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default Page;
+export default Page

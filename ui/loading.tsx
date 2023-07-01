@@ -1,4 +1,4 @@
-import { motion, Transition } from "framer-motion";
+import { motion, Transition } from "framer-motion"
 
 export const LoadingDots = () => {
   const container = {
@@ -12,7 +12,7 @@ export const LoadingDots = () => {
         staggerChildren: 0.2,
       },
     },
-  };
+  }
 
   const dotVariants = {
     initial: {
@@ -23,14 +23,14 @@ export const LoadingDots = () => {
       y: "15%",
       opacity: 1,
     },
-  };
+  }
 
   const dotTransition: Transition = {
     duration: 0.5,
     repeat: Infinity,
     repeatType: "reverse",
     ease: "easeIn",
-  };
+  }
 
   return (
     <motion.span
@@ -61,5 +61,5 @@ export const LoadingDots = () => {
         &bull;
       </motion.span>
     </motion.span>
-  );
-};
+  )
+}

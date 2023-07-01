@@ -1,15 +1,16 @@
-import { FeaturedPost } from "@/ui/post/featured";
-import { ArrowRightIcon } from "@heroicons/react/24/solid";
-import { Metadata } from "next";
-import Link from "next/link";
-import { Suspense } from "react";
+import { FeaturedPost } from "@/ui/post/featured"
+import { ArrowRightIcon } from "@heroicons/react/24/solid"
+import { Metadata } from "next"
+import Link from "next/link"
+import { Suspense } from "react"
 
 export const metadata: Metadata = {
   title: "Home | Yash Agarwal",
   description: "My nest on the Internet",
-};
+}
 
 const Page = () => {
+  console.log("YASH: inside root page")
   return (
     <>
       <section className="flex flex-col justify-start">
@@ -44,7 +45,7 @@ const Page = () => {
         </Link> */}
       </section>
     </>
-  );
-};
+  )
+}
 
-export default Page;
+export default Page

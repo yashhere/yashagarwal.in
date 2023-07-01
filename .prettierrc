@@ -1,0 +1,11 @@
+{
+    "arrowParens": "always",
+    "semi": false,
+    "trailingComma": "all",
+    "proseWrap": "always",
+    "tabWidth": 2,
+    "requireConfig": false,
+    "useTabs": false,
+    "bracketSpacing": true,
+    "jsxBracketSameLine": false
+}

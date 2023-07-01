@@ -7,12 +7,10 @@ status: "published"
 This post is a result of my experimentation with Drozer. Drozer is a security testing framework for Android, developed by MWR Labs. According the Drozer's official [documentation](https://labs.f-secure.com/assets/BlogFiles/mwri-drozer-user-guide-2015-03-23.pdf):
 
 > Drozer allows you to assume the role of an Android app and interact with other apps. It can do anything that an
-installed application can do, such as making use of Android's Inter-Process Communication (IPC) mechanism and
-interact with the underlying operating system.
-
+> installed application can do, such as making use of Android's Inter-Process Communication (IPC) mechanism and
+> interact with the underlying operating system.
 
 Drozer modules are written in Python. The module performs operations on an Android device with the help of an agent app installed on the device. The agent app, by default, has permission to use the internet connection only. This permission is required so that the agent can open a ServerSocket on port 31415 (default). The agent will listen for the incoming connections on this port. The console will connect to the agent on this port.
-
 
 Drozer modules are inherited Python classes. The parent class is defined in [drozer.modules.Module](https://github.com/FSecureLABS/drozer/blob/develop/src/drozer/modules/base.py). Drozer console provides commands to create a custom module repository, which is very useful for the local development of modules.
 
@@ -126,6 +124,5 @@ Here are some exercises that you should try if you want to learn more about Droz
 Slightly tougher one.
 
 - A module to terminate a call without user intervention (I do not know if it is possible to do this programmatically. If you implement this successfully, do let me know in the comments section.)
-
 
 Thanks for reading. Cheers :)

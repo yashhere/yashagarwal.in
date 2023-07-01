@@ -1,25 +1,25 @@
-import { headers } from "next/headers";
-import Link from "next/link";
+import { headers } from "next/headers"
+import Link from "next/link"
 
-import { ViewCounter } from "@/ui/view-counter";
-import { Post } from "contentlayer/generated";
-import moment from "moment";
-import { Suspense } from "react";
-import { PostPreviewLoading } from "./loading";
+import { Metrics } from "@/ui/metrics"
+import { Post } from "contentlayer/generated"
+import moment from "moment"
+import { Suspense } from "react"
+import { PostPreviewLoading } from "./loading"
 
 async function getFeaturedPost(): Promise<Post> {
-  const data = headers();
-  const protocol = data.get("x-forwarded-proto");
-  const host = data.get("host");
+  const data = headers()
+  const protocol = data.get("x-forwarded-proto")
+  const host = data.get("host")
 
   const res = await fetch(`${protocol}://${host}/best`, {
     cache: "reload",
-  });
-  return res.json();
+  })
+  return res.json()
 }
 
 export async function FeaturedPost() {
-  const data = await getFeaturedPost();
+  const data = await getFeaturedPost()
 
   return (
     <Suspense fallback={<PostPreviewLoading />}>
@@ -34,12 +34,12 @@ export async function FeaturedPost() {
             </h4>
             <div className="text-black/80 text-sm flex font-semibold space-x-2">
               <p>{moment(data.published).format("MMM DD, YYYY")}</p>
-              {/* <p>&middot;</p> */}
-              {/* TODO: <ViewCounter slug={data.slug} track={false} /> */}
+              <p>&middot;</p>
+              <Metrics slug={data.slug} increment={false} />
             </div>
           </div>
         </div>
       </Link>
     </Suspense>
-  );
+  )
 }

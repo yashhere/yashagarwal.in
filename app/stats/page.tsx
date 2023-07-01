@@ -1,23 +1,23 @@
-import { ArrowTrendingUpIcon, PencilIcon } from "@heroicons/react/24/solid";
-import { allPosts } from "contentlayer/generated";
-import { headers } from "next/headers";
-import { Suspense } from "react";
+import { ArrowTrendingUpIcon, PencilIcon } from "@heroicons/react/24/solid"
+import { allPosts } from "contentlayer/generated"
+import { headers } from "next/headers"
+import { Suspense } from "react"
 
 async function getTotalViews(): Promise<number> {
-  const data = headers();
-  const protocol = data.get("x-forwarded-proto");
-  const host = data.get("host");
+  const data = headers()
+  const protocol = data.get("x-forwarded-proto")
+  const host = data.get("host")
 
   const res = await fetch(`${protocol}://${host}/views`, {
     cache: "reload",
-  });
-  return res.json();
+  })
+  return res.json()
 }
 
 const Page = async () => {
   // const totalViews = await getTotalViews();
-  const totalViews = 0;
-  const totalPosts = allPosts.filter((p) => p.status != "draft").length;
+  const totalViews = 0
+  const totalPosts = allPosts.filter((p) => p.status != "draft").length
 
   return (
     <>
@@ -43,6 +43,6 @@ const Page = async () => {
         </div>
       </section>
     </>
-  );
-};
-export default Page;
+  )
+}
+export default Page

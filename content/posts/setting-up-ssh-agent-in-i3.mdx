@@ -7,23 +7,27 @@ status: "published"
 In this post, I will write about the procedure to correctly setup SSH and GPG agents in the i3 window manager. To follow this post, you need to have ssh-keys and your private GPG keys ready. If you do not already have these keys with you, I will describe the process of creating the keys.
 
 ## SSH
+
 Generating an SSH key pair provides you with a public key and a private key. The private key should never be given to anyone and public key, well the name itself is self-explanatory.
 
 To create a new key pair, open a terminal and paste the text below.
+
 ```sh
 ssh-keygen -t rsa -b 4096 -C "your_email_address"
 ```
 
 This command will create a new ssh key pair with the given email address as the label. Press Enter for any question asked. When it asks for the passphrase, type a strong passphrase, otherwise leave it blank to have no password.
 
-
 ## GPG
+
 You might need to download the GPG command line tools before following the below steps. Follow your distribution's documentation for more help.
 
 Once you have downloaded the tools, open a terminal, and type the following command.
+
 ```sh
 gpg --gen-key
 ```
+
 You will see something like this. Enter 1 to select the default key choice.
 
 ```text
@@ -64,6 +68,7 @@ You can now use the key (until it expires) to encrypt your data.
 **Update (26/05/2018):** _As pointed out by [Saksham](https://sakshamsharma.com/) in the comments below, this step is not required for the setup of SSH in i3. This step can be safely ignored._
 
 Open i3 configuration file and add an `exec_always` statement -
+
 ```sh
 exec_always ~/.config/i3/scripts/gnome-keyring.sh
 ```
@@ -74,11 +79,13 @@ Obviously, you will need to change the path according to your OS. Now make a new
 eval $(/usr/bin/gnome-keyring-daemon --start --components=gpg,pkcs11,secrets,ssh)
 export GNOME_KEYRING_CONTROL GNOME_KEYRING_PID GPG_AGENT_INFO SSH_AUTH_SOCK
 ```
+
 (Assuming that you already have installed gnome-keyring)
 
 Now, reload the i3.
 
 ### Configuring SSH
+
 **Update (26/05/2018):** _This step is also optional. Thanks to [Saksham](https://sakshamsharma.com/) for pointing it out._
 
 Open `~/.ssh/config` file and add following content to it -
@@ -92,9 +99,11 @@ Host *
 Replace \<your username\> accordingly.
 
 ### Setting up .bashrc
+
 I am not using a login shell, and I could not find any suitable method to source `~/.profile` or `~/.bash_profile` on login in i3. So I added my configuration to `~/.bashrc` file. I know it is a hack, but it works well for me without much headache.
 
 Open `~/.bashrc` file and add following lines to the end of the file.
+
 ```bash
 if [ -f ~/.ssh/agent.env ] ; then
     . ~/.ssh/agent.env > /dev/null

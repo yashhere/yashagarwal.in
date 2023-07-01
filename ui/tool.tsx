@@ -1,12 +1,12 @@
-import { ChevronDoubleRightIcon } from "@heroicons/react/24/solid";
+import { ChevronDoubleRightIcon } from "@heroicons/react/24/solid"
 
 export type Tool = {
-  title: string;
-  description?: string;
-  tags?: string[];
-  link?: string;
-  category?: string;
-};
+  title: string
+  description?: string
+  tags?: string[]
+  link?: string
+  category?: string
+}
 
 export const ToolCard = ({ title, tags, description, link }: Tool) => {
   return (
@@ -16,7 +16,7 @@ export const ToolCard = ({ title, tags, description, link }: Tool) => {
           <h4 className="font-semibold">{title}</h4>
           <div className="flex space-x-1 mb-1">
             {tags?.map((t) => {
-              return <p key={t} className="text-xs">{`#${t}`}</p>;
+              return <p key={t} className="text-xs">{`#${t}`}</p>
             })}
           </div>
         </div>
@@ -31,5 +31,5 @@ export const ToolCard = ({ title, tags, description, link }: Tool) => {
         </div>
       ) : null}
     </div>
-  );
-};
+  )
+}

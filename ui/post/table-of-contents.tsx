@@ -1,12 +1,12 @@
-"use client";
+"use client"
 
-import clsx from "clsx";
-import { motion } from "framer-motion";
-import GithubSlugger from "github-slugger";
-import { useRouter } from "next/navigation";
+import clsx from "clsx"
+import { motion } from "framer-motion"
+import GithubSlugger from "github-slugger"
+import { useRouter } from "next/navigation"
 
 export const TableOfContents = ({ headings, path }) => {
-  const router = useRouter();
+  const router = useRouter()
   return (
     <>
       <motion.div
@@ -35,13 +35,13 @@ export const TableOfContents = ({ headings, path }) => {
                         {
                           "pl-2": heading.heading === 2,
                           "pl-4": heading.heading === 3,
-                        }
+                        },
                       )}
                     >
                       {heading.text}
                     </a>
                   </div>
-                );
+                )
               })}
             </div>
           ) : null}
@@ -52,9 +52,9 @@ export const TableOfContents = ({ headings, path }) => {
               <button
                 className="text-sm text-gray-100 hover:text-white"
                 onClick={() => {
-                  window.scrollTo({ top: 0 });
+                  window.scrollTo({ top: 0 })
                   // @ts-expect-error
-                  router.push(path, { shallow: true });
+                  router.push(path, { shallow: true })
                 }}
               >
                 Back to top
@@ -64,5 +64,5 @@ export const TableOfContents = ({ headings, path }) => {
         </div>
       </motion.div>
     </>
-  );
-};
+  )
+}

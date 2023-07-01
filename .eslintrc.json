@@ -4,6 +4,7 @@
   "rules": {
     "import/no-unresolved": [2],
     "prettier/prettier": ["error"],
-    "react-hooks/exhaustive-deps": ["off"]
+    "react-hooks/exhaustive-deps": ["off"],
+    "indent": "off"
   }
 }

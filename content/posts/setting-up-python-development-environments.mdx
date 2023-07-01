@@ -11,6 +11,7 @@ As a beginner to open source projects, the problem I faced, in the beginning, wa
 Python uses `pip` for package management.
 
 ## Installing pip
+
 `pip` depends on setuptools library, which is in official Ubuntu repositories. To install it for python2 -
 
 ```sh
@@ -18,16 +19,19 @@ sudo apt-get install python-setuptools
 ```
 
 Then install `pip` using -
+
 ```sh
 sudo apt-get install python-pip
 ```
 
 and for python3 -
+
 ```sh
 sudo apt-get install python3-setuptools
 ```
 
 Then install `pip` using -
+
 ```sh
 sudo apt-get install python3-pip
 ```
@@ -41,9 +45,11 @@ It should install `pip` on your system for both python versions. `pip` is very e
 pip install [package]
 pip install django
 ```
+
 If you are using python3, then don't forget to use `pip3`.
 
 `pip` can be used to install a specific version of package also.
+
 ```sh
 # it will search and install [package] with [version]
 pip install [package]==[version]
@@ -51,6 +57,7 @@ pip install django==1.6.5
 ```
 
 ### Uninstalling a package using pip
+
 ```sh
 # it will search and uninstall [package]
 pip uninstall [package]
@@ -58,6 +65,7 @@ pip uninstall django
 ```
 
 ### upgrading a package using pip
+
 ```sh
 # it will upgrade [package] to latest version
 pip install --upgrade [package]
@@ -65,7 +73,9 @@ pip install --upgrade django
 ```
 
 ### Creating list of all packages with pip
+
 It is one of most used and most useful feature of `pip`. It allows you to make a list of all the dependencies of your project.
+
 ```sh
 # it will output the file to current directory
 pip freeze > [file_name.txt]
@@ -74,20 +84,25 @@ pip freeze > [file_name.txt]
 All these commands above will install the packages globally. But that's not what is desired. `virtualenv` comes to our rescue here.
 
 ## Virtualenv
+
 `virtualenv` solves a very particular problem; it allows multiple python projects that have different and often conflicting dependencies, to coexist on the same system.
 
 `virtualenv` solves this problem by creating different isolated development environments for your projects. An environment is a folder which contains everything; your project needs to work properly.
 
 ### Installing virtualenv
+
 By default, if you install `virtualenv` using `pip`, it will use system's default python to create virtual environments. To overcome this problem, we will install `virtualenv` using ubuntu package manager.
+
 ```sh
 sudo apt-get install python-virtualenv
 ```
 
 ### Installing virtualenvwrapper
+
 `virtualenvwrapper` provides some set of commands which makes working with virtual environments much easier.
 
 To install it -
+
 ```sh
 sudo pip install virtualenvwrapper
 ```
@@ -97,6 +112,7 @@ sudo pip install virtualenvwrapper
 `virtualenvwrapper` also places all your virtual environments in one place. It makes working with projects very easy.
 
 Now open your `.bashrc` and add these two lines to the end -
+
 ```sh
 # All your projects will be saved in python-dev folder
 export PROJECT_HOME=~/python-dev
@@ -111,17 +127,21 @@ source /usr/local/bin/virtualenvwrapper.sh
 You can change `python-dev` to any name you wish. Your virtual environments will be created at that location.
 
 Now restart your terminal to source the `.bashrc` or use -
+
 ```sh
 source .bashrc
 ```
 
 ### Basic Usage
+
 Create a virtual environment -
+
 ```sh
 mkvirtualenv myproject
 ```
 
 It will create `myproject` folder in the python-dev directory. To activate this project -
+
 ```sh
 workon myproject
 ```
@@ -131,21 +151,25 @@ Alternatively you can create project using `mkproject` command. It will create a
 Don't forget to deactivate current project when you switch between different projects.
 
 To deactivate a project -
+
 ```sh
 deactivate
 ```
 
 To delete a virtual environment -
+
 ```sh
 rmvirtualenv myproject
 ```
 
 List all environments -
+
 ```sh
 lsvirtualenv
 ```
 
 it will also list all virtual environments -
+
 ```sh
 workon
 ```
@@ -155,4 +179,3 @@ Please refer to virtualenvwrapper documentation for [full list of virtualenvwrap
 virtualenvwrapper also provides the tab-completion feature which is very handy when you have a lot of projects to work with.
 
 That's it. Hope you liked the post. :smile:
-

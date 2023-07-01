@@ -1,14 +1,14 @@
-import { getPost } from "@/lib/content";
-import moment from "moment";
-import Link from "next/link";
-import { Suspense } from "react";
-import { ViewCounter } from "../view-counter";
-import { PostPreviewLoading } from "./loading";
+import { getPost } from "@/lib/content"
+import moment from "moment"
+import Link from "next/link"
+import { Suspense } from "react"
+import { Metrics } from "../metrics"
+import { PostPreviewLoading } from "./loading"
 
 export const PostPreview = ({
   post,
 }: {
-  post: NonNullable<ReturnType<typeof getPost>>;
+  post: NonNullable<ReturnType<typeof getPost>>
 }) => {
   return (
     <>
@@ -24,13 +24,13 @@ export const PostPreview = ({
                 <p>
                   {moment(post.published, "YYYY-MM-DD").format("MMM DD, YYYY")}
                 </p>
-                {/* <p>&middot;</p> */}
-                {/* TODO: <ViewCounter slug={post.slug} track={false} /> */}
+                <p>&middot;</p>
+                <Metrics slug={post.slug} track={false} />
               </div>
             </div>
           </div>
         </Link>
       </Suspense>
     </>
-  );
-};
+  )
+}

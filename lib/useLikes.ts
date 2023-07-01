@@ -1,11 +1,11 @@
-import useSWR, { SWRConfiguration } from "swr";
+import useSWR, { SWRConfiguration } from "swr"
 
 async function getTotalViews(): Promise<number> {
-  const res = await fetch("/views");
+  const res = await fetch("/views")
   if (!res.ok) {
-    throw new Error("An error occurred while fetching the data.");
+    throw new Error("An error occurred while fetching the data.")
   }
-  return res.json();
+  return res.json()
 }
 
 export const useLikes = (config?: SWRConfiguration) => {
@@ -15,12 +15,12 @@ export const useLikes = (config?: SWRConfiguration) => {
     {
       dedupingInterval: 60000,
       ...config,
-    }
-  );
+    },
+  )
 
   return {
     views,
     isLoading: !viewsError && !views,
     isError: !!viewsError,
-  };
-};
+  }
+}

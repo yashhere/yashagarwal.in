@@ -1,5 +1,5 @@
-import { defineDocumentType } from "contentlayer/source-files";
-import { Tag } from "./tag";
+import { defineDocumentType } from "contentlayer/source-files"
+import { Tag } from "./tag"
 
 export const Book = defineDocumentType(() => ({
   name: "Book",
@@ -22,4 +22,4 @@ export const Book = defineDocumentType(() => ({
       of: Tag,
     },
   },
-}));
+}))

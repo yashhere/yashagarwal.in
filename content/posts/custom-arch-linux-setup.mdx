@@ -13,6 +13,7 @@ So I end up going the route of building something up from scratch using Openbox 
 ![Openbox on ArchLinux](/posts/openbox_desktop.jpg "Openbox on ArchLinux")
 
 ## Window Manager
+
 After the installation of Arch, the first thing I did was to install `openbox`, a tiling window manager. You may also try other window managers like `awesome`, `i3`, and `fluxbox`, etc. but I chose Openbox because it is used everywhere. Thus there is a plethora of information out there about customizing it.
 
 For our window manager to show up, it needs to be added either in a login manager or user's `~/.xinitrx` file. There is a default version of this file that contain some code which we may want to retain, so rather than making this file from scratch, copy the default version of the file to the user's home directory.
@@ -29,10 +30,9 @@ An openbox session can be started automatically upon login using shell's startup
 [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx
 ```
 
-
 ## Configuring Openbox
 
-Setting up openbox is quite simple. Four files make the basis of openbox configuration. They are `rc.xml`, `autostart`,  `menu.xml` and `environment`. These files controls everything about the window manager.
+Setting up openbox is quite simple. Four files make the basis of openbox configuration. They are `rc.xml`, `autostart`, `menu.xml` and `environment`. These files controls everything about the window manager.
 
 - **rc.xml**: Determine the behavior and settings of overall Openbox session
 - **autostart**: Contains a list of applications to be launched with the window manager
@@ -47,7 +47,6 @@ cp -R /etc/xdg/openbox ~/.config/
 
 These files can be edited by hand, although some graphical tools are also available, use of these may be desired.
 
-
 ## Themes and Appearance
 
 [obconf](https://www.archlinux.org/packages/community/x86_64/obconf/) and [lxappearance-obconf](https://www.archlinux.org/packages/community/x86_64/lxappearance-obconf/) can be used to configure appearance and theme of openbox session. There are quite a few themes available in [openbox-themes](https://www.archlinux.org/packages/community/any/openbox-themes/) package. My personal favorite is [Numix-themes](https://www.archlinux.org/packages/community/any/numix-themes/) and [Numix-icon-theme-git (AUR)](https://aur.archlinux.org/packages/numix-icon-theme-git/).
@@ -57,7 +56,6 @@ To see changes after editing a configuration file, the Openbox needs to be refre
 ```sh
 openbox --reconfigure
 ```
-
 
 ## Menus
 
@@ -69,12 +67,12 @@ Pipe menus are the sections of the Openbox menu that Openbox creates on the fly 
 
 Generators are the most convenient type of menus. These can be found in most desktop environments where applications show up in the menu automatically. If applications are being installed regularly, then this will probably be the preferred choice.
 
-
 ### Static Menus
+
 The process of making these menus can be automated by static menu generator like [obmenu](https://www.archlinux.org/packages/?name=obmenu). It will generate static menus from installed applications by looking into certain directories. Others available tools are [menumaker](https://www.archlinux.org/packages/?name=menumaker), [obmenu](https://www.archlinux.org/packages/?name=obmenu) and [xdg-menu](https://www.archlinux.org/packages/?name=archlinux-xdg-menu).
 
-
 ### Dynamic Menus
+
 Dynamic menus give the same kind of functionality most people are used to. So it was my preferred choice. They can be used to generate full, complex menus on the fly. One of the most popular application for generating dynamic menus is [obmenu-generator (AUR)](https://aur.archlinux.org/packages/obmenu-generator/). Though it is not officially connected to Openbox, it is widely used.
 
 In order to have [obmenu-generator (AUR)](https://aur.archlinux.org/packages/obmenu-generator/) make a menu on demand, the `menu.xml` file should contain the following code as the only entry.
@@ -86,11 +84,9 @@ In order to have [obmenu-generator (AUR)](https://aur.archlinux.org/packages/obm
 </openbox_menu>
 ```
 
-
 ## Panels and Taskbars
 
 You can get any panel like [xfce4-panel](https://www.archlinux.org/packages/extra/i686/xfce4-panel/) or the simple and customizable [tint2](https://www.archlinux.org/packages/?name=tint2). I chose tint2 because it very closely follows the openbox spirit of having easy customization with plain configuration files. tint2 package also containg a graphical tool `tint2conf` for customizing panel and you can obviously go right to the tint2 configuration file and edit it there. This also means it is easy to pick up your configuration file and move it to another computer, or restore an old configuration since it is as simple as pasting a text document in the right place. tint2 can also have sections for each individual desktop and has various small widget like programs that can be used with it such as a calendar, [gsimplecal](https://www.archlinux.org/packages/community/x86_64/gsimplecal/), a volume application, [volumeicon](https://www.archlinux.org/packages/?name=volumeicon), a battery indicator, [cbatticon](https://www.archlinux.org/packages/?name=cbatticon), a network indicator like [wicd](https://www.archlinux.org/packages/extra/any/wicd/) which also have a system tray icon and a mini task tray. To start tint2 with openbox, you need to add `tint2 &` to the `autostart` file.
-
 
 ## File Manager
 
@@ -109,7 +105,6 @@ pcmanfm --desktop-off &
 
 Many functions present in modern file managers require the installation of a few additional programs. `gvfs` gives you the ability to mount volumes and have trash control. It is not mandatory to have, but it allows on-demand `mounting` completely from within the file manager, as opposed to having to drop down to the command line. A disk-volume manager such as `udisks2` will also be wanted, and for auto-mounting removable disks, `udiskie` works well with Openbox. udiskie can be added to Openbox's autostart file like any other application.
 
-
 ## Composition
 
 Openbox does not provide native support for composition, although having a compositor may prevent screen flickering and other distortion in applications like `oblogout`. Some options work great with Openbox. The one which I am using and quite happy with is `compton`. It can be used with or without any initial configuration, although there are a lot of different configuration options if you decide to customize the setup. To start compton in background with shadows, use this in `autostart` file.
@@ -117,7 +112,6 @@ Openbox does not provide native support for composition, although having a compo
 ```sh
 compton -b -c &
 ```
-
 
 ## Wrapping up
 

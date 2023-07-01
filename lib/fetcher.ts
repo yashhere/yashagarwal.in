@@ -1,15 +1,15 @@
 export async function fetcher<JSON = any>(
   input: RequestInfo,
-  init?: RequestInit
+  init?: RequestInit,
 ) {
-  const res = await fetch(input, init);
+  const res = await fetch(input, init)
 
   if (!res.ok) {
-    const { message } = await res.json();
+    const { message } = await res.json()
     throw Error(`Unable to execute request`, {
       cause: message,
-    });
+    })
   }
 
-  return res.json();
+  return res.json()
 }

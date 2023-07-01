@@ -1,18 +1,18 @@
-import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid";
-import { FC, ReactNode, useState } from "react";
+import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid"
+import { FC, ReactNode, useState } from "react"
 
 type AccordionItemProps = {
-  label: string;
-  children: ReactNode;
-  isOpen?: boolean;
-};
+  label: string
+  children: ReactNode
+  isOpen?: boolean
+}
 
 export const AccordionItem: FC<AccordionItemProps> = ({
   label,
   children,
   isOpen,
 }) => {
-  const [open, setOpen] = useState(isOpen);
+  const [open, setOpen] = useState(isOpen)
 
   return (
     <div className="border-b last:border-none bg-clip-border">
@@ -34,13 +34,13 @@ export const AccordionItem: FC<AccordionItemProps> = ({
         </div>
       ) : null}
     </div>
-  );
-};
+  )
+}
 
 type AccordionProps = {
-  children: ReactNode[];
-};
+  children: ReactNode[]
+}
 
 export const Accordion: FC<AccordionProps> = ({ children }) => {
-  return <div className="rounded-lg border border-black/80">{children}</div>;
-};
+  return <div className="rounded-lg border border-black/80">{children}</div>
+}

@@ -1,12 +1,12 @@
-"use client";
+"use client"
 
-import { Accordion, AccordionItem } from "@/ui/accordion";
-import { BookListItem } from "@/ui/book-list";
+import { Accordion, AccordionItem } from "@/ui/accordion"
+import { BookListItem } from "@/ui/book-list"
 
 export const Books = ({ books }) => {
-  const reading = books?.filter((b) => b.status === "in progress");
-  const complete = books?.filter((b) => b.status === "completed");
-  const queued = books?.filter((b) => b.status === "queued");
+  const reading = books?.filter((b) => b.status === "in progress")
+  const complete = books?.filter((b) => b.status === "completed")
+  const queued = books?.filter((b) => b.status === "queued")
 
   return (
     <>
@@ -53,7 +53,7 @@ export const Books = ({ books }) => {
         </Accordion>
       </section>
     </>
-  );
-};
+  )
+}
 
-export default Books;
+export default Books

@@ -1,13 +1,13 @@
-import { LoadingDots } from "./loading";
+import { LoadingDots } from "./loading"
 
 export const Statistic = ({
   value,
   label,
   isLoading,
 }: {
-  value?: number;
-  label?: string;
-  isLoading?: boolean;
+  value?: number
+  label?: string
+  isLoading?: boolean
 }) => {
   return (
     <div className="bg-black/10 flex flex-col w-full items-center justify-center px-2 py-5 rounded-md">
@@ -18,5 +18,5 @@ export const Statistic = ({
       )}
       <p className="font-medium">{label}</p>
     </div>
-  );
-};
+  )
+}

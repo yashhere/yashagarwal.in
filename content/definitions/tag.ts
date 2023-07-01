@@ -1,4 +1,4 @@
-import { defineNestedType } from "contentlayer/source-files";
+import { defineNestedType } from "contentlayer/source-files"
 
 export const Tag = defineNestedType(() => ({
   name: "Tag",
@@ -8,4 +8,4 @@ export const Tag = defineNestedType(() => ({
       required: true,
     },
   },
-}));
+}))

@@ -1,5 +1,5 @@
-import { Book } from "contentlayer/generated";
-import moment from "moment";
+import { Book } from "contentlayer/generated"
+import moment from "moment"
 
 export const BookListItem = ({ books }: { books: Book[] }) => {
   return (
@@ -38,8 +38,8 @@ export const BookListItem = ({ books }: { books: Book[] }) => {
               ) : null}
             </div>
           </div>
-        );
+        )
       })}
     </>
-  );
-};
+  )
+}

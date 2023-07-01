@@ -1,8 +1,8 @@
-"use client";
+"use client"
 
-import clsx from "clsx";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import clsx from "clsx"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
 
 const navItems = {
   "/": {
@@ -14,12 +14,12 @@ const navItems = {
   "/about": {
     name: "about",
   },
-};
+}
 
 export const Navigation = () => {
-  let pathname = usePathname() || "/";
+  let pathname = usePathname() || "/"
   if (pathname.includes("/blog/")) {
-    pathname = "/blog";
+    pathname = "/blog"
   }
 
   return (
@@ -31,7 +31,7 @@ export const Navigation = () => {
         >
           <div className="font-heading font-bold space-x-2 md:space-x-0 text-2xl sm:text-[40px] flex flex-row md:flex-col items-start relative px-0 pb-0 fade md:overflow-auto scroll-pr-6">
             {Object.entries(navItems).map(([path, { name }]) => {
-              const isActive = path == pathname;
+              const isActive = path == pathname
               return (
                 <Link
                   key={path}
@@ -40,16 +40,16 @@ export const Navigation = () => {
                     "transition-all hover:text-black/95 flex align-middle leading-extra-tight sm:leading-tight",
                     {
                       "text-black/60": !isActive,
-                    }
+                    },
                   )}
                 >
                   {name}
                 </Link>
-              );
+              )
             })}
           </div>
         </nav>
       </div>
     </aside>
-  );
-};
+  )
+}

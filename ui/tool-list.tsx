@@ -1,4 +1,4 @@
-import { Tool, ToolCard } from "./tool";
+import { Tool, ToolCard } from "./tool"
 
 export const ToolList = ({ items }: { items: Tool[] }) => {
   return (
@@ -12,8 +12,8 @@ export const ToolList = ({ items }: { items: Tool[] }) => {
             tags={i?.tags}
             link={i?.link}
           />
-        );
+        )
       })}
     </div>
-  );
-};
+  )
+}

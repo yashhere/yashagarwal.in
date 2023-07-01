@@ -1,5 +1,5 @@
-import clsx from "clsx";
-import React from "react";
+import clsx from "clsx"
+import React from "react"
 
 export const Aside = ({
   children,
@@ -7,10 +7,10 @@ export const Aside = ({
   styled = false,
   title,
 }: {
-  children: React.ReactNode;
-  position?: "left" | "right";
-  styled?: boolean;
-  title?: string;
+  children: React.ReactNode
+  position?: "left" | "right"
+  styled?: boolean
+  title?: string
 }) => {
   return (
     <div className="bg-black/10 px-2 py-2 rounded-md mt-2 mb-2">
@@ -26,5 +26,5 @@ export const Aside = ({
         {children}
       </div>
     </div>
-  );
-};
+  )
+}

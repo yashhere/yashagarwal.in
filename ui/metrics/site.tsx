@@ -1,25 +1,25 @@
-import { Metric } from "@/ui/metrics/metric";
+import { Metric } from "@/ui/metrics/metric"
 import {
   ArrowTrendingUpIcon,
   PencilSquareIcon,
-} from "@heroicons/react/24/solid";
-import { allPosts } from "contentlayer/generated";
-import { headers } from "next/headers";
-import { Suspense } from "react";
-import { LoadingMetric } from "./loading";
+} from "@heroicons/react/24/solid"
+import { allPosts } from "contentlayer/generated"
+import { headers } from "next/headers"
+import { Suspense } from "react"
+import { LoadingMetric } from "./loading"
 
 async function getTotalViews() {
-  const data = headers();
-  const protocol = data.get("x-forwarded-proto");
-  const host = data.get("host");
+  const data = headers()
+  const protocol = data.get("x-forwarded-proto")
+  const host = data.get("host")
 
-  const res = await fetch(`${protocol}://${host}/views`);
-  return res.json();
+  const res = await fetch(`${protocol}://${host}/views`)
+  return res.json()
 }
 
 export const SiteMetrics = async (): Promise<JSX.Element> => {
-  const data = await getTotalViews();
-  const count = allPosts.length;
+  const data = await getTotalViews()
+  const count = allPosts.length
 
   return (
     <>
@@ -43,5 +43,5 @@ export const SiteMetrics = async (): Promise<JSX.Element> => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}

@@ -1,16 +1,16 @@
-"use client";
+"use client"
 
-import React, { FC, ReactNode } from "react";
-import cx from "clsx";
-import Link from "next/link";
-import { ChevronUpIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
-import { FOCUS_VISIBLE_OUTLINE, LINK_STYLES } from "../lib/constants";
-import { motion } from "framer-motion";
-import { getSeries } from "@/lib/content";
+import React, { FC, ReactNode } from "react"
+import cx from "clsx"
+import Link from "next/link"
+import { ChevronUpIcon, ChevronDownIcon } from "@heroicons/react/24/outline"
+import { FOCUS_VISIBLE_OUTLINE, LINK_STYLES } from "../lib/constants"
+import { motion } from "framer-motion"
+import { getSeries } from "@/lib/content"
 
 type TitleProps = {
-  children?: ReactNode;
-};
+  children?: ReactNode
+}
 
 const Title: FC<TitleProps> = ({ children }) => {
   return (
@@ -18,19 +18,19 @@ const Title: FC<TitleProps> = ({ children }) => {
       <div className="text-sm font-heading text-black/50">series</div>
       <div className="text-lg font-bold">{children}</div>
     </div>
-  );
-};
+  )
+}
 
 export const Series = ({
   series,
   interactive,
 }: {
-  series: NonNullable<ReturnType<typeof getSeries>>;
-  interactive?: boolean;
-  current: string;
+  series: NonNullable<ReturnType<typeof getSeries>>
+  interactive?: boolean
+  current: string
 }) => {
-  const [isOpen, setIsOpen] = React.useState(!interactive);
-  const index = series.posts?.findIndex((post) => post?.isCurrent) + 1;
+  const [isOpen, setIsOpen] = React.useState(!interactive)
+  const index = series.posts?.findIndex((post) => post?.isCurrent) + 1
 
   return (
     <div className="rounded bg-black/10 p-5 shadow-surface-elevation-low lg:px-8 lg:py-7">
@@ -38,7 +38,7 @@ export const Series = ({
         <button
           className="group flex w-full items center text-left"
           onClick={() => {
-            setIsOpen(!isOpen);
+            setIsOpen(!isOpen)
           }}
         >
           <Title>
@@ -93,7 +93,7 @@ export const Series = ({
                     "before:bg-black/30":
                       post.status === "published" && !post.isCurrent,
                     "before:bg-black/10": post.status !== "published",
-                  }
+                  },
                 )}
               >
                 {post.status === "published" ? (
@@ -116,5 +116,5 @@ export const Series = ({
         </motion.div>
       )}
     </div>
-  );
-};
+  )
+}

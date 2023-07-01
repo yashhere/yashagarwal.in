@@ -1,16 +1,16 @@
 /* eslint-disable react/jsx-no-target-blank */
-import { FOCUS_VISIBLE_OUTLINE, LINK_STYLES } from "../lib/constants";
-import cx from "clsx";
-import type { ImageProps } from "next/image";
-import NextLink from "next/link";
-import React from "react";
-import { LoadingImage } from "./loading-image";
-import { Aside } from "./aside";
-import Link from "next/link";
-import { TbArrowUpRight } from "react-icons/tb";
+import { FOCUS_VISIBLE_OUTLINE, LINK_STYLES } from "../lib/constants"
+import cx from "clsx"
+import type { ImageProps } from "next/image"
+import NextLink from "next/link"
+import React from "react"
+import { LoadingImage } from "./loading-image"
+import { Aside } from "./aside"
+import Link from "next/link"
+import { TbArrowUpRight } from "react-icons/tb"
 
 const CustomLink = (props) => {
-  const href = props.href;
+  const href = props.href
 
   if (href.startsWith("/")) {
     return (
@@ -21,11 +21,11 @@ const CustomLink = (props) => {
       >
         {props.children}
       </Link>
-    );
+    )
   }
 
   if (href.startsWith("#")) {
-    return <a className={cx(LINK_STYLES, FOCUS_VISIBLE_OUTLINE)} {...props} />;
+    return <a className={cx(LINK_STYLES, FOCUS_VISIBLE_OUTLINE)} {...props} />
   }
 
   return (
@@ -38,8 +38,8 @@ const CustomLink = (props) => {
       {props.children}
       <TbArrowUpRight className="inline h-5 w-5" />
     </a>
-  );
-};
+  )
+}
 
 export const components = {
   Aside,
@@ -84,9 +84,9 @@ export const components = {
     caption,
     ...props
   }: {
-    children: React.ReactNode;
-    bleed?: boolean;
-    caption?: string;
+    children: React.ReactNode
+    bleed?: boolean
+    caption?: string
   } & ImageProps) => {
     return (
       <>
@@ -101,7 +101,7 @@ export const components = {
           <div className="mt-2 text-sm italic text-rose-100/60">{caption}</div>
         ) : null}
       </>
-    );
+    )
   },
   blockquote: (props: any) => (
     <blockquote
@@ -119,4 +119,4 @@ export const components = {
   tr: (props: any) => <tr className="border" {...props} />,
   th: (props: any) => <th scope="col" className="border" {...props} />,
   td: (props: any) => <td className="border" {...props} />,
-};
+}

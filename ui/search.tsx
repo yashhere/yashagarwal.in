@@ -1,12 +1,12 @@
-import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
-import { ChangeEvent } from "react";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/solid"
+import { ChangeEvent } from "react"
 
 export const SearchInput = ({
   search,
   onChange,
 }: {
-  search: string;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  search: string
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void
 }) => {
   return (
     <>
@@ -26,5 +26,5 @@ export const SearchInput = ({
         </div>
       </form>
     </>
-  );
-};
+  )
+}

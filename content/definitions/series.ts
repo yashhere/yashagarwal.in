@@ -1,5 +1,5 @@
-import { defineNestedType } from "contentlayer/source-files";
-import { Post } from "./post";
+import { defineNestedType } from "contentlayer/source-files"
+import { Post } from "./post"
 
 export const Series = defineNestedType(() => ({
   name: "Series",
@@ -13,4 +13,4 @@ export const Series = defineNestedType(() => ({
       required: true,
     },
   },
-}));
+}))

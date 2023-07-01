@@ -9,7 +9,7 @@ const Page = () => {
         shows up 🙂
       </p>
     </>
-  );
-};
+  )
+}
 
-export default Page;
+export default Page

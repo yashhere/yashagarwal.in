@@ -1,8 +1,8 @@
-import moment from "moment";
-import Link from "next/link";
-import { FC } from "react";
+import moment from "moment"
+import Link from "next/link"
+import { FC } from "react"
 
-import { BsGithub, BsLinkedin, BsTwitter } from "react-icons/bs";
+import { BsGithub, BsLinkedin, BsTwitter } from "react-icons/bs"
 
 const Socials = [
   {
@@ -20,7 +20,7 @@ const Socials = [
     url: "https://twitter.com/yash__here",
     icon: BsTwitter,
   },
-];
+]
 
 export const Footer: FC = () => {
   return (
@@ -48,7 +48,7 @@ export const Footer: FC = () => {
                 <a href={s.url} key={s.name}>
                   <s.icon className="text-black/70 w-6 h-6 hover:text-black" />
                 </a>
-              );
+              )
             })}
           </div>
         </div>
@@ -60,5 +60,5 @@ export const Footer: FC = () => {
         </div>
       </div>
     </footer>
-  );
-};
+  )
+}

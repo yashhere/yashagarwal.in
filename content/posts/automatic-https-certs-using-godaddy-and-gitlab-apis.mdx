@@ -10,11 +10,12 @@ Before I start, here is some technical information about my website -
 - The domain name registrar is GoDaddy.
 - Let's Encrypt as the TLS certificate provider for my domain name.
 
-Let's Encrypt provides certificates for 90 days only, so I was forced to set up the `certbot` every three months, then generate the certificate and *manually* deploy the certificates to GitLab. It was frustrating because in three months, my shell probably will not remember the command I used last time, and I was too lazy to document the process somewhere.
+Let's Encrypt provides certificates for 90 days only, so I was forced to set up the `certbot` every three months, then generate the certificate and _manually_ deploy the certificates to GitLab. It was frustrating because in three months, my shell probably will not remember the command I used last time, and I was too lazy to document the process somewhere.
 
 Then I came across a [project](https://github.com/pallavagarwal07/NamesiloCert), which was trying to do a similar thing with other domain name registrar. I thought that this is an excellent setup to adapt and modify it to suit my needs. So I decided to write my module for automatic deployment of Let's Encrypt certificates to GitLab.
 
 ## How does Let's Encrypt work?
+
 Before Let's Encrypt can generate the certificate for the domain, it requires the user to prove domain ownership. Let's Encrypt provides two [methods](https://letsencrypt.org/docs/challenge-types/) to do this task -
 
 - Updating the DNS records of the domain registrar (DNS-01 challenge)
@@ -25,6 +26,7 @@ Using the second method requires me to add a file on my website, and I did not w
 The first method requires that the domain configuration on the domain registrar is modified. GoDaddy provides a robust API, and it is not difficult to utilize that API to automate specific tasks. The probability of changing the registrar is quite low, at least for the next few years. It will be easier to generate the certificates for any subdomains, as all the subdomains will also be hosted under the same domain registrar.
 
 ## How does the tool work?
+
 So here are the steps:
 
 1. Call `certbot` with all the domain names
@@ -66,8 +68,8 @@ certbot --help
 
 The `--manual-auth-hook` flag is worth looking. This hook provides a mechanism to specify the executable, which can be used to facilitate domain ownership validation. In this case, the hook points to a script `auth_hook.sh`, which then calls a Go client, which interacts with GoDaddy API.
 
-
 ### Step 2: Adding DNS entry to GoDaddy DNS manager
+
 Certbot supplies two environment variables `CERTBOT_DOMAIN`, which contains the domain name to be verified and `CERTBOT_VALIDATION`, which includes a random string corresponding to `_acme-challenge TXT` entry. What this means is that, if I have
 
 ```text
@@ -82,9 +84,11 @@ The `auth_hook.sh` file calls the Go client with the abovementioned environment 
 Once all the DNS entries are added, the `auth_hook.sh` script will sleep for 10 minutes. It is to allow DNS changes to propagate throughout the Internet. It is a random duration as I could not find any GoDaddy support page mentioning the exact period used by them.
 
 ### Step 3: Generation of certificates
-Once the `auth_hook.sh` script returns successfully, `certbot` will verify the DNS records. If the verification is successful, `certbot` will generate the certificates in `./generated/config/live/{CERTBOT_DOMAIN}` directory. 
+
+Once the `auth_hook.sh` script returns successfully, `certbot` will verify the DNS records. If the verification is successful, `certbot` will generate the certificates in `./generated/config/live/{CERTBOT_DOMAIN}` directory.
 
 ### Step 4: Deploying the certificates to GitLab
+
 I use the following command to deploy the certificates to Gitlab pages where my website is hosted -
 
 ```bash
@@ -104,6 +108,7 @@ key_dir="./generated/config/live/yashagarwal.in"
 Moreover, `GITLAB_TOKEN` is an environment variable that contains the API token generated from the Gitlab settings page.
 
 ## Automatic Deployment using Travis CI
+
 It is not automation if I have to run this script manually every three months. So I created a Travis CI job to automate this process. The job will run every month and deploy my certificates automatically. It has been four months, and I have not faced any issues with this setup.
 
 The code for this post can be viewed at [Github](https://github.com/yashhere/GoDaddy-GitLab-Certs).

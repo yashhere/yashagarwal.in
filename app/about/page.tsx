@@ -1,11 +1,11 @@
-import { Metadata } from "next";
-import Link from "next/link";
-import { FC } from "react";
+import { Metadata } from "next"
+import Link from "next/link"
+import { FC } from "react"
 
 export const metadata: Metadata = {
   title: "About Me | Yash Agarwal",
   description: "Learn about me and what I do.",
-};
+}
 
 const Page: FC = () => {
   return (
@@ -38,7 +38,7 @@ const Page: FC = () => {
         </p>
       </section>
     </>
-  );
-};
+  )
+}
 
-export default Page;
+export default Page

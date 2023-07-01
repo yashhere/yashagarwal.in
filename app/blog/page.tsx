@@ -1,20 +1,22 @@
-import { BlogPostList } from "@/ui/post/blog-list";
-import { allPosts } from "contentlayer/generated";
-import { compareDesc } from "date-fns";
-import { Metadata } from "next";
+import { BlogPostList } from "@/ui/post/blog-list"
+import { allPosts } from "contentlayer/generated"
+import { compareDesc } from "date-fns"
+import { Metadata } from "next"
 
 export const metadata: Metadata = {
   title: "Writing | Yash Agarwal",
   description:
     "Search through the thoughts I have dumped in this vast ocean of knowledge.",
-};
+}
 
 const Page = () => {
   const posts = allPosts
     .filter((p) => p.status === "published")
     .sort((a, b) => {
-      return compareDesc(new Date(a.published), new Date(b.published));
-    });
+      return compareDesc(new Date(a.published), new Date(b.published))
+    })
+
+  console.log("YASH: inside blog page")
 
   return (
     <>
@@ -31,7 +33,7 @@ const Page = () => {
       </section>
       <BlogPostList posts={posts} />
     </>
-  );
-};
+  )
+}
 
-export default Page;
+export default Page
