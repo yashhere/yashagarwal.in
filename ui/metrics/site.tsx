@@ -1,4 +1,3 @@
-import { Metric } from "@/ui/metrics/metric"
 import {
   ArrowTrendingUpIcon,
   PencilSquareIcon,
@@ -7,18 +6,11 @@ import { allPosts } from "contentlayer/generated"
 import { headers } from "next/headers"
 import { Suspense } from "react"
 import { LoadingMetric } from "./loading"
-
-async function getTotalViews() {
-  const data = headers()
-  const protocol = data.get("x-forwarded-proto")
-  const host = data.get("host")
-
-  const res = await fetch(`${protocol}://${host}/views`)
-  return res.json()
-}
+import { getTotalViews } from "@/lib/db"
+import { Metric } from "./metric"
 
 export const SiteMetrics = async (): Promise<JSX.Element> => {
-  const data = await getTotalViews()
+  const data = Number((await getTotalViews()).total_views || 0)
   const count = allPosts.length
 
   return (
@@ -27,7 +19,7 @@ export const SiteMetrics = async (): Promise<JSX.Element> => {
         <ArrowTrendingUpIcon className="w-5" />
         <div className="flex space-x-1">
           <Suspense fallback={<LoadingMetric />}>
-            <Metric stat={data as number} />
+            <Metric stat={data} />
           </Suspense>
           <p>views</p>
         </div>

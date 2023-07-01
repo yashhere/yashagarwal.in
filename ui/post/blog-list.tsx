@@ -15,7 +15,16 @@ export const PostListLoading = ({ posts }: { posts: Post[] }) => {
     </>
   )
 }
-export const BlogPostList = ({ posts }: { posts: Post[] }) => {
+export const BlogPostList = ({
+  posts,
+  allViews,
+}: {
+  posts: Post[]
+  allViews: {
+    slug: string
+    views: number
+  }[]
+}) => {
   const [search, setSearch] = useState("")
 
   const [results, setResults] = useState(posts)
@@ -40,7 +49,7 @@ export const BlogPostList = ({ posts }: { posts: Post[] }) => {
       </div>
       <section className="w-full space-y-5">
         <Suspense fallback={<PostListLoading posts={posts} />}>
-          <PostList posts={results} />
+          <PostList allViews={allViews} posts={results} />
         </Suspense>
       </section>
     </div>

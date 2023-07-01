@@ -6,7 +6,7 @@ import { NextResponse } from "next/server"
 export async function GET(req: NextRequest) {
   try {
     const data = await db
-      .selectFrom("stats")
+      .selectFrom("Stats")
       .select(["slug", "views"])
       .orderBy("views", "desc")
       .limit(3)

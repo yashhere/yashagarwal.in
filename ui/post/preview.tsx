@@ -2,13 +2,18 @@ import { getPost } from "@/lib/content"
 import moment from "moment"
 import Link from "next/link"
 import { Suspense } from "react"
-import { Metrics } from "../metrics"
+import { ViewCounter } from "../view-counter"
 import { PostPreviewLoading } from "./loading"
 
 export const PostPreview = ({
   post,
+  allViews,
 }: {
   post: NonNullable<ReturnType<typeof getPost>>
+  allViews: {
+    slug: string
+    views: number
+  }[]
 }) => {
   return (
     <>
@@ -25,7 +30,11 @@ export const PostPreview = ({
                   {moment(post.published, "YYYY-MM-DD").format("MMM DD, YYYY")}
                 </p>
                 <p>&middot;</p>
-                <Metrics slug={post.slug} track={false} />
+                <ViewCounter
+                  slug={post.slug}
+                  allViews={allViews}
+                  track={false}
+                />
               </div>
             </div>
           </div>

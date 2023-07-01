@@ -1,22 +1,11 @@
+import { getTotalViews } from "@/lib/db"
 import { ArrowTrendingUpIcon, PencilIcon } from "@heroicons/react/24/solid"
 import { allPosts } from "contentlayer/generated"
-import { headers } from "next/headers"
 import { Suspense } from "react"
 
-async function getTotalViews(): Promise<number> {
-  const data = headers()
-  const protocol = data.get("x-forwarded-proto")
-  const host = data.get("host")
-
-  const res = await fetch(`${protocol}://${host}/views`, {
-    cache: "reload",
-  })
-  return res.json()
-}
-
 const Page = async () => {
-  // const totalViews = await getTotalViews();
-  const totalViews = 0
+  const data = await getTotalViews()
+  const totalViews = !data.total_views ? 0 : Number(data[0].total_views)
   const totalPosts = allPosts.filter((p) => p.status != "draft").length
 
   return (

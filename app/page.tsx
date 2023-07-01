@@ -9,8 +9,8 @@ export const metadata: Metadata = {
   description: "My nest on the Internet",
 }
 
-const Page = () => {
-  console.log("YASH: inside root page")
+export default async function Page() {
+  console.log("YASH: in root page")
   return (
     <>
       <section className="flex flex-col justify-start">
@@ -30,22 +30,20 @@ const Page = () => {
       </section>
       <section className="flex flex-col justify-start mt-8">
         {/* TODO: debug this. Shall I use 'use client' here? */}
-        {/* <h3 className="font-bold font-heading text-xl text-black/60 pb-4">
+        <h3 className="font-bold font-heading text-xl text-black/60 pb-4">
           Trending Article
-        </h3> */}
-        {/* TODO: Add a @ts-expect-error Async Server Component */}
-        {/* <FeaturedPost /> */}
-        {/* <Link
+        </h3>
+        {/* @ts-expect-error Async Server Component */}
+        <FeaturedPost />
+        <Link
           href="/blog"
           className=" text-black/60 transition-all fade hover:text-black/95"
         >
           <p className="font-semibold flex">
             All Posts <ArrowRightIcon className="w-4" />
           </p>
-        </Link> */}
+        </Link>
       </section>
     </>
   )
 }
-
-export default Page

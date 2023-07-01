@@ -8,19 +8,21 @@ datasource db {
   relationMode         = "prisma"
 }
 
-generator client {
-  provider        = "prisma-client-js"
+generator kysely {
+  provider = "prisma-kysely"
+  output = "../lib"
+  fileName = "db_types.ts"
+  readOnlyIds = true
 }
 
 model Stats {
-  id        String    @id @default(cuid())
   slug      String    @unique
-  likes     Int       @default(0)
   views     Int       @default(0)
+  likes     Int       @default(0)
 }
 
 model Session {
-  id        String   @id
-  createdAt DateTime @default(now())
-  likes     Int      @default(0)
+  id        Int       @id
+  createdAt DateTime  @default(now())
+  likes     Int       @default(0)
 }
