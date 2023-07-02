@@ -7,10 +7,13 @@ import { Post, allPosts } from "contentlayer/generated"
 
 export const db = new Kysely<DB>({
   dialect: new PlanetScaleDialect({
-    url: process.env.DATABASE_URL,
-    username: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD,
-    host: process.env.DB_HOST,
+    // url: process.env.DATABASE_URL,
+    // username: process.env.DB_USERNAME,
+    // password: process.env.DB_PASSWORD,
+    // host: process.env.DB_HOST,
+    username: "puy0lexbhfb5ynfwo6et",
+    password: "pscale_pw_QH6KgT0INLR4jILsrVIJ2Il9fbV7qNDNr6SrQgtsebX",
+    host: "aws.connect.psdb.cloud",
   }),
 })
 

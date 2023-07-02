@@ -2,6 +2,7 @@ import {
   defineDocumentType,
   defineComputedFields,
 } from "contentlayer/source-files"
+import readingTime from "reading-time"
 import { Series } from "./series"
 import { Tag } from "./tag"
 import GithubSlugger from "github-slugger"
@@ -11,6 +12,10 @@ const computedFields = defineComputedFields<"Post">({
   slug: {
     type: "string",
     resolve: (doc) => doc._raw.sourceFileName.replace(/\.mdx$/, ""),
+  },
+  readingTime: {
+    type: "json",
+    resolve: (doc) => readingTime(doc.body.raw),
   },
   headings: {
     type: "json",

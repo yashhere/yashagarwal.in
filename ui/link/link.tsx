@@ -10,6 +10,7 @@ import {
 } from "react"
 import { TbArrowUpRight } from "react-icons/tb"
 import Link from "next/link"
+import { FOCUS_VISIBLE_OUTLINE, LINK_STYLES } from "@/lib/constants"
 
 interface ExternalLinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
   href: string
@@ -38,7 +39,6 @@ const ExternalLink = forwardRef<HTMLAnchorElement, ExternalLinkProps>(
     ref,
   ): JSX.Element => {
     const isInternalLink = href.startsWith("/") || href.startsWith("#")
-
     const isGradientUnderline = gradientUnderline
       ? true
       : (typeof children === "string" || typeof children === "undefined") &&
@@ -74,7 +74,9 @@ const ExternalLink = forwardRef<HTMLAnchorElement, ExternalLinkProps>(
             {...otherProps}
           >
             {icon &&
-              cloneElement(icon as ReactElement, { className: "h-4 w-4 mr-1" })}
+              cloneElement(icon as ReactElement, {
+                className: "h-4 w-4 mr-1",
+              })}
             {noExternalLinkIcon ? children : <span>{children}</span>}{" "}
             {!noExternalLinkIcon && <TbArrowUpRight className="h-4 w-4" />}
           </a>

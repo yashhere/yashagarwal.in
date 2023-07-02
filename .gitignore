@@ -36,4 +36,8 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# contentlayer
 .contentlayer
+
+# RSS
+public/rss.xml

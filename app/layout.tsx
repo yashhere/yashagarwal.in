@@ -63,6 +63,12 @@ const metadata: Metadata = {
   verification: {
     google: "",
   },
+  alternates: {
+    canonical: "https://yashagarwal.in",
+    types: {
+      "application/rss+xml": [{ url: "rss.xml", title: "rss" }],
+    },
+  },
 }
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
