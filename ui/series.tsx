@@ -88,7 +88,7 @@ export const Series = ({
                 className={cx(
                   "relative my-3 pl-7 before:absolute before:left-1 before:top-[9px] before:h-1.5 before:w-1.5 before:rounded-full",
                   {
-                    "before:bg-black/90 before:ring-[3px] before:ring-yellow-300/20 before:ring-offset-1 before:ring-offset-white/10":
+                    "before:bg-black/90 before:ring-[3px] before:ring-light-yellow-300/20 before:ring-offset-1 before:ring-offset-white/10":
                       post.isCurrent,
                     "before:bg-black/30":
                       post.status === "published" && !post.isCurrent,

@@ -14,7 +14,7 @@ const Page: FC = () => {
         About Me
       </h1>
       <section className="space-y-4 text-black/80 font-medium">
-        <blockquote className="border-l-2 border-purple/50 bg-purple/40 rounded-md pl-4 py-2 italic text-md">
+        <blockquote className="border-l-4 border-primary/50 bg-primary/40 rounded-md pl-4 py-2 italic text-md">
           <p>
             Great minds discuss ideas; average minds discuss events; small minds
             discuss people.

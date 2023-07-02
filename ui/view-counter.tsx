@@ -3,6 +3,7 @@ import { Suspense, useEffect } from "react"
 import { LoadingDots } from "./loading"
 import { Metric } from "./metrics/metric"
 import { incrementSlugViews } from "@/lib/db"
+// import { LoadingDots } from "./loading-dots"
 
 export function ViewCounter({
   slug,

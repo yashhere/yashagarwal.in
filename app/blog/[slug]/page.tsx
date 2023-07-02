@@ -1,5 +1,5 @@
 import { getPost, getSeries } from "@/lib/content"
-import { components } from "@/ui/mdx"
+import CustomMDXComponents, { components } from "@/ui/mdx"
 import { TableOfContents } from "@/ui/post/table-of-contents"
 import { Series } from "@/ui/series"
 import { ViewCounter } from "@/ui/view-counter"
@@ -8,6 +8,8 @@ import moment from "moment"
 import { getMDXComponent } from "next-contentlayer/hooks"
 import { Suspense } from "react"
 import { getAllViewsCount } from "@/lib/db"
+import { LoadingDots } from "@/ui/loading"
+import { LikeButton2 } from "@/ui/like-button"
 
 export async function generateMetadata({ params }) {
   const post = await getPost(params.slug)
@@ -65,9 +67,13 @@ export default async function Page({ params }: { params: { slug: string } }) {
           ) : null}
 
           {/* Post Content */}
-          <div className="space-y-4 font-medium text-black/80 [&_h1,h2,h3,h4]:text-black">
-            <Content components={components} />
+          <div className="prose md:prose-lg lg:prose-xl leading-7">
+            <Content components={CustomMDXComponents} />
           </div>
+
+          {/* <div className="mt-16">
+            <LikeButton2 slug={post.slug} />
+          </div> */}
         </Suspense>
       </div>
     </>

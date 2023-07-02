@@ -2,29 +2,22 @@ import "../styles/globals.css"
 
 import { Metadata } from "next"
 import localFont from "next/font/local"
-import { Inter, Fira_Code, Gentium_Plus } from "next/font/google"
+import { Inter, Fira_Code, Gentium_Plus, EB_Garamond } from "next/font/google"
 import { Analytics } from "@vercel/analytics/react"
 
 import { Navigation } from "@/ui/layout/navigation"
 import { Footer } from "@/ui/layout/footer"
 import clsx from "clsx"
 
-const bodyFont = Inter({
-  display: "swap",
-  variable: "--font-inter",
-  subsets: ["cyrillic"],
-})
-
-const headingFont = Gentium_Plus({
-  display: "swap",
-  variable: "--font-gentium_plus",
-  subsets: ["latin"],
-  weight: "700",
+const bodyFont = localFont({
+  src: "../public/assets/fonts/wotfard.ttf",
+  variable: "--font-body",
+  // weight: "400 900",
 })
 
 const monoFont = Fira_Code({
   display: "swap",
-  variable: "--font-fira-code",
+  variable: "--font-mono",
   subsets: ["cyrillic"],
 })
 
@@ -73,14 +66,12 @@ const metadata: Metadata = {
 }
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
-  console.log("YASH: inside root layout")
   return (
     <html
       lang="en"
       className={clsx(
         "bg-white text-black dark:text-white dark:bg-[#111010]",
         bodyFont.variable,
-        headingFont.variable,
         monoFont.variable,
       )}
     >

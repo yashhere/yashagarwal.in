@@ -5,7 +5,7 @@ type TagListProps = {
   tags: string[]
 }
 
-const gradients = ["from-purple to-blue", "from-blue to-purple"]
+const gradients = ["from-purple to-primary", "from-primary to-purple"]
 
 let count = 0
 
