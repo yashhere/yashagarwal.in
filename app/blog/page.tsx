@@ -11,15 +11,12 @@ export const metadata: Metadata = {
 }
 
 export default async function Page() {
+  const allViews = await getAllViewsCount()
   const posts = allPosts
     .filter((p) => p.status === "published")
     .sort((a, b) => {
       return compareDesc(new Date(a.published), new Date(b.published))
     })
-
-  console.log("Got all posts")
-  const allViews = await getAllViewsCount()
-  console.log("Got all views")
 
   return (
     <>
@@ -27,7 +24,7 @@ export default async function Page() {
         <h1 className="text-5xl lg:text-[96px] font-heading font-bold leading-extra-tight pb-8">
           Blog
         </h1>
-        <p className="text-black/80">
+        <p className="text-black/80 text-lg">
           I&apos;ve written {posts?.length} articles since I started this blog
           in November 2022. My writing isn&apos;t just related to coding. I also
           try to write about the tricks I&apos;ve learned to manage my ADHD and

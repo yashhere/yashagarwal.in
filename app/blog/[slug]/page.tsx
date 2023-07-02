@@ -35,18 +35,20 @@ export default async function Page({ params }: { params: { slug: string } }) {
   const post: NonNullable<ReturnType<typeof getPost>> = getPost(slug)
   const Content = getMDXComponent(post.body.code)
   const allViews = await getAllViewsCount()
-  console.log("YASH: allViews = ", allViews)
+
   return (
     <>
-      <div className="space-y-2">
+      <div className="space-y-4">
         <section>
-          <h1 className="font-bold font-heading text-5xl sm:text-[72px] leading-extra-tight relative max-w-4xl pb-2">
+          <h1 className="font-bold font-heading text-5xl sm:text-6xl leading-none relative max-w-4xl pb-2">
             {post.title}
           </h1>
-          <div className="mt-2 flex space-x-1 text-xs text-black/60 sm:text-lg font-body font-semibold">
+          <div className="mt-2 flex space-x-2 text-md text-black/70 sm:text-lg font-body font-semibold">
             <p>{moment(post.published).format("MMM DD, YYYY")}</p>
             <p>&middot;</p>
             <ViewCounter slug={slug} allViews={allViews} track={true} />
+            <p>&middot;</p>
+            <p>45 likes</p>
           </div>
         </section>
 
@@ -67,8 +69,10 @@ export default async function Page({ params }: { params: { slug: string } }) {
           ) : null}
 
           {/* Post Content */}
-          <div className="prose md:prose-lg lg:prose-xl leading-7">
-            <Content components={CustomMDXComponents} />
+          <div className="pt-8">
+            <div className="prose text-black md:prose-lg lg:prose-xl leading-7">
+              <Content components={CustomMDXComponents} />
+            </div>
           </div>
 
           {/* <div className="mt-16">

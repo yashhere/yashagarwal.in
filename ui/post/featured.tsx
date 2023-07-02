@@ -1,26 +1,14 @@
 import { headers } from "next/headers"
-import Link from "next/link"
-
 import { ViewCounter } from "@/ui/view-counter"
 import { Post } from "contentlayer/generated"
 import moment from "moment"
 import { Suspense } from "react"
 import { PostPreviewLoading } from "./loading"
 import { getAllViewsCount, getTopPosts } from "@/lib/db"
+import Link from "../link/link"
 
-async function getFeaturedPost(): Promise<Post> {
-  const data = headers()
-  const protocol = data.get("x-forwarded-proto")
-  const host = data.get("host")
-
-  const res = await fetch(`${protocol}://${host}/best`, {
-    cache: "reload",
-  })
-  return res.json()
-}
-
-export async function FeaturedPost() {
-  const data = await getTopPosts(5)
+export async function TopPosts() {
+  const data = await getTopPosts(3)
   const allViews = await getAllViewsCount()
 
   return (
@@ -30,21 +18,24 @@ export async function FeaturedPost() {
           <Suspense key={post.slug} fallback={<PostPreviewLoading />}>
             <Link
               href={`/blog/${post.slug}`}
-              className="[&_h4]:hover:underline transform hover:scale-[1.02] transition-all"
+              className="[&_h4]:hover:text-primary-300 transition-all"
             >
-              <div className="flex flex-col bg-white rounded-lg justify-between h-full">
-                <div className="tracking-tight mb-6">
-                  <h4 className="w-full text-xl font-bold font-heading">
+              <div className="flex flex-col rounded-lg justify-between h-full">
+                <div className="mb-6">
+                  <h4 className="w-full text-lg font-bold font-heading">
                     {post.title}
                   </h4>
-                  <div className="text-black/80 text-sm flex font-semibold space-x-2">
-                    <p>{moment(post.published).format("MMM DD, YYYY")}</p>
+                  <div className="text-black/60 text-md flex font-semibold space-x-2">
+                    <p>{moment(post.published).fromNow()}</p>
                     <p>&middot;</p>
                     <ViewCounter
                       slug={post.slug as string}
                       allViews={allViews}
                       track={false}
                     />
+                    <p>&middot;</p>
+                    {/* TODO: Add LikeCounter */}
+                    <p>45 likes</p>
                   </div>
                 </div>
               </div>
