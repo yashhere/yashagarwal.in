@@ -10,7 +10,7 @@
     "staged": "lint-staged",
     "prepare": "husky install",
     "generate": "prisma generate",
-    "postinstall": "prisma generate && yarn rss",
+    "postinstall": "prisma generate",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "copy-shiki": "cp node_modules/shiki/languages/* shiki/languages && cp node_modules/shiki/themes/* shiki/themes",
     "rss": "node scripts/rss.mjs"
