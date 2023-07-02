@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "yarn copy-shiki && next dev",
-    "build": "yarn copy-shiki && yarn rss && next build",
+    "build": "yarn copy-shiki && next build && yarn rss",
     "start": "next start",
     "lint": "next lint --fix",
     "staged": "lint-staged",

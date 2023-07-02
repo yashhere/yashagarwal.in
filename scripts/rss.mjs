@@ -1,6 +1,13 @@
-import { writeFileSync } from "fs"
+import fs from "fs"
+import path from "path"
 import RSS from "rss"
-import { allPosts } from "../.contentlayer/generated/index.mjs"
+
+const loadJSON = (path) =>
+  JSON.parse(fs.readFileSync(new URL(path, import.meta.url)))
+
+const allPosts = loadJSON(
+  path.join(process.cwd(), ".contentlayer/generated/Post/_index.json"),
+)
 
 const feed = new RSS({
   title: "My Blogs",
