@@ -24,12 +24,14 @@ export default async function Page() {
         <h1 className="text-5xl lg:text-[96px] font-heading font-bold leading-extra-tight pb-8">
           Blog
         </h1>
-        <p className="text-black/80 text-lg">
-          I&apos;ve written {posts?.length} articles since I started this blog
-          in November 2022. My writing isn&apos;t just related to coding. I also
-          try to write about the tricks I&apos;ve learned to manage my ADHD and
-          psoriatic arthritis to (sorta) function as an adult.
-        </p>
+        <div className="text-black/80 text-lg">
+          <p>
+            Since April 2016, I&apos;ve penned 47 captivating articles across
+            diverse categories. From tech knowledge and life updates to year
+            reviews and travelogues, there&apos;s a little something on every
+            topic.
+          </p>
+        </div>
       </section>
       <BlogPostList allViews={allViews} posts={posts} />
     </>
