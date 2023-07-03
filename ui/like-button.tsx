@@ -1,10 +1,12 @@
 "use client"
 
-import { FOCUS_VISIBLE_OUTLINE } from "@/lib/constants"
+import React from "react"
 // import { usePostLikes } from "@/lib/usePostLikes"
 import HeartIcon from "@heroicons/react/24/solid/HeartIcon"
-import cx from "clsx"
-import React from "react"
+
+import { FOCUS_VISIBLE_OUTLINE } from "@/lib/constants"
+import { cn } from "@/lib/utils"
+
 import { LoadingDots } from "./loading-dots"
 
 const emojis = ["👍", "🙏", "🥰"]
@@ -47,7 +49,7 @@ export const LikeButton2 = ({ slug }: { slug: string }) => {
         })}
 
         <button
-          className={cx(
+          className={cn(
             "shadow-lgx group relative block transform overflow-hidden rounded-lg bg-gradient-to-tl from-red/5 to-red/30 p-1 transition-all duration-300 ease-out hover:scale-[1.2] hover:rounded-[10px] active:scale-100 active:rounded-lg",
             FOCUS_VISIBLE_OUTLINE,
             {
@@ -59,7 +61,7 @@ export const LikeButton2 = ({ slug }: { slug: string }) => {
           onClick={handleClick}
         >
           <div
-            className={cx(
+            className={cn(
               "absolute inset-0 transform-gpu bg-gradient-to-tl from-purple-500 to-rose-400 transition-transform",
               {
                 "translate-y-8": currentUserLikes === 0,

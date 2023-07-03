@@ -1,11 +1,11 @@
-[*.{ts,tsx}]
-indent_size = 2
-indent_style = space
-trim_trailing_whitespace = true
-max_line_length = 80
+# editorconfig.org
+root = true
 
-[*.{md, mdx}]
+[*]
+charset = utf-8
+end_of_line = lf
 indent_size = 2
 indent_style = space
+insert_final_newline = true
 trim_trailing_whitespace = true
 max_line_length = 80

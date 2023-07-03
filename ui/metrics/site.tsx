@@ -1,12 +1,14 @@
+import { Suspense } from "react"
+import { headers } from "next/headers"
 import {
   ArrowTrendingUpIcon,
   PencilSquareIcon,
 } from "@heroicons/react/24/solid"
 import { allPosts } from "contentlayer/generated"
-import { headers } from "next/headers"
-import { Suspense } from "react"
-import { LoadingMetric } from "./loading"
+
 import { getTotalViews } from "@/lib/db"
+
+import { LoadingMetric } from "./loading"
 import { Metric } from "./metric"
 
 export const SiteMetrics = async (): Promise<JSX.Element> => {

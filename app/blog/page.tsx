@@ -1,8 +1,9 @@
-import { getAllViewsCount } from "@/lib/db"
+import { Metadata } from "next"
 import { BlogPostList } from "@/ui/post/blog-list"
 import { allPosts } from "contentlayer/generated"
 import { compareDesc } from "date-fns"
-import { Metadata } from "next"
+
+import { getAllViewsCount } from "@/lib/db"
 
 export const metadata: Metadata = {
   title: "Writing | Yash Agarwal",
@@ -21,10 +22,10 @@ export default async function Page() {
   return (
     <>
       <section className="pb-8">
-        <h1 className="text-5xl lg:text-[96px] font-heading font-bold leading-extra-tight pb-8">
+        <h1 className="leading-extra-tight pb-8 font-heading text-5xl font-bold lg:text-[96px]">
           Blog
         </h1>
-        <div className="text-black/80 text-lg">
+        <div className="text-lg text-black/80">
           <p>
             Since April 2016, I&apos;ve penned 47 captivating articles across
             diverse categories. From tech knowledge and life updates to year

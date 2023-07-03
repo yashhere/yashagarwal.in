@@ -1,7 +1,7 @@
 const Loading = () => {
   return (
     <>
-      <div className="flex flex-row w-full justify-center">
+      <div className="flex w-full flex-row justify-center">
         <div aria-label="Loading..." role="status" className="py-48">
           <svg
             className="h-8 w-8 animate-spin stroke-gray-500"

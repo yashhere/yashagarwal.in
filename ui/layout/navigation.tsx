@@ -1,8 +1,9 @@
 "use client"
 
-import clsx from "clsx"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+
+import { cn } from "@/lib/utils"
 
 const navItems = {
   "/": {
@@ -36,7 +37,7 @@ export const Navigation = () => {
                 <Link
                   key={path}
                   href={path}
-                  className={clsx(
+                  className={cn(
                     "transition-all hover:text-black/95 flex align-middle leading-extra-tight sm:leading-tight",
                     {
                       "text-black/60": !isActive,

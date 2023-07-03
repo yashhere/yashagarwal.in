@@ -1,16 +1,20 @@
 // import 'server-only' not working with API routes yet
+import { cache } from "react"
+import { allPosts, Post } from "contentlayer/generated"
 import { Kysely } from "kysely"
 import { PlanetScaleDialect } from "kysely-planetscale"
+
 import { DB } from "./db_types"
-import { cache } from "react"
-import { Post, allPosts } from "contentlayer/generated"
 
 export const db = new Kysely<DB>({
   dialect: new PlanetScaleDialect({
     // url: process.env.DATABASE_URL,
-    username: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD,
-    host: process.env.DB_HOST,
+    // username: process.env.DB_USERNAME,
+    // password: process.env.DB_PASSWORD,
+    // host: process.env.DB_HOST,
+    username: "43zdhtnaxvy8ghmy9lrk",
+    password: "pscale_pw_GEleC4PXtNZchxlWJR72JzDVATzjPtxxWJ1kXu5i0Jg",
+    host: "aws.connect.psdb.cloud",
   }),
 })
 

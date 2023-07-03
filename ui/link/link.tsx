@@ -1,6 +1,5 @@
 "use client"
 
-import cx from "classnames"
 import {
   AnchorHTMLAttributes,
   cloneElement,
@@ -8,9 +7,11 @@ import {
   ReactElement,
   ReactNode,
 } from "react"
-import { TbArrowUpRight } from "react-icons/tb"
 import Link from "next/link"
+import { TbArrowUpRight } from "react-icons/tb"
+
 import { FOCUS_VISIBLE_OUTLINE, LINK_STYLES } from "@/lib/constants"
+import { cn } from "@/lib/utils"
 
 interface ExternalLinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
   href: string
@@ -51,7 +52,7 @@ const ExternalLink = forwardRef<HTMLAnchorElement, ExternalLinkProps>(
         {isInternalLink ? (
           <Link
             href={href}
-            className={cx("transition duration-200", className)}
+            className={cn("transition duration-200", className)}
             ref={ref}
             {...otherProps}
           >
@@ -60,7 +61,7 @@ const ExternalLink = forwardRef<HTMLAnchorElement, ExternalLinkProps>(
         ) : (
           <a
             href={href}
-            className={cx(
+            className={cn(
               "mr-1 inline-flex items-center space-x-1 text-primary-500 transition duration-200",
               isGradientUnderline && "gradient-underline no-underline",
               isGradientUnderline &&

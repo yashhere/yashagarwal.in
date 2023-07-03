@@ -1,13 +1,16 @@
 import "../styles/globals.css"
 
 import { Metadata } from "next"
+import { Fira_Code } from "next/font/google"
 import localFont from "next/font/local"
-import { Inter, Fira_Code, Gentium_Plus, EB_Garamond } from "next/font/google"
-import { Analytics } from "@vercel/analytics/react"
-
-import { Navigation } from "@/ui/layout/navigation"
+import { Analytics } from "@/ui/analytics"
 import { Footer } from "@/ui/layout/footer"
-import clsx from "clsx"
+import { Navigation } from "@/ui/layout/navigation"
+import { TailwindIndicator } from "@/ui/tailwind-indicator"
+import { ThemeProvider } from "@/ui/theme-provider"
+
+import { siteConfig } from "@/config/site"
+import { cn } from "@/lib/utils"
 
 const bodyFont = localFont({
   src: "../public/assets/fonts/wotfard.ttf",
@@ -21,27 +24,55 @@ const monoFont = Fira_Code({
   subsets: ["cyrillic"],
 })
 
-const metadata: Metadata = {
+export const metadata: Metadata = {
   title: {
-    default: "Yash Agarwal",
-    template: "%s | Yash Agarwal",
+    default: siteConfig.name,
+    template: `%s | ${siteConfig.name}`,
   },
-  description: "Developer, writer, and creator.",
+  description: siteConfig.description,
+  keywords: [],
+  authors: [
+    {
+      name: "Yash Agarwal",
+      url: "https://yashagarwal.in",
+    },
+  ],
+  creator: "yashhere",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "white" },
+    { media: "(prefers-color-scheme: dark)", color: "black" },
+  ],
   openGraph: {
-    title: "Yash Agarwal",
-    description: "Developer, writer, and creator.",
-    url: "https://yashagarwal.in",
-    siteName: "Yash Agarwal",
-    images: [
-      {
-        url: "https://yashagarwal.in/og.jpg",
-        width: 1920,
-        height: 1080,
-      },
-    ],
-    locale: "en-US",
     type: "website",
+    locale: "en_US",
+    url: siteConfig.url,
+    title: siteConfig.name,
+    description: siteConfig.description,
+    siteName: siteConfig.name,
+    images: [`${siteConfig.url}/og.jpg`],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: siteConfig.name,
+    description: siteConfig.description,
+    images: [`${siteConfig.url}/og.jpg`],
+    creator: "@yashhere",
+  },
+  icons: {
+    icon: "/favicon.ico",
+    // shortcut: "/favicon-16x16.png",
+    // apple: "/apple-touch-icon.png",
+  },
+  verification: {
+    google: "",
+  },
+  alternates: {
+    canonical: "https://yashagarwal.in",
+    types: {
+      "application/rss+xml": [{ url: "rss.xml", title: "rss" }],
+    },
+  },
+  manifest: `${siteConfig.url}/site.webmanifest`,
   robots: {
     index: true,
     follow: true,
@@ -53,44 +84,33 @@ const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  twitter: {
-    title: "Yash Agarwal",
-    card: "summary_large_image",
-  },
-  icons: {
-    shortcut: "/favicon.ico",
-  },
-  verification: {
-    google: "",
-  },
-  alternates: {
-    canonical: "https://yashagarwal.in",
-    types: {
-      "application/rss+xml": [{ url: "rss.xml", title: "rss" }],
-    },
-  },
 }
 
-const RootLayout = ({ children }: { children: React.ReactNode }) => {
+interface RootLayoutProps {
+  children: React.ReactNode
+}
+
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html
-      lang="en"
-      className={clsx(
-        "bg-white text-black dark:text-white dark:bg-[#111010]",
-        bodyFont.variable,
-        monoFont.variable,
-      )}
-    >
-      <body className="antialiased max-w-4xl mb-40 flex flex-col md:flex-row mx-4 mt-8 md:mt-20 lg:mt-32 lg:mx-auto font-body">
-        <Navigation />
-        <main className="flex-auto min-w-0 mt-6 md:mt-0 flex flex-col px-2 md:px-0">
-          {children}
-          <Footer />
-        </main>
-        <Analytics />
+    <html lang="en" suppressHydrationWarning>
+      <body
+        className={cn(
+          "bg-background min-h-screen font-body antialiased",
+          "mx-4 mb-40 mt-8 flex max-w-4xl flex-col md:mt-20 md:flex-row lg:mx-auto lg:mt-32",
+          bodyFont.variable,
+          monoFont.variable,
+        )}
+      >
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <Navigation />
+          <main className="mt-6 flex min-w-0 flex-auto flex-col px-2 md:mt-0 md:px-0">
+            {children}
+            <Footer />
+          </main>
+          <Analytics />
+          <TailwindIndicator />
+        </ThemeProvider>
       </body>
     </html>
   )
 }
-
-export default RootLayout

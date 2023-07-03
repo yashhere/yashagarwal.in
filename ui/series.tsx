@@ -1,12 +1,14 @@
 "use client"
 
 import React, { FC, ReactNode } from "react"
-import cx from "clsx"
 import Link from "next/link"
-import { ChevronUpIcon, ChevronDownIcon } from "@heroicons/react/24/outline"
-import { FOCUS_VISIBLE_OUTLINE, LINK_STYLES } from "../lib/constants"
+import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/outline"
 import { motion } from "framer-motion"
+
 import { getSeries } from "@/lib/content"
+import { cn } from "@/lib/utils"
+
+import { FOCUS_VISIBLE_OUTLINE, LINK_STYLES } from "../lib/constants"
 
 type TitleProps = {
   children?: ReactNode
@@ -85,7 +87,7 @@ export const Series = ({
             {series.posts?.map((post) => (
               <li
                 key={post.slug}
-                className={cx(
+                className={cn(
                   "relative my-3 pl-7 before:absolute before:left-1 before:top-[9px] before:h-1.5 before:w-1.5 before:rounded-full",
                   {
                     "before:bg-black/90 before:ring-[3px] before:ring-light-yellow-300/20 before:ring-offset-1 before:ring-offset-white/10":
@@ -102,7 +104,7 @@ export const Series = ({
                   ) : (
                     <Link
                       href={`/blog/${post.slug}`}
-                      className={cx(LINK_STYLES, FOCUS_VISIBLE_OUTLINE)}
+                      className={cn(LINK_STYLES, FOCUS_VISIBLE_OUTLINE)}
                     >
                       {post.title}
                     </Link>

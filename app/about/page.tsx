@@ -1,7 +1,7 @@
-import { Metadata } from "next"
 import { FC } from "react"
-import RandomPhoto from "@/ui/random-photo"
+import { Metadata } from "next"
 import Link from "@/ui/link/link"
+import RandomPhoto from "@/ui/random-photo"
 
 export const metadata: Metadata = {
   title: "About Me | Yash Agarwal",
@@ -11,17 +11,17 @@ export const metadata: Metadata = {
 const Page: FC = () => {
   return (
     <>
-      <h1 className="text-5xl sm:text-[96px] font-heading font-bold leading-extra-tight pb-8">
+      <h1 className="leading-extra-tight pb-8 font-heading text-5xl font-bold sm:text-[96px]">
         About Me
       </h1>
-      <section className="prose prose-neutral md:prose-lg lg:prose-xl dark:prose-invert text-black">
+      <section className="prose prose-neutral text-black dark:prose-invert md:prose-lg lg:prose-xl">
         <blockquote className="">
           <p>
             Great minds discuss ideas; average minds discuss events; small minds
             discuss people.
           </p>
         </blockquote>
-        <RandomPhoto className="mx-auto max-w-full h-auto shadow-lg dark:shadow-black/30 rounded" />
+        <RandomPhoto className="mx-auto h-auto max-w-full rounded shadow-lg dark:shadow-black/30" />
         <p>
           Hi, I am Yash (y-uh-sh) 🙏. I&apos;m a software engineer working
           remotely.
@@ -47,14 +47,14 @@ const Page: FC = () => {
           experiences of{" "}
           <Link
             href="/blog/fossmeet-17"
-            className="text-primary-400 hover:text-primary-300 no-underline"
+            className="text-primary-400 no-underline hover:text-primary-300"
           >
             FOSSMeet&apos;17
           </Link>{" "}
           and{" "}
           <Link
             href="/blog/fossmeet-18"
-            className="text-primary-400 hover:text-primary-300 no-underline"
+            className="text-primary-400 no-underline hover:text-primary-300"
           >
             FOSSMeet&apos;18
           </Link>

@@ -7,13 +7,23 @@ series:
   title: "Arch Linux Installation Guide"
 ---
 
-In this post, I will continue from my last [post](/blog/arch-linux-installation-part-1/) and set up my newly installed Arch Linux for daily use. I am going to install some applications that I use on a day to day basis. Some of these applications are required for my current dotfile [configuration](/blog/my-own-configuration-manager/) setup to work properly. The choice of applications is highly opinionated and your preferences might be different.
+In this post, I will continue from my last
+[post](/blog/arch-linux-installation-part-1/) and set up my newly installed Arch
+Linux for daily use. I am going to install some applications that I use on a day
+to day basis. Some of these applications are required for my current dotfile
+[configuration](/blog/my-own-configuration-manager/) setup to work properly. The
+choice of applications is highly opinionated and your preferences might be
+different.
 
-If you had gone for installation via SSH option, then I would suggest you to edit your `sshd_config` file and disable `root` login. It can be a security risk otherwise.
+If you had gone for installation via SSH option, then I would suggest you to
+edit your `sshd_config` file and disable `root` login. It can be a security risk
+otherwise.
 
 ### Install a terminal based browser
 
-Terminal-based browsers are very handy in cases when you are required to login into a captive portal and you don't have access to a graphical browser. We will install two different browsers, `elinks` and `w3m`.
+Terminal-based browsers are very handy in cases when you are required to login
+into a captive portal and you don't have access to a graphical browser. We will
+install two different browsers, `elinks` and `w3m`.
 
 ```bash
 sudo pacman -S elinks w3m
@@ -25,11 +35,13 @@ sudo pacman -S elinks w3m
 sudo pacman -S xorg
 ```
 
-This will install minimal X desktop environment with fonts, in case, you want to test your system before installing any desktop environment.
+This will install minimal X desktop environment with fonts, in case, you want to
+test your system before installing any desktop environment.
 
 ### Enable multilib repository for 32-bit package support
 
-To enable multilib repository, uncomment the `[multilib]` section in `/etc/pacman.conf`.
+To enable multilib repository, uncomment the `[multilib]` section in
+`/etc/pacman.conf`.
 
 ```bash
 [multilib]
@@ -98,7 +110,8 @@ Add your virtualhost configuration in following file -
 sudo vim /etc/httpd/conf/extra/httpd-vhosts.conf
 ```
 
-To test the virtual hosts on you local machine, add the virtual names to your `/etc/hosts` file.
+To test the virtual hosts on you local machine, add the virtual names to your
+`/etc/hosts` file.
 
 #### Install PHP:
 
@@ -106,7 +119,8 @@ To test the virtual hosts on you local machine, add the virtual names to your `/
 sudo pacman -S php php-apache
 ```
 
-To use PHP with apache, open `/etc/httpd/conf/httpd.conf` and uncomment following line -
+To use PHP with apache, open `/etc/httpd/conf/httpd.conf` and uncomment
+following line -
 
 ```bash
 LoadModule mpm_prefork_module modules/mod_mpm_prefork.so
@@ -201,7 +215,9 @@ sudo systemctl mask systemd-rfkill.socket
 
 ### Install i3 and other tools
 
-All these tools are part of my `i3` config with exception of the theme related packages. So installing them here will help me later while setting up the `i3` window manager.
+All these tools are part of my `i3` config with exception of the theme related
+packages. So installing them here will help me later while setting up the `i3`
+window manager.
 
 ```bash
 pacaur -S i3 rofi polybar xautolock powerline-fonts-git i3lock-fancy-git compton scrot feh dunst unclutter xfce4-power-manager numlockx lxappearance adapta-gtk-theme gtk-engine-murrine gnome-themes-standard termite
@@ -209,17 +225,28 @@ pacaur -S i3 rofi polybar xautolock powerline-fonts-git i3lock-fancy-git compton
 
 ### Fix Ugly Fonts [^1]
 
-Fonts rendering is one area where Linux still lags behind Windows and OSX. It can be a nightmare for users to setup fonts properly in Linux. In Arch Linux, this is even worse. I found some tricks to improve the quality of font rendering on Arch Linux. Though this is far from perfect, it is manageable. Follow these [steps](https://www.reddit.com/r/archlinux/comments/5r5ep8/make_your_arch_fonts_beautiful_easily/) on Reddit to fix font rendering. I use Noto Sans, Adobe Source Code Pro, and Microsoft fonts. My apologies, but I can't help here. Some websites still use Microsoft fonts.
+Fonts rendering is one area where Linux still lags behind Windows and OSX. It
+can be a nightmare for users to setup fonts properly in Linux. In Arch Linux,
+this is even worse. I found some tricks to improve the quality of font rendering
+on Arch Linux. Though this is far from perfect, it is manageable. Follow these
+[steps](https://www.reddit.com/r/archlinux/comments/5r5ep8/make_your_arch_fonts_beautiful_easily/)
+on Reddit to fix font rendering. I use Noto Sans, Adobe Source Code Pro, and
+Microsoft fonts. My apologies, but I can't help here. Some websites still use
+Microsoft fonts.
 
 ### Setup Python Environment
 
-I use Python extensively and virtual environments are a must for my development setup. I use `pipenv` to manage my virtual environments. To install `pipenv`, you need to install `virtualenv` first. To install it, run the following command.
+I use Python extensively and virtual environments are a must for my development
+setup. I use `pipenv` to manage my virtual environments. To install `pipenv`,
+you need to install `virtualenv` first. To install it, run the following
+command.
 
 ```bash
 sudo pacman -S python-virtualenv
 ```
 
-Now you are ready to install `pipenv`. Follow [here](https://pipenv.pypa.io/en/latest/) to install the tool.
+Now you are ready to install `pipenv`. Follow
+[here](https://pipenv.pypa.io/en/latest/) to install the tool.
 
 ### Install some other common tools
 
@@ -227,10 +254,15 @@ Now you are ready to install `pipenv`. Follow [here](https://pipenv.pypa.io/en/l
 sudo pacman -S vlc openssh npm imagemagick git la-capitaine-icon-theme-git
 ```
 
-Do not forget to [setup](https://stackoverflow.com/questions/10081293/install-npm-into-home-directory-with-distribution-nodejs-package-ubuntu/13021677#13021677) `npm` to install packages globally without requiring `sudo`.
+Do not forget to
+[setup](https://stackoverflow.com/questions/10081293/install-npm-into-home-directory-with-distribution-nodejs-package-ubuntu/13021677#13021677)
+`npm` to install packages globally without requiring `sudo`.
 
-That's all! Your system should be in working condition now. Do check out my [dotfiles](/blog/my-own-configuration-manager/) if you want to set up your system like mine.
+That's all! Your system should be in working condition now. Do check out my
+[dotfiles](/blog/my-own-configuration-manager/) if you want to set up your
+system like mine.
 
 Hope you enjoyed the article. Cheers :smile:
 
-[^1]: [Make your Arch fonts beautiful easily!](https://www.reddit.com/r/archlinux/comments/5r5ep8/make_your_arch_fonts_beautiful_easily/)
+[^1]:
+    [Make your Arch fonts beautiful easily!](https://www.reddit.com/r/archlinux/comments/5r5ep8/make_your_arch_fonts_beautiful_easily/)

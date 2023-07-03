@@ -1,9 +1,11 @@
-import { getPost } from "@/lib/content"
-import moment from "moment"
 import { Suspense } from "react"
+import moment from "moment"
+
+import { getPost } from "@/lib/content"
+
+import Link from "../link/link"
 import { ViewCounter } from "../view-counter"
 import { PostPreviewLoading } from "./loading"
-import Link from "../link/link"
 
 export const PostPreview = ({
   post,

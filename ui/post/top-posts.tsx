@@ -1,11 +1,13 @@
+import { Suspense } from "react"
 import { headers } from "next/headers"
 import { ViewCounter } from "@/ui/view-counter"
 import { Post } from "contentlayer/generated"
 import moment from "moment"
-import { Suspense } from "react"
-import { PostPreviewLoading } from "./loading"
+
 import { getAllViewsCount, getTopPosts } from "@/lib/db"
+
 import Link from "../link/link"
+import { PostPreviewLoading } from "./loading"
 
 export async function TopPosts() {
   const [data, allViews] = await Promise.all([

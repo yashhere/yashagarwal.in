@@ -1,7 +1,8 @@
-import { getTotalViews } from "@/lib/db"
+import { Suspense } from "react"
 import { ArrowTrendingUpIcon, PencilIcon } from "@heroicons/react/24/solid"
 import { allPosts } from "contentlayer/generated"
-import { Suspense } from "react"
+
+import { getTotalViews } from "@/lib/db"
 
 const Page = async () => {
   const data = await getTotalViews()
@@ -12,7 +13,7 @@ const Page = async () => {
   return (
     <>
       <section className="pb-4">
-        <h1 className="font-heading text-5xl sm:text-[96px] leading-extra-tight pb-6">
+        <h1 className="leading-extra-tight pb-6 font-heading text-5xl sm:text-[96px]">
           Stats
         </h1>
         <p className="font-medium text-black/80">

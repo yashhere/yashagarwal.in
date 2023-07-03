@@ -1,7 +1,8 @@
 "use client"
 
-import { Post } from "contentlayer/generated"
 import { ChangeEvent, Suspense, useState } from "react"
+import { Post } from "contentlayer/generated"
+
 import { SearchInput } from "../search"
 import { PostList } from "./list"
 import { PostPreviewLoading } from "./loading"

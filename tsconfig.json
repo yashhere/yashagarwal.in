@@ -17,13 +17,8 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
-      "@/ui/*": ["./ui/*"],
-      "@/lib/*": ["./lib/*"],
-      "@/public/*": ["./public/*"],
-      "@/types": ["./types"],
-      "@/container/*": ["./container/*"],
-      "contentlayer/generated": ["./.contentlayer/generated"],
-      "@/content/*": ["./content/*"]
+      "@/*": ["./*"],
+      "contentlayer/generated": ["./.contentlayer/generated"]
     },
     "plugins": [
       {

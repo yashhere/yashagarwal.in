@@ -1,5 +1,6 @@
-import classNames from "classnames"
 import { FC } from "react"
+
+import { cn } from "@/lib/utils"
 
 type TagListProps = {
   tags: string[]
@@ -23,14 +24,14 @@ export const TagList: FC<TagListProps> = ({ tags }) => {
         return (
           <div
             key={t}
-            className={classNames(
+            className={cn(
               "transform transition-all",
-              "rounded-xl bg-gradient-to-r p-1 shadow-surface-elevation-high mr-2 mt-2",
+              "shadow-surface-elevation-high mr-2 mt-2 rounded-xl bg-gradient-to-r p-1",
               getNextGradient(),
             )}
           >
-            <div className="bg-white rounded-lg px-4 py-2 justify-between h-full">
-              <p className="font-medium text-sm">{t}</p>
+            <div className="h-full justify-between rounded-lg bg-white px-4 py-2">
+              <p className="text-sm font-medium">{t}</p>
             </div>
           </div>
         )

@@ -1,5 +1,6 @@
-import clsx from "clsx"
 import React from "react"
+
+import { cn } from "@/lib/utils"
 
 export const Aside = ({
   children,
@@ -18,7 +19,7 @@ export const Aside = ({
         <div className="mb-2 text-base italic text-opacity-100">{title}</div>
       ) : null}
       <div
-        className={clsx({
+        className={cn({
           "text-sm italic text-black/60 [&>span[data-rehype-pretty-code-fragment]]:!text-[11px]":
             styled,
         })}

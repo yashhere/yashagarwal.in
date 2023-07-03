@@ -1,4 +1,10 @@
-const { fontFamily } = require("tailwindcss/defaultTheme")
+const disabledCss = {
+  "code::before": false,
+  "code::after": false,
+  pre: false,
+  code: false,
+  "pre code": false,
+}
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -7,9 +13,17 @@ module.exports = {
     "./ui/**/*.{ts,tsx}",
     "./lib/**/*.{js,ts}",
     "./container/**/*.{ts,tsx}",
+    "./content/**/*.{md,mdx}",
   ],
-  darkMode: "class",
+  darkMode: ["class"],
   theme: {
+    container: {
+      center: true,
+      padding: "2rem",
+      screens: {
+        "2xl": "1400px",
+      },
+    },
     extend: {
       colors: {
         black: "#0A0A0A",
@@ -40,7 +54,14 @@ module.exports = {
         body: ["var(--font-body)"],
         heading: ["var(--font-body)"],
       },
+      typography: {
+        DEFAULT: { css: disabledCss },
+        sm: { css: disabledCss },
+        lg: { css: disabledCss },
+        xl: { css: disabledCss },
+        "2xl": { css: disabledCss },
+      },
     },
   },
-  plugins: [require("@tailwindcss/typography"), require("@tailwindcss/forms")],
+  plugins: [require("@tailwindcss/typography")],
 }

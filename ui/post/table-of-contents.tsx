@@ -1,9 +1,10 @@
 "use client"
 
-import clsx from "clsx"
+import { useRouter } from "next/navigation"
 import { motion } from "framer-motion"
 import GithubSlugger from "github-slugger"
-import { useRouter } from "next/navigation"
+
+import { cn } from "@/lib/utils"
 
 export const TableOfContents = ({ headings, path }) => {
   const router = useRouter()
@@ -30,7 +31,7 @@ export const TableOfContents = ({ headings, path }) => {
                   <div key={heading.slug}>
                     <a
                       href={`#${heading.slug}`}
-                      className={clsx(
+                      className={cn(
                         "block underline-offset-2 transition-all text-white/60 hover:underline hover:text-white",
                         {
                           "pl-2": heading.heading === 2,
