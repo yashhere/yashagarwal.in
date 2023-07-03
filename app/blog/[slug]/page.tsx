@@ -73,7 +73,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
           {/* Post Content */}
           <div className="pt-8">
-            <div className="prose text-black text-lg md:prose-lg lg:prose-xl prose-headings:text-secondary prose-h1:mt-16 prose-h1:mb-4 prose-h2:mt-8 prose-h2:mb-4 prose-h3:my-4 prose-p:my-4 leading-7">
+            <div className="prose text-black text-lg md:prose-lg lg:prose-xl prose-headings:text-secondary prose-h1:mt-16 prose-h1:mb-4 prose-h2:mt-8 prose-h2:mb-4 prose-h3:my-4 prose-p:my-4 prose-code:before:hidden prose-code:after:hidden leading-7">
               <Content components={CustomMDXComponents} />
             </div>
           </div>
