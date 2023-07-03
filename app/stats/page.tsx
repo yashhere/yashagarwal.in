@@ -5,7 +5,8 @@ import { Suspense } from "react"
 
 const Page = async () => {
   const data = await getTotalViews()
-  const totalViews = !data.total_views ? 0 : Number(data[0].total_views)
+  console.log(data.total_views)
+  const totalViews = Number(data.total_views || 0)
   const totalPosts = allPosts.filter((p) => p.status != "draft").length
 
   return (
