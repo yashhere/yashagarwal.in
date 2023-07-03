@@ -17,17 +17,17 @@ export default async function Page() {
           hey, I&apos;m Yash 👋
         </h1>
         <div className="prose text-xl prose-neutral dark:prose-invert leading-7">
-          <p>🌱 Welcome to my digital home! 🏡</p>
+          <p>Welcome to my digital home!</p>
           <p>
             I&apos;m a software engineer with a knack for exploring technology
-            🖥️ and expressing myself through writing ✍️.
+            and expressing myself through writing.
           </p>
           <p>
             This blog is my little oasis, where ideas bloom and stories take
-            root. 🌷🌿 Here, you&apos;ll find a collection of personal
-            anecdotes, occasional tech insights, and experiments that fuel my
-            curiosity. 📝💡 Step inside, explore, and don&apos;t forget to check
-            out my most popular posts below.
+            root. Here, you&apos;ll find a collection of personal anecdotes,
+            occasional tech insights, and experiments that fuel my curiosity.
+            Step inside, explore, and don&apos;t forget to check out my most
+            popular posts below.
           </p>
           <p>Happy reading! 🚀</p>
           <br />

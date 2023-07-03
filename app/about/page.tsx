@@ -1,7 +1,7 @@
-import RandomPhoto from "@/ui/random-photo"
 import { Metadata } from "next"
-import Link from "next/link"
 import { FC } from "react"
+import RandomPhoto from "@/ui/random-photo"
+import Link from "@/ui/link/link"
 
 export const metadata: Metadata = {
   title: "About Me | Yash Agarwal",
@@ -22,21 +22,58 @@ const Page: FC = () => {
           </p>
         </blockquote>
         <RandomPhoto className="mx-auto max-w-full h-auto shadow-lg dark:shadow-black/30 rounded" />
-        <p>I&apos;m a 27 year old software engineer working remotely.</p>
         <p>
-          Hi, I am Yash (y-uh-sh) 🙏. I am a computer programmer 👨‍💻 interested
-          in network security 🛡, cryptography 🔐, and distributed systems 🌐.
+          Hi, I am Yash (y-uh-sh) 🙏. I&apos;m a software engineer working
+          remotely.
+        </p>
+        <p>
+          In tech, I am primarily interested in backend development and learning
+          scalable systems.
+        </p>
+
+        <p>
+          I currently work in the API-enabled Protection team at{" "}
+          <Link href="https://netskope.com">Netskope</Link>. Previously I worked
+          for <Link href="https://cisco.com">Cisco</Link> in the SBG group.
+        </p>
+
+        <p>
+          I completed my graduation from National Institute of Technology,
+          Calicut in 2018. In NITC, I majored in Computer Science and
+          Engineering. Apart from curriculam, I was active in managing the{" "}
+          <Link href="https://athena.nitc.ac.in/">Software Systems Lab</Link> as
+          a system administrator. In 2018, I also led the team organising the
+          largest FOSS event in South India at that time - FOSSMeet. Read my
+          experiences of{" "}
+          <Link
+            href="/blog/fossmeet-17"
+            className="text-primary-400 hover:text-primary-300 no-underline"
+          >
+            FOSSMeet&apos;17
+          </Link>{" "}
+          and{" "}
+          <Link
+            href="/blog/fossmeet-18"
+            className="text-primary-400 hover:text-primary-300 no-underline"
+          >
+            FOSSMeet&apos;18
+          </Link>
+          .
+        </p>
+        <p>
           You can find me elsewhere on the Web; at places like{" "}
-          <Link href="https://twitter.com/yash__here">Twitter</Link>,{" "}
-          <Link href="https://github.com/yashhere">Github</Link> and{" "}
+          <Link href="https://github.com/yashhere">Github</Link>,{" "}
           <Link href="https://www.linkedin.com/in/theyashagarwal">
             LinkedIn
-          </Link>
-          . There is also my{" "}
-          <Link href="mailto:yashagarwaljpr+blog@gmail.com">email</Link> 📩. I
-          maintain a separate{" "}
+          </Link>{" "}
+          and <Link href="https://twitter.com/yash__here">Twitter</Link>. There
+          is also my{" "}
+          <Link href="mailto:yashagarwaljpr+blog@gmail.com">email</Link>.
+        </p>
+        <p>
+          I also built another{" "}
           <Link href="https://highlights.yashagarwal.in/">website</Link> for
-          storing my Kindle Paperwhite Highlights. Check it out!!
+          storing my Kindle Paperwhite Highlights.
         </p>
       </section>
     </>
