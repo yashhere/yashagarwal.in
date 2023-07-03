@@ -7,7 +7,7 @@ series:
   title: "Go + gRPC + OPA - A Perfect Union"
 ---
 
-In the last [post](/posts/2019/02/go-grpc-opa-a-perfect-union-part-1/), we discussed about the structure of our library
+In the last [post](/blog/go-grpc-opa-a-perfect-union-part-1/), we discussed about the structure of our library
 application. In this post, we will define the data definitions using protobuf, and then we will use these definitions to
 create a Go service. We will also add a REST interface to the service. So let's get started.
 
@@ -120,7 +120,7 @@ My implementation of the server stub is hosted
 [here](https://github.com/yashhere/go-library-service/blob/master/pkg/librarylib/server.go). A basic flow diagram of
 this implementation will look like this -
 
-![Architecture](/posts/OPA_Service_Flow_Diagram.jpeg "Architecture")
+![Architecture](/images/posts/OPA_Service_Flow_Diagram.jpeg "Architecture")
 
 The gRPC server will listen on port `:50051`, and a REST HTTP server will listen on port `:8181`. The OPA server is
 running on port `:8182`. The REST server is
