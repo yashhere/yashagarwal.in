@@ -4,7 +4,7 @@ const Loading = () => {
       <div className="flex w-full flex-row justify-center">
         <div aria-label="Loading..." role="status" className="py-48">
           <svg
-            className="h-8 w-8 animate-spin stroke-gray-500"
+            className="dark:stroke-white-500 h-8 w-8 animate-spin stroke-gray-500"
             viewBox="0 0 256 256"
           >
             <line

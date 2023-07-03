@@ -14,14 +14,14 @@ const Page: FC = () => {
       <h1 className="leading-extra-tight pb-8 font-heading text-5xl font-bold sm:text-[96px]">
         About Me
       </h1>
-      <section className="prose prose-neutral text-black dark:prose-invert md:prose-lg lg:prose-xl">
+      <section className="prose prose-neutral dark:prose-invert md:prose-lg lg:prose-xl">
         <blockquote className="">
           <p>
             Great minds discuss ideas; average minds discuss events; small minds
             discuss people.
           </p>
         </blockquote>
-        <RandomPhoto className="mx-auto h-auto max-w-full rounded shadow-lg dark:shadow-black/30" />
+        <RandomPhoto className="mx-auto h-auto max-w-full rounded shadow-lg" />
         <p>
           Hi, I am Yash (y-uh-sh) 🙏. I&apos;m a software engineer working
           remotely.

@@ -14,7 +14,14 @@
     "format": "prettier --write",
     "lint": "next lint",
     "preview": "next build && next start",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "lint-staged": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{tsx, ts}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
   },
   "dependencies": {
     "@fontsource/fira-code": "^4.5.13",
@@ -46,7 +53,8 @@
     "reading-time": "^1.5.0",
     "rss": "^1.2.2",
     "shiki": "^0.14.1",
-    "tailwind-merge": "^1.13.2"
+    "tailwind-merge": "^1.13.2",
+    "zod": "^3.21.4"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.6.6",
@@ -64,6 +72,7 @@
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-tailwindcss": "^3.13.0",
     "husky": "^8.0.3",
+    "lint-staged": "^13.2.3",
     "postcss": "^8.4.21",
     "prettier": "^2.8.7",
     "prettier-plugin-tailwindcss": "^0.3.0",

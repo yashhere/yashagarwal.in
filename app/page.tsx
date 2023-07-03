@@ -42,7 +42,7 @@ export default async function Page() {
         <TopPosts />
         <Link
           href="/blog"
-          className=" fade text-black/60 transition-all hover:text-black/95"
+          className="fade text-black/60 transition-all hover:text-black/95 dark:text-white/60 dark:hover:text-white/95"
         >
           <p className="flex items-center text-lg font-bold">
             All Posts &nbsp;

@@ -24,9 +24,9 @@ const Socials = [
 export const Footer: FC = () => {
   return (
     <footer className="mt-12 pb-4 font-heading font-bold">
-      <hr className="border-black/20 border-t-2" />
-      <div className="mt-8 mb-12 grid space-y-2 sm:space-y-0 sm:grid-cols-2">
-        <div className="text-md flex flex-col text-black/60">
+      <hr className="border-t-2 border-black/20 dark:border-white/20" />
+      <div className="mb-12 mt-8 grid space-y-2 sm:grid-cols-2 sm:space-y-0">
+        <div className="text-md flex flex-col text-black/60 dark:text-white/60">
           {/* <Link href="/books" className="hover:text-black/95">
             reading
           </Link>
@@ -36,7 +36,10 @@ export const Footer: FC = () => {
           <Link href="/snippets" className="hover:text-black/95">
             snippets
           </Link> */}
-          <Link href="/stats" className="hover:text-black/95">
+          <Link
+            href="/stats"
+            className="hover:text-black/95 dark:hover:text-white/95"
+          >
             stats
           </Link>
         </div>
@@ -45,7 +48,7 @@ export const Footer: FC = () => {
             {Socials.map((s) => {
               return (
                 <a href={s.url} key={s.name}>
-                  <s.icon className="text-black/70 w-6 h-6 hover:text-black" />
+                  <s.icon className="h-6 w-6 text-black/70 hover:text-black dark:text-white/70 dark:hover:text-white" />
                 </a>
               )
             })}
@@ -53,7 +56,7 @@ export const Footer: FC = () => {
         </div>
       </div>
       <div className="grid xl:grid-cols-2">
-        <div className="text-sm text-black/70">
+        <div className="text-sm text-black/70 dark:text-white/70">
           <p>Yash Agarwal</p>
           <p>© 2016 - {moment().format("YYYY")}</p>
         </div>

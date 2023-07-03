@@ -24,13 +24,13 @@ export const Navigation = () => {
   }
 
   return (
-    <aside className="md:w-[150px] md:flex-shrink-0 -mx-4 md:mx-0 md:px-0">
+    <aside className="-mx-4 md:mx-0 md:w-[150px] md:shrink-0 md:px-0">
       <div className="lg:sticky lg:top-20">
         <nav
-          className="flex flex-row sm:flex-col items-start relative px-6 md:px-0 pb-0 fade scroll-pr-6 md:relative"
+          className="fade relative flex scroll-pr-6 flex-row items-start px-6 pb-0 sm:flex-col md:relative md:px-0"
           id="nav"
         >
-          <div className="font-heading font-bold space-x-2 md:space-x-0 text-2xl sm:text-[40px] flex flex-row md:flex-col items-start relative px-0 pb-0 fade md:overflow-auto scroll-pr-6">
+          <div className="fade relative flex scroll-pr-6 flex-row items-start space-x-2 px-0 pb-0 font-heading text-2xl font-bold sm:text-[40px] md:flex-col md:space-x-0 md:overflow-auto">
             {Object.entries(navItems).map(([path, { name }]) => {
               const isActive = path == pathname
               return (
@@ -38,9 +38,9 @@ export const Navigation = () => {
                   key={path}
                   href={path}
                   className={cn(
-                    "transition-all hover:text-black/95 flex align-middle leading-extra-tight sm:leading-tight",
+                    "leading-extra-tight flex align-middle transition-all hover:text-black/95 dark:hover:text-white/95 sm:leading-tight",
                     {
-                      "text-black/60": !isActive,
+                      "text-black/60 dark:text-white/60": !isActive,
                     },
                   )}
                 >

@@ -45,13 +45,13 @@ export const PostPreview = ({
       <Suspense fallback={<PostPreviewLoading />}>
         <Link
           href={`/blog/${post.slug}`}
-          className="flex flex-col w-full [&_h4]:hover:text-primary-300 transition-all"
+          className="flex w-full flex-col transition-all [&_h4]:hover:text-primary-300"
         >
           <div className="flex flex-col">
-            <h4 className="w-full text-lg font-bold font-heading">
+            <h4 className="w-full font-heading text-lg font-bold">
               {post.title}
             </h4>
-            <div className="text-black/60 text-sm flex font-medium space-x-2">
+            <div className="flex space-x-2 text-sm font-medium text-black/60 dark:text-white/60">
               <p>{moment(post.published).fromNow()}</p>
               <p>&middot;</p>
               <ViewCounter
