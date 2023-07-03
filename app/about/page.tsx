@@ -1,3 +1,4 @@
+import RandomPhoto from "@/ui/random-photo"
 import { Metadata } from "next"
 import Link from "next/link"
 import { FC } from "react"
@@ -13,13 +14,14 @@ const Page: FC = () => {
       <h1 className="text-5xl sm:text-[96px] font-heading font-bold leading-extra-tight pb-8">
         About Me
       </h1>
-      <section className="space-y-4 text-black/80 font-medium">
-        <blockquote className="border-l-4 border-primary/50 bg-primary/40 rounded-md pl-4 py-2 italic text-md">
+      <section className="prose prose-neutral md:prose-lg lg:prose-xl dark:prose-invert text-black">
+        <blockquote className="">
           <p>
             Great minds discuss ideas; average minds discuss events; small minds
             discuss people.
           </p>
         </blockquote>
+        <RandomPhoto className="mx-auto max-w-full h-auto shadow-lg dark:shadow-black/30 rounded" />
         <p>I&apos;m a 27 year old software engineer working remotely.</p>
         <p>
           Hi, I am Yash (y-uh-sh) 🙏. I am a computer programmer 👨‍💻 interested
