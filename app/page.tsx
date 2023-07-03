@@ -16,11 +16,22 @@ export default async function Page() {
         <h1 className="mt-8 sm:mt-4 font-bold text-4xl mb-8 tracking-tighter">
           hey, I&apos;m Yash 👋
         </h1>
-        <p className="prose text-xl prose-neutral dark:prose-invert leading-7">
-          Hey there! Thanks for stopping by. I currently work as Software
-          Developer at <Link href="https://www.netskope.com/">Netskope</Link>.
+        <div className="prose text-xl prose-neutral dark:prose-invert leading-7">
+          <p>🌱 Welcome to my digital home! 🏡</p>
+          <p>
+            I&apos;m a software engineer with a knack for exploring technology
+            🖥️ and expressing myself through writing ✍️.
+          </p>
+          <p>
+            This blog is my little oasis, where ideas bloom and stories take
+            root. 🌷🌿 Here, you&apos;ll find a collection of personal
+            anecdotes, occasional tech insights, and experiments that fuel my
+            curiosity. 📝💡 Step inside, explore, and don&apos;t forget to check
+            out my most popular posts below.
+          </p>
+          <p>Happy reading! 🚀</p>
           <br />
-        </p>
+        </div>
       </section>
       <section className="flex flex-col justify-start mt-8">
         {/* TODO: debug this. Shall I use 'use client' here? */}
