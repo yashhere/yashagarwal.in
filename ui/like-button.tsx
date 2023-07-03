@@ -18,9 +18,7 @@ export const LikeButton2 = ({ slug }: { slug: string }) => {
   const currentUserLikes = Math.floor(Math.random() * 3)
   const likes = 0
   const isLoading = false
-  const increment = () => {
-    console.log("YASH: increment likes")
-  }
+  const increment = () => {}
 
   let [animatedEmojis, setAnimatedEmojis] = React.useState<string[]>(
     currentUserLikes ? [emojis[currentUserLikes]] : [],

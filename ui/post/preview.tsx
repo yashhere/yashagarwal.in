@@ -49,7 +49,7 @@ export const PostPreview = ({
             <h4 className="w-full text-lg font-bold font-heading">
               {post.title}
             </h4>
-            <div className="text-black/60 text-sm flex font-semibold space-x-2">
+            <div className="text-black/60 text-sm flex font-medium space-x-2">
               <p>{moment(post.published).fromNow()}</p>
               <p>&middot;</p>
               <ViewCounter

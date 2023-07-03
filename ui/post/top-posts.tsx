@@ -8,8 +8,10 @@ import { getAllViewsCount, getTopPosts } from "@/lib/db"
 import Link from "../link/link"
 
 export async function TopPosts() {
-  const data = await getTopPosts(3)
-  const allViews = await getAllViewsCount()
+  const [data, allViews] = await Promise.all([
+    getTopPosts(3),
+    getAllViewsCount(),
+  ])
 
   return (
     <>
@@ -25,7 +27,7 @@ export async function TopPosts() {
                   <h4 className="w-full text-lg font-bold font-heading">
                     {post.title}
                   </h4>
-                  <div className="text-black/60 text-md flex font-semibold space-x-2">
+                  <div className="text-black/60 text-md flex font-medium space-x-2">
                     <p>{moment(post.published).fromNow()}</p>
                     <p>&middot;</p>
                     <ViewCounter

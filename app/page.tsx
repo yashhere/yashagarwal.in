@@ -1,5 +1,5 @@
 import Link from "@/ui/link/link"
-import { TopPosts } from "@/ui/post/featured"
+import { TopPosts } from "@/ui/post/top-posts"
 import { ArrowRightIcon } from "@heroicons/react/24/solid"
 import { Metadata } from "next"
 import { Suspense } from "react"
@@ -13,18 +13,13 @@ export default async function Page() {
   return (
     <>
       <section className="flex flex-col justify-start">
-        <h1 className="text-5xl font-bold font-heading sm:text-[96px] leading-extra-tight">
-          Yash
+        <h1 className="mt-8 sm:mt-4 font-bold text-4xl mb-8 tracking-tighter">
+          hey, I&apos;m Yash 👋
         </h1>
-        <h1 className="text-5xl font-bold font-heading sm:text-[96px] leading-extra-tight pb-12">
-          Agarwal
-        </h1>
-        <p className="font-medium text-xl text-black">
-          Hey there! Thanks for stopping by. I am Yash Agarwal, a Software
-          Engineer.
+        <p className="prose text-xl prose-neutral dark:prose-invert leading-7">
+          Hey there! Thanks for stopping by. I currently work as Software
+          Developer at <Link href="https://www.netskope.com/">Netskope</Link>.
           <br />
-          <br />
-          This is work in progress.
         </p>
       </section>
       <section className="flex flex-col justify-start mt-8">

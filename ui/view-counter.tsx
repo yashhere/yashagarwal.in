@@ -20,7 +20,6 @@ export function ViewCounter({
   const viewsForSlug = allViews && allViews.find((view) => view.slug === slug)
   const views = new Number(viewsForSlug?.views || 0)
 
-  console.log("track: ", track, " views: ", views)
   useEffect(() => {
     if (track) {
       incrementSlugViews(slug)
