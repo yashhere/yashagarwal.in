@@ -72,7 +72,6 @@ export const metadata: Metadata = {
       "application/rss+xml": [{ url: "rss.xml", title: "rss" }],
     },
   },
-  manifest: `${siteConfig.url}/site.webmanifest`,
   robots: {
     index: true,
     follow: true,
