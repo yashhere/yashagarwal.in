@@ -1,9 +1,8 @@
-import { Metadata } from "next"
+import { getAllLikesCount, getAllViewsCount, getLikes } from "@/lib/db"
 import { BlogPostList } from "@/ui/post/blog-list"
 import { allPosts } from "contentlayer/generated"
 import { compareDesc } from "date-fns"
-
-import { getAllLikesCount, getAllViewsCount, getLikes } from "@/lib/db"
+import { Metadata } from "next"
 
 export const metadata: Metadata = {
   title: "Writing | Yash Agarwal",

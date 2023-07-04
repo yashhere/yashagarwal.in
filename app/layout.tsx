@@ -1,16 +1,14 @@
 import "../styles/globals.css"
-
-import { Metadata } from "next"
-import { Fira_Code } from "next/font/google"
-import localFont from "next/font/local"
+import { siteConfig } from "@/config/site"
+import { cn } from "@/lib/utils"
 import { Analytics } from "@/ui/analytics"
 import { Footer } from "@/ui/layout/footer"
 import { Navigation } from "@/ui/layout/navigation"
 import { TailwindIndicator } from "@/ui/tailwind-indicator"
 import { ThemeProvider } from "@/ui/theme-provider"
-
-import { siteConfig } from "@/config/site"
-import { cn } from "@/lib/utils"
+import { Metadata } from "next"
+import { Fira_Code } from "next/font/google"
+import localFont from "next/font/local"
 
 const bodyFont = localFont({
   src: "../public/assets/fonts/wotfard.ttf",
