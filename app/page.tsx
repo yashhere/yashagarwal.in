@@ -1,8 +1,7 @@
-import { Suspense } from "react"
-import { Metadata } from "next"
 import Link from "@/ui/link/link"
 import { TopPosts } from "@/ui/post/top-posts"
 import { ArrowRightIcon } from "@heroicons/react/24/solid"
+import { Metadata } from "next"
 
 export const metadata: Metadata = {
   title: "Home | Yash Agarwal",

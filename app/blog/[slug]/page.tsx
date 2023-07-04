@@ -1,8 +1,7 @@
 import "@/styles/mdx.css"
-
 import { createHash } from "crypto"
-import { Suspense } from "react"
-import { headers } from "next/headers"
+import { getPost, getSeries } from "@/lib/content"
+import { getAllViewsCount, getLikes } from "@/lib/db"
 import { LikeButton } from "@/ui/like-button"
 import CustomMDXComponents from "@/ui/mdx"
 import { TableOfContents } from "@/ui/post/table-of-contents"
@@ -10,9 +9,8 @@ import { Series } from "@/ui/series"
 import { ViewCounter } from "@/ui/view-counter"
 import moment from "moment"
 import { getMDXComponent } from "next-contentlayer/hooks"
-
-import { getPost, getSeries } from "@/lib/content"
-import { getAllLikesCount, getAllViewsCount, getLikes } from "@/lib/db"
+import { headers } from "next/headers"
+import { Suspense } from "react"
 
 export async function generateMetadata({ params }) {
   const post = await getPost(params.slug)

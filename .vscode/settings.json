@@ -2,8 +2,10 @@
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "prettier.tabWidth": 4,
-  "editor.formatOnSave": false,
+  "editor.formatOnSave": true,
   "editor.formatOnSaveMode": "modificationsIfAvailable",
-  "editor.formatOnPaste": false,
-  "prettier.requireConfig": true
+  "editor.formatOnPaste": true,
+  "prettier.requireConfig": true,
+  "prettier.semi": false,
+  "prettier.configPath": "prettier.config.js"
 }

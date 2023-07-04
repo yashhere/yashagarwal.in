@@ -1,21 +1,18 @@
-import { cache } from "react"
 import { allPosts, Post } from "contentlayer/generated"
 import { Kysely } from "kysely"
 import { PlanetScaleDialect } from "kysely-planetscale"
-
+import { cache } from "react"
 import { DB } from "./db_types"
 
 export const db = new Kysely<DB>({
   dialect: new PlanetScaleDialect({
-    url: process.env.DATABASE_URL,
+    host: process.env.DB_HOSTNAME,
+    username: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
   }),
 })
 
 export const getBlogViews = cache(async () => {
-  if (!process.env.DATABASE_URL) {
-    return 0
-  }
-
   const data = await db.selectFrom("Stats").select(["views"]).execute()
 
   return data.reduce((acc, curr) => acc + Number(curr.views), 0)

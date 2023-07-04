@@ -1,9 +1,7 @@
 "use client"
 
-import { Suspense, useEffect } from "react"
-
 import { incrementSlugMetrics } from "@/lib/db"
-
+import { Suspense, useEffect } from "react"
 import { LoadingDots } from "./loading"
 import { Metric } from "./metrics/metric"
 
