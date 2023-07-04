@@ -18,9 +18,14 @@ export const PostListLoading = ({ posts }: { posts: Post[] }) => {
 }
 export const BlogPostList = ({
   posts,
+  allLikes,
   allViews,
 }: {
   posts: Post[]
+  allLikes: {
+    slug: string
+    likes: number
+  }[]
   allViews: {
     slug: string
     views: number
@@ -50,7 +55,7 @@ export const BlogPostList = ({
       </div>
       <section className="w-full space-y-5">
         <Suspense fallback={<PostListLoading posts={posts} />}>
-          <PostList allViews={allViews} posts={results} />
+          <PostList allViews={allViews} allLikes={allLikes} posts={results} />
         </Suspense>
       </section>
     </div>

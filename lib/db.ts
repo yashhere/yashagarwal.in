@@ -1,4 +1,3 @@
-// import 'server-only' not working with API routes yet
 import { cache } from "react"
 import { allPosts, Post } from "contentlayer/generated"
 import { Kysely } from "kysely"
@@ -9,12 +8,9 @@ import { DB } from "./db_types"
 export const db = new Kysely<DB>({
   dialect: new PlanetScaleDialect({
     // url: process.env.DATABASE_URL,
-    // username: process.env.DB_USERNAME,
-    // password: process.env.DB_PASSWORD,
-    // host: process.env.DB_HOST,
-    username: "43zdhtnaxvy8ghmy9lrk",
-    password: "pscale_pw_GEleC4PXtNZchxlWJR72JzDVATzjPtxxWJ1kXu5i0Jg",
-    host: "aws.connect.psdb.cloud",
+    username: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
+    host: process.env.DB_HOST,
   }),
 })
 
@@ -44,7 +40,55 @@ export const getTotalViews = cache(async () => {
     .executeTakeFirstOrThrow()
 })
 
-export async function incrementSlugViews(slug: string) {
+export async function getLikes(slug: string, sessionId: string) {
+  const [post, user] = await Promise.all([
+    db
+      .selectFrom("Stats")
+      .where("slug", "=", slug)
+      .select(["slug", "likes"])
+      .executeTakeFirst(),
+
+    db
+      .selectFrom("Session")
+      .where("id", "=", sessionId)
+      .select(["id", "likes"])
+      .executeTakeFirst(),
+  ])
+
+  return [post?.likes || 0, user?.likes || 0]
+}
+
+export async function incrementLikes(
+  slug: string,
+  sessionId: string,
+  currentLikes: number,
+) {
+  return await Promise.all([
+    incrementSlugMetrics(slug, 0, currentLikes),
+    db
+      .selectFrom("Session")
+      .where("id", "=", sessionId)
+      .select(["id", "likes"])
+      .executeTakeFirst()
+      .then((data) => {
+        const currentUserLikes = !data ? 0 : Number(data.likes)
+        return db
+          .insertInto("Session")
+          .values({
+            id: sessionId,
+            likes: currentLikes,
+          })
+          .onDuplicateKeyUpdate({ likes: currentUserLikes + currentLikes })
+          .execute()
+      }),
+  ])
+}
+
+export async function incrementSlugMetrics(
+  slug: string,
+  currentViews: number = 1,
+  currentLikes: number = 0,
+) {
   const data = await db
     .selectFrom("Stats")
     .where("slug", "=", slug)
@@ -61,7 +105,10 @@ export async function incrementSlugViews(slug: string) {
       views: views,
       likes: likes,
     })
-    .onDuplicateKeyUpdate({ views: views + 1 })
+    .onDuplicateKeyUpdate({
+      views: views + currentViews,
+      likes: likes + currentLikes,
+    })
     .execute()
 }
 

@@ -4,20 +4,24 @@ import { ViewCounter } from "@/ui/view-counter"
 import { Post } from "contentlayer/generated"
 import moment from "moment"
 
-import { getAllViewsCount, getTopPosts } from "@/lib/db"
+import { getAllLikesCount, getAllViewsCount, getTopPosts } from "@/lib/db"
 
 import Link from "../link/link"
 import { PostPreviewLoading } from "./loading"
 
 export async function TopPosts() {
-  const [data, allViews] = await Promise.all([
+  const [data, allViews, allLikes] = await Promise.all([
     getTopPosts(3),
     getAllViewsCount(),
+    getAllLikesCount(),
   ])
 
   return (
     <>
       {data?.map((post) => {
+        const likesForSlug =
+          allLikes && allLikes.find((item) => item.slug === post.slug)
+        const likes = new Number(likesForSlug?.likes || 0)
         return (
           <Suspense key={post.slug} fallback={<PostPreviewLoading />}>
             <Link
@@ -38,8 +42,7 @@ export async function TopPosts() {
                       track={false}
                     />
                     <p>&middot;</p>
-                    {/* TODO: Add LikeCounter */}
-                    <p>45 likes</p>
+                    <p>{`${likes.toLocaleString()} likes`}</p>
                   </div>
                 </div>
               </div>

@@ -2,7 +2,7 @@
 
 import { Suspense, useEffect } from "react"
 
-import { incrementSlugViews } from "@/lib/db"
+import { incrementSlugMetrics } from "@/lib/db"
 
 import { LoadingDots } from "./loading"
 import { Metric } from "./metrics/metric"
@@ -26,7 +26,7 @@ export function ViewCounter({
 
   useEffect(() => {
     if (track) {
-      incrementSlugViews(slug)
+      incrementSlugMetrics(slug)
     }
   }, [])
 

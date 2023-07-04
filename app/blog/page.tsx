@@ -3,7 +3,7 @@ import { BlogPostList } from "@/ui/post/blog-list"
 import { allPosts } from "contentlayer/generated"
 import { compareDesc } from "date-fns"
 
-import { getAllViewsCount } from "@/lib/db"
+import { getAllLikesCount, getAllViewsCount, getLikes } from "@/lib/db"
 
 export const metadata: Metadata = {
   title: "Writing | Yash Agarwal",
@@ -13,6 +13,7 @@ export const metadata: Metadata = {
 
 export default async function Page() {
   const allViews = await getAllViewsCount()
+  let allLikes = await getAllLikesCount()
   const posts = allPosts
     .filter((p) => p.status === "published")
     .sort((a, b) => {
@@ -34,7 +35,7 @@ export default async function Page() {
           </p>
         </div>
       </section>
-      <BlogPostList allViews={allViews} posts={posts} />
+      <BlogPostList allViews={allViews} allLikes={allLikes} posts={posts} />
     </>
   )
 }

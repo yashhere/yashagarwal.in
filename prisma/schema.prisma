@@ -22,7 +22,7 @@ model Stats {
 }
 
 model Session {
-  id        Int       @id
-  createdAt DateTime  @default(now())
-  likes     Int       @default(0)
+  id        String        @id
+  createdAt DateTime      @default(now())
+  likes     Int           @default(0)
 }

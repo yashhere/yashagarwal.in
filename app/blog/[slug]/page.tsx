@@ -1,6 +1,9 @@
 import "@/styles/mdx.css"
 
+import { createHash } from "crypto"
 import { Suspense } from "react"
+import { headers } from "next/headers"
+import { LikeButton } from "@/ui/like-button"
 import CustomMDXComponents from "@/ui/mdx"
 import { TableOfContents } from "@/ui/post/table-of-contents"
 import { Series } from "@/ui/series"
@@ -9,7 +12,7 @@ import moment from "moment"
 import { getMDXComponent } from "next-contentlayer/hooks"
 
 import { getPost, getSeries } from "@/lib/content"
-import { getAllViewsCount } from "@/lib/db"
+import { getAllLikesCount, getAllViewsCount, getLikes } from "@/lib/db"
 
 export async function generateMetadata({ params }) {
   const post = await getPost(params.slug)
@@ -30,11 +33,29 @@ export async function generateMetadata({ params }) {
   }
 }
 
+function getSessionId(slug: string) {
+  const ipAddress = headers().get("x-forwarded-for")
+
+  const currentUserId =
+    // Since a users IP address is part of the sessionId in our database, we
+    // hash it to protect their privacy. By combining it with a salt, we get
+    // get a unique id we can refer to, but we won't know what their ip
+    // address was.
+    createHash("md5")
+      .update(ipAddress + process.env.IP_ADDRESS_SALT!, "utf8")
+      .digest("hex")
+
+  // Identify a specific users interactions with a specific post
+  return slug + "___" + currentUserId
+}
+
 export default async function Page({ params }: { params: { slug: string } }) {
   const { slug } = params
   const post: NonNullable<ReturnType<typeof getPost>> = getPost(slug)
   const Content = getMDXComponent(post.body.code)
   const allViews = await getAllViewsCount()
+  const sessionId = getSessionId(slug)
+  let [totalLikes, userLikes] = await getLikes(slug, sessionId)
 
   return (
     <>
@@ -48,7 +69,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
             <p>&middot;</p>
             <ViewCounter slug={slug} allViews={allViews} track={true} />
             <p>&middot;</p>
-            <p>45 likes</p>
+            <p>{totalLikes} likes</p>
           </div>
           <div className="text-md mt-2 flex space-x-2 font-body font-semibold text-black/70 dark:text-white/70 sm:text-lg">
             <p>Time to read: {Math.round(post.readingTime.minutes)} mins</p>
@@ -78,9 +99,23 @@ export default async function Page({ params }: { params: { slug: string } }) {
             </div>
           </div>
 
-          {/* <div className="mt-16">
-            <LikeButton2 slug={post.slug} />
-          </div> */}
+          <div className="mt-16">
+            <LikeButton
+              slug={slug}
+              sessionId={sessionId}
+              totalLikes={totalLikes}
+              userLikes={userLikes}
+            />
+          </div>
+
+          {/* Post Series */}
+          {post.series != null ? (
+            <Series
+              series={getSeries(post.series.title, post.slug)}
+              interactive={true}
+              current={slug}
+            />
+          ) : null}
         </Suspense>
       </div>
     </>
