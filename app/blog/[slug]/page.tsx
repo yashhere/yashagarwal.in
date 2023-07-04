@@ -107,15 +107,6 @@ export default async function Page({ params }: { params: { slug: string } }) {
               userLikes={userLikes}
             />
           </div>
-
-          {/* Post Series */}
-          {post.series != null ? (
-            <Series
-              series={getSeries(post.series.title, post.slug)}
-              interactive={true}
-              current={slug}
-            />
-          ) : null}
         </Suspense>
       </div>
     </>

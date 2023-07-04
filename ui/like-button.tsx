@@ -42,14 +42,14 @@ export function LikeButton({
   }
 
   return (
-    <div className="flex items-center space-x-2">
+    <div className="flex items-center space-x-4">
       <div className="relative">
         {/* Thank you emojis */}
         {animatedEmojis.map((emoji, index) => {
           return (
             <div
               key={index}
-              className="absolute w-full animate-[emoji_0.75s_ease-out] text-center opacity-0"
+              className="absolute w-full animate-[emoji_0.75s_ease-out] text-center opacity-100"
             >
               {emoji}
             </div>
@@ -58,10 +58,10 @@ export function LikeButton({
 
         <button
           className={cn(
-            "shadow-lgx group relative block overflow-hidden rounded-lg bg-gradient-to-tl from-white/5 to-white/30 p-1 transition-all duration-300 ease-out hover:scale-[1.2] hover:rounded-[10px] active:scale-100 active:rounded-lg",
+            "shadow-lgx group relative block overflow-hidden rounded-lg bg-gradient-to-tl from-black/30 to-black/60 p-1 transition-all duration-300 ease-out hover:scale-[1.2] hover:rounded-[10px] active:scale-100 active:rounded-lg",
             FOCUS_VISIBLE_OUTLINE,
             {
-              // "animate-pulse": isLoading,
+              "animate-pulse": false,
               "hover:shadow-gray-500/30": currentUserLikes === 0,
               "hover:shadow-purple-500/50": currentUserLikes !== 0,
             },
@@ -79,12 +79,12 @@ export function LikeButton({
             )}
           />
 
-          <HeartIcon className="relative w-5 text-rose-500 transition delay-100 duration-500 ease-out group-hover:scale-110" />
+          <HeartIcon className="relative w-5 text-rose-100 transition delay-100 duration-500 ease-out group-hover:scale-110" />
         </button>
       </div>
 
       {/* Like counter text */}
-      <div className="text-lg font-medium leading-none text-rose-500/90">
+      <div className="text-black-100/90 text-xl font-medium leading-none">
         {<span>{totalUserLikes}</span>}
       </div>
     </div>
