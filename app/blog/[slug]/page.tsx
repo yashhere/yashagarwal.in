@@ -1,5 +1,6 @@
 import "@/styles/mdx.css"
 import { createHash } from "crypto"
+import { env } from "@/env.mjs"
 import { getAllMetrics, getLikes } from "@/lib/actions"
 import { getPost, getSeries } from "@/lib/content"
 import { createOgImage } from "@/lib/createOgImage"
@@ -32,7 +33,7 @@ export async function generateMetadata(
   const newOgImage = createOgImage({
     title: post.title,
     meta: [
-      "yashagarwal.in",
+      env.NEXT_PUBLIC_APP_URL,
       moment(post.published).format("MMM DD, YYYY"),
     ].join(" · "),
   })
@@ -42,7 +43,7 @@ export async function generateMetadata(
     description: post.description,
     authors: {
       name: "Yash Agarwal",
-      url: "https://yashagarwal.in",
+      url: env.NEXT_PUBLIC_APP_URL,
     },
     keywords: post.tags?.map((tag) => tag.value),
     creator: "Yash Agarwal",
@@ -51,6 +52,10 @@ export async function generateMetadata(
       creator: "@yash__here",
     },
     openGraph: {
+      title: post.title,
+      description: post.description,
+      type: "article",
+      publishedTime: moment(post.published).format("MMM DD, YYYY"),
       images: [newOgImage, ...previousImages],
     },
   }
