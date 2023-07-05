@@ -1119,7 +1119,7 @@
 
 "@planetscale/database@^1.8.0":
   version "1.8.0"
-  resolved "https://registry.npmjs.org/@planetscale/database/-/database-1.8.0.tgz"
+  resolved "https://registry.yarnpkg.com/@planetscale/database/-/database-1.8.0.tgz#d3a522e633a4b337739f38718017678ede25f353"
   integrity sha512-+zk04eXRiaJGaRnJZkCxXbBtBvQDQJXCoxqlXhLY3HzAovXfsBnh6DjXRujPRQQ7GKtT8/tOlyvZ9h6ReM+GLQ==
 
 "@prisma/client@^4.16.1":
@@ -2386,6 +2386,11 @@ concat-map@0.0.1:
   version "0.0.1"
   resolved "https://registry.npmjs.org/concat-map/-/concat-map-0.0.1.tgz"
   integrity sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==
+
+connection-string@^4.3.6:
+  version "4.3.6"
+  resolved "https://registry.yarnpkg.com/connection-string/-/connection-string-4.3.6.tgz#4aa23f0b6d31f6a310afffd4e9a481d000c64836"
+  integrity sha512-dwaq4BMeiIIWry/oQxjstPB7Xp0K1nGjaY8p6PHQB+J9ZJuIvNp7ux3Noupq0hMd/dqEHXkfdmmGFOKTbGKWmw==
 
 contentlayer@^0.3.1:
   version "0.3.2"
@@ -4488,14 +4493,14 @@ kleur@^4.0.3:
 
 kysely-planetscale@^1.3.0:
   version "1.3.0"
-  resolved "https://registry.npmjs.org/kysely-planetscale/-/kysely-planetscale-1.3.0.tgz"
+  resolved "https://registry.yarnpkg.com/kysely-planetscale/-/kysely-planetscale-1.3.0.tgz#171ddd990006a7cb16d862c50e2ac81060521049"
   integrity sha512-lAldOF+Yg2raVvRfyXjBqlZ63ONpNZRpfWUK9WrtEdVUIYJxOhbgzihYaRtb4lHVFNyAZyuSCvatEsK7hszcJg==
   dependencies:
     date-fns "^2.29.3"
 
 kysely@^0.25.0:
   version "0.25.0"
-  resolved "https://registry.npmjs.org/kysely/-/kysely-0.25.0.tgz"
+  resolved "https://registry.yarnpkg.com/kysely/-/kysely-0.25.0.tgz#a1289d55035aa13c165dc06821fee2c04a1a9700"
   integrity sha512-srn0efIMu5IoEBk0tBmtGnoUss4uwvxtbFQWG/U2MosfqIace1l43IFP1PmEpHRDp+Z79xIcKEqmHH3dAvQdQA==
 
 language-subtag-registry@~0.3.2:
@@ -6980,6 +6985,11 @@ sprintf-js@~1.0.2:
   resolved "https://registry.npmjs.org/sprintf-js/-/sprintf-js-1.0.3.tgz"
   integrity sha512-D9cPgkvLlV3t3IzL0D0YLvGA9Ahk4PcvVwUbN0dSGr1aP0Nrt4AEnTUbuGvquEC0mA64Gqt1fzirlRs5ibXx8g==
 
+sqlstring@^2.3.3:
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/sqlstring/-/sqlstring-2.3.3.tgz#2ddc21f03bce2c387ed60680e739922c65751d0c"
+  integrity sha512-qC9iz2FlN7DQl3+wjwn3802RTyjCx7sDvfQEXchwa6CWOx07/WVfh91gBmQ9fahw8snwGEWU3xGzOt4tFyHLxg==
+
 stack-generator@^2.0.5:
   version "2.0.10"
   resolved "https://registry.yarnpkg.com/stack-generator/-/stack-generator-2.0.10.tgz#8ae171e985ed62287d4f1ed55a1633b3fb53bb4d"
@@ -7572,6 +7582,13 @@ undici@5.21.0:
   version "5.21.0"
   resolved "https://registry.npmjs.org/undici/-/undici-5.21.0.tgz"
   integrity sha512-HOjK8l6a57b2ZGXOcUsI5NLfoTrfmbOl90ixJDl0AEFG4wgHNDQxtZy15/ZQp7HhjkpaGlp/eneMgtsu1dIlUA==
+  dependencies:
+    busboy "^1.6.0"
+
+undici@^5.22.1:
+  version "5.22.1"
+  resolved "https://registry.yarnpkg.com/undici/-/undici-5.22.1.tgz#877d512effef2ac8be65e695f3586922e1a57d7b"
+  integrity sha512-Ji2IJhFXZY0x/0tVBXeQwgPlLWw13GVzpsWPQ3rV50IFMMof2I55PZZxtm4P6iNq+L5znYN9nSTAq0ZyE6lSJw==
   dependencies:
     busboy "^1.6.0"
 

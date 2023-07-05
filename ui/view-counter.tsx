@@ -1,6 +1,6 @@
 "use client"
 
-import { incrementSlugMetrics } from "@/lib/db"
+import { incrementSlugMetrics } from "@/lib/actions"
 import { Suspense, useEffect } from "react"
 import { LoadingDots } from "./loading"
 import { Metric } from "./metrics/metric"
@@ -9,18 +9,20 @@ import { Metric } from "./metrics/metric"
 
 export function ViewCounter({
   slug,
-  allViews,
+  allMetrics,
   track,
 }: {
   slug: string
-  allViews: {
+  allMetrics: {
     slug: string
     views: number
+    likes: number
   }[]
   track?: boolean
 }) {
-  const viewsForSlug = allViews && allViews.find((view) => view.slug === slug)
-  const views = new Number(viewsForSlug?.views || 0)
+  const metrics = allMetrics && allMetrics.find((view) => view.slug === slug)
+  const views = new Number(metrics?.views || 0)
+  const likes = new Number(metrics?.likes || 0)
 
   useEffect(() => {
     if (track) {
@@ -31,7 +33,7 @@ export function ViewCounter({
   return (
     <div className="flex space-x-1">
       <Suspense fallback={<LoadingDots />}>
-        <Metric stat={views} />
+        <Metric stat={views} type={"views"} />
       </Suspense>
     </div>
   )

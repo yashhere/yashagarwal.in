@@ -1,4 +1,4 @@
-import { getAllLikesCount, getAllViewsCount, getLikes } from "@/lib/db"
+import { getAllMetrics } from "@/lib/actions"
 import { BlogPostList } from "@/ui/post/blog-list"
 import { allPosts } from "contentlayer/generated"
 import { compareDesc } from "date-fns"
@@ -11,8 +11,7 @@ export const metadata: Metadata = {
 }
 
 export default async function Page() {
-  const allViews = await getAllViewsCount()
-  let allLikes = await getAllLikesCount()
+  const allMetrics = await getAllMetrics()
   const posts = allPosts
     .filter((p) => p.status === "published")
     .sort((a, b) => {
@@ -34,7 +33,7 @@ export default async function Page() {
           </p>
         </div>
       </section>
-      <BlogPostList allViews={allViews} allLikes={allLikes} posts={posts} />
+      <BlogPostList allMetrics={allMetrics} posts={posts} />
     </>
   )
 }

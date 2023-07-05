@@ -1,8 +1,3 @@
-import { User } from "@prisma/client"
-import type { Icon } from "lucide-react"
-
-// import { Icons } from "@/components/icons"
-
 export type SiteConfig = {
   name: string
   description: string
@@ -12,4 +7,10 @@ export type SiteConfig = {
     twitter: string
     github: string
   }
+}
+
+export type PostWithMetrics = {
+  post: Partial<Post>
+  likes: number
+  views: number
 }

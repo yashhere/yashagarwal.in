@@ -1,30 +1,25 @@
-import { Suspense } from "react"
-import moment from "moment"
-
 import { getPost } from "@/lib/content"
-
+import moment from "moment"
+import { Suspense } from "react"
 import Link from "../link/link"
-import { ViewCounter } from "../view-counter"
+import { Metric } from "../metrics/metric"
 import { PostPreviewLoading } from "./loading"
 
 export const PostPreview = ({
   post,
-  allLikes,
-  allViews,
+  allMetrics,
 }: {
   post: NonNullable<ReturnType<typeof getPost>>
-  allLikes: {
+  allMetrics: {
     slug: string
     likes: number
-  }[]
-  allViews: {
-    slug: string
     views: number
   }[]
 }) => {
-  const likesForSlug =
-    allLikes && allLikes.find((item) => item.slug === post.slug)
-  const likes = new Number(likesForSlug?.likes || 0)
+  const metrics =
+    allMetrics && allMetrics.find((item) => item.slug === post.slug)
+  const likes = new Number(metrics?.likes || 0)
+  const views = new Number(metrics?.views || 0)
   return (
     <>
       <Suspense fallback={<PostPreviewLoading />}>
@@ -39,13 +34,9 @@ export const PostPreview = ({
             <div className="flex space-x-2 text-sm font-medium text-black/60 dark:text-white/60">
               <p>{moment(post.published).fromNow()}</p>
               <p>&middot;</p>
-              <ViewCounter
-                slug={post.slug as string}
-                allViews={allViews}
-                track={false}
-              />
+              <Metric stat={views} type="views" />
               <p>&middot;</p>
-              <p>{`${likes.toLocaleString()} likes`}</p>
+              <Metric stat={likes} type="likes" />
             </div>
           </div>
         </Link>

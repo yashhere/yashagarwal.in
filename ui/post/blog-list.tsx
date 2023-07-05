@@ -1,8 +1,7 @@
 "use client"
 
-import { ChangeEvent, Suspense, useState } from "react"
 import { Post } from "contentlayer/generated"
-
+import { ChangeEvent, Suspense, useState } from "react"
 import { SearchInput } from "../search"
 import { PostList } from "./list"
 import { PostPreviewLoading } from "./loading"
@@ -18,16 +17,12 @@ export const PostListLoading = ({ posts }: { posts: Post[] }) => {
 }
 export const BlogPostList = ({
   posts,
-  allLikes,
-  allViews,
+  allMetrics,
 }: {
   posts: Post[]
-  allLikes: {
+  allMetrics: {
     slug: string
     likes: number
-  }[]
-  allViews: {
-    slug: string
     views: number
   }[]
 }) => {
@@ -55,7 +50,7 @@ export const BlogPostList = ({
       </div>
       <section className="w-full space-y-5">
         <Suspense fallback={<PostListLoading posts={posts} />}>
-          <PostList allViews={allViews} allLikes={allLikes} posts={results} />
+          <PostList allMetrics={allMetrics} posts={results} />
         </Suspense>
       </section>
     </div>

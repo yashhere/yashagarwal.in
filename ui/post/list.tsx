@@ -1,19 +1,14 @@
-import { PostPreview } from "@/ui/post/preview"
-
 import { getPosts } from "@/lib/content"
+import { PostPreview } from "@/ui/post/preview"
 
 export const PostList = ({
   posts,
-  allLikes,
-  allViews,
+  allMetrics,
 }: {
   posts?: ReturnType<typeof getPosts>
-  allLikes: {
+  allMetrics: {
     slug: string
     likes: number
-  }[]
-  allViews: {
-    slug: string
     views: number
   }[]
 }) => {
@@ -24,8 +19,7 @@ export const PostList = ({
           <PostPreview
             key={article.slug}
             post={article}
-            allViews={allViews}
-            allLikes={allLikes}
+            allMetrics={allMetrics}
           />
         )
       })}

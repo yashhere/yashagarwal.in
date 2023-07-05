@@ -1,9 +1,10 @@
 import "@/styles/mdx.css"
 import { createHash } from "crypto"
+import { getAllMetrics, getLikes } from "@/lib/actions"
 import { getPost, getSeries } from "@/lib/content"
-import { getAllViewsCount, getLikes } from "@/lib/db"
 import { LikeButton } from "@/ui/like-button"
 import CustomMDXComponents from "@/ui/mdx"
+import { Metric } from "@/ui/metrics/metric"
 import { TableOfContents } from "@/ui/post/table-of-contents"
 import { Series } from "@/ui/series"
 import { ViewCounter } from "@/ui/view-counter"
@@ -51,9 +52,12 @@ export default async function Page({ params }: { params: { slug: string } }) {
   const { slug } = params
   const post: NonNullable<ReturnType<typeof getPost>> = getPost(slug)
   const Content = getMDXComponent(post.body.code)
-  const allViews = await getAllViewsCount()
+  const allMetrics = await getAllMetrics()
   const sessionId = getSessionId(slug)
   let [totalLikes, userLikes] = await getLikes(slug, sessionId)
+
+  const metrics = allMetrics && allMetrics.find((view) => view.slug === slug)
+  const likes = new Number(metrics?.likes || 0)
 
   return (
     <>
@@ -65,9 +69,9 @@ export default async function Page({ params }: { params: { slug: string } }) {
           <div className="text-md mt-2 flex space-x-2 font-body font-semibold text-black/70 dark:text-white/70 sm:text-lg">
             <p>{moment(post.published).format("MMM DD, YYYY")}</p>
             <p>&middot;</p>
-            <ViewCounter slug={slug} allViews={allViews} track={true} />
+            <ViewCounter slug={slug} allMetrics={allMetrics} track={true} />
             <p>&middot;</p>
-            <p>{totalLikes} likes</p>
+            <Metric stat={likes} type={"likes"} />
           </div>
           <div className="text-md mt-2 flex space-x-2 font-body font-semibold text-black/70 dark:text-white/70 sm:text-lg">
             <p>Time to read: {Math.round(post.readingTime.minutes)} mins</p>

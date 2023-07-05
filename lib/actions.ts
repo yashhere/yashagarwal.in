@@ -1,32 +1,20 @@
-import { allPosts, Post } from "contentlayer/generated"
-import { Kysely } from "kysely"
-import { PlanetScaleDialect } from "kysely-planetscale"
+"use server"
+
+import { PostWithMetrics } from "@/types"
+import { allPosts } from "contentlayer/generated"
 import { cache } from "react"
-import { DB } from "./db_types"
+import { queryBuilder } from "./planetscale"
 
-export const db = new Kysely<DB>({
-  dialect: new PlanetScaleDialect({
-    url: process.env.DATABASE_URL,
-  }),
-})
-
-export const getBlogViews = cache(async () => {
-  const data = await db.selectFrom("Stats").select(["views"]).execute()
-
-  return data.reduce((acc, curr) => acc + Number(curr.views), 0)
-})
-
-export const getAllViewsCount = cache(async () => {
-  return db.selectFrom("Stats").select(["slug", "views"]).execute()
-})
-
-export const getAllLikesCount = cache(async () => {
-  return db.selectFrom("Stats").select(["slug", "likes"]).execute()
+export const getAllMetrics = cache(async () => {
+  return queryBuilder
+    .selectFrom("Stats")
+    .select(["slug", "views", "likes"])
+    .execute()
 })
 
 export const getTotalViews = cache(async () => {
-  const { sum } = db.fn
-  return db
+  const { sum } = queryBuilder.fn
+  return queryBuilder
     .selectFrom("Stats")
     .select(sum("views").as("total_views"))
     .executeTakeFirstOrThrow()
@@ -34,13 +22,13 @@ export const getTotalViews = cache(async () => {
 
 export async function getLikes(slug: string, sessionId: string) {
   const [post, user] = await Promise.all([
-    db
+    queryBuilder
       .selectFrom("Stats")
       .where("slug", "=", slug)
       .select(["slug", "likes"])
       .executeTakeFirst(),
 
-    db
+    queryBuilder
       .selectFrom("Session")
       .where("id", "=", sessionId)
       .select(["id", "likes"])
@@ -57,14 +45,14 @@ export async function incrementLikes(
 ) {
   return await Promise.all([
     incrementSlugMetrics(slug, 0, currentLikes),
-    db
+    queryBuilder
       .selectFrom("Session")
       .where("id", "=", sessionId)
       .select(["id", "likes"])
       .executeTakeFirst()
       .then((data) => {
         const currentUserLikes = !data ? 0 : Number(data.likes)
-        return db
+        return queryBuilder
           .insertInto("Session")
           .values({
             id: sessionId,
@@ -81,7 +69,7 @@ export async function incrementSlugMetrics(
   currentViews: number = 1,
   currentLikes: number = 0,
 ) {
-  const data = await db
+  const data = await queryBuilder
     .selectFrom("Stats")
     .where("slug", "=", slug)
     .select(["views", "likes"])
@@ -90,7 +78,7 @@ export async function incrementSlugMetrics(
   const views = !data ? 1 : Number(data.views)
   const likes = !data ? 0 : Number(data.likes)
 
-  return db
+  return queryBuilder
     .insertInto("Stats")
     .values({
       slug,
@@ -105,21 +93,21 @@ export async function incrementSlugMetrics(
 }
 
 export async function getTopPosts(n: number) {
-  const data = await db
+  const data = await queryBuilder
     .selectFrom("Stats")
-    .select(["slug", "views"])
+    .select(["slug", "views", "likes"])
     .orderBy("views", "desc")
     .limit(n)
     .execute()
 
-  const articles: Partial<Post>[] = []
+  const articles: PostWithMetrics[] = []
 
   data?.forEach(async (item) => {
     const post = allPosts
       .filter((p) => p.status != "draft")
       .find((p) => p.slug === item.slug)
     if (post != null) {
-      articles.push(post)
+      articles.push({ post: post, views: item.views, likes: item.likes })
     }
   })
 

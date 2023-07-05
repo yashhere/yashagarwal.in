@@ -1,13 +1,11 @@
-import { Suspense } from "react"
-import { headers } from "next/headers"
+import { getTotalViews } from "@/lib/actions"
 import {
   ArrowTrendingUpIcon,
   PencilSquareIcon,
 } from "@heroicons/react/24/solid"
 import { allPosts } from "contentlayer/generated"
-
-import { getTotalViews } from "@/lib/db"
-
+import { headers } from "next/headers"
+import { Suspense } from "react"
 import { LoadingMetric } from "./loading"
 import { Metric } from "./metric"
 

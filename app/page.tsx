@@ -34,9 +34,9 @@ export default async function Page() {
       </section>
       <section className="mt-8 flex flex-col justify-start">
         {/* TODO: debug this. Shall I use 'use client' here? */}
-        <h3 className="pb-4 font-heading text-xl font-bold uppercase tracking-widest text-tertiary">
+        <h2 className="pb-4 font-heading text-xl font-bold uppercase tracking-widest text-tertiary">
           Popular posts
-        </h3>
+        </h2>
         {/* @ts-expect-error Async Server Component */}
         <TopPosts />
         <Link

@@ -1,48 +1,33 @@
-import { Suspense } from "react"
-import { headers } from "next/headers"
-import { ViewCounter } from "@/ui/view-counter"
-import { Post } from "contentlayer/generated"
+import { getTopPosts } from "@/lib/actions"
 import moment from "moment"
-
-import { getAllLikesCount, getAllViewsCount, getTopPosts } from "@/lib/db"
-
+import { Suspense } from "react"
 import Link from "../link/link"
+import { Metric } from "../metrics/metric"
 import { PostPreviewLoading } from "./loading"
 
 export async function TopPosts() {
-  const [data, allViews, allLikes] = await Promise.all([
-    getTopPosts(3),
-    getAllViewsCount(),
-    getAllLikesCount(),
-  ])
+  const articles = await getTopPosts(3)
 
   return (
     <>
-      {data?.map((post) => {
-        const likesForSlug =
-          allLikes && allLikes.find((item) => item.slug === post.slug)
-        const likes = new Number(likesForSlug?.likes || 0)
+      {articles?.map((item) => {
         return (
-          <Suspense key={post.slug} fallback={<PostPreviewLoading />}>
+          <Suspense key={item.post.slug} fallback={<PostPreviewLoading />}>
             <Link
-              href={`/blog/${post.slug}`}
+              href={`/blog/${item.post.slug}`}
               className="transition-all [&_h4]:hover:text-primary-300"
             >
               <div className="flex h-full flex-col justify-between rounded-lg">
                 <div className="mb-6">
                   <h4 className="w-full font-heading text-lg font-bold">
-                    {post.title}
+                    {item.post.title}
                   </h4>
                   <div className="text-md flex space-x-2 font-medium text-black/60 dark:text-white/60">
-                    <p>{moment(post.published).fromNow()}</p>
+                    <p>{moment(item.post.published).fromNow()}</p>
                     <p>&middot;</p>
-                    <ViewCounter
-                      slug={post.slug as string}
-                      allViews={allViews}
-                      track={false}
-                    />
+                    <Metric stat={item.views} type="views" />
                     <p>&middot;</p>
-                    <p>{`${likes.toLocaleString()} likes`}</p>
+                    <Metric stat={item.likes} type="likes" />
                   </div>
                 </div>
               </div>
