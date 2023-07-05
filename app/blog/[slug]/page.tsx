@@ -2,6 +2,7 @@ import "@/styles/mdx.css"
 import { createHash } from "crypto"
 import { getAllMetrics, getLikes } from "@/lib/actions"
 import { getPost, getSeries } from "@/lib/content"
+import { createOgImage } from "@/lib/createOgImage"
 import { LikeButton } from "@/ui/like-button"
 import CustomMDXComponents from "@/ui/mdx"
 import { Metric } from "@/ui/metrics/metric"
@@ -9,12 +10,32 @@ import { TableOfContents } from "@/ui/post/table-of-contents"
 import { Series } from "@/ui/series"
 import { ViewCounter } from "@/ui/view-counter"
 import moment from "moment"
+import { Metadata, ResolvingMetadata } from "next"
 import { getMDXComponent } from "next-contentlayer/hooks"
 import { headers } from "next/headers"
 import { Suspense } from "react"
 
-export async function generateMetadata({ params }) {
+type Props = {
+  params: { slug: string }
+}
+
+export async function generateMetadata(
+  { params }: Props,
+  parent: ResolvingMetadata,
+): Promise<Metadata> {
   const post = await getPost(params.slug)
+
+  // access and extend (rather than replace) parent metadata
+  const previousImages = (await parent).openGraph?.images || []
+  const tags = (post.tags && post.tags.map(({ value }) => value)) || [""]
+
+  const newOgImage = createOgImage({
+    title: post.title,
+    meta: [
+      "yashagarwal.in",
+      moment(post.published).format("MMM DD, YYYY"),
+    ].join(" · "),
+  })
 
   return {
     title: `${post.title} | Yash Agarwal`,
@@ -28,6 +49,9 @@ export async function generateMetadata({ params }) {
     twitter: {
       card: "summary_large_image",
       creator: "@yash__here",
+    },
+    openGraph: {
+      images: [newOgImage, ...previousImages],
     },
   }
 }
