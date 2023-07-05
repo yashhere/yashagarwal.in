@@ -71,7 +71,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
             <p>&middot;</p>
             <ViewCounter slug={slug} allMetrics={allMetrics} track={true} />
             <p>&middot;</p>
-            <Metric stat={likes} type={"likes"} />
+            <Metric stat={likes.toString()} type={"likes"} />
           </div>
           <div className="text-md mt-2 flex space-x-2 font-body font-semibold text-black/70 dark:text-white/70 sm:text-lg">
             <p>Time to read: {Math.round(post.readingTime.minutes)} mins</p>

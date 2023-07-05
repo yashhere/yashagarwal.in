@@ -34,9 +34,9 @@ export const PostPreview = ({
             <div className="flex space-x-2 text-sm font-medium text-black/60 dark:text-white/60">
               <p>{moment(post.published).fromNow()}</p>
               <p>&middot;</p>
-              <Metric stat={views} type="views" />
+              <Metric stat={views.toString()} type="views" />
               <p>&middot;</p>
-              <Metric stat={likes} type="likes" />
+              <Metric stat={likes.toString()} type="likes" />
             </div>
           </div>
         </Link>

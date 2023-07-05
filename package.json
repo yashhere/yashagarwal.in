@@ -32,7 +32,6 @@
     "@tailwindcss/typography": "^0.5.9",
     "@vercel/analytics": "^1.0.1",
     "clsx": "^1.2.1",
-    "connection-string": "^4.3.6",
     "contentlayer": "^0.3.1",
     "date-fns": "^2.29.3",
     "framer-motion": "^10.11.2",
@@ -55,9 +54,7 @@
     "reading-time": "^1.5.0",
     "rss": "^1.2.2",
     "shiki": "^0.14.1",
-    "sqlstring": "^2.3.3",
     "tailwind-merge": "^1.13.2",
-    "undici": "^5.22.1",
     "zod": "^3.21.4"
   },
   "devDependencies": {
@@ -89,7 +86,7 @@
     "remark": "^14.0.3",
     "remark-gfm": "^3.0.1",
     "remark-math": "^5.1.1",
-    "tailwindcss": "^3.3.1",
+    "tailwindcss": "^3.3.2",
     "typescript": "^5.1.0-beta"
   }
 }

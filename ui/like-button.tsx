@@ -1,11 +1,9 @@
 "use client"
 
-import { createHash } from "crypto"
-import { getAllLikesCount, getLikes, incrementLikes } from "@/lib/actions"
+import { incrementLikes } from "@/lib/actions"
 import { FOCUS_VISIBLE_OUTLINE } from "@/lib/constants"
 import { cn } from "@/lib/utils"
 import { HeartIcon } from "@heroicons/react/24/solid"
-import { headers } from "next/headers"
 import { useState } from "react"
 
 const emojis = ["👍", "🙏", "🥰"]

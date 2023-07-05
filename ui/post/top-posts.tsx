@@ -25,9 +25,9 @@ export async function TopPosts() {
                   <div className="text-md flex space-x-2 font-medium text-black/60 dark:text-white/60">
                     <p>{moment(item.post.published).fromNow()}</p>
                     <p>&middot;</p>
-                    <Metric stat={item.views} type="views" />
+                    <Metric stat={item.views.toString()} type="views" />
                     <p>&middot;</p>
-                    <Metric stat={item.likes} type="likes" />
+                    <Metric stat={item.likes.toString()} type="likes" />
                   </div>
                 </div>
               </div>

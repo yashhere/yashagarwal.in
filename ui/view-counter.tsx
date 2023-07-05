@@ -22,7 +22,6 @@ export function ViewCounter({
 }) {
   const metrics = allMetrics && allMetrics.find((view) => view.slug === slug)
   const views = new Number(metrics?.views || 0)
-  const likes = new Number(metrics?.likes || 0)
 
   useEffect(() => {
     if (track) {
@@ -30,11 +29,5 @@ export function ViewCounter({
     }
   }, [])
 
-  return (
-    <div className="flex space-x-1">
-      <Suspense fallback={<LoadingDots />}>
-        <Metric stat={views} type={"views"} />
-      </Suspense>
-    </div>
-  )
+  return <Metric stat={views.toString()} type={"views"} />
 }

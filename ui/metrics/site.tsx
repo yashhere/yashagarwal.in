@@ -4,7 +4,6 @@ import {
   PencilSquareIcon,
 } from "@heroicons/react/24/solid"
 import { allPosts } from "contentlayer/generated"
-import { headers } from "next/headers"
 import { Suspense } from "react"
 import { LoadingMetric } from "./loading"
 import { Metric } from "./metric"
@@ -19,7 +18,7 @@ export const SiteMetrics = async (): Promise<JSX.Element> => {
         <ArrowTrendingUpIcon className="w-5" />
         <div className="flex space-x-1">
           <Suspense fallback={<LoadingMetric />}>
-            <Metric stat={data} />
+            <Metric stat={data.toString()} type={"views"} />
           </Suspense>
           <p>views</p>
         </div>
@@ -29,7 +28,7 @@ export const SiteMetrics = async (): Promise<JSX.Element> => {
         <PencilSquareIcon className="w-5" />
         <div className="flex space-x-1">
           <Suspense fallback={<LoadingMetric />}>
-            <Metric stat={count} />
+            <Metric stat={count.toString()} type={"posts"} />
           </Suspense>
           <p>articles</p>
         </div>
