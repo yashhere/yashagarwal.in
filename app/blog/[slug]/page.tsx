@@ -1,3 +1,4 @@
+import "katex/dist/katex.css"
 import "@/styles/mdx.css"
 import { createHash } from "crypto"
 import { env } from "@/env.mjs"
