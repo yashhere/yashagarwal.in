@@ -15,7 +15,8 @@
     "lint": "next lint",
     "preview": "yarn build && next start",
     "postinstall": "prisma generate",
-    "lint-staged": "lint-staged"
+    "lint-staged": "lint-staged",
+    "prepare": "husky install"
   },
   "lint-staged": {
     "*.{tsx, ts}": [
@@ -78,11 +79,12 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-tailwindcss": "^3.13.0",
-    "husky": "^8.0.3",
+    "husky": "^8.0.0",
     "lint-staged": "^13.2.3",
     "postcss": "^8.4.21",
     "prettier": "^2.8.7",
     "prettier-plugin-tailwindcss": "^0.3.0",
+    "pretty-quick": "^3.1.3",
     "rehype-accessible-emojis": "^0.3.2",
     "rehype-autolink-headings": "^6.1.1",
     "rehype-mathjax": "^4.0.2",
