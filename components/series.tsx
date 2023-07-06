@@ -1,14 +1,12 @@
 "use client"
 
-import React, { FC, ReactNode } from "react"
-import Link from "next/link"
-import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/outline"
-import { motion } from "framer-motion"
-
+import { FOCUS_VISIBLE_OUTLINE, LINK_STYLES } from "@/lib/constants"
 import { getSeries } from "@/lib/content"
 import { cn } from "@/lib/utils"
-
-import { FOCUS_VISIBLE_OUTLINE, LINK_STYLES } from "../lib/constants"
+import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/outline"
+import { motion } from "framer-motion"
+import Link from "next/link"
+import React, { FC, ReactNode } from "react"
 
 type TitleProps = {
   children?: ReactNode

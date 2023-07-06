@@ -1,10 +1,10 @@
 "use client"
 
+import { PostList } from "@/components/article-list"
+import { SearchInput } from "@/components/search"
+import { PostPreviewLoading } from "@/components/ui/post-preview-loading"
 import { Post } from "contentlayer/generated"
 import { ChangeEvent, Suspense, useState } from "react"
-import { SearchInput } from "../search"
-import { PostList } from "./list"
-import { PostPreviewLoading } from "./loading"
 
 export const PostListLoading = ({ posts }: { posts: Post[] }) => {
   return (

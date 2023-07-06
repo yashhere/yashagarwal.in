@@ -1,11 +1,8 @@
 "use client"
 
+import { Metric } from "@/components/metrics/metric"
 import { incrementSlugMetrics } from "@/lib/actions"
-import { Suspense, useEffect } from "react"
-import { LoadingDots } from "./loading"
-import { Metric } from "./metrics/metric"
-
-// import { LoadingDots } from "./loading-dots"
+import { useEffect } from "react"
 
 export function ViewCounter({
   slug,

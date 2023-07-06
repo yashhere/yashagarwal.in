@@ -1,4 +1,4 @@
-import { LoadingDots } from "./loading"
+import { LoadingDots } from "@/components/ui/loading"
 
 export const Statistic = ({
   value,

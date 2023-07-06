@@ -1,5 +1,5 @@
-import { FC, ReactNode, useState } from "react"
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid"
+import { FC, ReactNode, useState } from "react"
 
 type AccordionItemProps = {
   label: string

@@ -1,5 +1,7 @@
 "use client"
 
+import { cn } from "@/lib/utils"
+import Link from "next/link"
 import {
   AnchorHTMLAttributes,
   cloneElement,
@@ -7,11 +9,7 @@ import {
   ReactElement,
   ReactNode,
 } from "react"
-import Link from "next/link"
 import { TbArrowUpRight } from "react-icons/tb"
-
-import { FOCUS_VISIBLE_OUTLINE, LINK_STYLES } from "@/lib/constants"
-import { cn } from "@/lib/utils"
 
 interface ExternalLinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
   href: string

@@ -1,9 +1,9 @@
 "use server"
 
+import { queryBuilder } from "@/lib/planetscale"
 import { PostWithMetrics } from "@/types"
 import { allPosts } from "contentlayer/generated"
 import { cache } from "react"
-import { queryBuilder } from "./planetscale"
 
 export const getAllMetrics = cache(async () => {
   return queryBuilder

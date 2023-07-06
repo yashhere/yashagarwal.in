@@ -1,5 +1,5 @@
+import { BlogPostList } from "@/components/blog-list"
 import { getAllMetrics } from "@/lib/actions"
-import { BlogPostList } from "@/ui/post/blog-list"
 import { allPosts } from "contentlayer/generated"
 import { compareDesc } from "date-fns"
 import { Metadata } from "next"

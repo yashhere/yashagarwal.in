@@ -1,9 +1,9 @@
+import { Metric } from "@/components/metrics/metric"
+import Link from "@/components/ui/link"
+import { PostPreviewLoading } from "@/components/ui/post-preview-loading"
 import { getTopPosts } from "@/lib/actions"
 import moment from "moment"
 import { Suspense } from "react"
-import Link from "../link/link"
-import { Metric } from "../metrics/metric"
-import { PostPreviewLoading } from "./loading"
 
 export async function TopPosts() {
   const articles = await getTopPosts(3)

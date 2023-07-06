@@ -1,9 +1,8 @@
 "use client"
 
-// import { Aside } from "@/ui/Aside"
-import React from "react"
-
+// import { Aside } from "@/components/Aside"
 import { cn } from "@/lib/utils"
+import React from "react"
 
 // There are probably better ways to do this 🥴
 export const Code = ({ children }: { children: React.ReactNode }) => {

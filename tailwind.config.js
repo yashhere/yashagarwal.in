@@ -10,9 +10,8 @@ const disabledCss = {
 module.exports = {
   content: [
     "./app/**/*.{ts,tsx}",
-    "./ui/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
     "./lib/**/*.{js,ts}",
-    "./container/**/*.{ts,tsx}",
     "./content/**/*.{md,mdx}",
   ],
   darkMode: ["class"],

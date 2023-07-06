@@ -4,7 +4,6 @@ import {
 } from "contentlayer/source-files"
 import GithubSlugger from "github-slugger"
 import readingTime from "reading-time"
-
 import { Series } from "./series"
 import { Tag } from "./tag"
 

@@ -1,7 +1,7 @@
 "use client"
 
+import { LoadingDots } from "@/components/ui/loading"
 import { Suspense } from "react"
-import { LoadingDots } from "../loading"
 
 export const Metric = ({
   stat,

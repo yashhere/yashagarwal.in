@@ -1,10 +1,9 @@
 "use client"
 
-import { useRouter } from "next/navigation"
+import { cn } from "@/lib/utils"
 import { motion } from "framer-motion"
 import GithubSlugger from "github-slugger"
-
-import { cn } from "@/lib/utils"
+import { useRouter } from "next/navigation"
 
 export const TableOfContents = ({ headings, path }) => {
   const router = useRouter()

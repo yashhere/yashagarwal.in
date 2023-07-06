@@ -1,3 +1,5 @@
+import { LoadingMetric } from "@/components/metrics/loading"
+import { Metric } from "@/components/metrics/metric"
 import { getTotalViews } from "@/lib/actions"
 import {
   ArrowTrendingUpIcon,
@@ -5,8 +7,6 @@ import {
 } from "@heroicons/react/24/solid"
 import { allPosts } from "contentlayer/generated"
 import { Suspense } from "react"
-import { LoadingMetric } from "./loading"
-import { Metric } from "./metric"
 
 export const SiteMetrics = async (): Promise<JSX.Element> => {
   const data = Number((await getTotalViews()).total_views || 0)

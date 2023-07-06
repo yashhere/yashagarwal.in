@@ -1,5 +1,5 @@
-import Link from "@/ui/link/link"
-import RandomPhoto from "@/ui/random-photo"
+import RandomPhoto from "@/components/random-photo"
+import Link from "@/components/ui/link"
 import { Metadata } from "next"
 import { FC } from "react"
 

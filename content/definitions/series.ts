@@ -1,7 +1,5 @@
 import { defineNestedType } from "contentlayer/source-files"
 
-import { Post } from "./post"
-
 export const Series = defineNestedType(() => ({
   name: "Series",
   fields: {

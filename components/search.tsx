@@ -1,5 +1,5 @@
-import { ChangeEvent } from "react"
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid"
+import { ChangeEvent } from "react"
 
 export const SearchInput = ({
   search,

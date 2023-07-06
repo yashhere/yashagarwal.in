@@ -1,5 +1,5 @@
+import { PostPreview } from "@/components/post-preview"
 import { getPosts } from "@/lib/content"
-import { PostPreview } from "@/ui/post/preview"
 
 export const PostList = ({
   posts,

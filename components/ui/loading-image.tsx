@@ -1,8 +1,7 @@
-import React from "react"
+import { cn } from "@/lib/utils"
 import type { ImageProps } from "next/image"
 import NextImage from "next/image"
-
-import { cn } from "@/lib/utils"
+import React from "react"
 
 export const LoadingImage = (props: ImageProps) => {
   const [isLoading, setLoading] = React.useState(true)

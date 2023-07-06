@@ -1,11 +1,11 @@
-import "../styles/globals.css"
+import "@/styles/globals.css"
+import { Analytics } from "@/components/analytics"
+import { Footer } from "@/components/footer"
+import { ThemeProvider } from "@/components/theme-provider"
+import { Navigation } from "@/components/ui/navigation"
+import { TailwindIndicator } from "@/components/ui/tailwind-indicator"
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
-import { Analytics } from "@/ui/analytics"
-import { Footer } from "@/ui/layout/footer"
-import { Navigation } from "@/ui/layout/navigation"
-import { TailwindIndicator } from "@/ui/tailwind-indicator"
-import { ThemeProvider } from "@/ui/theme-provider"
 import { Metadata } from "next"
 import { Fira_Code } from "next/font/google"
 import localFont from "next/font/local"
@@ -13,7 +13,6 @@ import localFont from "next/font/local"
 const bodyFont = localFont({
   src: "../public/assets/fonts/wotfard.ttf",
   variable: "--font-body",
-  // weight: "400 900",
 })
 
 const monoFont = Fira_Code({

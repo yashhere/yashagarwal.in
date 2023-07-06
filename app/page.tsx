@@ -1,5 +1,5 @@
-import Link from "@/ui/link/link"
-import { TopPosts } from "@/ui/post/top-posts"
+import { TopPosts } from "@/components/top-posts"
+import Link from "@/components/ui/link"
 import { ArrowRightIcon } from "@heroicons/react/24/solid"
 import { Metadata } from "next"
 

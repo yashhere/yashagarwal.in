@@ -1,18 +1,12 @@
 /* eslint-disable react/jsx-no-target-blank */
-import React from "react"
-import type { ImageProps } from "next/image"
-import NextLink from "next/link"
-import { MDXComponents } from "mdx/types"
-// import Link from "next/link"
-import { TbArrowUpRight } from "react-icons/tb"
-
+import Link from "@/components/ui/link"
+import { LoadingImage } from "@/components/ui/loading-image"
+import { FOCUS_VISIBLE_OUTLINE, LINK_STYLES } from "@/lib/constants"
 import { cn } from "@/lib/utils"
-
-import { FOCUS_VISIBLE_OUTLINE, LINK_STYLES } from "../lib/constants"
-import { Aside } from "./aside"
-import { Code } from "./code"
-import Link from "./link/link"
-import { LoadingImage } from "./loading-image"
+import { MDXComponents } from "mdx/types"
+import type { ImageProps } from "next/image"
+import React from "react"
+import { TbArrowUpRight } from "react-icons/tb"
 
 const CustomLink = (props) => {
   const href = props.href

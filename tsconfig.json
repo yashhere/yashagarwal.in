@@ -17,15 +17,14 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
-      "@/ui/*": ["./ui/*"],
+      "@/components/*": ["./components/*"],
       "@/lib/*": ["./lib/*"],
       "@/public/*": ["./public/*"],
       "@/styles/*": ["./styles/*"],
       "@/types": ["./types"],
       "@/config": ["./config"],
-      "@/container/*": ["./container/*"],
-      "contentlayer/generated": ["./.contentlayer/generated"],
       "@/content/*": ["./content/*"],
+      "contentlayer/generated": ["./.contentlayer/generated"],
       "@/*": ["./*"]
     },
     "plugins": [
