@@ -11,7 +11,7 @@ export const SearchInput = ({
   return (
     <>
       <form>
-        <div className="relative text-black/40 dark:text-white/40">
+        <div className="relative text-text/40">
           <div className="pointer-events-none absolute inset-y-0 flex items-center pl-2">
             <MagnifyingGlassIcon className="w-5" />
           </div>
@@ -19,7 +19,7 @@ export const SearchInput = ({
             type="search"
             id="default_search"
             placeholder="Search for a post..."
-            className="block w-full rounded-md bg-black/10 p-1 pl-8 text-lg drop-shadow-md dark:bg-white/10"
+            className="block w-full rounded-md bg-gray-900/10 p-1 pl-8 text-lg drop-shadow-md border-none"
             value={search}
             onChange={onChange}
           />
