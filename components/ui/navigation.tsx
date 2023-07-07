@@ -3,6 +3,7 @@
 import { cn } from "@/lib/utils"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { DarkToggle } from "../mode-toggle"
 
 const navItems = {
   "/": {
@@ -47,6 +48,9 @@ export const Navigation = () => {
                 </Link>
               )
             })}
+          </div>
+          <div className="text-sm text-black/70 dark:text-white/70">
+            <DarkToggle />
           </div>
         </nav>
       </div>
