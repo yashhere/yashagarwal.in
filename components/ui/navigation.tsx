@@ -38,9 +38,9 @@ export const Navigation = () => {
                   key={path}
                   href={path}
                   className={cn(
-                    "leading-extra-tight flex align-middle transition-all hover:text-black/95 dark:hover:text-white/95 sm:leading-tight",
+                    "leading-extra-tight flex align-middle transition-all hover:text-text sm:leading-tight",
                     {
-                      "text-black/60 dark:text-white/60": !isActive,
+                      "text-text/60": !isActive,
                     },
                   )}
                 >
@@ -49,7 +49,7 @@ export const Navigation = () => {
               )
             })}
           </div>
-          <div className="text-sm text-black/70 dark:text-white/70">
+          <div className="text-lg text-text">
             <DarkToggle />
           </div>
         </nav>
