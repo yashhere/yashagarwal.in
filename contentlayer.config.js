@@ -40,10 +40,11 @@ export default makeSource({
       [
         rehypeAutolinkHeadings,
         {
-          behaviour: "append",
+          behaviour: "wrap",
           properties: {
-            className: [HEADING_LINK_ANCHOR],
-            ariaLabel: "Link to section",
+            className: [
+              "text-tertiary no-underline after:content-['#'] after:absolute after:pl-4",
+            ],
           },
         },
       ],
