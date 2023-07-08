@@ -17,10 +17,7 @@ const BlogLink = (props) => {
 const CustomMDXComponents: MDXComponents = {
   a: BlogLink,
   pre: ({ children, ...props }) => (
-    <pre
-      className="mb-4 mt-6 overflow-x-auto bg-pre-bg pb-4 text-sm rounded-t-xl"
-      {...props}
-    >
+    <pre className="mb-4 mt-6 bg-pre-bg pb-4 text-sm rounded-t-xl" {...props}>
       <div className={"code-header"}>{props["data-language"]}</div>
       {children}
     </pre>
@@ -28,7 +25,7 @@ const CustomMDXComponents: MDXComponents = {
   code: ({ className, ...props }) => (
     <code
       className={cn(
-        "relative bg-code-bg px-[0.3rem] py-[0.3rem] rounded text-sm break-words",
+        "relative bg-code-bg overflow-x-auto px-[0.3rem] py-[0.3rem] rounded text-sm break-words",
         className,
       )}
       {...props}
