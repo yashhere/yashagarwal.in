@@ -1,78 +1,31 @@
 /* eslint-disable react/jsx-no-target-blank */
 import Link from "@/components/ui/link"
 import { LoadingImage } from "@/components/ui/loading-image"
-import { FOCUS_VISIBLE_OUTLINE, LINK_STYLES } from "@/lib/constants"
 import { cn } from "@/lib/utils"
 import { MDXComponents } from "mdx/types"
 import type { ImageProps } from "next/image"
 import React from "react"
-import { TbArrowUpRight } from "react-icons/tb"
-
-const CustomLink = (props) => {
-  const href = props.href
-
-  if (href.startsWith("/")) {
-    return (
-      <Link
-        className={cn(
-          LINK_STYLES,
-          FOCUS_VISIBLE_OUTLINE,
-          "text-primary-400 no-underline hover:text-primary-300",
-        )}
-        href={href}
-        {...props}
-      >
-        {props.children}
-      </Link>
-    )
-  }
-
-  if (href.startsWith("#")) {
-    return <a className={cn(LINK_STYLES, FOCUS_VISIBLE_OUTLINE)} {...props} />
-  }
-
-  return (
-    <a
-      className={cn(LINK_STYLES, FOCUS_VISIBLE_OUTLINE)}
-      target="_blank"
-      rel="noopener noreferrer"
-      {...props}
-    >
-      {props.children}
-      <TbArrowUpRight className="inline h-5 w-5" />
-    </a>
-  )
-}
 
 const BlogLink = (props) => {
   if (props.href.startsWith("#")) {
-    return <a className={cn(LINK_STYLES, FOCUS_VISIBLE_OUTLINE)} {...props} />
+    return <a {...props} />
   }
 
-  return (
-    <Link
-      {...props}
-      className="text-primary-400 no-underline hover:text-primary-300"
-    />
-  )
+  return <Link {...props} className="text-primary no-underline" />
 }
 
 const CustomMDXComponents: MDXComponents = {
-  // pre: CodeBlock,
   a: BlogLink,
-  pre: ({ className, ...props }) => (
-    <pre
-      className={cn(
-        "mb-4 mt-6 overflow-x-auto rounded-lg border bg-black py-4",
-        className,
-      )}
-      {...props}
-    />
+  pre: ({ children, ...props }) => (
+    <pre className="mb-4 mt-6 bg-pre-bg pb-4 text-sm rounded-t-xl" {...props}>
+      <div className={"code-header"}>{props["data-language"]}</div>
+      {children}
+    </pre>
   ),
   code: ({ className, ...props }) => (
     <code
       className={cn(
-        "relative rounded border px-[0.3rem] py-[0.2rem] font-mono text-sm",
+        "relative bg-code-bg overflow-x-auto px-[0.3rem] py-[0.3rem] rounded text-sm break-words",
         className,
       )}
       {...props}
@@ -98,7 +51,7 @@ const CustomMDXComponents: MDXComponents = {
           <LoadingImage {...props} />
         </div>
         {caption ? (
-          <div className="mt-2 text-sm italic text-rose-100/60">{caption}</div>
+          <div className="mt-2 text-sm italic text-text/70">{caption}</div>
         ) : null}
       </>
     )

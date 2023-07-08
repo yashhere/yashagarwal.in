@@ -7,18 +7,18 @@ import { TailwindIndicator } from "@/components/ui/tailwind-indicator"
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
 import { Metadata } from "next"
-import { Fira_Code } from "next/font/google"
 import localFont from "next/font/local"
 
 const bodyFont = localFont({
   src: "../public/assets/fonts/wotfard.ttf",
   variable: "--font-body",
+  display: "swap",
 })
 
-const monoFont = Fira_Code({
-  display: "swap",
+const monoFont = localFont({
+  src: "../public/assets/fonts/league-mono.ttf",
   variable: "--font-mono",
-  subsets: ["cyrillic"],
+  display: "swap",
 })
 
 export const metadata: Metadata = {
@@ -92,7 +92,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <body
         className={cn(
           "min-h-screen font-body antialiased",
-          "bg-white text-black dark:bg-[#111010] dark:text-white",
+          "bg-background text-text",
           "mx-4 mb-40 mt-8 flex max-w-4xl flex-col md:mt-20 md:flex-row lg:mx-auto lg:mt-32",
           bodyFont.variable,
           monoFont.variable,

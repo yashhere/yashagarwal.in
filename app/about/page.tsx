@@ -14,7 +14,7 @@ const Page: FC = () => {
       <h1 className="leading-extra-tight pb-8 font-heading text-5xl font-bold sm:text-[96px]">
         About Me
       </h1>
-      <section className="prose prose-neutral dark:prose-invert md:prose-lg lg:prose-xl">
+      <section className="prose prose-article md:prose-lg lg:prose-xl">
         <blockquote className="">
           <p>
             Great minds discuss ideas; average minds discuss events; small minds
@@ -44,21 +44,8 @@ const Page: FC = () => {
           <Link href="https://athena.nitc.ac.in/">Software Systems Lab</Link> as
           a system administrator. In 2018, I also led the team organising the
           largest FOSS event in South India at that time - FOSSMeet. Read my
-          experiences of{" "}
-          <Link
-            href="/blog/fossmeet-17"
-            className="text-primary-400 no-underline hover:text-primary-300"
-          >
-            FOSSMeet&apos;17
-          </Link>{" "}
-          and{" "}
-          <Link
-            href="/blog/fossmeet-18"
-            className="text-primary-400 no-underline hover:text-primary-300"
-          >
-            FOSSMeet&apos;18
-          </Link>
-          .
+          experiences of <Link href="/blog/fossmeet-17">FOSSMeet&apos;17</Link>{" "}
+          and <Link href="/blog/fossmeet-18">FOSSMeet&apos;18</Link>.
         </p>
         <p>
           You can find me elsewhere on the Web; at places like{" "}

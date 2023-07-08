@@ -14,12 +14,12 @@ const Page = async () => {
         <h1 className="leading-extra-tight pb-6 font-heading text-5xl sm:text-[96px]">
           Stats
         </h1>
-        <p className="font-medium text-black/80 dark:text-white/80">
+        <p className="font-medium text-text">
           Currated statistics regarding the existence of me on the web, and this
           blog.
         </p>
       </section>
-      <section className="font-medium text-black/80 dark:text-white/80">
+      <section className="font-medium text-text">
         <div className="flex space-x-2">
           <PencilIcon className="w-4" />
           <p>{totalPosts} articles written</p>

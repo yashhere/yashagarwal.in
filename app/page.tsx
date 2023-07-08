@@ -15,7 +15,7 @@ export default async function Page() {
         <h1 className="my-8 text-4xl font-bold tracking-tighter sm:mt-4">
           hey, I&apos;m Yash 👋
         </h1>
-        <div className="prose prose-neutral text-xl leading-7 dark:prose-invert">
+        <div className="prose prose-article text-text text-xl leading-7">
           <p>Welcome to my digital home!</p>
           <p>
             I&apos;m a software engineer with a knack for exploring technology
@@ -34,19 +34,17 @@ export default async function Page() {
       </section>
       <section className="mt-8 flex flex-col justify-start">
         {/* TODO: debug this. Shall I use 'use client' here? */}
-        <h2 className="pb-4 font-heading text-xl font-bold uppercase tracking-widest text-tertiary">
+        <h2 className="pb-4 font-heading text-xl font-bold uppercase tracking-widest text-secondary">
           Popular posts
         </h2>
         {/* @ts-expect-error Async Server Component */}
         <TopPosts />
         <Link
           href="/blog"
-          className="fade text-black/60 transition-all hover:text-black/95 dark:text-white/60 dark:hover:text-white/95"
+          className="group mt-8 flex items-center justify-start space-x-2 text-xl font-bold hover:text-primary"
         >
-          <p className="flex items-center text-lg font-bold">
-            All Posts &nbsp;
-            <ArrowRightIcon className="w-4" />
-          </p>
+          <span>All Posts</span>
+          <ArrowRightIcon className="h-4 w-4 transition duration-200 group-hover:translate-x-1" />
         </Link>
       </section>
     </>

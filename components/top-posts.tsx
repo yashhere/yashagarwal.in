@@ -15,14 +15,14 @@ export async function TopPosts() {
           <Suspense key={item.post.slug} fallback={<PostPreviewLoading />}>
             <Link
               href={`/blog/${item.post.slug}`}
-              className="transition-all [&_h4]:hover:text-primary-300"
+              className="transition-all [&_h4]:hover:text-primary"
             >
               <div className="flex h-full flex-col justify-between rounded-lg">
                 <div className="mb-6">
                   <h4 className="w-full font-heading text-lg font-bold">
                     {item.post.title}
                   </h4>
-                  <div className="text-md flex space-x-2 font-medium text-black/60 dark:text-white/60">
+                  <div className="text-sm flex space-x-2 font-medium text-gray-600">
                     <p>{moment(item.post.published).fromNow()}</p>
                     <p>&middot;</p>
                     <Metric stat={item.views.toString()} type="views" />

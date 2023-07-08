@@ -29,7 +29,7 @@ export const TagList: FC<TagListProps> = ({ tags }) => {
               getNextGradient(),
             )}
           >
-            <div className="h-full justify-between rounded-lg bg-white px-4 py-2">
+            <div className="h-full justify-between rounded-lg bg-text px-4 py-2">
               <p className="text-sm font-medium">{t}</p>
             </div>
           </div>

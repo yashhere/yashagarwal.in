@@ -1,6 +1,5 @@
 import "katex/dist/katex.css"
 import "@/styles/mdx.css"
-import { createHash } from "crypto"
 import { LikeButton } from "@/components/like-button"
 import CustomMDXComponents from "@/components/mdx"
 import { Metric } from "@/components/metrics/metric"
@@ -11,10 +10,10 @@ import { env } from "@/env.mjs"
 import { getAllMetrics, getLikes } from "@/lib/actions"
 import { getPost, getSeries } from "@/lib/content"
 import { createOgImage } from "@/lib/createOgImage"
+import { getSessionId } from "@/lib/server-utils"
 import moment from "moment"
 import { Metadata, ResolvingMetadata } from "next"
 import { getMDXComponent } from "next-contentlayer/hooks"
-import { headers } from "next/headers"
 import { Suspense } from "react"
 
 type Props = {
@@ -62,22 +61,6 @@ export async function generateMetadata(
   }
 }
 
-function getSessionId(slug: string) {
-  const ipAddress = headers().get("x-forwarded-for")
-
-  const currentUserId =
-    // Since a users IP address is part of the sessionId in our database, we
-    // hash it to protect their privacy. By combining it with a salt, we get
-    // get a unique id we can refer to, but we won't know what their ip
-    // address was.
-    createHash("md5")
-      .update(ipAddress + process.env.IP_ADDRESS_SALT!, "utf8")
-      .digest("hex")
-
-  // Identify a specific users interactions with a specific post
-  return slug + "___" + currentUserId
-}
-
 export default async function Page({ params }: { params: { slug: string } }) {
   const { slug } = params
   const post: NonNullable<ReturnType<typeof getPost>> = getPost(slug)
@@ -96,14 +79,14 @@ export default async function Page({ params }: { params: { slug: string } }) {
           <h1 className="relative max-w-4xl pb-2 font-heading text-5xl font-bold leading-none sm:text-6xl">
             {post.title}
           </h1>
-          <div className="text-md mt-2 flex space-x-2 font-body font-semibold text-black/70 dark:text-white/70 sm:text-lg">
+          <div className="text-md mt-2 flex space-x-2 font-body font-semibold text-gray-600 sm:text-lg">
             <p>{moment(post.published).format("MMM DD, YYYY")}</p>
             <p>&middot;</p>
             <ViewCounter slug={slug} allMetrics={allMetrics} track={true} />
             <p>&middot;</p>
             <Metric stat={likes.toString()} type={"likes"} />
           </div>
-          <div className="text-md mt-2 flex space-x-2 font-body font-semibold text-black/70 dark:text-white/70 sm:text-lg">
+          <div className="text-md mt-2 flex space-x-2 font-body font-semibold text-gray-600 sm:text-lg">
             <p>Time to read: {Math.round(post.readingTime.minutes)} mins</p>
           </div>
         </section>
@@ -126,7 +109,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
           {/* Post Content */}
           <div className="pt-8">
-            <div className="prose text-lg leading-7 dark:prose-invert md:prose-lg lg:prose-xl prose-headings:text-secondary prose-h1:mb-4 prose-h1:mt-16 prose-h2:mb-4 prose-h2:mt-8 prose-h3:my-4 prose-p:my-4">
+            <div className="prose prose-article text-lg leading-7 prose-headings:cursor-pointer prose-th:cursor-auto md:prose-lg lg:prose-xl prose-h1:mb-4 prose-h1:mt-16 prose-h2:mb-4 prose-h2:mt-16 prose-h3:my-8 prose-p:my-4">
               <Content components={CustomMDXComponents} />
             </div>
           </div>

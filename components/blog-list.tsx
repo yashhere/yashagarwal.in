@@ -15,6 +15,7 @@ export const PostListLoading = ({ posts }: { posts: Post[] }) => {
     </>
   )
 }
+
 export const BlogPostList = ({
   posts,
   allMetrics,
