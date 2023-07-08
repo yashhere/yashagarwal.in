@@ -63,7 +63,7 @@ const ExternalLink = forwardRef<HTMLAnchorElement, ExternalLinkProps>(
           <a
             href={href}
             className={cn(
-              "mr-1 inline-flex items-center space-x-1 text-primary transition duration-200 no-underline",
+              "inline-flex items-center space-x-1 text-primary transition duration-200 no-underline",
               isUnderline && "hover:underline hover:underline-offset-8",
               className,
             )}
