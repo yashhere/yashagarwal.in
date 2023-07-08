@@ -28,7 +28,7 @@ const CustomMDXComponents: MDXComponents = {
   code: ({ className, ...props }) => (
     <code
       className={cn(
-        "relative bg-code-bg px-[0.3rem] py-[0.3rem] rounded text-sm",
+        "relative bg-code-bg px-[0.3rem] py-[0.3rem] rounded text-sm break-words",
         className,
       )}
       {...props}
