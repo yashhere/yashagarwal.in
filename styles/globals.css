@@ -44,8 +44,6 @@
     --color-syntax-del: rgb(255 85 85);
     --color-syntax-regex: #3600d6;
     --color-syntax-fn: #3d5afe;
-
-    --radius: 0.5rem;
   }
 
   .dark {
@@ -93,8 +91,6 @@
     --color-syntax-del: #ff5555;
     --color-syntax-regex: #ffd700;
     --color-syntax-fn: rgb(0 190 255);
-
-    --radius: 0.5rem;
   }
 }
 

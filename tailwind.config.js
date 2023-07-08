@@ -1,6 +1,9 @@
 const disabledCss = {
   "code::before": false,
   "code::after": false,
+  pre: false,
+  code: false,
+  "pre code": false,
 }
 
 /** @type {import('tailwindcss').Config} */
@@ -12,6 +15,9 @@ module.exports = {
     "./content/**/*.{md,mdx}",
   ],
   darkMode: ["class"],
+  future: {
+    hoverOnlyWhenSupported: true,
+  },
   theme: {
     container: {
       center: true,
@@ -25,19 +31,16 @@ module.exports = {
         text: "hsl(var(--color-text))",
         muted: "hsl(var(--color-muted))",
         info: "hsl(var(--color-info))",
-        background: {
-          DEFAULT: "hsl(var(--color-background))",
-          muted: "hsl(var(--color-muted-background))",
-          subtle: "hsl(var(--color-subtle-background))",
-        },
         foreground: "hsl(var(--color-foreground))",
         primary: "hsl(var(--color-primary))",
         secondary: "hsl(var(--color-secondary))",
         tertiary: "hsl(var(--color-tertiary))",
-        code: {
-          bg: "hsl(var(--syntax-bg))",
-          text: "hsl(var(--syntax-txt))",
-        },
+        background: "hsl(var(--color-background))",
+        "background-muted": "hsl(var(--color-muted-background))",
+        "background-subtle": "hsl(var(--color-subtle-background))",
+        "pre-bg": "#151f28",
+        "code-bg": "#737d8c2b",
+        "code-text": "hsl(var(--color-syntax-txt))",
         gray: {
           DEFAULT: "hsl(var(--color-gray-400))",
           100: "hsl(var(--color-gray-100))",
@@ -50,11 +53,6 @@ module.exports = {
           900: "hsl(var(--color-gray-900))",
           1000: "hsl(var(--color-gray-1000))",
         },
-      },
-      borderRadius: {
-        lg: `var(--radius)`,
-        md: `calc(var(--radius) - 2px)`,
-        sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
         mono: ["var(--font-mono)"],
@@ -75,9 +73,9 @@ module.exports = {
             "--tw-prose-quotes": theme("colors.gray[700]"),
             "--tw-prose-quote-borders": theme("colors.gray[300]"),
             "--tw-prose-captions": theme("colors.gray[500]"),
-            "--tw-prose-code": theme("colors.code_text"),
-            "--tw-prose-pre-code": theme("colors.code_text"),
-            "--tw-prose-pre-bg": theme("colors.code_bg"),
+            "--tw-prose-code": theme("colors.code-text"),
+            "--tw-prose-pre-code": theme("colors.code-text"),
+            "--tw-prose-pre-bg": theme("colors.code-bg"),
             "--tw-prose-th-borders": theme("colors.gray[200]"),
             "--tw-prose-td-borders": theme("colors.gray[200]"),
           },

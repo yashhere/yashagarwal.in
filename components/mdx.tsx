@@ -16,19 +16,19 @@ const BlogLink = (props) => {
 
 const CustomMDXComponents: MDXComponents = {
   a: BlogLink,
-  pre: ({ className, ...props }) => (
+  pre: ({ children, ...props }) => (
     <pre
-      className={cn(
-        "mb-4 mt-6 overflow-x-auto rounded-lg border bg-muted py-4 font-mono text-text/80",
-        className,
-      )}
+      className="mb-4 mt-6 overflow-x-auto bg-pre-bg py-4 text-sm rounded"
       {...props}
-    />
+    >
+      <div className={"code-header"}>{props["data-language"]}</div>
+      {children}
+    </pre>
   ),
   code: ({ className, ...props }) => (
     <code
       className={cn(
-        "relative rounded border px-[0.3rem] py-[0.2rem] font-mono text-sm",
+        "relative bg-code-bg px-[0.3rem] py-[0.3rem] rounded text-sm",
         className,
       )}
       {...props}
