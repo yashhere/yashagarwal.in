@@ -5,6 +5,7 @@ import * as React from "react"
 
 export const DarkToggle = () => {
   const { theme, setTheme } = useTheme()
+  if (process.env.NODE_ENV === "production") return null
   return (
     <label>
       <input

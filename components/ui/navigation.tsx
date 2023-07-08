@@ -49,6 +49,9 @@ export const Navigation = () => {
               )
             })}
           </div>
+          <div className="text-lg text-text">
+            <DarkToggle />
+          </div>
         </nav>
       </div>
     </aside>
