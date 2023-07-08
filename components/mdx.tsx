@@ -18,7 +18,7 @@ const CustomMDXComponents: MDXComponents = {
   a: BlogLink,
   pre: ({ children, ...props }) => (
     <pre
-      className="mb-4 mt-6 overflow-x-auto bg-pre-bg py-4 text-sm rounded"
+      className="mb-4 mt-6 overflow-x-auto bg-pre-bg pb-4 text-sm rounded-t-xl"
       {...props}
     >
       <div className={"code-header"}>{props["data-language"]}</div>
