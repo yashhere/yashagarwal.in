@@ -7,18 +7,18 @@ import { TailwindIndicator } from "@/components/ui/tailwind-indicator"
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
 import { Metadata } from "next"
-import { Fira_Code } from "next/font/google"
 import localFont from "next/font/local"
 
 const bodyFont = localFont({
   src: "../public/assets/fonts/wotfard.ttf",
   variable: "--font-body",
+  display: "swap",
 })
 
-const monoFont = Fira_Code({
-  display: "swap",
+const monoFont = localFont({
+  src: "../public/assets/fonts/league-mono.ttf",
   variable: "--font-mono",
-  subsets: ["cyrillic"],
+  display: "swap",
 })
 
 export const metadata: Metadata = {
