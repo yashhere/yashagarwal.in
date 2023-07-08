@@ -4,6 +4,8 @@ const disabledCss = {
   pre: false,
   code: false,
   "pre code": false,
+  "blockquote p:first-of-type::before": false,
+  "blockquote p:last-of-type::after": false,
 }
 
 /** @type {import('tailwindcss').Config} */
