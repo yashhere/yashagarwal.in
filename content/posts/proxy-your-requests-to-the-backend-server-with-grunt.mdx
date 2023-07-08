@@ -48,17 +48,15 @@ Grunt has a module
 [grunt-connect-proxy](https://github.com/drewzboto/grunt-connect-proxy) that
 exists to help to solve this issue. It delegates requests that match a given URL
 to the backend of your choice. So for example, you want to access your backend
-using the URL [http://localhost:8080/api](http://localhost:8080/api), you can
-write a proxy rule so that whenever your user tries to access this URL in a
-browser, the proxy will get the data from your backend and server it at this
-particular URL.
+using the URL `http://localhost:8080/api`, you can write a proxy rule so that
+whenever your user tries to access this URL in a browser, the proxy will get the
+data from your backend and server it at this particular URL.
 
 The procedure to set up the proxy is simple. First, you will have to add the
 proxy configuration to your `Gruntfile.js`. In this example, I am assuming that
 the backend server is running on the port 8000, and the Grunt server is running
 on the port 8080. This configuration will delegate all requests to
-[http://localhost:8080/api](http://localhost:8080/api) to
-[http://localhost:8000/backend](http://localhost:8000/backend).
+`http://localhost:8080/api` to `http://localhost:8000/backend`.
 
 ```js
 connect: {
@@ -108,12 +106,10 @@ the proxies section are explained below.
 - **https**: If your backend server is an https endpoint, then set this value to
   `true`.
 - **rewrite**: This option allows rewriting of URL when proxying. What this
-  means is that when trying to proxy
-  [http://localhost:8080/api](http://localhost:8080/api) to the backend server,
-  the URL will be rewritten as
-  [http://localhost:8000/backend](http://localhost:8000/backend). The object's
-  key serves as the regex used in the replacement operation, and the object's
-  value is the context of your backend server's service.
+  means is that when trying to proxy `http://localhost:8080/api` to the backend
+  server, the URL will be rewritten as `http://localhost:8000/backend`. The
+  object's key serves as the regex used in the replacement operation, and the
+  object's value is the context of your backend server's service.
 
 More options can be found in the
 [documentation](https://github.com/drewzboto/grunt-connect-proxy#grunt-connect-proxy)
@@ -155,10 +151,8 @@ Started connect web server on http://localhost:8080
 The above output confirms that the proxy is working fine. Some of the example
 URLs are:
 
-{/* TODO table formatting */} | Grunt Server | Backend Server | |
------------------------------ | --------------------------------- | |
-http://127.0.0.1:8080/api | http://127.0.0.1:8000/backend | |
-http://127.0.0.1:8080/api/x/y | http://127.0.0.1:8000/backend/x/y |
+1. http://127.0.0.1:8080/api points to http://127.0.0.1:8000/backend
+2. http://127.0.0.1:8080/api/x/y points to http://127.0.0.1:8000/backend/x/y
 
 That's all. Now you will not face any problems getting data from any backend of
 your choice.
