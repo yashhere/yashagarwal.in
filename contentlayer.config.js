@@ -17,7 +17,7 @@ export default makeSource({
       [rehypeKatex],
       [rehypeSlug],
       [rehypeAccessibleEmojis],
-      [rehypePrettyCode, { theme: "nord" }],
+      [rehypePrettyCode, { theme: "dracula" }],
       [
         rehypeAutolinkHeadings,
         {
