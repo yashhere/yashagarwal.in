@@ -1,5 +1,12 @@
 import { createHash } from "crypto"
+import { Post } from "contentlayer/generated"
 import { headers } from "next/headers"
+
+export function sortPosts(array: Post[]) {
+  return array.sort(
+    (a, b) => new Date(b.published).getTime() - new Date(a.published).getTime(),
+  )
+}
 
 export function getSessionId(slug: string) {
   const ipAddress = headers().get("x-forwarded-for")

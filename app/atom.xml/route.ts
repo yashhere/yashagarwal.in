@@ -1,18 +1,11 @@
-import { writeFileSync } from "fs"
 import { siteConfig } from "@/config/site"
-import { env } from "@/env.mjs"
+import { createOgImage } from "@/lib/createOgImage"
+import { sortPosts } from "@/lib/server-utils"
 import { allPosts } from "contentlayer/generated"
-import { compareDesc } from "date-fns"
 import { Feed } from "feed"
 import moment from "moment"
-import { createOgImage } from "./createOgImage"
 
-const allPostsNewToOld =
-  allPosts?.sort((a, b) => {
-    return compareDesc(new Date(a.published), new Date(b.published))
-  }) || []
-
-export default async function generateRSS() {
+export async function GET() {
   const author = {
     name: siteConfig.name,
     email: siteConfig.email,
@@ -37,7 +30,7 @@ export default async function generateRSS() {
     author: author,
   })
 
-  allPostsNewToOld.forEach((post) => {
+  sortPosts(allPosts).forEach((post) => {
     const ogImage = createOgImage({
       title: post.title,
       meta: [
@@ -57,7 +50,10 @@ export default async function generateRSS() {
     })
   })
 
-  writeFileSync("./public/feed.xml", feed.rss2())
-  writeFileSync("./public/atom.xml", feed.atom1())
-  writeFileSync("./public/feed.json", feed.json1())
+  return new Response(feed.atom1(), {
+    headers: {
+      "Content-Type": "text/xml",
+      "Cache-Control": "public, s-maxage=1200, stale-while-revalidate=600",
+    },
+  })
 }
