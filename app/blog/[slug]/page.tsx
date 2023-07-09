@@ -8,6 +8,7 @@ import { TableOfContents } from "@/components/table-of-contents"
 import { ViewCounter } from "@/components/view-counter"
 import { env } from "@/env.mjs"
 import { getAllMetrics, getLikes } from "@/lib/actions"
+import { Comments } from "@/lib/comments"
 import { getPost, getSeries } from "@/lib/content"
 import { createOgImage } from "@/lib/createOgImage"
 import { getSessionId } from "@/lib/server-utils"
@@ -122,6 +123,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
               userLikes={userLikes}
             />
           </div>
+          <Comments />
         </Suspense>
       </div>
     </>
