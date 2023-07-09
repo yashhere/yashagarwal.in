@@ -1,6 +1,5 @@
 import { TopPosts } from "@/components/top-posts"
 import Link from "@/components/ui/link"
-import generateRSS from "@/lib/generateRss"
 import { ArrowRightIcon } from "@heroicons/react/24/solid"
 import { Metadata } from "next"
 
@@ -10,8 +9,6 @@ export const metadata: Metadata = {
 }
 
 export default async function Page() {
-  await generateRSS()
-
   return (
     <>
       <section className="flex flex-col justify-start">

@@ -1,5 +1,6 @@
 import { BlogPostList } from "@/components/blog-list"
 import { getAllMetrics } from "@/lib/actions"
+import generateRSS from "@/lib/generateRss"
 import { allPosts } from "contentlayer/generated"
 import { compareDesc } from "date-fns"
 import { Metadata } from "next"
@@ -11,7 +12,7 @@ export const metadata: Metadata = {
 }
 
 export default async function Page() {
-  const allMetrics = await getAllMetrics()
+  const [allMetrics, _] = await Promise.all([getAllMetrics(), generateRSS()])
   const posts = allPosts
     .filter((p) => p.status === "published")
     .sort((a, b) => {
