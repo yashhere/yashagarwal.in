@@ -1,0 +1,9 @@
+{
+  "origins": ["https://yashagarwal.in"],
+  "originsRegex": [
+    "http://localhost:[0-9]+",
+    "https://([A-Za-z0-9]+[.])yashagarwal[.]in",
+    "https://yashagarwal-in-([A-Za-z0-9-])+-yashhere.vercel.app"
+  ],
+  "defaultCommentOrder": "newest"
+}

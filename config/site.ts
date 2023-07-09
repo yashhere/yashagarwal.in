@@ -10,4 +10,12 @@ export const siteConfig: SiteConfig = {
     twitter: "https://twitter.com/yash__here",
     github: "https://github.com/yashhere",
   },
+  comment: {
+    repo: "yashhere/yashagarwal.in-comments",
+    repoId: "R_kgDOJ5aOmA",
+    category: "Comments",
+    categoryId: "DIC_kwDOJ5aOmM4CXxEK",
+    lightTheme: "light",
+    darkTheme: "dark",
+  },
 }

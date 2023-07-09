@@ -26,7 +26,6 @@
   },
   "dependencies": {
     "@fontsource/fira-code": "^4.5.13",
-    "@giscus/react": "^2.3.0",
     "@heroicons/react": "^2.0.14",
     "@planetscale/database": "^1.8.0",
     "@prisma/client": "^4.16.1",
@@ -55,6 +54,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.8.0",
+    "react-intersection-observer": "^9.5.2",
     "react-timeago": "^7.1.0",
     "react-use": "^17.4.0",
     "reading-time": "^1.5.0",
