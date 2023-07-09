@@ -1,4 +1,5 @@
 import { env } from "@/env.mjs"
+import generateRSS from "@/lib/generateRss"
 import { allPosts } from "contentlayer/generated"
 
 export default async function sitemap() {
@@ -13,5 +14,6 @@ export default async function sitemap() {
     lastModified: new Date().toISOString().split("T")[0],
   }))
 
+  generateRSS()
   return [...routeUrls, ...postUrls]
 }
