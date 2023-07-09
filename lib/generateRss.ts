@@ -41,7 +41,7 @@ export default async function generateRSS() {
     const ogImage = createOgImage({
       title: post.title,
       meta: [
-        env.NEXT_PUBLIC_APP_URL,
+        siteConfig.url,
         moment(post.published).format("MMM DD, YYYY"),
       ].join(" · "),
     })

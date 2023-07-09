@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { Navigation } from "@/components/ui/navigation"
 import { TailwindIndicator } from "@/components/ui/tailwind-indicator"
 import { siteConfig } from "@/config/site"
+import { env } from "@/env.mjs"
 import { cn } from "@/lib/utils"
 import { Metadata } from "next"
 import localFont from "next/font/local"
@@ -31,7 +32,7 @@ export const metadata: Metadata = {
   authors: [
     {
       name: "Yash Agarwal",
-      url: "https://yashagarwal.in",
+      url: `${env.NEXT_PUBLIC_APP_URL}`,
     },
   ],
   creator: "yashhere",
@@ -64,7 +65,7 @@ export const metadata: Metadata = {
     google: "",
   },
   alternates: {
-    canonical: "https://yashagarwal.in",
+    canonical: `${env.NEXT_PUBLIC_APP_URL}`,
     types: {
       "application/rss+xml": [{ url: "rss.xml", title: "rss" }],
     },

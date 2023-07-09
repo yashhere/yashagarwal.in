@@ -12,7 +12,8 @@ export const metadata: Metadata = {
 }
 
 export default async function Page() {
-  const [allMetrics, _] = await Promise.all([getAllMetrics(), generateRSS()])
+  await generateRSS()
+  const allMetrics = await getAllMetrics()
   const posts = allPosts
     .filter((p) => p.status === "published")
     .sort((a, b) => {
