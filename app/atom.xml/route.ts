@@ -23,8 +23,6 @@ export async function GET() {
       siteConfig.name
     }`,
     feedLinks: {
-      rss2: `${siteConfig.url}/feed.xml`,
-      json: `${siteConfig.url}/feed.json`,
       atom: `${siteConfig.url}/atom.xml`,
     },
     author: author,
