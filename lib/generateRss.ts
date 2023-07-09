@@ -25,7 +25,7 @@ export default function generateRSS() {
     id: siteConfig.url,
     link: siteConfig.url,
     // image: siteConfig.logoUrl,
-    // favicon: siteConfig.logoUrl,
+    favicon: `${siteConfig.url}/favicon.ico`,
     copyright: `Copyright © 2016 - ${new Date().getFullYear()} ${
       siteConfig.name
     }`,
@@ -54,7 +54,6 @@ export default function generateRSS() {
       author: [author],
       contributor: [author],
       date: new Date(post.published),
-      content: post.body.raw,
     })
   })
 
