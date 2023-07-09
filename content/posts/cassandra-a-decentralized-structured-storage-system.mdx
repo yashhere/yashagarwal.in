@@ -104,20 +104,19 @@ membership and positions of other nodes in the system.
 
 ### Failure Detection
 
-{/\* TODO: Failure detection is a mechanism by which a node can locally
-determine if any other node in the system is up or down. Cassandra uses a
-modified version of $\phi\text{-Accrual Failure Detector}$. The basic idea is
-that the failure detection module emits the suspicion level of a node instead of
-a binary up/down status. This suspicion level is $\phi$. The idea is to
-represent $\phi$ on a dynamically adjustable scale, which reflects network and
-load conditions at the monitored nodes.
+Failure detection is a mechanism by which a node can locally determine if any
+other node in the system is up or down. Cassandra uses a modified version of
+$\phi$-Accrual Failure Detector. The basic idea is that the failure detection
+module emits the suspicion level of a node instead of a binary up/down status.
+This suspicion level is $\phi$. The idea is to represent $\phi$ on a dynamically
+adjustable scale, which reflects network and load conditions at the monitored
+nodes.
 
 Every node in the system maintains a sliding window of inter-arrival times of
 gossip messages from other nodes in the cluster. The distribution of these
 inter-arrival times is determined, and $\phi$ is calculated. Cassandra uses
 exponential distribution as an approximation for determining $\phi$. The
-original $\phi\text{-Accrual Failure Detection Algorithm}$ used Gaussian
-distribution. \*/}
+original $\phi$-Accrual Failure Detection Algorithm used Gaussian distribution.
 
 ### Scaling
 
