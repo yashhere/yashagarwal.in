@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 }
 
 export default async function Page() {
-  generateRSS()
+  await generateRSS()
 
   return (
     <>

@@ -12,7 +12,7 @@ const allPostsNewToOld =
     return compareDesc(new Date(a.published), new Date(b.published))
   }) || []
 
-export default function generateRSS() {
+export default async function generateRSS() {
   const author = {
     name: siteConfig.name,
     email: siteConfig.email,
