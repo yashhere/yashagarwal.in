@@ -8,6 +8,14 @@ export type SiteConfig = {
     twitter: string
     github: string
   }
+  comment: {
+    repo: string
+    repoId: string
+    category: string
+    categoryId: string
+    lightTheme: string
+    darkTheme: string
+  }
 }
 
 export type PostWithMetrics = {

@@ -1,5 +1,6 @@
 import "katex/dist/katex.css"
 import "@/styles/mdx.css"
+import { Comments } from "@/components/comments"
 import { LikeButton } from "@/components/like-button"
 import CustomMDXComponents from "@/components/mdx"
 import { Metric } from "@/components/metrics/metric"
@@ -122,6 +123,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
               userLikes={userLikes}
             />
           </div>
+          <Comments />
         </Suspense>
       </div>
     </>
