@@ -14,7 +14,7 @@
     "format": "prettier --write",
     "lint": "next lint",
     "preview": "yarn build && next start",
-    "postinstall": "prisma generate && next-sitemap",
+    "postinstall": "prisma generate",
     "lint-staged": "lint-staged",
     "prepare": "husky install"
   },
@@ -83,7 +83,6 @@
     "feed": "^4.2.2",
     "husky": "^8.0.0",
     "lint-staged": "^13.2.3",
-    "next-sitemap": "^4.1.8",
     "postcss": "^8.4.21",
     "prettier": "^2.8.7",
     "prettier-plugin-tailwindcss": "^0.3.0",
