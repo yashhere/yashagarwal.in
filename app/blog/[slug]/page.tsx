@@ -12,6 +12,7 @@ import { getAllMetrics, getLikes } from "@/lib/actions"
 import { getPost, getSeries } from "@/lib/content"
 import { createOgImage } from "@/lib/createOgImage"
 import { getSessionId } from "@/lib/server-utils"
+import { absoluteUrl } from "@/lib/utils"
 import moment from "moment"
 import { Metadata, ResolvingMetadata } from "next"
 import { getMDXComponent } from "next-contentlayer/hooks"
@@ -19,6 +20,15 @@ import { Suspense } from "react"
 
 type Props = {
   params: { slug: string }
+}
+
+function constructOgImageUri(title: string, published: string) {
+  const uri = [
+    `?title=${encodeURIComponent(title)}`,
+    `&published=${encodeURIComponent(published)}`,
+  ].join("")
+
+  return absoluteUrl(`/og${uri}`)
 }
 
 export async function generateMetadata(
@@ -37,6 +47,12 @@ export async function generateMetadata(
     meta: [siteUrl, moment(post.published).format("MMM DD, YYYY")].join(" · "),
   })
 
+  const publishedDate = moment(post.published).format("MMM DD, YYYY")
+  const ogImage = {
+    url: constructOgImageUri(post.title, publishedDate),
+  }
+
+  console.log(ogImage)
   return {
     title: `${post.title} | Yash Agarwal`,
     description: post.description,
@@ -49,13 +65,14 @@ export async function generateMetadata(
     twitter: {
       card: "summary_large_image",
       creator: "@yash__here",
+      images: ogImage,
     },
     openGraph: {
       title: post.title,
       description: post.description,
       type: "article",
       publishedTime: moment(post.published).format("MMM DD, YYYY"),
-      images: [newOgImage, ...previousImages],
+      images: [ogImage],
     },
   }
 }
