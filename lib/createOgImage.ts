@@ -1,3 +1,5 @@
+import { env } from "@/env.mjs"
+
 export const createOgImage = ({
   title,
   meta,
@@ -33,7 +35,7 @@ export const createOgImage = ({
     `fl_layer_apply,w_140,g_north_west,x_100,y_100`,
 
     // BG
-    `yashagarwal.in/opengraph_background.png`,
+    `${env.NEXT_PUBLIC_APP_URL}/images/og.jpg`,
   ].join("/")
 
 // double escape for commas and slashes

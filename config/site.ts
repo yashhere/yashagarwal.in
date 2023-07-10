@@ -3,9 +3,10 @@ import { SiteConfig } from "types"
 
 export const siteConfig: SiteConfig = {
   name: "Yash Agarwal",
+  email: "yashagarwaljpr+blog@gmail.com",
   description: "Developer, writer, and creator",
-  url: "https://yashagarwal.in",
-  ogImage: `${env.NEXT_PUBLIC_APP_URL}/og.jpg`,
+  url: `${env.NEXT_PUBLIC_APP_URL}`,
+  ogImage: `${env.NEXT_PUBLIC_APP_URL}/images/og.jpg`,
   links: {
     twitter: "https://twitter.com/yash__here",
     github: "https://github.com/yashhere",

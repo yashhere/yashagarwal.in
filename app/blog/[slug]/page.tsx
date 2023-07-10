@@ -26,6 +26,7 @@ export async function generateMetadata(
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
   const post = await getPost(params.slug)
+  const siteUrl: string = env.NEXT_PUBLIC_APP_URL
 
   // access and extend (rather than replace) parent metadata
   const previousImages = (await parent).openGraph?.images || []
@@ -33,10 +34,7 @@ export async function generateMetadata(
 
   const newOgImage = createOgImage({
     title: post.title,
-    meta: [
-      env.NEXT_PUBLIC_APP_URL,
-      moment(post.published).format("MMM DD, YYYY"),
-    ].join(" · "),
+    meta: [siteUrl, moment(post.published).format("MMM DD, YYYY")].join(" · "),
   })
 
   return {
@@ -44,7 +42,7 @@ export async function generateMetadata(
     description: post.description,
     authors: {
       name: "Yash Agarwal",
-      url: env.NEXT_PUBLIC_APP_URL,
+      url: siteUrl,
     },
     keywords: post.tags?.map((tag) => tag.value),
     creator: "Yash Agarwal",
