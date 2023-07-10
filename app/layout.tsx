@@ -56,18 +56,19 @@ export const metadata: Metadata = {
     images: [`${siteConfig.url}/og.jpg`],
     creator: "@yashhere",
   },
-  icons: {
-    icon: "/favicon.ico",
-    // shortcut: "/favicon-16x16.png",
-    // apple: "/apple-touch-icon.png",
-  },
   verification: {
     google: "",
   },
   alternates: {
     canonical: `${env.NEXT_PUBLIC_APP_URL}`,
     types: {
-      "application/rss+xml": [{ url: "rss.xml", title: "rss" }],
+      "application/rss+xml": [
+        { url: "rss.xml", title: "RSS Feed for yashagarwal.in" },
+        { url: "atom.xml", title: "Atom Feed for yashagarwal.in" },
+      ],
+      "application/rss+json": [
+        { url: "feed.json", title: "JSON Feed for yashagarwal.in" },
+      ],
     },
   },
   robots: {

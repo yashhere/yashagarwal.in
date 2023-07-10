@@ -5,7 +5,7 @@ import { allPosts } from "contentlayer/generated"
 import { Feed } from "feed"
 import moment from "moment"
 
-export async function GET() {
+export async function getFeed() {
   const author = {
     name: siteConfig.name,
     email: siteConfig.email,
@@ -48,10 +48,5 @@ export async function GET() {
     })
   })
 
-  return new Response(feed.atom1(), {
-    headers: {
-      "Content-Type": "text/xml",
-      "Cache-Control": "public, s-maxage=1200, stale-while-revalidate=600",
-    },
-  })
+  return feed
 }
