@@ -38,7 +38,3 @@ next-env.d.ts
 
 # contentlayer
 .contentlayer
-
-# RSS
-public/*.xml
-public/*.json
