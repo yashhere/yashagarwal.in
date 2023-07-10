@@ -40,6 +40,14 @@ export const metadata: Metadata = {
     { media: "(prefers-color-scheme: light)", color: "white" },
     { media: "(prefers-color-scheme: dark)", color: "black" },
   ],
+  referrer: "origin-when-cross-origin",
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 1,
+    userScalable: false,
+    viewportFit: "cover",
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -47,7 +55,7 @@ export const metadata: Metadata = {
     title: siteConfig.name,
     description: siteConfig.description,
     siteName: siteConfig.name,
-    images: [`${siteConfig.url}/og.jpg`],
+    images: [`${siteConfig.url}/images/og.jpg`],
   },
   twitter: {
     card: "summary_large_image",
