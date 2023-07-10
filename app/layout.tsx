@@ -66,9 +66,6 @@ export const metadata: Metadata = {
         { url: "rss.xml", title: "RSS Feed for yashagarwal.in" },
         { url: "atom.xml", title: "Atom Feed for yashagarwal.in" },
       ],
-      "application/rss+json": [
-        { url: "feed.json", title: "JSON Feed for yashagarwal.in" },
-      ],
     },
   },
   robots: {
