@@ -1,4 +1,4 @@
-import { env } from "@/env.mjs"
+import { siteConfig } from "@/config/site"
 import { ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 
@@ -16,5 +16,5 @@ export function formatDate(input: string | number): string {
 }
 
 export function absoluteUrl(path: string) {
-  return `${env.NEXT_PUBLIC_APP_URL}/${path}`
+  return `${siteConfig.url}${path}`
 }

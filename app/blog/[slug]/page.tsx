@@ -7,10 +7,10 @@ import { Metric } from "@/components/metrics/metric"
 import { Series } from "@/components/series"
 import { TableOfContents } from "@/components/table-of-contents"
 import { ViewCounter } from "@/components/view-counter"
-import { env } from "@/env.mjs"
+import { siteConfig } from "@/config/site"
 import { getAllMetrics, getLikes } from "@/lib/actions"
 import { getPost, getSeries } from "@/lib/content"
-import { createOgImage } from "@/lib/createOgImage"
+import { createOgImageForPost } from "@/lib/og/createOgImage"
 import { getSessionId } from "@/lib/server-utils"
 import moment from "moment"
 import { Metadata, ResolvingMetadata } from "next"
@@ -26,16 +26,11 @@ export async function generateMetadata(
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
   const post = await getPost(params.slug)
-  const siteUrl: string = env.NEXT_PUBLIC_APP_URL
+  const siteUrl: string = siteConfig.url
 
   // access and extend (rather than replace) parent metadata
   const previousImages = (await parent).openGraph?.images || []
-  const tags = (post.tags && post.tags.map(({ value }) => value)) || [""]
-
-  const newOgImage = createOgImage({
-    title: post.title,
-    meta: [siteUrl, moment(post.published).format("MMM DD, YYYY")].join(" · "),
-  })
+  const newOgImage = createOgImageForPost({ post })
 
   return {
     title: `${post.title} | Yash Agarwal`,
@@ -47,8 +42,12 @@ export async function generateMetadata(
     keywords: post.tags?.map((tag) => tag.value),
     creator: "Yash Agarwal",
     twitter: {
+      title: post.title,
+      description: post.description,
       card: "summary_large_image",
       creator: "@yash__here",
+      images: newOgImage,
+      site: siteUrl,
     },
     openGraph: {
       title: post.title,
@@ -56,6 +55,10 @@ export async function generateMetadata(
       type: "article",
       publishedTime: moment(post.published).format("MMM DD, YYYY"),
       images: [newOgImage, ...previousImages],
+      locale: "en_US",
+      url: siteConfig.url,
+      siteName: siteConfig.title,
+      countryName: "India",
     },
   }
 }

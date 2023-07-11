@@ -1,9 +1,11 @@
 import { siteConfig } from "@/config/site"
-import { createOgImage } from "@/lib/createOgImage"
+import {
+  createOgImageForPost,
+  createOgImageGeneral,
+} from "@/lib/og/createOgImage"
 import { sortPosts } from "@/lib/server-utils"
 import { allPosts } from "contentlayer/generated"
 import { Feed } from "feed"
-import moment from "moment"
 
 export async function getFeed() {
   const author = {
@@ -13,29 +15,24 @@ export async function getFeed() {
   }
 
   const feed = new Feed({
-    title: siteConfig.name,
+    title: siteConfig.title,
     description: siteConfig.description,
     id: siteConfig.url,
     link: siteConfig.url,
-    // image: siteConfig.logoUrl,
+    image: createOgImageGeneral(),
     favicon: `${siteConfig.url}/favicon.ico`,
     copyright: `Copyright © 2016 - ${new Date().getFullYear()} ${
       siteConfig.name
     }`,
     feedLinks: {
       atom: `${siteConfig.url}/atom.xml`,
+      rss: `${siteConfig.url}/rss.xml`,
     },
     author: author,
   })
 
   sortPosts(allPosts).forEach((post) => {
-    const ogImage = createOgImage({
-      title: post.title,
-      meta: [
-        siteConfig.url,
-        moment(post.published).format("MMM DD, YYYY"),
-      ].join(" · "),
-    })
+    const ogImage = createOgImageForPost({ post })
     feed.addItem({
       id: siteConfig.url + "/blog/" + post.slug,
       title: post.title,

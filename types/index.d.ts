@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-vars */
 export type SiteConfig = {
+  title: string
   name: string
   email: string
   description: string
   url: string
-  ogImage: string
   links: {
     twitter: string
     github: string
