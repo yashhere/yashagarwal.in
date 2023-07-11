@@ -31,7 +31,7 @@ export const Footer: FC = () => {
     <footer className="mt-12 pb-4 font-heading font-bold">
       <hr className="border-t-2 border-gray-300/60" />
       <div className="mb-12 mt-8 grid space-y-8 sm:grid-cols-2 sm:space-y-0">
-        <div className="flex flex-row flex-wrap justify-center space-x-4 text-base text-text/60 sm:justify-normal">
+        <div className="flex flex-row flex-wrap justify-center space-x-4 text-lg text-text/60 sm:justify-normal">
           {/* <Link href="/books" className="hover:text-text">
             reading
           </Link>
@@ -58,7 +58,7 @@ export const Footer: FC = () => {
         </div>
       </div>
       <div className="grid justify-center sm:justify-normal xl:grid-cols-2">
-        <div className="text-base text-text/70">
+        <div className="sm:items-normal flex flex-col items-center justify-center text-base text-text/70 sm:items-baseline sm:justify-normal">
           <p>Yash Agarwal</p>
           <p>© 2016 - {moment().format("YYYY")}</p>
         </div>
