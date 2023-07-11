@@ -1,9 +1,9 @@
 "use server"
 
+import { cache } from "react"
 import { queryBuilder } from "@/lib/planetscale"
 import { PostWithMetrics } from "@/types"
 import { allPosts } from "contentlayer/generated"
-import { cache } from "react"
 
 export const getAllMetrics = cache(async () => {
   return queryBuilder
@@ -41,7 +41,7 @@ export async function getLikes(slug: string, sessionId: string) {
 export async function incrementLikes(
   slug: string,
   sessionId: string,
-  currentLikes: number,
+  currentLikes: number
 ) {
   return await Promise.all([
     incrementSlugMetrics(slug, 0, currentLikes),
@@ -67,7 +67,7 @@ export async function incrementLikes(
 export async function incrementSlugMetrics(
   slug: string,
   currentViews: number = 1,
-  currentLikes: number = 0,
+  currentLikes: number = 0
 ) {
   const data = await queryBuilder
     .selectFrom("Stats")

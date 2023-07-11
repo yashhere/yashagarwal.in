@@ -1,7 +1,7 @@
 "use client"
 
-import Image from "next/image"
 import { useState } from "react"
+import Image from "next/image"
 
 const photoSources = [
   "/images/yash/at-salong-valley.jpeg",
@@ -11,7 +11,7 @@ const photoSources = [
 
 export default function RandomPhoto(props: any) {
   const [currentImage, setCurrentImage] = useState(
-    photoSources[Math.floor(Math.random() * photoSources.length)],
+    photoSources[Math.floor(Math.random() * photoSources.length)]
   )
 
   return (

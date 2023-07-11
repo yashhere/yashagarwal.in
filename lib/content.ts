@@ -28,7 +28,7 @@ export function getSeries(title: string, current: string) {
       .filter((p) => p.series?.title === title)
       .sort(
         (a, b) =>
-          Number(new Date(a.series!.order)) - Number(new Date(b.series!.order)),
+          Number(new Date(a.series!.order)) - Number(new Date(b.series!.order))
       )
       .map((p) => {
         return {

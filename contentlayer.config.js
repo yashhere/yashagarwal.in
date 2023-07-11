@@ -6,6 +6,7 @@ import rehypePrettyCode from "rehype-pretty-code"
 import rehypeSlug from "rehype-slug"
 import remarkGfm from "remark-gfm"
 import remarkMath from "remark-math"
+
 import { Post } from "./content/definitions/post"
 
 export default makeSource({

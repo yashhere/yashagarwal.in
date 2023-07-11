@@ -1,6 +1,6 @@
-import moment from "moment"
-import Link from "next/link"
 import { FC } from "react"
+import Link from "next/link"
+import moment from "moment"
 import { BsGithub, BsLinkedin, BsTwitter } from "react-icons/bs"
 
 const Socials = [

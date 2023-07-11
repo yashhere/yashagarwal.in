@@ -1,9 +1,9 @@
 "use client"
 
+import { useRouter } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { motion } from "framer-motion"
 import GithubSlugger from "github-slugger"
-import { useRouter } from "next/navigation"
 
 export const TableOfContents = ({ headings, path }) => {
   const router = useRouter()
@@ -31,11 +31,11 @@ export const TableOfContents = ({ headings, path }) => {
                     <a
                       href={`#${heading.slug}`}
                       className={cn(
-                        "block underline-offset-2 transition-all text-text/60 hover:underline hover:text-text",
+                        "block text-text/60 underline-offset-2 transition-all hover:text-text hover:underline",
                         {
                           "pl-2": heading.heading === 2,
                           "pl-4": heading.heading === 3,
-                        },
+                        }
                       )}
                     >
                       {heading.text}
@@ -45,7 +45,7 @@ export const TableOfContents = ({ headings, path }) => {
               })}
             </div>
           ) : null}
-          <div className="border-t border-white-200"></div>
+          <div className="border-white-200 border-t"></div>
 
           <div className="flex w-full justify-end">
             <div>

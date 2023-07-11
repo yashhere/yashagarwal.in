@@ -1,4 +1,7 @@
 import "@/styles/globals.css"
+
+import { Metadata, ResolvingMetadata } from "next"
+import localFont from "next/font/local"
 import { Analytics } from "@/components/analytics"
 import { Footer } from "@/components/footer"
 import { ThemeProvider } from "@/components/theme-provider"
@@ -7,8 +10,6 @@ import { TailwindIndicator } from "@/components/ui/tailwind-indicator"
 import { siteConfig } from "@/config/site"
 import { createOgImageGeneral } from "@/lib/og/createOgImage"
 import { cn } from "@/lib/utils"
-import { Metadata, ResolvingMetadata } from "next"
-import localFont from "next/font/local"
 
 const bodyFont = localFont({
   src: "../public/assets/fonts/wotfard.ttf",
@@ -23,7 +24,7 @@ const monoFont = localFont({
 })
 
 export async function generateMetadata(
-  parent: ResolvingMetadata,
+  parent: ResolvingMetadata
 ): Promise<Metadata> {
   const siteUrl: string = siteConfig.url
 
@@ -32,6 +33,7 @@ export async function generateMetadata(
   const newOgImage = createOgImageGeneral()
 
   return {
+    metadataBase: new URL(siteUrl),
     title: siteConfig.title,
     description: siteConfig.description,
     keywords: [],
@@ -113,7 +115,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           "bg-background text-text",
           "mx-4 mb-40 mt-8 flex max-w-4xl flex-col md:mt-20 md:flex-row lg:mx-auto lg:mt-32",
           bodyFont.variable,
-          monoFont.variable,
+          monoFont.variable
         )}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>

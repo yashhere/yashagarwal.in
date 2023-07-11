@@ -1,6 +1,6 @@
 export async function fetcher<JSON = any>(
   input: RequestInfo,
-  init?: RequestInit,
+  init?: RequestInit
 ) {
   const res = await fetch(input, init)
 

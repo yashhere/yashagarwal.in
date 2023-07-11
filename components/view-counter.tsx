@@ -1,8 +1,8 @@
 "use client"
 
+import { useEffect } from "react"
 import { Metric } from "@/components/metrics/metric"
 import { incrementSlugMetrics } from "@/lib/actions"
-import { useEffect } from "react"
 
 export function ViewCounter({
   slug,
@@ -24,7 +24,7 @@ export function ViewCounter({
     if (track) {
       incrementSlugMetrics(slug)
     }
-  }, [])
+  }, [slug, track])
 
   return <Metric stat={views.toString()} type={"views"} />
 }

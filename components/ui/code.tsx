@@ -1,8 +1,8 @@
 "use client"
 
 // import { Aside } from "@/components/Aside"
-import { cn } from "@/lib/utils"
 import React from "react"
+import { cn } from "@/lib/utils"
 
 // There are probably better ways to do this 🥴
 export const Code = ({ children }: { children: React.ReactNode }) => {
@@ -54,12 +54,12 @@ export const Code = ({ children }: { children: React.ReactNode }) => {
             <button
               key={index}
               className={cn(
-                "mr-2 mb-2 rounded-lg px-2 py-1 text-sm font-medium",
+                "mb-2 mr-2 rounded-lg px-2 py-1 text-sm font-medium",
                 {
                   " bg-rose-100/10 text-rose-100/70 hover:bg-rose-100/20 hover:text-rose-100":
                     index !== slide,
                   "bg-rose-100/30 text-white": index === slide,
-                },
+                }
               )}
               onClick={() => setSlide(index)}
             >

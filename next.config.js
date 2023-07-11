@@ -3,7 +3,7 @@ const { withContentlayer } = require("next-contentlayer")
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  // swcMinify: true,
+  swcMinify: true,
   images: {
     // allow next/image to serve remote images from safelisted domains
     remotePatterns: [

@@ -1,5 +1,5 @@
-import { MagnifyingGlassIcon } from "@heroicons/react/24/solid"
 import { ChangeEvent } from "react"
+import { MagnifyingGlassIcon } from "@heroicons/react/24/solid"
 
 export const SearchInput = ({
   search,
@@ -19,7 +19,7 @@ export const SearchInput = ({
             type="search"
             id="default_search"
             placeholder="Search for a post..."
-            className="block w-full rounded-md bg-gray-900/10 p-1 pl-8 text-lg drop-shadow-md border-none"
+            className="block w-full rounded-md border-none bg-gray-900/10 p-1 pl-8 text-lg drop-shadow-md"
             value={search}
             onChange={onChange}
           />

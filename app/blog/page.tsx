@@ -1,8 +1,8 @@
+import { Metadata } from "next"
 import { BlogPostList } from "@/components/blog-list"
 import { getAllMetrics } from "@/lib/actions"
 import { allPosts } from "contentlayer/generated"
 import { compareDesc } from "date-fns"
-import { Metadata } from "next"
 
 export const metadata: Metadata = {
   title: "Writing | Yash Agarwal",

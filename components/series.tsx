@@ -1,11 +1,11 @@
 "use client"
 
+import React, { FC, ReactNode } from "react"
+import Link from "next/link"
 import { getSeries } from "@/lib/content"
 import { cn } from "@/lib/utils"
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/outline"
 import { motion } from "framer-motion"
-import Link from "next/link"
-import React, { FC, ReactNode } from "react"
 
 type TitleProps = {
   children?: ReactNode
@@ -92,7 +92,7 @@ export const Series = ({
                     "before:bg-gray-600":
                       post.status === "published" && !post.isCurrent,
                     "before:bg-gray-300/70": post.status !== "published",
-                  },
+                  }
                 )}
               >
                 {post.status === "published" ? (

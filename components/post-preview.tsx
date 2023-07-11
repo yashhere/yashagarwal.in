@@ -1,9 +1,9 @@
+import { Suspense } from "react"
 import { Metric } from "@/components/metrics/metric"
 import Link from "@/components/ui/link"
 import { PostPreviewLoading } from "@/components/ui/post-preview-loading"
 import { getPost } from "@/lib/content"
 import moment from "moment"
-import { Suspense } from "react"
 
 export const PostPreview = ({
   post,

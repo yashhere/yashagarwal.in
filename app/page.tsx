@@ -1,7 +1,7 @@
+import { Metadata } from "next"
 import { TopPosts } from "@/components/top-posts"
 import Link from "@/components/ui/link"
 import { ArrowRightIcon } from "@heroicons/react/24/solid"
-import { Metadata } from "next"
 
 export const metadata: Metadata = {
   title: "Home | Yash Agarwal",
@@ -15,7 +15,7 @@ export default async function Page() {
         <h1 className="my-8 text-4xl font-bold tracking-tighter sm:mt-4">
           hey, I&apos;m Yash 👋
         </h1>
-        <div className="prose prose-article text-text text-xl leading-7">
+        <div className="prose prose-article text-xl leading-7 text-text">
           <p>Welcome to my digital home!</p>
           <p>
             I&apos;m a software engineer with a knack for exploring technology

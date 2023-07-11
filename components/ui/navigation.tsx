@@ -1,8 +1,9 @@
 "use client"
 
-import { cn } from "@/lib/utils"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { cn } from "@/lib/utils"
+
 import { DarkToggle } from "../mode-toggle"
 
 const navItems = {
@@ -41,7 +42,7 @@ export const Navigation = () => {
                     "leading-extra-tight flex align-middle transition-all hover:text-text sm:leading-tight",
                     {
                       "text-text/60": !isActive,
-                    },
+                    }
                   )}
                 >
                   {name}

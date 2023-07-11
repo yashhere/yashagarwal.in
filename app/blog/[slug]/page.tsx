@@ -1,5 +1,8 @@
 import "katex/dist/katex.css"
 import "@/styles/mdx.css"
+
+import { Suspense } from "react"
+import { Metadata, ResolvingMetadata } from "next"
 import { Comments } from "@/components/comments"
 import { LikeButton } from "@/components/like-button"
 import CustomMDXComponents from "@/components/mdx"
@@ -13,9 +16,7 @@ import { getPost, getSeries } from "@/lib/content"
 import { createOgImageForPost } from "@/lib/og/createOgImage"
 import { getSessionId } from "@/lib/server-utils"
 import moment from "moment"
-import { Metadata, ResolvingMetadata } from "next"
 import { getMDXComponent } from "next-contentlayer/hooks"
-import { Suspense } from "react"
 
 type Props = {
   params: { slug: string }
@@ -23,7 +24,7 @@ type Props = {
 
 export async function generateMetadata(
   { params }: Props,
-  parent: ResolvingMetadata,
+  parent: ResolvingMetadata
 ): Promise<Metadata> {
   const post = await getPost(params.slug)
   const siteUrl: string = siteConfig.url
@@ -111,7 +112,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
           {/* Post Content */}
           <div className="pt-8">
-            <div className="prose prose-article text-lg leading-7 prose-headings:cursor-pointer prose-th:cursor-auto md:prose-lg lg:prose-xl prose-h1:mb-4 prose-h1:mt-16 prose-h2:mb-4 prose-h2:mt-16 prose-h3:my-8 prose-p:my-4">
+            <div className="prose prose-article text-lg leading-7 md:prose-lg lg:prose-xl prose-headings:cursor-pointer prose-h1:mb-4 prose-h1:mt-16 prose-h2:mb-4 prose-h2:mt-16 prose-h3:my-8 prose-p:my-4 prose-th:cursor-auto">
               <Content components={CustomMDXComponents} />
             </div>
           </div>
