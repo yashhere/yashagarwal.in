@@ -19,9 +19,9 @@ export async function TopPosts() {
             >
               <div className="flex h-full flex-col justify-between rounded-lg">
                 <div className="mb-6">
-                  <h4 className="w-full font-heading text-lg font-bold">
+                  <h3 className="w-full font-heading text-lg font-bold">
                     {item.post.title}
-                  </h4>
+                  </h3>
                   <div className="flex space-x-2 text-sm font-medium text-gray-600">
                     <p>{moment(item.post.published).fromNow()}</p>
                     <p>&middot;</p>
