@@ -32,7 +32,7 @@ const getOgImageUrl = ({ title, meta }: { title: string; meta: string }) =>
   [
     `https://res.cloudinary.com/yashagarwal/image/upload`,
     // Composed Image Transformations
-    `w_1600,h_836,q_100`,
+    `w_1200,h_630,q_100`,
 
     // TITLE
     // Karla google font in light rose
