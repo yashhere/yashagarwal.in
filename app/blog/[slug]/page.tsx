@@ -1,6 +1,3 @@
-import "katex/dist/katex.css"
-import "@/styles/mdx.css"
-
 import { Suspense } from "react"
 import { Metadata, ResolvingMetadata } from "next"
 import { Comments } from "@/components/comments"
@@ -15,6 +12,8 @@ import { getAllMetrics, getLikes } from "@/lib/actions"
 import { getPost, getSeries } from "@/lib/content"
 import { createOgImageForPost } from "@/lib/og/createOgImage"
 import { getSessionId } from "@/lib/server-utils"
+import "@/styles/mdx.css"
+import "katex/dist/katex.css"
 import moment from "moment"
 import { getMDXComponent } from "next-contentlayer/hooks"
 

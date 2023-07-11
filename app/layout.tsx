@@ -1,5 +1,3 @@
-import "@/styles/globals.css"
-
 import { Metadata, ResolvingMetadata } from "next"
 import localFont from "next/font/local"
 import { Analytics } from "@/components/analytics"
@@ -10,6 +8,7 @@ import { TailwindIndicator } from "@/components/ui/tailwind-indicator"
 import { siteConfig } from "@/config/site"
 import { createOgImageGeneral } from "@/lib/og/createOgImage"
 import { cn } from "@/lib/utils"
+import "@/styles/globals.css"
 
 const bodyFont = localFont({
   src: "../public/assets/fonts/wotfard.ttf",

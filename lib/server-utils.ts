@@ -1,6 +1,6 @@
-import { createHash } from "crypto"
 import { headers } from "next/headers"
 import { Post } from "contentlayer/generated"
+import { createHash } from "crypto"
 
 export function sortPosts(array: Post[]) {
   return array.sort(
