@@ -5,9 +5,9 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { Navigation } from "@/components/ui/navigation"
 import { TailwindIndicator } from "@/components/ui/tailwind-indicator"
 import { siteConfig } from "@/config/site"
-import { env } from "@/env.mjs"
+import { createOgImageGeneral } from "@/lib/og/createOgImage"
 import { cn } from "@/lib/utils"
-import { Metadata } from "next"
+import { Metadata, ResolvingMetadata } from "next"
 import localFont from "next/font/local"
 
 const bodyFont = localFont({
@@ -22,71 +22,82 @@ const monoFont = localFont({
   display: "swap",
 })
 
-export const metadata: Metadata = {
-  title: {
-    default: siteConfig.name,
-    template: `%s | ${siteConfig.name}`,
-  },
-  description: siteConfig.description,
-  keywords: [],
-  authors: [
-    {
-      name: "Yash Agarwal",
-      url: `${env.NEXT_PUBLIC_APP_URL}`,
-    },
-  ],
-  creator: "yashhere",
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "white" },
-    { media: "(prefers-color-scheme: dark)", color: "black" },
-  ],
-  referrer: "origin-when-cross-origin",
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 1,
-    userScalable: false,
-    viewportFit: "cover",
-  },
-  openGraph: {
-    type: "website",
-    locale: "en_US",
-    url: siteConfig.url,
-    title: siteConfig.name,
+export async function generateMetadata(
+  parent: ResolvingMetadata,
+): Promise<Metadata> {
+  const siteUrl: string = siteConfig.url
+
+  // access and extend (rather than replace) parent metadata
+  const previousImages = (await parent).openGraph?.images || []
+  const newOgImage = createOgImageGeneral()
+
+  return {
+    title: siteConfig.title,
     description: siteConfig.description,
-    siteName: siteConfig.name,
-    images: [`${siteConfig.url}/images/og.jpg`],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: siteConfig.name,
-    description: siteConfig.description,
-    images: [`${siteConfig.url}/og.jpg`],
-    creator: "@yashhere",
-  },
-  verification: {
-    google: "",
-  },
-  alternates: {
-    canonical: `${env.NEXT_PUBLIC_APP_URL}`,
-    types: {
-      "application/rss+xml": [
-        { url: "rss.xml", title: "RSS Feed for yashagarwal.in" },
-        { url: "atom.xml", title: "Atom Feed for yashagarwal.in" },
-      ],
+    keywords: [],
+    authors: [
+      {
+        name: "Yash Agarwal",
+        url: siteUrl,
+      },
+    ],
+    creator: "Yash Agarwal",
+    generator: "Next.js",
+    archives: [`${siteUrl}/blog`],
+    themeColor: [
+      { media: "(prefers-color-scheme: light)", color: "white" },
+      { media: "(prefers-color-scheme: dark)", color: "black" },
+    ],
+    referrer: "origin-when-cross-origin",
+    viewport: {
+      width: "device-width",
+      initialScale: 1,
+      maximumScale: 1,
+      userScalable: false,
+      viewportFit: "cover",
     },
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
+    openGraph: {
+      type: "website",
+      locale: "en_US",
+      url: siteConfig.url,
+      title: siteConfig.title,
+      description: siteConfig.description,
+      siteName: siteConfig.title,
+      images: [newOgImage, ...previousImages],
+      countryName: "India",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: siteConfig.title,
+      description: siteConfig.description,
+      images: newOgImage,
+      creator: "@yash__here",
+      site: siteConfig.url,
+    },
+    verification: {
+      google: "",
+    },
+    alternates: {
+      canonical: siteUrl,
+      types: {
+        "application/rss+xml": [
+          { url: "rss.xml", title: "RSS Feed for yashagarwal.in" },
+          { url: "atom.xml", title: "Atom Feed for yashagarwal.in" },
+        ],
+      },
+    },
+    robots: {
       index: true,
       follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
     },
-  },
+  }
 }
 
 interface RootLayoutProps {

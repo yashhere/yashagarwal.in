@@ -1,8 +1,8 @@
-import { env } from "@/env.mjs"
+import { siteConfig } from "@/config/site"
 import { allPosts } from "contentlayer/generated"
 
 export default async function sitemap() {
-  const siteUrl: string = env.NEXT_PUBLIC_APP_URL
+  const siteUrl: string = siteConfig.url
   const postUrls = allPosts.map((post) => ({
     url: `${siteUrl}/blog/${post.slug}`,
     lastModified: post.published,

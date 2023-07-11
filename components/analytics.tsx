@@ -1,12 +1,12 @@
 "use client"
 
-import { env } from "@/env.mjs"
+import { siteConfig } from "@/config/site"
 import Script from "next/script"
 
 export function Analytics() {
   if (
     process.env.NODE_ENV !== "production" ||
-    !env.NEXT_PUBLIC_APP_URL.startsWith("https://yashagarwal.in")
+    !siteConfig.url.startsWith("https://yashagarwal.in")
   ) {
     return null
   }

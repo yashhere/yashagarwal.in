@@ -1,7 +1,7 @@
-import { env } from "@/env.mjs"
+import { siteConfig } from "@/config/site"
 
 export default function robots() {
-  const siteUrl: string = env.NEXT_PUBLIC_APP_URL
+  const siteUrl: string = siteConfig.url
   return {
     rules: [
       {

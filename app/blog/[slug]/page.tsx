@@ -7,12 +7,11 @@ import { Metric } from "@/components/metrics/metric"
 import { Series } from "@/components/series"
 import { TableOfContents } from "@/components/table-of-contents"
 import { ViewCounter } from "@/components/view-counter"
-import { env } from "@/env.mjs"
+import { siteConfig } from "@/config/site"
 import { getAllMetrics, getLikes } from "@/lib/actions"
 import { getPost, getSeries } from "@/lib/content"
-import { createOgImage } from "@/lib/createOgImage"
+import { createOgImageForPost } from "@/lib/og/createOgImage"
 import { getSessionId } from "@/lib/server-utils"
-import { absoluteUrl } from "@/lib/utils"
 import moment from "moment"
 import { Metadata, ResolvingMetadata } from "next"
 import { getMDXComponent } from "next-contentlayer/hooks"
@@ -22,37 +21,17 @@ type Props = {
   params: { slug: string }
 }
 
-function constructOgImageUri(title: string, published: string) {
-  const uri = [
-    `?title=${encodeURIComponent(title)}`,
-    `&published=${encodeURIComponent(published)}`,
-  ].join("")
-
-  return absoluteUrl(`/og${uri}`)
-}
-
 export async function generateMetadata(
   { params }: Props,
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
   const post = await getPost(params.slug)
-  const siteUrl: string = env.NEXT_PUBLIC_APP_URL
+  const siteUrl: string = siteConfig.url
 
   // access and extend (rather than replace) parent metadata
   const previousImages = (await parent).openGraph?.images || []
-  const tags = (post.tags && post.tags.map(({ value }) => value)) || [""]
+  const newOgImage = createOgImageForPost({ post })
 
-  const newOgImage = createOgImage({
-    title: post.title,
-    meta: [siteUrl, moment(post.published).format("MMM DD, YYYY")].join(" · "),
-  })
-
-  const publishedDate = moment(post.published).format("MMM DD, YYYY")
-  const ogImage = {
-    url: constructOgImageUri(post.title, publishedDate),
-  }
-
-  console.log(ogImage)
   return {
     title: `${post.title} | Yash Agarwal`,
     description: post.description,
@@ -63,16 +42,23 @@ export async function generateMetadata(
     keywords: post.tags?.map((tag) => tag.value),
     creator: "Yash Agarwal",
     twitter: {
+      title: post.title,
+      description: post.description,
       card: "summary_large_image",
       creator: "@yash__here",
-      images: ogImage,
+      images: newOgImage,
+      site: siteUrl,
     },
     openGraph: {
       title: post.title,
       description: post.description,
       type: "article",
       publishedTime: moment(post.published).format("MMM DD, YYYY"),
-      images: [ogImage],
+      images: [newOgImage, ...previousImages],
+      locale: "en_US",
+      url: siteConfig.url,
+      siteName: siteConfig.title,
+      countryName: "India",
     },
   }
 }
