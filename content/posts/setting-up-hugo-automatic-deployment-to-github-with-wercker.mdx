@@ -14,7 +14,7 @@ In this post, I will list all the process which I used to set up automatic
 deployment of Hugo generated site to Github pages using Wercker. In the
 beginning, I was trying to use Travis-CI, but then I read about Wercker
 somewhere. I was impressed with the integration of Wercker with Hugo and the
-availability of many its community-generated “steps” for the build and deploy
+availability of many its community-generated "steps" for the build and deploy
 process.
 
 [Hugo Docs](https://gohugo.io/getting-started/) already have a fantastic
@@ -25,7 +25,7 @@ its platform, which made it difficult for me to set up things correctly. But
 after hours of trial and error cycle, I was able to build and deploy my static
 files successfully.
 
-Here I would like to share the issues I encountered and the tweaks I’ve made.
+Here I would like to share the issues I encountered and the tweaks I've made.
 The source codes of this site can be found
 [here](https://github.com/yashhere/yashhere.github.io).
 
@@ -40,7 +40,7 @@ gh-pages will be served at the address `https://repo_name.github.io`.
 My site is a User site, so I wanted all the static files to be saved in the
 master branch. As Hugo generates all the static files under `public` directory,
 I needed another branch to store my source files. So my made a new branch
-`source`, which will save all the source files for my blog. Don’t forget to
+`source`, which will save all the source files for my blog. Don't forget to
 remove the `.git` folder from the theme folder. Otherwise, the build will fail
 at a later stage. You can try using the git submodule feature to avoid this
 issue. I created a repository `yash2696.github.io` in Github also.
@@ -96,7 +96,7 @@ problems which I face while setting up things properly.
 Following the official guide, I used this
 [step](https://github.com/ArjenSchwarz/wercker-step-hugo-build) to trigger Hugo
 to build HTML pages. I had already removed git repository information from the
-theme folder, so this step finished successfully. If you haven’t, you may add
+theme folder, so this step finished successfully. If you haven't, you may add
 the following piece of code in your build step.
 
 ```yml
