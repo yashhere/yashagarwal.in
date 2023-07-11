@@ -1,5 +1,5 @@
-import { cn } from "@/lib/utils"
 import React from "react"
+import { cn } from "@/lib/utils"
 
 export const Aside = ({
   children,
@@ -13,7 +13,7 @@ export const Aside = ({
   title?: string
 }) => {
   return (
-    <div className="bg-black/10 px-2 py-2 rounded-md mt-2 mb-2">
+    <div className="m-2 rounded-md bg-black/10 p-2">
       {title ? (
         <div className="mb-2 text-base italic text-opacity-100">{title}</div>
       ) : null}

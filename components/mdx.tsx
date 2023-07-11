@@ -1,10 +1,10 @@
 /* eslint-disable react/jsx-no-target-blank */
+import React from "react"
+import type { ImageProps } from "next/image"
 import Link from "@/components/ui/link"
 import { LoadingImage } from "@/components/ui/loading-image"
 import { cn } from "@/lib/utils"
 import { MDXComponents } from "mdx/types"
-import type { ImageProps } from "next/image"
-import React from "react"
 
 const BlogLink = (props) => {
   if (props.href.startsWith("#")) {
@@ -17,7 +17,7 @@ const BlogLink = (props) => {
 const CustomMDXComponents: MDXComponents = {
   a: BlogLink,
   pre: ({ children, ...props }) => (
-    <pre className="mb-4 mt-6 bg-pre-bg pb-4 text-sm rounded-t-xl" {...props}>
+    <pre className="mb-4 mt-6 rounded-t-xl bg-pre-bg pb-4 text-sm" {...props}>
       <div className={"code-header"}>{props["data-language"]}</div>
       {children}
     </pre>
@@ -25,8 +25,8 @@ const CustomMDXComponents: MDXComponents = {
   code: ({ className, ...props }) => (
     <code
       className={cn(
-        "relative bg-code-bg overflow-x-auto px-[0.3rem] py-[0.3rem] rounded text-sm break-words",
-        className,
+        "relative overflow-x-auto break-words rounded bg-code-bg p-[0.3rem] text-sm",
+        className
       )}
       {...props}
     />

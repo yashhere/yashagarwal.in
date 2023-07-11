@@ -1,7 +1,7 @@
+import { Suspense } from "react"
 import { getTotalViews } from "@/lib/actions"
 import { ArrowTrendingUpIcon, PencilIcon } from "@heroicons/react/24/solid"
 import { allPosts } from "contentlayer/generated"
-import { Suspense } from "react"
 
 const Page = async () => {
   const data = await getTotalViews()

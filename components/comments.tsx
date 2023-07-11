@@ -1,7 +1,7 @@
 "use client"
 
-import { useGiscus } from "@/lib/useGiscus"
 import React from "react"
+import { useGiscus } from "@/lib/useGiscus"
 import { useInView } from "react-intersection-observer"
 
 export const Comments = () => {

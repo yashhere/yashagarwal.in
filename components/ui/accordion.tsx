@@ -1,5 +1,5 @@
-import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid"
 import { FC, ReactNode, useState } from "react"
+import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid"
 
 type AccordionItemProps = {
   label: string
@@ -15,9 +15,9 @@ export const AccordionItem: FC<AccordionItemProps> = ({
   const [open, setOpen] = useState(isOpen)
 
   return (
-    <div className="border-b last:border-none bg-clip-border">
+    <div className="border-b bg-clip-border last:border-none">
       <div className="">
-        <div className="flex justify-between mx-2 my-2">
+        <div className="m-2 flex justify-between">
           <h4 className="font-semibold">{label}</h4>
           <button onClick={(e) => setOpen(!open)}>
             {open ? (
@@ -29,8 +29,8 @@ export const AccordionItem: FC<AccordionItemProps> = ({
         </div>
       </div>
       {open ? (
-        <div className="border-t mt-2 bg-white">
-          <div className="mx-2 my-2">{children}</div>
+        <div className="mt-2 border-t bg-white">
+          <div className="m-2">{children}</div>
         </div>
       ) : null}
     </div>

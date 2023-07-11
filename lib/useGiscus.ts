@@ -1,8 +1,7 @@
 // https://github.com/orgs/giscus/discussions/152
-
+import React from "react"
 import { siteConfig } from "@/config/site"
 import { useTheme } from "next-themes"
-import React from "react"
 
 interface IGiscus {
   mapping: string
@@ -48,7 +47,7 @@ export const useGiscus = ({ mapping, commentNodeId }: IGiscus) => {
     }
 
     Object.entries(attributes).forEach(([name, value]) =>
-      script.setAttribute(name, value),
+      script.setAttribute(name, value)
     )
 
     scriptParentNode.appendChild(script)
@@ -56,7 +55,7 @@ export const useGiscus = ({ mapping, commentNodeId }: IGiscus) => {
 
   React.useEffect(() => {
     const iframe = document.querySelector<HTMLIFrameElement>(
-      "iframe.giscus-frame",
+      "iframe.giscus-frame"
     )
     iframe?.contentWindow?.postMessage(
       {
@@ -66,7 +65,7 @@ export const useGiscus = ({ mapping, commentNodeId }: IGiscus) => {
           },
         },
       },
-      "https://giscus.app",
+      "https://giscus.app"
     )
   }, [resolvedTheme])
 }

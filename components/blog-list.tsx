@@ -1,10 +1,10 @@
 "use client"
 
+import { ChangeEvent, Suspense, useState } from "react"
 import { PostList } from "@/components/article-list"
 import { SearchInput } from "@/components/search"
 import { PostPreviewLoading } from "@/components/ui/post-preview-loading"
 import { Post } from "contentlayer/generated"
-import { ChangeEvent, Suspense, useState } from "react"
 
 export const PostListLoading = ({ posts }: { posts: Post[] }) => {
   return (
@@ -40,7 +40,7 @@ export const BlogPostList = ({
         ? posts?.filter((p) => {
             return p.title.toLowerCase().includes(e.target.value.toLowerCase())
           })
-        : posts,
+        : posts
     )
   }
 

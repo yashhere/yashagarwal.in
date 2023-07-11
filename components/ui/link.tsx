@@ -1,14 +1,14 @@
 "use client"
 
-import { cn } from "@/lib/utils"
-import Link from "next/link"
 import {
   AnchorHTMLAttributes,
-  cloneElement,
-  forwardRef,
   ReactElement,
   ReactNode,
+  cloneElement,
+  forwardRef,
 } from "react"
+import Link from "next/link"
+import { cn } from "@/lib/utils"
 import { TbArrowUpRight } from "react-icons/tb"
 
 interface ExternalLinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
@@ -34,7 +34,7 @@ const ExternalLink = forwardRef<HTMLAnchorElement, ExternalLinkProps>(
       icon,
       ...otherProps
     }: ExternalLinkProps,
-    ref,
+    ref
   ): JSX.Element => {
     const isInternalLink = href.startsWith("/") || href.startsWith("#")
     const isUnderline = underline
@@ -50,9 +50,9 @@ const ExternalLink = forwardRef<HTMLAnchorElement, ExternalLinkProps>(
           <Link
             href={href}
             className={cn(
-              "transition duration-200 no-underline",
+              "no-underline transition duration-200",
               isUnderline && "hover:underline hover:underline-offset-8",
-              className,
+              className
             )}
             ref={ref}
             {...otherProps}
@@ -63,9 +63,9 @@ const ExternalLink = forwardRef<HTMLAnchorElement, ExternalLinkProps>(
           <a
             href={href}
             className={cn(
-              "inline-flex items-center space-x-1 text-primary transition duration-200 no-underline",
+              "inline-flex items-center space-x-1 text-primary no-underline transition duration-200",
               isUnderline && "hover:underline hover:underline-offset-8",
-              className,
+              className
             )}
             target="_blank"
             rel="noopener noreferrer"
@@ -82,7 +82,7 @@ const ExternalLink = forwardRef<HTMLAnchorElement, ExternalLinkProps>(
         )}
       </>
     )
-  },
+  }
 )
 
 ExternalLink.displayName = "Link"

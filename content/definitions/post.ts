@@ -1,11 +1,11 @@
+import { Series } from "./series"
+import { Tag } from "./tag"
 import {
   defineComputedFields,
   defineDocumentType,
 } from "contentlayer/source-files"
 import GithubSlugger from "github-slugger"
 import readingTime from "reading-time"
-import { Series } from "./series"
-import { Tag } from "./tag"
 
 /** @type {import('contentlayer/source-files').ComputedFields} */
 const computedFields = defineComputedFields<"Post">({
@@ -35,7 +35,7 @@ const computedFields = defineComputedFields<"Post">({
             text: content,
             slug: content ? slugger.slug(content) : undefined,
           }
-        },
+        }
       )
 
       return headings

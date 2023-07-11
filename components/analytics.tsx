@@ -1,7 +1,7 @@
 "use client"
 
-import { siteConfig } from "@/config/site"
 import Script from "next/script"
+import { siteConfig } from "@/config/site"
 
 export function Analytics() {
   const siteUrl = siteConfig.url

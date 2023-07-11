@@ -1,5 +1,5 @@
-import { cn } from "@/lib/utils"
 import { FC } from "react"
+import { cn } from "@/lib/utils"
 
 type TagListProps = {
   tags: string[]
@@ -24,9 +24,8 @@ export const TagList: FC<TagListProps> = ({ tags }) => {
           <div
             key={t}
             className={cn(
-              "transform transition-all",
-              "shadow-surface-elevation-high mr-2 mt-2 rounded-xl bg-gradient-to-r p-1",
-              getNextGradient(),
+              "shadow-surface-elevation-high mr-2 mt-2 rounded-xl bg-gradient-to-r p-1 transition-all",
+              getNextGradient()
             )}
           >
             <div className="h-full justify-between rounded-lg bg-text px-4 py-2">

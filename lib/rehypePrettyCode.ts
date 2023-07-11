@@ -25,7 +25,7 @@ export function rehypePrettyCodeClasses() {
         Boolean(
           node.tagName === "code" &&
             Object.keys(node.properties).length === 0 &&
-            node.children.some((n: any) => n.type === "text"),
+            node.children.some((n: any) => n.type === "text")
         ),
       (node: any) => {
         const textNode = node.children.find((n: any) => n.type === "text")
@@ -35,7 +35,7 @@ export function rehypePrettyCodeClasses() {
         textNode.children = [{ type: "text", value: textNode.value }]
         node.properties.className = [INLINE_BLOCK]
         node.tagName = "span"
-      },
+      }
     )
 
     visit(
@@ -43,7 +43,7 @@ export function rehypePrettyCodeClasses() {
       (node: any) =>
         Boolean(
           typeof node?.properties?.["data-rehype-pretty-code-fragment"] !==
-            "undefined",
+            "undefined"
         ),
       (node: any) => {
         if (node.tagName === "span") {
@@ -96,7 +96,7 @@ export function rehypePrettyCodeClasses() {
 
           return node
         }
-      },
+      }
     )
   }
 }

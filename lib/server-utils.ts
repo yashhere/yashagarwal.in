@@ -1,10 +1,10 @@
-import { createHash } from "crypto"
-import { Post } from "contentlayer/generated"
 import { headers } from "next/headers"
+import { Post } from "contentlayer/generated"
+import { createHash } from "crypto"
 
 export function sortPosts(array: Post[]) {
   return array.sort(
-    (a, b) => new Date(b.published).getTime() - new Date(a.published).getTime(),
+    (a, b) => new Date(b.published).getTime() - new Date(a.published).getTime()
   )
 }
 

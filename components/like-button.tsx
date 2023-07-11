@@ -1,10 +1,10 @@
 "use client"
 
+import { useState } from "react"
 import { incrementLikes } from "@/lib/actions"
 import { FOCUS_VISIBLE_OUTLINE } from "@/lib/constants"
 import { cn } from "@/lib/utils"
 import { HeartIcon } from "@heroicons/react/24/solid"
-import { useState } from "react"
 
 const emojis = ["👍", "🙏", "🥰"]
 
@@ -22,7 +22,7 @@ export function LikeButton({
   const [currentUserLikes, setCurrentUserLikes] = useState(userLikes)
   const [totalUserLikes, setTotalUserLikes] = useState(totalLikes)
   let [animatedEmojis, setAnimatedEmojis] = useState<string[]>(
-    currentUserLikes ? [emojis[currentUserLikes]] : [],
+    currentUserLikes ? [emojis[currentUserLikes]] : []
   )
 
   const handleClick = async () => {
@@ -61,7 +61,7 @@ export function LikeButton({
               "animate-pulse": false,
               "hover:shadow-gray-500/30": currentUserLikes === 0,
               "hover:shadow-purple-500/50": currentUserLikes !== 0,
-            },
+            }
           )}
           onClick={handleClick}
         >
@@ -72,7 +72,7 @@ export function LikeButton({
                 "translate-y-8": currentUserLikes === 0,
                 "translate-y-5": currentUserLikes === 1,
                 "translate-y-3": currentUserLikes === 2,
-              },
+              }
             )}
           />
 
