@@ -46,10 +46,10 @@ export async function generateMetadata(
     generator: "Next.js",
     archives: [`${siteUrl}/blog`],
     themeColor: [
-      { media: "(prefers-color-scheme: light)", color: "white" },
-      { media: "(prefers-color-scheme: dark)", color: "black" },
+      { media: "(prefers-color-scheme: dark)", color: "#0e141b" },
+      { media: "(prefers-color-scheme: light)", color: "#ffffff" },
     ],
-    referrer: "origin-when-cross-origin",
+    referrer: "strict-origin-when-cross-origin",
     viewport: {
       width: "device-width",
       initialScale: 1,
