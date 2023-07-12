@@ -1,11 +1,10 @@
 import React from "react"
 import type { ImageProps } from "next/image"
-import NextImage from "next/image"
+import Image from "next/image"
 import { cn } from "@/lib/utils"
 
 export const LoadingImage = (props: ImageProps) => {
   const [isLoading, setLoading] = React.useState(true)
-
   return (
     <div
       className={cn(
@@ -13,8 +12,9 @@ export const LoadingImage = (props: ImageProps) => {
         isLoading ? "animate-pulse" : ""
       )}
     >
-      <NextImage
+      <Image
         {...props}
+        alt=""
         className={cn(
           "rounded-xl duration-700 ease-in-out",
           isLoading

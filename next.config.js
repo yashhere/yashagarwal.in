@@ -10,6 +10,7 @@ const nextConfig = {
     serverComponentsExternalPackages: [],
   },
   images: {
+    formats: ['image/avif', 'image/webp'],
     // allow next/image to serve remote images from safelisted domains
     remotePatterns: [
       {
