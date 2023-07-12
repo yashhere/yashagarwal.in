@@ -54,6 +54,7 @@ export function LikeButton({
         })}
 
         <button
+          aria-label="like"
           className={cn(
             "shadow-lgx group relative block overflow-hidden rounded-lg bg-gradient-to-tl from-black/30 to-black/60 p-1 transition-all duration-300 ease-out hover:scale-[1.2] hover:rounded-[10px] active:scale-100 active:rounded-lg",
             FOCUS_VISIBLE_OUTLINE,

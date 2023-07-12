@@ -29,10 +29,10 @@ export const PostPreview = ({
           noUnderline
         >
           <div className="flex flex-col">
-            <h4 className="w-full font-heading text-lg font-bold">
+            <span className="w-full font-heading text-lg font-bold">
               {post.title}
-            </h4>
-            <div className="flex space-x-2 text-sm font-medium text-gray-600">
+            </span>
+            <div className="flex space-x-2 text-sm font-medium text-gray-700">
               <p>{moment(post.published).fromNow()}</p>
               <p>&middot;</p>
               <Metric stat={views.toString()} type="views" />
