@@ -45,10 +45,7 @@ export async function generateMetadata(
     creator: "Yash Agarwal",
     generator: "Next.js",
     archives: [`${siteUrl}/blog`],
-    themeColor: [
-      { media: "(prefers-color-scheme: dark)", color: "#0e141b" },
-      { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    ],
+    themeColor: [{ media: "(prefers-color-scheme: dark)", color: "#0e141b" }],
     openGraph: {
       type: "website",
       locale: "en_US",
