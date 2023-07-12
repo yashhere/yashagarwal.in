@@ -7,5 +7,6 @@
   "editor.formatOnPaste": true,
   "prettier.requireConfig": true,
   "prettier.semi": false,
-  "prettier.configPath": ".prettierrc.js"
+  "prettier.configPath": "",
+  "prettier.withNodeModules": true
 }

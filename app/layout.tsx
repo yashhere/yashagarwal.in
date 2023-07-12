@@ -49,7 +49,6 @@ export async function generateMetadata(
       { media: "(prefers-color-scheme: dark)", color: "#0e141b" },
       { media: "(prefers-color-scheme: light)", color: "#ffffff" },
     ],
-    referrer: "strict-origin-when-cross-origin",
     openGraph: {
       type: "website",
       locale: "en_US",
