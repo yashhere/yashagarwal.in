@@ -7,7 +7,7 @@ export function Analytics() {
   const siteUrl = siteConfig.url
   if (
     process.env.NODE_ENV !== "production" ||
-    !siteConfig.url.startsWith("https://yashagarwal.in")
+    !siteUrl.startsWith("https://yashagarwal.in")
   ) {
     return null
   }
