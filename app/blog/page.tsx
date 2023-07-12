@@ -26,9 +26,10 @@ export default async function Page() {
         </h1>
         <div className="text-lg text-text">
           <p>
-            Since April 2016, I&apos;ve penned 47 articles across diverse
-            categories. From tech knowledge and life updates to year reviews and
-            travelogues, there&apos;s a little something on every topic.
+            Since April 2016, I&apos;ve penned {posts.length} articles across
+            diverse categories. From tech knowledge and life updates to year
+            reviews and travelogues, there&apos;s a little something on every
+            topic.
           </p>
         </div>
       </section>

@@ -14,7 +14,7 @@ type TitleProps = {
 const Title: FC<TitleProps> = ({ children }) => {
   return (
     <div>
-      <div className="font-heading text-sm text-gray-600">series</div>
+      <div className="font-heading text-lg text-text">series</div>
       <div className="text-lg font-bold">{children}</div>
     </div>
   )

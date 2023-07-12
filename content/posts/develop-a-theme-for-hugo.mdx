@@ -122,13 +122,18 @@ using Hugo. Hugo provides a command to generate new sites. We will use that
 command to scaffold our site. It will create a basic skeleton of your site and
 will give you a basic configuration file.
 
-```yaml
-$ hugo new site ~/zeo $ cd ~/zeo $ ls -l total 28 drwxr-xr-x 2 yash hogwarts
-4096 Feb 11 11:13 archetypes -rw-r--r-- 1 yash hogwarts   82 Feb 11 11:13
-config.toml drwxr-xr-x 2 yash hogwarts 4096 Feb 11 11:13 content drwxr-xr-x 2
-yash hogwarts 4096 Feb 11 11:13 data drwxr-xr-x 2 yash hogwarts 4096 Feb 11
-11:13 layouts drwxr-xr-x 2 yash hogwarts 4096 Feb 11 11:13 static drwxr-xr-x 2
-yash hogwarts 4096 Feb 11 11:13 themes
+```sh
+$ hugo new site ~/zeo
+$ cd ~/zeo
+$ ls -l
+total 28
+drwxr-xr-x 2 yash hogwarts 4096 Feb 11 11:13 archetypes
+-rw-r--r-- 1 yash hogwarts   82 Feb 11 11:13 config.toml
+drwxr-xr-x 2 yash hogwarts 4096 Feb 11 11:13 content
+drwxr-xr-x 2 yash hogwarts 4096 Feb 11 11:13 data
+drwxr-xr-x 2 yash hogwarts 4096 Feb 11 11:13 layouts
+drwxr-xr-x 2 yash hogwarts 4096 Feb 11 11:13 static
+drwxr-xr-x 2 yash hogwarts 4096 Feb 11 11:13 themes
 ```
 
 **Note:** I will use YAML format for the config file. Hugo, By default, uses
@@ -178,7 +183,7 @@ layouts and themes directories are still empty.
 ```sh
 $ hugo --verbose
 INFO 2018/02/11 11:20:59 Using config file: /home/yash/zeo/config.yaml
-Building sites … INFO 2018/02/11 11:20:59 syncing static files to /home/yash/zeo/public/
+Building sites ... INFO 2018/02/11 11:20:59 syncing static files to /home/yash/zeo/public/
 WARN 2018/02/11 11:20:59 No translation bundle found for default language "en"
 WARN 2018/02/11 11:20:59 Translation func for language en not found, use default.
 WARN 2018/02/11 11:20:59 i18n not initialized, check that you have language file (in i18n) that matches the site language or the default language.
@@ -248,7 +253,7 @@ Now that we have an empty theme, let's build the site.
 ```sh
 $ hugo --verbose
 INFO 2018/02/11 11:34:14 Using config file: /home/yash/zeo/config.yaml
-Building sites … INFO 2018/02/11 11:34:14 syncing static files to /home/yash/zeo/public/
+Building sites ... INFO 2018/02/11 11:34:14 syncing static files to /home/yash/zeo/public/
 WARN 2018/02/11 11:34:14 No translation bundle found for default language "en"
 WARN 2018/02/11 11:34:14 Translation func for language en not found, use default.
 WARN 2018/02/11 11:34:14 i18n not initialized, check that you have language file (in i18n) that matches the site language or the default language.
@@ -301,9 +306,8 @@ changes in your files and reloads the web page accordingly.
 
 Run it with `hugo server` command.
 
-Now open [http://localhost:1313](http://localhost:1313) in your browser. By
-default, Hugo will not show anything, because it cannot find any HTML file in
-the public directory.
+Now open `http://localhost:1313` in your browser. By default, Hugo will not show
+anything, because it cannot find any HTML file in the public directory.
 
 The command to load web server with `--watch` option is:
 
@@ -355,7 +359,7 @@ $ vim themes/zeo/layouts/index.html
 ```
 
 Build the site and verify the results. You should see _Hello World!_ when you
-open [http://localhost:1313](http://localhost:1313).
+open `http://localhost:1313`.
 
 ### Building a functional Home Page
 
@@ -553,8 +557,8 @@ empty content. Remember I mentioned it earlier.
 
 Now that we have our home page and posts page ready, we will build a page to
 list all the posts, not just the recent ten posts. This page will be accessible
-at [http://localhost:1313/post](http://localhost:1313/post). Currently, this
-page is blank because there is no template defined for it.
+at `http://localhost:1313/post`. Currently, this page is blank because there is
+no template defined for it.
 
 This page will show the listings of all the posts, so the type of this page will
 be a list. We will again use the default `_default/list.html` as we do not have
