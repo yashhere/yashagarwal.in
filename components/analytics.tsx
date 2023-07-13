@@ -18,7 +18,7 @@ export function Analytics() {
         async
         defer
         src="https://static.cloudflareinsights.com/beacon.min.js"
-        data-cf-beacon='{"token": "2a7ef969c27242e684ce70372f081ad8"}'
+        data-cf-beacon='{"token": "e14f712dcb3f4bb7aab3a2f606159e03"}'
       />
       <Script
         async
