@@ -15,14 +15,16 @@ export function Analytics() {
   return (
     <>
       <Script
+        async
         defer
         src="https://static.cloudflareinsights.com/beacon.min.js"
         data-cf-beacon='{"token": "e14f712dcb3f4bb7aab3a2f606159e03"}'
       />
       <Script
-        data-goatcounter="https://yashhere.goatcounter.com/count"
         async
-        src="//gc.zgo.at/count.js"
+        defer
+        data-website-id="528ca5db-941c-4b23-982f-da0696d768d0"
+        src="https://umami.yashagarwal.in/umami.js"
       />
     </>
   )
