@@ -49,7 +49,9 @@ export const TableOfContents = ({ headings, path, interactive }) => {
             </div>
           </button>
         ) : (
-          <div className="font-heading text-lg text-text">On This Page</div>
+          <div className="font-heading text-lg font-bold uppercase tracking-widest text-secondary ">
+            Table of Contents
+          </div>
         )}
         {isOpen && (
           <motion.div
