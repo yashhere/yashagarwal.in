@@ -12,8 +12,10 @@ import { getAllMetrics, getLikes } from "@/lib/actions"
 import { getPost, getSeries } from "@/lib/content"
 import { createOgImageForPost } from "@/lib/og/createOgImage"
 import { getSessionId } from "@/lib/server-utils"
+
 import "@/styles/mdx.css"
 import "katex/dist/katex.css"
+
 import moment from "moment"
 import { getMDXComponent } from "next-contentlayer/hooks"
 
@@ -94,12 +96,6 @@ export default async function Page({ params }: { params: { slug: string } }) {
         </section>
 
         <Suspense fallback={<div>Loading...</div>}>
-          {/* DEBUG: Table of contents needs some serious UI tweaking */}
-          <TableOfContents
-            headings={post.headings}
-            path={`/blog/${post.slug}`}
-          />
-
           {/* Post Series */}
           {post.series != null ? (
             <Series
@@ -112,6 +108,11 @@ export default async function Page({ params }: { params: { slug: string } }) {
           {/* Post Content */}
           <div className="pt-8">
             <div className="prose prose-article text-lg leading-7 md:prose-lg lg:prose-xl prose-headings:cursor-pointer prose-h1:mb-4 prose-h1:mt-16 prose-h2:mb-4 prose-h2:mt-16 prose-h3:my-8 prose-p:my-4 prose-th:cursor-auto">
+              <TableOfContents
+                headings={post.headings}
+                path={`/blog/${post.slug}`}
+                interactive={true}
+              />
               <Content components={CustomMDXComponents} />
             </div>
           </div>
@@ -124,6 +125,16 @@ export default async function Page({ params }: { params: { slug: string } }) {
               userLikes={userLikes}
             />
           </div>
+
+          {/* Post Series */}
+          {post.series != null ? (
+            <Series
+              series={getSeries(post.series.title, post.slug)}
+              interactive={true}
+              current={slug}
+            />
+          ) : null}
+
           <Comments />
         </Suspense>
       </div>

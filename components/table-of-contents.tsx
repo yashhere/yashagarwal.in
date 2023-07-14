@@ -1,68 +1,92 @@
 "use client"
 
+import { FC, ReactNode, useState } from "react"
 import { useRouter } from "next/navigation"
 import { cn } from "@/lib/utils"
+import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/outline"
 import { motion } from "framer-motion"
-import GithubSlugger from "github-slugger"
 
-export const TableOfContents = ({ headings, path }) => {
+import Link from "./ui/link"
+
+type TitleProps = {
+  children?: ReactNode
+}
+
+const Title: FC<TitleProps> = ({ children }) => {
+  return (
+    <div>
+      <div className="text-lg font-bold">{children}</div>
+    </div>
+  )
+}
+
+export const TableOfContents = ({ headings, path, interactive }) => {
   const router = useRouter()
+  const [isOpen, setIsOpen] = useState(!interactive)
+
   return (
     <>
-      <motion.div
-        className="sticky top-6 hidden h-0"
-        initial={{ y: 300, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        exit={{ y: 300, opacity: 0 }}
-        transition={{
-          type: "spring",
-          stiffness: 260,
-          damping: 20,
-          delay: 0.2,
-        }}
-      >
-        <div className="space-y-6">
-          {headings ? (
-            <div className="space-y-2 text-sm">
-              <div className="uppercase text-text/30">On this page</div>
-              {headings.map((heading) => {
-                return (
+      <div className="shadow-surface-elevation-low rounded border-2 bg-transparent p-5 lg:px-8">
+        {interactive ? (
+          <button
+            className="items center group flex w-full items-center text-left"
+            onClick={() => {
+              setIsOpen(!isOpen)
+            }}
+          >
+            <div className="font-heading text-lg font-bold uppercase tracking-widest text-secondary ">
+              Table of Contents
+            </div>
+
+            <div className="ml-auto pl-4">
+              <div className="rounded-full bg-gray-600/10 p-2 text-text group-hover:bg-gray-600/25">
+                {isOpen ? (
+                  <ChevronUpIcon className="w-5" />
+                ) : (
+                  <ChevronDownIcon className="w-5" />
+                )}
+              </div>
+            </div>
+          </button>
+        ) : (
+          <div className="font-heading text-lg text-text">On This Page</div>
+        )}
+        {isOpen && (
+          <motion.div
+            initial="collapsed"
+            animate="open"
+            exit="collapsed"
+            transition={{ duration: 0.8, ease: "easeInOut" }}
+            variants={{
+              open: {
+                opacity: 1,
+                height: "auto",
+              },
+              collapsed: {
+                opacity: 0,
+                height: 0,
+              },
+            }}
+          >
+            {headings ? (
+              <div>
+                {headings.map((heading) => (
                   <div key={heading.slug}>
-                    <a
+                    <Link
                       href={`#${heading.slug}`}
-                      className={cn(
-                        "block text-text/60 underline-offset-2 transition-all hover:text-text hover:underline",
-                        {
-                          "pl-2": heading.heading === 2,
-                          "pl-4": heading.heading === 3,
-                        }
-                      )}
+                      className={cn("my-4 text-lg text-text", {
+                        "pl-6": heading.heading === 3,
+                      })}
                     >
                       {heading.text}
-                    </a>
+                    </Link>
                   </div>
-                )
-              })}
-            </div>
-          ) : null}
-          <div className="border-white-200 border-t"></div>
-
-          <div className="flex w-full justify-end">
-            <div>
-              <button
-                className="text-sm text-gray-100 hover:text-text"
-                onClick={() => {
-                  window.scrollTo({ top: 0 })
-                  // @ts-expect-error
-                  router.push(path, { shallow: true })
-                }}
-              >
-                Back to top
-              </button>
-            </div>
-          </div>
-        </div>
-      </motion.div>
+                ))}
+              </div>
+            ) : null}
+          </motion.div>
+        )}
+      </div>
     </>
   )
 }
