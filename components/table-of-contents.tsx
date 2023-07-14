@@ -75,7 +75,8 @@ export const TableOfContents = ({ headings, path, interactive }) => {
                     <Link
                       href={`#${heading.slug}`}
                       className={cn("my-4 text-lg text-text", {
-                        "pl-6": heading.heading === 3,
+                        "pl-5": heading.heading === 2,
+                        "pl-7": heading.heading === 3,
                       })}
                     >
                       {heading.text}
