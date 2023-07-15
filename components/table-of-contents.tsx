@@ -79,6 +79,7 @@ export const TableOfContents = ({ headings, path, interactive }) => {
                       className={cn("my-4 text-lg text-text", {
                         "pl-5": heading.heading === 2,
                         "pl-7": heading.heading === 3,
+                        "pl-9": heading.heading === 4,
                       })}
                     >
                       {heading.text}
