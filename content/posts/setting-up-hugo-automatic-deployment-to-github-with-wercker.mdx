@@ -29,7 +29,7 @@ Here I would like to share the issues I encountered and the tweaks I've made.
 The source codes of this site can be found
 [here](https://github.com/yashhere/yashhere.github.io).
 
-## Project Pages or User Pages
+# Project Pages or User Pages
 
 Two types of sites are supported on Github Pages, User Site, and Project Site.
 User Sites will serve the files stored in the master branch of the repository
@@ -66,7 +66,7 @@ git commit -a -m "Initial Commit"
 git push origin master
 ```
 
-## Automatic deployment using Wrecker
+# Automatic deployment using Wrecker
 
 It is straightforward to build a Hugo site. Invoke `hugo` command under your
 root directory, Hugo will create a public folder which will contain all your
@@ -91,7 +91,7 @@ for reference. In this, I have used two pipelines, _build_ and _deploy_. Please
 follow the official docs for the more detailed steps. I will list all the
 problems which I face while setting up things properly.
 
-### Build
+## Build
 
 Following the official guide, I used this
 [step](https://github.com/ArjenSchwarz/wercker-step-hugo-build) to trigger Hugo
@@ -111,7 +111,7 @@ the following piece of code in your build step.
             git submodule update --init --recursive
 ```
 
-### Deploy
+## Deploy
 
 There is no concept named "Add Deploy Target" in Wercker as of now. Most of the
 on-line tutorials follow this process which is outdated. Now Wercker uses a

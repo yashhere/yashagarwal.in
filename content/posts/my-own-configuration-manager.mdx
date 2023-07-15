@@ -25,7 +25,7 @@ learn new tools just for maintaining my dotfiles. At last, I decided to write my
 tool to solve this problem. This way, there will not be any external dependency,
 and this tool will also become part of my dotfiles.
 
-## Design
+# Design
 
 The tool, in itself, is inspired by the
 [UNIX tradition](https://en.wikipedia.org/wiki/Configuration_file#UNIX/Linux) of
@@ -49,7 +49,7 @@ configuration system. Let's have a look at the file structure of the repository.
 |   |-- ......
 |-- dotfiles.json
 |-- LICENSE
-`-- README.md
+|-- README.md
 ```
 
 During the initial setup, you need to edit the `dotfiles.json` file to suit your
@@ -128,7 +128,7 @@ will be symlinked to their correct place.
 The `current_status` file saves all the symlink locations that are being managed
 by the script, for your easy reference and to debug any error.
 
-## Behind the Scenes
+# Behind the Scenes
 
 A lot to cool things happen behind the scenes. The script will check if any
 previous symlink exists at the given `dest` location. It removes any symlinks to

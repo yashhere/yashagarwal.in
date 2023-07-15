@@ -7,7 +7,7 @@ status: "published"
 _This article was originally published on
 [zeolearn](https://www.zeolearn.com/magazine/develop-a-theme-for-hugo)._
 
-## Introduction
+# Introduction
 
 In this tutorial, I will show you how to create a basic Hugo theme. I assume
 that you are familiar with basic HTML, and how to write content in markdown. I
@@ -25,9 +25,9 @@ Now, a short tutorial about the flow of this post. The commands that start with
 `$` are meant to be run in the terminal or command line. The output of the
 command will follow immediately. Comments will begin with `#`.
 
-## Some Terminology
+# Some Terminology
 
-### Configuration File
+## Configuration File
 
 Hugo uses a configuration file to identify common settings for your site. It is
 located in the root of your site. This file can be written in TOML, YAML or JSON
@@ -38,14 +38,14 @@ template files in your `themes/` directory. It will create HTML files in your
 `public/` directory. You can change this by specifying alternate locations in
 the configuration file.
 
-### Content
+## Content
 
 The content files will contain the metadata and text about your posts. A content
 file can be divided into two sections, the top section being frontmatter and the
 next section is the markdown that will be converted to HTML by Hugo. The content
 files reside in `/content` directory.
 
-### Frontmatter
+## Frontmatter
 
 The frontmatter section contains information about your post. It can be written
 in JSON, TOML or YAML. Hugo identifies the type of frontmatter used with the
@@ -77,13 +77,13 @@ tags:
 You can read more about different configuration options available for
 frontmatter [here](https://gohugo.io/content-management/front-matter/#readout).
 
-### Markdown
+## Markdown
 
 The markdown section is where you will write your actual post. The content
 written here will automatically be converted to HTML by Hugo with the help of a
 Markdown engine.
 
-### Templates
+## Templates
 
 In Hugo, templates govern the way; your content will be rendered to HTML. Each
 template provides a consistent layout when rendering the markdown content. The
@@ -93,12 +93,12 @@ There are three types of templates: _single_, _list_ and _partial_. Each kind of
 template take some content as input and transform it according to the way
 defined in the template.
 
-#### Single Template
+### Single Template
 
 A single template is used to render a single page. The best example of this is
 _about_ page.
 
-#### List Template
+### List Template
 
 A list template renders a group of related content. It can be all recent posts
 or all posts belonging to a particular category.
@@ -106,7 +106,7 @@ or all posts belonging to a particular category.
 The homepage template is a specific type of list template. Hugo assumes that the
 homepage will serve as a bridge to all the other content on your website.
 
-### Partials
+## Partials
 
 Partials are short code snippets that can be injected in any other template
 type. They are instrumental when you want to repeat some content on every page
@@ -115,7 +115,7 @@ included in separate partials. It is a good practice to use partials liberally
 in your Hugo site as it adheres to
 [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) principle.
 
-## Okay, Let's Start
+# Okay, Let's Start
 
 So now that you have a basic understanding of Hugo, we will create a new site
 using Hugo. Hugo provides a command to generate new sites. We will use that
@@ -213,7 +213,7 @@ have not created any content in our content directory yet.
 At this point, you have a working site with you. All that is left is to add some
 content and a theme to your site.
 
-### Create a new theme
+## Create a new theme
 
 Hugo doesn't ship with a default theme. There are a lot of themes available on
 Hugo website. Hugo also ships with a command to create new themes.
@@ -280,7 +280,7 @@ content files to HTML using the defined templates, and its copies static files
 into the site. Static files are not transformed by Hugo. They are copied exactly
 as they are.
 
-### The Cycle
+## The Cycle
 
 The usual development cycle when developing themes for Hugo is:
 
@@ -298,7 +298,7 @@ It is also a good idea to track changes in your theme with the help of a version
 control software. I prefer Git for this. You can use others according to your
 preference.
 
-### Run your site in the browser
+## Run your site in the browser
 
 Hugo has a built-in web server which helps considerably while developing themes
 for Hugo. It also has a _live reload_ and _watch_ feature which watches for
@@ -332,7 +332,7 @@ Total in 11 ms
 
 ```
 
-### Update the Home page template
+## Update the Home page template
 
 Hugo looks for following directories in theme's `/layout` folder to search for
 `index.html` page.
@@ -361,7 +361,7 @@ $ vim themes/zeo/layouts/index.html
 Build the site and verify the results. You should see _Hello World!_ when you
 open `http://localhost:1313`.
 
-### Building a functional Home Page
+## Building a functional Home Page
 
 Now we will create a home page which will reflect the content of our site every
 time we build it.
@@ -459,7 +459,7 @@ similar type of content and render them as a list. The home page will show a
 list of last ten posts that we have created. Let's update its template to add
 this logic.
 
-### Update your home page to show your content
+## Update your home page to show your content
 
 Now add your template code to `themes/zeo/layouts/index.html`.
 
@@ -494,7 +494,7 @@ Build the website and see the changes. The homepage now shows our two posts.
 However, you cannot click on the posts and read their content. Let's change that
 too.
 
-### Linking your posts on Home Page
+## Linking your posts on Home Page
 
 Let's add a link to the post's page from home page.
 
@@ -578,7 +578,7 @@ $ vim themes/zeo/layouts/_default/list.html
 </html>
 ```
 
-### Add "Date Published" to the posts
+## Add "Date Published" to the posts
 
 It is a standard practice to add the date on which the post was published on the
 blog. The front matter of our posts has a variable named `date`. We will use
@@ -602,7 +602,7 @@ $ vim themes/zeo/layouts/_default/single.html
 
 ---
 
-## Adding top-level Pages
+# Adding top-level Pages
 
 Okay, so now that we have our homepage, post-list page and post content pages in
 place, we will add a new _about_ page at the top level of our blog, not at a
@@ -678,7 +678,7 @@ let's use the feature provided by Hugo and create a new template type for the
 posts. Before we do that, let's learn to use one more template type which is
 _partials_.
 
-## Partials
+# Partials
 
 In Hugo, partials are used to store the shared piece of code which repeats in
 more than one templates. Partials are kept in `themes/zeo/layouts/partials`
@@ -686,7 +686,7 @@ directory. Partials can be used to override the themes presentation. End users
 can use them to change the default behavior of a theme. It is always a good idea
 to use partials as much as possible.
 
-### Header and Footer partials
+## Header and Footer partials
 
 Header and footer of most of the posts and pages will follow a similar pattern.
 So they form an excellent example to be defined as a partial.
@@ -710,7 +710,7 @@ We can call a partial by including this path in the template
 {{ partial "header.html" . }}
 ```
 
-## Update the Homepage template
+# Update the Homepage template
 
 Let's update our homepage template to use these partials.
 
@@ -732,7 +732,7 @@ $ vim themes/zeo/layouts/index.html {{ partial "header.html" . }}
 {{ end }} {{ end }} {{ partial "footer.html" . }}
 ```
 
-## Update the single template
+# Update the single template
 
 ```html
 $ vim themes/zeo/layouts/_default/single.html {{ partial "header.html" . }}
@@ -745,7 +745,7 @@ $ vim themes/zeo/layouts/_default/single.html {{ partial "header.html" . }}
 Build the website and verify the results. The title on the posts and the about
 page should both reflect the value from the markdown file.
 
-## Fixing the date shown on About page
+# Fixing the date shown on About page
 
 Remember, we had the issue that the date was showing on the _about_ page also.
 We discussed one method to solve this issue. Now I will discuss a more _hugoic_
@@ -780,7 +780,7 @@ Build the website and verify the results. The _about_ page does not show the
 date now, but the posts page still show the date. We can also move the list
 template's logic to the `index.html` file of post section template.
 
-## Conclusion
+# Conclusion
 
 We have learnt, how Hugo harnesses the powerful yet simple Go template engine to
 create the static site generator. We also learnt about partials and their

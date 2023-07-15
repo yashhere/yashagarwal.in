@@ -35,7 +35,7 @@ export const Series = ({
     <div className="shadow-surface-elevation-low rounded bg-muted p-5 lg:px-8 lg:py-7">
       {interactive ? (
         <button
-          className="items center group flex w-full text-left"
+          className="items center group flex w-full items-center text-left"
           onClick={() => {
             setIsOpen(!isOpen)
           }}

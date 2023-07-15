@@ -11,7 +11,7 @@ for a course project. From the support page of ALM Octane:
 > enables teams to collaborate easily, manage the product delivery pipeline, and
 > visualize the impact of changes.
 
-## Precursor
+# Precursor
 
 My [department](http://cse.nitc.ac.in/) insists on using open-source software (a
 plus point, indeed!). But ALM Octane has Oracle DB/MSSQL as a dependency. My
@@ -25,7 +25,7 @@ should be installed on different machines. I decided to use three separate
 Docker containers for this isolation and then configured them to communicate
 with each other with docker-compose.
 
-### Wait ... Docker Compose?
+## Wait ... Docker Compose?
 
 (Skip this if already know about Docker and Compose)
 
@@ -37,7 +37,7 @@ with each other with docker-compose.
 So before reading this article any further, if you do not know about
 docker-compose, go and read about it.
 
-## The Problem
+# The Problem
 
 Three primary services are required for the proper functioning of the Octane
 Server -- Octane, Oracle DB and Elastic Search. The difficulty was to set up
@@ -46,7 +46,7 @@ communication between them. I searched on Docker Hub for any pre-built images.
 Fortunately, I found some pre-built Docker images for my purpose. So I started
 writing my config file.
 
-## The Solution
+# The Solution
 
 Here is my config file for easy reference.
 

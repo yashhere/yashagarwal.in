@@ -23,7 +23,7 @@ thought that this is an excellent setup to adapt and modify it to suit my needs.
 So I decided to write my module for automatic deployment of Let's Encrypt
 certificates to GitLab.
 
-## How does Let's Encrypt work?
+# How does Let's Encrypt work?
 
 Before Let's Encrypt can generate the certificate for the domain, it requires
 the user to prove domain ownership. Let's Encrypt provides two
@@ -44,7 +44,7 @@ is quite low, at least for the next few years. It will be easier to generate the
 certificates for any subdomains, as all the subdomains will also be hosted under
 the same domain registrar.
 
-## How does the tool work?
+# How does the tool work?
 
 So here are the steps:
 
@@ -54,7 +54,7 @@ So here are the steps:
 4. Let `certbot` verify the DNS changes
 5. Use the GitLab API to deploy the generated certificates to GitLab pages
 
-### Step 1: Invoking certbot
+## Invoking certbot
 
 In step 1, we call `certbot` will the preferred method DNS. We also need to
 supply an email id (used by Let's Encrypt to notify domain expiration). The
@@ -97,7 +97,7 @@ to specify the executable, which can be used to facilitate domain ownership
 validation. In this case, the hook points to a script `auth_hook.sh`, which then
 calls a Go client, which interacts with GoDaddy API.
 
-### Step 2: Adding DNS entry to GoDaddy DNS manager
+## Adding DNS entry to GoDaddy DNS manager
 
 Certbot supplies two environment variables `CERTBOT_DOMAIN`, which contains the
 domain name to be verified and `CERTBOT_VALIDATION`, which includes a random
@@ -121,13 +121,13 @@ minutes. It is to allow DNS changes to propagate throughout the Internet. It is
 a random duration as I could not find any GoDaddy support page mentioning the
 exact period used by them.
 
-### Step 3: Generation of certificates
+## Generation of certificates
 
 Once the `auth_hook.sh` script returns successfully, `certbot` will verify the
 DNS records. If the verification is successful, `certbot` will generate the
 certificates in `./generated/config/live/{CERTBOT_DOMAIN}` directory.
 
-### Step 4: Deploying the certificates to GitLab
+## Deploying the certificates to GitLab
 
 I use the following command to deploy the certificates to Gitlab pages where my
 website is hosted -
@@ -149,7 +149,7 @@ key_dir="./generated/config/live/yashagarwal.in"
 Moreover, `GITLAB_TOKEN` is an environment variable that contains the API token
 generated from the Gitlab settings page.
 
-## Automatic Deployment using Travis CI
+# Automatic Deployment using Travis CI
 
 It is not automation if I have to run this script manually every three months.
 So I created a Travis CI job to automate this process. The job will run every

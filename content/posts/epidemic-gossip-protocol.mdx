@@ -23,7 +23,7 @@ distributed systems.
 
 I use both terms (Gossip and Epidemic) interchangeably in this post.
 
-## Analogy to a real epidemic
+# Analogy to a real epidemic
 
 Let' take a close look at how a virus spreads. I'll explain it using a small
 sample of five people. We assume that, initially, none of these people is
@@ -45,7 +45,7 @@ knows the said information, but is not spreading it because, for example, all
 its peers already know the information, so there is no need to keep spreading it
 -- the so-called herd immunity).
 
-## Some theory
+# Some theory
 
 The concept of the Gossip Protocol is not something new. The 1987
 [paper](https://dl.acm.org/doi/10.1145/41840.41841) Epidemic algorithms for
@@ -68,11 +68,11 @@ Usually, these protocols work as follows -
 4. These steps repeat periodically until the information is disseminated to
    every node in the network.
 
-## Methods
+# Methods
 
 In the paper mentioned above, two schemes of epidemic protocols were analyzed -
 
-### Anti-entropy
+## Anti-entropy
 
 In this scheme, a node $p$ randomly contacts a random partner $q$ from the
 current population. The nodes $p$ and $q$ engage in information exchange to
@@ -94,7 +94,7 @@ This scheme is equivalent to the SI model (simple epidemic) from epidemiology.
 The term SI stands for susceptible-infected (same as explained above). A node is
 always susceptible or infected.
 
-### Rumor mongering
+## Rumor mongering
 
 As the name suggests, this scheme works similarly to how rumors spread.
 Initially, all nodes are ignorant of a rumor. When a node learns about some

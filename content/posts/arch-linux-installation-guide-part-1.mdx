@@ -22,7 +22,7 @@ work on other setups also.
 
 All the commands are run in root shell unless otherwise specified.
 
-## 0. Check your network connection
+# 0. Check your network connection
 
 If you are behind a captive portal, use `links` to open browser and login into
 your network. For WiFi connections, use `wifi-menu`. LAN connections should not
@@ -33,7 +33,7 @@ connections. After connecting, test your connection by pinging any website:
 ping -c 5 google.com
 ```
 
-## 1. Setup SSH
+# 1. Setup SSH
 
 This step is not mandatory, though I prefer to use this method to install Arch
 Linux, as it provides me the convenience of copying and pasting the commands
@@ -75,7 +75,7 @@ following command
 ssh root@ip-address-of-target
 ```
 
-## 2. Partition the disks
+# 2. Partition the disks
 
 If Windows 8 or above is already installed on your machine, then your hard disk
 is probably using `GPT` partitioning scheme. In that case, use `gdisk` to
@@ -98,7 +98,7 @@ mkfs.ext4 /dev/sda9
 mkfs.ext4 /dev/sda10
 ```
 
-## 3. Mount the partitions
+# 3. Mount the partitions
 
 Now mount the root partition (`sda9` in this case) to `/mnt`
 
@@ -117,7 +117,7 @@ mkdir /mnt/boot
 mount /dev/sda1 /mnt/boot
 ```
 
-## 4. Install the base file-system
+# 4. Install the base file-system
 
 To install the base system and some development tools, issue the following
 command.
@@ -130,7 +130,7 @@ This will take a while to download and install. After it finishes, it will give
 you a bare-bone Arch Linux system with just the tools required to run a Linux
 distribution, no other software is installed.
 
-## 5. Generate /etc/fstab
+# 5. Generate /etc/fstab
 
 The `/etc/fstab` file stores the information about file systems of partitions
 and how to mount the partitions on system boot up. To generate this file, issue
@@ -143,7 +143,7 @@ genfstab -U /mnt >> /mnt/etc/fstab
 If you prefer to use partition labels (sda1, sda9 etc.) instead of UUID, then
 use `-L` flag in place of `-U`.
 
-## 6. chroot into the system
+# 6. chroot into the system
 
 From the [Arch wiki](https://wiki.archlinux.org/index.php/Change_root):
 
@@ -160,7 +160,7 @@ pretend as if we are logged into this system.
 arch-chroot /mnt
 ```
 
-## 7. Setup the time zone, locale, and hostname
+# 7. Setup the time zone, locale, and hostname
 
 Browse the `/use/share/zoneinfo` directory to find your location entries. My
 location is India, so I will use this command.
@@ -210,7 +210,7 @@ To allow other machines to address the host by name, it is necessary to edit the
 127.0.1.1    your-host-name.localdomain     your-host-name
 ```
 
-## 8. Create user account
+# 8. Create user account
 
 Before creating user account, set password for `root` account
 
@@ -234,7 +234,7 @@ Set password for your user.
 passwd your-user-name
 ```
 
-## 9. Enable sudo access
+# 9. Enable sudo access
 
 This allows you to use root privileges without using the root account. To enable
 this, first open `/etc/sudoers` file
@@ -262,7 +262,7 @@ su your-user-name
 From this point onwards, it is necessary to append `sudo` to any command that
 requires `root` privileges.
 
-## 10. Install bootloader
+# 10. Install bootloader
 
 My preferred bootloader of choice is `grub`. To install `grub`, we need to
 install following packages.
@@ -308,7 +308,7 @@ mount --bind /hostrun/lvm /run/lvm
 
 Now you can install `grub` without any errors.
 
-## 11. Configure the network
+# 11. Configure the network
 
 By default, your current system cannot connect to the network in the current
 state. I prefer to use
@@ -330,7 +330,7 @@ To enable NetworkManager to start at system startup
 sudo systemctl enable NetworkManager.service
 ```
 
-## 12. Reboot now
+# 12. Reboot now
 
 If you had performed the `lvm` troubleshooting steps during `grub` install, then
 
