@@ -24,12 +24,16 @@ export const TableOfContents = ({ headings, path, interactive }) => {
   const router = useRouter()
   const [isOpen, setIsOpen] = useState(!interactive)
 
+  if (headings.length == 0) {
+    return null
+  }
+
   return (
     <>
-      <div className="shadow-surface-elevation-low rounded border-2 bg-transparent p-5 lg:px-8">
+      <div className="shadow-surface-elevation-low rounded border-2 bg-transparent p-5">
         {interactive ? (
           <button
-            className="items center group flex w-full items-center text-left"
+            className="group flex w-full items-center text-left"
             onClick={() => {
               setIsOpen(!isOpen)
             }}
@@ -70,24 +74,22 @@ export const TableOfContents = ({ headings, path, interactive }) => {
               },
             }}
           >
-            {headings ? (
-              <div>
-                {headings.map((heading) => (
-                  <div key={heading.slug}>
-                    <Link
-                      href={`#${heading.slug}`}
-                      className={cn("my-4 text-lg text-text", {
-                        "pl-5": heading.heading === 2,
-                        "pl-9": heading.heading === 3,
-                        "pl-14": heading.heading === 4,
-                      })}
-                    >
-                      {heading.text}
-                    </Link>
-                  </div>
-                ))}
-              </div>
-            ) : null}
+            <div>
+              {headings.map((heading) => (
+                <div
+                  key={heading.slug}
+                  className={cn("line-clamp-1 sm:line-clamp-none", {
+                    "ml-5": heading.heading === 2,
+                    "ml-9": heading.heading === 3,
+                    "ml-14": heading.heading === 4,
+                  })}
+                >
+                  <Link href={`#${heading.slug}`} className="text-lg text-text">
+                    {heading.text}
+                  </Link>
+                </div>
+              ))}
+            </div>
           </motion.div>
         )}
       </div>
