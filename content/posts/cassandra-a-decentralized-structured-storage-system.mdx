@@ -17,7 +17,7 @@ and Amazon's
 In some ways, Cassandra resembles the traditional databases, yet it does not
 support the relational data model completely.
 
-## Data Model
+# Data Model
 
 Cassandra uses a tabular data structure like relational databases. A table in
 Cassandra is a distributed multi-dimensional map indexed by a key. Every row
@@ -34,14 +34,14 @@ Cassandra provides following methods -
 2. $get(table, key, tableName)$
 3. $delete(table, key, tableName)$
 
-## Architecture
+# Architecture
 
 A data storage system should satisfy some requirements - data persistence,
 scalability, membership, failure detection and handling, data partitioning,
 request routing, among others. Cassandra uses a variety of techniques to solve
 these issues.
 
-### Routing
+## Routing
 
 Any node can attend an incoming read/write request with a key. Each node in the
 Cassandra cluster knows about other nodes. The serving node uses this
@@ -56,7 +56,7 @@ required data or forwards the request to all the replicas and waits for a quorum
 of responses before replying. Which method, the system utilizes, depends on the
 consistency requirements of the client.
 
-### Partitioning
+## Partitioning
 
 Cassandra uses
 [consistent hashing](https://en.wikipedia.org/wiki/Consistent_hashing) with an
@@ -77,7 +77,7 @@ and non-uniformity of data distribution. Cassandra solves these issues by
 periodically analyzing the load information in the ring and repositioning the
 lightly loaded nodes on the ring to alleviate high load nodes.
 
-### Replication
+## Replication
 
 Each data item is replicated at $N$ nodes in the ring. As mentioned above, each
 data item's key is assigned to a coordinator node, which is responsible for the
@@ -87,14 +87,14 @@ the coordinator node replicates these keys at the $(N-1)$ replicas on the ring.
 Replication policies such as Rack aware, Rack unaware, Datacenter aware are used
 for this purpose.
 
-### Leader Election
+## Leader Election
 
 Cassandra uses Zookeeper for leader election and fault tolerance. Whenever a new
 node joins the cluster, it contacts the leader who tells them what ranges the
 node is responsible for. The metadata about ranges of a node is cached locally
 as well as on the Zookeeper instance.
 
-### Membership
+## Membership
 
 Cassandra uses Scuttlebutt - an anti-entropy Gossip based protocol to
 disseminate the membership information inside the ring. Whenever a new node
@@ -102,7 +102,7 @@ joins the system, it calculates a token for itself. This token is gossiped
 around the cluster. That's how each node in the system knows about the
 membership and positions of other nodes in the system.
 
-### Failure Detection
+## Failure Detection
 
 Failure detection is a mechanism by which a node can locally determine if any
 other node in the system is up or down. Cassandra uses a modified version of
@@ -118,14 +118,14 @@ inter-arrival times is determined, and $\phi$ is calculated. Cassandra uses
 exponential distribution as an approximation for determining $\phi$. The
 original $\phi$-Accrual Failure Detection Algorithm used Gaussian distribution.
 
-### Scaling
+## Scaling
 
 Whenever a new node joins the system, its token is generated such that it falls
 within the range of an existing heavily loaded node. This results in the new
 node splitting the range of the old node. The old node transfers some of its
 data to the new node using kernel-kernel copying techniques.
 
-### Local Persistence
+## Local Persistence
 
 Cassandra uses a commit log as well as an in-memory data structure to store the
 data. Each write is first committed to the commit log. Only after successful

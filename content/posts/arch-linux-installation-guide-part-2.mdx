@@ -19,7 +19,7 @@ If you had gone for installation via SSH option, then I would suggest you to
 edit your `sshd_config` file and disable `root` login. It can be a security risk
 otherwise.
 
-### Install a terminal based browser
+# Install a terminal based browser
 
 Terminal-based browsers are very handy in cases when you are required to login
 into a captive portal and you don't have access to a graphical browser. We will
@@ -29,7 +29,7 @@ install two different browsers, `elinks` and `w3m`.
 sudo pacman -S elinks w3m
 ```
 
-### Install X server.
+# Install X server.
 
 ```bash
 sudo pacman -S xorg
@@ -38,7 +38,7 @@ sudo pacman -S xorg
 This will install minimal X desktop environment with fonts, in case, you want to
 test your system before installing any desktop environment.
 
-### Enable multilib repository for 32-bit package support
+# Enable multilib repository for 32-bit package support
 
 To enable multilib repository, uncomment the `[multilib]` section in
 `/etc/pacman.conf`.
@@ -54,13 +54,13 @@ Now upgrade your system.
 sudo pacman -Syyu
 ```
 
-### Install video and touchpad drivers
+# Install video and touchpad drivers
 
 ```bash
 sudo pacman -S xf86-video-intel xf86-input-synaptics
 ```
 
-### Install pacaur to fetch and install packages from AUR
+# Install pacaur to fetch and install packages from AUR
 
 ```bash
 sudo pacman -S expac yajl --noconfirm
@@ -73,21 +73,21 @@ makepkg -i PKGBUILD --noconfirm
 cd
 ```
 
-### Install graphical browsers
+# Install graphical browsers
 
 ```bash
 pacaur -S firefox chromium
 ```
 
-### Install code editors
+# Install code editors
 
 ```bash
 pacaur -S sublime-text-dev atom-editor-git visual-studio-code-bin neovim neovim-drop-in leafpad
 ```
 
-### Setup LAMP stack
+# Setup LAMP stack
 
-#### Install Apache server
+## Install Apache server
 
 ```bash
 sudo pacman -S apache
@@ -113,7 +113,7 @@ sudo vim /etc/httpd/conf/extra/httpd-vhosts.conf
 To test the virtual hosts on you local machine, add the virtual names to your
 `/etc/hosts` file.
 
-#### Install PHP:
+## Install PHP
 
 ```bash
 sudo pacman -S php php-apache
@@ -143,7 +143,7 @@ AddHandler php7-script .php
 Include conf/extra/php7_module.conf
 ```
 
-#### Install MySQL server
+## Install MySQL server
 
 ```bash
 sudo pacman -S mariadb
@@ -159,7 +159,7 @@ sudo systemctl start mariadb.service
 sudo mysql_secure_installation
 ```
 
-#### Install PHPMyAdmin
+## Install PHPMyAdmin
 
 ```bash
 sudo pacman -S phpmyadmin php-mcrypt
@@ -194,7 +194,7 @@ sudo systemctl restart httpd
 
 Once all these steps are done, your LAMP stack should be working.
 
-### Setup power management
+# Setup power management
 
 Install `tlp` and some of its optional dependencies
 
@@ -213,7 +213,7 @@ sudo systemctl mask systemd-rfkill.service
 sudo systemctl mask systemd-rfkill.socket
 ```
 
-### Install i3 and other tools
+# Install i3 and other tools
 
 All these tools are part of my `i3` config with exception of the theme related
 packages. So installing them here will help me later while setting up the `i3`
@@ -223,7 +223,7 @@ window manager.
 pacaur -S i3 rofi polybar xautolock powerline-fonts-git i3lock-fancy-git compton scrot feh dunst unclutter xfce4-power-manager numlockx lxappearance adapta-gtk-theme gtk-engine-murrine gnome-themes-standard termite
 ```
 
-### Fix Ugly Fonts [^1]
+# Fix Ugly Fonts [^1]
 
 Fonts rendering is one area where Linux still lags behind Windows and OSX. It
 can be a nightmare for users to setup fonts properly in Linux. In Arch Linux,
@@ -234,7 +234,7 @@ on Reddit to fix font rendering. I use Noto Sans, Adobe Source Code Pro, and
 Microsoft fonts. My apologies, but I can't help here. Some websites still use
 Microsoft fonts.
 
-### Setup Python Environment
+# Setup Python Environment
 
 I use Python extensively and virtual environments are a must for my development
 setup. I use `pipenv` to manage my virtual environments. To install `pipenv`,
@@ -248,7 +248,7 @@ sudo pacman -S python-virtualenv
 Now you are ready to install `pipenv`. Follow
 [here](https://pipenv.pypa.io/en/latest/) to install the tool.
 
-### Install some other common tools
+# Install some other common tools
 
 ```bash
 sudo pacman -S vlc openssh npm imagemagick git la-capitaine-icon-theme-git

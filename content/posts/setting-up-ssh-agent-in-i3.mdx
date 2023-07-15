@@ -9,7 +9,7 @@ agents in the i3 window manager. To follow this post, you need to have ssh-keys
 and your private GPG keys ready. If you do not already have these keys with you,
 I will describe the process of creating the keys.
 
-## SSH
+# SSH
 
 Generating an SSH key pair provides you with a public key and a private key. The
 private key should never be given to anyone and public key, well the name itself
@@ -25,7 +25,7 @@ This command will create a new ssh key pair with the given email address as the
 label. Press Enter for any question asked. When it asks for the passphrase, type
 a strong passphrase, otherwise leave it blank to have no password.
 
-## GPG
+# GPG
 
 You might need to download the GPG command line tools before following the below
 steps. Follow your distribution's documentation for more help.
@@ -73,9 +73,9 @@ utilize the disks) during the prime generation; this gives the random number gen
 
 You can now use the key (until it expires) to encrypt your data.
 
-## Setting up SSH Agent
+# Setting up SSH Agent
 
-### Configuring i3
+## Configuring i3
 
 **Update (26/05/2018):** _As pointed out by
 [Saksham](https://sakshamsharma.com/) in the comments below, this step is not
@@ -100,7 +100,7 @@ export GNOME_KEYRING_CONTROL GNOME_KEYRING_PID GPG_AGENT_INFO SSH_AUTH_SOCK
 
 Now, reload the i3.
 
-### Configuring SSH
+## Configuring SSH
 
 **Update (26/05/2018):** _This step is also optional. Thanks to
 [Saksham](https://sakshamsharma.com/) for pointing it out._
@@ -115,7 +115,7 @@ Host *
 
 Replace \<your username\> accordingly.
 
-### Setting up .bashrc
+## Setting up .bashrc
 
 I am not using a login shell, and I could not find any suitable method to source
 `~/.profile` or `~/.bash_profile` on login in i3. So I added my configuration to

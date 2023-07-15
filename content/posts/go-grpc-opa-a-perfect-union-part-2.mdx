@@ -13,7 +13,7 @@ data definitions using protobuf, and then we will use these definitions to
 create a Go service. We will also add a REST interface to the service. So let's
 get started.
 
-## Defining Proto Definitions
+# Defining Proto Definitions
 
 gRPC uses protocol buffers for serializing structured data. To define the
 structure of the data that you want to serialize, we use a _proto_ file - it is
@@ -119,7 +119,7 @@ It will generate corresponding Golang definitions of the messages and services
 defined in the Proto file. These definitions can be used by the server and
 client stubs to communicate with each other.
 
-## Implementation of Go service
+# Implementation of Go service
 
 Now we can start implementing the code for our services `AddBook()`,
 `ListAllBooks()` and `SearchBook()`. It is going to be a very naive

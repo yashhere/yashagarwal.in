@@ -16,7 +16,7 @@ So I decided to write this guide, which will be useful for me in future also.
 
 Python uses `pip` for package management.
 
-## Installing pip
+# Installing pip
 
 `pip` depends on setuptools library, which is in official Ubuntu repositories.
 To install it for python2 -
@@ -47,7 +47,7 @@ It should install `pip` on your system for both python versions. `pip` is very
 easy to use. It will take care of every single package you may require for your
 project.
 
-### Installing a package using pip
+## Installing a package using pip
 
 ```sh
 # it will search and install [package]
@@ -65,7 +65,7 @@ pip install [package]==[version]
 pip install django==1.6.5
 ```
 
-### Uninstalling a package using pip
+## Uninstalling a package using pip
 
 ```sh
 # it will search and uninstall [package]
@@ -73,7 +73,7 @@ pip uninstall [package]
 pip uninstall django
 ```
 
-### upgrading a package using pip
+## upgrading a package using pip
 
 ```sh
 # it will upgrade [package] to latest version
@@ -81,7 +81,7 @@ pip install --upgrade [package]
 pip install --upgrade django
 ```
 
-### Creating list of all packages with pip
+## Creating list of all packages with pip
 
 It is one of most used and most useful feature of `pip`. It allows you to make a
 list of all the dependencies of your project.
@@ -94,7 +94,7 @@ pip freeze > [file_name.txt]
 All these commands above will install the packages globally. But that's not what
 is desired. `virtualenv` comes to our rescue here.
 
-## Virtualenv
+# Virtualenv
 
 `virtualenv` solves a very particular problem; it allows multiple python
 projects that have different and often conflicting dependencies, to coexist on
@@ -104,7 +104,7 @@ the same system.
 environments for your projects. An environment is a folder which contains
 everything; your project needs to work properly.
 
-### Installing virtualenv
+## Installing virtualenv
 
 By default, if you install `virtualenv` using `pip`, it will use system's
 default python to create virtual environments. To overcome this problem, we will
@@ -114,7 +114,7 @@ install `virtualenv` using ubuntu package manager.
 sudo apt-get install python-virtualenv
 ```
 
-### Installing virtualenvwrapper
+## Installing virtualenvwrapper
 
 `virtualenvwrapper` provides some set of commands which makes working with
 virtual environments much easier.
@@ -154,7 +154,7 @@ Now restart your terminal to source the `.bashrc` or use -
 source .bashrc
 ```
 
-### Basic Usage
+## Basic Usage
 
 Create a virtual environment -
 

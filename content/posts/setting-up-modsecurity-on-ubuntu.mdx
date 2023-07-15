@@ -26,7 +26,7 @@ Now that you know, what a WAF is, let's proceed to install ModSecurity on
 Ubuntu. I will be compiling ModSecurity's latest version on Ubuntu 18.04. We
 will also configure ModSecurity to use Core Rule Set.
 
-## Installing Dependencies
+# Installing Dependencies
 
 ModSecurity requires some dependencies to work correctly. Let's install them -
 
@@ -62,7 +62,7 @@ make
 sudo make install
 ```
 
-## Compiling ModSecurity
+# Compiling ModSecurity
 
 Let's clone ModSecurity from Github.
 
@@ -78,7 +78,7 @@ make                # takes ~8 minutes on AWS t2.micro
 sudo make install
 ```
 
-## Compiling ModSecurity-apache connector
+# Compiling ModSecurity-apache connector
 
 To configure it with Apache, we will require ModSecurity-apache connector. Let's
 install that as well.
@@ -93,7 +93,7 @@ make
 sudo make install
 ```
 
-## Setting up CRS rules
+# Setting up CRS rules
 
 Now, let's download CRS rule set as well.
 
@@ -109,7 +109,7 @@ Rename CRS configuration file -
 sudo mv /usr/local/owasp-modsecurity-crs/crs-setup.conf.example /usr/local/owasp-modsecurity-crs/crs-setup.conf
 ```
 
-## Setting up ModSecurity
+# Setting up ModSecurity
 
 Now, we need to create a file in the Apache modules directory, so that Apache
 can know, how to activate ModSecurity.
@@ -175,7 +175,7 @@ Now restart the Apache server
 sudo systemctl restart apache2
 ```
 
-## Fixing some common issues
+# Fixing some common issues
 
 Sometimes, I had encountered errors when ModSecurity was not able to append logs
 to its log file. I figured out that ModSecurity did not have enough permissions
@@ -262,7 +262,7 @@ sudo chown -R $apache_user:$apache_user /var/log/apache2/*
 
 Now, ModSecurity should be able to append logs to the file `modsec_audit.log`.
 
-## _Bonus_: Enabling JSON logs
+# _Bonus_: Enabling JSON logs
 
 **Note:** Honestly speaking, I was not able to make it work every time. I do not
 know what is the issue, but it works with some of the installations, and with
@@ -344,7 +344,7 @@ audit
 
 Now, your site should be relatively more secure than before.
 
-## A warning, though
+# A warning, though
 
 CRS is known to generate a lot of false-positive when enabled completely. We
 have not touched CRS paranoia levels. By default, it is set to paranoia level 1,
