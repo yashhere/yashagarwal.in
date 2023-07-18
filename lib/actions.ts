@@ -2,8 +2,6 @@
 
 import { cache } from "react"
 import { queryBuilder } from "@/lib/planetscale"
-import { PostWithMetrics } from "@/types"
-import { allPosts } from "contentlayer/generated"
 
 export const getAllMetrics = cache(async () => {
   return queryBuilder
@@ -90,26 +88,4 @@ export async function incrementSlugMetrics(
       likes: likes + currentLikes,
     })
     .execute()
-}
-
-export async function getTopPosts(n: number) {
-  const data = await queryBuilder
-    .selectFrom("Stats")
-    .select(["slug", "views", "likes"])
-    .orderBy("views", "desc")
-    .limit(n)
-    .execute()
-
-  const articles: PostWithMetrics[] = []
-
-  data?.forEach(async (item) => {
-    const post = allPosts
-      .filter((p) => p.status != "draft")
-      .find((p) => p.slug === item.slug)
-    if (post != null) {
-      articles.push({ post: post, views: item.views, likes: item.likes })
-    }
-  })
-
-  return articles
 }
