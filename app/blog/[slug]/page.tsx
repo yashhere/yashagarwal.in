@@ -122,7 +122,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
           ) : null}
 
           {/* Post Content */}
-          <div className="pt-8">
+          <div className="pt-4">
             <div className="prose prose-article text-lg leading-7 md:prose-lg lg:prose-xl prose-headings:cursor-pointer prose-h1:mb-4 prose-h1:mt-16 prose-h2:mb-4 prose-h2:mt-16 prose-h3:my-8 prose-p:my-4 prose-th:cursor-auto">
               <TableOfContents
                 headings={article.post.headings}
