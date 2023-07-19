@@ -1,12 +1,9 @@
-import { PostWithMetrics } from "@/types";
-import { pick } from "contentlayer/client";
-import { allPosts, Post } from "contentlayer/generated";
-import { compareDesc } from "date-fns";
+import { PostWithMetrics } from "@/types"
+import { pick } from "contentlayer/client"
+import { allPosts, Post } from "contentlayer/generated"
+import { compareDesc } from "date-fns"
 
-
-
-import { getAllMetrics } from "./actions";
-
+import { getAllMetrics } from "./actions"
 
 export function getPosts() {
   const posts = allPosts.sort((a, b) => {
