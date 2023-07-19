@@ -2,10 +2,20 @@ import { FC } from "react"
 import { Metadata } from "next"
 import RandomPhoto from "@/components/random-photo"
 import Link from "@/components/ui/link"
+import { siteConfig } from "@/config/site"
 
 export const metadata: Metadata = {
   title: "About Me | Yash Agarwal",
   description: "Learn about me and what I do.",
+  alternates: {
+    canonical: `${siteConfig.url}/about`,
+    types: {
+      "application/rss+xml": [
+        { url: "rss.xml", title: "RSS Feed for yashagarwal.in" },
+        { url: "atom.xml", title: "Atom Feed for yashagarwal.in" },
+      ],
+    },
+  },
 }
 
 const Page: FC = () => {

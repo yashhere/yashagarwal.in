@@ -1,7 +1,23 @@
 import { Suspense } from "react"
+import { Metadata } from "next"
+import { siteConfig } from "@/config/site"
 import { getTotalViews } from "@/lib/actions"
 import { ArrowTrendingUpIcon, PencilIcon } from "@heroicons/react/24/solid"
 import { allPosts } from "contentlayer/generated"
+
+export const metadata: Metadata = {
+  title: "Writing | Yash Agarwal",
+  description: "Find curated statistics regarding this website",
+  alternates: {
+    canonical: `${siteConfig.url}/stats`,
+    types: {
+      "application/rss+xml": [
+        { url: "rss.xml", title: "RSS Feed for yashagarwal.in" },
+        { url: "atom.xml", title: "Atom Feed for yashagarwal.in" },
+      ],
+    },
+  },
+}
 
 const Page = async () => {
   const data = await getTotalViews()

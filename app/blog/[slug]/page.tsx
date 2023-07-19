@@ -48,6 +48,15 @@ export async function generateMetadata(
     },
     keywords: post.tags?.map((tag) => tag.value),
     creator: "Yash Agarwal",
+    alternates: {
+      canonical: `${siteConfig.url}/blog/${params.slug}`,
+      types: {
+        "application/rss+xml": [
+          { url: "rss.xml", title: "RSS Feed for yashagarwal.in" },
+          { url: "atom.xml", title: "Atom Feed for yashagarwal.in" },
+        ],
+      },
+    },
     twitter: {
       title: post.title,
       description: post.description,
