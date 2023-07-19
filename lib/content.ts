@@ -1,9 +1,12 @@
-import { PostWithMetrics } from "@/types"
-import { pick } from "contentlayer/client"
-import { allPosts, Post } from "contentlayer/generated"
-import { compareDesc } from "date-fns"
+import { PostWithMetrics } from "@/types";
+import { pick } from "contentlayer/client";
+import { allPosts, Post } from "contentlayer/generated";
+import { compareDesc } from "date-fns";
 
-import { getAllMetrics } from "./actions"
+
+
+import { getAllMetrics } from "./actions";
+
 
 export function getPosts() {
   const posts = allPosts.sort((a, b) => {
@@ -58,13 +61,13 @@ export async function getPartialPost(slug: string) {
     readingTime: post.readingTime,
   }
 
-  const series = getSeries(post.series?.title as string, post.slug)
-
   const article: PostWithMetrics = {
     post: trimmedPost,
     views: metrics?.views || 0,
     likes: metrics?.likes || 0,
-    series: series,
+    series:
+      (post.series && getSeries(post.series?.title as string, post.slug)) ||
+      undefined,
   }
 
   return article
