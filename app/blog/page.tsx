@@ -1,8 +1,6 @@
 import { Metadata } from "next"
 import { BlogPostList } from "@/components/blog-list"
-import { getAllMetrics } from "@/lib/actions"
-import { allPosts } from "contentlayer/generated"
-import { compareDesc } from "date-fns"
+import { getPreviewPosts } from "@/lib/content"
 
 export const metadata: Metadata = {
   title: "Writing | Yash Agarwal",
@@ -11,12 +9,7 @@ export const metadata: Metadata = {
 }
 
 export default async function Page() {
-  const allMetrics = await getAllMetrics()
-  const posts = allPosts
-    .filter((p) => p.status === "published")
-    .sort((a, b) => {
-      return compareDesc(new Date(a.published), new Date(b.published))
-    })
+  const articles = await getPreviewPosts()
 
   return (
     <>
@@ -26,14 +19,14 @@ export default async function Page() {
         </h1>
         <div className="text-lg text-text">
           <p>
-            Since April 2016, I&apos;ve penned {posts.length} articles across
+            Since April 2016, I&apos;ve penned {articles.length} articles across
             diverse categories. From tech knowledge and life updates to year
             reviews and travelogues, there&apos;s a little something on every
             topic.
           </p>
         </div>
       </section>
-      <BlogPostList allMetrics={allMetrics} posts={posts} />
+      <BlogPostList articles={articles} />
     </>
   )
 }

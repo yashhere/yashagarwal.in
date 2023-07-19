@@ -1,27 +1,11 @@
 import { PostPreview } from "@/components/post-preview"
-import { getPosts } from "@/lib/content"
+import { PostWithMetrics } from "@/types"
 
-export const PostList = ({
-  posts,
-  allMetrics,
-}: {
-  posts?: ReturnType<typeof getPosts>
-  allMetrics: {
-    slug: string
-    likes: number
-    views: number
-  }[]
-}) => {
+export const PostList = ({ articles }: { articles: PostWithMetrics[] }) => {
   return (
     <>
-      {posts?.map((article) => {
-        return (
-          <PostPreview
-            key={article.slug}
-            post={article}
-            allMetrics={allMetrics}
-          />
-        )
+      {articles?.map((article) => {
+        return <PostPreview key={article.post.slug} article={article} />
       })}
     </>
   )

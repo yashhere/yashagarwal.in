@@ -8,8 +8,8 @@ import { Series } from "@/components/series"
 import { TableOfContents } from "@/components/table-of-contents"
 import { ViewCounter } from "@/components/view-counter"
 import { siteConfig } from "@/config/site"
-import { getAllMetrics, getLikes } from "@/lib/actions"
-import { getPost, getSeries } from "@/lib/content"
+import { getLikes } from "@/lib/actions"
+import { getPartialPost, getPost, getPreviewPosts } from "@/lib/content"
 import { createOgImageForPost } from "@/lib/og/createOgImage"
 import { getSessionId } from "@/lib/server-utils"
 
@@ -27,8 +27,13 @@ export async function generateMetadata(
   { params }: Props,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  const post = await getPost(params.slug)
+  const previewPosts = await getPreviewPosts()
+  const post = previewPosts.find((item) => item.post.slug === params.slug)?.post
   const siteUrl: string = siteConfig.url
+
+  if (!post) {
+    return {}
+  }
 
   // access and extend (rather than replace) parent metadata
   const previousImages = (await parent).openGraph?.images || []
@@ -67,53 +72,53 @@ export async function generateMetadata(
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const { slug } = params
-  const post: NonNullable<ReturnType<typeof getPost>> = getPost(slug)
-  const Content = getMDXComponent(post.body.code)
-  const allMetrics = await getAllMetrics()
+  const article = await getPartialPost(slug)
+  const MdxContent = getMDXComponent(article.post.body.code)
   const sessionId = getSessionId(slug)
   let [totalLikes, userLikes] = await getLikes(slug, sessionId)
 
-  const metrics = allMetrics && allMetrics.find((view) => view.slug === slug)
-  const likes = new Number(metrics?.likes || 0)
+  const metrics = {
+    slug: article.post.slug as string,
+    likes: article.likes as number,
+    views: article.views as number,
+  }
 
   return (
     <>
       <div className="space-y-4">
         <section>
           <h1 className="relative max-w-4xl pb-2 font-heading text-5xl font-bold leading-none sm:text-6xl">
-            {post.title}
+            {article.post.title}
           </h1>
           <div className="text-md mt-2 flex space-x-2 font-body font-semibold text-gray-600 sm:text-lg">
-            <p>{moment(post.published).format("MMM DD, YYYY")}</p>
+            <p>{moment(article.post.published).format("MMM DD, YYYY")}</p>
             <p>&middot;</p>
-            <ViewCounter slug={slug} allMetrics={allMetrics} track={true} />
+            <ViewCounter slug={slug} metrics={metrics} track={true} />
             <p>&middot;</p>
-            <Metric stat={likes.toString()} type={"likes"} />
+            <Metric stat={article.likes.toString()} type={"likes"} />
           </div>
           <div className="text-md mt-2 flex space-x-2 font-body font-semibold text-gray-600 sm:text-lg">
-            <p>Time to read: {Math.round(post.readingTime.minutes)} mins</p>
+            <p>
+              Time to read: {Math.round(article.post.readingTime.minutes)} mins
+            </p>
           </div>
         </section>
 
         <Suspense fallback={<div>Loading...</div>}>
           {/* Post Series */}
-          {post.series != null ? (
-            <Series
-              series={getSeries(post.series.title, post.slug)}
-              interactive={true}
-              current={slug}
-            />
+          {article.series ? (
+            <Series series={article.series} interactive={true} current={slug} />
           ) : null}
 
           {/* Post Content */}
           <div className="pt-8">
             <div className="prose prose-article text-lg leading-7 md:prose-lg lg:prose-xl prose-headings:cursor-pointer prose-h1:mb-4 prose-h1:mt-16 prose-h2:mb-4 prose-h2:mt-16 prose-h3:my-8 prose-p:my-4 prose-th:cursor-auto">
               <TableOfContents
-                headings={post.headings}
-                path={`/blog/${post.slug}`}
+                headings={article.post.headings}
+                path={`/blog/${article.post.slug}`}
                 interactive={true}
               />
-              <Content components={CustomMDXComponents} />
+              <MdxContent components={CustomMDXComponents} />
             </div>
           </div>
 
@@ -127,12 +132,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
           </div>
 
           {/* Post Series */}
-          {post.series != null ? (
-            <Series
-              series={getSeries(post.series.title, post.slug)}
-              interactive={true}
-              current={slug}
-            />
+          {article.series ? (
+            <Series series={article.series} interactive={true} current={slug} />
           ) : null}
 
           <Comments />

@@ -4,32 +4,27 @@ import { ChangeEvent, Suspense, useState } from "react"
 import { PostList } from "@/components/article-list"
 import { SearchInput } from "@/components/search"
 import { PostPreviewLoading } from "@/components/ui/post-preview-loading"
+import { PostWithMetrics } from "@/types"
 import { Post } from "contentlayer/generated"
 
-export const PostListLoading = ({ posts }: { posts: Post[] }) => {
+export const PostListLoading = ({
+  articles,
+}: {
+  articles: PostWithMetrics[]
+}) => {
   return (
     <>
-      {posts.map((p) => (
-        <PostPreviewLoading key={p.slug} />
+      {articles.map((article) => (
+        <PostPreviewLoading key={article.post.slug} />
       ))}
     </>
   )
 }
 
-export const BlogPostList = ({
-  posts,
-  allMetrics,
-}: {
-  posts: Post[]
-  allMetrics: {
-    slug: string
-    likes: number
-    views: number
-  }[]
-}) => {
+export const BlogPostList = ({ articles }: { articles: PostWithMetrics[] }) => {
   const [search, setSearch] = useState("")
 
-  const [results, setResults] = useState(posts)
+  const [results, setResults] = useState(articles)
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
@@ -37,10 +32,12 @@ export const BlogPostList = ({
 
     setResults(
       e.target.value != ""
-        ? posts?.filter((p) => {
-            return p.title.toLowerCase().includes(e.target.value.toLowerCase())
+        ? articles?.filter((article) => {
+            return article.post.title
+              .toLowerCase()
+              .includes(e.target.value.toLowerCase())
           })
-        : posts
+        : articles
     )
   }
 
@@ -50,8 +47,8 @@ export const BlogPostList = ({
         <SearchInput search={search} onChange={onChange} />
       </div>
       <section className="w-full space-y-5">
-        <Suspense fallback={<PostListLoading posts={posts} />}>
-          <PostList allMetrics={allMetrics} posts={results} />
+        <Suspense fallback={<PostListLoading articles={articles} />}>
+          <PostList articles={articles} />
         </Suspense>
       </section>
     </div>
