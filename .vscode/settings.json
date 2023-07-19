@@ -8,5 +8,8 @@
   "prettier.requireConfig": true,
   "prettier.semi": false,
   "prettier.configPath": "",
-  "prettier.withNodeModules": true
+  "prettier.withNodeModules": true,
+  "css.completion.completePropertyWithSemicolon": false,
+  "javascript.format.semicolons": "remove",
+  "typescript.format.semicolons": "remove"
 }

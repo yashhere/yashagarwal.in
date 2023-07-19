@@ -2,27 +2,13 @@ import { Suspense } from "react"
 import { Metric } from "@/components/metrics/metric"
 import Link from "@/components/ui/link"
 import { PostPreviewLoading } from "@/components/ui/post-preview-loading"
-import { getAllMetrics } from "@/lib/actions"
-import { PostWithMetrics } from "@/types"
-import { allPosts } from "contentlayer/generated"
+import { getPostWithMetrics } from "@/lib/content"
 import moment from "moment"
 
 export async function TopPosts({ count }: { count: number }) {
-  const allMetrics = await getAllMetrics()
-  const data = allMetrics.sort((a, b) => b.views - a.views)
-  const articles: PostWithMetrics[] = []
-
-  data?.forEach(async (item) => {
-    if (articles.length == count) {
-      return
-    }
-    const post = allPosts
-      .filter((p) => p.status != "draft")
-      .find((p) => p.slug === item.slug)
-    if (post != null) {
-      articles.push({ post: post, views: item.views, likes: item.likes })
-    }
-  })
+  let articles = await getPostWithMetrics()
+  articles.sort((a, b) => b.views - a.views)
+  articles = articles.slice(0, count)
 
   return (
     <>

@@ -1,5 +1,9 @@
+import { PostWithMetrics } from "@/types"
+import { pick } from "contentlayer/client"
 import { allPosts } from "contentlayer/generated"
 import { compareDesc } from "date-fns"
+
+import { getAllMetrics } from "./actions"
 
 export function getPosts() {
   const posts = allPosts.sort((a, b) => {
@@ -10,6 +14,23 @@ export function getPosts() {
   } else {
     return posts.filter((p) => p.status === "published")
   }
+}
+
+export async function getPostWithMetrics() {
+  const posts = getPosts()
+  const allMetrics = await getAllMetrics()
+
+  const articles: PostWithMetrics[] = []
+  posts?.forEach(async (post) => {
+    const metrics = allMetrics.find((item) => item.slug === post.slug)
+    articles.push({
+      post: pick(post, ["title", "description", "published", "slug"]),
+      views: metrics?.views || 0,
+      likes: metrics?.likes || 0,
+    })
+  })
+
+  return articles
 }
 
 export function getPost(slug: string) {
