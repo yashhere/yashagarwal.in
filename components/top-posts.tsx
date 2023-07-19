@@ -2,11 +2,11 @@ import { Suspense } from "react"
 import { Metric } from "@/components/metrics/metric"
 import Link from "@/components/ui/link"
 import { PostPreviewLoading } from "@/components/ui/post-preview-loading"
-import { getPostWithMetrics } from "@/lib/content"
+import { getPreviewPosts } from "@/lib/content"
 import moment from "moment"
 
 export async function TopPosts({ count }: { count: number }) {
-  let articles = await getPostWithMetrics()
+  let articles = await getPreviewPosts()
   articles.sort((a, b) => b.views - a.views)
   articles = articles.slice(0, count)
 

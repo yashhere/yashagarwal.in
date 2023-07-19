@@ -41,7 +41,7 @@ export const Series = ({
           }}
         >
           <Title>
-            {series?.title}
+            {series?.seriesTitle}
             <span className="font-medium text-text">
               {" "}
               &middot; {index} of {series.posts?.length}
@@ -59,7 +59,7 @@ export const Series = ({
           </div>
         </button>
       ) : (
-        <Title>{series.title}</Title>
+        <Title>{series.seriesTitle}</Title>
       )}
       {isOpen && (
         <motion.div

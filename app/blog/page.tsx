@@ -1,6 +1,6 @@
 import { Metadata } from "next"
 import { BlogPostList } from "@/components/blog-list"
-import { getPostWithMetrics } from "@/lib/content"
+import { getPreviewPosts } from "@/lib/content"
 
 export const metadata: Metadata = {
   title: "Writing | Yash Agarwal",
@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 }
 
 export default async function Page() {
-  const articles = await getPostWithMetrics()
+  const articles = await getPreviewPosts()
 
   return (
     <>

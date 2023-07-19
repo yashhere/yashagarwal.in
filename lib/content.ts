@@ -1,6 +1,6 @@
 import { PostWithMetrics } from "@/types"
 import { pick } from "contentlayer/client"
-import { allPosts } from "contentlayer/generated"
+import { allPosts, Post } from "contentlayer/generated"
 import { compareDesc } from "date-fns"
 
 import { getAllMetrics } from "./actions"
@@ -16,7 +16,7 @@ export function getPosts() {
   }
 }
 
-export async function getPostWithMetrics() {
+export async function getPreviewPosts() {
   const posts = getPosts()
   const allMetrics = await getAllMetrics()
 
@@ -24,13 +24,50 @@ export async function getPostWithMetrics() {
   posts?.forEach(async (post) => {
     const metrics = allMetrics.find((item) => item.slug === post.slug)
     articles.push({
-      post: pick(post, ["title", "description", "published", "slug"]),
+      post: pick(post, ["title", "description", "published", "slug", "tags"]),
       views: metrics?.views || 0,
       likes: metrics?.likes || 0,
     })
   })
 
   return articles
+}
+
+export async function getPartialPost(slug: string) {
+  const allMetrics = await getAllMetrics()
+  const post = getPosts().find((item) => item.slug === slug)
+  if (!post) {
+    throw Error("Unable to Retrieve Post")
+  }
+
+  const metrics = allMetrics.find((item) => item.slug === slug)
+  const trimmedPost: Partial<Post> = {
+    title: post.title,
+    published: post.published,
+    slug: post.slug,
+    description: post.description,
+    body: {
+      code: post.body.code,
+      raw: "", // use empty string to reduce payload size
+    },
+    tags: post.tags,
+    status: post.status,
+    headings:
+      (post.headings as { heading: number; text: string; slug: string }[]) ??
+      null,
+    readingTime: post.readingTime,
+  }
+
+  const series = getSeries(post.series?.title as string, post.slug)
+
+  const article: PostWithMetrics = {
+    post: trimmedPost,
+    views: metrics?.views || 0,
+    likes: metrics?.likes || 0,
+    series: series,
+  }
+
+  return article
 }
 
 export function getPost(slug: string) {
@@ -44,7 +81,7 @@ export function getPost(slug: string) {
 
 export function getSeries(title: string, current: string) {
   return {
-    title: title,
+    seriesTitle: title,
     posts: allPosts
       .filter((p) => p.series?.title === title)
       .sort(

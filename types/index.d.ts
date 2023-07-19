@@ -24,6 +24,15 @@ export type PostWithMetrics = {
   post: Partial<Post>
   likes: number
   views: number
+  series?: {
+    seriesTitle: string
+    posts: {
+      title: string
+      slug: string
+      status: "draft" | "published"
+      isCurrent: boolean
+    }[]
+  }
 }
 
 export interface ImageProps {

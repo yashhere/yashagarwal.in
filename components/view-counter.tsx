@@ -6,18 +6,17 @@ import { incrementSlugMetrics } from "@/lib/actions"
 
 export function ViewCounter({
   slug,
-  allMetrics,
+  metrics,
   track,
 }: {
   slug: string
-  allMetrics: {
+  metrics: {
     slug: string
     views: number
     likes: number
-  }[]
+  }
   track?: boolean
 }) {
-  const metrics = allMetrics && allMetrics.find((view) => view.slug === slug)
   const views = new Number(metrics?.views || 0)
 
   useEffect(() => {
