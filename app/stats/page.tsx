@@ -15,7 +15,7 @@ const Page = async () => {
           Stats
         </h1>
         <p className="font-medium text-text">
-          Currated statistics regarding the existence of me on the web, and this
+          Curated statistics regarding the existence of me on the web, and this
           blog.
         </p>
       </section>
