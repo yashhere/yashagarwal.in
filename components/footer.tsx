@@ -1,7 +1,8 @@
 import { FC } from "react"
-import Link from "next/link"
 import moment from "moment"
 import { BsGithub, BsInstagram, BsLinkedin, BsTwitter } from "react-icons/bs"
+
+import Link from "./ui/link"
 
 const Socials = [
   {
@@ -49,9 +50,14 @@ export const Footer: FC = () => {
           <div className="grid grid-cols-4 gap-6">
             {Socials.map((s) => {
               return (
-                <a href={s.url} key={s.name} aria-label={s.name}>
+                <Link
+                  href={s.url}
+                  key={s.name}
+                  aria-label={s.name}
+                  noExternalLinkIcon
+                >
                   <s.icon className="h-8 w-8 text-text/70 hover:text-text sm:h-6 sm:w-6" />
-                </a>
+                </Link>
               )
             })}
           </div>
