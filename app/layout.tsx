@@ -8,6 +8,7 @@ import { TailwindIndicator } from "@/components/ui/tailwind-indicator"
 import { siteConfig } from "@/config/site"
 import { createOgImageGeneral } from "@/lib/og/createOgImage"
 import { cn } from "@/lib/utils"
+
 import "@/styles/globals.css"
 
 const bodyFont = localFont({
@@ -22,13 +23,9 @@ const monoFont = localFont({
   display: "swap",
 })
 
-export async function generateMetadata(
-  parent: ResolvingMetadata
-): Promise<Metadata> {
+export async function generateMetadata(): Promise<Metadata> {
   const siteUrl: string = siteConfig.url
 
-  // access and extend (rather than replace) parent metadata
-  const previousImages = (await parent).openGraph?.images || []
   const newOgImage = createOgImageGeneral()
 
   return {
@@ -56,7 +53,7 @@ export async function generateMetadata(
       title: siteConfig.title,
       description: siteConfig.description,
       siteName: siteConfig.title,
-      images: [newOgImage, ...previousImages],
+      images: [newOgImage],
       countryName: "India",
     },
     twitter: {

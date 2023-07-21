@@ -4,11 +4,6 @@ import Link from "@/components/ui/link"
 import { siteConfig } from "@/config/site"
 import { ArrowRightIcon } from "@heroicons/react/24/solid"
 
-export const metadata: Metadata = {
-  title: "Home | Yash Agarwal",
-  description: "My nest on the Internet",
-}
-
 export default async function Page() {
   return (
     <>
