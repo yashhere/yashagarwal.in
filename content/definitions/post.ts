@@ -1,11 +1,11 @@
-import { Series } from "./series"
-import { Tag } from "./tag"
 import {
   defineComputedFields,
   defineDocumentType,
 } from "contentlayer/source-files"
 import GithubSlugger from "github-slugger"
 import readingTime from "reading-time"
+
+import { Series } from "./series"
 
 /** @type {import('contentlayer/source-files').ComputedFields} */
 const computedFields = defineComputedFields<"Post">({
@@ -59,7 +59,7 @@ export const Post = defineDocumentType(() => ({
     tags: {
       type: "list",
       required: false,
-      of: Tag,
+      of: { type: "string" },
     },
     series: {
       type: "nested",
