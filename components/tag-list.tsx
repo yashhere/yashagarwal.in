@@ -1,37 +1,32 @@
 import { FC } from "react"
-import { cn } from "@/lib/utils"
+import GithubSlugger from "github-slugger"
+
+import Link from "./ui/link"
 
 type TagListProps = {
   tags: string[]
 }
 
-const gradients = ["from-purple to-primary", "from-primary to-purple"]
-
-let count = 0
-
-const getNextGradient = () => {
-  const g = gradients[count]
-  count++
-  if (count == gradients.length) count = 0
-  return g
-}
-
 export const TagList: FC<TagListProps> = ({ tags }) => {
+  if (!tags || (tags && tags.length === 0)) {
+    return null
+  }
+
   return (
-    <div className="flex flex-wrap">
-      {tags.map((t) => {
+    <div className="text-md mt-2 flex flex-wrap justify-start font-body font-semibold text-gray-600 sm:text-lg">
+      {tags.map((tag) => {
+        const slugger = new GithubSlugger()
+        const tag_slug = tag ? slugger.slug(tag) : undefined
         return (
-          <div
-            key={t}
-            className={cn(
-              "shadow-surface-elevation-high mr-2 mt-2 rounded-xl bg-gradient-to-r p-1 transition-all",
-              getNextGradient()
-            )}
-          >
-            <div className="h-full justify-between rounded-lg bg-text px-4 py-2">
-              <p className="text-sm font-medium">{t}</p>
-            </div>
-          </div>
+          <>
+            <Link
+              key={tag_slug}
+              href={`/tags/${tag_slug}`}
+              className="mr-2 text-primary"
+            >
+              #{tag}
+            </Link>
+          </>
         )
       })}
     </div>
