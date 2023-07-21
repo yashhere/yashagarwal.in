@@ -16,6 +16,7 @@ import { getSessionId } from "@/lib/server-utils"
 import "@/styles/mdx.css"
 import "katex/dist/katex.css"
 
+import { GoToTop } from "@/components/go-to-top"
 import { TagList } from "@/components/tag-list"
 import moment from "moment"
 import { getMDXComponent } from "next-contentlayer/hooks"
@@ -133,7 +134,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
             </div>
           </div>
 
-          <div className="mt-16">
+          <div className="py-8">
             <LikeButton
               slug={slug}
               sessionId={sessionId}
@@ -144,8 +145,18 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
           {/* Post Series */}
           {article.series ? (
-            <Series series={article.series} interactive={true} current={slug} />
+            <div className="py-8">
+              <Series
+                series={article.series}
+                interactive={true}
+                current={slug}
+              />
+            </div>
           ) : null}
+
+          <GoToTop slug={slug} />
+
+          <hr className="border-t-1 border-gray-300/60" />
 
           <Comments />
         </Suspense>
