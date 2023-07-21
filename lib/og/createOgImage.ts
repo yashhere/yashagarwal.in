@@ -6,14 +6,13 @@ export const createOgImageForPost = ({ post }: { post: Post }) => {
   const siteUrl: string = siteConfig.url
 
   const title = post.title
-  const tags = (post.tags && post.tags.map(({ value }) => value)) || []
   const metaItems = [
     siteUrl.replace(/(^\w+:|^)\/\//, ""),
     moment(post.published).format("MMM DD, YYYY"),
   ]
 
-  if (tags.length != 0) {
-    metaItems.push(...tags)
+  if (post.tags && post.tags.length != 0) {
+    metaItems.push(...post.tags)
   }
 
   const meta = metaItems.join(" · ")

@@ -11,5 +11,9 @@
   "prettier.withNodeModules": true,
   "css.completion.completePropertyWithSemicolon": false,
   "javascript.format.semicolons": "remove",
-  "typescript.format.semicolons": "remove"
+  "typescript.format.semicolons": "remove",
+  "eslint.codeActionsOnSave.mode": "problems",
+  "workbench.editor.highlightModifiedTabs": true,
+  "workbench.editor.showTabs": true,
+  "editor.detectIndentation": false
 }
