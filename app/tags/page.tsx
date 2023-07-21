@@ -23,13 +23,13 @@ export default function Page() {
           const tag_slug = tag ? slugger.slug(tag) : undefined
 
           return (
-            <div className="ml-4 mt-4 inline-flex items-center rounded-full bg-muted px-3 py-1 text-lg font-bold uppercase leading-7 text-text">
+            <div className="ml-4 mt-4 inline-flex items-center rounded-full bg-muted px-3 py-1 text-lg font-bold normal-case leading-7 text-text">
               <Link
                 key={tag_slug}
                 href={`/tags/${tag_slug}`}
                 className="mr-2 text-primary"
               >
-                #{tag} ({tagEntry.count})
+                {tag} ({tagEntry.count})
               </Link>
             </div>
           )
