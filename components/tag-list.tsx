@@ -14,15 +14,9 @@ export const TagList: FC<TagListProps> = ({ tags }) => {
 
   return (
     <div className="text-md mt-2 flex flex-wrap justify-start font-body font-semibold text-gray-600 sm:text-lg">
-      {tags.map((t, i, { length }) => {
+      {tags.map((tag) => {
         const slugger = new GithubSlugger()
-        const tag_slug = t ? slugger.slug(t) : undefined
-        let delimiter = ""
-        if (length - 1 !== i) {
-          {
-            delimiter = ","
-          }
-        }
+        const tag_slug = tag ? slugger.slug(tag) : undefined
         return (
           <>
             <Link
@@ -30,9 +24,8 @@ export const TagList: FC<TagListProps> = ({ tags }) => {
               href={`/tags/${tag_slug}`}
               className="mr-2 text-primary"
             >
-              #{t}
+              #{tag}
             </Link>
-            {/* <span className="">{delimiter}</span> */}
           </>
         )
       })}
