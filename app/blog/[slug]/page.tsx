@@ -16,6 +16,7 @@ import { getSessionId } from "@/lib/server-utils"
 import "@/styles/mdx.css"
 import "katex/dist/katex.css"
 
+import { TagList } from "@/components/tag-list"
 import moment from "moment"
 import { getMDXComponent } from "next-contentlayer/hooks"
 
@@ -111,6 +112,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
               Time to read: {Math.round(article.post.readingTime.minutes)} mins
             </p>
           </div>
+          <TagList tags={article.post.tags} />
         </section>
 
         <Suspense fallback={<div>Loading...</div>}>
