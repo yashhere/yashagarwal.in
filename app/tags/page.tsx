@@ -11,6 +11,11 @@ export default function Page() {
     count: allTags.filter((f) => f === tagName).length,
   }))
 
+  for (let i = tagCounts.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[tagCounts[i], tagCounts[j]] = [tagCounts[j], tagCounts[i]]
+  }
+
   return (
     <>
       <h1 className="leading-extra-tight pb-8 font-heading text-5xl font-bold lg:text-[96px]">
@@ -23,11 +28,11 @@ export default function Page() {
           const tag_slug = tag ? slugger.slug(tag) : undefined
 
           return (
-            <div className="ml-4 mt-4 inline-flex items-center rounded-full bg-muted px-3 py-1 text-lg font-bold normal-case leading-7 text-text">
+            <div className="ml-4 mt-4 inline-flex items-center rounded-full bg-muted px-3 py-1 text-lg font-bold normal-case leading-7">
               <Link
                 key={tag_slug}
                 href={`/tags/${tag_slug}`}
-                className="mr-2 text-primary"
+                className="mr-2 text-text hover:text-primary"
               >
                 {tag} ({tagEntry.count})
               </Link>
