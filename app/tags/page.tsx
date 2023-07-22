@@ -1,5 +1,5 @@
 import { Metadata } from "next"
-import TagCloud from "@/components/tag-clound"
+import TagCloud from "@/components/tag-cloud"
 import { siteConfig } from "@/config/site"
 import { allPosts } from "contentlayer/generated"
 
