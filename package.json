@@ -7,14 +7,14 @@
     "url": "https://twitter.com/yash__here"
   },
   "scripts": {
-    "dev": "next dev",
+    "dev": "contentlayer build && next dev",
     "build": "contentlayer build && next build",
     "start": "next start",
     "lint": "next lint",
     "prepare": "husky install",
     "postinstall": "prisma generate",
     "preview": "yarn build && yarn start",
-    "debug": "NODE_OPTIONS='--inspect' next dev",
+    "debug": "NODE_OPTIONS='--inspect' yarn dev",
     "lint-staged": "lint-staged"
   },
   "lint-staged": {

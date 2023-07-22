@@ -5,7 +5,7 @@
 This blog is my digital home. Here, you'll find a collection of personal anecdotes, occasional tech insights, and experiments that fuel my curiosity.
 I use this website as a medium to explore new web technologies. Currently I am learning React and NextJs so I decided to migrate my Hugo blog to NextJs. You can check the code of my previous Hugo blog [here](https://github.com/yashhere/tufte.yashagarwal.in).
 
-## Insiparation
+## Inspiration
 
 While I modified the source code of this repository significantly, I forked [Emma](https://www.emmacampbell.dev/) Campbell's [codegarden](https://github.com/emma-campbell/codegarden) to begin with. My inexperience with TailwindCSS forced me to look for a good base to build upon. Emma's website was perfect for my usecase, so I decided to take her code. Since then, I have modified the code heavily but the influence of her design is still evident on my blog. I will continue working on my TailwindCSS skills to alter the design of this blog to my liking and requirements.
 
