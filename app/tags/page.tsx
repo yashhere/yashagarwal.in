@@ -1,5 +1,6 @@
 import { Metadata } from "next"
 import TagCloud from "@/components/tag-cloud"
+import SectionTitle from "@/components/ui/section-title"
 import { siteConfig } from "@/config/site"
 import { allPosts } from "contentlayer/generated"
 
@@ -28,9 +29,7 @@ export default function Page() {
 
   return (
     <>
-      <h1 className="leading-extra-tight pb-8 font-heading text-5xl font-bold lg:text-[96px]">
-        Tags
-      </h1>
+      <SectionTitle data={tagCounts} title="Tags" />
       <TagCloud tagCounts={tagCounts} />
     </>
   )

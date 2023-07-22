@@ -9,7 +9,7 @@ import { TableOfContents } from "@/components/table-of-contents"
 import { ViewCounter } from "@/components/view-counter"
 import { siteConfig } from "@/config/site"
 import { getLikes } from "@/lib/actions"
-import { getPartialPost, getPost, getPreviewPosts } from "@/lib/content"
+import { getPartialPost, getPreviewPosts } from "@/lib/content"
 import { createOgImageForPost } from "@/lib/og/createOgImage"
 import { getSessionId } from "@/lib/server-utils"
 

@@ -2,6 +2,7 @@ import { FC } from "react"
 import { Metadata } from "next"
 import RandomPhoto from "@/components/random-photo"
 import Link from "@/components/ui/link"
+import SectionTitle from "@/components/ui/section-title"
 import { siteConfig } from "@/config/site"
 
 export const metadata: Metadata = {
@@ -21,9 +22,7 @@ export const metadata: Metadata = {
 const Page: FC = () => {
   return (
     <>
-      <h1 className="leading-extra-tight pb-8 font-heading text-5xl font-bold sm:text-[96px]">
-        About Me
-      </h1>
+      <SectionTitle data={null} title="About" />
       <section className="prose prose-article md:prose-lg lg:prose-xl">
         <blockquote className="">
           <p>
