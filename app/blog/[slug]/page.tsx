@@ -9,13 +9,14 @@ import { TableOfContents } from "@/components/table-of-contents"
 import { ViewCounter } from "@/components/view-counter"
 import { siteConfig } from "@/config/site"
 import { getLikes } from "@/lib/actions"
-import { getPartialPost, getPost, getPreviewPosts } from "@/lib/content"
+import { getPartialPost, getPreviewPosts } from "@/lib/content"
 import { createOgImageForPost } from "@/lib/og/createOgImage"
 import { getSessionId } from "@/lib/server-utils"
 
 import "@/styles/mdx.css"
 import "katex/dist/katex.css"
 
+import { GoToTop } from "@/components/go-to-top"
 import { TagList } from "@/components/tag-list"
 import moment from "moment"
 import { getMDXComponent } from "next-contentlayer/hooks"
@@ -122,7 +123,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
           ) : null}
 
           {/* Post Content */}
-          <div className="pt-8">
+          <div className="pt-4">
             <div className="prose prose-article text-lg leading-7 md:prose-lg lg:prose-xl prose-headings:cursor-pointer prose-h1:mb-4 prose-h1:mt-16 prose-h2:mb-4 prose-h2:mt-16 prose-h3:my-8 prose-p:my-4 prose-th:cursor-auto">
               <TableOfContents
                 headings={article.post.headings}
@@ -133,7 +134,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
             </div>
           </div>
 
-          <div className="mt-16">
+          <div className="py-8">
             <LikeButton
               slug={slug}
               sessionId={sessionId}
@@ -144,8 +145,18 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
           {/* Post Series */}
           {article.series ? (
-            <Series series={article.series} interactive={true} current={slug} />
+            <div className="py-8">
+              <Series
+                series={article.series}
+                interactive={true}
+                current={slug}
+              />
+            </div>
           ) : null}
+
+          <GoToTop slug={slug} />
+
+          <hr className="border-t-1 border-gray-300/60" />
 
           <Comments />
         </Suspense>

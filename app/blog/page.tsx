@@ -1,5 +1,6 @@
 import { Metadata } from "next"
 import { BlogPostList } from "@/components/blog-list"
+import SectionTitle from "@/components/ui/section-title"
 import { siteConfig } from "@/config/site"
 import { getPreviewPosts } from "@/lib/content"
 
@@ -24,9 +25,7 @@ export default async function Page() {
   return (
     <>
       <section className="pb-8">
-        <h1 className="leading-extra-tight pb-8 font-heading text-5xl font-bold lg:text-[96px]">
-          Blog
-        </h1>
+        <SectionTitle data={articles} title="Blog" />
         <div className="text-lg text-text">
           <p>
             Since April 2016, I&apos;ve penned {articles.length} articles across

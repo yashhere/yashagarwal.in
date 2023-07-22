@@ -32,7 +32,7 @@ export const Series = ({
   const index = series.posts?.findIndex((post) => post?.isCurrent) + 1
 
   return (
-    <div className="shadow-surface-elevation-low rounded bg-muted p-5 lg:px-8 lg:py-7">
+    <div className="shadow-surface-elevation-low rounded bg-muted px-5 py-4 lg:px-8 lg:py-5">
       {interactive ? (
         <button
           className="items center group flex w-full items-center text-left"

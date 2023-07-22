@@ -1,5 +1,6 @@
 import { Suspense } from "react"
 import { Metadata } from "next"
+import SectionTitle from "@/components/ui/section-title"
 import { siteConfig } from "@/config/site"
 import { getTotalViews } from "@/lib/actions"
 import { ArrowTrendingUpIcon, PencilIcon } from "@heroicons/react/24/solid"
@@ -27,9 +28,7 @@ const Page = async () => {
   return (
     <>
       <section className="pb-4">
-        <h1 className="leading-extra-tight pb-6 font-heading text-5xl sm:text-[96px]">
-          Stats
-        </h1>
+        <SectionTitle data={null} title="Stats" />
         <p className="font-medium text-text">
           Curated statistics regarding the existence of me on the web, and this
           blog.

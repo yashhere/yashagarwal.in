@@ -30,7 +30,7 @@ export const TableOfContents = ({ headings, path, interactive }) => {
 
   return (
     <>
-      <div className="shadow-surface-elevation-low rounded border-2 bg-transparent p-5">
+      <div className="shadow-surface-elevation-low mb-8 rounded border-2 bg-transparent px-5 py-2 lg:px-8 lg:py-3">
         {interactive ? (
           <button
             className="group flex w-full items-center text-left"
