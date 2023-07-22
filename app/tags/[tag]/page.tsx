@@ -1,5 +1,6 @@
 import { Metadata, ResolvingMetadata } from "next"
 import { BlogPostList } from "@/components/blog-list"
+import SectionTitle from "@/components/ui/section-title"
 import { siteConfig } from "@/config/site"
 import { getPreviewPosts } from "@/lib/content"
 import GithubSlugger from "github-slugger"
@@ -74,9 +75,7 @@ export default async function Page({ params }: Props) {
   return (
     <>
       <section className="pb-8">
-        <h1 className="leading-extra-tight pb-8 font-heading text-5xl font-bold lg:text-[96px]">
-          {tagName}
-        </h1>
+        <SectionTitle data={postsWithTag} title={tagName} />
       </section>
       {postsWithTag.length !== 0 ? (
         <BlogPostList articles={postsWithTag} noSearchBox />
