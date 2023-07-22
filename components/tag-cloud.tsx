@@ -28,12 +28,9 @@ export default function TagCloud({ tagCounts }) {
             return (
               <div
                 key={tag_slug}
-                className="ml-4 mt-4 inline-flex items-center rounded-full bg-muted px-3 py-1 text-lg font-bold normal-case leading-7"
+                className="ml-4 mt-4 inline-flex items-center rounded-full border px-3 py-1 text-lg font-bold normal-case leading-7 text-text hover:bg-muted hover:text-primary"
               >
-                <Link
-                  href={`/tags/${tag_slug}`}
-                  className="mr-2 text-text hover:text-primary"
-                >
+                <Link href={`/tags/${tag_slug}`}>
                   {tag} ({tagEntry.count})
                 </Link>
               </div>

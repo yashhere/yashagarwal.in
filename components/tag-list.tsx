@@ -13,7 +13,7 @@ export const TagList: FC<TagListProps> = ({ tags }) => {
   }
 
   return (
-    <div className="text-md mt-2 flex flex-wrap justify-start font-body font-semibold text-gray-600 sm:text-lg">
+    <div className="text-md mt-2 flex flex-row flex-wrap justify-start font-body font-semibold text-gray-600 sm:text-lg">
       {tags.map((tag) => {
         const slugger = new GithubSlugger()
         const tag_slug = tag ? slugger.slug(tag) : undefined
@@ -22,7 +22,7 @@ export const TagList: FC<TagListProps> = ({ tags }) => {
             <Link
               key={tag_slug}
               href={`/tags/${tag_slug}`}
-              className="mr-2 text-primary"
+              className="mb-2 mr-2 rounded-full border px-3 py-1 text-primary hover:bg-muted"
             >
               #{tag}
             </Link>
