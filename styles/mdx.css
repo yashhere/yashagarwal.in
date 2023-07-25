@@ -62,3 +62,21 @@
 [data-rehype-pretty-code-title] + pre {
   @apply mt-0;
 }
+
+.img-blur {
+    @apply blur-lg;
+}
+
+.img-unblur {
+    animation: img-unblur 0.3s linear;
+}
+
+@keyframes img-unblur {
+    from {
+        @apply blur-lg;
+    }
+
+    to {
+        @apply blur-none;
+    }
+}

@@ -1,8 +1,8 @@
+/* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable react/jsx-no-target-blank */
 import React from "react"
-import type { ImageProps } from "next/image"
+import Image from "@/components/ui/image"
 import Link from "@/components/ui/link"
-import { LoadingImage } from "@/components/ui/loading-image"
 import { cn } from "@/lib/utils"
 import { MDXComponents } from "mdx/types"
 
@@ -12,6 +12,10 @@ const BlogLink = (props) => {
   }
 
   return <Link {...props} className="text-primary no-underline" />
+}
+
+const BlogImage = (props) => {
+  return <Image {...props} />
 }
 
 const CustomMDXComponents: MDXComponents = {
@@ -31,30 +35,6 @@ const CustomMDXComponents: MDXComponents = {
       {...props}
     />
   ),
-  Img: ({
-    children,
-    bleed,
-    caption,
-    ...props
-  }: {
-    children: React.ReactNode
-    bleed?: boolean
-    caption?: string
-  } & ImageProps) => {
-    return (
-      <>
-        <div
-          className={cn({
-            "xl:!col-start-2 xl:!col-end-4": bleed === true,
-          })}
-        >
-          <LoadingImage {...props} />
-        </div>
-        {caption ? (
-          <div className="mt-2 text-sm italic text-text/70">{caption}</div>
-        ) : null}
-      </>
-    )
-  },
+  img: BlogImage,
 }
 export default CustomMDXComponents

@@ -1,4 +1,3 @@
-import { Post } from "./content/definitions/post"
 import { makeSource } from "contentlayer/source-files"
 import { rehypeAccessibleEmojis } from "rehype-accessible-emojis"
 import rehypeAutolinkHeadings from "rehype-autolink-headings"
@@ -7,15 +6,20 @@ import rehypePrettyCode from "rehype-pretty-code"
 import rehypeSlug from "rehype-slug"
 import remarkGfm from "remark-gfm"
 import remarkMath from "remark-math"
+import remarkUnwrapImages from "remark-unwrap-images"
+
+import { Post } from "./content/definitions/post"
+import rehypeImageMetadata from "./utils/plugins/image-metadata"
 
 export default makeSource({
   contentDirPath: "content",
   documentTypes: [Post],
   mdx: {
-    remarkPlugins: [[remarkGfm], [remarkMath]],
+    remarkPlugins: [[remarkGfm], [remarkMath], [remarkUnwrapImages]],
     rehypePlugins: [
       [rehypeKatex],
       [rehypeSlug],
+      [rehypeImageMetadata],
       [rehypeAccessibleEmojis],
       [rehypePrettyCode, { theme: "dracula" }],
       [
