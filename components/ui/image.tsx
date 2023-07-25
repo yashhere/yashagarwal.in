@@ -1,29 +1,27 @@
 "use client"
 
 import { forwardRef, ImgHTMLAttributes, useState } from "react"
-import Image from "next/image"
+import Image, { ImageProps } from "next/image"
 import { cn } from "@/lib/utils"
 
-interface CustomImageProps extends ImgHTMLAttributes<HTMLImageElement> {
-  src?: string
-  title?: string
-  alt?: string
-  width?: number | string
-  height?: number | string
-  blurDataURL?: string
-  placeholder: "blur" | "empty"
+interface CustomImageProps extends ImageProps {
+  title: string
 }
 
 const CustomImage = forwardRef<HTMLImageElement, CustomImageProps>(
-  ({
-    src,
-    title,
-    alt,
-    width,
-    height,
-    blurDataURL,
-    placeholder,
-  }: CustomImageProps): JSX.Element => {
+  (
+    {
+      src,
+      title,
+      alt,
+      width,
+      height,
+      blurDataURL,
+      placeholder,
+      ...otherProps
+    }: CustomImageProps,
+    ref
+  ): JSX.Element => {
     if (!src || !alt) {
       throw new Error("src and alt is required")
     }
@@ -42,14 +40,18 @@ const CustomImage = forwardRef<HTMLImageElement, CustomImageProps>(
           alt={alt}
           width={Number(width)}
           height={Number(height)}
+          ref={ref}
           sizes="(max-width: 640px) 100vw,
                   (max-width: 1280px) 50vw,
                   (max-width: 1536px) 33vw,
                   25vw"
+          {...otherProps}
         />
-        <figcaption className="z-10 mt-5 text-sm italic text-gray-400">
-          {title}
-        </figcaption>
+        {title && (
+          <figcaption className="z-10 mt-5 text-sm italic text-gray-400">
+            {title}
+          </figcaption>
+        )}
       </figure>
     )
   }
