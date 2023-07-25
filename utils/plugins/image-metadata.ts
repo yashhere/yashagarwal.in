@@ -49,9 +49,8 @@ async function addProps(node: ImageNode): Promise<void> {
   // and pass the path of the image
   if (!isExternal) {
     const imagePath = path.join(process.cwd(), "public", node.properties.src)
-    console.log(imagePath)
     // Calculate image resolution (width, height)
-    res = await sizeOf(imagePath)
+    res = (await sizeOf(imagePath))!
 
     // read file in a buffer
     const imageData = await fs.readFile(imagePath)

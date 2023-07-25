@@ -1,4 +1,3 @@
-import { Metadata } from "next"
 import { TopPosts } from "@/components/top-posts"
 import Link from "@/components/ui/link"
 import { siteConfig } from "@/config/site"
@@ -32,7 +31,6 @@ export default async function Page() {
         <h2 className="pb-4 font-heading text-xl font-bold uppercase tracking-widest text-secondary">
           Popular posts
         </h2>
-        {/* @ts-expect-error Async Server Component */}
         <TopPosts count={siteConfig.popularPosts} />
         <Link
           href="/blog"
