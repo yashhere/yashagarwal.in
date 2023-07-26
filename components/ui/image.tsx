@@ -26,13 +26,13 @@ const CustomImage = forwardRef<HTMLImageElement, CustomImageProps>(
       throw new Error("src and alt is required")
     }
 
-    const [blur, setBlur] = useState(true)
+    const [isLoading, setLoading] = useState(true)
 
     return (
       <figure className="group relative mb-5 block w-full break-inside-avoid-column text-center drop-shadow-xl">
         <Image
-          className={cn("rounded-lg", blur ? "img-blur" : "img-unblur")}
-          onLoadingComplete={() => setBlur(false)}
+          className={cn("rounded-lg", isLoading ? "img-blur" : "img-unblur")}
+          onLoadingComplete={() => setLoading(false)}
           style={{ transform: "translate3d(0, 0, 0)" }}
           placeholder={placeholder}
           blurDataURL={blurDataURL}

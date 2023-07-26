@@ -64,16 +64,16 @@
 }
 
 .img-blur {
-    @apply blur-lg;
+    @apply blur-md;
 }
 
 .img-unblur {
-    animation: img-unblur 0.3s linear;
+    animation: img-unblur 0.8s linear;
 }
 
 @keyframes img-unblur {
     from {
-        @apply blur-lg;
+        @apply blur-md;
     }
 
     to {
