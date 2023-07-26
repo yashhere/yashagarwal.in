@@ -2,6 +2,7 @@
 
 import Script from "next/script"
 import { siteConfig } from "@/config/site"
+import { Analytics as VercelAnalytics } from "@vercel/analytics/react"
 
 export function Analytics() {
   const siteUrl = siteConfig.url
@@ -14,6 +15,7 @@ export function Analytics() {
 
   return (
     <>
+      <VercelAnalytics />
       <Script
         async
         defer
