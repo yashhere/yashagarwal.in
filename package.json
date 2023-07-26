@@ -15,13 +15,7 @@
     "postinstall": "prisma generate",
     "preview": "yarn build && yarn start",
     "debug": "NODE_OPTIONS='--inspect' yarn dev",
-    "lint-staged": "lint-staged"
-  },
-  "lint-staged": {
-    "*.{tsx, ts, js, jsx}": [
-      "eslint --fix",
-      "prettier --write"
-    ]
+    "lint:staged": "lint-staged"
   },
   "dependencies": {
     "@fontsource/fira-code": "^4.5.13",
@@ -79,6 +73,7 @@
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-tailwindcss": "^3.13.0",
     "feed": "^4.2.2",
+    "gray-matter": "^4.0.3",
     "husky": "^8.0.0",
     "lint-staged": "^13.2.3",
     "postcss": "^8.4.21",
