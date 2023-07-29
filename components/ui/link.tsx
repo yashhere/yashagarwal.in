@@ -2,10 +2,10 @@
 
 import {
   AnchorHTMLAttributes,
-  ReactElement,
-  ReactNode,
   cloneElement,
   forwardRef,
+  ReactElement,
+  ReactNode,
 } from "react"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
@@ -79,7 +79,7 @@ const ExternalLink = forwardRef<HTMLAnchorElement, ExternalLinkProps>(
                 className: "h-4 w-4 mr-1",
               })}
             {noExternalLinkIcon ? children : <span>{children}</span>}{" "}
-            {!noExternalLinkIcon && <TbArrowUpRight className="h-4 w-4" />}
+            {!noExternalLinkIcon && <TbArrowUpRight className="ml-1 h-4 w-4" />}
           </a>
         )}
       </>
