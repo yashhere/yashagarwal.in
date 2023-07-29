@@ -76,10 +76,19 @@ const ExternalLink = forwardRef<HTMLAnchorElement, ExternalLinkProps>(
           >
             {icon &&
               cloneElement(icon as ReactElement, {
-                className: "h-4 w-4 mr-1",
+                className: "h-4 w-4 flex-none mr-1 self-center",
               })}
-            {noExternalLinkIcon ? children : <span>{children}</span>}{" "}
-            {!noExternalLinkIcon && <TbArrowUpRight className="ml-1 h-4 w-4" />}
+            {/* Have no option other than clamping.
+                https://stackoverflow.com/questions/70164816/how-to-make-the-width-fit-to-the-content-when-text-wrapped
+            */}
+            {noExternalLinkIcon ? (
+              children
+            ) : (
+              <span className="line-clamp-1">{children}</span>
+            )}{" "}
+            {!noExternalLinkIcon && (
+              <TbArrowUpRight className="ml-1 h-4 w-4 flex-none self-center" />
+            )}
           </a>
         )}
       </>
