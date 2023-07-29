@@ -65,7 +65,7 @@ const ExternalLink = forwardRef<HTMLAnchorElement, ExternalLinkProps>(
             href={href}
             aria-label="External Link"
             className={cn(
-              "inline-flex items-center space-x-1 text-primary no-underline transition duration-200",
+              "text-primary no-underline transition duration-200",
               isUnderline && "hover:underline hover:underline-offset-8",
               className
             )}
@@ -76,18 +76,13 @@ const ExternalLink = forwardRef<HTMLAnchorElement, ExternalLinkProps>(
           >
             {icon &&
               cloneElement(icon as ReactElement, {
-                className: "h-4 w-4 flex-none mr-1 self-center",
+                className: "inline h-5 w-5 pb-[2px] mr-1",
               })}
-            {/* Have no option other than clamping.
-                https://stackoverflow.com/questions/70164816/how-to-make-the-width-fit-to-the-content-when-text-wrapped
-            */}
-            {noExternalLinkIcon ? (
-              children
-            ) : (
-              <span className="line-clamp-1">{children}</span>
-            )}{" "}
+            {noExternalLinkIcon ? children : <span>{children}</span>}{" "}
+            {/* have to use inline icon because flex isn't working with multiline text. */}
+            {/* Can't help with weird padding hack to center the icon. Yikes! */}
             {!noExternalLinkIcon && (
-              <TbArrowUpRight className="ml-1 h-4 w-4 flex-none self-center" />
+              <TbArrowUpRight className="-ml-1 inline h-5 w-5 pb-[2px]" />
             )}
           </a>
         )}
