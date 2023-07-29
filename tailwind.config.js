@@ -6,6 +6,18 @@ const disabledCss = {
   "pre code": false,
   "blockquote p:first-of-type::before": false,
   "blockquote p:last-of-type::after": false,
+  "> ul > li > *:first-child": {
+    marginTop: 0,
+  },
+  "> ul > li > *:last-child": {
+    marginBottom: 0,
+  },
+  "> ol > li > *:first-child": {
+    marginTop: 0,
+  },
+  "> ol > li > *:last-child": {
+    marginBottom: 0,
+  },
 }
 
 /** @type {import('tailwindcss').Config} */

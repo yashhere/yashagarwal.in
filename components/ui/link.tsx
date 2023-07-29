@@ -2,10 +2,10 @@
 
 import {
   AnchorHTMLAttributes,
-  ReactElement,
-  ReactNode,
   cloneElement,
   forwardRef,
+  ReactElement,
+  ReactNode,
 } from "react"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
@@ -65,7 +65,7 @@ const ExternalLink = forwardRef<HTMLAnchorElement, ExternalLinkProps>(
             href={href}
             aria-label="External Link"
             className={cn(
-              "inline-flex items-center space-x-1 text-primary no-underline transition duration-200",
+              "text-primary no-underline transition duration-200",
               isUnderline && "hover:underline hover:underline-offset-8",
               className
             )}
@@ -76,10 +76,14 @@ const ExternalLink = forwardRef<HTMLAnchorElement, ExternalLinkProps>(
           >
             {icon &&
               cloneElement(icon as ReactElement, {
-                className: "h-4 w-4 mr-1",
+                className: "inline h-5 w-5 pb-[3px] mr-1",
               })}
             {noExternalLinkIcon ? children : <span>{children}</span>}{" "}
-            {!noExternalLinkIcon && <TbArrowUpRight className="h-4 w-4" />}
+            {/* have to use inline icon because flex isn't working with multiline text. */}
+            {/* Can't help with weird padding hack to center the icon. Yikes! */}
+            {!noExternalLinkIcon && (
+              <TbArrowUpRight className="-ml-1 inline h-5 w-5 pb-[3px]" />
+            )}
           </a>
         )}
       </>
