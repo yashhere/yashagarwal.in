@@ -98,7 +98,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
     <>
       <div className="space-y-4">
         <section>
-          <h1 className="relative max-w-4xl pb-2 font-heading text-5xl font-bold leading-none sm:text-6xl">
+          <h1 className="relative max-w-4xl pb-2 font-heading text-4xl font-bold leading-none sm:text-5xl">
             {article.post.title}
           </h1>
           <div className="text-md mt-2 flex space-x-2 font-body font-semibold text-gray-600 sm:text-lg">
