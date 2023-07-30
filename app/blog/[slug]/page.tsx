@@ -84,6 +84,10 @@ export async function generateMetadata(
 export default async function Page({ params }: Props) {
   const { slug } = params
   const article = await getPartialPost(slug)
+  if (!article) {
+    // TODO: Add 404 here
+    return <></>
+  }
   const MdxContent = getMDXComponent(article.post.body.code)
   const sessionId = getSessionId(slug)
   let [totalLikes, userLikes] = await getLikes(slug, sessionId)
