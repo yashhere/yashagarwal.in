@@ -40,7 +40,7 @@
 }
 
 [data-rehype-pretty-code-fragment] [data-highlighted-line] {
-  @apply bg-code-bg bg-opacity-10;
+@apply bg-code-bg bg-opacity-10 w-full;
 }
 
 [data-rehype-pretty-code-fragment] [data-highlighted-line] span {

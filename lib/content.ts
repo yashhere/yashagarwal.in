@@ -9,10 +9,15 @@ export function getPosts() {
   const posts = allPosts.sort((a, b) => {
     return compareDesc(new Date(a.published), new Date(b.published))
   })
+
   if (process.env.NODE_ENV === "development") {
     return posts
   } else {
-    return posts.filter((p) => p.status === "published")
+    return posts.filter((p) => {
+      const currentTime = new Date()
+      const publishedDate = new Date(p.published)
+      return p.status === "published" && currentTime >= publishedDate
+    })
   }
 }
 
@@ -37,7 +42,7 @@ export async function getPartialPost(slug: string) {
   const allMetrics = await getAllMetrics()
   const post = getPosts().find((item) => item.slug === slug)
   if (!post) {
-    throw Error("Unable to Retrieve Post")
+    return null
   }
 
   const metrics = allMetrics.find((item) => item.slug === slug)
