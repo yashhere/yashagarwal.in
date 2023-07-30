@@ -81,7 +81,7 @@ export async function generateMetadata(
   }
 }
 
-export default async function Page({ params }: { params: { slug: string } }) {
+export default async function Page({ params }: Props) {
   const { slug } = params
   const article = await getPartialPost(slug)
   const MdxContent = getMDXComponent(article.post.body.code)

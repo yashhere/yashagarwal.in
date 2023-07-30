@@ -1,6 +1,6 @@
 ---
 title: Integrating Contentlayer with NextJs Blog
-published: 2023-07-30T13:05:24.000Z
+published: 2023-07-30T18:30:24.000Z
 status: published
 series:
   order: 2
@@ -9,6 +9,336 @@ tags:
   - Blog Setup
   - Development
   - NextJs
-updatedOn: 2023-07-29T11:55:39.000Z
+  - Contentlayer
+updatedOn: 2023-07-30T06:53:02.000Z
 ---
 
+The second part of this series explores Contentlayer and how to integrate it with a NextJs blog. I will elaborate on my experience managing content on my blog throughout the last eight years using various tools, why I decided to use Contentlayer and how to integrate it into a NextJs blog.
+
+
+# History
+
+When I was starting out on my journey with NextJs to build the next version of my blog, I had to figure out a way to feed data into my application. I used only traditional static site generators like Jekyll and Hugo until then. SSGs work in this way - One writes the content in local markdown files; the SSG takes these files, extract the front matter and actual body, converts the extracted information to variables and feeds them into the actual server-side rendering logic, which will generate the static HTML files. Storing these content markdown files in Git is what is today called the **Git CMS**. I am a big proponent of keeping the content in a Git repository because it makes it easier to track the writing journey without tying too much into a vendor.
+
+Although the concept of SSGs came into being with the release of Jekyll in 2008 (at the same time as Github and its iconic [Pages](https://docs.github.com/en/pages/quickstart) feature), I actually started my journey with it in 2015. Since then, technology has advanced by leaps and frogs, and several new approaches to managing content and code have emerged.
+
+I also dabbled with integrating headless CMS ([WordPress](https://wordpress.com/), [Sanity](https://www.sanity.io/) and [Contentful](https://www.contentful.com/)) and GraphQL based [Gatsby](https://www.gatsbyjs.com/) at various points in past few years, however I was never successful because of my unease with JavaScript. My unwillingness to rely on any third-party vendor for storing my content and the costs associated with self-hosting any open source CMS also contributed greatly to my failure to transition.
+
+
+# Migrating to NextJs
+
+When I was starting to migrate my blog to NextJs, I had a couple of requirements in mind -
+
+1. I preferred using a headless CMS for storing the content. A few reasons are -
+    a. My writing was already suffering because of my over-emphasis on coding instead of writing.
+    b. I was somewhat frustrated with my blog's overly complicated publishing process.
+2. The CMS should allow export in popular open formats when I decide to migrate in future.
+
+Notion fits nicely into my requirements. It has a well-defined (although with poor performance) [API](https://developers.notion.com/). It is a popular tool with the developer community and offers the export of the content in markdown format. Notion would have worked well for my requirements, but I couldn't integrate it properly with my blog due to my lack of JavaScript experience.
+
+So, I reverted back to using markdown for my blog's content. I still write in Notion's excellent editor but then export the file to markdown and manually edit image paths etc., to work with my blog's structure.
+
+However, using `md` and its more advanced sibling `mdx` with NextJs is tedious and error-prone. A bunch of tools need to be integrated to make MDX work with NextJs. `unified`, `remark` and `rehype` ecosystem provides some great tools, but combining these is not trivial. I had already wasted enough time struggling with Notion. I might have abandoned the project altogether if I had wasted a few more days.
+
+My search finally ended on [Contentlayer](https://www.contentlayer.dev/). Contentlayer is a tool which transforms unstructured markdown content into structured type-safe JSON data structures and provides accessible interfaces to access these data structures. This means I could import all my content in the code files using an `import` statement and work with the data as if working with a Typescript interface. This eliminated the need to struggle with additional boilerplate code needed to use the low-level libraries to interact with the MDX files.
+
+With that in mind, let's see how to integrate Contentlayer in our NextJs blog. In later posts of this series, we will also see how to utilise the extensive plugin ecosystem provided by the `unified` project to enrich the data interfaces exposed by Contentlayer.
+
+# Install and Configure Contentlayer
+
+Contentlayer's [getting started](https://www.contentlayer.dev/docs/getting-started-cddd76b7) guide is a good resource to setup your NextJs project to work with Contentlayer. I have described the same steps below for quick reference -
+
+First, add `contentlayer` and `next-contentlayer` to the project -
+
+```bash showLineNumbers
+yarn add contentlayer next-contentlayer
+```
+
+The `next-contentlayer` provides an [API](https://www.contentlayer.dev/docs/reference/next-contentlayer-e6e7eb3a#withcontentlayer) to stitch together `next` and `contentlayer` by hooking into the `next dev` and `next build` commands. This will ensure that `contentlayer` runs automatically for local development and production deployments.
+
+Now, we need to patch the `next.config.js` to use the API provided by the `next-contentlayer` to hook into the commands mentioned above -
+
+```jsx showLineNumbers
+// next.config.js
+const { withContentlayer } = require('next-contentlayer')
+
+module.exports = withContentlayer(nextConfig)
+```
+
+# Content Schema
+
+Once we have `contentlayer` setup, it is time to define the structure of our data that will be used by Contentlayer to parse the MDX files. Contentlayer can also process the parsed content to derive new fields. Let's see how it is done.
+
+Create a new file, `contentlayer.config.js`, in the root of your project. Inside this file, I am defining a `Post` document type -
+
+```jsx showLineNumbers
+import { defineDocumentType, makeSource } from "contentlayer/source-files"
+
+export const Post = defineDocumentType(() => ({
+  // The name of the document type
+  name: "Post",
+
+  // The type of the files to parse. 'md' also works
+  contentType: "mdx",
+
+  // The path of the mdx files, relative to contentDirPath
+  filePathPattern: "posts/*.mdx",
+
+  // Fields present in the frontmatter of the MDX file
+  fields: {
+    title: { type: "string", required: true },
+    published: { type: "string", required: true },
+    description: { type: "string" },
+    status: {
+      type: "enum",
+      options: ["draft", "published"],
+      required: true,
+    },
+  },
+}))
+
+export default makeSource({
+  contentDirPath: "content",
+  documentTypes: [Post],
+})
+```
+
+In the code snippet above, the `fields` key is used to store the [custom fields](https://www.contentlayer.dev/docs/reference/source-files/field-types-defe41e9) related to the metadata of a post, such as title, publish date etc. Any field can be made mandatory by using `required: true`.
+
+Now, create a folder called `content` in the project's root, and inside this folder, create a subfolder called `posts`. We will store the `mdx` files inside this folder. Let's start our first post, `content/posts/hello-world.mdx`.
+
+```markdown showLineNumbers
+---
+title: Hello World
+published: 2023-07-30T13:05:24.000Z
+status: published
+---
+
+Hello world! This is my first post.
+```
+
+If `next dev` is running in the background while you save this file, you will see the following output in your terminal -
+
+```txt showLineNumbers
+wait - compiling...
+File updated: content/posts/hello-world.mdx
+Generated 1 document in .contentlayer
+```
+
+# Contentlayer Files
+
+When `next dev` is run for the first time after setting up Contentlayer, Contentlayer creates a hidden folder inside the project root directory - `.contentlayer`. All the processed files, generated data structures, and helper functions and interfaces are stored here. Let's see the contents of this directory -
+
+```txt showLineNumbers {7, 8, 11, 15}
+❯ tree
+./
+├── .contentlayer/
+│   ├── generated/
+│   │   ├── Post/
+│   │   │   ├── _index.json
+│   │   │   ├── _index.mjs
+│   │   │   └── posts__hello-world.mdx.json
+│   │   ├── index.d.ts
+│   │   ├── index.mjs
+│   │   └── types.d.ts
+│   └── package.json
+├── content/
+│   └── posts/
+│       └── hello-world.mdx
+├── contentlayer.config.js
+├── next.config.js
+└── tsconfig.json
+```
+
+Contentlayer converts the static MDX file (line 15) into a structured JSON file (line 8). All such JSON files are accessible through the `allPosts` variable exported from `index.mjs` on line 7. In addition, it also generates type definitions (line 11) which helps Typescript understand the interface provided by the `allPosts` import.
+
+```json showLineNumbers
+// .contentlayer/generated/Post/posts__hello-world.mdx.json
+
+{
+  "title": "Hello World",
+  "published": "2023-07-30T13:05:24.000Z",
+  "status": "published",
+  "body": {
+    "raw": "\nHello world! This is my first post.\n",
+    "code": "var Component=(()=>{var sr=Object.create;..."
+  },
+  "_id": "posts/hello-world.mdx",
+  "_raw": {
+    "sourceFilePath": "posts/hello-world.mdx",
+    "sourceFileName": "hello-world.mdx",
+    "sourceFileDir": "posts",
+    "contentType": "mdx",
+    "flattenedPath": "posts/hello-world"
+  },
+  "type": "Post"
+}
+```
+
+Below is the generated type definition for the `Post` document type -
+
+```js
+// .contentlayer/generated/types.d.ts
+
+/** Document types */
+export type Post = {
+  /** File path relative to `contentDirPath` */
+  _id: string
+  _raw: Local.RawDocumentData
+  type: 'Post'
+  title: string
+  published: string
+  description?: string | undefined
+  status: 'draft' | 'published'
+  /** MDX file body */
+  body: MDX
+}
+```
+
+# Computed Fields
+
+Once Contentlayer has generated the JSON files, the content is ready to consume on our pages. We will use NextJs's [dynamic routes](https://nextjs.org/docs/app/building-your-application/routing/dynamic-routes) to render a single blog post. But before that, we must decide which unique value will be used for navigating the page. File path without the file extension is a standard approach used in the community (called a `slug`), but we currently don't have this value available easily.
+
+That's where Contentlayer's **Computed Fields** come into the picture. It lets us compute new metadata from existing content. For example, it can be used to calculate the estimated reading time from the post content.
+
+To compute the `slug` field, we need to modify the `contentlayer.config.js` as follows -
+
+```js showLineNumbers {23}
+export const Post = defineDocumentType(() => ({
+  // The name of the document type
+  name: "Post",
+
+  // The type of the files to parse. 'md' also works
+  contentType: "mdx",
+
+  // The path of the mdx files, relative to contentDirPath
+  filePathPattern: "posts/*.mdx",
+
+  // Fields present in the frontmatter of MDX file
+  fields: {
+    title: { type: "string", required: true },
+    published: { type: "string", required: true },
+    description: { type: "string" },
+    status: {
+      type: "enum",
+      options: ["draft", "published"],
+      required: true,
+    },
+  },
+
+  computedFields: {
+    slug: {
+      type: "string",
+      resolve: (doc) =>
+        doc._raw.sourceFileName
+          // hello-world.mdx => hello-world
+          .replace(/\.mdx$/, ""),
+    },
+  },
+}))
+```
+
+Once the JSONs are generated, you will notice a new field, `slug`, added to the post -
+
+```json showLineNumbers {4}
+{
+  "_id": "posts/hello-world.mdx",
+  "title": "Hello World",
+  "slug": "hello-world",
+  "body": {
+    "raw": "\nHello world! This is my first post.\n",
+    "code": "var Component=(()=>{var sr=Object.create;..."
+  },
+  // [...]
+}
+```
+
+We can do a lot more with the `computedFields`. We will explore this in more detail in future posts.
+
+# Let's tie it all together
+
+Let's build a dynamic article page with the information available. The aim is to show the nicely formatted markdown content whenever the user navigates to the `<base_url>/blog/hello-world` page on the blog.
+
+Create the following folder structure in the root of the project directory -
+
+```txt showLineNumbers {5, 6}
+./
+└── app/
+    ├── blog/
+    │   ├── [slug]/
+    │   │   └── page.tsx
+    │   └── page.tsx
+    ├── layout.tsx
+    └── page.tsx
+```
+
+We will use the `page.tsx` on line 5 to show a dynamic article page and `page.tsx` on line 6 to display a list of all blog posts.
+
+## Blog Posts List
+
+Open up `./blog/page.tsx` in your code editor and add the following code -
+
+```jsx showLineNumbers
+import { allPosts, Post } from "contentlayer/generated"
+import Link from "next/link"
+
+export default function ListPage() {
+	// sort posts based on 'published' date
+	const posts: Post[] = allPosts.sort((a, b) => {
+    return compareDesc(new Date(a.published), new Date(b.published))
+  })
+
+  return (
+    <div>
+      <h1>Blog</h1>
+      {posts.map((post) => (
+        <div key={post.slug}>
+          <h2>
+            <Link href={`/blog/${post.slug}`}>{post.title}</Link>
+          </h2>
+        </div>
+      ))}
+    </div>
+  )
+}
+```
+
+## Article Page
+
+Once we click on any entry on the blog list page, it takes us to the `/blog/<slug>` page, where the content of the markdown file should be shown. Let's implement this functionality now -
+
+```jsx showLineNumbers
+import { allPosts, Post } from "contentlayer/generated"
+import { getMDXComponent } from "next-contentlayer/hooks"
+
+type Props = {
+  params: { slug: string }
+}
+
+export default async function Page({ params }: Props) {
+  const { slug } = params
+  const post: Post | undefined = allPosts.find((post) => post.slug === slug)
+  if (!post) {
+    return <></>
+  }
+
+  const MdxContent = getMDXComponent(post.body.code)
+
+  return (
+    <div>
+      <h1>{post.title}</h1>
+      <section>
+        <MdxContent />
+      </section>
+    </div>
+  )
+}
+```
+
+Contentlayer provides the `getMDXComponent` hook, which can render the `mdx` content on the page as HTML. Under the hood, our `mdx` file was transformed by Contentlayer using a bundler into `JSX` and cached in a JSON file, which was then picked up by NextJs to statically render using React.
+
+# Conclusion
+
+Contentlayer greatly abstracts away the intricacies of using MDX content inside a NextJs project by doing most of the heavy lifting for us. It simplifies working with `unified`, `remark` and `rehype` ecosystems while providing interfaces to define a schema to our relatively freeform MDX content and type-safe data structures to access the transformed content.
+
+It is also possible to pass custom MDX components to the `MdxContent` to enable the re-mapping of standard markdown constructs to React components. We will dive deeper into it in future posts of the series.
