@@ -1,5 +1,3 @@
-const path = require("path")
-const fsp = require("fs/promises")
 const { withContentlayer } = require("next-contentlayer")
 
 /** @type {import('next').NextConfig} */
@@ -13,7 +11,7 @@ const nextConfig = {
   },
   images: {
     formats: ["image/avif", "image/webp"],
-    // allow next/image to serve remote images from safelisted domains
+    // allow next/image to serve remote images from safe-listed domains
     remotePatterns: [
       {
         protocol: "https",
