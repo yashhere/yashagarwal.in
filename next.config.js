@@ -11,14 +11,6 @@ const nextConfig = {
   },
   images: {
     formats: ["image/avif", "image/webp"],
-    // allow next/image to serve remote images from safe-listed domains
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "res.cloudinary.com",
-        pathname: "/yashagarwal/**",
-      },
-    ],
   },
   headers() {
     return [

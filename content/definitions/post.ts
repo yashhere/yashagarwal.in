@@ -52,6 +52,7 @@ export const Post = defineDocumentType(() => ({
     published: { type: "string", required: true },
     updatedOn: { type: "string", required: false },
     description: { type: "string" },
+    image: { type: "string" },
     status: {
       type: "enum",
       options: ["draft", "published"],

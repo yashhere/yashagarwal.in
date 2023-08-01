@@ -1,4 +1,4 @@
-import { Metadata, ResolvingMetadata } from "next"
+import { Metadata } from "next"
 import localFont from "next/font/local"
 import { Analytics } from "@/components/analytics"
 import { Footer } from "@/components/footer"
@@ -6,8 +6,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { Navigation } from "@/components/ui/navigation"
 import { TailwindIndicator } from "@/components/ui/tailwind-indicator"
 import { siteConfig } from "@/config/site"
-import { createOgImageGeneral } from "@/lib/og/createOgImage"
-import { cn } from "@/lib/utils"
+import { cn, encodeParameter } from "@/lib/utils"
 
 import "@/styles/globals.css"
 
@@ -26,7 +25,9 @@ const monoFont = localFont({
 export async function generateMetadata(): Promise<Metadata> {
   const siteUrl: string = siteConfig.url
 
-  const newOgImage = createOgImageGeneral()
+  const newOgImage = `/og?title=${encodeParameter(
+    siteConfig.title
+  )}&meta=${encodeParameter(siteConfig.description)}`
 
   return {
     metadataBase: new URL(siteUrl),

@@ -29,7 +29,14 @@ export async function getPreviewPosts() {
   posts?.forEach(async (post) => {
     const metrics = allMetrics.find((item) => item.slug === post.slug)
     articles.push({
-      post: pick(post, ["title", "description", "published", "slug", "tags"]),
+      post: pick(post, [
+        "title",
+        "description",
+        "published",
+        "slug",
+        "tags",
+        "image",
+      ]),
       views: metrics?.views || 0,
       likes: metrics?.likes || 0,
     })

@@ -10,7 +10,6 @@ import { ViewCounter } from "@/components/view-counter"
 import { siteConfig } from "@/config/site"
 import { getLikes } from "@/lib/actions"
 import { getPartialPost, getPreviewPosts } from "@/lib/content"
-import { createOgImageForPost } from "@/lib/og/createOgImage"
 import { getSessionId } from "@/lib/server-utils"
 
 import "@/styles/mdx.css"
@@ -18,6 +17,7 @@ import "katex/dist/katex.css"
 
 import { GoToTop } from "@/components/go-to-top"
 import { TagList } from "@/components/tag-list"
+import { encodeParameter } from "@/lib/utils"
 import moment from "moment"
 import { getMDXComponent } from "next-contentlayer/hooks"
 
@@ -32,14 +32,17 @@ export async function generateMetadata(
   const previewPosts = await getPreviewPosts()
   const post = previewPosts.find((item) => item.post.slug === params.slug)?.post
   const siteUrl: string = siteConfig.url
-
   if (!post) {
     return {}
   }
 
   // access and extend (rather than replace) parent metadata
   const previousImages = (await parent).openGraph?.images || []
-  const newOgImage = createOgImageForPost({ post })
+  const newOgImage = post.image
+    ? `${post.image}`
+    : `/og?title=${encodeParameter(post.title)}&meta=${encodeParameter(
+        moment(post.published).format("MMMM DD, YYYY")
+      )}&tags=${post.tags.join("|")}`
 
   return {
     title: `${post.title} | Yash Agarwal`,
