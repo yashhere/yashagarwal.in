@@ -1,13 +1,7 @@
-import { siteConfig } from "@/config/site";
-import { sortPosts } from "@/lib/server-utils";
-import { encodeParameter } from "@/lib/utils";
-import { allPosts } from "contentlayer/generated";
-import { Feed } from "feed";
-import moment from "moment";
-
-
-
-
+import { siteConfig } from "@/config/site"
+import { sortPosts } from "@/lib/server-utils"
+import { allPosts } from "contentlayer/generated"
+import { Feed } from "feed"
 
 export async function getFeed() {
   const author = {
