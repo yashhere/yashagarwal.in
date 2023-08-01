@@ -15,9 +15,6 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const siteUrl: string = siteConfig.url
 
-  // access and extend (rather than replace) parent metadata
-  const previousImages = (await parent).openGraph?.images || []
-
   return {
     title: `${params.tag} | Yash Agarwal`,
     description: `All posts related to ${params.tag}`,
