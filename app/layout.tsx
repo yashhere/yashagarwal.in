@@ -54,7 +54,12 @@ export async function generateMetadata(): Promise<Metadata> {
       title: siteConfig.title,
       description: siteConfig.description,
       siteName: siteConfig.title,
-      images: [newOgImage],
+      images: {
+        width: 1200,
+        height: 630,
+        url: newOgImage,
+        type: "image/png",
+      },
       countryName: "India",
     },
     twitter: {

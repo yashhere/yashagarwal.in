@@ -4,6 +4,12 @@ import { decodeParameter } from "@/lib/utils"
 
 export const runtime = "edge"
 
+// Image metadata
+export const size = {
+  width: 1200,
+  height: 630,
+}
+
 export async function GET(req: NextRequest) {
   const { searchParams } = req.nextUrl
   const postTitle = decodeParameter(searchParams.get("title"))
@@ -74,8 +80,7 @@ export async function GET(req: NextRequest) {
       </div>
     ),
     {
-      width: 1200,
-      height: 630,
+      ...size,
       fonts: [
         {
           name: "Wotfard",
