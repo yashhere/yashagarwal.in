@@ -18,3 +18,15 @@ export function formatDate(input: string | number): string {
 export function absoluteUrl(path: string) {
   return `${siteConfig.url}${path}`
 }
+
+export function encodeParameter(str: string) {
+  return encodeURIComponent(str)
+}
+
+export function decodeParameter(str: string | null) {
+  if (str) {
+    return decodeURIComponent(str)
+  } else {
+    return
+  }
+}
