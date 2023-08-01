@@ -17,6 +17,7 @@ import "katex/dist/katex.css"
 
 import { GoToTop } from "@/components/go-to-top"
 import { TagList } from "@/components/tag-list"
+import Draft from "@/components/ui/draft"
 import { encodeParameter } from "@/lib/utils"
 import moment from "moment"
 import { getMDXComponent } from "next-contentlayer/hooks"
@@ -151,6 +152,8 @@ export default async function Page({ params }: Props) {
                 interactive={true}
               />
               <MdxContent components={CustomMDXComponents} />
+
+              {article.post.status === "draft" ? <Draft /> : null}
             </div>
           </div>
 
