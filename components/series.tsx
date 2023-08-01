@@ -15,7 +15,9 @@ const Title: FC<TitleProps> = ({ children }) => {
   return (
     <div>
       <div className="font-heading text-lg text-text">series</div>
-      <div className="text-lg font-bold">{children}</div>
+      <div className="flex flex-col text-lg font-bold sm:flex-row sm:space-x-2">
+        {children}
+      </div>
     </div>
   )
 }
@@ -41,10 +43,10 @@ export const Series = ({
           }}
         >
           <Title>
-            {series?.seriesTitle}
+            <span>{series?.seriesTitle}</span>
+            <span className="hidden sm:inline-block">&middot;</span>
             <span className="font-medium text-text">
-              {" "}
-              &middot; {index} of {series.posts?.length}
+              {index} of {series.posts?.length}
             </span>
           </Title>
 
