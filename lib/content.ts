@@ -16,7 +16,10 @@ export function getPosts() {
     return posts.filter((p) => {
       const currentTime = new Date()
       const publishedDate = new Date(p.published)
-      return p.status === "published" && currentTime >= publishedDate
+
+      // in production, all posts with publish date less than current time
+      // are included so that we can navigate to such posts from series menu.
+      return currentTime >= publishedDate
     })
   }
 }
@@ -27,19 +30,23 @@ export async function getPreviewPosts() {
 
   const articles: PostWithMetrics[] = []
   posts?.forEach(async (post) => {
-    const metrics = allMetrics.find((item) => item.slug === post.slug)
-    articles.push({
-      post: pick(post, [
-        "title",
-        "description",
-        "published",
-        "slug",
-        "tags",
-        "image",
-      ]),
-      views: metrics?.views || 0,
-      likes: metrics?.likes || 0,
-    })
+    // all posts with draft status are omitted from the blog list and popular
+    // list. These are navigable only from the series menu.
+    if (post.status === "published") {
+      const metrics = allMetrics.find((item) => item.slug === post.slug)
+      articles.push({
+        post: pick(post, [
+          "title",
+          "description",
+          "published",
+          "slug",
+          "tags",
+          "image",
+        ]),
+        views: metrics?.views || 0,
+        likes: metrics?.likes || 0,
+      })
+    }
   })
 
   return articles
