@@ -66,7 +66,12 @@ export async function generateMetadata(): Promise<Metadata> {
       card: "summary_large_image",
       title: siteConfig.title,
       description: siteConfig.description,
-      images: newOgImage,
+      images: {
+        width: 1200,
+        height: 630,
+        url: newOgImage,
+        type: "image/png",
+      },
       creator: "@yash__here",
       site: siteConfig.url,
     },

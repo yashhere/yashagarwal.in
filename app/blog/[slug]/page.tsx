@@ -67,7 +67,12 @@ export async function generateMetadata(
       description: post.description,
       card: "summary_large_image",
       creator: "@yash__here",
-      images: newOgImage,
+      images: {
+        width: 1200,
+        height: 630,
+        url: newOgImage,
+        type: "image/png",
+      },
       site: siteUrl,
     },
     openGraph: {
