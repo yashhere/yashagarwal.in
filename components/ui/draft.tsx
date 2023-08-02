@@ -12,7 +12,7 @@ export default function Draft({ children }: Props) {
         <div className="">
           <ImPencil className="h-28 w-28 text-tertiary" />
         </div>
-        <div className="text-7xl font-semibold text-secondary">
+        <div className="text-6xl font-semibold text-secondary sm:text-7xl">
           Work in Progress
         </div>
         <div className="mx-auto w-4/5 text-center text-2xl font-medium">
