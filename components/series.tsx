@@ -109,7 +109,12 @@ export const Series = ({
                     </Link>
                   )
                 ) : (
-                  <span className="text-text/50">Planned: {post.title}</span>
+                  <Link
+                    href={`/blog/${post.slug}`}
+                    className={cn("font-medium text-text/50 transition-all")}
+                  >
+                    Planned: {post.title}
+                  </Link>
                 )}
               </li>
             ))}
