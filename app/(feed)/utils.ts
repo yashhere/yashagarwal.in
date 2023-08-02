@@ -28,18 +28,20 @@ export async function getFeed() {
   })
 
   sortPosts(allPosts).forEach((post) => {
-    var converter = new showdown.Converter()
-    var html = converter.makeHtml(post.body.raw)
-    feed.addItem({
-      id: siteConfig.url + "/blog/" + post.slug,
-      title: post.title,
-      link: siteConfig.url + "/blog/" + post.slug,
-      description: post.description,
-      author: [author],
-      contributor: [author],
-      date: new Date(post.published),
-      content: html,
-    })
+    if (post.status === "published") {
+      var converter = new showdown.Converter()
+      var html = converter.makeHtml(post.body.raw)
+      feed.addItem({
+        id: siteConfig.url + "/blog/" + post.slug,
+        title: post.title,
+        link: siteConfig.url + "/blog/" + post.slug,
+        description: post.description,
+        author: [author],
+        contributor: [author],
+        date: new Date(post.published),
+        content: html,
+      })
+    }
   })
 
   return feed
