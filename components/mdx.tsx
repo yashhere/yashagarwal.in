@@ -6,6 +6,8 @@ import Link from "@/components/ui/link"
 import { cn } from "@/lib/utils"
 import { MDXComponents } from "mdx/types"
 
+import Draft from "./ui/draft"
+
 const BlogLink = (props) => {
   if (props.href.startsWith("#")) {
     return <a {...props} />
@@ -19,6 +21,7 @@ const BlogImage = (props) => {
 }
 
 const CustomMDXComponents: MDXComponents = {
+  Draft,
   a: BlogLink,
   pre: ({ children, ...props }) => (
     <pre className="mb-4 mt-6 rounded-t-xl bg-pre-bg pb-4 text-sm" {...props}>

@@ -1,13 +1,26 @@
-export default function Draft() {
+import { ReactNode } from "react"
+import { ImPencil } from "react-icons/im"
+
+interface Props {
+  children?: ReactNode
+}
+
+export default function Draft({ children }: Props) {
   return (
-    <div className="mt-32 flex flex-col gap-8 rounded border py-16 text-center shadow-sm">
-      <div className="text-7xl font-semibold text-secondary">
-        Work in Progress
+    <>
+      <div className="mt-16 flex flex-col items-center gap-8 rounded border bg-foreground py-16 text-center shadow-md">
+        <div className="">
+          <ImPencil className="h-28 w-28 text-tertiary" />
+        </div>
+        <div className="text-7xl font-semibold text-secondary">
+          Work in Progress
+        </div>
+        <div className="mx-auto w-4/5 text-center text-2xl font-medium">
+          I am still working on this article. It may be a good idea to come back
+          later.
+        </div>
       </div>
-      <p className="text-center text-xl font-medium">
-        I am still working on this article. <br />
-        It may be a good idea to come back later.
-      </p>
-    </div>
+      <div className="opacity-40">{children}</div>
+    </>
   )
 }
