@@ -2,6 +2,7 @@ import { siteConfig } from "@/config/site"
 import { sortPosts } from "@/lib/server-utils"
 import { allPosts } from "contentlayer/generated"
 import { Feed } from "feed"
+import showdown from "showdown"
 
 export async function getFeed() {
   const author = {
@@ -27,6 +28,8 @@ export async function getFeed() {
   })
 
   sortPosts(allPosts).forEach((post) => {
+    var converter = new showdown.Converter()
+    var html = converter.makeHtml(post.body.raw)
     feed.addItem({
       id: siteConfig.url + "/blog/" + post.slug,
       title: post.title,
@@ -35,6 +38,7 @@ export async function getFeed() {
       author: [author],
       contributor: [author],
       date: new Date(post.published),
+      content: html,
     })
   })
 
