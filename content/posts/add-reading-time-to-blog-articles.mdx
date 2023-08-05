@@ -1,6 +1,6 @@
 ---
 title: Add reading time to blog articles
-published: 2023-08-05T15:15:24.000Z
+published: 2023-08-05T23:25:24.000Z
 status: published
 series:
   order: 3
@@ -9,7 +9,7 @@ tags:
   - Blog Setup
   - Development
   - NextJs
-updatedOn: 2023-08-03T13:03:08.000Z
+updatedOn: 2023-08-05T17:50:56.000Z
 ---
 
 This article will show how to add estimated reading time to your posts. This is pretty easy to achieve with Contentlayer’s computed fields.
@@ -28,17 +28,17 @@ We can come up with our own [algorithm](https://www.freecodecamp.org/news/how-to
 1. [reading-time](https://www.npmjs.com/package/reading-time)
 2. [read-time-estimate](https://github.com/pritishvaidya/read-time-estimate)
 
-`read-time-estimate` appears to be a more complete package also taking image read times into consideration, but I am not sure if it is meant as a ready-to-use package. At least I couldn’t get it to work with my setup. So, I decided to go with `reading-time`, a far more popular and supported package.
+`read-time-estimate` appears to be a more complete package that also takes image read times into consideration, but I am not sure if it is meant as a ready-to-use package. At least I couldn’t get it to work with my setup. So, I decided to go with `reading-time`, a far more popular package.
 
 # Adding a new computed field
 
-After finalising the package to use, it’s time to install it. I use `yarn`, so I will use it to install the package. You can find a similar command for your package manager.
+After finalising the package to use, it’s time to install it. I will use `yarn` to install the package. You can find a similar command for your package manager.
 
 ```bash
 yarn add -D reading-time
 ```
 
-This will install `reading-time` as a dev-dependency in our project, which is acceptable given that we will only be utilising this package at build time.
+This will install `reading-time` as a dev-dependency in our project, which is fine given that we will only be utilising this package at build time.
 
 Once installed, it is time to import and use it in the `contentlayer.config.js` -
 
@@ -110,7 +110,7 @@ In the generated JSON files, we will have the `readingTime` property available f
 }
 ```
 
-To use it in the component, we can use the `post.readingTime.minutes` property to show the time-to-read, something like this (where `post` contains the JSON data shown above) -
+To use it in the component, we can use the `post.readingTime.minutes` property to show the time-to-read, something like this (here `post` contains the JSON data shown above) -
 
 ```html
 <p>
