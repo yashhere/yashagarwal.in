@@ -30,7 +30,7 @@ export const TableOfContents = ({ headings, path, interactive }) => {
 
   return (
     <>
-      <div className="shadow-surface-elevation-low mb-8 rounded border-2 bg-transparent px-5 py-2 lg:px-8 lg:py-3">
+      <div>
         {interactive ? (
           <button
             className="group flex w-full items-center text-left"
@@ -38,7 +38,7 @@ export const TableOfContents = ({ headings, path, interactive }) => {
               setIsOpen(!isOpen)
             }}
           >
-            <div className="font-heading text-lg font-bold uppercase tracking-widest text-secondary ">
+            <div className="font-heading text-lg font-bold">
               Table of Contents
             </div>
 
@@ -53,10 +53,11 @@ export const TableOfContents = ({ headings, path, interactive }) => {
             </div>
           </button>
         ) : (
-          <div className="font-heading text-lg font-bold uppercase tracking-widest text-secondary ">
+          <div className="font-heading text-lg font-bold">
             Table of Contents
           </div>
         )}
+        <hr className="border-t-1 my-4 border-gray-300/60" />
         {isOpen && (
           <motion.div
             initial="collapsed"
@@ -74,7 +75,7 @@ export const TableOfContents = ({ headings, path, interactive }) => {
               },
             }}
           >
-            <div>
+            <div className="ml-2">
               {headings.map((heading) => (
                 <div
                   key={heading.slug}
@@ -84,11 +85,16 @@ export const TableOfContents = ({ headings, path, interactive }) => {
                     "ml-14": heading.heading === 4,
                   })}
                 >
-                  <Link href={`#${heading.slug}`} className="text-lg text-text">
+                  <Link
+                    noUnderline
+                    href={`#${heading.slug}`}
+                    className="text-lg text-text/80 hover:text-primary"
+                  >
                     {heading.text}
                   </Link>
                 </div>
               ))}
+              <hr className="border-t-1 my-4 border-gray-300/60" />
             </div>
           </motion.div>
         )}

@@ -30,7 +30,7 @@ const ExternalLink = forwardRef<HTMLAnchorElement, ExternalLinkProps>(
       children,
       underline,
       noUnderline,
-      noExternalLinkIcon = false,
+      noExternalLinkIcon = true,
       icon,
       ...otherProps
     }: ExternalLinkProps,

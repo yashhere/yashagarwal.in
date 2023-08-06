@@ -8,6 +8,7 @@ export function ViewCounter({
   slug,
   metrics,
   track,
+  show,
 }: {
   slug: string
   metrics: {
@@ -16,6 +17,7 @@ export function ViewCounter({
     likes: number
   }
   track?: boolean
+  show?: boolean
 }) {
   const views = new Number(metrics?.views || 0)
 
@@ -25,5 +27,9 @@ export function ViewCounter({
     }
   }, [slug, track])
 
-  return <Metric stat={views.toString()} type={"views"} />
+  if (!show) {
+    return null
+  } else {
+    return <Metric stat={views.toString()} type={"views"} />
+  }
 }

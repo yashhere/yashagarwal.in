@@ -3,7 +3,6 @@ import { Metadata, ResolvingMetadata } from "next"
 import { Comments } from "@/components/comments"
 import { LikeButton } from "@/components/like-button"
 import CustomMDXComponents from "@/components/mdx"
-import { Metric } from "@/components/metrics/metric"
 import { Series } from "@/components/series"
 import { TableOfContents } from "@/components/table-of-contents"
 import { ViewCounter } from "@/components/view-counter"
@@ -122,37 +121,52 @@ export default async function Page({ params }: Props) {
           <h1 className="relative max-w-4xl pb-2 font-heading text-4xl font-bold leading-none sm:text-5xl">
             {article.post.title}
           </h1>
-          <div className="text-md mt-2 flex space-x-2 font-body font-semibold text-gray-600 sm:text-lg">
-            <p>{moment(article.post.published).format("MMM DD, YYYY")}</p>
-            <p>&middot;</p>
-            <ViewCounter slug={slug} metrics={metrics} track={true} />
-            <p>&middot;</p>
-            <Metric stat={article.likes.toString()} type={"likes"} />
+          {article.post.description ? (
+            <>
+              <h3 className="relative mt-4 max-w-4xl pb-2 font-heading text-lg font-normal leading-relaxed text-text/70">
+                {article.post.description}
+              </h3>
+              <hr className="border-t-1 my-4 border-gray-300/60" />
+            </>
+          ) : null}
+          <div className="mt-2 flex flex-col font-body text-base text-gray-600 sm:flex-row sm:justify-between">
+            <p>Planted about {moment(article.post.published).fromNow()}</p>
+            {article.post.updatedOn ? (
+              <p>
+                Last tended about {moment(article.post.updatedOn).fromNow()}
+              </p>
+            ) : null}
           </div>
-          <div className="text-md mt-2 flex space-x-2 font-body font-semibold text-gray-600 sm:text-lg">
-            <p>
-              Time to read: {Math.round(article.post.readingTime.minutes)} mins
-            </p>
-          </div>
+          <ViewCounter
+            slug={slug}
+            metrics={metrics}
+            track={true}
+            show={false}
+          />
           <TagList tags={article.post.tags} />
+          <hr className="border-t-1 my-4 border-gray-300/60" />
         </section>
 
         <Suspense fallback={<div>Loading...</div>}>
-          {/* Post Series */}
           {article.series ? (
-            <Series series={article.series} interactive={true} current={slug} />
+            <>
+              <Series
+                series={article.series}
+                interactive={true}
+                current={slug}
+              />
+            </>
           ) : null}
 
-          {/* Post Content */}
+          <TableOfContents
+            headings={article.post.headings}
+            path={`/blog/${article.post.slug}`}
+            interactive={true}
+          />
+
           <div className="pt-4">
             <div className="prose prose-article text-lg leading-7 md:prose-lg lg:prose-xl prose-headings:cursor-pointer prose-h1:mb-4 prose-h1:mt-16 prose-h2:mb-4 prose-h2:mt-16 prose-h3:my-8 prose-p:my-4 prose-th:cursor-auto">
-              <TableOfContents
-                headings={article.post.headings}
-                path={`/blog/${article.post.slug}`}
-                interactive={true}
-              />
               <MdxContent components={CustomMDXComponents} />
-
               {article.post.status === "draft" ? <Draft /> : null}
             </div>
           </div>
@@ -166,7 +180,6 @@ export default async function Page({ params }: Props) {
             />
           </div>
 
-          {/* Post Series */}
           {article.series ? (
             <div className="py-8">
               <Series
