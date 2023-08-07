@@ -15,6 +15,7 @@ import { GoToTop } from "@/components/go-to-top"
 import { TagList } from "@/components/tag-list"
 import Draft from "@/components/ui/draft"
 import Link from "@/components/ui/link"
+import SectionTitle from "@/components/ui/section-title"
 import { env } from "@/env.mjs"
 import { encodeParameter } from "@/lib/utils"
 import moment from "moment"
@@ -117,9 +118,7 @@ export default async function Page({ params }: Props) {
     <>
       <div className="space-y-4">
         <section>
-          <h1 className="relative pb-2 font-heading text-4xl font-bold leading-none sm:text-5xl">
-            {article.post.title}
-          </h1>
+          <SectionTitle data={null} title={article.post.title} />
           {article.post.description ? (
             <>
               <h3 className="relative mt-4 pb-2 font-heading text-lg font-normal leading-relaxed text-text/70">
@@ -164,7 +163,7 @@ export default async function Page({ params }: Props) {
           />
 
           <div className="py-8">
-            <div className="prose prose-article text-lg leading-7 md:prose-lg lg:prose-xl prose-headings:cursor-pointer prose-h1:mb-4 prose-h1:mt-16 prose-h2:mb-4 prose-h2:mt-16 prose-h3:my-8 prose-p:my-4 prose-th:cursor-auto">
+            <div className="prose prose-article text-lg leading-8 prose-headings:cursor-pointer prose-h1:mt-16 prose-h1:text-4xl prose-h2:mt-8 prose-h2:text-3xl prose-h3:mt-8 prose-h3:text-2xl prose-h4:text-xl prose-p:mt-8 prose-th:cursor-auto">
               <MdxContent components={CustomMDXComponents} />
               {article.post.status === "draft" ? <Draft /> : null}
             </div>

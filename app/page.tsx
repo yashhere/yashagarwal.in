@@ -1,5 +1,6 @@
 import { RecentPosts } from "@/components/recent-posts"
 import Link from "@/components/ui/link"
+import SectionTitle from "@/components/ui/section-title"
 import { siteConfig } from "@/config/site"
 import { ArrowRightIcon } from "@heroicons/react/24/solid"
 
@@ -7,27 +8,24 @@ export default async function Page() {
   return (
     <>
       <section className="flex flex-col justify-start">
-        <h1 className="my-8 text-4xl font-semibold tracking-tight sm:mt-4">
-          Namaste, fellow wanderer 👋
-        </h1>
-        <div className="prose prose-article text-xl leading-8 text-text">
-          <p>Welcome to my nest on the internet!</p>
+        <SectionTitle data={null} title="Namaste, fellow wanderer 👋" />
+        <div className="prose prose-article text-lg leading-8 text-text">
+          <p>Welcome to my little corner of the internet!</p>
           <p>
-            Let me tell you{" "}
+            You should read{" "}
             <Link href="/blog/how-i-built-a-blog-with-nextjs">how</Link> I built
-            this blog <br />
-            Or perhaps I should <Link href="/about">introduce</Link> myself
-            first?
+            this blog, but perhaps I should <Link href="/about">introduce</Link>{" "}
+            myself first.
           </p>
           <p>
             This is perhaps the 6th-edition of my personal website in seven
             years. The I&apos;m-actually-going-to-write-this-time-edition. The
-            last edition had a complex writing workflow which eventually led to
-            my{" "}
+            last edition of this website had a complex writing workflow which
+            eventually led to my{" "}
             <Link href="/blog/2021-a-bullish-year#blogging-and-writing">
               negligence
             </Link>{" "}
-            to actually write (!). Not this time. Of course, that&apos;s what I
+            to actually write! Not this time. Of course, that&apos;s what I
             always say 😈.
           </p>
           <p>
@@ -37,13 +35,13 @@ export default async function Page() {
           <br />
         </div>
       </section>
-      <section className="mt-8 flex flex-col justify-start">
+      <section className="flex flex-col justify-start">
         <RecentPosts count={siteConfig.recentPosts} />
         <Link
           href="/blog"
           className="group mt-8 flex items-center justify-start space-x-2 text-lg font-bold hover:text-primary"
         >
-          <span>All Posts</span>
+          <span>Writings</span>
           <ArrowRightIcon className="h-4 w-4 transition duration-200 group-hover:translate-x-1" />
         </Link>
       </section>
