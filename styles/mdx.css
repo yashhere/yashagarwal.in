@@ -1,66 +1,65 @@
 .prose .anchor {
-  @apply invisible absolute no-underline;
-
-  margin-left: 0.3em;
-  cursor: pointer;
+    @apply invisible absolute no-underline;
+    cursor: pointer;
+    margin-left: 0.3em;
 }
 
 .anchor:hover {
-  @apply visible;
+    @apply visible;
 }
 
 .prose .anchor:after {
-  @apply text-tertiary;
-  content: "#";
+    @apply text-tertiary;
+    content: "#";
 }
 
-.prose *:hover > .anchor {
-  @apply visible;
+.prose *:hover>.anchor {
+    @apply visible;
 }
 
 [data-rehype-pretty-code-fragment] code {
-  @apply mt-4 grid min-w-full break-words rounded-none border-0 bg-transparent p-0;
-  counter-reset: line;
-  box-decoration-break: clone;
+    @apply grid min-w-full break-words rounded-none border-0 bg-transparent p-0;
+    box-decoration-break: clone;
+    counter-reset: line;
 }
 
 [data-rehype-pretty-code-fragment] [data-line] {
-  @apply px-4 py-1;
-  margin-right: 1rem;
+    @apply px-4 py-1;
+    margin-right: 1rem;
 }
 
-[data-rehype-pretty-code-fragment] [data-line-numbers] > [data-line]::before {
-  counter-increment: line;
-  content: counter(line);
-  display: inline-block;
-  width: 1rem;
-  margin-right: 1rem;
-  text-align: right;
-  @apply text-gray-400;
+[data-rehype-pretty-code-fragment] [data-line-numbers]>[data-line]::before {
+    counter-increment: line;
+    content: counter(line);
+    display: inline-block;
+    width: 1rem;
+    margin-right: 1rem;
+    text-align: right;
+    @apply text-gray-400;
 }
 
 [data-rehype-pretty-code-fragment] [data-highlighted-line] {
-@apply bg-code-bg bg-opacity-10 w-full;
+    @apply bg-code-bg bg-opacity-10 w-full;
 }
 
 [data-rehype-pretty-code-fragment] [data-highlighted-line] span {
-  @apply relative;
+    @apply relative;
 }
 
 [data-rehype-pretty-code-fragment] [data-highlighted-chars] {
-  @apply rounded-md bg-code-bg bg-opacity-10 p-1;
+    @apply rounded-md bg-code-bg bg-opacity-10 p-1;
 }
 
 [data-rehype-pretty-code-fragment] [data-rehype-pretty-code-title] {
-  @apply mt-4 w-4 bg-code-bg px-2 py-1 text-lg font-medium;
+    @apply relative flex w-full justify-between bg-pre-bg px-4 py-2 text-base font-mono text-white/90;
 }
 
 [data-rehype-pretty-code-fragment] .code-header {
-  @apply relative flex w-full justify-between rounded-t-xl bg-code-bg px-4 py-2 text-sm font-semibold text-white/90;
+    @apply relative flex w-full justify-between rounded-t-xl bg-code-bg px-4 py-2 text-base font-semibold text-white/90;
 }
 
-[data-rehype-pretty-code-title] + pre {
-  @apply mt-0;
+[data-rehype-pretty-code-title]+pre {
+    @apply mt-0;
 }
 
 .img-blur {
