@@ -1,4 +1,4 @@
-import { TopPosts } from "@/components/top-posts"
+import { RecentPosts } from "@/components/recent-posts"
 import Link from "@/components/ui/link"
 import { siteConfig } from "@/config/site"
 import { ArrowRightIcon } from "@heroicons/react/24/solid"
@@ -28,10 +28,7 @@ export default async function Page() {
         </div>
       </section>
       <section className="mt-8 flex flex-col justify-start">
-        <h2 className="pb-4 font-heading text-xl font-bold uppercase tracking-widest text-secondary">
-          Popular posts
-        </h2>
-        <TopPosts count={siteConfig.popularPosts} />
+        <RecentPosts count={siteConfig.recentPosts} />
         <Link
           href="/blog"
           className="group mt-8 flex items-center justify-start space-x-2 text-xl font-bold hover:text-primary"

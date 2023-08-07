@@ -11,5 +11,9 @@ export const Comments = () => {
 
   useGiscus({ mapping: MAPPING, commentNodeId: inView ? COMMENTS_NODE_ID : "" })
 
-  return <div ref={ref}>{inView ? <div id={COMMENTS_NODE_ID} /> : null}</div>
+  return (
+    <div ref={ref}>
+      {inView ? <div id={COMMENTS_NODE_ID} className="pt-8" /> : null}
+    </div>
+  )
 }

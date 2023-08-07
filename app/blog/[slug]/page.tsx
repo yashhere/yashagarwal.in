@@ -1,15 +1,12 @@
 import { Suspense } from "react"
 import { Metadata, ResolvingMetadata } from "next"
 import { Comments } from "@/components/comments"
-import { LikeButton } from "@/components/like-button"
 import CustomMDXComponents from "@/components/mdx"
 import { Series } from "@/components/series"
 import { TableOfContents } from "@/components/table-of-contents"
 import { ViewCounter } from "@/components/view-counter"
 import { siteConfig } from "@/config/site"
-import { getLikes } from "@/lib/actions"
 import { getPartialPost, getPreviewPosts } from "@/lib/content"
-import { getSessionId } from "@/lib/server-utils"
 
 import "@/styles/mdx.css"
 import "katex/dist/katex.css"
@@ -17,6 +14,8 @@ import "katex/dist/katex.css"
 import { GoToTop } from "@/components/go-to-top"
 import { TagList } from "@/components/tag-list"
 import Draft from "@/components/ui/draft"
+import Link from "@/components/ui/link"
+import { env } from "@/env.mjs"
 import { encodeParameter } from "@/lib/utils"
 import moment from "moment"
 import { getMDXComponent } from "next-contentlayer/hooks"
@@ -105,9 +104,9 @@ export default async function Page({ params }: Props) {
     return <></>
   }
   const MdxContent = getMDXComponent(article.post.body.code)
-  const sessionId = getSessionId(slug)
-  let [totalLikes, userLikes] = await getLikes(slug, sessionId)
-
+  const encodedUrl = encodeParameter(
+    `${env.NEXT_PUBLIC_APP_URL}/blog/${article.post.slug}`
+  )
   const metrics = {
     slug: article.post.slug as string,
     likes: article.likes as number,
@@ -164,33 +163,25 @@ export default async function Page({ params }: Props) {
             interactive={true}
           />
 
-          <div className="pt-4">
+          <div className="py-8">
             <div className="prose prose-article text-lg leading-7 md:prose-lg lg:prose-xl prose-headings:cursor-pointer prose-h1:mb-4 prose-h1:mt-16 prose-h2:mb-4 prose-h2:mt-16 prose-h3:my-8 prose-p:my-4 prose-th:cursor-auto">
               <MdxContent components={CustomMDXComponents} />
               {article.post.status === "draft" ? <Draft /> : null}
             </div>
           </div>
 
-          <div className="py-8">
-            <LikeButton
-              slug={slug}
-              sessionId={sessionId}
-              totalLikes={totalLikes}
-              userLikes={userLikes}
-            />
+          <hr className="border-t-1 border-gray-300/60" />
+          <div className="flex flex-col items-center justify-center space-x-2 space-y-4 py-8 sm:flex-row sm:justify-between sm:space-y-0">
+            <Link
+              href={`https://twitter.com/intent/tweet?text=${encodedUrl}%20via%20%40yash__here`}
+              className="text-lg text-primary"
+              noUnderline
+            >
+              <span className="text-text/80">Share this article on</span>{" "}
+              <span>Twitter</span>
+            </Link>
+            <GoToTop slug={slug} />
           </div>
-
-          {article.series ? (
-            <div className="py-8">
-              <Series
-                series={article.series}
-                interactive={true}
-                current={slug}
-              />
-            </div>
-          ) : null}
-
-          <GoToTop slug={slug} />
 
           <hr className="border-t-1 border-gray-300/60" />
 

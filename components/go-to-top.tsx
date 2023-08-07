@@ -6,9 +6,9 @@ export function GoToTop({ slug }: { slug: string }) {
   const path = `/blog/${slug}`
   const router = useRouter()
   return (
-    <div className="flex items-center justify-center pb-4">
+    <div>
       <button
-        className="text-lg text-primary no-underline transition duration-200 hover:underline hover:underline-offset-8"
+        className="text-lg text-primary"
         onClick={() => {
           window.scrollTo({ top: 0 })
           router.push(path)
