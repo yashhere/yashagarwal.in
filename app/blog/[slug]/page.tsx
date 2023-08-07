@@ -117,12 +117,12 @@ export default async function Page({ params }: Props) {
     <>
       <div className="space-y-4">
         <section>
-          <h1 className="relative max-w-4xl pb-2 font-heading text-4xl font-bold leading-none sm:text-5xl">
+          <h1 className="relative pb-2 font-heading text-4xl font-bold leading-none sm:text-5xl">
             {article.post.title}
           </h1>
           {article.post.description ? (
             <>
-              <h3 className="relative mt-4 max-w-4xl pb-2 font-heading text-lg font-normal leading-relaxed text-text/70">
+              <h3 className="relative mt-4 pb-2 font-heading text-lg font-normal leading-relaxed text-text/70">
                 {article.post.description}
               </h3>
               <hr className="border-t-1 my-4 border-gray-300/60" />
