@@ -79,7 +79,7 @@ export const TableOfContents = ({ headings, path, interactive }) => {
               {headings.map((heading) => (
                 <div
                   key={heading.slug}
-                  className={cn("line-clamp-1 sm:line-clamp-none", {
+                  className={cn("my-3 line-clamp-1 sm:line-clamp-none", {
                     "ml-5": heading.heading === 2,
                     "ml-9": heading.heading === 3,
                     "ml-14": heading.heading === 4,
