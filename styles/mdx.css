@@ -1,10 +1,12 @@
 .prose .anchor {
-    @apply invisible absolute no-underline;
+    /* Trying to replicate prose-headings because the link tag styles take
+       precedence
+    */
+    @apply font-bold no-underline text-tertiary;
     cursor: pointer;
-    margin-left: 0.3em;
 }
 
-.anchor:hover {
+/* .anchor:hover {
     @apply visible;
 }
 
@@ -16,6 +18,7 @@
 .prose *:hover>.anchor {
     @apply visible;
 }
+*/
 
 [data-rehype-pretty-code-fragment] code {
     @apply grid min-w-full break-words rounded-none border-0 bg-transparent p-0;

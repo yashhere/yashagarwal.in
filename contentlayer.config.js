@@ -25,7 +25,7 @@ export default makeSource({
       [
         rehypeAutolinkHeadings,
         {
-          behaviour: "append",
+          behaviour: "wrap",
           properties: {
             className: ["anchor"],
           },
