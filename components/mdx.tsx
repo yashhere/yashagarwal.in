@@ -24,15 +24,14 @@ const CustomMDXComponents: MDXComponents = {
   Draft,
   a: BlogLink,
   pre: ({ children, ...props }) => (
-    <pre className="mb-4 mt-6 rounded-t-xl bg-pre-bg pb-4 text-sm" {...props}>
-      <div className={"code-header"}>{props["data-language"]}</div>
+    <pre className="mb-4 mt-6 bg-pre-bg py-4 text-base" {...props}>
       {children}
     </pre>
   ),
   code: ({ className, ...props }) => (
     <code
       className={cn(
-        "relative overflow-x-auto break-words rounded bg-code-bg p-[0.3rem] text-sm",
+        "relative overflow-x-auto break-words rounded bg-code-bg p-[0.3rem] text-base",
         className
       )}
       {...props}

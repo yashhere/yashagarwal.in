@@ -1,9 +1,8 @@
 import { Suspense } from "react"
-import { Metric } from "@/components/metrics/metric"
-import Link from "@/components/ui/link"
-import { PostPreviewLoading } from "@/components/ui/post-preview-loading"
 import { getPreviewPosts } from "@/lib/content"
-import moment from "moment"
+
+import { PostList } from "./article-list"
+import { PostListLoading } from "./blog-list"
 
 export async function TopPosts({ count }: { count: number }) {
   let articles = await getPreviewPosts()
@@ -12,31 +11,14 @@ export async function TopPosts({ count }: { count: number }) {
 
   return (
     <>
-      {articles?.map((item) => {
-        return (
-          <Suspense key={item.post.slug} fallback={<PostPreviewLoading />}>
-            <Link
-              href={`/blog/${item.post.slug}`}
-              className="transition-all [&_h4]:hover:text-primary"
-            >
-              <div className="flex h-full flex-col justify-between rounded-lg">
-                <div className="mb-6">
-                  <h3 className="w-full font-heading text-lg font-bold">
-                    {item.post.title}
-                  </h3>
-                  <div className="flex space-x-2 text-sm font-medium text-gray-600">
-                    <p>{moment(item.post.published).fromNow()}</p>
-                    <p>&middot;</p>
-                    <Metric stat={item.views.toString()} type="views" />
-                    <p>&middot;</p>
-                    <Metric stat={item.likes.toString()} type="likes" />
-                  </div>
-                </div>
-              </div>
-            </Link>
-          </Suspense>
-        )
-      })}
+      <h2 className="pb-4 font-heading text-xl font-bold uppercase tracking-widest text-secondary">
+        Popular posts
+      </h2>
+      <section className="w-full space-y-3">
+        <Suspense fallback={<PostListLoading articles={articles} />}>
+          <PostList articles={articles} />
+        </Suspense>
+      </section>
     </>
   )
 }

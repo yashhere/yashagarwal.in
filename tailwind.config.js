@@ -1,4 +1,4 @@
-const disabledCss = {
+const customCss = {
   "code::before": false,
   "code::after": false,
   pre: false,
@@ -94,11 +94,11 @@ module.exports = {
             "--tw-prose-td-borders": theme("colors.gray[200]"),
           },
         },
-        DEFAULT: { css: disabledCss },
-        sm: { css: disabledCss },
-        lg: { css: disabledCss },
-        xl: { css: disabledCss },
-        "2xl": { css: disabledCss },
+        DEFAULT: { css: customCss },
+        sm: { css: customCss },
+        lg: { css: customCss },
+        xl: { css: customCss },
+        "2xl": { css: customCss },
       }),
     },
   },

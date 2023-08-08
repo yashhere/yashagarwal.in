@@ -14,8 +14,8 @@ type TitleProps = {
 const Title: FC<TitleProps> = ({ children }) => {
   return (
     <div>
-      <div className="font-heading text-lg text-text">series</div>
-      <div className="flex flex-col text-lg font-bold sm:flex-row sm:space-x-2">
+      <div className="font-heading text-base text-text">series</div>
+      <div className="flex flex-col justify-start text-lg sm:flex-row sm:items-center sm:space-x-2">
         {children}
       </div>
     </div>
@@ -34,18 +34,18 @@ export const Series = ({
   const index = series.posts?.findIndex((post) => post?.isCurrent) + 1
 
   return (
-    <div className="shadow-surface-elevation-low rounded bg-muted px-5 py-4 lg:px-8 lg:py-5">
+    <div>
       {interactive ? (
         <button
-          className="items center group flex w-full items-center text-left"
+          className="group flex w-full items-center text-left"
           onClick={() => {
             setIsOpen(!isOpen)
           }}
         >
           <Title>
-            <span>{series?.seriesTitle}</span>
+            <span className="font-bold">{series?.seriesTitle}</span>
             <span className="hidden sm:inline-block">&middot;</span>
-            <span className="font-medium text-text">
+            <span className="text-base text-text">
               {index} of {series.posts?.length}
             </span>
           </Title>
@@ -63,6 +63,7 @@ export const Series = ({
       ) : (
         <Title>{series.seriesTitle}</Title>
       )}
+      <hr className="border-t-1 my-4 border-gray-300/60" />
       {isOpen && (
         <motion.div
           initial="collapsed"
@@ -80,9 +81,7 @@ export const Series = ({
             },
           }}
         >
-          <hr className="my-5 border-t-2 border-gray-600/30" />
-
-          <ul className="text-base">
+          <ul className="text-lg">
             {series.posts?.map((post) => (
               <li
                 key={post.slug}
@@ -119,6 +118,7 @@ export const Series = ({
               </li>
             ))}
           </ul>
+          <hr className="border-t-1 my-4 border-gray-300/60" />
         </motion.div>
       )}
     </div>

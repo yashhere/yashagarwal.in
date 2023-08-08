@@ -21,4 +21,5 @@ export const siteConfig: SiteConfig = {
     darkTheme: "dark",
   },
   popularPosts: 3,
+  recentPosts: 5,
 }

@@ -29,7 +29,7 @@ const CustomImage = forwardRef<HTMLImageElement, CustomImageProps>(
     const [isLoading, setLoading] = useState(true)
 
     return (
-      <figure className="group relative mb-5 block w-full break-inside-avoid-column text-center drop-shadow-xl">
+      <figure className="group relative mb-8 block w-full break-inside-avoid-column text-center drop-shadow-xl">
         <Image
           className={cn("rounded-lg", isLoading ? "img-blur" : "img-unblur")}
           onLoadingComplete={() => setLoading(false)}

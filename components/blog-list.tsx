@@ -53,7 +53,7 @@ export const BlogPostList = ({
           <SearchInput search={search} onChange={onChange} />
         </div>
       ) : null}
-      <section className="w-full space-y-5">
+      <section className="w-full space-y-4">
         <Suspense fallback={<PostListLoading articles={articles} />}>
           <PostList articles={articles} />
         </Suspense>

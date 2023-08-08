@@ -18,6 +18,7 @@ export type SiteConfig = {
     darkTheme: string
   }
   popularPosts: number
+  recentPosts: number
 }
 
 export type PostWithMetrics = {

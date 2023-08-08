@@ -24,16 +24,8 @@ export default async function Page() {
 
   return (
     <>
-      <section className="pb-8">
-        <SectionTitle data={articles} title="Blog" />
-        <div className="text-lg text-text">
-          <p>
-            Since April 2016, I&apos;ve penned {articles.length} articles across
-            diverse categories. From tech knowledge and life updates to year
-            reviews and travelogues, there&apos;s a little something on every
-            topic.
-          </p>
-        </div>
+      <section>
+        <SectionTitle data={articles} title="Writing" />
       </section>
       <BlogPostList articles={articles} />
     </>

@@ -1,5 +1,6 @@
-import { TopPosts } from "@/components/top-posts"
+import { RecentPosts } from "@/components/recent-posts"
 import Link from "@/components/ui/link"
+import SectionTitle from "@/components/ui/section-title"
 import { siteConfig } from "@/config/site"
 import { ArrowRightIcon } from "@heroicons/react/24/solid"
 
@@ -7,36 +8,40 @@ export default async function Page() {
   return (
     <>
       <section className="flex flex-col justify-start">
-        <h1 className="my-8 text-4xl font-bold tracking-tighter sm:mt-4">
-          hey, I&apos;m Yash 👋
-        </h1>
-        <div className="prose prose-article text-xl leading-7 text-text">
-          <p>Welcome to my digital home!</p>
+        <SectionTitle data={null} title="Namaste, fellow wanderer 👋" />
+        <div className="prose prose-article text-lg leading-8 text-text">
+          <p>Welcome to my little corner of the internet!</p>
           <p>
-            I&apos;m a software engineer with a knack for exploring technology
-            and expressing myself through writing.
+            You should read{" "}
+            <Link href="/blog/how-i-built-a-blog-with-nextjs">how</Link> I built
+            this blog, but perhaps I should <Link href="/about">introduce</Link>{" "}
+            myself first.
           </p>
           <p>
-            This blog is my little oasis, where ideas bloom and stories take
-            root. Here, you&apos;ll find a collection of personal anecdotes,
-            occasional tech insights, and experiments that fuel my curiosity.
-            Step inside, explore, and don&apos;t forget to check out my most
-            popular posts below.
+            This is perhaps the 6th-edition of my personal website in seven
+            years. The I&apos;m-actually-going-to-write-this-time-edition. The
+            last edition of this website had a complex writing workflow which
+            eventually led to my{" "}
+            <Link href="/blog/2021-a-bullish-year#blogging-and-writing">
+              negligence
+            </Link>{" "}
+            to actually write! Not this time. Of course, that&apos;s what I
+            always say 😈.
           </p>
-          <p>Happy reading! 🚀</p>
+          <p>
+            So, till the time I abandon this version in favor of a new edition
+            of my blog, keep reading and sharing! 🚀
+          </p>
           <br />
         </div>
       </section>
-      <section className="mt-8 flex flex-col justify-start">
-        <h2 className="pb-4 font-heading text-xl font-bold uppercase tracking-widest text-secondary">
-          Popular posts
-        </h2>
-        <TopPosts count={siteConfig.popularPosts} />
+      <section className="flex flex-col justify-start">
+        <RecentPosts count={siteConfig.recentPosts} />
         <Link
           href="/blog"
-          className="group mt-8 flex items-center justify-start space-x-2 text-xl font-bold hover:text-primary"
+          className="group flex items-center justify-start space-x-2 text-lg font-bold hover:text-primary"
         >
-          <span>All Posts</span>
+          <span>Writings</span>
           <ArrowRightIcon className="h-4 w-4 transition duration-200 group-hover:translate-x-1" />
         </Link>
       </section>

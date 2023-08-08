@@ -112,14 +112,14 @@ export default function RootLayout({ children }: RootLayoutProps) {
         className={cn(
           "min-h-screen font-body antialiased",
           "bg-background text-text",
-          "mx-4 mb-40 mt-8 flex max-w-4xl flex-col md:mt-20 md:flex-row lg:mx-auto lg:mt-32",
+          "mx-4 mb-40 mt-8 flex max-w-6xl flex-col md:flex-row lg:mx-auto",
           bodyFont.variable,
           monoFont.variable
         )}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <Navigation />
-          <main className="mt-6 flex min-w-0 flex-auto flex-col px-2 md:mt-0 md:px-0">
+          <main className="mt-6 flex max-w-2xl flex-auto flex-col px-2 sm:mx-auto md:mt-0 md:px-0">
+            <Navigation />
             {children}
             <Footer />
           </main>

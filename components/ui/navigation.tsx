@@ -2,18 +2,19 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { DarkToggle } from "../mode-toggle"
 import { cn } from "@/lib/utils"
+
+import { DarkToggle } from "../mode-toggle"
 
 const navItems = {
   "/": {
     name: "home",
   },
   "/blog": {
-    name: "blog",
+    name: "writing",
   },
   "/about": {
-    name: "about",
+    name: "intro",
   },
 }
 
@@ -24,21 +25,21 @@ export const Navigation = () => {
   }
 
   return (
-    <aside className="-mx-4 md:mx-0 md:w-[150px] md:shrink-0 md:px-0">
+    <aside className="mb-8 tracking-tight">
       <div className="lg:sticky lg:top-20">
         <nav
-          className="fade relative flex scroll-pr-6 flex-row items-start px-6 pb-0 sm:flex-col md:relative md:px-0"
+          className="fade relative flex scroll-pr-6 flex-row items-center justify-between px-0 pb-0 md:relative md:overflow-auto"
           id="nav"
         >
-          <div className="fade relative flex scroll-pr-6 flex-row items-start space-x-2 px-0 pb-0 font-heading text-2xl font-bold sm:text-[40px] md:flex-col md:space-x-0 md:overflow-auto">
+          <div className="flex flex-row space-x-4 pr-10 sm:space-x-6">
             {Object.entries(navItems).map(([path, { name }]) => {
-              const isActive = path == pathname
+              const isActive = path === pathname
               return (
                 <Link
                   key={path}
                   href={path}
                   className={cn(
-                    "leading-extra-tight flex align-middle transition-all hover:text-text sm:leading-tight",
+                    "flex align-middle text-2xl transition-all hover:text-text",
                     {
                       "text-text/60": !isActive,
                     }
@@ -49,9 +50,9 @@ export const Navigation = () => {
               )
             })}
           </div>
-          <div className="text-lg text-text">
+          <span className="text-lg text-text">
             <DarkToggle />
-          </div>
+          </span>
         </nav>
       </div>
     </aside>

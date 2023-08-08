@@ -26,25 +26,24 @@ export function getPosts() {
 
 export async function getPreviewPosts() {
   const posts = getPosts()
-  const allMetrics = await getAllMetrics()
 
   const articles: PostWithMetrics[] = []
   posts?.forEach(async (post) => {
     // all posts with draft status are omitted from the blog list and popular
     // list. These are navigable only from the series menu.
     if (post.status === "published") {
-      const metrics = allMetrics.find((item) => item.slug === post.slug)
       articles.push({
         post: pick(post, [
           "title",
           "description",
           "published",
+          "updatedOn",
           "slug",
           "tags",
           "image",
         ]),
-        views: metrics?.views || 0,
-        likes: metrics?.likes || 0,
+        views: 0,
+        likes: 0,
       })
     }
   })
@@ -63,6 +62,7 @@ export async function getPartialPost(slug: string) {
   const trimmedPost: Partial<Post> = {
     title: post.title,
     published: post.published,
+    updatedOn: post.updatedOn,
     slug: post.slug,
     description: post.description,
     body: {

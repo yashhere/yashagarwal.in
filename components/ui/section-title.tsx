@@ -1,11 +1,9 @@
 export default function SectionTitle({ title, data }) {
   return (
-    <h1 className="leading-extra-tight space-x-4 pb-8 font-heading text-5xl font-bold lg:text-[96px]">
+    <h1 className="my-8 space-x-4 text-4xl font-semibold sm:mt-4">
       {title}
       {data && data.length !== 0 && (
-        <span className="pl-4 text-lg text-secondary sm:text-xl">
-          {data.length}
-        </span>
+        <span className="pl-2 text-sm text-text/60">{data.length}</span>
       )}
     </h1>
   )

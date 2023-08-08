@@ -24,7 +24,7 @@ const Page: FC = () => {
     <>
       <SectionTitle data={null} title="About" />
       <section className="prose prose-article md:prose-lg lg:prose-xl">
-        <blockquote className="">
+        <blockquote>
           <p>
             Great minds discuss ideas; average minds discuss events; small minds
             discuss people.
