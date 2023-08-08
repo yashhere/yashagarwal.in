@@ -39,7 +39,7 @@ export default async function Page() {
         <RecentPosts count={siteConfig.recentPosts} />
         <Link
           href="/blog"
-          className="group mt-8 flex items-center justify-start space-x-2 text-lg font-bold hover:text-primary"
+          className="group flex items-center justify-start space-x-2 text-lg font-bold hover:text-primary"
         >
           <span>Writings</span>
           <ArrowRightIcon className="h-4 w-4 transition duration-200 group-hover:translate-x-1" />

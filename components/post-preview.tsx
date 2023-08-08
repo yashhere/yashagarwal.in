@@ -17,7 +17,7 @@ export const PostPreview = ({ article }: { article: PostWithMetrics }) => {
             <span className="font-heading text-lg font-medium">
               {article.post.title}
             </span>
-            <span className="text-sm  transition duration-200 sm:group-hover:-translate-x-1">
+            <span className="text-sm text-text/60 transition duration-200 sm:group-hover:-translate-x-1">
               {moment(article.post.published).fromNow()}
             </span>
           </div>
