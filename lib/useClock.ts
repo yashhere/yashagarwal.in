@@ -2,8 +2,19 @@ import { useEffect, useState } from "react"
 
 type ClockHook = () => [any, any]
 
+function getISTTime() {
+  var localTime = new Date()
+  var currentOffset = localTime.getTimezoneOffset()
+  var ISTOffset = 330 // IST offset UTC +5:30
+  var ISTTime = new Date(
+    localTime.getTime() + (ISTOffset + currentOffset) * 60000
+  )
+
+  return ISTTime
+}
+
 const useClock: ClockHook = () => {
-  const [currentTime, setCurrentTime] = useState(new Date())
+  const [currentTime, setCurrentTime] = useState(getISTTime())
   const [timing, setTiming] = useState({
     updateSeconds: {},
     updateMinutes: {},
@@ -11,7 +22,7 @@ const useClock: ClockHook = () => {
   })
 
   const updateTime = () => {
-    setCurrentTime(new Date())
+    setCurrentTime(getISTTime())
   }
 
   useEffect(() => {
