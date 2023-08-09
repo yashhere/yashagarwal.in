@@ -34,7 +34,7 @@ const useClock: any = () => {
     })
   }, [currentTime])
 
-  return [timing]
+  return timing
 }
 
 export default useClock

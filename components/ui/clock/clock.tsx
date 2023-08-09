@@ -4,11 +4,13 @@ import { FC } from "react"
 import useClock from "@/lib/useClock"
 
 export const AnalogClock: FC = () => {
-  const [timing] = useClock()
+  const timing = useClock()
   return (
     <div className="group relative flex cursor-pointer items-center justify-center text-sm">
       <div className="relative flex h-6 w-6 flex-col items-center justify-start overflow-hidden rounded-full">
+        {/* The Circle */}
         <div className="h-6 w-6 rounded-full border border-text"></div>
+
         <section className="absolute z-50 flex h-6 w-6 items-center justify-center">
           {/* Center Circle */}
           <span className="absolute z-50 flex rounded-full bg-text/80 before:absolute before:h-px before:w-px before:justify-center before:rounded-full before:bg-text"></span>
