@@ -84,7 +84,7 @@ const ExternalLink = forwardRef<HTMLAnchorElement, ExternalLinkProps>(
             {/* Can't help with weird padding hack to center the icon. Yikes! */}
             {!noExternalLinkIcon && (
               <>
-                <TbArrowUpRight className="-ml-1 inline h-5 w-5 pb-[3px]" />
+                <TbArrowUpRight className="-mx-1 inline h-5 w-5 pb-[3px]" />
               </>
             )}
           </a>

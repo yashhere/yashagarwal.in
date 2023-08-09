@@ -1,5 +1,9 @@
 import { FC } from "react"
+import { env } from "@/env.mjs"
+import { cn } from "@/lib/utils"
+import { RssIcon } from "@heroicons/react/24/outline"
 import moment from "moment"
+import { IconContext } from "react-icons"
 import {
   SlSocialGithub,
   SlSocialInstagram,
@@ -14,21 +18,31 @@ const Socials = [
     name: "Github",
     url: "https://github.com/yashhere",
     icon: SlSocialGithub,
+    color: "#333",
   },
   {
     name: "Linkedin",
     url: "https://www.linkedin.com/in/theyashagarwal/",
     icon: SlSocialLinkedin,
+    color: "#0077b5",
+  },
+  {
+    name: "RSS",
+    url: `${env.NEXT_PUBLIC_APP_URL}/atom.xml`,
+    icon: RssIcon,
+    color: "#f26522",
   },
   {
     name: "Twitter",
     url: "https://twitter.com/yash__here",
     icon: SlSocialTwitter,
+    color: "#1da1f2",
   },
   {
     name: "Instagram",
     url: "https://instagram.com/yum_yash",
     icon: SlSocialInstagram,
+    color: "#c13584",
   },
 ]
 
@@ -36,7 +50,7 @@ export const Footer: FC = () => {
   return (
     <footer className="mt-12 pb-4 font-heading">
       <hr className="border-[0.5px]" />
-      <div className="mt-8 flex flex-row items-center justify-center gap-x-10">
+      <div className="mt-12 flex flex-row items-center justify-center gap-x-10">
         {Socials.map((s) => {
           return (
             <Link
@@ -45,7 +59,12 @@ export const Footer: FC = () => {
               aria-label={s.name}
               noExternalLinkIcon
             >
-              <s.icon className="h-6 w-6 text-text/70 hover:text-text" />
+              <s.icon
+                className={cn(
+                  "h-6 w-6 text-text/70",
+                  `hover:text-[${s.color}]`
+                )}
+              />
             </Link>
           )
         })}
@@ -58,7 +77,7 @@ export const Footer: FC = () => {
             Yash
           </Link>
         </p>
-        <p className="text-base">© 2016 - {moment().format("YYYY")}</p>
+        <p className="mt-4 text-base">🌱 2016 - {moment().format("YYYY")}</p>
       </div>
     </footer>
   )

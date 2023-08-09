@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
 
-const useClock: any = () => {
+type ClockHook = () => [any, any]
+
+const useClock: ClockHook = () => {
   const [currentTime, setCurrentTime] = useState(new Date())
   const [timing, setTiming] = useState({
     updateSeconds: {},
@@ -34,7 +36,7 @@ const useClock: any = () => {
     })
   }, [currentTime])
 
-  return timing
+  return [timing, currentTime]
 }
 
 export default useClock
