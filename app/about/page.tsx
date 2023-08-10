@@ -30,7 +30,6 @@ const Page: FC = () => {
             discuss people.
           </p>
         </blockquote>
-        <RandomPhoto className="mx-auto h-auto max-w-full rounded shadow-lg" />
         <p>
           Hi, I am Yash (y-uh-sh) 🙏. I&apos;m a software engineer working
           remotely.
@@ -46,6 +45,7 @@ const Page: FC = () => {
           for <Link href="https://cisco.com">Cisco</Link> in the SBG group.
         </p>
 
+        <RandomPhoto className="mx-auto h-auto max-w-full rounded shadow-lg" />
         <p>
           I completed my graduation from National Institute of Technology,
           Calicut in 2018. In NITC, I majored in Computer Science and
