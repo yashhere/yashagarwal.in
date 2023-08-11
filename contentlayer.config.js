@@ -8,12 +8,13 @@ import remarkGfm from "remark-gfm"
 import remarkMath from "remark-math"
 import remarkUnwrapImages from "remark-unwrap-images"
 
+import { LifeLog } from "./content/definitions/lifelog"
 import { Post } from "./content/definitions/post"
 import rehypeImageMetadata from "./utils/plugins/image-metadata"
 
 export default makeSource({
   contentDirPath: "content",
-  documentTypes: [Post],
+  documentTypes: [Post, LifeLog],
   mdx: {
     remarkPlugins: [[remarkGfm], [remarkMath], [remarkUnwrapImages]],
     rehypePlugins: [
