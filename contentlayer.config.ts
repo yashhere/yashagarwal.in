@@ -1,6 +1,5 @@
 import remarkCallouts from "@portaljs/remark-callouts"
 import { makeSource } from "contentlayer/source-files"
-import mdxMermaid from "mdx-mermaid"
 import { rehypeAccessibleEmojis } from "rehype-accessible-emojis"
 import rehypeAutolinkHeadings from "rehype-autolink-headings"
 import rehypeKatex from "rehype-katex"
@@ -10,10 +9,17 @@ import remarkGfm from "remark-gfm"
 import remarkMath from "remark-math"
 import remarkSmartypants from "remark-smartypants"
 import remarkUnwrapImages from "remark-unwrap-images"
+import wikiLinkPlugin from "remark-wiki-link"
 
 import { LifeLog } from "./content/definitions/lifelog"
 import { Post } from "./content/definitions/post"
 import rehypeImageMetadata from "./utils/plugins/image-metadata"
+
+const pageResolver = (name: string) => [
+  name.replace(/-/g, "").replace(/ /g, "-").toLowerCase(),
+]
+
+const hrefTemplate = (permalink: string) => `/blog/${permalink}`
 
 export default makeSource({
   contentDirPath: "content",
@@ -23,8 +29,16 @@ export default makeSource({
       [remarkGfm],
       [remarkMath],
       [remarkUnwrapImages],
-      [mdxMermaid, {}],
       [remarkCallouts],
+      [
+        wikiLinkPlugin,
+        {
+          pageResolver,
+          hrefTemplate,
+          aliasDivider: "|",
+          newClassName: "text-secondary",
+        },
+      ],
       [remarkSmartypants, { quotes: false, dashes: "oldschool" }],
     ],
     rehypePlugins: [

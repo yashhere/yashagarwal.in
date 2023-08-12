@@ -1,4 +1,4 @@
-import { FC } from "react"
+import { FC, Suspense } from "react"
 import { Metadata } from "next"
 import RandomPhoto from "@/components/random-photo"
 import Link from "@/components/ui/link"
@@ -45,7 +45,10 @@ const Page: FC = () => {
           for <Link href="https://cisco.com">Cisco</Link> in the SBG group.
         </p>
 
-        <RandomPhoto className="mx-auto h-auto max-w-full rounded shadow-lg" />
+        <Suspense fallback={<p>Loading image...</p>}>
+          <RandomPhoto className="mx-auto h-auto max-w-full rounded shadow-lg" />
+        </Suspense>
+
         <p>
           I completed my graduation from National Institute of Technology,
           Calicut in 2018. In NITC, I majored in Computer Science and
