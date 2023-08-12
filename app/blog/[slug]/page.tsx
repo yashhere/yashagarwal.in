@@ -170,7 +170,6 @@ export default async function Page({ params }: Props) {
               {article.post.status === "draft" ? <Draft /> : null}
             </div>
           </div>
-          <hr className="border-t-1 border-gray-300/60" />
           <BackLinks backlinks={article.backlinks} />
           <hr className="border-t-1 border-gray-300/60" />
           <div className="flex flex-col items-center justify-center space-x-2 space-y-4 py-8 sm:flex-row sm:justify-between sm:space-y-0">

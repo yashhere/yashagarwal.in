@@ -106,7 +106,7 @@ export function getPost(slug: string) {
 
 export function getBacklinks(slug: string, urlSegment: string) {
   const backlinkingPosts = allPosts.filter((doc) => {
-    const urlToSearch = `/${urlSegment}/${doc.slug}`
+    const urlToSearch = `/${urlSegment}/${slug}`
     return doc.body.raw.includes(urlToSearch)
   }) as DocumentTypes[]
 

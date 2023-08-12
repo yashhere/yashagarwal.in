@@ -7,8 +7,13 @@ export const BackLinks = ({
 }: {
   backlinks?: NonNullable<ReturnType<typeof getBacklinks>>
 }) => {
+  if (backlinks?.length === 0) {
+    return null
+  }
+
   return (
     <>
+      <hr className="border-t-1 border-gray-300/60" />
       <div className="py-8">
         <div className="mb-4 text-3xl font-semibold">
           Pages that link to this

@@ -1,10 +1,11 @@
+import remarkCallouts from "@portaljs/remark-callouts"
 import { makeSource } from "contentlayer/source-files"
+import mdxMermaid from "mdx-mermaid"
 import { rehypeAccessibleEmojis } from "rehype-accessible-emojis"
 import rehypeAutolinkHeadings from "rehype-autolink-headings"
 import rehypeKatex from "rehype-katex"
 import rehypePrettyCode from "rehype-pretty-code"
 import rehypeSlug from "rehype-slug"
-import callouts from "remark-callouts"
 import remarkGfm from "remark-gfm"
 import remarkMath from "remark-math"
 import remarkSmartypants from "remark-smartypants"
@@ -22,14 +23,15 @@ export default makeSource({
       [remarkGfm],
       [remarkMath],
       [remarkUnwrapImages],
+      [mdxMermaid, {}],
+      [remarkCallouts],
       [remarkSmartypants, { quotes: false, dashes: "oldschool" }],
     ],
     rehypePlugins: [
-      [rehypeKatex],
+      [rehypeKatex, { output: "mathml" }],
       [rehypeSlug],
       [rehypeImageMetadata],
       [rehypeAccessibleEmojis],
-      [callouts],
       [rehypePrettyCode, { theme: "dracula" }],
       [
         rehypeAutolinkHeadings,
