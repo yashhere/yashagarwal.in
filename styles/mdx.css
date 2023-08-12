@@ -1,3 +1,4 @@
+@import "@portaljs/remark-callouts/styles.css";
 .prose .anchor {
     /* Trying to replicate prose-headings because the link tag styles take
        precedence
