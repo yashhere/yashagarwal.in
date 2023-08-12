@@ -1,9 +1,14 @@
 import { PostWithMetrics } from "@/types"
 import { pick } from "contentlayer/client"
-import { allPosts, Post } from "contentlayer/generated"
+import { allPosts, DocumentTypes, Post } from "contentlayer/generated"
 import { compareDesc } from "date-fns"
 
 import { getAllMetrics } from "./actions"
+
+const URL_SEGMENTS = {
+  BLOG: "blog",
+  LIFELOG: "lifelog",
+}
 
 export function getPosts() {
   const posts = allPosts.sort((a, b) => {
@@ -81,6 +86,7 @@ export async function getPartialPost(slug: string) {
     post: trimmedPost,
     views: metrics?.views || 0,
     likes: metrics?.likes || 0,
+    backlinks: getBacklinks(post.slug as string, URL_SEGMENTS.BLOG),
     series:
       (post.series && getSeries(post.series?.title as string, post.slug)) ||
       undefined,
@@ -96,6 +102,19 @@ export function getPost(slug: string) {
   } else {
     throw Error("Unable to Retrieve Post")
   }
+}
+
+export function getBacklinks(slug: string, urlSegment: string) {
+  const backlinkingPosts = allPosts.filter((doc) => {
+    const urlToSearch = `/${urlSegment}/${doc.slug}`
+    return doc.body.raw.includes(urlToSearch)
+  }) as DocumentTypes[]
+
+  return backlinkingPosts.map((doc) => ({
+    title: doc.title,
+    url: `/${urlSegment}/${doc.slug}`,
+    type: doc.type,
+  }))
 }
 
 export function getSeries(title: string, current: string) {

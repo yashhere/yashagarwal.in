@@ -25,6 +25,11 @@ export type PostWithMetrics = {
   post: Partial<Post>
   likes: number
   views: number
+  backlinks?: {
+    title: string
+    url: string
+    type: "Post"
+  }[]
   series?: {
     seriesTitle: string
     posts: {

@@ -4,8 +4,10 @@ import rehypeAutolinkHeadings from "rehype-autolink-headings"
 import rehypeKatex from "rehype-katex"
 import rehypePrettyCode from "rehype-pretty-code"
 import rehypeSlug from "rehype-slug"
+import callouts from "remark-callouts"
 import remarkGfm from "remark-gfm"
 import remarkMath from "remark-math"
+import remarkSmartypants from "remark-smartypants"
 import remarkUnwrapImages from "remark-unwrap-images"
 
 import { LifeLog } from "./content/definitions/lifelog"
@@ -16,12 +18,18 @@ export default makeSource({
   contentDirPath: "content",
   documentTypes: [Post, LifeLog],
   mdx: {
-    remarkPlugins: [[remarkGfm], [remarkMath], [remarkUnwrapImages]],
+    remarkPlugins: [
+      [remarkGfm],
+      [remarkMath],
+      [remarkUnwrapImages],
+      [remarkSmartypants, { quotes: false, dashes: "oldschool" }],
+    ],
     rehypePlugins: [
       [rehypeKatex],
       [rehypeSlug],
       [rehypeImageMetadata],
       [rehypeAccessibleEmojis],
+      [callouts],
       [rehypePrettyCode, { theme: "dracula" }],
       [
         rehypeAutolinkHeadings,
