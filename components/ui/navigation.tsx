@@ -11,18 +11,18 @@ const navItems = {
   "/": {
     name: "home",
   },
-  "/blog": {
-    name: "writing",
+  "/notes": {
+    name: "notes",
   },
-  "/about": {
-    name: "intro",
+  "/whoami": {
+    name: "whoami",
   },
 }
 
 export const Navigation = () => {
   let pathname = usePathname() || "/"
-  if (pathname.includes("/blog/")) {
-    pathname = "/blog"
+  if (pathname.includes("/notes/")) {
+    pathname = "/notes"
   }
 
   return (

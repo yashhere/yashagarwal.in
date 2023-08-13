@@ -1,6 +1,6 @@
 import { siteConfig } from "@/config/site"
-import { sortPosts } from "@/lib/server-utils"
-import { allPosts } from "contentlayer/generated"
+import { sortNotes } from "@/lib/server-utils"
+import { allNotes } from "contentlayer/generated"
 import { Feed } from "feed"
 
 export async function getFeed() {
@@ -26,15 +26,15 @@ export async function getFeed() {
     author: author,
   })
 
-  sortPosts(allPosts).forEach((post) => {
+  sortNotes(allNotes).forEach((note) => {
     feed.addItem({
-      id: siteConfig.url + "/blog/" + post.slug,
-      title: post.title,
-      link: siteConfig.url + "/blog/" + post.slug,
-      description: post.description,
+      id: siteConfig.url + "/notes/" + note.slug,
+      title: note.title,
+      link: siteConfig.url + "/notes/" + note.slug,
+      description: note.description,
       author: [author],
       contributor: [author],
-      date: new Date(post.published),
+      date: new Date(note.createdOn),
     })
   })
 

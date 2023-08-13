@@ -20,6 +20,6 @@ export const siteConfig: SiteConfig = {
     lightTheme: "light",
     darkTheme: "dark",
   },
-  popularPosts: 3,
-  recentPosts: 5,
+  popularNotes: 3,
+  recentNotes: 5,
 }

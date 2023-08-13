@@ -1,4 +1,4 @@
-import { Transition, motion } from "framer-motion"
+import { motion, Transition } from "framer-motion"
 
 export const LoadingDots = () => {
   const container = {

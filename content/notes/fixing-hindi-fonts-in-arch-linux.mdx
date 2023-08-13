@@ -1,0 +1,35 @@
+---
+title: "Fixing Hindi Fonts in Arch Linux"
+createdOn: 2017-10-17T21:55:53+05:30
+status: "published"
+tags:
+  - Arch Linux
+  - Hindi Fonts
+  - OS Setup
+  - Linux Ricing
+---
+
+When viewing Hindi content in any browser in Arch Linux, the rendering looks
+weird.
+
+![before applying the fix](/images/notes/fixing-hindi-fonts-in-arch-linux/hindi_font_before.png "before applying the fix")
+
+It doesn't look good, right! I'll try to fix this issue in this post. You might
+need to install the appropriate
+[font support](https://wiki.archlinux.org/index.php/fonts) in Arch Linux before
+applying this fix. The suitable package for installing Indic Language support is
+`ttf-indic-otf`.
+
+Now go to `/usr/share/fonts/TTF` and take the backup of two fonts `FreeSans.ttf`
+and `FreeSerif.ttf`. Now delete these two fonts from the directory. Restart the
+browser and see the difference.
+
+![after applying the fix](/images/notes/fixing-hindi-fonts-in-arch-linux/hindi_font_after.png "after applying the fix")
+
+This bug is reported in
+[this](https://bugs.launchpad.net/ubuntu/+source/chromium-browser/+bug/856736)
+bug report in 2011. I don't know why nobody has fixed it yet. Or maybe I was not
+able to find the proper solution. This workaround is also given in the same bug
+report.
+
+I hope this helps. :)

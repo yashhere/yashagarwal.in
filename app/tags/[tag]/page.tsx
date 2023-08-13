@@ -1,8 +1,8 @@
 import { Metadata, ResolvingMetadata } from "next"
-import { BlogPostList } from "@/components/blog-list"
+import { NotesList } from "@/components/all-notes"
 import SectionTitle from "@/components/ui/section-title"
 import { siteConfig } from "@/config/site"
-import { getPreviewPosts } from "@/lib/content"
+import { getPreviewNotes } from "@/lib/content"
 import GithubSlugger from "github-slugger"
 
 type Props = {
@@ -17,7 +17,7 @@ export async function generateMetadata(
 
   return {
     title: `${params.tag} | Yash Agarwal`,
-    description: `All posts related to ${params.tag}`,
+    description: `All notes related to ${params.tag}`,
     authors: {
       name: "Yash Agarwal",
       url: siteUrl,
@@ -38,11 +38,11 @@ export async function generateMetadata(
 
 export default async function Page({ params }: Props) {
   const slugger = new GithubSlugger()
-  const previewPosts = await getPreviewPosts()
+  const previewNotes = await getPreviewNotes()
 
-  const postsWithTag = previewPosts.filter((previewPost) => {
+  const notesWithTag = previewNotes.filter((item) => {
     slugger.reset()
-    const tags = previewPost.post.tags
+    const tags = item.note.tags
     if (!tags || tags.length == 0) {
       return false
     }
@@ -51,8 +51,8 @@ export default async function Page({ params }: Props) {
 
   // find un-slugified tag name
   const tagName = new Set<string[]>()
-  postsWithTag.forEach((post) => {
-    const tags = post.post.tags
+  notesWithTag.forEach((item) => {
+    const tags = item.note.tags
     if (!tags || tags.length == 0) {
       return
     }
@@ -72,12 +72,12 @@ export default async function Page({ params }: Props) {
   return (
     <>
       <section className="pb-8">
-        <SectionTitle data={postsWithTag} title={tagName} />
+        <SectionTitle data={notesWithTag} title={tagName} />
       </section>
-      {postsWithTag.length !== 0 ? (
-        <BlogPostList articles={postsWithTag} noSearchBox />
+      {notesWithTag.length !== 0 ? (
+        <NotesList notes={notesWithTag} noSearchBox />
       ) : (
-        <p>No posts found for tag {tagName}</p>
+        <p>No notes found for tag {tagName}</p>
       )}
     </>
   )

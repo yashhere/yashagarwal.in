@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation"
 
 export function GoToTop({ slug }: { slug: string }) {
-  const path = `/blog/${slug}`
+  const path = `/notes/${slug}`
   const router = useRouter()
   return (
     <div>
