@@ -20,14 +20,14 @@ export const metadata: Metadata = {
 }
 
 export default async function Page() {
-  const articles = await getPreviewNotes()
+  const notes = await getPreviewNotes()
 
   return (
     <>
       <section>
-        <SectionTitle data={articles} title="Notes" />
+        <SectionTitle data={notes} title="Notes" />
       </section>
-      <NotesList articles={articles} />
+      <NotesList notes={notes} />
     </>
   )
 }

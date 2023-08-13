@@ -6,17 +6,17 @@ import { NoteListLoading } from "./all-notes"
 import { NoteList } from "./notes-list"
 
 export async function RecentNotes({ count }: { count: number }) {
-  let articles = await getPreviewNotes()
-  articles.sort((a, b) => b.note.updatedOn - a.note.updatedOn)
+  let notes = await getPreviewNotes()
+  notes.sort((a, b) => b.note.updatedOn - a.note.updatedOn)
   // filter out notes older than 6 months
-  let articlesFiltered = articles
+  let notesFiltered = notes
     .filter((article) => {
       const date = article.note.updatedOn || article.note.createdOn
       return moment().diff(date, "months") < 6
     })
     .slice(0, count)
 
-  if (articlesFiltered.length === 0) {
+  if (notesFiltered.length === 0) {
     return
   }
 
@@ -26,8 +26,8 @@ export async function RecentNotes({ count }: { count: number }) {
         Just Penned
       </h2>
       <section className="mb-8 w-full space-y-3">
-        <Suspense fallback={<NoteListLoading articles={articlesFiltered} />}>
-          <NoteList articles={articlesFiltered} />
+        <Suspense fallback={<NoteListLoading notes={notesFiltered} />}>
+          <NoteList notes={notesFiltered} />
         </Suspense>
       </section>
     </>

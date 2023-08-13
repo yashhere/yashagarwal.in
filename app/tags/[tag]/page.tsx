@@ -75,7 +75,7 @@ export default async function Page({ params }: Props) {
         <SectionTitle data={notesWithTag} title={tagName} />
       </section>
       {notesWithTag.length !== 0 ? (
-        <NotesList articles={notesWithTag} noSearchBox />
+        <NotesList notes={notesWithTag} noSearchBox />
       ) : (
         <p>No notes found for tag {tagName}</p>
       )}

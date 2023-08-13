@@ -32,12 +32,12 @@ export function getNotes() {
 export async function getPreviewNotes() {
   const notes = getNotes()
 
-  const articles: NoteWithMetrics[] = []
+  const previewNotes: NoteWithMetrics[] = []
   notes?.forEach(async (note) => {
     // all notes with draft status are omitted from the blog list and popular
     // list. These are navigable only from the series menu.
     if (note.status === "published" || process.env.NODE_ENV === "development") {
-      articles.push({
+      previewNotes.push({
         note: pick(note, [
           "title",
           "description",
@@ -53,7 +53,7 @@ export async function getPreviewNotes() {
     }
   })
 
-  return articles
+  return previewNotes
 }
 
 export async function getPartialNote(slug: string) {

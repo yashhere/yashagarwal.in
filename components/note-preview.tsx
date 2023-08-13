@@ -4,25 +4,25 @@ import { NotePreviewLoading } from "@/components/ui/note-preview-loading"
 import { NoteWithMetrics } from "@/types"
 import moment from "moment"
 
-export const NotePreview = ({ article }: { article: NoteWithMetrics }) => {
+export const NotePreview = ({ note }: { note: NoteWithMetrics }) => {
   const dateFormat =
-    moment(article.note.createdOn).year() === moment().year()
+    moment(note.note.createdOn).year() === moment().year()
       ? "DD/MM"
       : "DD/MM/YYYY"
   return (
     <>
       <Suspense fallback={<NotePreviewLoading />}>
         <Link
-          href={`/notes/${article.note.slug}`}
+          href={`/notes/${note.note.slug}`}
           className="flex w-full flex-col transition-all hover:text-primary"
           noUnderline
         >
           <div className="group flex flex-col sm:flex-row sm:justify-between">
             <span className="font-heading text-lg font-medium">
-              {article.note.title}
+              {note.note.title}
             </span>
             <span className="text-sm tracking-widest text-text/60 transition duration-200 sm:group-hover:-translate-x-1">
-              {moment(article.note.createdOn).format("DD/MM/YY")}
+              {moment(note.note.createdOn).format("DD/MM/YY")}
             </span>
           </div>
         </Link>

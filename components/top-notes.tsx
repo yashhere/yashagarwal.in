@@ -5,9 +5,9 @@ import { NoteListLoading } from "./all-notes"
 import { NoteList } from "./notes-list"
 
 export async function TopNotes({ count }: { count: number }) {
-  let articles = await getPreviewNotes()
-  articles.sort((a, b) => b.views - a.views)
-  articles = articles.slice(0, count)
+  let notes = await getPreviewNotes()
+  notes.sort((a, b) => b.views - a.views)
+  notes = notes.slice(0, count)
 
   return (
     <>
@@ -15,8 +15,8 @@ export async function TopNotes({ count }: { count: number }) {
         Popular notes
       </h2>
       <section className="w-full space-y-3">
-        <Suspense fallback={<NoteListLoading articles={articles} />}>
-          <NoteList articles={articles} />
+        <Suspense fallback={<NoteListLoading notes={notes} />}>
+          <NoteList notes={notes} />
         </Suspense>
       </section>
     </>

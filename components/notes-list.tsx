@@ -1,11 +1,11 @@
 import { NotePreview } from "@/components/note-preview"
 import { NoteWithMetrics } from "@/types"
 
-export const NoteList = ({ articles }: { articles: NoteWithMetrics[] }) => {
+export const NoteList = ({ notes }: { notes: NoteWithMetrics[] }) => {
   return (
     <>
-      {articles?.map((article) => {
-        return <NotePreview key={article.note.slug} article={article} />
+      {notes?.map((note) => {
+        return <NotePreview key={note.note.slug} note={note} />
       })}
     </>
   )

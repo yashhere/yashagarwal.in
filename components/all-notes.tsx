@@ -6,14 +6,10 @@ import { SearchInput } from "@/components/search"
 import { NotePreviewLoading } from "@/components/ui/note-preview-loading"
 import { NoteWithMetrics } from "@/types"
 
-export const NoteListLoading = ({
-  articles,
-}: {
-  articles: NoteWithMetrics[]
-}) => {
+export const NoteListLoading = ({ notes }: { notes: NoteWithMetrics[] }) => {
   return (
     <>
-      {articles.map((article) => (
+      {notes.map((article) => (
         <NotePreviewLoading key={article.note.slug} />
       ))}
     </>
@@ -21,15 +17,15 @@ export const NoteListLoading = ({
 }
 
 export const NotesList = ({
-  articles,
+  notes,
   noSearchBox = false,
 }: {
-  articles: NoteWithMetrics[]
+  notes: NoteWithMetrics[]
   noSearchBox?: boolean
 }) => {
   const [search, setSearch] = useState("")
 
-  const [results, setResults] = useState(articles)
+  const [results, setResults] = useState(notes)
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
@@ -37,12 +33,12 @@ export const NotesList = ({
 
     setResults(
       e.target.value != ""
-        ? articles?.filter((article) => {
+        ? notes?.filter((article) => {
             return article.note.title
               .toLowerCase()
               .includes(e.target.value.toLowerCase())
           })
-        : articles
+        : notes
     )
   }
 
@@ -54,8 +50,8 @@ export const NotesList = ({
         </div>
       ) : null}
       <section className="w-full space-y-4">
-        <Suspense fallback={<NoteListLoading articles={articles} />}>
-          <NoteList articles={articles} />
+        <Suspense fallback={<NoteListLoading notes={notes} />}>
+          <NoteList notes={notes} />
         </Suspense>
       </section>
     </div>
