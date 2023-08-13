@@ -4,7 +4,7 @@ import SectionTitle from "@/components/ui/section-title"
 import { siteConfig } from "@/config/site"
 import { getTotalViews } from "@/lib/actions"
 import { ArrowTrendingUpIcon, PencilIcon } from "@heroicons/react/24/solid"
-import { allPosts } from "contentlayer/generated"
+import { allNotes } from "contentlayer/generated"
 
 export const metadata: Metadata = {
   title: "Writing | Yash Agarwal",
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 const Page = async () => {
   const data = await getTotalViews()
   const totalViews = Number(data.total_views || 0)
-  const totalPosts = allPosts.filter((p) => p.status != "draft").length
+  const totalNotes = allNotes.filter((p) => p.status != "draft").length
 
   return (
     <>
@@ -37,7 +37,7 @@ const Page = async () => {
       <section className="font-medium text-text">
         <div className="flex space-x-2">
           <PencilIcon className="w-4" />
-          <p>{totalPosts} articles written</p>
+          <p>{totalNotes} articles written</p>
         </div>
         <div className="flex space-x-2">
           <ArrowTrendingUpIcon className="w-4" />

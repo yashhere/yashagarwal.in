@@ -6,7 +6,7 @@ export const runtime = "edge"
 
 export async function GET(req: NextRequest) {
   const { searchParams } = req.nextUrl
-  const postTitle = decodeParameter(searchParams.get("title"))
+  const noteTitle = decodeParameter(searchParams.get("title"))
   const meta = decodeParameter(searchParams.get("meta"))
   const tags = searchParams.get("tags")?.split("|")
   const hostname = new URL(`${siteConfig.url}`).hostname
@@ -43,7 +43,7 @@ export async function GET(req: NextRequest) {
                 boxShadow: "4px 4px 8px 1px rgba(184,182,184,1)",
               }}
             >
-              {postTitle}
+              {noteTitle}
             </div>
           </div>
           {meta ? (

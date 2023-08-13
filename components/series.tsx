@@ -31,7 +31,7 @@ export const Series = ({
   current: string
 }) => {
   const [isOpen, setIsOpen] = React.useState(!interactive)
-  const index = series.posts?.findIndex((post) => post?.isCurrent) + 1
+  const index = series.notes?.findIndex((note) => note?.isCurrent) + 1
 
   return (
     <div>
@@ -46,7 +46,7 @@ export const Series = ({
             <span className="font-bold">{series?.seriesTitle}</span>
             <span className="hidden sm:inline-block">&middot;</span>
             <span className="text-base text-text">
-              {index} of {series.posts?.length}
+              {index} of {series.notes?.length}
             </span>
           </Title>
 
@@ -82,37 +82,37 @@ export const Series = ({
           }}
         >
           <ul className="text-lg">
-            {series.posts?.map((post) => (
+            {series.notes?.map((note) => (
               <li
-                key={post.slug}
+                key={note.slug}
                 className={cn(
                   "relative my-3 pl-7 before:absolute before:left-1 before:top-[9px] before:h-1.5 before:w-1.5 before:rounded-full",
                   {
                     "before:bg-gray-100/10 before:ring-[3px] before:ring-primary before:ring-offset-1 before:ring-offset-gray-100/10":
-                      post.isCurrent,
+                      note.isCurrent,
                     "before:bg-gray-600":
-                      post.status === "published" && !post.isCurrent,
-                    "before:bg-gray-300/70": post.status !== "published",
+                      note.status === "published" && !note.isCurrent,
+                    "before:bg-gray-300/70": note.status !== "published",
                   }
                 )}
               >
-                {post.status === "published" ? (
-                  post.isCurrent ? (
-                    <span className="text-text">{post.title}</span>
+                {note.status === "published" ? (
+                  note.isCurrent ? (
+                    <span className="text-text">{note.title}</span>
                   ) : (
                     <Link
-                      href={`/blog/${post.slug}`}
+                      href={`/notes/${note.slug}`}
                       className={cn("font-medium text-primary transition-all")}
                     >
-                      {post.title}
+                      {note.title}
                     </Link>
                   )
                 ) : (
                   <Link
-                    href={`/blog/${post.slug}`}
+                    href={`/notes/${note.slug}`}
                     className={cn("font-medium text-text/50 transition-all")}
                   >
-                    Planned: {post.title}
+                    Planned: {note.title}
                   </Link>
                 )}
               </li>

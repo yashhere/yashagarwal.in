@@ -11,19 +11,19 @@ import remarkSmartypants from "remark-smartypants"
 import remarkUnwrapImages from "remark-unwrap-images"
 import wikiLinkPlugin from "remark-wiki-link"
 
-import { LifeLog } from "./content/definitions/lifelog"
-import { Post } from "./content/definitions/post"
+import { LifeLog } from "./content/definitions/lifelog";
+import { Note } from "./content/definitions/note"
 import rehypeImageMetadata from "./utils/plugins/image-metadata"
 
 const pageResolver = (name: string) => [
   name.replace(/-/g, "").replace(/ /g, "-").toLowerCase(),
 ]
 
-const hrefTemplate = (permalink: string) => `/blog/${permalink}`
+const hrefTemplate = (permalink: string) => `/notes/${permalink}`
 
 export default makeSource({
   contentDirPath: "content",
-  documentTypes: [Post, LifeLog],
+  documentTypes: [Note, LifeLog],
   mdx: {
     remarkPlugins: [
       [remarkGfm],

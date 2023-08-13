@@ -17,12 +17,12 @@ export type SiteConfig = {
     lightTheme: string
     darkTheme: string
   }
-  popularPosts: number
-  recentPosts: number
+  popularNotes: number
+  recentNotes: number
 }
 
-export type PostWithMetrics = {
-  post: Partial<Post>
+export type NoteWithMetrics = {
+  note: Partial<Note>
   likes: number
   views: number
   backlinks?: {
@@ -32,7 +32,7 @@ export type PostWithMetrics = {
   }[]
   series?: {
     seriesTitle: string
-    posts: {
+    notes: {
       title: string
       slug: string
       status: "draft" | "published"

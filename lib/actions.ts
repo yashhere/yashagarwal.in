@@ -1,7 +1,11 @@
-"use server"
+"use server";
 
-import { cache } from "react"
-import { queryBuilder } from "@/lib/planetscale"
+import { cache } from "react";
+import { queryBuilder } from "@/lib/planetscale";
+
+
+
+
 
 export const getAllMetrics = cache(async () => {
   return queryBuilder
@@ -19,7 +23,7 @@ export const getTotalViews = cache(async () => {
 })
 
 export async function getLikes(slug: string, sessionId: string) {
-  const [post, user] = await Promise.all([
+  const [note, user] = await Promise.all([
     queryBuilder
       .selectFrom("Stats")
       .where("slug", "=", slug)
@@ -33,7 +37,7 @@ export async function getLikes(slug: string, sessionId: string) {
       .executeTakeFirst(),
   ])
 
-  return [post?.likes || 0, user?.likes || 0]
+  return [note?.likes || 0, user?.likes || 0]
 }
 
 export async function incrementLikes(

@@ -1,10 +1,10 @@
-import { headers } from "next/headers"
-import { Post } from "contentlayer/generated"
 import { createHash } from "crypto"
+import { headers } from "next/headers"
+import { Note } from "contentlayer/generated"
 
-export function sortPosts(array: Post[]) {
+export function sortNotes(array: Note[]) {
   return array.sort(
-    (a, b) => new Date(b.published).getTime() - new Date(a.published).getTime()
+    (a, b) => new Date(b.createdOn).getTime() - new Date(a.createdOn).getTime()
   )
 }
 
@@ -20,6 +20,6 @@ export function getSessionId(slug: string) {
       .update(ipAddress + process.env.IP_ADDRESS_SALT!, "utf8")
       .digest("hex")
 
-  // Identify a specific users interactions with a specific post
+  // Identify a specific users interactions with a specific note
   return slug + "___" + currentUserId
 }

@@ -22,13 +22,13 @@ const updateFrontmatter = async () => {
 
     if (currentFrontmatter.status === "published") {
       // TODO: auto add publishedDate as well
-      // If published is not present, set it to current time, else ignore
-      const publishedDate = new Date(currentFrontmatter.published)
+      // If createdOn is not present, set it to current time, else ignore
+      const publishedDate = new Date(currentFrontmatter.createdOn)
       const cutoffDate = new Date(CUTOFF_DATE)
       if (publishedDate >= cutoffDate) {
         const updatedFrontmatter = {
           ...currentFrontmatter,
-          published: convertDateToIST(publishedDate),
+          createdOn: convertDateToIST(publishedDate),
           updatedOn: convertDateToIST(new Date().toISOString()),
         }
         file.data = updatedFrontmatter

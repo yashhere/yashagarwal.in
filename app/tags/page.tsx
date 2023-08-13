@@ -2,7 +2,7 @@ import { Metadata } from "next"
 import TagCloud from "@/components/tag-cloud"
 import SectionTitle from "@/components/ui/section-title"
 import { siteConfig } from "@/config/site"
-import { allPosts } from "contentlayer/generated"
+import { allNotes } from "contentlayer/generated"
 
 export const metadata: Metadata = {
   title: "Tags | Yash Agarwal",
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 
 export default function Page() {
   const allTags: string[] = []
-  allPosts.map((post) => post.tags && allTags.push(...post.tags))
+  allNotes.map((note) => note.tags && allTags.push(...note.tags))
 
   var tagCounts = Array.from(new Set(allTags)).map((tagName) => ({
     tag: tagName,

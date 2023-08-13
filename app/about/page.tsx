@@ -56,8 +56,8 @@ const Page: FC = () => {
           <Link href="https://athena.nitc.ac.in/">Software Systems Lab</Link> as
           a system administrator. In 2018, I also led the team organising the
           largest FOSS event in South India at that time - FOSSMeet. Read my
-          experiences of <Link href="/blog/fossmeet-17">FOSSMeet&apos;17</Link>{" "}
-          and <Link href="/blog/fossmeet-18">FOSSMeet&apos;18</Link>.
+          experiences of <Link href="/notes/fossmeet-17">FOSSMeet&apos;17</Link>{" "}
+          and <Link href="/notes/fossmeet-18">FOSSMeet&apos;18</Link>.
         </p>
         <p>
           You can find me elsewhere on the Web; at places like{" "}

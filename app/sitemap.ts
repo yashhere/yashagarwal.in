@@ -1,17 +1,17 @@
 import { siteConfig } from "@/config/site"
-import { allPosts } from "contentlayer/generated"
+import { allNotes } from "contentlayer/generated"
 
 export default async function sitemap() {
   const siteUrl: string = siteConfig.url
-  const postUrls = allPosts.map((post) => ({
-    url: `${siteUrl}/blog/${post.slug}`,
-    lastModified: post.published,
+  const noteUrls = allNotes.map((note) => ({
+    url: `${siteUrl}/notes/${note.slug}`,
+    lastModified: note.createdOn,
   }))
 
-  const routeUrls = ["", "/about", "/stats", "/blog"].map((route) => ({
+  const routeUrls = ["", "/about", "/stats", "/notes"].map((route) => ({
     url: `${siteUrl}${route}`,
     lastModified: new Date().toISOString().split("T")[0],
   }))
 
-  return [...routeUrls, ...postUrls]
+  return [...routeUrls, ...noteUrls]
 }

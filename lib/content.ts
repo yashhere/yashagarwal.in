@@ -1,47 +1,47 @@
-import { PostWithMetrics } from "@/types"
+import { NoteWithMetrics } from "@/types"
 import { pick } from "contentlayer/client"
-import { allPosts, DocumentTypes, Post } from "contentlayer/generated"
+import { allNotes, DocumentTypes, Note } from "contentlayer/generated"
 import { compareDesc } from "date-fns"
 
 import { getAllMetrics } from "./actions"
 
 const URL_SEGMENTS = {
-  BLOG: "blog",
+  NOTES: "notes",
   LIFELOG: "lifelog",
 }
 
-export function getPosts() {
-  const posts = allPosts.sort((a, b) => {
-    return compareDesc(new Date(a.published), new Date(b.published))
+export function getNotes() {
+  const notes = allNotes.sort((a, b) => {
+    return compareDesc(new Date(a.createdOn), new Date(b.createdOn))
   })
 
   if (process.env.NODE_ENV === "development") {
-    return posts
+    return notes
   } else {
-    return posts.filter((p) => {
+    return notes.filter((p) => {
       const currentTime = new Date()
-      const publishedDate = new Date(p.published)
+      const publishedDate = new Date(p.createdOn)
 
-      // in production, all posts with publish date less than current time
-      // are included so that we can navigate to such posts from series menu.
+      // in production, all notes with publish date less than current time
+      // are included so that we can navigate to such notes from series menu.
       return currentTime >= publishedDate
     })
   }
 }
 
-export async function getPreviewPosts() {
-  const posts = getPosts()
+export async function getPreviewNotes() {
+  const notes = getNotes()
 
-  const articles: PostWithMetrics[] = []
-  posts?.forEach(async (post) => {
-    // all posts with draft status are omitted from the blog list and popular
+  const articles: NoteWithMetrics[] = []
+  notes?.forEach(async (note) => {
+    // all notes with draft status are omitted from the blog list and popular
     // list. These are navigable only from the series menu.
-    if (post.status === "published") {
+    if (note.status === "published" || process.env.NODE_ENV === "development") {
       articles.push({
-        post: pick(post, [
+        note: pick(note, [
           "title",
           "description",
-          "published",
+          "createdOn",
           "updatedOn",
           "slug",
           "tags",
@@ -56,71 +56,72 @@ export async function getPreviewPosts() {
   return articles
 }
 
-export async function getPartialPost(slug: string) {
+export async function getPartialNote(slug: string) {
   const allMetrics = await getAllMetrics()
-  const post = getPosts().find((item) => item.slug === slug)
-  if (!post) {
+  const note = getNotes().find((item) => item.slug === slug)
+  if (!note) {
     return null
   }
 
   const metrics = allMetrics.find((item) => item.slug === slug)
-  const trimmedPost: Partial<Post> = {
-    title: post.title,
-    published: post.published,
-    updatedOn: post.updatedOn,
-    slug: post.slug,
-    description: post.description,
+  const trimmedNote: Partial<Note> = {
+    title: note.title,
+    createdOn: note.createdOn,
+    updatedOn: note.updatedOn,
+    slug: note.slug,
+    description: note.description,
+    growthStage: note.growthStage,
     body: {
-      code: post.body.code,
+      code: note.body.code,
       raw: "", // use empty string to reduce payload size
     },
-    tags: post.tags,
-    status: post.status,
+    tags: note.tags,
+    status: note.status,
     headings:
-      (post.headings as { heading: number; text: string; slug: string }[]) ??
+      (note.headings as { heading: number; text: string; slug: string }[]) ??
       null,
-    readingTime: post.readingTime,
+    readingTime: note.readingTime,
   }
 
-  const article: PostWithMetrics = {
-    post: trimmedPost,
+  const article: NoteWithMetrics = {
+    note: trimmedNote,
     views: metrics?.views || 0,
     likes: metrics?.likes || 0,
-    backlinks: getBacklinks(post.slug as string, URL_SEGMENTS.BLOG),
+    backlinks: getBacklinks(note.slug as string, URL_SEGMENTS.NOTES),
     series:
-      (post.series && getSeries(post.series?.title as string, post.slug)) ||
+      (note.series && getSeries(note.series?.title as string, note.slug)) ||
       undefined,
   }
 
   return article
 }
 
-export function getPost(slug: string) {
-  const post = allPosts.find((post) => post.slug === slug)
-  if (post != null) {
-    return post
+export function getNote(slug: string) {
+  const note = allNotes.find((note) => note.slug === slug)
+  if (note != null) {
+    return note
   } else {
-    throw Error("Unable to Retrieve Post")
+    throw Error("Unable to Retrieve Note")
   }
 }
 
 export function getBacklinks(slug: string, urlSegment: string) {
-  const backlinkingPosts = allPosts.filter((doc) => {
+  const backlinkingNotes = allNotes.filter((doc) => {
     const urlToSearch = `/${urlSegment}/${slug}`
     return doc.body.raw.includes(urlToSearch)
   }) as DocumentTypes[]
 
-  return backlinkingPosts.map((doc) => ({
+  return backlinkingNotes.map((doc) => ({
     title: doc.title,
     url: `/${urlSegment}/${doc.slug}`,
-    type: "Post",
+    type: "Note",
   }))
 }
 
 export function getSeries(title: string, current: string) {
   return {
     seriesTitle: title,
-    posts: allPosts
+    notes: allNotes
       .filter((p) => p.series?.title === title)
       .sort(
         (a, b) =>
