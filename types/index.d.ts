@@ -28,7 +28,7 @@ export type PostWithMetrics = {
   backlinks?: {
     title: string
     url: string
-    type: "Post"
+    type: string
   }[]
   series?: {
     seriesTitle: string

@@ -1148,15 +1148,6 @@
     svg-parser "^2.0.4"
     unist-util-visit "^4.1.0"
 
-"@portaljs/remark-wiki-link@^1.0.4":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@portaljs/remark-wiki-link/-/remark-wiki-link-1.0.4.tgz#8288d588b450f4eb382616515d2c15863e920dab"
-  integrity sha512-cp6vlssDAPawcBI0vUPRpcPdORql3RbK1Q+t1LuRvMQ+yiRb+9DnSPBUviDXKqwsBMOOXP/ePAdYohaeXGt0lQ==
-  dependencies:
-    mdast-util-to-markdown "^1.5.0"
-    mdast-util-wiki-link "^0.0.2"
-    micromark-util-symbol "^1.0.1"
-
 "@prisma/client@^5.0.0":
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/@prisma/client/-/client-5.0.0.tgz#9f0cd4164f4ffddb28bb1811c27eb7fa1e01a087"
@@ -5988,7 +5979,7 @@ mdast-util-to-markdown@^0.6.5:
     repeat-string "^1.0.0"
     zwitch "^1.0.0"
 
-mdast-util-to-markdown@^1.0.0, mdast-util-to-markdown@^1.3.0, mdast-util-to-markdown@^1.5.0:
+mdast-util-to-markdown@^1.0.0, mdast-util-to-markdown@^1.3.0:
   version "1.5.0"
   resolved "https://registry.npmjs.org/mdast-util-to-markdown/-/mdast-util-to-markdown-1.5.0.tgz"
   integrity sha512-bbv7TPv/WC49thZPg3jXuqzuvI45IL2EVAr/KxF0BSdHsU0ceFHOmwQn6evxAh1GaoK/6GQ1wp4R4oW2+LFL/A==
@@ -6464,11 +6455,6 @@ micromark-util-symbol@^1.0.0:
   version "1.0.1"
   resolved "https://registry.npmjs.org/micromark-util-symbol/-/micromark-util-symbol-1.0.1.tgz"
   integrity sha512-oKDEMK2u5qqAptasDAwWDXq0tG9AssVwAx3E9bBF3t/shRIGsWIRG+cGafs2p/SnDSOecnt6hZPCE2o6lHfFmQ==
-
-micromark-util-symbol@^1.0.1:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/micromark-util-symbol/-/micromark-util-symbol-1.1.0.tgz#813cd17837bdb912d069a12ebe3a44b6f7063142"
-  integrity sha512-uEjpEYY6KMs1g7QfJ2eX1SQEV+ZT4rUD3UcF6l57acZvLNK7PBZL+ty82Z1qhK1/yXIY4bdx04FKMgR0g4IAag==
 
 micromark-util-types@^1.0.0, micromark-util-types@^1.0.1:
   version "1.0.2"
@@ -7924,15 +7910,6 @@ rehype-stringify@^9.0.3:
     "@types/hast" "^2.0.0"
     hast-util-to-html "^8.0.0"
     unified "^10.0.0"
-
-remark-callouts@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/remark-callouts/-/remark-callouts-2.0.0.tgz#9feb52574d136339133bf8b9f14ae037d0131fed"
-  integrity sha512-kTtBca6NzVNVn71wKMBiliSS/XEtYr6CQgWFQt+s6lkqtHHwHsfP4PxsqFbL98m9nxqlnqTyoYfNr1//u9jrlA==
-  dependencies:
-    mdast-util-from-markdown "^1.2.0"
-    svg-parser "^2.0.4"
-    unist-util-visit "^4.1.0"
 
 remark-frontmatter@^4.0.1:
   version "4.0.1"

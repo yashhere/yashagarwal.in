@@ -113,7 +113,7 @@ export function getBacklinks(slug: string, urlSegment: string) {
   return backlinkingPosts.map((doc) => ({
     title: doc.title,
     url: `/${urlSegment}/${doc.slug}`,
-    type: doc.type,
+    type: "Post",
   }))
 }
 
