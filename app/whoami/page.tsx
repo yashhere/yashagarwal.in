@@ -23,7 +23,7 @@ const Page: FC = () => {
   return (
     <>
       <SectionTitle data={null} title="whoami" />
-      <section className="prose prose-article md:prose-lg lg:prose-xl">
+      <section className="prose prose-lg prose-article">
         <blockquote>
           <p>
             Great minds discuss ideas; average minds discuss events; small minds
