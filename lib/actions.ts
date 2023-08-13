@@ -1,11 +1,7 @@
-"use server";
+"use server"
 
-import { cache } from "react";
-import { queryBuilder } from "@/lib/planetscale";
-
-
-
-
+import { cache } from "react"
+import { queryBuilder } from "@/lib/planetscale"
 
 export const getAllMetrics = cache(async () => {
   return queryBuilder

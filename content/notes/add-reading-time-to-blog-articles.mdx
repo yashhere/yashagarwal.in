@@ -9,7 +9,7 @@ tags:
   - Blog Setup
   - Development
   - NextJs
-updatedOn: 2023-08-13T04:45:04.000Z
+updatedOn: 2023-08-13T05:33:48.000Z
 ---
 
 This article will show how to add estimated reading time to your posts. This is pretty easy to achieve with Contentlayer’s computed fields.
@@ -113,7 +113,5 @@ In the generated JSON files, we will have the `readingTime` property available f
 To use it in the component, we can use the `post.readingTime.minutes` property to show the time-to-read, something like this (here `post` contains the JSON data shown above) -
 
 ```html
-<p>
-  Time to read: {Math.round(post.readingTime.minutes)} mins
-</p>
+<p>Time to read: {Math.round(post.readingTime.minutes)} mins</p>
 ```

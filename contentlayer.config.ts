@@ -11,7 +11,7 @@ import remarkSmartypants from "remark-smartypants"
 import remarkUnwrapImages from "remark-unwrap-images"
 import wikiLinkPlugin from "remark-wiki-link"
 
-import { LifeLog } from "./content/definitions/lifelog";
+import { LifeLog } from "./content/definitions/lifelog"
 import { Note } from "./content/definitions/note"
 import rehypeImageMetadata from "./utils/plugins/image-metadata"
 

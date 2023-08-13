@@ -10,11 +10,10 @@ tags:
   - Development
   - NextJs
   - Contentlayer
-updatedOn: 2023-08-13T04:45:04.000Z
+updatedOn: 2023-08-13T05:33:48.000Z
 ---
 
 The second part of this series explores Contentlayer and how to integrate it with a NextJs blog. I will elaborate on my experience managing content on my blog throughout the last eight years using various tools, why I decided to use Contentlayer and how to integrate it into a NextJs blog.
-
 
 # History
 
@@ -24,14 +23,13 @@ Although the concept of SSGs came into being with the release of Jekyll in 2008 
 
 I also dabbled with integrating headless CMS ([WordPress](https://wordpress.com/), [Sanity](https://www.sanity.io/) and [Contentful](https://www.contentful.com/)) and GraphQL based [Gatsby](https://www.gatsbyjs.com/) at various points in past few years, however I was never successful because of my unease with JavaScript. My unwillingness to rely on any third-party vendor for storing my content and the costs associated with self-hosting any open source CMS also contributed greatly to my failure to transition.
 
-
 # Migrating to NextJs
 
 When I was starting to migrate my blog to NextJs, I had a couple of requirements in mind -
 
 1. I preferred using a headless CMS for storing the content. A few reasons are -
-    a. My writing was already suffering because of my over-emphasis on coding instead of writing.
-    b. I was somewhat frustrated with my blog's overly complicated publishing process.
+   a. My writing was already suffering because of my over-emphasis on coding instead of writing.
+   b. I was somewhat frustrated with my blog's overly complicated publishing process.
 2. The CMS should allow export in popular open formats when I decide to migrate in future.
 
 Notion fits nicely into my requirements. It has a well-defined (although with poor performance) [API](https://developers.notion.com/). It is a popular tool with the developer community and offers the export of the content in markdown format. Notion would have worked well for my requirements, but I couldn't integrate it properly with my blog due to my lack of JavaScript experience.
@@ -60,7 +58,7 @@ Now, we need to patch the `next.config.js` to use the API provided by the `next-
 
 ```jsx showLineNumbers
 // next.config.js
-const { withContentlayer } = require('next-contentlayer')
+const { withContentlayer } = require("next-contentlayer")
 
 module.exports = withContentlayer(nextConfig)
 ```
@@ -248,7 +246,7 @@ Once the JSONs are generated, you will notice a new field, `slug`, added to the 
   "body": {
     "raw": "\nHello world! This is my first post.\n",
     "code": "var Component=(()=>{var sr=Object.create;..."
-  },
+  }
   // [...]
 }
 ```
@@ -279,12 +277,12 @@ We will use the `page.tsx` on line 5 to show a dynamic article page and `page.ts
 Open up `./blog/page.tsx` in your code editor and add the following code -
 
 ```jsx showLineNumbers
-import { allPosts, Post } from "contentlayer/generated"
 import Link from "next/link"
+import { allPosts, Post } from "contentlayer/generated"
 
 export default function ListPage() {
-	// sort posts based on 'published' date
-	const posts: Post[] = allPosts.sort((a, b) => {
+  // sort posts based on 'published' date
+  const posts: Post[] = allPosts.sort((a, b) => {
     return compareDesc(new Date(a.published), new Date(b.published))
   })
 
@@ -312,7 +310,7 @@ import { allPosts, Post } from "contentlayer/generated"
 import { getMDXComponent } from "next-contentlayer/hooks"
 
 type Props = {
-  params: { slug: string }
+  params: { slug: string },
 }
 
 export default async function Page({ params }: Props) {
