@@ -36,7 +36,7 @@ export async function generateMetadata(
   const note = previewNotes.find((item) => item.note.slug === params.slug)?.note
   const siteUrl: string = siteConfig.url
   if (!note) {
-    notFound()
+    return
   }
 
   // access and extend (rather than replace) parent metadata
@@ -105,7 +105,7 @@ export default async function Page({ params }: Props) {
   const article = await getPartialNote(slug)
   if (!article) {
     // TODO: Add 404 here
-    return <></>
+    notFound()
   }
   const MdxContent = getMDXComponent(article.note.body.code)
   const encodedUrl = encodeParameter(

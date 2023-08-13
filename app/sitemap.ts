@@ -8,7 +8,7 @@ export default async function sitemap() {
     lastModified: note.createdOn,
   }))
 
-  const routeUrls = ["", "/about", "/stats", "/notes"].map((route) => ({
+  const routeUrls = ["", "/whoami", "/stats", "/notes"].map((route) => ({
     url: `${siteUrl}${route}`,
     lastModified: new Date().toISOString().split("T")[0],
   }))

@@ -14,8 +14,8 @@ const navItems = {
   "/notes": {
     name: "notes",
   },
-  "/about": {
-    name: "intro",
+  "/whoami": {
+    name: "whoami",
   },
 }
 

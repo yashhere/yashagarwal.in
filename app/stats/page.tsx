@@ -7,7 +7,7 @@ import { ArrowTrendingUpIcon, PencilIcon } from "@heroicons/react/24/solid"
 import { allNotes } from "contentlayer/generated"
 
 export const metadata: Metadata = {
-  title: "Writing | Yash Agarwal",
+  title: "Stats | Yash Agarwal",
   description: "Find curated statistics regarding this website",
   alternates: {
     canonical: `${siteConfig.url}/stats`,

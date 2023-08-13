@@ -15,7 +15,7 @@ export default async function Page() {
             You should read{" "}
             <Link href="/notes/how-i-built-a-blog-with-nextjs">how</Link> I
             built this blog, but perhaps I should{" "}
-            <Link href="/about">introduce</Link> myself first.
+            <Link href="/whoami">introduce</Link> myself first.
           </p>
           <p>
             This is perhaps the 6th-edition of my personal website in seven
@@ -41,7 +41,7 @@ export default async function Page() {
           href="/notes"
           className="group flex items-center justify-start space-x-2 text-lg font-bold hover:text-primary"
         >
-          <span>Writings</span>
+          <span>Notes</span>
           <ArrowRightIcon className="h-4 w-4 transition duration-200 group-hover:translate-x-1" />
         </Link>
       </section>

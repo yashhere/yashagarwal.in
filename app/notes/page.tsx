@@ -5,7 +5,7 @@ import { siteConfig } from "@/config/site"
 import { getPreviewNotes } from "@/lib/content"
 
 export const metadata: Metadata = {
-  title: "Writing | Yash Agarwal",
+  title: "Notes | Yash Agarwal",
   description:
     "Search through the thoughts I have dumped in this vast ocean of knowledge.",
   alternates: {
@@ -25,7 +25,7 @@ export default async function Page() {
   return (
     <>
       <section>
-        <SectionTitle data={articles} title="Writing" />
+        <SectionTitle data={articles} title="Notes" />
       </section>
       <NotesList articles={articles} />
     </>

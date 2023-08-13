@@ -6,10 +6,10 @@ import SectionTitle from "@/components/ui/section-title"
 import { siteConfig } from "@/config/site"
 
 export const metadata: Metadata = {
-  title: "About Me | Yash Agarwal",
+  title: "whoami | Yash Agarwal",
   description: "Learn about me and what I do.",
   alternates: {
-    canonical: `${siteConfig.url}/about`,
+    canonical: `${siteConfig.url}/whoami`,
     types: {
       "application/rss+xml": [
         { url: "rss.xml", title: "RSS Feed for yashagarwal.in" },
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 const Page: FC = () => {
   return (
     <>
-      <SectionTitle data={null} title="About" />
+      <SectionTitle data={null} title="whoami" />
       <section className="prose prose-article md:prose-lg lg:prose-xl">
         <blockquote>
           <p>
