@@ -40,9 +40,9 @@ export default async function Page({ params }: Props) {
   const slugger = new GithubSlugger()
   const previewNotes = await getPreviewNotes()
 
-  const notesWithTag = previewNotes.filter((previewNote) => {
+  const notesWithTag = previewNotes.filter((item) => {
     slugger.reset()
-    const tags = previewNote.note.tags
+    const tags = item.note.tags
     if (!tags || tags.length == 0) {
       return false
     }
@@ -51,8 +51,8 @@ export default async function Page({ params }: Props) {
 
   // find un-slugified tag name
   const tagName = new Set<string[]>()
-  notesWithTag.forEach((note) => {
-    const tags = note.note.tags
+  notesWithTag.forEach((item) => {
+    const tags = item.note.tags
     if (!tags || tags.length == 0) {
       return
     }
