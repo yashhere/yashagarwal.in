@@ -1,30 +1,25 @@
 "use client"
 
-import { useState } from "react"
 import Image from "@/components/ui/image"
 
 const photoSources = [
   "/images/yash/at-salong-valley.jpeg",
-  "/images/yash/in-ocean.jpeg",
-  "/images/yash/at-beach.jpeg",
+  // "/images/yash/in-ocean.jpeg",
+  // "/images/yash/at-beach.jpeg",
 ]
 
 export default function RandomPhoto(props: any) {
-  const [currentImage, setCurrentImage] = useState(
-    photoSources[Math.floor(Math.random() * photoSources.length)]
-  )
-
   return (
     <Image
-      src={currentImage}
+      src={photoSources[0]}
       alt="a photo of yash"
       width={800 / 1.5}
       height={1200 / 1.5}
       style={{ objectFit: "cover" }}
       placeholder="blur"
-      blurDataURL={currentImage}
+      blurDataURL={photoSources[0]}
       priority={false}
-      loading="lazy"
+      loading="eager"
       {...props}
     />
   )

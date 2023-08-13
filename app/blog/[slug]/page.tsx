@@ -11,6 +11,8 @@ import { getPartialPost, getPreviewPosts } from "@/lib/content"
 import "@/styles/mdx.css"
 import "katex/dist/katex.css"
 
+import { notFound } from "next/navigation"
+import { BackLinks } from "@/components/backlinks"
 import { GoToTop } from "@/components/go-to-top"
 import { TagList } from "@/components/tag-list"
 import Draft from "@/components/ui/draft"
@@ -33,7 +35,7 @@ export async function generateMetadata(
   const post = previewPosts.find((item) => item.post.slug === params.slug)?.post
   const siteUrl: string = siteConfig.url
   if (!post) {
-    return {}
+    notFound()
   }
 
   // access and extend (rather than replace) parent metadata
@@ -168,7 +170,7 @@ export default async function Page({ params }: Props) {
               {article.post.status === "draft" ? <Draft /> : null}
             </div>
           </div>
-
+          <BackLinks backlinks={article.backlinks} />
           <hr className="border-t-1 border-gray-300/60" />
           <div className="flex flex-col items-center justify-center space-x-2 space-y-4 py-8 sm:flex-row sm:justify-between sm:space-y-0">
             <Link
