@@ -36,7 +36,7 @@ export async function generateMetadata(
   const note = previewNotes.find((item) => item.note.slug === params.slug)?.note
   const siteUrl: string = siteConfig.url
   if (!note) {
-    return
+    return {}
   }
 
   // access and extend (rather than replace) parent metadata
