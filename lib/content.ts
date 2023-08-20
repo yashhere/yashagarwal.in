@@ -87,7 +87,8 @@ export async function getPartialNote(slug: string) {
     note: trimmedNote,
     views: metrics?.views || 0,
     likes: metrics?.likes || 0,
-    backlinks: getBacklinks(note.slug as string, URL_SEGMENTS.NOTES),
+    // Array destructuring, in case I decide to include backlinks to other types as well
+    backlinks: [...getNoteBacklinks(note.slug as string, URL_SEGMENTS.NOTES)],
     series:
       (note.series && getSeries(note.series?.title as string, note.slug)) ||
       undefined,
@@ -105,13 +106,15 @@ export function getNote(slug: string) {
   }
 }
 
-export function getBacklinks(slug: string, urlSegment: string) {
-  const backlinkingNotes = allNotes.filter((doc) => {
-    const urlToSearch = `/${urlSegment}/${slug}`
-    return doc.body.raw.includes(urlToSearch)
+export function getNoteBacklinks(slug: string, urlSegment: string) {
+  const backlinksToNote = allNotes.filter((doc) => {
+    if (doc.slug !== slug) {
+      const urlToSearch = `/${urlSegment}/${slug}`
+      return doc.body.raw.includes(urlToSearch)
+    }
   }) as DocumentTypes[]
 
-  return backlinkingNotes.map((doc) => ({
+  return backlinksToNote.map((doc) => ({
     title: doc.title,
     url: `/${urlSegment}/${doc.slug}`,
     type: "Note",
