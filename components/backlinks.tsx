@@ -1,11 +1,11 @@
-import { getBacklinks } from "@/lib/content"
+import { getNoteBacklinks } from "@/lib/content"
 
 import Link from "./ui/link"
 
 export const BackLinks = ({
   backlinks,
 }: {
-  backlinks?: NonNullable<ReturnType<typeof getBacklinks>>
+  backlinks?: NonNullable<ReturnType<typeof getNoteBacklinks>>
 }) => {
   if (backlinks?.length === 0) {
     return null
