@@ -8,6 +8,7 @@ import {
   ReactNode,
 } from "react"
 import Link from "next/link"
+import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
 import { TbArrowUpRight } from "react-icons/tb"
 
@@ -20,6 +21,17 @@ interface ExternalLinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
   noExternalLinkIcon?: boolean
   noHighlight?: boolean
   icon?: ReactNode
+}
+
+function buildUrl(fromURL, fromQuery) {
+  const url = new URL(fromURL)
+
+  const query = new URLSearchParams(fromQuery)
+  for (const [key, value] of Array.from(new Set(query))) {
+    url.searchParams.set(key, value)
+  }
+
+  return url.toString()
 }
 
 const ExternalLink = forwardRef<HTMLAnchorElement, ExternalLinkProps>(
@@ -37,6 +49,7 @@ const ExternalLink = forwardRef<HTMLAnchorElement, ExternalLinkProps>(
     ref
   ): JSX.Element => {
     const isInternalLink = href.startsWith("/") || href.startsWith("#")
+    const hostname = new URL(`${siteConfig.url}`).hostname
     const isUnderline = underline
       ? true
       : (typeof children === "string" || typeof children === "undefined") &&
@@ -63,7 +76,7 @@ const ExternalLink = forwardRef<HTMLAnchorElement, ExternalLinkProps>(
           </Link>
         ) : (
           <a
-            href={href}
+            href={buildUrl(href, `ref=${hostname}`)}
             aria-label="External Link"
             className={cn(
               "text-primary no-underline transition duration-200",
