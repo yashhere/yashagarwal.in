@@ -2,7 +2,6 @@
 
 import Script from "next/script"
 import { siteConfig } from "@/config/site"
-import { Analytics as VercelAnalytics } from "@vercel/analytics/react"
 
 export function Analytics() {
   const siteUrl = siteConfig.url
@@ -15,18 +14,11 @@ export function Analytics() {
 
   return (
     <>
-      <VercelAnalytics />
       <Script
         async
         defer
         src="https://static.cloudflareinsights.com/beacon.min.js"
         data-cf-beacon='{"token": "e14f712dcb3f4bb7aab3a2f606159e03"}'
-      />
-      <Script
-        async
-        defer
-        data-website-id="528ca5db-941c-4b23-982f-da0696d768d0"
-        src="https://umami.yashagarwal.in/umami.js"
       />
     </>
   )
