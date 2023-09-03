@@ -200,9 +200,8 @@ export default async function Page({ params }: Props) {
             <GoToTop slug={slug} />
           </div>
 
-          <hr className="border-t-1 border-gray-300/60" />
-
-          <Comments />
+          {/* <hr className="border-t-1 border-gray-300/60" />
+          <Comments /> */}
         </Suspense>
       </div>
     </>
