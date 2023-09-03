@@ -43,8 +43,7 @@ const Socials = [
 
 export const Footer: FC = () => {
   return (
-    <footer className="mt-12 pb-4 font-heading">
-      <hr className="border-[0.5px]" />
+    <footer className="mt-auto pb-4 font-heading">
       <div className="mt-12 flex flex-row items-center justify-center gap-x-10">
         {Socials.map((s) => {
           return (
