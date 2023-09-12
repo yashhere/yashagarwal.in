@@ -26,24 +26,20 @@ export default async function Page() {
               negligence
             </Link>{" "}
             to actually write! Not this time. Of course, that&apos;s what I
-            always say 😈.
-          </p>
-          <p>
-            So, till the time I abandon this version in favor of a new edition
-            of my blog, keep reading and sharing! 🚀
+            always say.
           </p>
           <br />
         </div>
       </section>
       <section className="flex flex-col justify-start">
         <RecentNotes count={siteConfig.recentNotes} />
-        <Link
+        {/* <Link
           href="/notes"
           className="group flex items-center justify-start space-x-2 text-lg font-bold hover:text-primary"
         >
           <span>All Notes</span>
           <ArrowRightIcon className="h-4 w-4 transition duration-200 group-hover:translate-x-1" />
-        </Link>
+        </Link> */}
       </section>
     </>
   )
