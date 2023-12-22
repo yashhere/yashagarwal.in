@@ -25,8 +25,8 @@ export function Analytics() {
       <Script
         async
         defer
-        data-website-id="528ca5db-941c-4b23-982f-da0696d768d0"
-        src="https://umami.yashagarwal.in/umami.js"
+        data-website-id="f66afc4e-6226-4ce0-ae83-0bd13afa4d8f"
+        src="/stats/script.js"
       />
     </>
   )
