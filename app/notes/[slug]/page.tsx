@@ -1,5 +1,5 @@
 import { Metadata, ResolvingMetadata } from "next"
-import { Comments } from "@/components/comments"
+import { DisqusComments } from "@/components/comments"
 import CustomMDXComponents from "@/components/mdx"
 import { Series } from "@/components/series"
 import { TableOfContents } from "@/components/table-of-contents"
@@ -175,7 +175,7 @@ export default async function Page({ params }: Props) {
 
         <hr className="border-t-1 border-gray-300/60" />
 
-        <Comments />
+        <DisqusComments slug={slug} url={""} title={""} />
       </div>
     </>
   )
