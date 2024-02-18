@@ -117,7 +117,12 @@ export default function RootLayout({ children }: RootLayoutProps) {
           monoFont.variable
         )}
       >
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <ThemeProvider
+          attribute="class"
+          enableColorScheme={false}
+          defaultTheme="system"
+          enableSystem
+        >
           <main className="mt-6 flex max-w-2xl flex-auto flex-col px-2 sm:mx-auto md:mt-0 md:px-0">
             <Navigation />
             {children}
