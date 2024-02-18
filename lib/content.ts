@@ -1,9 +1,7 @@
-import { NoteWithMetrics } from "@/types"
+import { NoteWithMetadata } from "@/types"
 import { pick } from "contentlayer/client"
 import { allNotes, DocumentTypes, Note } from "contentlayer/generated"
 import { compareDesc } from "date-fns"
-
-import { getAllMetrics } from "./actions"
 
 const URL_SEGMENTS = {
   NOTES: "notes",
@@ -32,7 +30,7 @@ export function getNotes() {
 export async function getPreviewNotes() {
   const notes = getNotes()
 
-  const previewNotes: NoteWithMetrics[] = []
+  const previewNotes: NoteWithMetadata[] = []
   notes?.forEach(async (note) => {
     // all notes with draft status are omitted from the blog list and popular
     // list. These are navigable only from the series menu.
@@ -47,8 +45,6 @@ export async function getPreviewNotes() {
           "tags",
           "image",
         ]),
-        views: 0,
-        likes: 0,
       })
     }
   })
@@ -57,20 +53,17 @@ export async function getPreviewNotes() {
 }
 
 export async function getPartialNote(slug: string) {
-  const allMetrics = await getAllMetrics()
   const note = getNotes().find((item) => item.slug === slug)
   if (!note) {
     return null
   }
 
-  const metrics = allMetrics.find((item) => item.slug === slug)
   const trimmedNote: Partial<Note> = {
     title: note.title,
     createdOn: note.createdOn,
     updatedOn: note.updatedOn,
     slug: note.slug,
     description: note.description,
-    growthStage: note.growthStage,
     body: {
       code: note.body.code,
       raw: "", // use empty string to reduce payload size
@@ -83,10 +76,8 @@ export async function getPartialNote(slug: string) {
     readingTime: note.readingTime,
   }
 
-  const article: NoteWithMetrics = {
+  const article: NoteWithMetadata = {
     note: trimmedNote,
-    views: metrics?.views || 0,
-    likes: metrics?.likes || 0,
     // Array destructuring, in case I decide to include backlinks to other types as well
     backlinks: [...getNoteBacklinks(note.slug as string, URL_SEGMENTS.NOTES)],
     series:

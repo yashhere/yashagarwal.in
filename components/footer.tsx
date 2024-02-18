@@ -1,9 +1,7 @@
 import { FC } from "react"
 import { env } from "@/env.mjs"
-import { cn } from "@/lib/utils"
 import { RssIcon } from "@heroicons/react/24/outline"
 import moment from "moment"
-import { IconContext } from "react-icons"
 import {
   SlSocialGithub,
   SlSocialInstagram,
