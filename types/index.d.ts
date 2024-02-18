@@ -21,10 +21,8 @@ export type SiteConfig = {
   recentNotes: number
 }
 
-export type NoteWithMetrics = {
+export type NoteWithMetadata = {
   note: Partial<Note>
-  likes: number
-  views: number
   backlinks?: {
     title: string
     url: string

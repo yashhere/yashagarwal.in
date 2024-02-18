@@ -1,26 +1,15 @@
 "use client"
 
-import { ChangeEvent, Suspense, useState } from "react"
+import { ChangeEvent, useState } from "react"
 import { NoteList } from "@/components/notes-list"
 import { SearchInput } from "@/components/search"
-import { NotePreviewLoading } from "@/components/ui/note-preview-loading"
-import { NoteWithMetrics } from "@/types"
-
-export const NoteListLoading = ({ notes }: { notes: NoteWithMetrics[] }) => {
-  return (
-    <>
-      {notes.map((article) => (
-        <NotePreviewLoading key={article.note.slug} />
-      ))}
-    </>
-  )
-}
+import { NoteWithMetadata } from "@/types"
 
 export const NotesList = ({
   notes,
   noSearchBox = false,
 }: {
-  notes: NoteWithMetrics[]
+  notes: NoteWithMetadata[]
   noSearchBox?: boolean
 }) => {
   const [search, setSearch] = useState("")
@@ -50,9 +39,7 @@ export const NotesList = ({
         </div>
       ) : null}
       <section className="w-full space-y-4">
-        <Suspense fallback={<NoteListLoading notes={notes} />}>
-          <NoteList notes={notes} />
-        </Suspense>
+        <NoteList notes={notes} />
       </section>
     </div>
   )

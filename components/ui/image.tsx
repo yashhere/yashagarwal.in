@@ -1,6 +1,6 @@
 "use client"
 
-import { forwardRef, ImgHTMLAttributes, useState } from "react"
+import { forwardRef, useState } from "react"
 import Image, { ImageProps } from "next/image"
 import { cn } from "@/lib/utils"
 

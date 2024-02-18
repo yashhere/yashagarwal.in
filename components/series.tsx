@@ -5,7 +5,6 @@ import Link from "next/link"
 import { getSeries } from "@/lib/content"
 import { cn } from "@/lib/utils"
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/outline"
-import { motion } from "framer-motion"
 
 type TitleProps = {
   children?: ReactNode
@@ -65,22 +64,7 @@ export const Series = ({
       )}
       <hr className="border-t-1 my-4 border-gray-300/60" />
       {isOpen && (
-        <motion.div
-          initial="collapsed"
-          animate="open"
-          exit="collapsed"
-          transition={{ duration: 0.8, ease: "easeInOut" }}
-          variants={{
-            open: {
-              opacity: 1,
-              height: "auto",
-            },
-            collapsed: {
-              opacity: 0,
-              height: 0,
-            },
-          }}
-        >
+        <div>
           <ul className="text-lg">
             {series.notes?.map((note) => (
               <li
@@ -119,7 +103,7 @@ export const Series = ({
             ))}
           </ul>
           <hr className="border-t-1 my-4 border-gray-300/60" />
-        </motion.div>
+        </div>
       )}
     </div>
   )

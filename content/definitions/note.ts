@@ -52,14 +52,7 @@ export const Note = defineDocumentType(() => ({
     createdOn: { type: "string", required: true },
     updatedOn: { type: "string", required: false },
     description: { type: "string" },
-    growthStage: {
-      type: "enum",
-      options: ["seedling", "budding", "evergreen"],
-      default: "evergreen",
-    },
     image: { type: "string" },
-    // this is used to determine if I want to show a note to public or not
-    // not to be seen together with growthStage
     status: {
       type: "enum",
       options: ["draft", "published"],

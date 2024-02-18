@@ -1,7 +1,7 @@
 import { NotePreview } from "@/components/note-preview"
-import { NoteWithMetrics } from "@/types"
+import { NoteWithMetadata } from "@/types"
 
-export const NoteList = ({ notes }: { notes: NoteWithMetrics[] }) => {
+export const NoteList = ({ notes }: { notes: NoteWithMetadata[] }) => {
   return (
     <>
       {notes?.map((note) => {
