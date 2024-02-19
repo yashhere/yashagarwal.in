@@ -9,7 +9,6 @@ import { useInView } from "react-intersection-observer"
 interface ICommentPprops {
   url: string
   slug: string
-  title: string
 }
 
 export const Comments = () => {
@@ -26,7 +25,7 @@ export const Comments = () => {
   )
 }
 
-export const DisqusComments = ({ url, slug, title }: ICommentPprops) => {
+export const DisqusComments = ({ url, slug }: ICommentPprops) => {
   const { resolvedTheme = "light" } = useTheme()
   const { ref, inView } = useInView({
     threshold: 0,
@@ -35,9 +34,8 @@ export const DisqusComments = ({ url, slug, title }: ICommentPprops) => {
   })
   const disqusShortname = "yashhere"
   const disqusConfig = {
-    url: url,
     identifier: slug,
-    title: title,
+    url: url,
   }
 
   return (

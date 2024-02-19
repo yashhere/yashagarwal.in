@@ -174,8 +174,10 @@ export default async function Page({ params }: Props) {
         </div>
 
         <hr className="border-t-1 border-gray-300/60" />
-
-        <DisqusComments slug={slug} url={""} title={""} />
+        <DisqusComments
+          slug={params.slug}
+          url={`${siteConfig.url}/notes/${params.slug}`}
+        />
       </div>
     </>
   )
