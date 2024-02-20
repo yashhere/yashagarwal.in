@@ -39,7 +39,7 @@ export const NotesList = ({
         </div>
       ) : null}
       <section className="w-full space-y-4">
-        <NoteList notes={notes} />
+        <NoteList notes={results} />
       </section>
     </div>
   )
