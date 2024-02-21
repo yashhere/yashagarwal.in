@@ -70,7 +70,7 @@ export const Series = ({
               <li
                 key={note.slug}
                 className={cn(
-                  "relative my-3 pl-7 before:absolute before:left-1 before:top-[9px] before:h-1.5 before:w-1.5 before:rounded-full",
+                  "relative my-3 pl-7 before:absolute before:left-1 before:top-[9px] before:size-1.5 before:rounded-full",
                   {
                     "before:bg-gray-100/10 before:ring-[3px] before:ring-primary before:ring-offset-1 before:ring-offset-gray-100/10":
                       note.isCurrent,

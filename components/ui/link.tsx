@@ -90,14 +90,14 @@ const ExternalLink = forwardRef<HTMLAnchorElement, ExternalLinkProps>(
           >
             {icon &&
               cloneElement(icon as ReactElement, {
-                className: "inline h-5 w-5 pb-[3px] mr-1",
+                className: "inline size-5 pb-[3px] mr-1",
               })}
             {noExternalLinkIcon ? children : <span>{children}</span>}{" "}
             {/* have to use inline icon because flex isn't working with multiline text. */}
             {/* Can't help with weird padding hack to center the icon. Yikes! */}
             {!noExternalLinkIcon && (
               <>
-                <TbArrowUpRight className="-mx-1 inline h-5 w-5 pb-[3px]" />
+                <TbArrowUpRight className="-mx-1 inline size-5 pb-[3px]" />
               </>
             )}
           </a>

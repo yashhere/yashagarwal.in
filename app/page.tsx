@@ -42,7 +42,7 @@ export default async function Page() {
           className="group flex items-center justify-start space-x-2 text-lg font-bold hover:text-primary"
         >
           <span>All Notes</span>
-          <ArrowRightIcon className="h-4 w-4 transition duration-200 group-hover:translate-x-1" />
+          <ArrowRightIcon className="size-4 transition duration-200 group-hover:translate-x-1" />
         </Link>
       </section>
     </>
