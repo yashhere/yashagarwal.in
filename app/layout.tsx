@@ -43,10 +43,6 @@ export async function generateMetadata(): Promise<Metadata> {
     creator: "Yash Agarwal",
     generator: "Next.js",
     archives: [`${siteUrl}/notes`],
-    themeColor: [
-      { media: "(prefers-color-scheme: dark)", color: "#0e141b" },
-      { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    ],
     openGraph: {
       type: "website",
       locale: "en_US",
@@ -99,6 +95,13 @@ export async function generateMetadata(): Promise<Metadata> {
       },
     },
   }
+}
+
+export const viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: dark)", color: "#0e141b" },
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+  ],
 }
 
 interface RootLayoutProps {
