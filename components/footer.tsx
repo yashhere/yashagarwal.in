@@ -52,7 +52,7 @@ export const Footer: FC = () => {
               aria-label={s.name}
               noExternalLinkIcon
             >
-              <s.icon className="h-6 w-6 text-text/60 hover:text-text" />
+              <s.icon className="size-6 text-text/60 hover:text-text" />
             </Link>
           )
         })}

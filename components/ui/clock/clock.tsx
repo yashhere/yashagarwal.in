@@ -18,13 +18,13 @@ export const AnalogClock: FC = () => {
 
   return (
     <div className="group relative flex cursor-pointer items-center justify-center text-sm">
-      <div className="relative flex h-6 w-6 flex-col items-center justify-start overflow-hidden rounded-full">
+      <div className="relative flex size-6 flex-col items-center justify-start overflow-hidden rounded-full">
         {/* The Circle */}
-        <div className="h-6 w-6 rounded-full border border-text"></div>
+        <div className="size-6 rounded-full border border-text"></div>
 
-        <section className="absolute z-50 flex h-6 w-6 items-center justify-center">
+        <section className="absolute z-50 flex size-6 items-center justify-center">
           {/* Center Circle */}
-          <span className="absolute z-50 flex rounded-full bg-text/80 before:absolute before:h-px before:w-px before:justify-center before:rounded-full before:bg-text"></span>
+          <span className="absolute z-50 flex rounded-full bg-text/80 before:absolute before:size-px before:justify-center before:rounded-full before:bg-text"></span>
 
           {/* Seconds hand */}
           <span

@@ -32,11 +32,9 @@ export const DarkToggle = () => {
           }
         }}
       >
-        {theme === "light" ? <TbSun className="h-6 w-6 text-text" /> : null}
-        {theme === "dark" ? <TbMoon className="h-6 w-6 text-text" /> : null}
-        {theme === "system" ? (
-          <TbSunMoon className="h-6 w-6 text-text" />
-        ) : null}
+        {theme === "light" ? <TbSun className="size-6 text-text" /> : null}
+        {theme === "dark" ? <TbMoon className="size-6 text-text" /> : null}
+        {theme === "system" ? <TbSunMoon className="size-6 text-text" /> : null}
       </motion.div>
     </>
   )
