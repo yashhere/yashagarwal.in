@@ -21,7 +21,7 @@ export const BackLinks = ({
         <ul className="list-inside list-disc text-lg leading-8">
           {backlinks?.map((link) => {
             return (
-              <li>
+              <li key={link.url}>
                 <Link href={link.url} noUnderline className="text-primary">
                   <strong>{link.type}</strong>: {link.title}
                 </Link>
