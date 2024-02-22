@@ -1,0 +1,60 @@
+---
+title: "Homelab: The experiment begins"
+createdOn: 2024-02-18T03:17:15.000Z
+status: published
+series:
+  order: 1
+  title: Homelab Tales
+tags:
+  - Homelab
+  - Networking
+updatedOn: 2024-02-22T11:40:45.000Z
+---
+
+I have been planning to set up a homelab for almost six years now. It all started in the last year of my graduation. At that time, the goal was to learn about PC hardware by building a high-end PC. Of course that would have required a high investment. I was already familiar with enterprise level hardware because of my involvement in the SSL lab upgradation effort (pity I didn’t get to feel that shiny new server I recommended as the next upgrade for the lab).
+
+Later I started looking at Raspberry Pi. My earliest memory of the Raspberry Pi is from 2019 when I was working with Cisco in Bangalore. I did extensive research, prepared a plan but somehow ended up never buying the SBC. You know, a Raspberry Pi is not sufficient alone in most cases - you need a case, an active cooler, cables, power supply, a UPS. All of this will put the expenses upwards in the range of 10k. I don’t think unit economics work in favour of Raspberry Pi anymore.
+
+However, for the last 4-5 months, since I have decided to focus on my career again, I have been thinking about exploring the Linux world again. So, the Raspberry Pi came back on my radar. I am going to work from home for the foreseeable future. More importantly, I have a mostly uninterruptible internet connection. The power connection sometimes fluctuates in my area. A RPi would instantly go down in case of a power cut, along with a high probability of data corruption. I was able to circumvent the issue of the router going down on a power cut by buying a router UPS, but buying one for RPi didn't make sense to me.
+
+I have a HP Pavilion laptop from 2016 gathering dust in my closet. Since I started using MacOS and Apple hardware, getting back to Windows and its keyboard layout has proven to be more difficult than I anticipated. So, my use of this laptop was limited to occasionally using Windows and as an offsite backup destination for some of my old data (nostalgia, huh). I was hesitant to keep it powered on 24/7 to preserve it for some more years. But then I convinced myself that in the worst case scenario, I will have to buy a new battery. Apart from that, the possibility of it getting fried is pretty miniscule.
+
+I was able to get to the work quickly after convincing myself
+
+# The Hardware
+
+I bought a **[HP Pavilion Notebook - 15-ab516tx](https://support.hp.com/us-en/document/c05030912)** in the third year of my graduation. At that time, it was a pretty powerful laptop and served me well in all my Linux and Windows experiments throughout the college term.
+
+It has an Intel Core-i5 6th generation CPU with four cores. It currently has 8 GB DDR3L-1600 SDRAM installed. The other RAM slot is a DDR type slot, but I am not sure if this is accurate. For now, I assume that I am limited to 8GB of RAM on this system. The ethernet port on this device is the Integrated 10/100 BASE-T Ethernet LAN.
+
+Yet another under-utilised component on this device is the NVIDIA 940M (2 GB DDR3 dedicated). I intend to use it for video transcoding in future however, I am doubtful about the support for it. If this doesn’t work, I might have to settle for Intel’s inbuilt graphic card.
+
+It came with a 1TB 5400 rpm SATA HDD. It got very slow with time, so I purchased a 512 GB SSD and placed it in the SATA slot of my HDD. Later I removed the disk tray from the laptop and installed the unused HDD into its SATA port using a caddy. So, now I have 1.5 TB of storage space. Windows 10 is installed on a 200 GB NTFS partition. Another 500 GB is occupied with my personal files (which I intend to organise later).
+
+# The OS
+
+I have not tinkered with Linux for almost 6 years now. Since I left college, somehow my zeal to explore new stuff also diminished. I had developed a false impression that building something is more important than using what others built. While I still believe in it, I don’t want to restrict myself with such black and white statements. Both activities have their significance. What matters more is to keep the fire burning.
+
+Anyway, I had a couple of choices for the OS on my server - Ubuntu server, Arch Linux, Debian minimal, and a few Virtualisation platforms - Proxmox etc. Proxmox was out of the question because I wasn’t sure that my laptop would be able to spin up more than a few VMs with just 4 cores and 8 GB of RAM.
+
+I don’t have a good experience with Ubuntu, though it has good support for non-free drivers, especially NVIDIA. Arch Linux may have been a good choice but I wanted to stick with apt-based distro. In the end, I decided to install Debian minimal on a 100 GB dedicated root partition.
+
+For some reason (most likely due to my RTL8723BE wireless card on my laptop), the installer failed a couple of times due to OOM issues. I had to boot up the installer by modifying the GRUB by adding following lines (although I doubt [PCIE errors](https://askubuntu.com/questions/1190813/realtek-rtl8723be-pcie-wireless-network-adapter-is-crashing-my-ubuntu-18-04) can cause OOM, but it worked, so all good) -
+
+```bash
+GRUB_CMDLINE_LINUX_DEFAULT="quiet pci=noaer"
+```
+
+Once the installation finished, I was greeted with the default TTY screen.
+
+# What’s next
+
+The Debian minimal comes with literally nothing. Not even `sudo`. In the next post in this series, I plan to write about setting up the Debian server - networking, SSH, setting up lid-close action etc. Later I will explain how to set up Docker MacVLAN interfaces and make docker containers appear like another device on your network.
+
+My near term goals with my homelab setup is to re-learn Linux networking, docker internals and host some nice-to-have applications like DNS Ad Blockers, Network Analyzers, Monitoring Dashboards (Grafana etc.) etc.
+
+The long term goal is to understand the WireGuard architecture and set it up to allow access to my home network from outside. I may also delve into port-forwarding some of the local ports to the outside world and host my blog from my server directly.
+
+While this is an exciting thing to dive into, I will also be focusing on employing my server for development work. I have planned many exciting things for 2024, most of which will get some mention on this blog.
+
+Stay tuned!
