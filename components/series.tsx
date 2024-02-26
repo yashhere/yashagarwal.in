@@ -33,7 +33,7 @@ export const Series = ({
   const index = series.notes?.findIndex((note) => note?.isCurrent) + 1
 
   return (
-    <div>
+    <>
       {interactive ? (
         <button
           className="group flex w-full items-center text-left"
@@ -65,7 +65,7 @@ export const Series = ({
       <hr className="border-t-1 my-4 border-gray-300/60" />
       {isOpen && (
         <div>
-          <ul className="text-lg">
+          <ul className="text-base">
             {series.notes?.map((note) => (
               <li
                 key={note.slug}
@@ -105,6 +105,6 @@ export const Series = ({
           <hr className="border-t-1 my-4 border-gray-300/60" />
         </div>
       )}
-    </div>
+    </>
   )
 }
