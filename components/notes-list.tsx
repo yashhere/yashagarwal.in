@@ -3,7 +3,7 @@ import { NoteWithMetadata } from "@/types"
 
 export const NoteList = ({
   notes,
-  showDescription,
+  showDescription = false,
 }: {
   notes: NoteWithMetadata[]
   showDescription: boolean
