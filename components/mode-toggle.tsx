@@ -23,18 +23,23 @@ export const DarkToggle = () => {
       <motion.div
         whileTap={{ rotate: 15 }}
         onClick={() => {
-          if (theme === "dark") {
-            setTheme("system")
-          } else if (theme === "light") {
-            setTheme("dark")
+          if (theme == "system") {
+            if (resolvedTheme == "dark") {
+              setTheme("light")
+            } else {
+              setTheme("dark")
+            }
           } else {
-            setTheme("light")
+            setTheme("system")
           }
         }}
       >
-        {theme === "light" ? <FiSun className="size-6 text-text" /> : null}
-        {theme === "dark" ? <FiMoon className="size-6 text-text" /> : null}
-        {theme === "system" ? <FiMonitor className="size-6 text-text" /> : null}
+        {resolvedTheme === "light" ? (
+          <FiSun className="size-6 text-text" />
+        ) : null}
+        {resolvedTheme === "dark" ? (
+          <FiMoon className="size-6 text-text" />
+        ) : null}
       </motion.div>
     </>
   )
