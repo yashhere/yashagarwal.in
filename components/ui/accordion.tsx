@@ -1,5 +1,5 @@
 import { FC, ReactNode, useState } from "react"
-import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid"
+import { FiChevronDown, FiChevronUp } from "react-icons/fi"
 
 type AccordionItemProps = {
   label: string
@@ -21,9 +21,9 @@ export const AccordionItem: FC<AccordionItemProps> = ({
           <h4 className="font-semibold">{label}</h4>
           <button onClick={(e) => setOpen(!open)}>
             {open ? (
-              <ChevronUpIcon className="w-4" />
+              <FiChevronUp className="w-4" />
             ) : (
-              <ChevronDownIcon className="w-4" />
+              <FiChevronDown className="w-4" />
             )}
           </button>
         </div>

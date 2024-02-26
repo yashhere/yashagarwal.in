@@ -10,7 +10,7 @@ import {
 import Link from "next/link"
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
-import { TbArrowUpRight } from "react-icons/tb"
+import { FiArrowUpRight } from "react-icons/fi"
 
 interface ExternalLinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
   href: string
@@ -53,10 +53,10 @@ const ExternalLink = forwardRef<HTMLAnchorElement, ExternalLinkProps>(
     const isUnderline = underline
       ? true
       : (typeof children === "string" || typeof children === "undefined") &&
-        !noUnderline &&
-        isInternalLink
-      ? true
-      : false
+          !noUnderline &&
+          isInternalLink
+        ? true
+        : false
 
     return (
       <>
@@ -97,7 +97,7 @@ const ExternalLink = forwardRef<HTMLAnchorElement, ExternalLinkProps>(
             {/* Can't help with weird padding hack to center the icon. Yikes! */}
             {!noExternalLinkIcon && (
               <>
-                <TbArrowUpRight className="-mx-1 inline size-5 pb-[3px]" />
+                <FiArrowUpRight className="-mx-1 inline size-5 pb-[3px]" />
               </>
             )}
           </a>

@@ -14,7 +14,7 @@ export const NotePreview = ({ note }: { note: NoteWithMetadata }) => {
           <span className="font-heading text-lg font-medium">
             {note.note.title}
           </span>
-          <span className="text-sm tracking-widest text-text/60 transition duration-200 sm:group-hover:-translate-x-1">
+          <span className="text-sm tracking-widest text-text/60 transition duration-200 sm:group-hover:translate-x-1">
             {moment(note.note.createdOn).format("DD/MM/YY")}
           </span>
         </div>

@@ -3,7 +3,7 @@
 import { FC, ReactNode, useState } from "react"
 import { useRouter } from "next/navigation"
 import { cn } from "@/lib/utils"
-import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/outline"
+import { FiChevronDown, FiChevronUp } from "react-icons/fi"
 
 import Link from "./ui/link"
 
@@ -44,9 +44,9 @@ export const TableOfContents = ({ headings, path, interactive }) => {
             <div className="ml-auto pl-4">
               <div className="rounded-full bg-gray-600/10 p-2 text-text group-hover:bg-gray-600/25">
                 {isOpen ? (
-                  <ChevronUpIcon className="w-5" />
+                  <FiChevronUp className="w-5" />
                 ) : (
-                  <ChevronDownIcon className="w-5" />
+                  <FiChevronDown className="w-5" />
                 )}
               </div>
             </div>

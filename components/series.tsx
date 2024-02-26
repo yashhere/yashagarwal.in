@@ -4,7 +4,7 @@ import React, { FC, ReactNode } from "react"
 import Link from "next/link"
 import { getSeries } from "@/lib/content"
 import { cn } from "@/lib/utils"
-import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/outline"
+import { FiChevronDown, FiChevronUp } from "react-icons/fi"
 
 type TitleProps = {
   children?: ReactNode
@@ -52,9 +52,9 @@ export const Series = ({
           <div className="ml-auto pl-4">
             <div className="rounded-full bg-gray-600/10 p-2 text-text group-hover:bg-gray-600/25">
               {isOpen ? (
-                <ChevronUpIcon className="w-5" />
+                <FiChevronUp className="w-5" />
               ) : (
-                <ChevronDownIcon className="w-5" />
+                <FiChevronDown className="w-5" />
               )}
             </div>
           </div>

@@ -11,16 +11,18 @@ const navItems = {
   "/": {
     name: "home",
   },
-  "/work": {
-    name: "work",
-  },
   "/notes": {
     name: "notes",
+  },
+  "/work": {
+    name: "work",
   },
 }
 
 export const Navigation = () => {
   let pathname = usePathname() || "/"
+
+  // a note should also show `notes` as active tab
   if (pathname.includes("/notes/")) {
     pathname = "/notes"
   }

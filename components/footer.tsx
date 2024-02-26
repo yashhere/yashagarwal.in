@@ -1,13 +1,7 @@
 import { FC } from "react"
 import { env } from "@/env.mjs"
-import { RssIcon } from "@heroicons/react/24/outline"
 import moment from "moment"
-import {
-  SlSocialGithub,
-  SlSocialInstagram,
-  SlSocialLinkedin,
-  SlSocialTwitter,
-} from "react-icons/sl"
+import { FiGithub, FiLinkedin, FiRss } from "react-icons/fi"
 
 import Link from "./ui/link"
 
@@ -15,57 +9,69 @@ const Socials = [
   {
     name: "Github",
     url: "https://github.com/yashhere",
-    icon: SlSocialGithub,
+    icon: FiGithub,
   },
   {
     name: "Linkedin",
     url: "https://www.linkedin.com/in/theyashagarwal/",
-    icon: SlSocialLinkedin,
+    icon: FiLinkedin,
   },
   {
     name: "RSS",
     url: `${env.NEXT_PUBLIC_APP_URL}/atom.xml`,
-    icon: RssIcon,
-  },
-  {
-    name: "Twitter",
-    url: "https://twitter.com/yash__here",
-    icon: SlSocialTwitter,
-  },
-  {
-    name: "Instagram",
-    url: "https://instagram.com/yum_yash",
-    icon: SlSocialInstagram,
+    icon: FiRss,
   },
 ]
 
+const navItems = {
+  "/": {
+    name: "home",
+  },
+  "/notes": {
+    name: "notes",
+  },
+  "/work": {
+    name: "work",
+  },
+}
+
 export const Footer: FC = () => {
   return (
-    <footer className="mt-12 pb-4 font-heading">
+    <footer className="mt-auto font-heading">
       <hr className="border-[0.5px]" />
-      <div className="mt-12 flex flex-row items-center justify-center gap-x-10">
-        {Socials.map((s) => {
-          return (
-            <Link
-              href={s.url}
-              key={s.name}
-              aria-label={s.name}
-              noExternalLinkIcon
-            >
-              <s.icon className="size-6 text-text/60 hover:text-text" />
-            </Link>
-          )
-        })}
-      </div>
-
-      <div className="mx-auto mt-8 flex flex-col items-center justify-center text-lg">
-        <p>
-          Nurtured with care by{" "}
-          <Link noUnderline className="text-secondary" href="/">
-            Yash
-          </Link>
-        </p>
-        <p className="mt-4 text-base">🌱 2016 - {moment().format("YYYY")}</p>
+      <div className="group my-8 flex flex-row items-center justify-between">
+        <div className="flex flex-col gap-y-8 self-center">
+          <div className="flex flex-row gap-x-4">
+            {Socials.map((s) => {
+              return (
+                <Link
+                  href={s.url}
+                  key={s.name}
+                  aria-label={s.name}
+                  noExternalLinkIcon
+                >
+                  <s.icon className="size-5 text-text/60 hover:text-text" />
+                </Link>
+              )
+            })}
+          </div>
+          <div className="justify-right text-lg">
+            <p className="text-base">&copy; 2016 - {moment().format("YYYY")}</p>
+          </div>
+        </div>
+        <div className="flex flex-col items-start">
+          {Object.entries(navItems).map(([path, { name }]) => {
+            return (
+              <Link
+                key={path}
+                href={path}
+                className="text-text/60 hover:text-text hover:no-underline"
+              >
+                {name}
+              </Link>
+            )
+          })}
+        </div>
       </div>
     </footer>
   )

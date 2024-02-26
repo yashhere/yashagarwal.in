@@ -25,7 +25,7 @@ export default async function Page() {
   return (
     <>
       <section>
-        <SectionTitle data={notes} title="Notes" />
+        <SectionTitle data={notes} title="notes" />
       </section>
       <NotesList notes={notes} />
     </>
