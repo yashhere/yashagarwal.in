@@ -28,7 +28,7 @@ export const Navigation = () => {
   }
 
   return (
-    <aside className="mb-8 tracking-tight">
+    <aside className="my-8 tracking-tight">
       <div className="lg:sticky lg:top-20">
         <nav
           className="fade relative flex scroll-pr-6 flex-row items-center justify-between px-0 pb-0 md:relative md:overflow-auto"
