@@ -6,7 +6,7 @@ export const NoteList = ({
   showDescription = false,
 }: {
   notes: NoteWithMetadata[]
-  showDescription: boolean
+  showDescription?: boolean
 }) => {
   return (
     <>
