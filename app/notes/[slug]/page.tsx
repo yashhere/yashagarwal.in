@@ -114,14 +114,14 @@ export default async function Page({ params }: Props) {
       <div className="space-y-4">
         <section>
           <SectionTitle data={null} title={article.note.title} />
-          {article.note.description ? (
+          {/* {article.note.description ? (
             <>
               <h3 className="relative mt-4 pb-2 font-heading text-lg font-normal leading-relaxed text-text/70">
                 {article.note.description}
               </h3>
               <hr className="border-t-1 my-4 border-gray-300/60" />
             </>
-          ) : null}
+          ) : null} */}
           <div className="mt-2 flex flex-col font-body text-base text-gray-600 sm:flex-row sm:justify-between">
             <p>
               Planted on{" "}
