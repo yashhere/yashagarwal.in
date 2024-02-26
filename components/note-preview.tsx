@@ -16,7 +16,7 @@ export const NotePreview = ({
         className="flex w-full flex-col hover:text-primary"
         noUnderline
       >
-        <div className="group flex flex-col space-y-2">
+        <div className="flex flex-col space-y-2">
           <span className="font-heading text-lg font-medium">
             {note.note.title}
           </span>

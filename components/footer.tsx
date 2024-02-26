@@ -40,9 +40,9 @@ export const Footer: FC = () => {
   return (
     <footer className="mt-auto font-heading">
       <hr className="border-[0.5px]" />
-      <div className="group my-8 flex flex-row items-center justify-between">
-        <div className="flex flex-col gap-y-8 self-center">
-          <div className="flex flex-row gap-x-4">
+      <div className="my-8 flex flex-row items-center justify-between">
+        <div className="flex flex-col gap-y-4">
+          <div className="flex flex-row justify-between">
             {Socials.map((s) => {
               return (
                 <Link
@@ -56,11 +56,11 @@ export const Footer: FC = () => {
               )
             })}
           </div>
-          <div className="justify-right text-lg">
+          <div className="items-start text-lg">
             <p className="text-base">&copy; 2016 - {moment().format("YYYY")}</p>
           </div>
         </div>
-        <div className="flex flex-col items-start">
+        <div className="flex flex-col items-end">
           {Object.entries(navItems).map(([path, { name }]) => {
             return (
               <Link
