@@ -5,8 +5,8 @@ import { siteConfig } from "@/config/site"
 
 export default async function Page() {
   return (
-    <>
-      <section className="mb-12 flex flex-col justify-start">
+    <div className="space-y-12">
+      <section className="flex flex-col justify-start">
         <SectionTitle data={null} title="Hi, I am Yash 👋" />
         <div className="prose prose-article text-lg leading-8 text-text">
           <p>
@@ -20,9 +20,9 @@ export default async function Page() {
           </p>
         </div>
       </section>
-      <section className="mt-12 flex flex-col justify-start">
+      <section className="flex flex-col justify-start">
         <RecentNotes count={siteConfig.recentNotes} />
       </section>
-    </>
+    </div>
   )
 }

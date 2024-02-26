@@ -23,15 +23,16 @@ const Socials = [
   },
 ]
 
+// same is present in navigation.tsx as well.
 const navItems = {
-  "/": {
-    name: "home",
-  },
   "/notes": {
     name: "notes",
   },
   "/work": {
     name: "work",
+  },
+  "/lifelog": {
+    name: "log",
   },
 }
 
