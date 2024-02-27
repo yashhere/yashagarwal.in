@@ -42,7 +42,7 @@ export const Footer: FC = () => {
       <hr className="border-[0.5px]" />
       <div className="my-8 flex flex-row items-center justify-between">
         <div className="flex flex-col gap-y-4">
-          <div className="flex flex-row justify-between">
+          <div className="flex flex-row justify-start gap-x-4">
             {Socials.map((s) => {
               return (
                 <Link
@@ -56,8 +56,8 @@ export const Footer: FC = () => {
               )
             })}
           </div>
-          <div className="items-start text-lg">
-            <p className="text-base">&copy; 2016 - {moment().format("YYYY")}</p>
+          <div className="items-start">
+            <p className="text-text/60">Live since 2016</p>
           </div>
         </div>
         <div className="flex flex-col items-end">
