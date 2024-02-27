@@ -1,6 +1,6 @@
 ---
 title: "Homelab: The experiment begins"
-createdOn: 2024-02-27T12:15:15.000Z
+createdOn: 2024-02-27T108:45:15.000Z
 status: published
 series:
   order: 1
@@ -15,24 +15,17 @@ updatedOn: 2024-02-27T06:45:02.000Z
 
 I have been planning to set up a homelab for almost six years now. It all started in the last year of my graduation. At that time, the goal was to learn about PC hardware by building a high-end PC. On the other hand, I was already familiar with enterprise level hardware because of my involvement in the [SSL](https://athena.nitc.ac.in/) lab upgradation effort (pity I didn’t get to feel that shiny new server I recommended as the next upgrade for the lab), so I also ventured into setting up a proper server but that was always a distant dream considering the cost to acquire a server and power it.
 
-Later I started looking at Raspberry Pi. My earliest memory of the Raspberry Pi is from 2019 when I was working with Cisco in Bangalore. I did extensive research, prepared a plan but somehow ended up never buying the SBC. A Raspberry Pi is not sufficient alone in most cases - you need a case, an active cooler, cables, power supply, and a UPS. One buys all of this and suddenly the Raspberry Pi starts to look rather unattractive. I couldn't convince myself about the unit economics of buying the Raspberry Pi.
+Later I started looking at Raspberry Pi. My earliest memory of the Raspberry Pi is from 2019 when I was working with Cisco in Bangalore. I did extensive research, prepared a plan but somehow ended up never buying the SBC. A Raspberry Pi is not sufficient alone in most cases - you need a case, an active cooler, cables, power supply, and a UPS. One buys all of this and suddenly the Raspberry Pi starts to look rather unattractive. I couldn't convince myself about the unit economics of buying the Raspberry Pi, so I dropped this plan.
 
 # Why now?
 
-For the last 4-5 months, since I have decided to focus on my career again, I have been thinking about exploring the Linux world again. Naturally, the Raspberry Pi came back on my radar. I am going to work from home for the foreseeable future. More importantly, I have a mostly uninterruptible internet connection, however the power connection sometimes fluctuates in my area. A RPi would instantly go down in case of a power cut, along with a high probability of data corruption. I was able to circumvent the issue of the router going down on a power cut by buying a [router UPS](https://cuzorlabs.com/products/router-ups-for-12v2a), but buying one for RPi didn't make sense to me.
+For the last 4-5 months, _since I have decided to focus on my career again_, I have been thinking about exploring the Linux world again. Naturally, the Raspberry Pi came back on my radar. I am going to work from home for the foreseeable future. More importantly, I have a mostly uninterruptible internet connection. The power connection sometimes fluctuates in my area. A RPi would instantly go down in case of a power cut, along with a high probability of data corruption. I was able to circumvent the issue of the router going down on a power cut by buying a [router UPS](https://cuzorlabs.com/products/router-ups-for-12v2a), but buying one for RPi didn't make sense to me.
 
-Being a backend developer, although the Networking, automation, and infra skills don't bring any apparent advantage in my day-to-day work, but still, I have decided to invest some time in it because -
+Being a backend developer, although the sysadmin, devops, networking, and platform skills don't bring any apparent advantages to my day-to-day work, I have decided to invest some time in homelabbing because -
 
 1. It is my long time passion and I want to experience it.
 2. A peripheral knowledge of the infra and platform side of things definitely make it easier to design more efficient systems and debug non-trivial issues.
-3. As I progress in my career, I will not only be handling one portion of the product. I intend to take more and more responsibilities. That means wearing more than one hats. A homelab provides me an opportunity to learn one such skill.
-
-As with all other things, it is easy to get lost in many options available for homelab. So I have decided a few minimum required goals that I would like to achieve with this exercise -
-
-1. Create a fully-reproducible setup (using Docker, Ansible etc.)
-2. Allow outside world access to some of the services and secure your server.
-3. Learn to configure VPN and also learn the theory.
-4. Document the progress and the concepts learned.
+3. As I progress in my career, I will not be handling just one portion of the product. I intend to take more and more responsibilities. That means wearing more than one hats. A homelab provides me an opportunity to learn one such skill.
 
 # The Hardware
 
@@ -52,7 +45,7 @@ I have not tinkered with Linux for almost 6 years now. Since I left college, som
 
 Anyway, I had a couple of choices for the OS on my server - Ubuntu server, Arch Linux, Debian minimal, and a few Virtualisation platforms - Proxmox etc. Proxmox was out of the question because I wasn’t sure that my laptop would be able to spin up more than a few VMs with just 4 cores and 8 GB of RAM.
 
-I don’t have a good experience with Ubuntu, though it has good support for non-free drivers, especially NVIDIA. Arch Linux may have been a good choice but I wanted to stick with apt-based distro. In the end, I decided to install Debian minimal on a 100 GB dedicated root partition.
+I don’t have a good experience with Ubuntu in the past, even though it has good support for non-free drivers, especially NVIDIA. Arch Linux may have been a good choice but I wanted to stick with an apt-based distro. In the end, I decided to install [Debian-minimal](https://www.debian.org/CD/netinst/) on a 100 GB dedicated root partition.
 
 For some reason (most likely due to my RTL8723BE wireless card on my laptop), the installer failed a couple of times due to OOM issues. I had to boot up the installer by modifying the GRUB by adding following lines (although I doubt [PCIE errors](https://askubuntu.com/questions/1190813/realtek-rtl8723be-pcie-wireless-network-adapter-is-crashing-my-ubuntu-18-04) can cause OOM, but it worked, so all good) -
 
@@ -66,9 +59,18 @@ Once the installation finished, I was greeted with the default TTY screen.
 
 The Debian minimal comes with literally nothing. Not even `sudo`. In the next post in this series, I plan to write about setting up the Debian server - networking, SSH, setting up lid-close action etc. Later I will explain how to set up Docker MacVLAN interfaces and make docker containers appear like another device on your network.
 
-My near term goals with my homelab setup is to re-learn Linux networking, docker internals and host some nice-to-have applications like DNS Ad Blockers, Network Analyzers, Monitoring Dashboards (Grafana etc.) etc.
+As with all other things, it is easy to get lost in many options available for homelab. So I have decided a few minimum required goals that I would like to achieve with this exercise -
 
-The long term goal is to understand the WireGuard architecture and set it up to allow access to my home network from outside. I may also delve into port-forwarding some of the local ports to the outside world and host my blog from my server directly.
+1. Create a fully-reproducible setup.
+   1. Host a few of the interesting services - bookmark manager, Plex, Adguard, reverse proxy etc.
+2. Allow outside world access to some of the services and secure the server.
+3. Learn VPNs and configure one.
+4. Document the progress and the concepts learned.
+5. Few of the technologies I plan to learn -
+   1. Docker - I already have a good experience with it, so it would be a refresh for me.
+   2. Ansible - Automate the repetitive work
+   3. Wireguard - I think it would be a good experience to learn how it works behind the scenes. Also explore Tailscale later.
+   4. DNS, Port Forwarding, CGNAT, IPv6, reverse proxy, cert management etc - to allow outside world access.
 
 While this is an exciting thing to dive into, I will also be focusing on employing my server for development work. I have planned many exciting things for 2024, most of which will get some mention on this blog.
 
