@@ -1,5 +1,5 @@
 import { ChangeEvent } from "react"
-import { MagnifyingGlassIcon } from "@heroicons/react/24/solid"
+import { FiSearch } from "react-icons/fi"
 
 export const SearchInput = ({
   search,
@@ -13,7 +13,7 @@ export const SearchInput = ({
       <form>
         <div className="relative text-text/80">
           <div className="pointer-events-none absolute inset-y-0 flex items-center pl-2">
-            <MagnifyingGlassIcon className="w-5" />
+            <FiSearch className="w-5" />
           </div>
           <input
             type="search"

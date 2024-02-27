@@ -111,10 +111,10 @@ export default async function Page({ params }: Props) {
 
   return (
     <>
-      <div className="space-y-4">
-        <section>
+      <div>
+        <section className="mb-8 space-y-4">
           <SectionTitle data={null} title={article.note.title} />
-          {article.note.description ? (
+          {/* {article.note.description ? (
             <>
               <h3 className="relative mt-4 pb-2 font-heading text-lg font-normal leading-relaxed text-text/70">
                 {article.note.description}
@@ -122,38 +122,39 @@ export default async function Page({ params }: Props) {
               <hr className="border-t-1 my-4 border-gray-300/60" />
             </>
           ) : null}
-          <div className="mt-2 flex flex-col font-body text-base text-gray-600 sm:flex-row sm:justify-between">
+          <div className="flex flex-col font-body text-base text-gray-600 sm:flex-row sm:justify-between">
             <p>
-              Planted on{" "}
+              Published:{" "}
               <span className="text-sm tracking-widest">
                 {moment(article.note.createdOn).format("DD/MM/YY")}
               </span>
             </p>
             {article.note.updatedOn ? (
               <p>
-                Last tended on{" "}
+                Last updated on{" "}
                 <span className="text-sm tracking-widest">
                   {moment(article.note.updatedOn).format("DD/MM/YY")}
                 </span>
               </p>
             ) : null}
-          </div>
+          </div> */}
           <TagList tags={article.note.tags} />
         </section>
-
         {article.series ? (
-          <>
+          <div className="mb-8">
             <Series series={article.series} interactive={true} current={slug} />
-          </>
+          </div>
         ) : null}
-
-        <TableOfContents
-          headings={article.note.headings}
-          path={`/notes/${article.note.slug}`}
-          interactive={true}
-        />
-
-        <div className="py-8">
+        {article.note.headings.length != 0 ? (
+          <div className="mb-8">
+            <TableOfContents
+              headings={article.note.headings}
+              path={`/notes/${article.note.slug}`}
+              interactive={true}
+            />
+          </div>
+        ) : null}
+        <div>
           <div className="prose prose-article text-lg leading-8 prose-headings:cursor-pointer prose-h1:mt-16 prose-h1:text-4xl prose-h2:mt-8 prose-h2:text-3xl prose-h3:mt-8 prose-h3:text-2xl prose-h4:text-xl prose-p:mt-8 prose-th:cursor-auto">
             <MdxContent components={CustomMDXComponents} />
             {article.note.status === "draft" ? <Draft /> : null}
@@ -172,7 +173,6 @@ export default async function Page({ params }: Props) {
           </Link>
           <GoToTop slug={slug} />
         </div>
-
         <hr className="border-t-1 border-gray-300/60" />
         <DisqusComments
           slug={params.slug}

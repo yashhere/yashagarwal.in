@@ -1,5 +1,5 @@
 import { ReactNode } from "react"
-import { ImPencil } from "react-icons/im"
+import { FiPenTool } from "react-icons/fi"
 
 interface Props {
   children?: ReactNode
@@ -10,7 +10,7 @@ export default function Draft({ children }: Props) {
     <>
       <div className="mt-16 flex flex-col items-center gap-8 rounded border bg-foreground py-16 text-center shadow-md">
         <div className="">
-          <ImPencil className="size-28 text-tertiary" />
+          <FiPenTool className="size-28 text-tertiary" />
         </div>
         <div className="text-6xl font-semibold text-secondary sm:text-7xl">
           Work in Progress

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
 import { useTheme } from "next-themes"
-import { TbMoon, TbSun, TbSunMoon } from "react-icons/tb"
+import { FiMonitor, FiMoon, FiSun } from "react-icons/fi"
 
 export const DarkToggle = () => {
   const [mounted, setMounted] = useState(false)
@@ -23,18 +23,23 @@ export const DarkToggle = () => {
       <motion.div
         whileTap={{ rotate: 15 }}
         onClick={() => {
-          if (theme === "dark") {
-            setTheme("system")
-          } else if (theme === "light") {
-            setTheme("dark")
+          if (theme == "system") {
+            if (resolvedTheme == "dark") {
+              setTheme("light")
+            } else {
+              setTheme("dark")
+            }
           } else {
-            setTheme("light")
+            setTheme("system")
           }
         }}
       >
-        {theme === "light" ? <TbSun className="size-6 text-text" /> : null}
-        {theme === "dark" ? <TbMoon className="size-6 text-text" /> : null}
-        {theme === "system" ? <TbSunMoon className="size-6 text-text" /> : null}
+        {resolvedTheme === "light" ? (
+          <FiSun className="size-6 text-text" />
+        ) : null}
+        {resolvedTheme === "dark" ? (
+          <FiMoon className="size-6 text-text" />
+        ) : null}
       </motion.div>
     </>
   )

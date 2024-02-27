@@ -14,25 +14,27 @@ const navItems = {
   "/notes": {
     name: "notes",
   },
-  "/whoami": {
-    name: "whoami",
+  "/work": {
+    name: "work",
   },
 }
 
 export const Navigation = () => {
   let pathname = usePathname() || "/"
+
+  // a note should also show `notes` as active tab
   if (pathname.includes("/notes/")) {
     pathname = "/notes"
   }
 
   return (
-    <aside className="mb-8 tracking-tight">
+    <aside className="my-8 tracking-tight">
       <div className="lg:sticky lg:top-20">
         <nav
           className="fade relative flex scroll-pr-6 flex-row items-center justify-between px-0 pb-0 md:relative md:overflow-auto"
           id="nav"
         >
-          <div className="flex flex-row space-x-5">
+          <div className="flex flex-row space-x-4">
             {Object.entries(navItems).map(([path, { name }]) => {
               const isActive = path === pathname
               return (
@@ -40,7 +42,7 @@ export const Navigation = () => {
                   key={path}
                   href={path}
                   className={cn(
-                    "flex align-middle text-2xl transition-all hover:text-text",
+                    "flex align-middle text-xl transition-all hover:text-text md:text-2xl",
                     {
                       "text-text/60": !isActive,
                     }
@@ -53,10 +55,10 @@ export const Navigation = () => {
           </div>
 
           <div className="flex flex-row items-center justify-end space-x-5">
-            <span className="text-lg text-text">
+            <span className="text-text">
               <AnalogClock />
             </span>
-            <span className="text-lg text-text">
+            <span className="text-text">
               <DarkToggle />
             </span>
           </div>
