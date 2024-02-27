@@ -18,15 +18,13 @@ export const TagList: FC<TagListProps> = ({ tags }) => {
         const slugger = new GithubSlugger()
         const tag_slug = tag ? slugger.slug(tag) : undefined
         return (
-          <>
-            <Link
-              key={tag_slug}
-              href={`/tags/${tag_slug}`}
-              className="mb-2 mr-4 rounded text-primary"
-            >
-              {tag}
-            </Link>
-          </>
+          <Link
+            key={tag_slug}
+            href={`/tags/${tag_slug}`}
+            className="mb-2 mr-4 rounded text-primary"
+          >
+            {tag}
+          </Link>
         )
       })}
     </div>
