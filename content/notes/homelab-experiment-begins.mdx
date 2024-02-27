@@ -1,6 +1,6 @@
 ---
 title: "Homelab: The experiment begins"
-createdOn: 2024-02-18T03:17:15.000Z
+createdOn: 2024-02-27T12:15:15.000Z
 status: published
 series:
   order: 1
@@ -8,22 +8,37 @@ series:
 tags:
   - Homelab
   - Networking
-updatedOn: 2024-02-25T02:39:03.000Z
+updatedOn: 2024-02-27T06:45:02.000Z
 ---
 
-I have been planning to set up a homelab for almost six years now. It all started in the last year of my graduation. At that time, the goal was to learn about PC hardware by building a high-end PC. Of course that would have required a high investment. I was already familiar with enterprise level hardware because of my involvement in the SSL lab upgradation effort (pity I didn’t get to feel that shiny new server I recommended as the next upgrade for the lab).
+# Background
 
-Later I started looking at Raspberry Pi. My earliest memory of the Raspberry Pi is from 2019 when I was working with Cisco in Bangalore. I did extensive research, prepared a plan but somehow ended up never buying the SBC. You know, a Raspberry Pi is not sufficient alone in most cases - you need a case, an active cooler, cables, power supply, and a UPS. All of this will put the expenses upwards in the range of 10k. I don’t think unit economics work in favour of Raspberry Pi anymore.
+I have been planning to set up a homelab for almost six years now. It all started in the last year of my graduation. At that time, the goal was to learn about PC hardware by building a high-end PC. On the other hand, I was already familiar with enterprise level hardware because of my involvement in the [SSL](https://athena.nitc.ac.in/) lab upgradation effort (pity I didn’t get to feel that shiny new server I recommended as the next upgrade for the lab), so I also ventured into setting up a proper server but that was always a distant dream considering the cost to acquire a server and power it.
 
-However, for the last 4-5 months, since I have decided to focus on my career again, I have been thinking about exploring the Linux world again. Naturally, the Raspberry Pi came back on my radar. I am going to work from home for the foreseeable future. More importantly, I have a mostly uninterruptible internet connection, however the power connection sometimes fluctuates in my area. A RPi would instantly go down in case of a power cut, along with a high probability of data corruption. I was able to circumvent the issue of the router going down on a power cut by buying a [router UPS](https://cuzorlabs.com/products/router-ups-for-12v2a), but buying one for RPi didn't make sense to me.
+Later I started looking at Raspberry Pi. My earliest memory of the Raspberry Pi is from 2019 when I was working with Cisco in Bangalore. I did extensive research, prepared a plan but somehow ended up never buying the SBC. A Raspberry Pi is not sufficient alone in most cases - you need a case, an active cooler, cables, power supply, and a UPS. One buys all of this and suddenly the Raspberry Pi starts to look rather unattractive. I couldn't convince myself about the unit economics of buying the Raspberry Pi.
 
-I have a HP Pavilion laptop from 2016 gathering dust in my closet. Since I started using MacOS and Apple hardware, getting back to Windows and its keyboard layout has proven to be more difficult than I anticipated. So, my use of this laptop was limited to occasionally using Windows and as an offsite backup destination for some of my old data (that I am keeping only for nostalgia, huh). I was hesitant to keep it powered on 24/7 to preserve it for some more years. But then I convinced myself that in the worst case scenario, I will have to buy a new battery. Apart from that, the possibility of it getting fried is pretty miniscule.
+# Why now?
 
-I was able to get to the work quickly after convincing myself
+For the last 4-5 months, since I have decided to focus on my career again, I have been thinking about exploring the Linux world again. Naturally, the Raspberry Pi came back on my radar. I am going to work from home for the foreseeable future. More importantly, I have a mostly uninterruptible internet connection, however the power connection sometimes fluctuates in my area. A RPi would instantly go down in case of a power cut, along with a high probability of data corruption. I was able to circumvent the issue of the router going down on a power cut by buying a [router UPS](https://cuzorlabs.com/products/router-ups-for-12v2a), but buying one for RPi didn't make sense to me.
+
+Being a backend developer, although the Networking, automation, and infra skills don't bring any apparent advantage in my day-to-day work, but still, I have decided to invest some time in it because -
+
+1. It is my long time passion and I want to experience it.
+2. A peripheral knowledge of the infra and platform side of things definitely make it easier to design more efficient systems and debug non-trivial issues.
+3. As I progress in my career, I will not only be handling one portion of the product. I intend to take more and more responsibilities. That means wearing more than one hats. A homelab provides me an opportunity to learn one such skill.
+
+As with all other things, it is easy to get lost in many options available for homelab. So I have decided a few minimum required goals that I would like to achieve with this exercise -
+
+1. Create a fully-reproducible setup (using Docker, Ansible etc.)
+2. Allow outside world access to some of the services and secure your server.
+3. Learn to configure VPN and also learn the theory.
+4. Document the progress and the concepts learned.
 
 # The Hardware
 
 I bought a **[HP Pavilion Notebook - 15-ab516tx](https://support.hp.com/us-en/document/c05030912)** in the third year of my graduation. At that time, it was a pretty powerful laptop and served me well in all my Linux and Windows experiments throughout the college term.
+
+It has been gathering dust in my closet since I started using MacOS and Apple hardware. Getting back to Windows and its keyboard layout has proven to be more difficult than I anticipated. So, my use of this laptop was limited to occasionally using Windows and as an offsite backup destination for some of my old data (that I am keeping only for nostalgia, huh). I was hesitant to keep it powered on 24/7 to preserve it for some more years. But then I convinced myself that in the worst case scenario, I will have to buy a new battery. Apart from that, the possibility of it getting fried is pretty miniscule.
 
 It has an Intel Core-i5 6th generation CPU with four cores. It currently has 8 GB DDR3L-1600 SDRAM installed. The other RAM slot is a DDR type slot, but I am not sure if this is accurate. For now, I assume that I am limited to 8GB of RAM on this system. The ethernet port on this device is the Integrated 10/100 BASE-T Ethernet LAN.
 
