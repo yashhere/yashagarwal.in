@@ -41,8 +41,18 @@ const Page: FC = () => {
         <p>Here&apos;s a summary of my work so far -</p>
         <div>
           <h2 className="my-2 text-2xl">Netskope</h2>
-          <h4 className="text-base font-normal text-gray-600">
-            Software Engineer II, 2022-Present
+          <h4 className="text-base font-normal text-gray-700">
+            Sr. Software Engineer, 2024-Present
+          </h4>
+          <p>
+            As I transitioned to a senior role in Netskope, I started working on
+            the next-gen implementation of the CASB API product, while also
+            maintaining the two crucial apps from the legacy product, ensuring a
+            smooth transition to the next-gen implementations.
+          </p>
+
+          <h4 className="text-base font-normal text-gray-700">
+            Software Engineer II, 2022-2024
           </h4>
           <p>
             I joined the API Data Protection Team in 2022. Since then, I have
@@ -63,8 +73,8 @@ const Page: FC = () => {
         </div>
         <div>
           <h2 className="my-2 text-2xl">Cisco Systems</h2>
-          <h4 className="text-base font-normal text-gray-600">
-            Software Engineer, 2018-2021
+          <h4 className="text-base font-normal text-gray-700">
+            Software Engineer I and II, 2018-2021
           </h4>
           <ul>
             <li>
