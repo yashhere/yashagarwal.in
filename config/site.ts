@@ -1,6 +1,9 @@
-import { env } from "@/env.mjs"
+import { env } from "@/env.mjs";
 
-import { SiteConfig } from "types"
+
+
+import { SiteConfig } from "types";
+
 
 export const siteConfig: SiteConfig = {
   title: "/dev/yash/notes",
@@ -21,5 +24,5 @@ export const siteConfig: SiteConfig = {
     darkTheme: "dark",
   },
   popularNotes: 3,
-  recentNotes: 3,
+  recentNotes: 5,
 }
