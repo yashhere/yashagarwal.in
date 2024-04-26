@@ -7,7 +7,7 @@
     "url": "https://twitter.com/yash__here"
   },
   "scripts": {
-    "dev": "contentlayer build && next dev",
+    "dev": "contentlayer build && next dev --turbo",
     "build": "contentlayer build && next build",
     "start": "next start",
     "lint": "next lint",
