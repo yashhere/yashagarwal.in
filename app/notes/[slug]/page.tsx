@@ -116,7 +116,7 @@ export default async function Page({ params }: Props) {
           <SectionTitle data={null} title={article.note.title} />
           {/* {article.note.description ? (
             <>
-              <h3 className="relative mt-4 pb-2 font-heading text-lg font-normal leading-relaxed text-text/70">
+              <h3 className="relative mt-4 pb-2 font-body text-lg font-normal leading-relaxed text-text/70">
                 {article.note.description}
               </h3>
               <hr className="border-t-1 my-4 border-gray-300/60" />
@@ -155,7 +155,7 @@ export default async function Page({ params }: Props) {
           </div>
         ) : null}
         <div className="mb-8">
-          <div className="prose prose-article text-lg leading-8 prose-headings:cursor-pointer prose-h1:mt-16 prose-h1:text-4xl prose-h2:mt-8 prose-h2:text-3xl prose-h3:mt-8 prose-h3:text-2xl prose-h4:text-xl prose-p:mt-8 prose-th:cursor-auto">
+          <div className="">
             <MdxContent components={CustomMDXComponents} />
             {article.note.status === "draft" ? <Draft /> : null}
           </div>

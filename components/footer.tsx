@@ -38,7 +38,7 @@ const navItems = {
 
 export const Footer: FC = () => {
   return (
-    <footer className="mt-auto font-heading">
+    <footer className="mt-auto font-body">
       <hr className="border-[0.5px]" />
       <div className="my-8 flex flex-row items-center justify-between">
         <div className="flex flex-col gap-y-4">

@@ -32,9 +32,7 @@ export const TableOfContents = ({ headings, path, interactive }) => {
             setIsOpen(!isOpen)
           }}
         >
-          <div className="font-heading text-lg font-bold">
-            Table of Contents
-          </div>
+          <div className="font-body text-lg font-bold">Table of Contents</div>
 
           <div className="ml-auto pl-4">
             <div className="rounded-full bg-gray-600/10 p-2 text-text group-hover:bg-gray-600/25">
@@ -47,7 +45,7 @@ export const TableOfContents = ({ headings, path, interactive }) => {
           </div>
         </button>
       ) : (
-        <div className="font-heading text-lg font-bold">Table of Contents</div>
+        <div className="font-body text-lg font-bold">Table of Contents</div>
       )}
       <hr className="border-t-1 my-4 border-gray-300/60" />
       {isOpen && (

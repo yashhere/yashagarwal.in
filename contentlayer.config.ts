@@ -36,7 +36,7 @@ export default makeSource({
           pageResolver,
           hrefTemplate,
           aliasDivider: "|",
-          newClassName: "text-secondary",
+          newClassName: "text-primary",
         },
       ],
       [remarkSmartypants, { quotes: false, dashes: "oldschool" }],

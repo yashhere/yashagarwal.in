@@ -20,6 +20,215 @@ const customCss = {
   },
 }
 
+const css = {
+  color: "var(--tw-prose-body)",
+  maxWidth: "65ch",
+  '[class~="lead"]': {
+    color: "var(--tw-prose-lead)",
+  },
+  a: {
+    color: "var(--tw-prose-links)",
+    textDecoration: "underline",
+    fontWeight: "500",
+  },
+  strong: {
+    color: "var(--tw-prose-bold)",
+    fontWeight: "600",
+  },
+  "a strong": {
+    color: "inherit",
+  },
+  "blockquote strong": {
+    color: "inherit",
+  },
+  "thead th strong": {
+    color: "inherit",
+  },
+  ol: {
+    listStyleType: "decimal",
+  },
+  'ol[type="A"]': {
+    listStyleType: "upper-alpha",
+  },
+  'ol[type="a"]': {
+    listStyleType: "lower-alpha",
+  },
+  'ol[type="A" s]': {
+    listStyleType: "upper-alpha",
+  },
+  'ol[type="a" s]': {
+    listStyleType: "lower-alpha",
+  },
+  'ol[type="I"]': {
+    listStyleType: "upper-roman",
+  },
+  'ol[type="i"]': {
+    listStyleType: "lower-roman",
+  },
+  'ol[type="I" s]': {
+    listStyleType: "upper-roman",
+  },
+  'ol[type="i" s]': {
+    listStyleType: "lower-roman",
+  },
+  'ol[type="1"]': {
+    listStyleType: "decimal",
+  },
+  ul: {
+    listStyleType: "disc",
+  },
+  "ol > li::marker": {
+    fontWeight: "400",
+    color: "var(--tw-prose-counters)",
+  },
+  "ul > li::marker": {
+    color: "var(--tw-prose-bullets)",
+  },
+  hr: {
+    borderColor: "var(--tw-prose-hr)",
+    borderTopWidth: 1,
+  },
+  blockquote: {
+    fontWeight: "500",
+    fontStyle: "italic",
+    color: "var(--tw-prose-quotes)",
+    borderLeftWidth: "0.25rem",
+    borderLeftColor: "var(--tw-prose-quote-borders)",
+    quotes: '"\\201C""\\201D""\\2018""\\2019"',
+  },
+  "blockquote p:first-of-type::before": {
+    content: "open-quote",
+  },
+  "blockquote p:last-of-type::after": {
+    content: "close-quote",
+  },
+  h1: {
+    color: "var(--tw-prose-headings)",
+    fontWeight: "800",
+  },
+  "h1 strong": {
+    fontWeight: "900",
+    color: "inherit",
+  },
+  h2: {
+    color: "var(--tw-prose-headings)",
+    fontWeight: "700",
+  },
+  "h2 strong": {
+    fontWeight: "800",
+    color: "inherit",
+  },
+  h3: {
+    color: "var(--tw-prose-headings)",
+    fontWeight: "600",
+  },
+  "h3 strong": {
+    fontWeight: "700",
+    color: "inherit",
+  },
+  h4: {
+    color: "var(--tw-prose-headings)",
+    fontWeight: "600",
+  },
+  "h4 strong": {
+    fontWeight: "700",
+    color: "inherit",
+  },
+  // TODO: Figure out how to not need these, it's a merging issue
+  img: {},
+  "figure > *": {},
+  figcaption: {
+    color: "var(--tw-prose-captions)",
+  },
+  code: {
+    color: "var(--tw-prose-code)",
+    fontWeight: "600",
+  },
+  "code::before": {
+    content: '"`"',
+  },
+  "code::after": {
+    content: '"`"',
+  },
+  "a code": {
+    color: "inherit",
+  },
+  "h1 code": {
+    color: "inherit",
+  },
+  "h2 code": {
+    color: "inherit",
+  },
+  "h3 code": {
+    color: "inherit",
+  },
+  "h4 code": {
+    color: "inherit",
+  },
+  "blockquote code": {
+    color: "inherit",
+  },
+  "thead th code": {
+    color: "inherit",
+  },
+  pre: {
+    color: "var(--tw-prose-pre-code)",
+    backgroundColor: "var(--tw-prose-pre-bg)",
+    overflowX: "auto",
+    fontWeight: "400",
+  },
+  "pre code": {
+    backgroundColor: "transparent",
+    borderWidth: "0",
+    borderRadius: "0",
+    padding: "0",
+    fontWeight: "inherit",
+    color: "inherit",
+    fontSize: "inherit",
+    fontFamily: "inherit",
+    lineHeight: "inherit",
+  },
+  "pre code::before": {
+    content: "none",
+  },
+  "pre code::after": {
+    content: "none",
+  },
+  table: {
+    width: "100%",
+    tableLayout: "auto",
+    textAlign: "left",
+    marginTop: "2rem",
+    marginBottom: "2rem",
+  },
+  thead: {
+    borderBottomWidth: "1px",
+    borderBottomColor: "var(--tw-prose-th-borders)",
+  },
+  "thead th": {
+    color: "var(--tw-prose-headings)",
+    fontWeight: "600",
+    verticalAlign: "bottom",
+  },
+  "tbody tr": {
+    borderBottomWidth: "1px",
+    borderBottomColor: "var(--tw-prose-td-borders)",
+  },
+  "tbody tr:last-child": {
+    borderBottomWidth: "0",
+  },
+  "tbody td": {
+    verticalAlign: "baseline",
+  },
+  tfoot: {
+    borderTopWidth: "1px",
+    borderTopColor: "var(--tw-prose-th-borders)",
+  },
+  "tfoot td": {
+    verticalAlign: "top",
+  },
+}
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -43,18 +252,10 @@ module.exports = {
     extend: {
       colors: {
         text: "hsl(var(--color-text))",
-        muted: "hsl(var(--color-muted))",
-        info: "hsl(var(--color-info))",
-        foreground: "hsl(var(--color-foreground))",
         primary: "hsl(var(--color-primary))",
-        secondary: "hsl(var(--color-secondary))",
-        tertiary: "hsl(var(--color-tertiary))",
         background: "hsl(var(--color-background))",
-        "background-muted": "hsl(var(--color-muted-background))",
-        "background-subtle": "hsl(var(--color-subtle-background))",
         "pre-bg": "#151f28",
         "code-bg": "#737d8c2b",
-        "code-text": "hsl(var(--color-syntax-txt))",
         gray: {
           DEFAULT: "hsl(var(--color-gray-400))",
           100: "hsl(var(--color-gray-100))",
@@ -71,35 +272,8 @@ module.exports = {
       fontFamily: {
         mono: ["var(--font-mono)"],
         body: ["var(--font-body)"],
-        heading: ["var(--font-body)"],
       },
-      typography: ({ theme }) => ({
-        article: {
-          css: {
-            "--tw-prose-body": theme("colors.text"),
-            "--tw-prose-headings": theme("colors.tertiary"),
-            "--tw-prose-lead": theme("colors.text"),
-            "--tw-prose-links": theme("colors.primary"),
-            "--tw-prose-bold": theme("colors.text"),
-            "--tw-prose-counters": theme("colors.primary"),
-            "--tw-prose-bullets": theme("colors.primary"),
-            "--tw-prose-hr": theme("colors.gray[300]"),
-            "--tw-prose-quotes": theme("colors.gray[700]"),
-            "--tw-prose-quote-borders": theme("colors.gray[300]"),
-            "--tw-prose-captions": theme("colors.gray[500]"),
-            "--tw-prose-code": theme("colors.code-text"),
-            "--tw-prose-pre-code": theme("colors.code-text"),
-            "--tw-prose-pre-bg": theme("colors.code-bg"),
-            "--tw-prose-th-borders": theme("colors.gray[200]"),
-            "--tw-prose-td-borders": theme("colors.gray[200]"),
-          },
-        },
-        DEFAULT: { css: customCss },
-        sm: { css: customCss },
-        lg: { css: customCss },
-        xl: { css: customCss },
-        "2xl": { css: customCss },
-      }),
+      typography: ({ theme }) => ({}),
     },
   },
   plugins: [require("@tailwindcss/typography")],
