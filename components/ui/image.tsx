@@ -32,7 +32,7 @@ const CustomImage = forwardRef<HTMLImageElement, CustomImageProps>(
       <figure className="group relative mb-8 block w-full break-inside-avoid-column text-center drop-shadow-xl">
         <Image
           className={cn("rounded-lg", isLoading ? "img-blur" : "img-unblur")}
-          onLoadingComplete={() => setLoading(false)}
+          onLoad={() => setLoading(false)}
           style={{ transform: "translate3d(0, 0, 0)" }}
           placeholder={placeholder}
           blurDataURL={blurDataURL}
