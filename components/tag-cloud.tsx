@@ -19,7 +19,7 @@ export default function TagCloud({ tagCounts }) {
   return (
     <>
       {hydrated ? (
-        <div className="text-md mt-2 flex flex-wrap justify-start font-body font-semibold text-gray-600 sm:text-lg">
+        <div className="text-md mt-2 flex flex-wrap justify-start font-sans font-semibold text-gray-600 sm:text-lg">
           {tagCounts.map((tagEntry) => {
             const slugger = new GithubSlugger()
             const tag = tagEntry.tag

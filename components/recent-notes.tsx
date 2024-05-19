@@ -11,7 +11,7 @@ export async function RecentNotes({ count }: { count: number }) {
   return (
     <>
       <div className="group flex flex-row justify-between pb-3">
-        <h2 className="font-body text-2xl font-bold text-primary">
+        <h2 className="font-sans text-2xl font-bold text-primary">
           recent notes
         </h2>
         <Link

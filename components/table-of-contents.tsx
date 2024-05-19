@@ -32,10 +32,10 @@ export const TableOfContents = ({ headings, path, interactive }) => {
             setIsOpen(!isOpen)
           }}
         >
-          <div className="font-body text-lg font-bold">Table of Contents</div>
+          <div className="font-sans text-lg font-bold">Table of Contents</div>
 
           <div className="ml-auto pl-4">
-            <div className="rounded-full bg-gray-600/10 p-2 text-text group-hover:bg-gray-600/25">
+            <div className="bg-gray-600/10 group-hover:bg-gray-600/25 rounded-full p-2 text-text">
               {isOpen ? (
                 <FiChevronUp className="w-5" />
               ) : (
@@ -45,9 +45,9 @@ export const TableOfContents = ({ headings, path, interactive }) => {
           </div>
         </button>
       ) : (
-        <div className="font-body text-lg font-bold">Table of Contents</div>
+        <div className="font-sans text-lg font-bold">Table of Contents</div>
       )}
-      <hr className="border-t-1 my-4 border-gray-300/60" />
+      <hr className="border-t-1 border-gray-300/60 my-4" />
       {isOpen && (
         <div>
           <div className="ml-2">
@@ -69,7 +69,7 @@ export const TableOfContents = ({ headings, path, interactive }) => {
                 </Link>
               </div>
             ))}
-            <hr className="border-t-1 my-4 border-gray-300/60" />
+            <hr className="border-t-1 border-gray-300/60 my-4" />
           </div>
         </div>
       )}

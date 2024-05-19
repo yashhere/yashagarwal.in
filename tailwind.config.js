@@ -242,13 +242,13 @@ module.exports = {
     hoverOnlyWhenSupported: true,
   },
   theme: {
-    container: {
-      center: true,
-      padding: "2rem",
-      screens: {
-        "2xl": "1400px",
-      },
-    },
+    // container: {
+    //   center: true,
+    //   padding: "2rem",
+    //   screens: {
+    //     "2xl": "1400px",
+    //   },
+    // },
     extend: {
       colors: {
         text: "hsl(var(--color-text))",
@@ -257,24 +257,33 @@ module.exports = {
         "pre-bg": "#151f28",
         "code-bg": "#737d8c2b",
         gray: {
-          DEFAULT: "hsl(var(--color-gray-400))",
-          100: "hsl(var(--color-gray-100))",
-          200: "hsl(var(--color-gray-200))",
-          300: "hsl(var(--color-gray-300))",
-          400: "hsl(var(--color-gray-400))",
-          500: "hsl(var(--color-gray-500))",
-          600: "hsl(var(--color-gray-600))",
-          700: "hsl(var(--color-gray-700))",
-          900: "hsl(var(--color-gray-900))",
-          1000: "hsl(var(--color-gray-1000))",
+          DEFAULT: "var(--color-gray-400)",
+          100: "var(--color-gray-100)",
+          200: "var(--color-gray-200)",
+          300: "var(--color-gray-300)",
+          400: "var(--color-gray-400)",
+          500: "var(--color-gray-500)",
+          600: "var(--color-gray-600)",
+          700: "var(--color-gray-700)",
+          900: "var(--color-gray-900)",
+          1000: "var(--color-gray-1000)",
+          1100: "var(--color-gray-1100)",
+          1200: "var(--color-gray-1200)",
         },
       },
+      fontSize: {
+        sm: ["14px", "20px"],
+        base: ["16px", "28px"],
+        lg: ["18px", "30px"],
+        xl: ["24px", "34px"],
+      },
       fontFamily: {
-        mono: ["var(--font-mono)"],
-        body: ["var(--font-body)"],
+        sans: ["var(--font-geist-regular)"],
+        serif: ["var(--font-news-reader)"],
+        mono: ["var(--font-geist-mono)"],
       },
       typography: ({ theme }) => ({}),
     },
   },
-  plugins: [require("@tailwindcss/typography")],
+  //   plugins: [require("@tailwindcss/typography")],
 }

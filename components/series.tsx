@@ -13,7 +13,7 @@ type TitleProps = {
 const Title: FC<TitleProps> = ({ children }) => {
   return (
     <div>
-      <div className="font-body text-base text-text">series</div>
+      <div className="font-sans text-base text-text">series</div>
       <div className="flex flex-col justify-start text-lg sm:flex-row sm:items-center sm:space-x-2">
         {children}
       </div>
@@ -50,7 +50,7 @@ export const Series = ({
           </Title>
 
           <div className="ml-auto pl-4">
-            <div className="rounded-full bg-gray-600/10 p-2 text-text group-hover:bg-gray-600/25">
+            <div className="bg-gray-600/10 group-hover:bg-gray-600/25 rounded-full p-2 text-text">
               {isOpen ? (
                 <FiChevronUp className="w-5" />
               ) : (
@@ -62,7 +62,7 @@ export const Series = ({
       ) : (
         <Title>{series.seriesTitle}</Title>
       )}
-      <hr className="border-t-1 my-4 border-gray-300/60" />
+      <hr className="border-t-1 border-gray-300/60 my-4" />
       {isOpen && (
         <div>
           <ul className="text-base">
@@ -102,7 +102,7 @@ export const Series = ({
               </li>
             ))}
           </ul>
-          <hr className="border-t-1 my-4 border-gray-300/60" />
+          <hr className="border-t-1 border-gray-300/60 my-4" />
         </div>
       )}
     </>

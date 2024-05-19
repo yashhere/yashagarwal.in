@@ -1,30 +1,24 @@
 import { RecentNotes } from "@/components/recent-notes"
+import Connect from "@/components/ui/layout/connect"
+import Now from "@/components/ui/layout/now"
+import Writing from "@/components/ui/layout/writing"
 import SectionTitle from "@/components/ui/section-title"
 import { siteConfig } from "@/config/site"
 
 export default async function Page() {
   return (
-    <div className="space-y-12">
+    <div className="mt-28 space-y-12">
       <section className="flex flex-col justify-start">
-        <SectionTitle data={null} title="Hey, I'm Yash 👋" />
-        <div className="text-lg leading-8 text-text">
-          <p>
-            I&apos;m a Software Engineer crafting efficient solutions for
-            intricate problems. Currently I work at{" "}
-            <a href="https://netskope.com" target="_blank">
-              Netskope
-            </a>{" "}
-            on it&apos;s API security product.
-          </p>
-          <p>
-            This domain is my little digital nest where I write about my
-            experiments with tech and life.
-          </p>
+        <div className="mb-32 flex flex-col items-start">
+          <h1 className="text-lg">Yash Agarwal</h1>
         </div>
+        <Now />
+        <Writing />
+        <Connect />
       </section>
-      <section className="flex flex-col justify-start">
+      {/* <section className="flex flex-col justify-start">
         <RecentNotes count={siteConfig.recentNotes} />
-      </section>
+      </section> */}
     </div>
   )
 }

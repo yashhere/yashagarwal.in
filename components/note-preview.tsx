@@ -13,19 +13,12 @@ export const NotePreview = ({
     <>
       <Link
         href={`/notes/${note.note.slug}`}
-        className="flex w-full flex-col hover:text-primary"
+        className="-mx-3 flex w-full flex-col rounded-md px-3 hover:bg-[#F5F4F4] dark:hover:bg-gray-200 sm:py-3"
         noUnderline
       >
-        <div className="flex flex-col space-y-2">
-          <span className="font-body text-lg font-medium">
-            {note.note.title}
-          </span>
-          {showDescription && note.note?.description && (
-            <span className="text-sm text-gray-500">
-              {note.note?.description}
-            </span>
-          )}
-          <span className="text-sm text-gray-600">
+        <div className="flex flex-col">
+          <span className="font-sans font-medium">{note.note.title}</span>
+          <span className="text-sm text-gray-1100">
             {moment(note.note.createdOn).format("DD MMM, YYYY")}
           </span>
         </div>

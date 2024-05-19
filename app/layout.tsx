@@ -1,4 +1,5 @@
 import { Metadata } from "next"
+import { Newsreader } from "next/font/google"
 import localFont from "next/font/local"
 import { Analytics } from "@/components/analytics"
 import { Footer } from "@/components/footer"
@@ -7,18 +8,26 @@ import { Navigation } from "@/components/ui/navigation"
 import { TailwindIndicator } from "@/components/ui/tailwind-indicator"
 import { siteConfig } from "@/config/site"
 import { cn, encodeParameter } from "@/lib/utils"
+import { GeistMono } from "geist/font/mono"
+import { GeistSans } from "geist/font/sans"
 
 import "@/styles/globals.css"
 
-const bodyFont = localFont({
-  src: "../public/assets/fonts/wotfard.ttf",
-  variable: "--font-body",
+const GeistRegular = localFont({
+  src: "../public/assets/fonts/geist-regular.otf",
+  variable: "--font-geist-regular",
   display: "swap",
 })
 
 const monoFont = localFont({
   src: "../public/assets/fonts/league-mono.ttf",
   variable: "--font-mono",
+  display: "swap",
+})
+
+const NewsReader = Newsreader({
+  subsets: ["latin"],
+  variable: "--font-news-reader",
   display: "swap",
 })
 
@@ -113,11 +122,13 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <body
         className={cn(
-          "min-h-screen font-body antialiased",
-          "bg-background text-text",
+          "min-h-screen font-sans antialiased",
+          "bg-gray-100 text-gray-1200",
           "mx-4 flex max-w-6xl flex-col md:flex-row lg:mx-auto",
-          bodyFont.variable,
-          monoFont.variable
+          GeistRegular.variable,
+          NewsReader.variable,
+          GeistSans.variable,
+          GeistMono.variable
         )}
       >
         <ThemeProvider
@@ -127,8 +138,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
           defaultTheme="system"
           enableSystem
         >
-          <main className="flex h-screen max-w-2xl flex-auto flex-col px-2 sm:mx-auto md:mt-0 md:px-0">
-            <Navigation />
+          <main className="flex h-screen max-w-2xl flex-auto flex-col px-2 sm:mx-auto">
+            {/* <Navigation /> */}
             <div className="mb-32">{children}</div>
             <Footer />
           </main>

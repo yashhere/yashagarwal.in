@@ -12,7 +12,7 @@ export async function GET(req: NextRequest) {
   const tags = searchParams.get("tags")?.split("|")
   const hostname = new URL(`${siteConfig.url}`).hostname
   const font = fetch(
-    new URL("../../public/assets/fonts/wotfard.ttf", import.meta.url)
+    new URL("../../public/assets/fonts/geist-regular.otf", import.meta.url)
   ).then((res) => res.arrayBuffer())
   const fontData = await font
 
@@ -21,14 +21,14 @@ export async function GET(req: NextRequest) {
       <div
         tw="flex p-10 h-full w-full bg-white flex-col"
         style={{
-          fontFamily: "Wotfard",
+          fontFamily: "Geist Regular",
           backgroundImage:
             "radial-gradient(circle at 50% 50%, lightgray 2%, transparent 0%), radial-gradient(circle at 100% 100%, lightgray 2%, transparent 0%)",
           backgroundSize: "75px 75px",
         }}
       >
         <header tw="flex mt-8 text-[44px] w-full">
-          <div tw="font-bold" style={{ fontFamily: "Wotfard" }}>
+          <div tw="font-bold" style={{ fontFamily: "Geist Regular" }}>
             {siteConfig.name}
           </div>
           <div tw="grow" />
@@ -40,7 +40,7 @@ export async function GET(req: NextRequest) {
             <div
               tw="rounded-md bg-stone-100 tracking-wide p-4 text-6xl leading-snug font-medium text-center max-w-screen-xl text-slate-500"
               style={{
-                fontFamily: "Wotfard",
+                fontFamily: "Geist Regular",
                 boxShadow: "4px 4px 8px 1px rgba(184,182,184,1)",
               }}
             >
@@ -50,7 +50,7 @@ export async function GET(req: NextRequest) {
           {meta ? (
             <div
               tw="mt-12 flex items-center justify-center text-4xl text-gray-500"
-              style={{ fontFamily: "Wotfard" }}
+              style={{ fontFamily: "Geist Regular" }}
             >
               {meta}
             </div>
@@ -59,7 +59,7 @@ export async function GET(req: NextRequest) {
           {tags && tags.length > 0 ? (
             <div
               tw="text-2xl mt-10 flex flex-row flex-wrap justify-center items-center flex-wrap max-w-screen-xl text-gray-600"
-              style={{ fontFamily: "Wotfard" }}
+              style={{ fontFamily: "Geist Regular" }}
             >
               {tags?.slice(0, 3).map((tag, index) => (
                 <span
@@ -79,7 +79,7 @@ export async function GET(req: NextRequest) {
       height: 630,
       fonts: [
         {
-          name: "Wotfard",
+          name: "Geist Regular",
           data: fontData,
           style: "normal",
         },

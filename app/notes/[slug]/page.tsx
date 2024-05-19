@@ -116,13 +116,13 @@ export default async function Page({ params }: Props) {
           <SectionTitle data={null} title={article.note.title} />
           {/* {article.note.description ? (
             <>
-              <h3 className="relative mt-4 pb-2 font-body text-lg font-normal leading-relaxed text-text/70">
+              <h3 className="relative mt-4 pb-2 font-sans text-lg font-normal leading-relaxed text-text/70">
                 {article.note.description}
               </h3>
               <hr className="border-t-1 my-4 border-gray-300/60" />
             </>
           ) : null}
-          <div className="flex flex-col font-body text-base text-gray-600 sm:flex-row sm:justify-between">
+          <div className="flex flex-col font-sans text-base text-gray-600 sm:flex-row sm:justify-between">
             <p>
               Published:{" "}
               <span className="text-sm tracking-widest">

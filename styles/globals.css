@@ -4,33 +4,63 @@
 
 @layer base {
   :root {
-    --color-text: 222 22% 5%;
+    --color-text: 0 0% 23% 1;
     --color-background: 0 0% 100%;
     --color-primary: 245 100% 60%;
-    --color-gray-100: 225 25% 95%;
-    --color-gray-200: 225 16% 90%;
-    --color-gray-300: 225 8% 80%;
-    --color-gray-400: 225 8% 70%;
-    --color-gray-500: 225 7% 60%;
-    --color-gray-600: 225 15% 50%;
-    --color-gray-700: 225 12% 40%;
-    --color-gray-900: 225 25% 20%;
-    --color-gray-1000: 225 15% 15%;
+    --color-gray-100: #fdfdfc;
+    --color-gray-200: #f9f9f8;
+    --color-gray-300: #f1f0ef;
+    --color-gray-400: #e9e9e7;
+    --color-gray-500: #e2e1de;
+    --color-gray-600: #dad9d6;
+    --color-gray-700: #cfceca;
+    --color-gray-800: #bcbbb5;
+    --color-gray-900: #8d8d86;
+    --color-gray-1000: #82827c;
+    --color-gray-1100: #63635e;
+    --color-gray-1200: #21201c;
+    --color-gray-alpha-100: #00000003;
+    --color-gray-alpha-200: #00000006;
+    --color-gray-alpha-300: #0000000f;
+    --color-gray-alpha-400: #00000017;
+    --color-gray-alpha-500: #0000001f;
+    --color-gray-alpha-600: #00000026;
+    --color-gray-alpha-700: #00000031;
+    --color-gray-alpha-800: #00000044;
+    --color-gray-alpha-900: #00000072;
+    --color-gray-alpha-1000: #0000007c;
+    --color-gray-alpha-1100: #0000009b;
+    --color-gray-alpha-1200: #000000df;
   }
 
   .dark {
     --color-text: 0 0% 100%;
     --color-background: 210 30% 8%;
     --color-primary: 230 100% 69%;
-    --color-gray-100: 210 15% 20%;
-    --color-gray-200: 210 15% 25%;
-    --color-gray-300: 210 10% 40%;
-    --color-gray-400: 210 9% 45%;
-    --color-gray-500: 210 8% 50%;
-    --color-gray-600: 210 12% 55%;
-    --color-gray-700: 210 14% 66%;
-    --color-gray-900: 210 25% 88%;
-    --color-gray-1000: 210 25% 96%;
+    --color-gray-100: #111110;
+    --color-gray-200: #191918;
+    --color-gray-300: #222221;
+    --color-gray-400: #2a2a28;
+    --color-gray-500: #31312e;
+    --color-gray-600: #3b3a37;
+    --color-gray-700: #494844;
+    --color-gray-800: #62605b;
+    --color-gray-900: #6f6d66;
+    --color-gray-1000: #7c7b74;
+    --color-gray-1100: #b5b3ad;
+    --color-gray-1200: #eeeeec;
+    --color-gray-alpha-100: #00000000;
+    --color-gray-alpha-200: #ffffff09;
+    --color-gray-alpha-300: #ffffff12;
+    --color-gray-alpha-400: #ffffff1b;
+    --color-gray-alpha-500: #ffffff22;
+    --color-gray-alpha-600: #ffffff2c;
+    --color-gray-alpha-700: #ffffff3b;
+    --color-gray-alpha-800: #ffffff55;
+    --color-gray-alpha-900: #ffffff64;
+    --color-gray-alpha-1000: #ffffff72;
+    --color-gray-alpha-1100: #ffffffaf;
+    --color-gray-alpha-1200: #ffffffed;
   }
 }
 
