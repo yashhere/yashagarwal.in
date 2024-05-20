@@ -1,12 +1,6 @@
 export default function Now() {
   return (
     <>
-      <div className="mb-8 flex flex-col items-start">
-        <span className="text-lg font-bold">Yash Agarwal</span>
-        <span className="stroke-current font-medium leading-none text-gray-1100">
-          Software Developer
-        </span>
-      </div>
       <div className="text-base text-gray-1100">
         <p>
           I&apos;m a Software Engineer crafting efficient solutions for

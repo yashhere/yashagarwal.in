@@ -25,7 +25,9 @@ export default async function Page() {
   return (
     <>
       <section>
-        <SectionTitle data={notes} title="notes" />
+        <div className="mt-16 flex flex-col items-start align-middle font-semibold">
+          <h1>Notes</h1>
+        </div>
       </section>
       <NotesList notes={notes} />
     </>

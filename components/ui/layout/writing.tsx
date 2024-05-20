@@ -5,11 +5,14 @@ import { FiArrowRight } from "react-icons/fi"
 import Link from "../link"
 
 export default async function Writing({
-  showDescription = false,
+  prioritySort = false,
 }: {
-  showDescription: boolean
+  prioritySort?: boolean
 }) {
   const notes = await getPreviewNotes()
+  if (prioritySort) {
+    notes.sort((a, b) => b.note.updatedOn - a.note.updatedOn)
+  }
   return (
     <>
       <div className="mb-5 mt-16 flex flex-row justify-between font-semibold sm:mb-6">
@@ -25,13 +28,7 @@ export default async function Writing({
       <div className="sm:-mt-3">
         <div className="flex flex-col gap-5 sm:gap-0">
           {notes.slice(0, 5).map((note) => {
-            return (
-              <NotePreview
-                key={note.note.slug}
-                showDescription={showDescription}
-                note={note}
-              />
-            )
+            return <NotePreview key={note.note.slug} note={note} />
           })}
           <Link
             href="/notes"

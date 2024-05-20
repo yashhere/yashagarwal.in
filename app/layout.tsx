@@ -13,6 +13,8 @@ import { GeistSans } from "geist/font/sans"
 
 import "@/styles/globals.css"
 
+import Header from "@/components/ui/layout/header"
+
 const GeistRegular = localFont({
   src: "../public/assets/fonts/geist-regular.otf",
   variable: "--font-geist-regular",
@@ -141,7 +143,14 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <div className="h-screen ">
             <main className="mx-4 flex max-w-2xl flex-auto flex-col px-2 sm:mx-auto">
               {/* <Navigation /> */}
-              <div className="mb-32">{children}</div>
+              <div className="mb-32">
+                <div className="mt-28 space-y-12">
+                  <section className="flex flex-col justify-start">
+                    <Header />
+                    {children}
+                  </section>
+                </div>
+              </div>
             </main>
             <Footer />
           </div>

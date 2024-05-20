@@ -23,7 +23,7 @@ export async function RecentNotes({ count }: { count: number }) {
         </Link>
       </div>
       <section className="w-full space-y-3">
-        <NoteList notes={notesFiltered} showDescription={true} />
+        <NoteList notes={notesFiltered} />
       </section>
     </>
   )
