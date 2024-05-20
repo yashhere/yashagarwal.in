@@ -275,7 +275,7 @@ module.exports = {
         sm: ["14px", "20px"],
         base: ["16px", "28px"],
         lg: ["18px", "30px"],
-        xl: ["24px", "34px"],
+        xl: ["24px", "36px"],
       },
       fontFamily: {
         sans: ["var(--font-geist-regular)"],

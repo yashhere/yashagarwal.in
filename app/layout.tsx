@@ -124,7 +124,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         className={cn(
           "min-h-screen font-sans antialiased",
           "bg-gray-100 text-gray-1200",
-          "mx-4 flex max-w-6xl flex-col md:flex-row lg:mx-auto",
+          "flex flex-col lg:mx-auto",
           GeistRegular.variable,
           NewsReader.variable,
           GeistSans.variable,
@@ -138,11 +138,13 @@ export default function RootLayout({ children }: RootLayoutProps) {
           defaultTheme="system"
           enableSystem
         >
-          <main className="flex h-screen max-w-2xl flex-auto flex-col px-2 sm:mx-auto">
-            {/* <Navigation /> */}
-            <div className="mb-32">{children}</div>
+          <div className="h-screen ">
+            <main className="mx-4 flex max-w-2xl flex-auto flex-col px-2 sm:mx-auto">
+              {/* <Navigation /> */}
+              <div className="mb-32">{children}</div>
+            </main>
             <Footer />
-          </main>
+          </div>
           <Analytics />
           <TailwindIndicator />
         </ThemeProvider>

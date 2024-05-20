@@ -18,9 +18,12 @@ export const NotePreview = ({
       >
         <div className="flex flex-col">
           <span className="font-sans font-medium">{note.note.title}</span>
-          <span className="text-sm text-gray-1100">
+          {showDescription && (
+            <span className="text-gray-1100">{note.note.description}</span>
+          )}
+          {/* <span className="text-sm text-gray-1100">
             {moment(note.note.createdOn).format("DD MMM, YYYY")}
-          </span>
+          </span> */}
         </div>
       </Link>
     </>

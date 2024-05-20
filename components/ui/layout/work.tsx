@@ -1,10 +1,10 @@
-export default async function Connect() {
+export default async function Work() {
   return (
     <>
-      <div className="mb-5 mt-16 flex flex-col items-start align-middle sm:mb-6">
-        <h1 className="font-semibold">Connect</h1>
+      <div className="mb-5 mt-16 flex flex-col items-start align-middle font-semibold sm:mb-6">
+        <h1>Work</h1>
       </div>
-      <div className="text-gray-1100">
+      <div>
         <span>
           You can reach me at{" "}
           <a href="https://twitter.com/yash__here">@yash__here</a> or{" "}
