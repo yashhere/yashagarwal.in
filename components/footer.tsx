@@ -9,6 +9,7 @@ import { env } from "@/env.mjs"
 import moment from "moment"
 import { FiGithub, FiLinkedin, FiRss } from "react-icons/fi"
 
+import { DarkToggle } from "./mode-toggle"
 import { AnalogClock } from "./ui/clock/clock"
 import Link from "./ui/link"
 
@@ -48,7 +49,7 @@ export const Footer: FC = () => {
     <footer className="mt-auto w-full border-[1px] border-t-gray-600 py-2">
       <div className="mx-auto flex max-w-2xl flex-col gap-4 px-3 sm:px-0">
         <div className="flex flex-row items-center justify-between">
-          <h1>This is footer</h1>
+          <DarkToggle />
           <AnalogClock />
         </div>
       </div>

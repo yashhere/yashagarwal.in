@@ -16,7 +16,7 @@ export default async function Writing({
   return (
     <>
       <div className="mb-5 mt-16 flex flex-row justify-between font-semibold sm:mb-6">
-        <h1>Featured Writing</h1>
+        <h1>Selected Writings</h1>
         <Link
           href="/notes"
           className="hidden align-middle sm:flex sm:items-center sm:space-x-2"
