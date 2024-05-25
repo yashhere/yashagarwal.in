@@ -10,7 +10,7 @@ export const NotePreview = ({ note }: { note: NoteWithMetadata }) => {
         className="flex w-full flex-col justify-between text-lg hover:text-primary md:flex-row  md:items-center"
         noUnderline
       >
-        <span className="mb-[2px] font-heading font-medium leading-7">
+        <span className="mb-[2px] font-heading font-medium">
           {note.note.title}
         </span>
         <span className="text-base text-gray-700">
