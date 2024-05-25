@@ -27,7 +27,7 @@ export default function LifeLog() {
             <>
               <li
                 key={note.slug}
-                className="prose prose-article ml-4 pt-24 first:pt-8"
+                className="prose prose-article ml-4 pt-24 leading-7 first:pt-8"
               >
                 <div className="absolute -left-1.5 mt-1.5 size-3 rounded-full border border-background bg-gray-700/80"></div>
                 <time className="mb-1 text-2xl font-semibold leading-none text-gray-900">

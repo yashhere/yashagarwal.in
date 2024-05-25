@@ -1,6 +1,5 @@
 import { FC } from "react"
 import { env } from "@/env.mjs"
-import moment from "moment"
 import { FiGithub, FiLinkedin, FiRss } from "react-icons/fi"
 
 import Link from "./ui/link"
@@ -30,9 +29,6 @@ const navItems = {
   },
   "/work": {
     name: "work",
-  },
-  "/lifelog": {
-    name: "log",
   },
 }
 

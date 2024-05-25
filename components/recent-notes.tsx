@@ -10,20 +10,18 @@ export async function RecentNotes({ count }: { count: number }) {
   let notesFiltered = notes.slice(0, count)
   return (
     <>
-      <div className="group flex flex-row justify-between pb-3">
-        <h2 className="font-heading text-2xl font-bold text-secondary">
-          recent notes
-        </h2>
+      <div className="group mb-4 flex flex-row justify-between">
+        <h2 className="text-xl font-semibold">Recent Notes</h2>
         <Link
           href="/notes"
-          className="flex items-center space-x-2 align-middle text-lg font-bold"
+          className="flex items-center space-x-2 align-middle text-xl font-bold hover:text-primary"
         >
           <span className="font-normal">all</span>
           <FiArrowRight className="size-4" />
         </Link>
       </div>
       <section className="w-full space-y-3">
-        <NoteList notes={notesFiltered} showDescription={true} />
+        <NoteList notes={notesFiltered} />
       </section>
     </>
   )

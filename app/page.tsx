@@ -1,4 +1,5 @@
 import { RecentNotes } from "@/components/recent-notes"
+import Link from "@/components/ui/link"
 import SectionTitle from "@/components/ui/section-title"
 import { siteConfig } from "@/config/site"
 
@@ -7,13 +8,18 @@ export default async function Page() {
     <div className="space-y-12">
       <section className="flex flex-col justify-start">
         <SectionTitle data={null} title="Hey, I'm Yash 👋" />
-        <div className="prose prose-article text-lg leading-8 text-text">
+        <div className="prose prose-article text-lg leading-7 text-text">
           <p>
             I&apos;m a Software Engineer crafting efficient solutions for
             intricate problems. Currently I work at{" "}
-            <a href="https://netskope.com" target="_blank">
+            <Link
+              href="https://netskope.com"
+              target="_blank"
+              noExternalLinkIcon
+              underline
+            >
               Netskope
-            </a>{" "}
+            </Link>{" "}
             on it&apos;s API security product.
           </p>
           <p>
