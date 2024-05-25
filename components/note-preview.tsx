@@ -2,33 +2,20 @@ import Link from "@/components/ui/link"
 import { NoteWithMetadata } from "@/types"
 import moment from "moment"
 
-export const NotePreview = ({
-  note,
-  showDescription = false,
-}: {
-  note: NoteWithMetadata
-  showDescription: boolean
-}) => {
+export const NotePreview = ({ note }: { note: NoteWithMetadata }) => {
   return (
     <>
       <Link
         href={`/notes/${note.note.slug}`}
-        className="flex w-full flex-col hover:text-primary"
+        className="flex w-full flex-col justify-between text-lg leading-6 hover:text-primary  md:flex-row md:items-center"
         noUnderline
       >
-        <div className="flex flex-col space-y-2">
-          <span className="font-heading text-lg font-medium">
-            {note.note.title}
-          </span>
-          {showDescription && note.note?.description && (
-            <span className="text-sm text-gray-500">
-              {note.note?.description}
-            </span>
-          )}
-          <span className="text-sm text-gray-600">
-            {moment(note.note.createdOn).format("DD MMM, YYYY")}
-          </span>
-        </div>
+        <span className="mb-[2px] font-heading font-medium">
+          {note.note.title}
+        </span>
+        <span className="text-base text-gray-700">
+          {moment(note.note.createdOn).format("DD MMM, YYYY")}
+        </span>
       </Link>
     </>
   )
