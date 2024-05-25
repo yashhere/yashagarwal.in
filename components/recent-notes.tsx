@@ -10,7 +10,7 @@ export async function RecentNotes({ count }: { count: number }) {
   let notesFiltered = notes.slice(0, count)
   return (
     <>
-      <div className="group mb-4 flex flex-row justify-between">
+      <div className="group mb-8 flex flex-row justify-between">
         <h2 className="text-xl font-semibold">Recent Notes</h2>
         <Link
           href="/notes"
