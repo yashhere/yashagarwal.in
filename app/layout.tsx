@@ -10,6 +10,8 @@ import { cn, encodeParameter } from "@/lib/utils"
 
 import "@/styles/globals.css"
 
+import FullWidthFooter from "@/components/full-width-footer"
+
 const bodyFont = localFont({
   src: "../public/assets/fonts/wotfard.ttf",
   variable: "--font-body",
@@ -115,7 +117,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         className={cn(
           "min-h-screen font-body antialiased",
           "bg-background text-text",
-          "mx-4 flex max-w-6xl flex-col md:flex-row lg:mx-auto",
+          "flex flex-col lg:mx-auto",
           bodyFont.variable,
           monoFont.variable
         )}
@@ -127,11 +129,17 @@ export default function RootLayout({ children }: RootLayoutProps) {
           defaultTheme="system"
           enableSystem
         >
-          <main className="flex h-screen max-w-2xl flex-auto flex-col px-2 sm:mx-auto md:mt-0 md:px-0">
-            <Navigation />
-            <div className="mb-32">{children}</div>
+          <div className="flex h-screen flex-auto flex-col">
+            <main className="mx-4 flex max-w-2xl flex-auto flex-col  sm:mx-auto">
+              <Navigation />
+              <div className="mb-32">
+                <section className="flex flex-col justify-start">
+                  {children}
+                </section>
+              </div>
+            </main>
             <Footer />
-          </main>
+          </div>
           <Analytics />
           <TailwindIndicator />
         </ThemeProvider>

@@ -2,6 +2,7 @@ import { FC } from "react"
 import { env } from "@/env.mjs"
 import { FiGithub, FiLinkedin, FiRss } from "react-icons/fi"
 
+import { AnalogClock } from "./ui/clock/clock"
 import Link from "./ui/link"
 
 const Socials = [
@@ -24,20 +25,42 @@ const Socials = [
 
 // same is present in navigation.tsx as well.
 const navItems = {
+  "/": {
+    name: "home",
+  },
   "/notes": {
     name: "notes",
   },
   "/work": {
     name: "work",
   },
+  "/colophon": {
+    name: "colophon",
+  },
+  "/changelog": {
+    name: "changelog",
+  },
 }
 
 export const Footer: FC = () => {
   return (
-    <footer className="mt-auto font-heading">
+    <footer className="mt-auto w-full space-y-4">
       <hr className="border-[0.5px]" />
-      <div className="my-8 flex flex-row items-center justify-between">
-        <div className="flex flex-col gap-y-4">
+      <div className="mx-auto flex max-w-2xl flex-col px-3 sm:px-0">
+        <div className="flex flex-row items-start justify-between space-x-4 md:mx-auto md:items-center">
+          {Object.entries(navItems).map(([path, { name }]) => {
+            return (
+              <Link
+                key={path}
+                href={path}
+                className="text-base text-text/60 hover:text-text hover:no-underline"
+              >
+                {name}
+              </Link>
+            )
+          })}
+        </div>
+        <div className="my-8 flex flex-row items-center justify-between">
           <div className="flex flex-row justify-start gap-x-4">
             {Socials.map((s) => {
               return (
@@ -47,27 +70,12 @@ export const Footer: FC = () => {
                   aria-label={s.name}
                   noExternalLinkIcon
                 >
-                  <s.icon className="size-5 text-text/60 hover:text-text" />
+                  <s.icon className="size-6 text-text/60 hover:text-text" />
                 </Link>
               )
             })}
           </div>
-          <div className="items-start">
-            <p className="text-text/60">Live since 2016</p>
-          </div>
-        </div>
-        <div className="flex flex-col items-end">
-          {Object.entries(navItems).map(([path, { name }]) => {
-            return (
-              <Link
-                key={path}
-                href={path}
-                className="text-text/60 hover:text-text hover:no-underline"
-              >
-                {name}
-              </Link>
-            )
-          })}
+          <AnalogClock />
         </div>
       </div>
     </footer>

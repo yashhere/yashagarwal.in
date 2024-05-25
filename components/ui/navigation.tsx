@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 
 import { DarkToggle } from "../mode-toggle"
-import { AnalogClock } from "./clock/clock"
 
 const navItems = {
   "/": {
@@ -55,9 +54,6 @@ export const Navigation = () => {
           </div>
 
           <div className="flex flex-row items-center justify-end space-x-5">
-            <span className="text-text">
-              <AnalogClock />
-            </span>
             <span className="text-text">
               <DarkToggle />
             </span>

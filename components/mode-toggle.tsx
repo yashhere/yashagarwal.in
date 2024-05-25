@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
 import { useTheme } from "next-themes"
-import { FiMonitor, FiMoon, FiSun } from "react-icons/fi"
+import { FiMoon, FiSun } from "react-icons/fi"
 
 export const DarkToggle = () => {
   const [mounted, setMounted] = useState(false)
