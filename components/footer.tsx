@@ -16,18 +16,10 @@ const Socials = [
     url: "https://www.linkedin.com/in/theyashagarwal/",
     icon: FiLinkedin,
   },
-  {
-    name: "RSS",
-    url: `${env.NEXT_PUBLIC_APP_URL}/atom.xml`,
-    icon: FiRss,
-  },
 ]
 
 // same is present in navigation.tsx as well.
 const navItems = {
-  "/": {
-    name: "home",
-  },
   "/notes": {
     name: "notes",
   },
@@ -47,13 +39,13 @@ export const Footer: FC = () => {
     <footer className="mt-auto w-full space-y-4">
       <hr className="border-[0.5px]" />
       <div className="mx-auto flex max-w-2xl flex-col px-3 sm:px-0">
-        <div className="flex flex-row items-start justify-between space-x-4 md:mx-auto md:items-center">
+        <div className="flex flex-row items-start justify-between space-x-4 sm:mx-auto sm:space-x-8 md:items-center">
           {Object.entries(navItems).map(([path, { name }]) => {
             return (
               <Link
                 key={path}
                 href={path}
-                className="text-base text-text/60 hover:text-text hover:no-underline"
+                className="text-lg text-text/60 hover:text-text hover:no-underline"
               >
                 {name}
               </Link>
@@ -75,7 +67,16 @@ export const Footer: FC = () => {
               )
             })}
           </div>
-          <AnalogClock />
+          <div className="flex flex-row justify-start gap-x-4">
+            <Link
+              href={`${env.NEXT_PUBLIC_APP_URL}/atom.xml`}
+              aria-label="rss-icon"
+              noExternalLinkIcon
+            >
+              <FiRss className="size-6 text-text/60 hover:text-text" />
+            </Link>
+            <AnalogClock />
+          </div>
         </div>
       </div>
     </footer>
