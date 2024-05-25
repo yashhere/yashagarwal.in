@@ -173,7 +173,7 @@ const css = {
   },
   pre: {
     color: "var(--tw-prose-pre-code)",
-    backgroundColor: "var(--tw-prose-pre-bg)",
+    // backgroundColor: "var(--tw-prose-pre-bg)",
     overflowX: "auto",
     fontWeight: "400",
   },
@@ -253,9 +253,6 @@ module.exports = {
       colors: {
         text: "hsl(var(--color-text))",
         primary: "hsl(var(--color-primary))",
-        background: "hsl(var(--color-background))",
-        "pre-bg": "#151f28",
-        "code-bg": "#737d8c2b",
         gray: {
           DEFAULT: "var(--color-gray-400)",
           100: "var(--color-gray-100)",
@@ -285,5 +282,5 @@ module.exports = {
       typography: ({ theme }) => ({}),
     },
   },
-  //   plugins: [require("@tailwindcss/typography")],
+  plugins: [require("@tailwindcss/typography")],
 }

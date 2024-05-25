@@ -2,6 +2,7 @@
 
 import { FC, ReactNode, useState } from "react"
 import { useRouter } from "next/navigation"
+import { useMediaQuery } from "@/lib/use-media-query"
 import { cn } from "@/lib/utils"
 import { FiChevronDown, FiChevronUp } from "react-icons/fi"
 
@@ -22,6 +23,11 @@ const Title: FC<TitleProps> = ({ children }) => {
 export const TableOfContents = ({ headings, path, interactive }) => {
   const router = useRouter()
   const [isOpen, setIsOpen] = useState(!interactive)
+  const { isMobile } = useMediaQuery()
+
+  if (isMobile) {
+    return <></>
+  }
 
   return (
     <>

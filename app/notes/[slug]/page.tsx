@@ -112,7 +112,7 @@ export default async function Page({ params }: Props) {
   return (
     <>
       <div>
-        <section className="mb-8 space-y-4">
+        <section className="mb-8">
           <SectionTitle data={null} title={article.note.title} />
           {/* {article.note.description ? (
             <>
@@ -138,14 +138,14 @@ export default async function Page({ params }: Props) {
               </p>
             ) : null}
           </div> */}
-          <TagList tags={article.note.tags} />
+          {/* <TagList tags={article.note.tags} /> */}
         </section>
         {article.series ? (
           <div className="mb-8">
             <Series series={article.series} interactive={true} current={slug} />
           </div>
         ) : null}
-        {article.note.headings.length != 0 ? (
+        {/* {article.note.headings.length != 0 ? (
           <div className="mb-8">
             <TableOfContents
               headings={article.note.headings}
@@ -153,9 +153,9 @@ export default async function Page({ params }: Props) {
               interactive={true}
             />
           </div>
-        ) : null}
+        ) : null} */}
         <div className="mb-8">
-          <div className="">
+          <div className="article text-base">
             <MdxContent components={CustomMDXComponents} />
             {article.note.status === "draft" ? <Draft /> : null}
           </div>
