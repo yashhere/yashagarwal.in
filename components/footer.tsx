@@ -38,12 +38,12 @@ const navItems = {
   "/work": {
     name: "work",
   },
-  "/colophon": {
-    name: "colophon",
-  },
-  "/changelog": {
-    name: "changelog",
-  },
+  // "/colophon": {
+  //   name: "colophon",
+  // },
+  // "/changelog": {
+  //   name: "changelog",
+  // },
 }
 
 export const Footer: FC = () => {
@@ -102,7 +102,7 @@ export const Footer: FC = () => {
                 </Link>
               </div>
             </section>
-            <section className="">
+            {/* <section>
               <h1 className="mb-4 text-lg font-bold">Get email updates</h1>
               <div className="mb-6 flex flex-col">
                 <form className="shadow-border flex h-10 items-center justify-between gap-2 overflow-hidden rounded-3xl border-[1px] border-gray-400/50 bg-gray-100/50 focus-within:border-gray-400 focus-within:outline-none">
@@ -123,7 +123,7 @@ export const Footer: FC = () => {
                   No spam. Unsubscribe anytime
                 </label>
               </div>
-            </section>
+            </section> */}
           </div>
         </div>
         <div className="flex flex-col items-start justify-between md:flex-row"></div>
@@ -131,7 +131,7 @@ export const Footer: FC = () => {
 
       <div className="mx-auto max-w-2xl space-y-8 p-4 text-lg md:px-0">
         <div className="flex w-full flex-row justify-between">
-          <div className="">Be nice ツ</div>
+          <div>Be nice ツ</div>
           <div className="flex flex-row items-center gap-2">
             <div>©</div>
             <div>2016</div>
