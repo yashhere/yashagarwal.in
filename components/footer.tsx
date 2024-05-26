@@ -36,8 +36,8 @@ const navItems = {
 
 export const Footer: FC = () => {
   return (
-    <footer className="mt-auto w-full space-y-4">
-      <hr className="border-[0.5px]" />
+    <footer className="mt-auto w-full space-y-4 bg-gray-100/40">
+      <hr className="border-[0.5px] border-gray-200" />
       <div className="mx-auto flex max-w-2xl flex-col px-3 sm:px-0">
         <div className="flex flex-row items-start justify-between space-x-4 sm:mx-auto sm:space-x-8 md:items-center">
           {Object.entries(navItems).map(([path, { name }]) => {
