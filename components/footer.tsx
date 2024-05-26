@@ -1,24 +1,32 @@
 import { FC } from "react"
 import { env } from "@/env.mjs"
 import { FiGithub, FiLinkedin, FiRss } from "react-icons/fi"
+import { RiAtLine, RiTwitterXFill } from "react-icons/ri"
+import { TfiHeart } from "react-icons/tfi"
 
+import { AnalogClock } from "./ui/clock/clock"
 import Link from "./ui/link"
 
 const Socials = [
   {
-    name: "Github",
+    name: "Email",
+    url: "mailto:yashagarwaljpr+blog@gmail.com",
+    icon: RiAtLine,
+  },
+  {
+    name: "GitHub",
     url: "https://github.com/yashhere",
     icon: FiGithub,
   },
   {
-    name: "Linkedin",
+    name: "LinkedIn",
     url: "https://www.linkedin.com/in/theyashagarwal/",
     icon: FiLinkedin,
   },
   {
-    name: "RSS",
-    url: `${env.NEXT_PUBLIC_APP_URL}/atom.xml`,
-    icon: FiRss,
+    name: "Twitter",
+    url: "https://www.twitter.com/yash__here",
+    icon: RiTwitterXFill,
   },
 ]
 
@@ -30,44 +38,108 @@ const navItems = {
   "/work": {
     name: "work",
   },
+  // "/colophon": {
+  //   name: "colophon",
+  // },
+  // "/changelog": {
+  //   name: "changelog",
+  // },
 }
 
 export const Footer: FC = () => {
   return (
-    <footer className="mt-auto font-heading">
-      <hr className="border-[0.5px]" />
-      <div className="my-8 flex flex-row items-center justify-between">
-        <div className="flex flex-col gap-y-4">
-          <div className="flex flex-row justify-start gap-x-4">
-            {Socials.map((s) => {
-              return (
+    <footer className="mt-auto w-full space-y-4 bg-gray-100/40">
+      <hr className="border-[0.5px] border-gray-200" />
+      <div className="mx-auto max-w-2xl space-y-8 p-4 md:px-0">
+        <div className="flex flex-row flex-wrap items-start justify-between md:flex-row">
+          <section className="flex flex-col  ">
+            <h1 className="mb-4 text-lg font-bold">Get in touch</h1>
+            <div className="space-y-2">
+              {Socials.map((s) => {
+                return (
+                  <Link
+                    href={s.url}
+                    key={s.name}
+                    aria-label={s.name}
+                    noExternalLinkIcon
+                    className="flex flex-row items-center gap-4 text-text/60 hover:text-text hover:no-underline md:gap-2"
+                  >
+                    <s.icon className="size-5" />
+                    <h1 className="text-lg">{s.name}</h1>
+                  </Link>
+                )
+              })}
+            </div>
+          </section>
+          <section className="flex w-1/3 flex-col md:w-auto ">
+            <h1 className="mb-4 text-lg font-bold">Explore</h1>
+            <div className="flex flex-col space-y-2">
+              {Object.entries(navItems).map(([path, { name }]) => {
+                return (
+                  <Link
+                    key={path}
+                    href={path}
+                    className="text-lg capitalize text-text/60 hover:text-text hover:no-underline"
+                  >
+                    {name}
+                  </Link>
+                )
+              })}
+            </div>
+          </section>
+          <div className="mt-8 flex flex-col md:mt-0">
+            <section className="">
+              <h1 className="mb-4 text-lg font-bold">Prefer RSS 🙂</h1>
+              <div className="mb-6">
                 <Link
-                  href={s.url}
-                  key={s.name}
-                  aria-label={s.name}
+                  href={`${env.NEXT_PUBLIC_APP_URL}/atom.xml`}
+                  aria-label="rss-icon"
                   noExternalLinkIcon
+                  className="flex h-10 flex-row items-center gap-2 rounded-3xl border border-gray-400/50 bg-background-subtle px-4 py-1 text-text/60 hover:border-gray-400 hover:text-text"
                 >
-                  <s.icon className="size-5 text-text/60 hover:text-text" />
+                  <FiRss className="size-6" />
+                  <span className="text-lg">Subscribe via RSS Feed</span>
                 </Link>
-              )
-            })}
-          </div>
-          <div className="items-start">
-            <p className="text-text/60">Live since 2016</p>
+              </div>
+            </section>
+            {/* <section>
+              <h1 className="mb-4 text-lg font-bold">Get email updates</h1>
+              <div className="mb-6 flex flex-col">
+                <form className="shadow-border flex h-10 items-center justify-between gap-2 overflow-hidden rounded-3xl border-[1px] border-gray-400/50 bg-gray-100/50 focus-within:border-gray-400 focus-within:outline-none">
+                  <input
+                    type="text"
+                    name="name"
+                    placeholder="Enter your email"
+                    className="h-full w-[20%] grow border-none bg-transparent px-3.5 text-lg transition-colors placeholder:text-text/60 focus:outline-none"
+                  />
+                  <button
+                    type="submit"
+                    className="focus:shadow-focus-ring mr-1 h-[30px] w-[80px] rounded-3xl bg-text px-1.5 text-sm font-semibold text-gray-100 outline-none md:w-[104px] md:px-3.5 md:text-base"
+                  >
+                    <span className="block">Subscribe</span>
+                  </button>
+                </form>
+                <label className="px-3.5 pt-1 text-xs">
+                  No spam. Unsubscribe anytime
+                </label>
+              </div>
+            </section> */}
           </div>
         </div>
-        <div className="flex flex-col items-end">
-          {Object.entries(navItems).map(([path, { name }]) => {
-            return (
-              <Link
-                key={path}
-                href={path}
-                className="text-text/60 hover:text-text hover:no-underline"
-              >
-                {name}
-              </Link>
-            )
-          })}
+        <div className="flex flex-col items-start justify-between md:flex-row"></div>
+      </div>
+
+      <div className="mx-auto max-w-2xl space-y-8 p-4 text-lg md:px-0">
+        <div className="flex w-full flex-row justify-between">
+          <div>Be nice ツ</div>
+          <div className="flex flex-row items-center gap-2">
+            <div>©</div>
+            <div>2016</div>
+            <div>-</div>
+            <div className="flex flex-row">
+              <AnalogClock />
+            </div>
+          </div>
         </div>
       </div>
     </footer>
