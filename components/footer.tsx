@@ -14,12 +14,12 @@ const Socials = [
     icon: RiAtLine,
   },
   {
-    name: "Github",
+    name: "GitHub",
     url: "https://github.com/yashhere",
     icon: FiGithub,
   },
   {
-    name: "Linkedin",
+    name: "LinkedIn",
     url: "https://www.linkedin.com/in/theyashagarwal/",
     icon: FiLinkedin,
   },
@@ -95,7 +95,7 @@ export const Footer: FC = () => {
                   href={`${env.NEXT_PUBLIC_APP_URL}/atom.xml`}
                   aria-label="rss-icon"
                   noExternalLinkIcon
-                  className="flex h-10 flex-row items-center gap-2 rounded-3xl border border-gray-400/50 bg-background px-4 py-1 text-text/60 shadow-md hover:border-gray-400 hover:text-text"
+                  className="flex h-10 flex-row items-center gap-2 rounded-3xl border border-gray-400/50 bg-background-subtle px-4 py-1 text-text/60 hover:border-gray-400 hover:text-text"
                 >
                   <FiRss className="size-6" />
                   <span className="text-lg">Subscribe via RSS Feed</span>
