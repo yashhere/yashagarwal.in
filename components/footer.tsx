@@ -1,9 +1,10 @@
-import { FC } from "react"
+import { FC, FormEvent, useState } from "react"
 import { env } from "@/env.mjs"
 import { FiGithub, FiLinkedin, FiRss } from "react-icons/fi"
 import { RiAtLine, RiTwitterXFill } from "react-icons/ri"
 import { TfiHeart } from "react-icons/tfi"
 
+import Newsletter from "./newsletter"
 import { AnalogClock } from "./ui/clock/clock"
 import Link from "./ui/link"
 
@@ -102,28 +103,12 @@ export const Footer: FC = () => {
                 </Link>
               </div>
             </section>
-            {/* <section>
+            <section>
               <h1 className="mb-4 text-lg font-bold">Get email updates</h1>
               <div className="mb-6 flex flex-col">
-                <form className="shadow-border flex h-10 items-center justify-between gap-2 overflow-hidden rounded-3xl border-[1px] border-gray-400/50 bg-gray-100/50 focus-within:border-gray-400 focus-within:outline-none">
-                  <input
-                    type="text"
-                    name="name"
-                    placeholder="Enter your email"
-                    className="h-full w-[20%] grow border-none bg-transparent px-3.5 text-lg transition-colors placeholder:text-text/60 focus:outline-none"
-                  />
-                  <button
-                    type="submit"
-                    className="focus:shadow-focus-ring mr-1 h-[30px] w-[80px] rounded-3xl bg-text px-1.5 text-sm font-semibold text-gray-100 outline-none md:w-[104px] md:px-3.5 md:text-base"
-                  >
-                    <span className="block">Subscribe</span>
-                  </button>
-                </form>
-                <label className="px-3.5 pt-1 text-xs">
-                  No spam. Unsubscribe anytime
-                </label>
+                <Newsletter />
               </div>
-            </section> */}
+            </section>
           </div>
         </div>
         <div className="flex flex-col items-start justify-between md:flex-row"></div>
