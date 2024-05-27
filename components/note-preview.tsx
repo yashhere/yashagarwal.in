@@ -1,21 +1,40 @@
+"use client"
+
 import Link from "@/components/ui/link"
+import { useMediaQuery } from "@/hooks/use-media-query"
 import { NoteWithMetadata } from "@/types"
 import moment from "moment"
 
-export const NotePreview = ({ note }: { note: NoteWithMetadata }) => {
+export const NotePreview = ({
+  note,
+  homePage,
+}: {
+  note: NoteWithMetadata
+  homePage: boolean
+}) => {
+  const { isMobile } = useMediaQuery()
   return (
     <>
       <Link
         href={`/notes/${note.note.slug}`}
-        className="flex w-full flex-col justify-between text-lg leading-6 hover:text-primary  md:flex-row md:items-center"
+        className="-mx-3 flex flex-col justify-between rounded-md px-3 leading-6 hover:bg-[#F5F4F4] dark:hover:bg-gray-200 sm:py-3 md:flex-row md:items-center"
         noUnderline
       >
-        <span className="mb-[2px] font-heading font-medium">
-          {note.note.title}
-        </span>
-        <span className="text-base text-gray-700">
-          {moment(note.note.createdOn).format("DD MMM, YYYY")}
-        </span>
+        <div className="flex flex-col">
+          <span className="mb-[2px] font-heading text-lg font-medium">
+            {note.note.title}
+          </span>
+          {!isMobile && (
+            <span className="mb-[2px] text-base text-gray-700">
+              {note.note.title}
+            </span>
+          )}
+        </div>
+        {(!homePage || isMobile) && (
+          <span className="text-base text-gray-700">
+            {moment(note.note.createdOn).format("DD MMM, YYYY")}
+          </span>
+        )}
       </Link>
     </>
   )
