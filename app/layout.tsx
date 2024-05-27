@@ -11,6 +11,7 @@ import { cn, encodeParameter } from "@/lib/utils"
 import "@/styles/globals.css"
 
 import FullWidthFooter from "@/components/full-width-footer"
+import { Toaster } from "@/components/ui/toast"
 
 const bodyFont = localFont({
   src: "../public/assets/fonts/wotfard.ttf",
@@ -129,6 +130,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           defaultTheme="system"
           enableSystem
         >
+          <Toaster closeButton className="pointer-events-auto" />
           <div className="flex h-screen flex-auto flex-col">
             <main className="mx-4 flex max-w-2xl flex-auto flex-col  sm:mx-auto">
               <Navigation />
