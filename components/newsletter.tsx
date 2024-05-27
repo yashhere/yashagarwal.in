@@ -7,6 +7,7 @@ import { EMPTY_FORM_STATE } from "@/lib/actions/newsletter/utils"
 import { useFormState, useFormStatus } from "react-dom"
 
 import { FieldError } from "./forms/field-error"
+import LoadingSpinner from "./ui/icons/loading-spinner"
 
 type SubmitButtonProps = {
   label: string
@@ -22,7 +23,7 @@ const SubmitButton = ({ label, loading }: SubmitButtonProps) => {
       className="focus:shadow-focus-ring mr-1 h-[30px] w-[80px] rounded-3xl bg-text px-1.5 text-sm font-semibold text-gray-100 outline-none md:w-[104px] md:px-3.5 md:text-sm"
       disabled={pending}
     >
-      <span>{pending ? loading : label}</span>
+      {pending ? loading : label}
     </button>
   )
 }
@@ -44,15 +45,16 @@ export default function Newsletter() {
           type="text"
           name="email"
           placeholder="Enter your email"
+          required
           className="h-full w-[20%] grow border-none bg-transparent px-3.5 text-lg transition-colors placeholder:text-text/60 focus:outline-none"
         />
-        <SubmitButton label="Subscribe" loading="Subscribing" />
+        <SubmitButton
+          label="Subscribe"
+          loading={<LoadingSpinner className="mx-auto flex flex-row" />}
+        />
         {noScriptFallback}
       </form>
       <FieldError formState={formState} name="email" />
-      {/* <label className="px-3.5 pt-1 text-xs">
-        <FieldError formState={formState} name="email" />
-      </label> */}
     </>
   )
 }

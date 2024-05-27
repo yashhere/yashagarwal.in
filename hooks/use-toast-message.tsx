@@ -8,7 +8,6 @@ const useToastMessage = (formState: FormState) => {
   const showToast =
     formState.message && formState.timestamp !== prevTimestamp.current
 
-  console.log(`formState: ${JSON.stringify(formState)}`)
   useEffect(() => {
     if (showToast) {
       if (formState.status === "ERROR") {

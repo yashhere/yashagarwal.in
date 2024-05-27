@@ -1,5 +1,8 @@
-"use server"
+"use server";
 
+import { revalidatePath } from "next/cache"
+import { getCurrentDateTime } from "@/lib/utils"
+import { google } from "googleapis"
 import { z } from "zod"
 
 import { FormState, fromErrorToFormState, toFormState } from "./utils"
@@ -19,10 +22,39 @@ export default async function submitEmail(
     const { email } = submitEmailSchema.parse({
       email: formData.get("email"),
     })
+    const signupDate = new Date().toUTCString()
+
+    const private_key = process.env.GOOGLE_PRIVATE_KEY?.replace(/['"]/g, "")
+
+    if (!private_key) throw new Error("no key")
+
+    try {
+      const auth = await google.auth.getClient({
+        projectId: process.env.GOOGLE_PROJECT_ID,
+        credentials: {
+          type: "service_account",
+          private_key: private_key?.replace(/\\n/g, "\n"),
+          client_email: process.env.GOOGLE_CLIENT_EMAIL,
+          client_id: process.env.GOOGLE_CLIENT_ID,
+          token_url: process.env.GOOGLE_TOKEN_URL,
+          universe_domain: "googleapis.com",
+        },
+        scopes: ["https://www.googleapis.com/auth/spreadsheets"],
+      })
+      const sheets = google.sheets({ version: "v4", auth })
+      const spreadsheetId = process.env.GOOGLE_SHEETS_ID
+      await sheets.spreadsheets.values.append({
+        spreadsheetId,
+        range: "subscribers!A:B",
+        valueInputOption: "USER_ENTERED",
+        requestBody: {
+          values: [[signupDate, email]],
+        },
+      })
+      revalidatePath("/")
+    } catch (error) {}
   } catch (error) {
-    console.log(fromErrorToFormState(error))
     return fromErrorToFormState(error)
   }
-
-  return toFormState("SUCCESS", "Message created")
+  return toFormState("SUCCESS", "Thanks for signing up!")
 }
