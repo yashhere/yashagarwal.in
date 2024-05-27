@@ -1,7 +1,7 @@
 "use server";
 
-import { revalidatePath } from "next/cache"
-import { getCurrentDateTime } from "@/lib/utils"
+import { revalidatePath } from "next/cache";
+import { env } from "@/env.mjs"
 import { google } from "googleapis"
 import { z } from "zod"
 
@@ -24,25 +24,25 @@ export default async function submitEmail(
     })
     const signupDate = new Date().toUTCString()
 
-    const private_key = process.env.GOOGLE_PRIVATE_KEY?.replace(/['"]/g, "")
+    const private_key = env.GOOGLE_PRIVATE_KEY?.replace(/['"]/g, "")
 
     if (!private_key) throw new Error("no key")
 
     try {
       const auth = await google.auth.getClient({
-        projectId: process.env.GOOGLE_PROJECT_ID,
+        projectId: env.GOOGLE_PROJECT_ID,
         credentials: {
           type: "service_account",
           private_key: private_key?.replace(/\\n/g, "\n"),
-          client_email: process.env.GOOGLE_CLIENT_EMAIL,
-          client_id: process.env.GOOGLE_CLIENT_ID,
-          token_url: process.env.GOOGLE_TOKEN_URL,
+          client_email: env.GOOGLE_CLIENT_EMAIL,
+          client_id: env.GOOGLE_CLIENT_ID,
+          token_url: env.GOOGLE_TOKEN_URL,
           universe_domain: "googleapis.com",
         },
         scopes: ["https://www.googleapis.com/auth/spreadsheets"],
       })
       const sheets = google.sheets({ version: "v4", auth })
-      const spreadsheetId = process.env.GOOGLE_SHEETS_ID
+      const spreadsheetId = env.GOOGLE_SHEETS_ID
       await sheets.spreadsheets.values.append({
         spreadsheetId,
         range: "subscribers!A:B",
