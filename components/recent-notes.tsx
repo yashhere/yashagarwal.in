@@ -11,7 +11,7 @@ export async function RecentNotes({ count }: { count: number }) {
   return (
     <>
       <div className="group mb-8 flex flex-row justify-between">
-        <h2 className="text-xl font-semibold">Recent Notes</h2>
+        <h2 className="text-xl font-semibold">Popular Notes</h2>
         <Link
           href="/notes"
           className="flex items-center space-x-2 align-middle text-xl font-bold hover:text-primary"
@@ -20,8 +20,8 @@ export async function RecentNotes({ count }: { count: number }) {
           <FiArrowRight className="size-4" />
         </Link>
       </div>
-      <section className="w-full space-y-3">
-        <NoteList notes={notesFiltered} />
+      <section className="w-full">
+        <NoteList homePage={true} notes={notesFiltered} />
       </section>
     </>
   )
