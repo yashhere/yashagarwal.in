@@ -26,7 +26,7 @@ export const AnalogClock: FC = () => {
   return (
     <TooltipProvider>
       <Tooltip>
-        <TooltipTrigger>
+        <TooltipTrigger aria-label="clock">
           <div className="group relative flex cursor-pointer items-center justify-center text-sm">
             <div className="relative flex size-6 flex-col items-center justify-start overflow-hidden rounded-full">
               {/* The Circle */}
