@@ -38,7 +38,7 @@ export const NotesList = ({
           <SearchInput search={search} onChange={onChange} />
         </div>
       ) : null}
-      <section className="w-full space-y-4">
+      <section>
         <NoteList notes={results} />
       </section>
     </div>

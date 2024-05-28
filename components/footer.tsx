@@ -121,7 +121,7 @@ export const Footer: FC = () => {
             <div>©</div>
             <div>2016</div>
             <div>-</div>
-            <div className="flex flex-row">
+            <div aria-label="analog-clock" className="flex flex-row">
               <AnalogClock />
             </div>
           </div>
