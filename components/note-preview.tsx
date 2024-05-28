@@ -1,5 +1,6 @@
 "use client"
 
+import { Suspense } from "react"
 import Link from "@/components/ui/link"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import { NoteWithMetadata } from "@/types"
@@ -25,15 +26,19 @@ export const NotePreview = ({
             {note.note.title}
           </span>
           {note.note.description && !isMobile && (
-            <span className="mb-[2px] text-base text-gray-700">
-              {note.note.description}
-            </span>
+            <Suspense fallback={<p>Loading description...</p>}>
+              <span className="mb-[2px] text-base text-gray-700">
+                {note.note.description}
+              </span>
+            </Suspense>
           )}
         </div>
         {(!homePage || isMobile) && (
-          <span className="text-base text-gray-700">
-            {moment(note.note.createdOn).format("DD MMM, YYYY")}
-          </span>
+          <Suspense fallback={<p>Loading date...</p>}>
+            <span className="text-base text-gray-700">
+              {moment(note.note.createdOn).format("DD MMM, YYYY")}
+            </span>
+          </Suspense>
         )}
       </Link>
     </>
