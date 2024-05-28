@@ -1,8 +1,11 @@
-import { FC, FormEvent, useState } from "react"
+"use client"
+
+import { FC } from "react"
+import { usePathname } from "next/navigation"
 import { env } from "@/env.mjs"
+import { cn } from "@/lib/utils"
 import { FiGithub, FiLinkedin, FiRss } from "react-icons/fi"
 import { RiAtLine, RiTwitterXFill } from "react-icons/ri"
-import { TfiHeart } from "react-icons/tfi"
 
 import Newsletter from "./newsletter"
 import { AnalogClock } from "./ui/clock/clock"
@@ -48,6 +51,13 @@ const navItems = {
 }
 
 export const Footer: FC = () => {
+  let pathname = usePathname() || "/"
+
+  // a note should also show `notes` as active tab
+  if (pathname.includes("/notes/")) {
+    pathname = "/notes"
+  }
+
   return (
     <footer className="mt-auto w-full space-y-4 bg-gray-100/40">
       <hr className="border-[0.5px] border-gray-200" />
@@ -76,11 +86,17 @@ export const Footer: FC = () => {
             <h1 className="mb-4 text-lg font-bold">Explore</h1>
             <div className="flex flex-col space-y-2">
               {Object.entries(navItems).map(([path, { name }]) => {
+                const isActive = path === pathname
                 return (
                   <Link
                     key={path}
                     href={path}
-                    className="text-lg capitalize text-text/60 hover:text-text hover:no-underline"
+                    className={cn(
+                      "text-lg capitalize text-text hover:text-text hover:no-underline",
+                      {
+                        "text-text/60": !isActive,
+                      }
+                    )}
                   >
                     {name}
                   </Link>
