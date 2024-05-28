@@ -1,8 +1,5 @@
-"use client"
-
-import { Suspense } from "react"
 import Link from "@/components/ui/link"
-import { useMediaQuery } from "@/hooks/use-media-query"
+import { cn } from "@/lib/utils"
 import { NoteWithMetadata } from "@/types"
 import moment from "moment"
 
@@ -13,7 +10,6 @@ export const NotePreview = ({
   note: NoteWithMetadata
   homePage: boolean
 }) => {
-  const { isMobile } = useMediaQuery()
   return (
     <>
       <Link
@@ -25,21 +21,17 @@ export const NotePreview = ({
           <span className="mb-[2px] font-heading text-lg font-medium">
             {note.note.title}
           </span>
-          {note.note.description && !isMobile && (
-            <Suspense fallback={<p>Loading description...</p>}>
-              <span className="mb-[2px] text-base text-gray-700">
-                {note.note.description}
-              </span>
-            </Suspense>
+          {note.note.description && (
+            <span className="mb-[2px] hidden text-base text-gray-700 sm:block">
+              {note.note.description}
+            </span>
           )}
         </div>
-        {(!homePage || isMobile) && (
-          <Suspense fallback={<p>Loading date...</p>}>
-            <span className="text-base text-gray-700">
-              {moment(note.note.createdOn).format("DD MMM, YYYY")}
-            </span>
-          </Suspense>
-        )}
+        <span
+          className={cn(homePage ? "sm:hidden" : "", "text-base text-gray-700")}
+        >
+          {moment(note.note.createdOn).format("DD MMM, YYYY")}
+        </span>
       </Link>
     </>
   )
