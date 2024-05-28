@@ -6,7 +6,7 @@ export const NoteList = ({
   homePage = false,
 }: {
   notes: NoteWithMetadata[]
-  homePage: boolean
+  homePage?: boolean
 }) => {
   return (
     <div className="flex flex-col gap-5 sm:gap-0">
