@@ -97,6 +97,15 @@ export async function generateMetadata(
   }
 }
 
+// Return a list of `params` to populate the [slug] dynamic segment
+export async function generateStaticParams() {
+  const notes = await getPreviewNotes()
+
+  return notes.map((note) => ({
+    slug: note.note.slug,
+  }))
+}
+
 export default async function Page({ params }: Props) {
   const { slug } = params
   const article = await getPartialNote(slug)
