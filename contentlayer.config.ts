@@ -1,19 +1,22 @@
-import remarkCallouts from "@portaljs/remark-callouts"
-import { makeSource } from "contentlayer/source-files"
-import { rehypeAccessibleEmojis } from "rehype-accessible-emojis"
-import rehypeAutolinkHeadings from "rehype-autolink-headings"
-import rehypeKatex from "rehype-katex"
-import rehypePrettyCode from "rehype-pretty-code"
-import rehypeSlug from "rehype-slug"
-import remarkGfm from "remark-gfm"
-import remarkMath from "remark-math"
-import remarkSmartypants from "remark-smartypants"
-import remarkUnwrapImages from "remark-unwrap-images"
-import wikiLinkPlugin from "remark-wiki-link"
+import remarkCallouts from "@portaljs/remark-callouts";
+import { makeSource } from "contentlayer/source-files";
+import { rehypeAccessibleEmojis } from "rehype-accessible-emojis";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import rehypeKatex from "rehype-katex";
+import rehypePrettyCode from "rehype-pretty-code";
+import rehypeSlug from "rehype-slug";
+import remarkGfm from "remark-gfm";
+import remarkMath from "remark-math";
+import remarkSmartypants from "remark-smartypants";
+import remarkUnwrapImages from "remark-unwrap-images";
+import wikiLinkPlugin from "remark-wiki-link";
 
-import { LifeLog } from "./content/definitions/lifelog"
-import { Note } from "./content/definitions/note"
-import rehypeImageMetadata from "./utils/plugins/image-metadata"
+
+
+import { LifeLog } from "./content/definitions/lifelog";
+import { Note } from "./content/definitions/note";
+import rehypeImageMetadata from "./utils/plugins/image-metadata";
+
 
 const pageResolver = (name: string) => [
   name.replace(/-/g, "").replace(/ /g, "-").toLowerCase(),
@@ -21,9 +24,31 @@ const pageResolver = (name: string) => [
 
 const hrefTemplate = (permalink: string) => `/notes/${permalink}`
 
+const rehypePrettyCodeOptions = {
+  theme: "one-dark-pro",
+  defaultLang: {
+    block: "plaintext",
+    inline: "plaintext",
+  },
+  // Callbacks to customize the output of the nodes
+  onVisitLine(node) {
+    // Prevent lines from collapsing in `display: grid` mode, and
+    // allow empty lines to be copy/pasted
+    if (node.children.length === 0) {
+      node.children = [{ type: "text", value: " " }]
+    }
+    node.properties.className = [""]
+  },
+  onVisitHighlightedLine(node) {
+    // Adding a class to the highlighted line
+    node.properties.className.push("highlighted")
+  },
+}
+
 export default makeSource({
   contentDirPath: "content",
   documentTypes: [Note, LifeLog],
+  date: { timezone: "Asia/Kolkata" },
   mdx: {
     remarkPlugins: [
       [remarkGfm],
@@ -46,7 +71,7 @@ export default makeSource({
       [rehypeSlug],
       [rehypeImageMetadata],
       [rehypeAccessibleEmojis],
-      [rehypePrettyCode, { theme: "dracula" }],
+      [rehypePrettyCode, rehypePrettyCodeOptions],
       [
         rehypeAutolinkHeadings,
         {
