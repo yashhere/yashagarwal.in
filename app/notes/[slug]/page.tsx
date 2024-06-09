@@ -123,9 +123,9 @@ export default async function Page({ params }: Props) {
       <div>
         <section className="mb-8 space-y-2">
           <SectionTitle data={null} title={article.note.title} />
-          <div className="flex flex-col font-body text-base text-gray-600 sm:flex-row sm:justify-between">
+          <div className="flex flex-col pb-4 font-body text-base text-gray-600 sm:flex-row sm:justify-between">
             <span className="text-base">
-              {moment(article.note.createdOn).format("DD/MM/YY")}
+              {moment(article.note.createdOn).format("MMMM DD, YYYY")}
             </span>
           </div>
           <TagList tags={article.note.tags} />
@@ -145,7 +145,7 @@ export default async function Page({ params }: Props) {
           </div>
         ) : null}
         <div className="mb-8">
-          <div className="prose leading-7 prose-headings:cursor-pointer prose-th:cursor-auto">
+          <div className="prose leading-7 text-text prose-headings:cursor-pointer">
             <MdxContent components={CustomMDXComponents} />
             {article.note.status === "draft" ? <Draft /> : null}
           </div>

@@ -32,14 +32,14 @@ html.dark pre[data-theme="light"] {
 
 /* inline code fragments */
 code .line {
-  @apply border rounded px-[3px] py-[1px] text-base;
+  @apply border break-words rounded px-[3px] py-[1px] text-base;
 }
 /* inline code fragments end */
 
 
 /* code blocks */
 [data-rehype-pretty-code-fragment] pre > code {
-  @apply grid min-w-full overflow-x-auto break-words rounded-lg bg-inherit py-1 leading-6;
+  @apply grid min-w-full break-words overflow-x-auto rounded-lg bg-inherit py-1 leading-6;
   box-decoration-break: clone;
   counter-reset: line;
 }

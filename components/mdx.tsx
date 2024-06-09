@@ -83,7 +83,7 @@ const CustomMDXComponents: MDXComponents = {
       {...props}
       className={cn(
         !props["data-theme"] &&
-          "relative rounded border bg-code-bg px-[0.3rem] py-[0.1rem] text-base"
+          "relative break-words rounded border bg-code-bg px-[0.3rem] py-[0.1rem] text-base"
       )}
     />
   ),
@@ -101,7 +101,7 @@ const CustomMDXComponents: MDXComponents = {
   th: (props) => (
     <th
       {...props}
-      className="border-b border-gray-300 py-3 text-base font-semibold text-gray-600"
+      className="cursor-auto border-b border-gray-300 py-3 text-base font-semibold text-gray-600"
     />
   ),
   td: (props) => (
