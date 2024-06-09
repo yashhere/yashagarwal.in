@@ -65,7 +65,7 @@ const ExternalLink = forwardRef<HTMLAnchorElement, ExternalLinkProps>(
             aria-label="Internal Link"
             href={href}
             className={cn(
-              "no-underline transition duration-200",
+              "text-primary no-underline transition duration-200",
               isUnderline && "hover:underline hover:underline-offset-8",
               className
             )}
