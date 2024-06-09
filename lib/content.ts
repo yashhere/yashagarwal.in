@@ -1,7 +1,11 @@
-import { NoteWithMetadata } from "@/types"
-import { pick } from "contentlayer/client"
-import { allNotes, DocumentTypes, Note } from "contentlayer/generated"
-import { compareDesc } from "date-fns"
+import { NoteWithMetadata } from "@/types";
+import { pick } from "contentlayer/client";
+import { allNotes, DocumentTypes, Note } from "contentlayer/generated";
+import { compareDesc } from "date-fns";
+
+
+
+
 
 const URL_SEGMENTS = {
   NOTES: "notes",
@@ -44,6 +48,7 @@ export async function getPreviewNotes() {
           "slug",
           "tags",
           "image",
+          "featured",
         ]),
       })
     }

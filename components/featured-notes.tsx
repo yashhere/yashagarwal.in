@@ -4,10 +4,10 @@ import { FiArrowRight } from "react-icons/fi"
 
 import { NoteList } from "./notes-list"
 
-export async function RecentNotes({ count }: { count: number }) {
+export async function FeaturedNotes({ count }: { count: number }) {
   let notes = await getPreviewNotes()
-  notes.sort((a, b) => b.note.updatedOn - a.note.updatedOn)
-  let notesFiltered = notes.slice(0, count)
+  let notesFiltered = notes.filter((note) => note.note.featured === true)
+  notesFiltered.sort((a, b) => b.note.updatedOn - a.note.updatedOn)
   return (
     <>
       <div className="group mb-8 flex flex-row justify-between">
@@ -21,7 +21,7 @@ export async function RecentNotes({ count }: { count: number }) {
         </Link>
       </div>
       <section className="w-full">
-        <NoteList homePage={true} notes={notesFiltered} />
+        <NoteList homePage={true} notes={notesFiltered.slice(0, count)} />
       </section>
     </>
   )

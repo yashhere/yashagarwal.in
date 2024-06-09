@@ -1,4 +1,4 @@
-import { RecentNotes } from "@/components/recent-notes"
+import { FeaturedNotes } from "@/components/featured-notes"
 import Link from "@/components/ui/link"
 import SectionTitle from "@/components/ui/section-title"
 import { siteConfig } from "@/config/site"
@@ -29,7 +29,7 @@ export default async function Page() {
         </div>
       </section>
       <section className="mt-16 flex flex-col justify-start">
-        <RecentNotes count={siteConfig.recentNotes} />
+        <FeaturedNotes count={siteConfig.featuredNotes} />
       </section>
     </div>
   )
