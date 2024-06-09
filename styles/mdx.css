@@ -3,7 +3,7 @@
   /* Trying to replicate prose-headings because the link tag styles take
       precedence
   */
-  @apply font-bold text-tertiary no-underline;
+  @apply font-bold text-text no-underline;
   cursor: pointer;
 }
 

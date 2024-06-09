@@ -21,6 +21,9 @@ const BlogImage = (props) => {
 }
 
 const CustomMDXComponents: MDXComponents = {
+  Draft,
+  a: BlogLink,
+  img: BlogImage,
   p: ({ className, ...props }) => (
     <p
       className={cn(
@@ -66,8 +69,6 @@ const CustomMDXComponents: MDXComponents = {
       {...props}
     />
   ),
-  Draft,
-  a: BlogLink,
   pre: ({ className, ...props }) => (
     <pre
       className={cn(
@@ -86,7 +87,29 @@ const CustomMDXComponents: MDXComponents = {
       )}
     />
   ),
-  img: BlogImage,
+  ul: (props) => <ul {...props} className="my-6 ml-6 list-disc [&>li]:mt-2" />,
+  ol: (props) => <ol {...props} className="mb-6 list-decimal pl-6" />,
+  li: (props) => <li {...props} className="mb-2 text-lg text-text" />,
+  strong: (props) => <strong className="text-text" {...props} />,
+  blockquote: (props) => (
+    <blockquote {...props} className="mt-6 border-l-2 pl-6 italic" />
+  ),
+  hr: (props) => <hr {...props} className="my-6 border-gray-300" />,
+  table: (props) => (
+    <table {...props} className="w-full border-collapse text-left" />
+  ),
+  th: (props) => (
+    <th
+      {...props}
+      className="border-b border-gray-300 py-3 text-base font-semibold text-gray-600"
+    />
+  ),
+  td: (props) => (
+    <td
+      {...props}
+      className="border-b border-gray-300 py-2 text-base text-text"
+    />
+  ),
 }
 
 export default CustomMDXComponents
