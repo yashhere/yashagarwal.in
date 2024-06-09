@@ -13,7 +13,7 @@ const BlogLink = (props) => {
     return <a {...props} />
   }
 
-  return <Link {...props} />
+  return <Link {...props} className="text-primary" />
 }
 
 const BlogImage = (props) => {
