@@ -5,6 +5,13 @@ import { FiArrowRight } from "react-icons/fi"
 import { NoteList } from "./notes-list"
 
 export async function FeaturedNotes({ count }: { count: number }) {
+  {
+    /* The eventual goal is to use cloudflare API to fetch the most
+      popular notes from the previous month, and show them. In absence
+      of the implemention right now, using a statically generated list
+      of popular notes.
+    */
+  }
   let notes = await getPreviewNotes()
   let notesFiltered = notes.filter((note) => note.note.featured === true)
   notesFiltered.sort((a, b) => b.note.updatedOn - a.note.updatedOn)

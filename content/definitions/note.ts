@@ -52,6 +52,7 @@ export const Note = defineDocumentType(() => ({
     createdOn: { type: "string", required: true },
     updatedOn: { type: "string", required: false },
     description: { type: "string" },
+    featured: { type: "boolean", default: false },
     image: { type: "string" },
     status: {
       type: "enum",
