@@ -23,7 +23,10 @@ const BlogImage = (props) => {
 const CustomMDXComponents: MDXComponents = {
   p: ({ className, ...props }) => (
     <p
-      className={cn("text-lg leading-7 [&:not(:first-child)]:mt-6", className)}
+      className={cn(
+        "text-lg leading-7 text-text [&:not(:first-child)]:mt-6",
+        className
+      )}
       {...props}
     />
   ),
@@ -68,7 +71,7 @@ const CustomMDXComponents: MDXComponents = {
   pre: ({ className, ...props }) => (
     <pre
       className={cn(
-        "mb-4 mt-6 overflow-x-auto rounded-lg border bg-pre-bg py-4 text-base",
+        "mb-6 mt-4 overflow-x-auto rounded-lg border bg-pre-bg py-2 text-base",
         className
       )}
       {...props}

@@ -25,7 +25,10 @@ const pageResolver = (name: string) => [
 const hrefTemplate = (permalink: string) => `/notes/${permalink}`
 
 const rehypePrettyCodeOptions = {
-  theme: "one-dark-pro",
+  theme: {
+    dark: "github-dark-dimmed",
+    light: "github-light",
+  },
   defaultLang: {
     block: "plaintext",
     inline: "plaintext",
