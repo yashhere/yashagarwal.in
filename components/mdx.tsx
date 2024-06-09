@@ -13,7 +13,7 @@ const BlogLink = (props) => {
     return <a {...props} />
   }
 
-  return <Link {...props} />
+  return <Link {...props} className="text-primary" />
 }
 
 const BlogImage = (props) => {
@@ -23,20 +23,93 @@ const BlogImage = (props) => {
 const CustomMDXComponents: MDXComponents = {
   Draft,
   a: BlogLink,
-  pre: ({ children, ...props }) => (
-    <pre className="mb-4 mt-6 bg-pre-bg py-4 text-base" {...props}>
-      {children}
-    </pre>
-  ),
-  code: ({ className, ...props }) => (
-    <code
+  img: BlogImage,
+  p: ({ className, ...props }) => (
+    <p
       className={cn(
-        "relative overflow-x-auto break-words rounded bg-code-bg p-[0.3rem] text-base",
+        "text-lg leading-7 text-text [&:not(:first-child)]:mt-6",
         className
       )}
       {...props}
     />
   ),
-  img: BlogImage,
+  h1: ({ className, ...props }) => (
+    <h1
+      className={cn(
+        "mt-12 scroll-m-6 border-b pb-2 text-[30px] font-bold",
+        className
+      )}
+      {...props}
+    />
+  ),
+  h2: ({ className, ...props }) => (
+    <h2
+      className={cn(
+        "mb-1 mt-8 scroll-m-10 text-[26px] font-semibold first:mt-0",
+        className
+      )}
+      {...props}
+    />
+  ),
+  h3: ({ className, ...props }) => (
+    <h3
+      className={cn(
+        "mt-8 scroll-m-4 text-[22px] font-semibold tracking-tight",
+        className
+      )}
+      {...props}
+    />
+  ),
+  h4: ({ className, ...props }) => (
+    <h4
+      className={cn(
+        "mt-8 scroll-m-4 text-[20px] font-semibold tracking-tight",
+        className
+      )}
+      {...props}
+    />
+  ),
+  pre: ({ className, ...props }) => (
+    <pre
+      className={cn(
+        "mb-6 mt-4 overflow-x-auto rounded-lg border bg-pre-bg py-2 text-base",
+        className
+      )}
+      {...props}
+    />
+  ),
+  code: (props) => (
+    <code
+      {...props}
+      className={cn(
+        !props["data-theme"] &&
+          "relative break-words rounded border bg-code-bg px-[0.3rem] py-[0.1rem] text-base"
+      )}
+    />
+  ),
+  ul: (props) => <ul {...props} className="my-6 ml-6 list-disc [&>li]:mt-2" />,
+  ol: (props) => <ol {...props} className="mb-6 list-decimal pl-6" />,
+  li: (props) => <li {...props} className="mb-2 text-lg text-text" />,
+  strong: (props) => <strong className="text-text" {...props} />,
+  blockquote: (props) => (
+    <blockquote {...props} className="mt-6 border-l-2 pl-6 italic" />
+  ),
+  hr: (props) => <hr {...props} className="my-6 border-gray-300" />,
+  table: (props) => (
+    <table {...props} className="w-full border-collapse text-left" />
+  ),
+  th: (props) => (
+    <th
+      {...props}
+      className="cursor-auto border-b border-gray-300 py-3 text-base font-semibold text-gray-600"
+    />
+  ),
+  td: (props) => (
+    <td
+      {...props}
+      className="border-b border-gray-300 py-2 text-base text-text"
+    />
+  ),
 }
+
 export default CustomMDXComponents

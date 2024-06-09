@@ -8,7 +8,7 @@ export default async function Page() {
     <div>
       <section className="flex flex-col justify-start">
         <SectionTitle data={null} title="Hey, I'm Yash 👋" />
-        <div className="prose prose-article text-lg leading-7 text-text">
+        <div className="prose text-lg leading-7 text-text">
           <p>
             I&apos;m a Software Engineer crafting efficient solutions for
             intricate problems. Currently I work at{" "}

@@ -106,3 +106,18 @@
     clip-path: inset(0.6px);
   }
 }
+
+@layer utilities {
+    .h-plus-p {
+        @apply mt-6;
+    }
+
+    h1+p,
+    h2+p,
+    h3+p,
+    h4+p,
+    h5+p,
+    h6+p {
+        @apply h-plus-p;
+    }
+}

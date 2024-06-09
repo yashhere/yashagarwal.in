@@ -121,32 +121,13 @@ export default async function Page({ params }: Props) {
   return (
     <>
       <div>
-        <section className="mb-8 space-y-4">
+        <section className="mb-8 space-y-2">
           <SectionTitle data={null} title={article.note.title} />
-          {/* {article.note.description ? (
-            <>
-              <h3 className="relative mt-4 pb-2 font-heading text-lg font-normal leading-relaxed text-text/70">
-                {article.note.description}
-              </h3>
-              <hr className="border-t-1 my-4 border-gray-300/60" />
-            </>
-          ) : null}
-          <div className="flex flex-col font-body text-base text-gray-600 sm:flex-row sm:justify-between">
-            <p>
-              Published:{" "}
-              <span className="text-sm tracking-widest">
-                {moment(article.note.createdOn).format("DD/MM/YY")}
-              </span>
-            </p>
-            {article.note.updatedOn ? (
-              <p>
-                Last updated on{" "}
-                <span className="text-sm tracking-widest">
-                  {moment(article.note.updatedOn).format("DD/MM/YY")}
-                </span>
-              </p>
-            ) : null}
-          </div> */}
+          <div className="flex flex-col pb-4 font-body text-base text-gray-600 sm:flex-row sm:justify-between">
+            <span className="text-base">
+              {moment(article.note.createdOn).format("MMMM DD, YYYY")}
+            </span>
+          </div>
           <TagList tags={article.note.tags} />
         </section>
         {article.series ? (
@@ -164,7 +145,7 @@ export default async function Page({ params }: Props) {
           </div>
         ) : null}
         <div className="mb-8">
-          <div className="prose prose-article text-lg leading-7 prose-headings:cursor-pointer prose-h1:mt-16 prose-h1:text-4xl prose-h2:mt-8 prose-h2:text-3xl prose-h3:mt-8 prose-h3:text-2xl prose-h4:text-xl prose-p:mt-8 prose-th:cursor-auto">
+          <div className="prose leading-7 text-text prose-headings:cursor-pointer">
             <MdxContent components={CustomMDXComponents} />
             {article.note.status === "draft" ? <Draft /> : null}
           </div>

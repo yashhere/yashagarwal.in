@@ -1,4 +1,5 @@
 import { Metadata } from "next"
+import { IBM_Plex_Mono } from "next/font/google"
 import localFont from "next/font/local"
 import { Analytics } from "@/components/analytics"
 import { Footer } from "@/components/footer"
@@ -19,10 +20,17 @@ const bodyFont = localFont({
   display: "swap",
 })
 
-const monoFont = localFont({
-  src: "../public/assets/fonts/league-mono.ttf",
+// const monoFont = localFont({
+//   src: "../public/assets/fonts/league-mono.ttf",
+//   variable: "--font-mono",
+//   display: "swap",
+// })
+
+const monoFont = IBM_Plex_Mono({
   variable: "--font-mono",
   display: "swap",
+  subsets: ["latin"],
+  weight: "400",
 })
 
 export async function generateMetadata(): Promise<Metadata> {

@@ -21,7 +21,7 @@ const Page: FC = () => {
   return (
     <>
       <SectionTitle data={null} title="work" />
-      <section className="prose prose-lg prose-article leading-7">
+      <section className="prose prose-lg leading-7 text-text">
         <p>
           I am a enthusiastic software developer with a knack for backend
           development. I&apos;ve got my hands dirty in Python, Golang, and C++.
@@ -39,7 +39,7 @@ const Page: FC = () => {
         <p>Here&apos;s a summary of my work so far -</p>
         <section className="space-y-8">
           <div>
-            <h2 className="text-2xl">Netskope</h2>
+            <h2 className="text-2xl text-info">Netskope</h2>
             <h4 className="text-lg font-normal italic text-info">
               Sr. Software Engineer, 2024-Present
             </h4>
@@ -71,7 +71,7 @@ const Page: FC = () => {
             </ul>
           </div>
           <div>
-            <h2 className="text-2xl">Cisco Systems</h2>
+            <h2 className="text-2xl text-info">Cisco Systems</h2>
             <h4 className="text-lg font-normal italic text-info">
               Software Engineer I and II, 2018-2021
             </h4>
