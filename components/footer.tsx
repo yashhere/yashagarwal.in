@@ -42,9 +42,9 @@ const navItems = {
   "/work": {
     name: "work",
   },
-  // "/colophon": {
-  //   name: "colophon",
-  // },
+  "/colophon": {
+    name: "colophon",
+  },
   // "/changelog": {
   //   name: "changelog",
   // },
