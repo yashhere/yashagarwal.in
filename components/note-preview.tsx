@@ -30,7 +30,7 @@ export const NotePreview = ({
         <span
           className={cn(homePage ? "hidden" : "", "text-base text-gray-700")}
         >
-          {moment(note.note.createdOn).format("DD MMM, YYYY")}
+          {moment(note.note.createdOn).format("MMM DD, YYYY")}
         </span>
       </Link>
     </>

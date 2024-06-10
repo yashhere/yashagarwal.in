@@ -41,7 +41,7 @@ export async function generateMetadata(
   const newOgImage = note.image
     ? `${note.image}`
     : `/og?title=${encodeParameter(note.title)}&meta=${encodeParameter(
-        moment(note.createdOn).format("MMMM DD, YYYY")
+        moment(note.createdOn).format("MMM DD, YYYY")
       )}&tags=${note.tags.join("|")}`
 
   return {
@@ -125,7 +125,7 @@ export default async function Page({ params }: Props) {
           <SectionTitle data={null} title={article.note.title} />
           <div className="flex flex-col pb-4 font-body text-base text-gray-600 sm:flex-row sm:justify-between">
             <span className="text-base">
-              {moment(article.note.createdOn).format("MMMM DD, YYYY")}
+              {moment(article.note.createdOn).format("MMM DD, YYYY")}
             </span>
           </div>
           <TagList tags={article.note.tags} />
