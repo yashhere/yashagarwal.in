@@ -27,9 +27,12 @@ export default function Colophon() {
             I designed and built this website myself. Being a backend developer,
             UI design is not my strongest skill, but playing with latest web
             technologies is an indulgent hobby I don&apos;t want to relinquish.
-            The source code of this website is available on Github, if
-            you&apos;d like to poke around. I started building this version of
-            the site in July 2023 and tinker on it regularly.
+            The source code of this website is available on{" "}
+            <Link href="https://github.com/yashhere/yashagarwal.in">
+              Github
+            </Link>
+            , if you&apos;d like to poke around. I started building this version
+            of the site in July 2023 and tinker on it regularly.
           </p>
         </section>
 
