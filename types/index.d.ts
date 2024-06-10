@@ -18,7 +18,7 @@ export type SiteConfig = {
     darkTheme: string
   }
   popularNotes: number
-  recentNotes: number
+  featuredNotes: number
 }
 
 export type NoteWithMetadata = {

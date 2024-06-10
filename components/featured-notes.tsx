@@ -4,10 +4,17 @@ import { FiArrowRight } from "react-icons/fi"
 
 import { NoteList } from "./notes-list"
 
-export async function RecentNotes({ count }: { count: number }) {
+export async function FeaturedNotes({ count }: { count: number }) {
+  {
+    /* The eventual goal is to use cloudflare API to fetch the most
+      popular notes from the previous month, and show them. In absence
+      of the implemention right now, using a statically generated list
+      of popular notes.
+    */
+  }
   let notes = await getPreviewNotes()
-  notes.sort((a, b) => b.note.updatedOn - a.note.updatedOn)
-  let notesFiltered = notes.slice(0, count)
+  let notesFiltered = notes.filter((note) => note.note.featured === true)
+  notesFiltered.sort((a, b) => b.note.updatedOn - a.note.updatedOn)
   return (
     <>
       <div className="group mb-8 flex flex-row justify-between">
@@ -21,7 +28,7 @@ export async function RecentNotes({ count }: { count: number }) {
         </Link>
       </div>
       <section className="w-full">
-        <NoteList homePage={true} notes={notesFiltered} />
+        <NoteList homePage={true} notes={notesFiltered.slice(0, count)} />
       </section>
     </>
   )

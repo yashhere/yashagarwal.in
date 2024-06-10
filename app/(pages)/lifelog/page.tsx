@@ -31,13 +31,13 @@ export default function LifeLog() {
               >
                 <div className="absolute -left-1.5 mt-1.5 size-3 rounded-full border border-background bg-gray-700/80"></div>
                 <time className="mb-1 text-2xl font-semibold leading-none text-gray-900">
-                  {moment(note.createdOn).format("MMMM DD, YYYY")}
+                  {moment(note.createdOn).format("MMM DD, YYYY")}
                 </time>
                 <div className="mt-4 text-base font-semibold leading-none text-gray-500">
                   {" "}
                   Last updated on:{" "}
                   <time className="">
-                    {moment(note.updatedOn).format("MMMM DD, YYYY")}
+                    {moment(note.updatedOn).format("MMM DD, YYYY")}
                   </time>
                 </div>
                 <p className="mb-4 text-lg font-light text-text">

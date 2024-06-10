@@ -21,16 +21,16 @@ export const NotePreview = ({
           <span className="mb-[2px] font-heading text-lg font-medium">
             {note.note.title}
           </span>
-          {note.note.description && (
-            <span className="mb-[2px] hidden text-base text-gray-700 sm:block">
+          {homePage && note.note.description && (
+            <span className="mb-[2px] text-base text-gray-700">
               {note.note.description}
             </span>
           )}
         </div>
         <span
-          className={cn(homePage ? "sm:hidden" : "", "text-base text-gray-700")}
+          className={cn(homePage ? "hidden" : "", "text-base text-gray-700")}
         >
-          {moment(note.note.createdOn).format("DD MMM, YYYY")}
+          {moment(note.note.createdOn).format("MMM DD, YYYY")}
         </span>
       </Link>
     </>
