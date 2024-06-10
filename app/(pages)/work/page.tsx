@@ -4,10 +4,10 @@ import SectionTitle from "@/components/ui/section-title"
 import { siteConfig } from "@/config/site"
 
 export const metadata: Metadata = {
-  title: "whoami | Yash Agarwal",
-  description: "Learn about me and what I do.",
+  title: "Work | Yash Agarwal",
+  description: "Learn about my professional journey.",
   alternates: {
-    canonical: `${siteConfig.url}/whoami`,
+    canonical: `${siteConfig.url}/work`,
     types: {
       "application/rss+xml": [
         { url: "rss.xml", title: "RSS Feed for yashagarwal.in" },

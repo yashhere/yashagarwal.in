@@ -11,7 +11,6 @@ import { cn, encodeParameter } from "@/lib/utils"
 
 import "@/styles/globals.css"
 
-import FullWidthFooter from "@/components/full-width-footer"
 import { Toaster } from "@/components/ui/toast"
 
 const bodyFont = localFont({
@@ -19,12 +18,6 @@ const bodyFont = localFont({
   variable: "--font-body",
   display: "swap",
 })
-
-// const monoFont = localFont({
-//   src: "../public/assets/fonts/league-mono.ttf",
-//   variable: "--font-mono",
-//   display: "swap",
-// })
 
 const monoFont = IBM_Plex_Mono({
   variable: "--font-mono",
