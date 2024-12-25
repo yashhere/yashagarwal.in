@@ -68,6 +68,7 @@ export const Note = defineDocumentType(() => ({
       type: "nested",
       of: Series,
     },
+    toc: { type: "boolean", default: true },
   },
   computedFields,
 }))

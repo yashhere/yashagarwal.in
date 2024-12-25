@@ -135,7 +135,7 @@ export default async function Page({ params }: Props) {
             <Series series={article.series} interactive={true} current={slug} />
           </div>
         ) : null}
-        {article.note.headings.length != 0 ? (
+        {article.note.toc && article.note.headings.length != 0 ? (
           <div className="mb-8">
             <TableOfContents
               headings={article.note.headings}

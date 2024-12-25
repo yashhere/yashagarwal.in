@@ -79,6 +79,7 @@ export async function getPartialNote(slug: string) {
       (note.headings as { heading: number; text: string; slug: string }[]) ??
       null,
     readingTime: note.readingTime,
+    toc: note.toc,
   }
 
   const article: NoteWithMetadata = {
