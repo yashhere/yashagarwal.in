@@ -1,11 +1,11 @@
-import { defineComputedFields, defineDocumentType } from "contentlayer/source-files";
-import GithubSlugger from "github-slugger";
-import readingTime from "reading-time";
+import {
+  defineComputedFields,
+  defineDocumentType,
+} from "contentlayer/source-files"
+import GithubSlugger from "github-slugger"
+import readingTime from "reading-time"
 
-
-
-import { Series } from "./series";
-
+import { Series } from "./series"
 
 /** @type {import('contentlayer/source-files').ComputedFields} */
 const computedFields = defineComputedFields<"Note">({
