@@ -7,6 +7,7 @@ tags:
   - Homelab
 featured: true
 description: Run Adguard DNS on Android
+toc: false
 ---
 
 I recently bought a new phone because after serving me faithfully for six years, my Poco F1's was left nearly unusable because of my carelessness. I dropped the phone while riding a bike and the screen cracked due to the impact. I had got the screen and battery replaced quite a few times, so I decided to finally say goodbye to this iconic phone.
@@ -14,6 +15,7 @@ I recently bought a new phone because after serving me faithfully for six years,
 
 For the last two months, the phone was lying unused in my closet. Recently somebody posted their homelab setup using their old phone. This post gave me the idea to bring back my Poco to life. So I started exploring the options available to me. I was planning to buy a Raspberry Pi 5, but the unit economics doesn't really work in the favour of RPi because of its rising cost. I think this phone can serve as a good alternative of RPi given that the inbuilt battery can also work as a UPS.
 
+![The Poco F1](/images/notes/running-adguard-with-termux/poco-f1.jpg "My Poco F1")
 
 # Specs
 The Poco F1 was a beast of its time. It was launched in 2018 and came with flagship class [specs](https://www.gsmarena.com/xiaomi_pocophone_f1-9293.php).
@@ -38,14 +40,17 @@ I have previously rooted a number of phones, so rooting this phone was a trivial
 
 
 # Initial Setup
+
 Once the phone was rooted, I installed the [Magisk](https://github.com/topjohnwu/Magisk) module [ACC](https://github.com/VR-25/acc) and configured it to keep my battery levels between 60-75%. As I intended to keep the phone plugged into a charger 24x7, I needed to ensure that the battery is not overburdended. ACC employs certain neat tricks to ensure that battery's wear and tear is reduced while it is plugged into a charger.
 
 Now, I wanted to set up Unbound and Adguard on this installation. I started with Adguard as it is easier to setup.
 
 ### Adguard Home
+
 Adguard Home provides arm64 binaries for arm platforms. This binary works for Android as well. So I downloaded the package from the Github [releases](https://github.com/AdguardTeam/AdGuardHome/releases) and unpacked it. Running `./AdGuardHome/AdGuardHome` under root (use `pkg install tsu`) worked flawlessly. This confirmed that the Adguard works on Android.
 
 ### Unbound
+
 [Unbound](https://github.com/NLnetLabs/unbound) is available on termux repositories and can be installed easily. But configuring Unbound requires some work. I have prepared the following script to help with the installation, in case you are interested -
 
 ```bash
@@ -390,5 +395,8 @@ schema_version: 29
 ```
 
 Please make sure that you modify this configuration according to your network setup. For example, you may want to use your router's address in the `local_ptr_upstreams` field.
+
+![Adguard Dashboard](/images/notes/running-adguard-with-termux/adguard.png "Adguard Dashboard")
+
 
 That brings us to the end of this post. Please keep sharing it if you find it useful.
