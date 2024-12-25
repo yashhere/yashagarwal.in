@@ -1,0 +1,392 @@
+---
+title: "Running Adguard with Termux"
+createdOn: 2024-12-25T16:30:36+00:00
+status: "published"
+tags:
+  - Android
+  - Homelab
+---
+
+I recently bought a new phone because after serving me faithfully for six years, my Poco F1's was left nearly unusable because of my carelessness. I dropped the phone while riding a bike and the screen cracked due to the impact. I had got the screen and battery replaced quite a few times, so I decided to finally say goodbye to this iconic phone.
+
+
+For the last two months, the phone was lying unused in my closet. Recently somebody posted their homelab setup using their old phone. This post gave me the idea to bring back my Poco to life. So I started exploring the options available to me. I was planning to buy a Raspberry Pi 5, but the unit economics doesn't really work in the favour of RPi because of its rising cost. I think this phone can serve as a good alternative of RPi given that the inbuilt battery can also work as a UPS.
+
+
+# Specs
+The Poco F1 was a beast of its time. It was launched in 2018 and came with flagship class [specs](https://www.gsmarena.com/xiaomi_pocophone_f1-9293.php).
+1. Chipset - Qualcomm SDM845 Snapdragon 845 (10 nm)
+2. CPU - Octa-core (4x2.8 GHz Kryo 385 Gold & 4x1.8 GHz Kryo 385 Silver)
+3. GPU - Adreno 630
+4. Memory - 64GB 6GB RAM
+
+
+I had unlocked it in the first month of purchase and installed and used quite a few custom ROMs on it. It is still a community favorite. Alas, companies don't manufacture phones like this anymore 😔
+
+# The plan
+So, given the beefy specs, I was very tempted to set something on it. There were two options available to me -
+1. Installed something like [PostMarketOS](https://wiki.postmarketos.org/wiki/Xiaomi_POCO_F1_(xiaomi-beryllium)) or [mobile-nixos](https://github.com/mobile-nixos/mobile-nixos/pull/672)
+2. Root the phone, install [Termux](https://termux.dev/en/) and install all services with it
+
+
+There is support for Linux installation on Poco, but I have some essential Google services running on this phone which can't be substituted. So I abandoned this idea.
+
+
+I have previously rooted a number of phones, so rooting this phone was a trivial task. There are a number of tutorials available on the Internet if you are interested.
+
+
+# Initial Setup
+Once the phone was rooted, I installed the [Magisk](https://github.com/topjohnwu/Magisk) module [ACC](https://github.com/VR-25/acc) and configured it to keep my battery levels between 60-75%. As I intended to keep the phone plugged into a charger 24x7, I needed to ensure that the battery is not overburdended. ACC employs certain neat tricks to ensure that battery's wear and tear is reduced while it is plugged into a charger.
+
+Now, I wanted to set up Unbound and Adguard on this installation. I started with Adguard as it is easier to setup.
+
+### Adguard Home
+Adguard Home provides arm64 binaries for arm platforms. This binary works for Android as well. So I downloaded the package from the Github [releases](https://github.com/AdguardTeam/AdGuardHome/releases) and unpacked it. Running `./AdGuardHome/AdGuardHome` under root (use `pkg install tsu`) worked flawlessly. This confirmed that the Adguard works on Android.
+
+### Unbound
+[Unbound](https://github.com/NLnetLabs/unbound) is available on termux repositories and can be installed easily. But configuring Unbound requires some work. I have prepared the following script to help with the installation, in case you are interested -
+
+```bash
+#!/bin/bash
+
+# Update package lists and install required packages
+pkg update -y
+pkg install -y \
+    unbound \
+    wget \
+    openssl-tool \
+    ca-certificates
+
+# Create necessary directories
+mkdir -p $PREFIX/etc/unbound
+mkdir -p $PREFIX/var/run/unbound
+
+# Download root hints file
+wget https://www.internic.net/domain/named.root -O $PREFIX/etc/unbound/root.hints
+
+# Generate root trust anchor for DNSSEC
+# needs root to read ip_local_port_range file
+su -c "/data/data/com.termux/files/usr/bin/unbound-anchor -a \"$PREFIX/etc/unbound/root.key\""
+
+# Create basic configuration file
+cat > $PREFIX/etc/unbound/unbound.conf << 'EOF'
+server:
+    # Basic server settings
+    verbosity: 0
+    interface: 127.0.0.1
+    port: 5335
+    do-ip4: yes
+    do-ip6: no
+    do-udp: yes
+    do-tcp: yes
+
+    # Access control (adjust according to your network)
+    access-control: 127.0.0.0/8 allow
+    access-control: 192.168.0.0/16 allow
+
+    # Privacy settings
+    hide-identity: yes
+    hide-version: yes
+
+    # Memory and performance tuning
+    msg-cache-size: 50m
+    rrset-cache-size: 100m
+    prefetch: yes
+    prefetch-key: yes
+    num-threads: 2
+
+    # DNSSEC
+    auto-trust-anchor-file: "/data/data/com.termux/files/usr/etc/unbound/root.key"
+    root-hints: "/data/data/com.termux/files/usr/etc/unbound/root.hints"
+
+remote-control:
+    control-enable: no
+EOF
+
+# Set correct permissions
+chmod 644 $PREFIX/etc/unbound/unbound.conf
+chmod 644 $PREFIX/etc/unbound/root.hints
+chmod 644 $PREFIX/etc/unbound/root.key
+
+# Test configuration
+unbound-checkconf $PREFIX/etc/unbound/unbound.conf
+```
+
+# Start services on boot
+Currently, the Adguard instance is running in a terminal. As soon as the terminal is killed, the Adguard process will also stop. For a critical DNS service, this is unacceptable. So, we need to run Adguard as a standalone background service. We also need to ensure that if the device is rebooted, the services are autostarted. Termus [provides](https://f-droid.org/en/packages/com.termux.boot/) a separate [Termux:Boot](https://wiki.termux.com/wiki/Termux:Boot) app to allow running scripts immediately after boot. The [caveat](https://github.com/termux/termux-boot/issues/58#issuecomment-1132533697) is that the user needs to unlock the phone and open termux for the Termux:boot to trigger an event which signals Termux to execute the scripts. I couldn't find a way around this limitation.
+
+First install the `Termux:Boot` apk and open it at least once (as mentioned in the [docs](https://wiki.termux.com/wiki/Termux:Boot)). After that you can execute the following script to set up the boot scripts. The script performs the following actions -
+1. Create a script to start unbound on boot.
+2. Create a script to start Adguard on boot.
+3. Check if the services are running and create a log file.
+
+```bash
+#!/bin/bash
+
+# Create directory structure
+HOME_DIR=/data/data/com.termux/files/home
+
+mkdir -p $HOME_DIR/.termux/boot
+mkdir -p $HOME_DIR/.logs
+
+# 1. Create Unbound startup script (runs first)
+cat > $HOME_DIR/.termux/boot/01-unbound.sh << 'EOF'
+#!/data/data/com.termux/files/usr/bin/bash
+
+HOME_DIR=/data/data/com.termux/files/home
+
+# Wait for system to fully boot
+sleep 30
+
+# Kill any existing Unbound process
+su -c "pkill unbound"
+
+# Start Unbound with root privileges
+su -c "/data/data/com.termux/files/usr/bin/unbound -c \
+    /data/data/com.termux/files/usr/etc/unbound/unbound.conf &"
+
+# Log the start
+echo "$(date): Unbound started" >> $HOME_DIR/.logs/unbound.log
+EOF
+
+# 2. Create AdGuard startup script (runs second)
+cat > $HOME_DIR/.termux/boot/02-adguard.sh << 'EOF'
+#!/data/data/com.termux/files/usr/bin/bash
+
+HOME_DIR=/data/data/com.termux/files/home
+
+# Wait for Unbound to initialize
+sleep 35
+
+# Kill any existing AdGuard process
+su -c "pkill AdGuardHome"
+
+# Start AdGuard with root privileges
+su -c "$HOME_DIR/services/adguard/AdGuardHome \
+    -c $HOME_DIR/services/adguard/AdGuardHome.yaml \
+    -w $HOME_DIR/services/adguard \
+    --no-check-update &"
+
+# Log the start
+echo "$(date): AdGuard started" >> $HOME_DIR/.logs/adguard.log
+EOF
+
+# 3. Create status check script (runs last)
+cat > $HOME_DIR/.termux/boot/100-check-services.sh << 'EOF'
+#!/data/data/com.termux/files/usr/bin/bash
+
+HOME_DIR=/data/data/com.termux/files/home
+
+# Wait for all services to start
+sleep 45
+
+echo "$(date): Checking services status..." >> $HOME_DIR/.logs/status.log
+
+check_service() {
+    if pgrep $1 > /dev/null; then
+        echo "✓ $1 is running" >> $HOME_DIR/.logs/status.log
+        return 0
+    else
+        echo "✗ $1 is NOT running" >> $HOME_DIR/.logs/status.log
+        return 1
+    fi
+}
+
+# Check each service
+check_service unbound
+check_service AdGuardHome
+
+# Show listening ports
+echo -e "\nListening ports:" >> $HOME_DIR/.logs/status.log
+su -c "netstat -tupln | grep -E 'unbound|AdGuard'" >> $HOME_DIR/.logs/status.log
+EOF
+
+# Make all scripts executable
+chmod +x $HOME_DIR/.termux/boot/*.sh
+```
+
+Test by rebooting your device. Once rebooted, unlock the device and open Termux and wait for 1-2 minutes. Your services should be up and running. Ensure to give forever root access to the Termux app as the services need root access to work.
+
+# Setting up Adguard
+Once Adguard is up, use `ifconfig` to know the ip of the phone and open `<ip_address>:3000` in another computer on the same subnet. The Adguard UI should show up and you can configure the settings. Below is the `AdGuardHome.yaml` that I used. You can place it in `$HOME_DIR/services/adguard/AdGuardHome.yaml` so that the boot script can use this to initialize your Adguard instance.
+
+```yaml
+http:
+  pprof:
+    port: 6060
+    enabled: false
+  address: 0.0.0.0:3000
+  session_ttl: 720h
+users: []
+auth_attempts: 5
+block_auth_min: 15
+http_proxy: ""
+language: ""
+theme: auto
+dns:
+  bind_hosts:
+    - 0.0.0.0
+  port: 53
+  anonymize_client_ip: false
+  ratelimit: 0
+  ratelimit_subnet_len_ipv4: 24
+  ratelimit_subnet_len_ipv6: 56
+  ratelimit_whitelist: []
+  refuse_any: true
+  upstream_dns:
+    - 127.0.0.1:5335
+  upstream_dns_file: ""
+  bootstrap_dns:
+    - 9.9.9.10
+    - 149.112.112.10
+    - 2620:fe::10
+    - 2620:fe::fe:10
+  fallback_dns:
+    - 1.1.1.1
+  upstream_mode: load_balance
+  fastest_timeout: 1s
+  allowed_clients: []
+  disallowed_clients: []
+  blocked_hosts:
+    - version.bind
+    - id.server
+    - hostname.bind
+  trusted_proxies:
+    - 127.0.0.0/8
+    - ::1/128
+  cache_size: 0
+  cache_ttl_min: 0
+  cache_ttl_max: 0
+  cache_optimistic: false
+  bogus_nxdomain: []
+  aaaa_disabled: false
+  enable_dnssec: false
+  edns_client_subnet:
+    custom_ip: ""
+    enabled: false
+    use_custom: false
+  max_goroutines: 300
+  handle_ddr: true
+  ipset: []
+  ipset_file: ""
+  bootstrap_prefer_ipv6: false
+  upstream_timeout: 10s
+  private_networks: []
+  use_private_ptr_resolvers: true
+  local_ptr_upstreams:
+    - 192.168.1.1
+  use_dns64: false
+  dns64_prefixes: []
+  serve_http3: false
+  use_http3_upstreams: false
+  serve_plain_dns: true
+  hostsfile_enabled: true
+tls:
+  enabled: false
+  server_name: ""
+  force_https: false
+  port_https: 443
+  port_dns_over_tls: 853
+  port_dns_over_quic: 853
+  port_dnscrypt: 0
+  dnscrypt_config_file: ""
+  allow_unencrypted_doh: false
+  certificate_chain: ""
+  private_key: ""
+  certificate_path: ""
+  private_key_path: ""
+  strict_sni_check: false
+querylog:
+  dir_path: ""
+  ignored: []
+  interval: 2160h
+  size_memory: 1000
+  enabled: true
+  file_enabled: true
+statistics:
+  dir_path: ""
+  ignored: []
+  interval: 2160h
+  enabled: true
+filters:
+  - enabled: false
+    url: https://adguardteam.github.io/HostlistsRegistry/assets/filter_1.txt
+    name: AdGuard DNS filter
+    id: 1
+  - enabled: false
+    url: https://adguardteam.github.io/HostlistsRegistry/assets/filter_2.txt
+    name: AdAway Default Blocklist
+    id: 2
+  - enabled: true
+    url: https://adguardteam.github.io/HostlistsRegistry/assets/filter_51.txt
+    name: HaGeZi's Pro++ Blocklist
+    id: 1735062048
+whitelist_filters: []
+user_rules: []
+dhcp:
+  enabled: false
+  interface_name: ""
+  local_domain_name: lan
+  dhcpv4:
+    gateway_ip: ""
+    subnet_mask: ""
+    range_start: ""
+    range_end: ""
+    lease_duration: 86400
+    icmp_timeout_msec: 1000
+    options: []
+  dhcpv6:
+    range_start: ""
+    lease_duration: 86400
+    ra_slaac_only: false
+    ra_allow_slaac: false
+filtering:
+  blocking_ipv4: ""
+  blocking_ipv6: ""
+  blocked_services:
+    schedule:
+      time_zone: UTC
+    ids: []
+  protection_disabled_until: null
+  safe_search:
+    enabled: false
+    bing: true
+    duckduckgo: true
+    ecosia: true
+    google: true
+    pixabay: true
+    yandex: true
+    youtube: true
+  blocking_mode: default
+  parental_block_host: family-block.dns.adguard.com
+  safebrowsing_block_host: standard-block.dns.adguard.com
+  rewrites: []
+  safe_fs_patterns: []
+  safebrowsing_cache_size: 1048576
+  safesearch_cache_size: 1048576
+  parental_cache_size: 1048576
+  cache_time: 30
+  filters_update_interval: 0
+  blocked_response_ttl: 10
+  filtering_enabled: true
+  parental_enabled: false
+  safebrowsing_enabled: false
+log:
+  enabled: true
+  file: ""
+  max_backups: 0
+  max_size: 100
+  max_age: 3
+  compress: false
+  local_time: false
+  verbose: false
+os:
+  group: ""
+  user: ""
+  rlimit_nofile: 0
+schema_version: 29
+```
+
+Please make sure that you modify this configuration according to your network setup. For example, you may want to use your router's address in the `local_ptr_upstreams` field.
+
+That brings us to the end of this post. Please keep sharing it if you find it useful.
