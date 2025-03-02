@@ -19,7 +19,7 @@ export const DarkToggle = () => {
   }
 
   return (
-    <>
+    <div className="overflow-hidden">
       <motion.div
         whileTap={{ rotate: 15 }}
         onClick={() => {
@@ -41,6 +41,6 @@ export const DarkToggle = () => {
           <FiMoon className="size-6 text-text" />
         ) : null}
       </motion.div>
-    </>
+    </div>
   )
 }

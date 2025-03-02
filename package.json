@@ -12,9 +12,9 @@
     "build": "contentlayer build && next build",
     "start": "next start",
     "lint": "next lint",
-    "prepare": "husky install",
-    "preview": "yarn build && yarn start",
-    "debug": "NODE_OPTIONS='--inspect' yarn dev",
+    "prepare": "husky",
+    "preview": "bun run build && bun run start",
+    "debug": "NODE_OPTIONS='--inspect' bun dev",
     "lint:staged": "lint-staged"
   },
   "dependencies": {
@@ -95,6 +95,5 @@
     "tailwindcss": "^3.3.2",
     "typescript": "^5.1.6",
     "unist-util-visit": "^5.0.0"
-  },
-  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+  }
 }

@@ -55,7 +55,7 @@ git clone https://github.com/yashhere/yashagarwal.in
 ### 2. Install Dependencies
 
 ```sh
-yarn
+bun
 ```
 
 <!-- ### 3. Setting up the Database -->
@@ -63,7 +63,7 @@ yarn
 ### 4. Start the Server
 
 ```sh
-yarn dev
+bun dev
 ```
 
 ## Repository Structure
@@ -105,7 +105,7 @@ The repository is structure as follows
 ├── screenshot-12-07-2023.png
 ├── tailwind.config.js
 ├── tsconfig.json
-└── yarn.lock
+└── bun.lock
 ```
 
 - `content` - articles/posts and related definitions

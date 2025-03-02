@@ -39,7 +39,7 @@ code .line {
 
 /* code blocks */
 [data-rehype-pretty-code-fragment] pre > code {
-  @apply grid min-w-full break-words overflow-x-auto rounded-lg bg-inherit py-1 leading-6;
+  @apply grid min-w-full break-words overflow-x-auto no-scrollbar rounded-lg bg-inherit py-1 leading-6;
   box-decoration-break: clone;
   counter-reset: line;
 }
