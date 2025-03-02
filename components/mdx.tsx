@@ -72,7 +72,7 @@ const CustomMDXComponents: MDXComponents = {
   pre: ({ className, ...props }) => (
     <pre
       className={cn(
-        "mb-6 mt-4 overflow-x-auto rounded-lg border bg-pre-bg py-2 text-base",
+        "no-scrollbar mb-6 mt-4 overflow-x-auto rounded-lg border bg-pre-bg py-2 text-base",
         className
       )}
       {...props}

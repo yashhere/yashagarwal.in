@@ -37,7 +37,7 @@ export default function Newsletter() {
   return (
     <>
       <form
-        className="flex h-10 items-center justify-between gap-2 overflow-hidden rounded-3xl border-[1px] border-gray-400/50 bg-background-subtle focus-within:border-gray-400 focus-within:outline-none"
+        className="flex h-10 items-center justify-between gap-2 overflow-hidden rounded-3xl border border-gray-400/50 bg-background-subtle focus-within:border-gray-400 focus-within:outline-none"
         action={action}
         ref={formRef}
       >
@@ -46,7 +46,7 @@ export default function Newsletter() {
           name="email"
           placeholder="Enter your email"
           required
-          className="h-full w-[20%] grow border-none bg-transparent px-3.5 text-lg transition-colors placeholder:text-text/60 focus:outline-none"
+          className="h-full w-1/5 grow border-none bg-transparent px-3.5 text-lg transition-colors placeholder:text-text/60 focus:outline-none"
         />
         <SubmitButton
           label="Subscribe"

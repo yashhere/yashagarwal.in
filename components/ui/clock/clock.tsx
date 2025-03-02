@@ -50,7 +50,7 @@ export const AnalogClock: FC = () => {
 
                 {/* Hour hand */}
                 <span
-                  className="absolute bottom-[0.72rem] left-[0.75rem] z-10 h-[0.5rem] w-px origin-bottom rounded-full bg-text"
+                  className="absolute bottom-[0.72rem] left-3 z-10 h-2 w-px origin-bottom rounded-full bg-text"
                   style={timing.updateHours}
                 ></span>
               </section>
