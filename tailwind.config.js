@@ -1,11 +1,17 @@
 const customCss = {
-    "code::before": false,
-    "code::after": false,
     pre: false,
     code: false,
-    "pre code": false,
-    "blockquote p:first-of-type::before": false,
-    "blockquote p:last-of-type::after": false,
+    "pre code": { content: "none !important" },
+    "blockquote": {
+        "& p:first-of-type::before": { content: "none !important" },
+        "& p:last-of-type::after": { content: "none !important" },
+        "& p::before": { content: "none !important" },
+        "& p::after": { content: "none !important" }
+    },
+    "code": {
+        "&::before": { content: "none !important" },
+        "&::after": { content: "none !important" }
+    },
     "> ul > li > *:first-child": {
         marginTop: 0,
     },
