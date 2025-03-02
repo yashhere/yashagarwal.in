@@ -8,7 +8,7 @@ interface Props {
 export default function Draft({ children }: Props) {
   return (
     <>
-      <div className="mt-16 flex flex-col items-center gap-8 rounded border bg-foreground py-16 text-center shadow-md">
+      <div className="mt-16 flex flex-col items-center gap-8 rounded-sm border bg-foreground py-16 text-center shadow-md">
         <div className="">
           <FiPenTool className="size-28 text-tertiary" />
         </div>

@@ -19,7 +19,7 @@ export const SearchInput = ({
             type="search"
             id="default_search"
             placeholder="Search for a note..."
-            className="block w-full rounded-md border-none bg-gray-500/10 p-1 pl-8 text-lg drop-shadow-md placeholder:text-text/80 focus-within:border-gray-400 focus-within:outline-none"
+            className="block w-full rounded-md border-none bg-gray-500/10 p-1 pl-8 text-lg drop-shadow-md placeholder:text-text/80 focus-within:border-gray-400 focus-within:outline-hidden"
             value={search}
             onChange={onChange}
           />

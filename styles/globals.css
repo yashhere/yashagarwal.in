@@ -1,6 +1,25 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@config '../tailwind.config.js';
+
+@utility h-plus-p {
+  @apply mt-6;
+}
+
+@utility no-scrollbar {
+  /*
+    https://github.com/tailwindlabs/tailwindcss/discussions/2394
+    https://github.com/tailwindlabs/tailwindcss/pull/5732
+*/
+  /* Chrome, Safari and Opera */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
 
 @layer base {
   :root {
@@ -101,37 +120,21 @@
   }
 }
 
-@supports (font: -apple-system-body) and (-webkit-appearance: none) {
-  img[loading="lazy"] {
-    clip-path: inset(0.6px);
+@layer utilities {
+  @supports (font: -apple-system-body) and (-webkit-appearance: none) {
+    img[loading="lazy"] {
+      clip-path: inset(0.6px);
+    }
   }
 }
 
 @layer utilities {
-    .h-plus-p {
-        @apply mt-6;
-    }
-
-    h1+p,
-    h2+p,
-    h3+p,
-    h4+p,
-    h5+p,
-    h6+p {
-        @apply h-plus-p;
-    }
-
-/*
-    https://github.com/tailwindlabs/tailwindcss/discussions/2394
-    https://github.com/tailwindlabs/tailwindcss/pull/5732
-*/
-    /* Chrome, Safari and Opera */
-    .no-scrollbar::-webkit-scrollbar {
-        display: none;
-    }
-
-    .no-scrollbar {
-        -ms-overflow-style: none; /* IE and Edge */
-        scrollbar-width: none; /* Firefox */
-    }
+  h1 + p,
+  h2 + p,
+  h3 + p,
+  h4 + p,
+  h5 + p,
+  h6 + p {
+    @apply h-plus-p;
+  }
 }

@@ -21,7 +21,7 @@ export const TagList: FC<TagListProps> = ({ tags }) => {
           <Link
             key={tag_slug}
             href={`/tags/${tag_slug}`}
-            className="mb-2 mr-4 rounded text-primary"
+            className="mb-2 mr-4 rounded-sm text-primary"
           >
             {tag}
           </Link>

@@ -26,10 +26,7 @@ const CustomMDXComponents: MDXComponents = {
   img: BlogImage,
   p: ({ className, ...props }) => (
     <p
-      className={cn(
-        "text-lg leading-7 text-text [&:not(:first-child)]:mt-6",
-        className
-      )}
+      className={cn("text-lg leading-7 text-text not-first:mt-6", className)}
       {...props}
     />
   ),
@@ -83,7 +80,7 @@ const CustomMDXComponents: MDXComponents = {
       {...props}
       className={cn(
         !props["data-theme"] &&
-          "relative break-words rounded border bg-code-bg px-[0.3rem] py-[0.1rem] text-base"
+          "relative break-words rounded-sm border bg-code-bg px-[0.3rem] py-[0.1rem] text-base"
       )}
     />
   ),

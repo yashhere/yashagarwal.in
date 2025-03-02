@@ -38,7 +38,7 @@ export async function GET(req: NextRequest) {
         <main tw="flex grow pb-3 flex-col items-center justify-center">
           <div tw="flex">
             <div
-              tw="rounded-md bg-stone-100 tracking-wide p-4 text-6xl leading-snug font-medium text-center max-w-screen-xl text-slate-500"
+              tw="rounded-md bg-stone-100 tracking-wide p-4 text-6xl leading-snug font-medium text-center max-w-(--breakpoint-xl) text-slate-500"
               style={{
                 fontFamily: "Wotfard",
                 boxShadow: "4px 4px 8px 1px rgba(184,182,184,1)",
@@ -58,7 +58,7 @@ export async function GET(req: NextRequest) {
 
           {tags && tags.length > 0 ? (
             <div
-              tw="text-2xl mt-10 flex flex-row flex-wrap justify-center items-center flex-wrap max-w-screen-xl text-gray-600"
+              tw="text-2xl mt-10 flex flex-row flex-wrap justify-center items-center flex-wrap max-w-(--breakpoint-xl) text-gray-600"
               style={{ fontFamily: "Wotfard" }}
             >
               {tags?.slice(0, 3).map((tag, index) => (

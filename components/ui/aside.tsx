@@ -19,7 +19,7 @@ export const Aside = ({
       ) : null}
       <div
         className={cn({
-          "text-sm italic text-black/60 [&>span[data-rehype-pretty-code-fragment]]:!text-[11px]":
+          "text-sm italic text-black/60 [&>span[data-rehype-pretty-code-fragment]]:text-[11px]!":
             styled,
         })}
       >
