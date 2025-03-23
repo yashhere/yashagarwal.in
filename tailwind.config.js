@@ -76,8 +76,8 @@ module.exports = {
         background: "hsl(var(--color-background))",
         "background-muted": "hsl(var(--color-muted-background))",
         "background-subtle": "hsl(var(--color-subtle-background))",
-        "pre-bg": "#151f28",
-        "code-bg": "#737d8c2b",
+        "pre-bg": "#0d1a26",
+        "code-bg": "#2c3e50",
         "code-text": "hsl(var(--color-syntax-txt))",
         gray: {
           DEFAULT: "hsl(var(--color-gray-400))",
