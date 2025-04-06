@@ -32,10 +32,7 @@ const CustomMDXComponents: MDXComponents = {
   ),
   h1: ({ className, ...props }) => (
     <h1
-      className={cn(
-        "mt-12 scroll-m-6 border-b pb-2 text-[30px] font-bold",
-        className
-      )}
+      className={cn("mt-12 scroll-m-6 pb-2 text-[30px] font-bold", className)}
       {...props}
     />
   ),
