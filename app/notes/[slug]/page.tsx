@@ -145,7 +145,7 @@ export default async function Page({ params }: Props) {
           </div>
         ) : null}
         <div className="mb-8">
-          <div className="prose leading-7 text-text prose-headings:cursor-pointer">
+          <div className="prose leading-7 text-text prose-headings:cursor-pointer lg:prose-lg">
             <MdxContent components={CustomMDXComponents} />
             {article.note.status === "draft" ? <Draft /> : null}
           </div>
