@@ -133,7 +133,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         >
           <Toaster closeButton className="pointer-events-auto" />
           <div className="flex h-screen flex-auto flex-col">
-            <main className="mx-4 flex max-w-2xl flex-auto flex-col sm:mx-auto sm:w-full">
+            <main className="mx-4 flex max-w-2xl flex-auto flex-col sm:mx-auto sm:w-full lg:max-w-4xl">
               <Navigation />
               <div className="mb-32">
                 <section className="flex flex-col justify-start">
