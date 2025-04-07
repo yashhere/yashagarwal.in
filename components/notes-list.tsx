@@ -9,7 +9,7 @@ export const NoteList = ({
   homePage?: boolean
 }) => {
   return (
-    <div className="flex flex-col gap-5 sm:gap-0">
+    <div className="flex flex-col gap-4 md:gap-0 mr-3">
       {notes?.map((note) => {
         return (
           <NotePreview homePage={homePage} key={note.note.slug} note={note} />

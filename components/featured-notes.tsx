@@ -17,15 +17,17 @@ export async function FeaturedNotes({ count }: { count: number }) {
   notesFiltered.sort((a, b) => b.note.updatedOn - a.note.updatedOn)
   return (
     <>
-      <div className="group mb-8 flex flex-row justify-between">
-        <h2 className="text-xl font-semibold">Popular Notes</h2>
-        <Link
+      <div className="group flex flex-row justify-between">
+        <h2 className="uppercase tracking-wider text-gray-500 mb-4">
+          Writings
+        </h2>
+        {/* <Link
           href="/notes"
           className="flex items-center space-x-2 align-middle text-xl font-bold hover:text-primary"
         >
           <span className="font-normal">all</span>
           <FiArrowRight className="size-4" />
-        </Link>
+        </Link> */}
       </div>
       <section className="w-full">
         <NoteList homePage={true} notes={notesFiltered.slice(0, count)} />
