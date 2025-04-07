@@ -21,7 +21,7 @@ export default function Colophon() {
   return (
     <>
       <SectionTitle data={null} title="colophon" />
-      <section className="prose prose-lg leading-7 text-text">
+      <section className="max-w-2xl lg:max-w-4xl prose prose-lg leading-7 text-text">
         <section>
           <p>
             I designed and built this website myself. Being a backend developer,

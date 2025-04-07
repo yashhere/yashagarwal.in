@@ -8,31 +8,9 @@ import { FiGithub, FiLinkedin, FiRss } from "react-icons/fi"
 import { RiAtLine, RiTwitterXFill } from "react-icons/ri"
 
 import Newsletter from "./newsletter"
+import { Socials } from "./social-icons"
 import { AnalogClock } from "./ui/clock/clock"
 import Link from "./ui/link"
-
-const Socials = [
-  {
-    name: "Email",
-    url: "mailto:yashagarwaljpr+blog@gmail.com",
-    icon: RiAtLine,
-  },
-  {
-    name: "GitHub",
-    url: "https://github.com/yashhere",
-    icon: FiGithub,
-  },
-  {
-    name: "LinkedIn",
-    url: "https://www.linkedin.com/in/theyashagarwal/",
-    icon: FiLinkedin,
-  },
-  {
-    name: "Twitter",
-    url: "https://www.twitter.com/yash__here",
-    icon: RiTwitterXFill,
-  },
-]
 
 // same is present in navigation.tsx as well.
 const navItems = {
@@ -61,7 +39,7 @@ export const Footer: FC = () => {
   return (
     <footer className="mt-auto w-full space-y-4 bg-gray-100/40">
       <hr className="border-[0.5px] border-gray-200" />
-      <div className="mx-auto max-w-2xl space-y-8 p-4 md:px-0">
+      <div className="mx-auto max-w-2xl space-y-8 p-4 md:px-0 lg:max-w-4xl">
         <div className="flex flex-row flex-wrap items-start justify-between md:flex-row">
           <section className="flex flex-col  ">
             <h1 className="mb-4 text-lg font-bold">Get in touch</h1>
@@ -130,7 +108,7 @@ export const Footer: FC = () => {
         <div className="flex flex-col items-start justify-between md:flex-row"></div>
       </div>
 
-      <div className="mx-auto max-w-2xl space-y-8 p-4 text-lg md:px-0">
+      <div className="mx-auto max-w-2xl lg:max-w-4xl space-y-8 p-4 text-lg md:px-0">
         <div className="flex w-full flex-row justify-between">
           <div>Be nice ツ</div>
           <div className="flex flex-row items-center gap-2">

@@ -21,7 +21,7 @@ const Page: FC = () => {
   return (
     <>
       <SectionTitle data={null} title="work" />
-      <section className="prose prose-lg leading-7 text-text">
+      <section className="max-w-2xl lg:max-w-4xl prose lg:prose-lg leading-7 text-text">
         <p>
           I am a enthusiastic software developer with a knack for backend
           development. I&apos;ve got my hands dirty in Python, Golang, and C++.
