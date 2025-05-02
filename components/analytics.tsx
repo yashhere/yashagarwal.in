@@ -3,6 +3,7 @@
 import Script from "next/script"
 import { siteConfig } from "@/config/site"
 import { Analytics as VercelAnalytics } from "@vercel/analytics/react"
+import { Lit } from "litlyx-js"
 
 export function Analytics() {
   const siteUrl = siteConfig.url
@@ -12,6 +13,8 @@ export function Analytics() {
   ) {
     return null
   }
+
+  Lit.init("68146204322ceedd6819fede")
 
   return (
     <>
