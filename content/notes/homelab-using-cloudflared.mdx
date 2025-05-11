@@ -1,0 +1,294 @@
+---
+title: Exposing Homelab Services with Cloudflare Tunnels
+createdOn: 2025-05-11T07:49:47.000Z
+status: published
+series:
+  order: 2
+  title: Homelab Tales
+tags:
+  - Homelab
+description: Use Cloudflare Tunnels to expose your homelab services securely
+updatedOn: 2025-05-11T08:28:56.000Z
+featured: true
+---
+
+I recently purchased a new MacMini to serve as my primary workstation. While setting up a homelab on this was a no-brainer, I wanted to ensure that I am able to access the services outside my home network. Unlike my previous attempts at homelabbing, this time, I was equipped with past experiences and a beefier machine to keep me engaged. Key objectives included enforcing HTTPS for all traffic (both local and external), and avoiding direct exposure of router ports. Since my domain is managed by Cloudflare DNS, I decided to leverage Cloudflare Tunnels for external access. This log documents the steps taken and solutions to common hiccups for future reference.
+
+# Core Design
+
+The setup relies on two main traffic flows:
+
+1.  **External Access:**
+
+    - User navigates to `service.mydomain.com`.
+    - DNS resolves via Cloudflare, directing the request through a Cloudflare Tunnel.
+    - The `cloudflared` client (Docker container) on my workstation receives this traffic.
+    - `cloudflared` forwards the request to Traefik (another Docker container) over the internal Docker network (HTTPS).
+    - Traefik, acting as a reverse proxy, handles SSL termination using Let's Encrypt certificates and routes the request to the appropriate backend application container.
+
+2.  **Internal (LAN) Access:**
+    - User navigates to `service.mydomain.com`.
+    - My local router's custom DNS entry resolves the domain directly to my workstation's local IP.
+    - The browser connects directly to Traefik (listening on port 443) on the workstation.
+    - Traefik handles SSL and routes to the backend application.
+
+# Cloudflare Configuration - Tokens and Tunnels
+
+## Cloudflare API Token for Traefik (DNS-01 Challenge)
+
+Traefik needs a Cloudflare API token to automatically manage Let's Encrypt certificates using Cloudflare's DNS. Here's how to create one:
+
+**Steps:**
+
+1.  Go to Cloudflare Dashboard -> My Profile -> API Tokens.
+2.  Click "Create Token."
+3.  Choose the "Edit zone DNS" template.
+4.  Set the following Permissions: `Zone - DNS - Edit`
+5.  Set Zone Resources: `Include - All zones from an account`
+6.  Generate the token and store it securely. This will be needed in the `docker-compose.yml` file.
+
+## Cloudflare Tunnel Creation
+
+To establish a secure connection from Cloudflare to my local network, I created a Cloudflare Tunnel. This tunnel acts as a secure conduit for traffic between Cloudflare's edge and my local `cloudflared` client.
+
+Since I wanted to run `cloudflared` inside Docker on my main server, I used a separate machine to create the tunnel. This avoids needing to install `cloudflared` directly on my workstation.
+
+On the separate machine:
+
+- `cloudflared login` - Authenticated with Cloudflare and selected `mydomain.com`.
+- `cloudflared tunnel create homelab-main-tunnel` - Created a new tunnel.
+- Noted the **Tunnel ID** (UUID format) provided.
+- `cloudflared tunnel token homelab-main-tunnel` - Generated the specific token for this tunnel.
+
+Keep this token handy; it will be used in the `docker-compose.yml` file for the `cloudflared` service.
+
+# Local Project Structure and Traefik Configuration
+
+I set up the following directory structure on my workstation:
+
+```
+~/homelab/
+├── docker-compose.yml
+├── traefik/
+│   ├── traefik.yml        # Traefik static configuration
+│   ├── acme.json          # For Let's Encrypt certificate storage
+│   └── logs/              # Persistent logs for Traefik
+└── cloudflared/
+    └── config.yml         # Ingress rules for the cloudflared client
+```
+
+## Traefik Static Configuration
+
+This file defines Traefik's fundamental settings, entrypoints, and certificate resolvers.
+
+```yaml
+global:
+  checkNewVersion: true
+  sendAnonymousUsage: false # Disabled for privacy
+
+api:
+  dashboard: true # Enable the Traefik web UI
+
+log:
+  level: INFO
+accessLog:
+  filePath: "/var/log/traefik/access.log"
+
+entryPoints:
+  web: # HTTP entrypoint (port 80)
+    address: ":80"
+    http:
+      redirections:
+        entryPoint:
+          to: websecure
+          scheme: https
+    # docker network inspect proxy_network
+    # IPAM -> Config -> Subnet
+    forwardedHeaders: # Trust headers from known internal proxies
+      trustedIPs:
+        - "172.16.0.0/12"
+        - "192.168.0.0/16"
+        - "10.0.0.0/8"
+
+  websecure: # HTTPS entrypoint (port 443)
+    address: ":443"
+    http:
+      tls:
+        certResolver: cloudflareResolver
+        domains:
+          - main: "mydomain.com"
+            sans:
+              - "*.mydomain.com" # Wildcard certificate for subdomains
+
+providers:
+  docker:
+    exposedByDefault: false # Only manage containers with explicit Traefik labels
+    network: proxy_network # The Docker network Traefik will monitor
+
+certificatesResolvers:
+  cloudflareResolver:
+    acme:
+      email: "my-email@example.com"
+      storage: "/etc/traefik/acme.json"
+      dnsChallenge:
+        provider: cloudflare
+```
+
+## Let's Encrypt Storage
+
+Created an empty file and set permissions for Traefik to store its certificates:
+
+```bash
+touch ~/homelab/traefik/acme.json
+chmod 600 ~/homelab/traefik/acme.json
+```
+
+## Cloudflared Client Configuration
+
+This configures the `cloudflared` Docker container to forward incoming tunnel traffic to Traefik's HTTPS endpoint.
+
+```yaml
+# ~/homelab/cloudflared/config.yml
+ingress:
+  # For traffic matching my domain, forward to Traefik's HTTPS port.
+  # Traefik will then handle routing based on hostname.
+  - hostname: "*.mydomain.com"
+    service: https://traefik:443 # 'traefik' is the Docker service name for Traefik
+    originRequest:
+      # Traefik's cert is for *.mydomain.com, not the internal hostname 'traefik'.
+      # noTLSVerify is safe for this internal hop on a trusted Docker network.
+      noTLSVerify: true
+  # Default rule for any other traffic hitting the tunnel directly.
+  - service: http_status:404
+```
+
+_Rationale for `https://traefik:443`_: I faced issues (HTTP status 418) when I tried to route to the Traefik http port. The mentioned approach routes tunnel traffic directly to Traefik's secure entrypoint. I don't know if this is the best practice, but it worked for me. The `noTLSVerify` option is necessary because the hostname `traefik` does not match the certificate's SAN (Subject Alternative Name). This is acceptable since the traffic is internal and on a trusted Docker network.
+
+# Docker Compose Orchestration
+
+The `docker-compose.yml` file defines and links the Traefik, `cloudflared`, and application services.
+
+```yaml
+version: "3.8"
+
+services:
+  traefik:
+    image: "traefik:v3"
+    container_name: "traefik_reverse_proxy"
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    env_file:
+      - .env
+    networks:
+      - proxy_network
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro" # Allows Traefik to discover services
+      - "./traefik/traefik.yml:/etc/traefik/traefik.yml:ro"
+      - "./traefik/acme.json:/etc/traefik/acme.json"
+      - "./traefik/logs:/var/log/traefik"
+    labels:
+      # Configuration for accessing the Traefik dashboard itself
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefik-dashboard.rule=Host(`dashboard.mydomain.com`)"
+      - "traefik.http.routers.traefik-dashboard.service=api@internal"
+      - "traefik.http.routers.traefik-dashboard.entrypoints=websecure"
+      - "traefik.http.routers.traefik-dashboard.tls.certresolver=cloudflareResolver"
+      - "traefik.http.services.traefik-dashboard.loadbalancer.server.port=8080"
+
+  cloudflared:
+    image: "cloudflare/cloudflared:latest"
+    container_name: "cloudflared_tunnel_client"
+    restart: unless-stopped
+    networks:
+      - proxy_network
+    env_file: .env
+    dns:
+      - 1.1.1.1
+      - 1.0.0.1
+    volumes:
+      - "./cloudflared/config.yml:/etc/cloudflared/config.yml:ro"
+    # The command uses the mounted config.yml and the tunnel token.
+    command: tunnel --no-autoupdate --edge-ip-version auto --config /etc/cloudflared/config.yml run
+    depends_on:
+      - traefik
+
+  whoami_app:
+    image: "traefik/whoami"
+    container_name: "whoami_service_instance"
+    restart: unless-stopped
+    networks:
+      - proxy_network
+    labels:
+      - "traefik.enable=true"
+      # Router definition for this application
+      - "traefik.http.routers.whoami-app-router.rule=Host(`whoami.mydomain.com`)"
+      - "traefik.http.routers.whoami-app-router.entrypoints=websecure"
+      - "traefik.http.routers.whoami-app-router.tls.certresolver=cloudflareResolver"
+      - "traefik.http.routers.whoami-app-router.service=whoami-app-service"
+      # Service definition pointing to the container's port
+      - "traefik.http.services.whoami-app-service.loadbalancer.server.port=80" # whoami listens on port 80
+
+networks:
+  proxy_network:
+    name: proxy_network
+    driver: bridge
+```
+
+# DNS and Network Adjustments
+
+At this point, the local setup is complete. However, we need to tell Cloudflare how to route traffic to our tunnel. When a request comes to the subdomain `whoami.mydomain.com`, it should be directed to the tunnel.
+
+## Cloudflare Public DNS Records
+
+To add the DNS records for the tunnel, we need to create a CNAME record in Cloudflare's DNS settings. Following command works great -
+
+```bash
+cloudflared tunnel route dns homelab-main-tunnel whoami.mydomain.com
+```
+
+This command associates the tunnel with the subdomain `whoami.mydomain.com`. Cloudflare will now route traffic for this domain through the tunnel to my local `cloudflared` client.
+
+## Local Router DNS for Split-Brain DNS
+
+To ensure that requests from my local network to `whoami.mydomain.com` do not go out to the internet and back in, I set up a split-brain DNS configuration. This allows local devices to resolve the domain directly to my workstation's local IP address. My router provides this functionality, allowing me to create custom DNS entries for specific domains.
+
+```text
+dashboard.mydomain.com -> 192.168.X.Y (my workstation's LAN IP)
+whoami.mydomain.com -> 192.168.X.Y
+```
+
+This ensures local traffic stays within the LAN.
+
+## Cloudflare SSL/TLS Encryption Mode
+
+Cloudflare provides several SSL/TLS encryption modes. For my setup, I chose the "Full (Strict)" mode. This means that Cloudflare will only connect to my origin server (the `cloudflared` client) if it can establish a secure connection using a valid SSL certificate. This is crucial for ensuring that all traffic between Cloudflare and my local network is encrypted, even if the traffic is not going out to the public internet. I have also noticed that this mode is needed to avoid the `TOO_MANY_REDIRECTS` error.
+
+In Cloudflare Dashboard -> mydomain.com -> SSL/TLS -> Overview, ensure that the SSL/TLS encryption mode is set to Full (Strict).
+
+# Hiccups and Solutions
+
+## Too many redirects
+
+In past, I observed the error `ERR_TOO_MANY_REDIRECTS` almost always when Cloudflare's SSL/TLS mode was not set to "Full (Strict)". This time, apart from configuring this setting, I noticed that my docker subnet was not the standard IP range, so Traefik was not trusting X-Forwarded-Proto from cloudflared. I fixed it by setting `forwardedHeaders.trustedIPs` on the HTTP entrypoint to allow my docker subnet.
+
+## 418 "I'm a teapot"
+
+This was an interesting one. I am not really sure why this happened, but if I didn't set the traffic forwarding to `traefik:443` in the `cloudflared` config, I got this error. I suspect it was because the request was not being routed correctly, and Traefik was returning a default response for unrecognized traffic.
+
+## 404 Not Found
+
+This error occurred when I tried to access the services without the correct router configuration. I had to ensure that the router for the dashboard was correctly set up in the `docker-compose.yml` file. Almost always, this was due to a missing or incorrect Traefik label in the service definition.
+
+## MacOS going to sleep
+
+I noticed that my Mac mini would go to sleep after a period of inactivity, causing the tunnel to drop. To prevent this, I set the energy saver settings to "Wake for network access" This ensures that the MacMini is always listening for network connections and the tunnel stays open.
+
+Though not applicable to my case, another important thing to note is that if you close the lid of your MacBook, it will go to sleep and the tunnel will drop. To prevent this, you can use a tool like Amphetamine or InsomniaX to keep your Mac awake while the lid is closed. Else, you can also keep the MBP plugged in to power and connected to an external display (or a virtual display adapter), which will prevent it from sleeping.
+
+# Conclusion
+
+This setup allows me to securely access my homelab services from anywhere while keeping my local network safe. The combination of Cloudflare Tunnels, Traefik, and Docker provides a robust solution for self-hosting applications with HTTPS support. I hope this log helps others in setting up a similar configuration and serves as a reference for my future endeavors.

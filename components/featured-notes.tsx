@@ -13,7 +13,20 @@ export async function FeaturedNotes({ count }: { count: number }) {
     */
   }
   let notes = await getPreviewNotes()
-  let notesFiltered = notes.filter((note) => note.note.featured === true)
+  // Sort all notes by update date (newest first)
+  const sortedNotes = [...notes].sort(
+    (a, b) => b.note.updatedOn - a.note.updatedOn
+  )
+  // Get the latest note
+  const latestNote = sortedNotes[0]
+  // Get all featured notes
+  const featuredNotes = notes.filter((note) => note.note.featured === true)
+  // Combine latest note with featured notes, avoiding duplicates
+  let notesFiltered = [
+    latestNote,
+    ...featuredNotes.filter((note) => note !== latestNote),
+  ]
+  // Sort them by update date
   notesFiltered.sort((a, b) => b.note.updatedOn - a.note.updatedOn)
   return (
     <>
