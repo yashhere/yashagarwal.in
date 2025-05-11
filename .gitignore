@@ -38,4 +38,4 @@ next-env.d.ts
 .contentlayer
 
 # aider
-**/.aider*
+**/*.aider*

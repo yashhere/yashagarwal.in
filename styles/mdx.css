@@ -38,9 +38,10 @@ html.dark pre[data-theme="light"] {
 code .line {
   word-break: break-word;
   border-radius: 0.375rem;
-  border: 1px solid;
-  padding: 3px 5px;
-  font-size: 0.85rem;
+  padding: 2px 2px;
+  font-size: 0.95rem;
+  background: hsl(var(--color-syntax-bg));
+  font-weight: normal;
 }
 /* inline code fragments end */
 
@@ -53,11 +54,11 @@ code .line {
   min-width: 100%;
   overflow-x: auto;
   word-wrap: break-word;
-  border-radius: 0.5rem;
+  /* border-radius: 0.5rem; */
   background-color: inherit;
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
-  line-height: 1.5rem;
+  font-size: 0.9rem;
 }
 
 [data-rehype-pretty-code-fragment] pre > code [data-line] {
@@ -72,7 +73,7 @@ code .line {
   margin-right: 1rem;
   width: 1.5rem;
   text-align: right;
-  color: text-gray-400
+  color: text-gray-400;
 }
 
 [data-rehype-pretty-code-fragment] [data-highlighted-line] {

@@ -26,7 +26,7 @@ const CustomMDXComponents: MDXComponents = {
   img: BlogImage,
   p: ({ className, ...props }) => (
     <p
-      className={cn("text-lg leading-7 text-text not-first:mt-6", className)}
+      className={cn("text-lg text-text not-first:mt-6", className)}
       {...props}
     />
   ),
@@ -84,9 +84,9 @@ const CustomMDXComponents: MDXComponents = {
       )}
     />
   ),
-  ul: (props) => <ul {...props} className="my-6 ml-6 list-disc [&>li]:mt-2" />,
+  ul: (props) => <ul {...props} className="mb-6 pl-4 list-disc [&>li]:mt-2" />,
   ol: (props) => <ol {...props} className="mb-6 list-decimal pl-6" />,
-  li: (props) => <li {...props} className="mb-2 text-lg text-text" />,
+  li: (props) => <li {...props} className="text-lg text-text" />,
   strong: (props) => <strong className="text-text" {...props} />,
   blockquote: (props) => (
     <blockquote {...props} className="mt-6 border-l-2 pl-6 italic" />
