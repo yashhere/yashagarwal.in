@@ -21,11 +21,21 @@ const computedFields = defineComputedFields<"Note">({
     type: "json",
     resolve: async (doc) => {
       const slugger = new GithubSlugger()
+      const content = doc.body.raw
 
-      // https://stackoverflow.com/a/70802303
-      const regex = /\n\n(?<flag>#{1,6})\s+(?<content>.+)/g
+      // identify code blocks and exclude them from heading detection
+      const codeBlockRegex = /```[\s\S]*?```/g
+      const contentWithoutCodeBlocks = content.replace(
+        codeBlockRegex,
+        "CODE_BLOCK_PLACEHOLDER"
+      )
 
-      const headings = Array.from(doc.body.raw.matchAll(regex)).map(
+      // Now detect headings only in the content outside code blocks
+      const headingRegex = /\n\n(?<flag>#{1,6})\s+(?<content>.+)/g
+
+      const headings = Array.from(
+        contentWithoutCodeBlocks.matchAll(headingRegex)
+      ).map(
         // @ts-ignore
         ({ groups }) => {
           const flag = groups?.flag

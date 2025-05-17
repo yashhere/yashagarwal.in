@@ -15,7 +15,8 @@
     "prepare": "husky",
     "preview": "bun run build && bun run start",
     "debug": "NODE_OPTIONS='--inspect' bun dev",
-    "lint:staged": "lint-staged"
+    "lint:staged": "lint-staged",
+    "postinstall": "bunx playwright install"
   },
   "dependencies": {
     "@fontsource/fira-code": "^5.0.16",
@@ -49,6 +50,7 @@
     "react-wrap-balancer": "^1.1.1",
     "reading-time": "^1.5.0",
     "rehype-katex": "^6.0.3",
+    "rehype-mermaid": "^3.0.0",
     "rss": "^1.2.2",
     "shiki": "^0.14.1",
     "sonner": "^1.4.41",
