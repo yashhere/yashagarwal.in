@@ -9,7 +9,7 @@ tags:
   - Homelab
 description: "Use UFW, Fail2Ban and PSAD to secure Traefik reverse proxy"
 featured: true
-updatedOn: 2025-05-17T07:13:43.000Z
+updatedOn: 2025-05-17T08:20:44.000Z
 ---
 
 When exposing a reverse proxy like [Traefik](https://traefik.io/) to the public internet, security should be a top priority. I recently deployed Traefik on a public-facing Linux server to route traffic to Docker containers — and I wanted a robust, layered security model to defend against port scans, brute-force attacks, and misbehaving clients.
@@ -48,9 +48,9 @@ flowchart TB
         TRAEFIK -- "Access Logs" --> F2B
     end
 
-    classDef firewall fill:#f96,stroke:#333,stroke-width:2px;
-    classDef monitoring fill:#bbf,stroke:#33f,stroke-width:1px;
-    classDef container fill:#bfb,stroke:#3a3,stroke-width:1px;
+    classDef firewall fill:#2563eb33,stroke:#2563eb,stroke-width:1.5px;
+    classDef monitoring fill:#8b5cf633,stroke:#8b5cf6,stroke-width:1.5px;
+    classDef container fill:#10b98133,stroke:#10b981,stroke-width:1.5px;
 
     class UFW,IPTABLES firewall;
     class PSAD,F2B monitoring;
@@ -387,12 +387,12 @@ flowchart TD
     logs -->|Monitor| fail2ban[Fail2Ban]
     fail2ban -->|Add ban rules| iptables
 
-    style client fill:#f96,stroke:#333
-    style iptables fill:#fcf,stroke:#333
-    style fail2ban fill:#fcf,stroke:#333
-    style logs fill:#fcf,stroke:#333
-    style traefik fill:#cfc,stroke:#333
-    style app fill:#cfc,stroke:#333
+    style client fill:#f5933033,stroke:#f59330,stroke-width:1.5px;
+    style iptables fill:#2563eb33,stroke:#2563eb,stroke-width:1.5px;
+    style fail2ban fill:#8b5cf633,stroke:#8b5cf6,stroke-width:1.5px;
+    style logs fill:#8b5cf633,stroke:#8b5cf6,stroke-width:1.5px;
+    style traefik fill:#10b98133,stroke:#10b981,stroke-width:1.5px;
+    style app fill:#10b98133,stroke:#10b981,stroke-width:1.5px;
 ```
 
 This approach ensures bans are effective even with Docker's network abstractions.

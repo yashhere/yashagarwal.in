@@ -76,7 +76,6 @@ export default makeSource({
         rehypeMermaid as any,
         {
           strategy: "inline-svg",
-          className: "mermaid-diagram",
         },
       ],
       [rehypePrettyCode, rehypePrettyCodeOptions],
