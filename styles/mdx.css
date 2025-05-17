@@ -34,6 +34,11 @@ html.dark pre[data-theme="light"] {
   display: none;
 }
 
+svg p {
+  font-size: unset !important;
+  line-height: normal !important;
+}
+
 /* inline code fragments */
 code .line {
   word-break: break-word;
