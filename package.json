@@ -15,7 +15,8 @@
     "prepare": "husky",
     "preview": "bun run build && bun run start",
     "debug": "NODE_OPTIONS='--inspect' bun dev",
-    "lint:staged": "lint-staged"
+    "lint:staged": "lint-staged",
+    "postinstall": "bunx playwright install"
   },
   "dependencies": {
     "@fontsource/fira-code": "^5.0.16",
