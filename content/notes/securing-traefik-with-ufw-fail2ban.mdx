@@ -20,12 +20,12 @@ tags:
   - Firewall
 description: "Use UFW, Fail2Ban and PSAD to secure Traefik reverse proxy"
 featured: true
-updatedOn: 2025-05-17T08:24:48.000Z
+updatedOn: 2025-05-17T10:57:42.000Z
 ---
 
-When exposing a reverse proxy like [Traefik](https://traefik.io/) to the public internet, security should be a top priority. I recently deployed Traefik on a public-facing Linux server to route traffic to Docker containers — and I wanted a robust, layered security model to defend against port scans, brute-force attacks, and misbehaving clients.
+When exposing a reverse proxy like [Traefik](https://traefik.io/) to the public internet, security should be a top priority. I recently deployed Traefik on a public-facing Linux server to route traffic to Docker containers - and I wanted a robust, layered security model to defend against port scans, brute-force attacks, and misbehaving clients.
 
-In this post, I’ll walk through how I secured my Traefik setup using UFW, Fail2Ban, and PSAD — combining firewall rules, intrusion detection, and log-based banning into an effective security stack.
+In this post, I’ll walk through how I secured my Traefik setup using UFW, Fail2Ban, and PSAD - combining firewall rules, intrusion detection, and log-based banning into an effective security stack.
 
 # Why a Layered Security Model?
 
@@ -126,67 +126,67 @@ sudo apt install psad
 
 1. Make a backup of the configuration:
 
-```bash
-sudo cp --archive /etc/psad/psad.conf /etc/psad/psad.conf-BACKUP
-```
+   ```bash
+   sudo cp --archive /etc/psad/psad.conf /etc/psad/psad.conf-BACKUP
+   ```
 
 2. Edit `/etc/psad/psad.conf` and update these settings:
 
-```text
-EMAIL_ADDRESSES         your@email.address;
-HOSTNAME                your-server-hostname;
-EXPECT_TCP_OPTIONS      Y;         # Enable TCP options logging
-ENABLE_PSADWATCHD       Y;
-ENABLE_AUTO_IDS         Y;         # Enable auto-blocking
-ENABLE_AUTO_IDS_EMAILS  Y;         # Enable email notifications
-```
+   ```text
+   EMAIL_ADDRESSES         your@email.address;
+   HOSTNAME                your-server-hostname;
+   EXPECT_TCP_OPTIONS      Y;         # Enable TCP options logging
+   ENABLE_PSADWATCHD       Y;
+   ENABLE_AUTO_IDS         Y;         # Enable auto-blocking
+   ENABLE_AUTO_IDS_EMAILS  Y;         # Enable email notifications
+   ```
 
 3. Configure UFW to log traffic for PSAD by modifying both `/etc/ufw/before.rules` (for IPv4) and `/etc/ufw/before6.rules` (for IPv6). First make a backup of both files:
 
-```bash
-sudo cp --archive /etc/ufw/before.rules /etc/ufw/before.rules-BACKUP
-sudo cp --archive /etc/ufw/before6.rules /etc/ufw/before6.rules-BACKUP
-```
+   ```bash
+   sudo cp --archive /etc/ufw/before.rules /etc/ufw/before.rules-BACKUP
+   sudo cp --archive /etc/ufw/before6.rules /etc/ufw/before6.rules-BACKUP
+   ```
 
-Add these lines to both files before the `COMMIT` line:
+   Add these lines to both files before the `COMMIT` line:
 
-In `/etc/ufw/before.rules`:
+   In `/etc/ufw/before.rules`:
 
-```text
-# log all traffic so psad can analyze
+   ```text
+   # log all traffic so psad can analyze
 
--A ufw-before-input -j LOG --log-tcp-options --log-prefix "[IPTABLES] "
--A ufw-before-forward -j LOG --log-tcp-options --log-prefix "[IPTABLES] "
-```
+   -A ufw-before-input -j LOG --log-tcp-options --log-prefix "[IPTABLES] "
+   -A ufw-before-forward -j LOG --log-tcp-options --log-prefix "[IPTABLES] "
+   ```
 
-In `/etc/ufw/before6.rules`:
+   In `/etc/ufw/before6.rules`:
 
-```text
-# log all traffic so psad can analyze
+   ```text
+   # log all traffic so psad can analyze
 
--A ufw6-before-input -j LOG --log-tcp-options --log-prefix "[IPTABLES] "
--A ufw6-before-forward -j LOG --log-tcp-options --log-prefix "[IPTABLES] "
-```
+   -A ufw6-before-input -j LOG --log-tcp-options --log-prefix "[IPTABLES] "
+   -A ufw6-before-forward -j LOG --log-tcp-options --log-prefix "[IPTABLES] "
+   ```
 
-**Note:** Using `ufw-before-input` and `ufw-before-forward` chains instead of directly modifying `INPUT` and `FORWARD` is crucial for proper integration with UFW.
+   **Note:** Using `ufw-before-input` and `ufw-before-forward` chains instead of directly modifying `INPUT` and `FORWARD` is crucial for proper integration with UFW.
 
 4. Reload and Verify
 
-```bash
-sudo ufw reload
-sudo psad -R
-sudo psad --sig-update
-sudo psad -H
-```
+   ```bash
+   sudo ufw reload
+   sudo psad -R
+   sudo psad --sig-update
+   sudo psad -H
+   ```
 
 5. Analyze Firewall Logs and Check PSAD Status
 
-```bash
-sudo psad --fw-analyze
-sudo psad --Status
-```
+   ```bash
+   sudo psad --fw-analyze
+   sudo psad --Status
+   ```
 
-If `psad --fw-analyze` shows issues, you can check your mail by executing the `mail` command. For this to work, you need to provide `<user>@localhost` as the email address in `EMAIL_ADDRESSES` field of the `psad.conf` file.
+   If `psad --fw-analyze` shows issues, you can check your mail by executing the `mail` command. For this to work, you need to provide `<user>@localhost` as the email address in `EMAIL_ADDRESSES` field of the `psad.conf` file.
 
 # Layer 3: Fail2Ban (Application Intrusion Prevention)
 
@@ -398,12 +398,19 @@ flowchart TD
     logs -->|Monitor| fail2ban[Fail2Ban]
     fail2ban -->|Add ban rules| iptables
 
-    style client fill:#f5933033,stroke:#f59330,stroke-width:1.5px;
-    style iptables fill:#2563eb33,stroke:#2563eb,stroke-width:1.5px;
-    style fail2ban fill:#8b5cf633,stroke:#8b5cf6,stroke-width:1.5px;
-    style logs fill:#8b5cf633,stroke:#8b5cf6,stroke-width:1.5px;
-    style traefik fill:#10b98133,stroke:#10b981,stroke-width:1.5px;
-    style app fill:#10b98133,stroke:#10b981,stroke-width:1.5px;
+    class client client;
+    class iptables iptables;
+    class fail2ban fail2ban;
+    class logs logs;
+    class traefik traefik;
+    class app app;
+
+    classDef client fill:#f5933033,stroke:#f59330,stroke-width:1.5px;
+    classDef iptables fill:#2563eb33,stroke:#2563eb,stroke-width:1.5px;
+    classDef fail2ban fill:#8b5cf633,stroke:#8b5cf6,stroke-width:1.5px;
+    classDef logs fill:#8b5cf633,stroke:#8b5cf6,stroke-width:1.5px;
+    classDef traefik fill:#10b98133,stroke:#10b981,stroke-width:1.5px;
+    classDef app fill:#10b98133,stroke:#10b981,stroke-width:1.5px;
 ```
 
 This approach ensures bans are effective even with Docker's network abstractions.
@@ -501,11 +508,11 @@ sequenceDiagram
 
 # Conclusion
 
-Hardening a reverse proxy like Traefik on a public host isn’t a set-it-and-forget-it operation. This layered approach — combining firewall rules, intrusion detection, and log-based banning — ensures you're actively defending against real-world threats.
+Hardening a reverse proxy like Traefik on a public host isn’t a set-it-and-forget-it operation. This layered approach - combining firewall rules, intrusion detection, and log-based banning - ensures you're actively defending against real-world threats.
 
 If you're running Docker in production or even just experimenting in a homelab, these practices are well worth the effort.
 
-Let me know if you have any questions or if you want to share your own security setups! If you found this post helpful, consider sharing it with others who might benefit from it. Happy securing!
+Let me know if you have any questions or if you want to share your own security setups! If you found this post helpful, consider sharing it with others who might benefit from it. Happy homelabbing!
 
 # Additional Resources
 
