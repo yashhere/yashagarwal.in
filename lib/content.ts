@@ -1,11 +1,7 @@
 import { NoteWithMetadata } from "@/types";
-import { pick } from "contentlayer/client";
-import { allNotes, DocumentTypes, Note } from "contentlayer/generated";
-import { compareDesc } from "date-fns";
-
-
-
-
+import { allNotes, Note } from "content-collections"
+import { compareDesc } from "date-fns"
+import { pick } from "lodash"
 
 const URL_SEGMENTS = {
   NOTES: "notes",
@@ -58,7 +54,7 @@ export async function getPreviewNotes() {
 }
 
 export async function getPartialNote(slug: string) {
-  const note = getNotes().find((item) => item.slug === slug)
+  const note = getNotes().find((item: Note) => item._meta.path === slug)
   if (!note) {
     return null
   }
@@ -69,10 +65,7 @@ export async function getPartialNote(slug: string) {
     updatedOn: note.updatedOn,
     slug: note.slug,
     description: note.description,
-    body: {
-      code: note.body.code,
-      raw: "", // use empty string to reduce payload size
-    },
+    mdx: note.mdx,
     tags: note.tags,
     status: note.status,
     headings:
@@ -87,7 +80,8 @@ export async function getPartialNote(slug: string) {
     // Array destructuring, in case I decide to include backlinks to other types as well
     backlinks: [...getNoteBacklinks(note.slug as string, URL_SEGMENTS.NOTES)],
     series:
-      (note.series && getSeries(note.series?.title as string, note.slug)) ||
+      (note.series &&
+        getSeries(note.series?.title as string, note.slug as string)) ||
       undefined,
   }
 
@@ -105,11 +99,11 @@ export function getNote(slug: string) {
 
 export function getNoteBacklinks(slug: string, urlSegment: string) {
   const backlinksToNote = allNotes.filter((doc) => {
-    if (doc.slug !== slug) {
+    if (doc._meta.filePath !== slug) {
       const urlToSearch = `/${urlSegment}/${slug}`
-      return doc.body.raw.includes(urlToSearch)
+      return doc.content.includes(urlToSearch)
     }
-  }) as DocumentTypes[]
+  })
 
   return backlinksToNote.map((doc) => ({
     title: doc.title,
@@ -124,13 +118,13 @@ export function getSeries(title: string, current: string) {
     notes: allNotes
       .filter((p) => p.series?.title === title)
       .sort(
-        (a, b) =>
-          Number(new Date(a.series!.order)) - Number(new Date(b.series!.order))
+        (a: Note, b: Note) =>
+          (a.series!.order as number) - (b.series!.order as number)
       )
       .map((p) => {
         return {
           title: p.title,
-          slug: p.slug,
+          slug: p.slug as string,
           status: p.status,
           isCurrent: p.slug === current,
         }

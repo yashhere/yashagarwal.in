@@ -1,45 +1,69 @@
 {
-  "compilerOptions": {
-    "target": "ES2021",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
-    "noImplicitAny": false,
-    "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": true,
-    "baseUrl": ".",
-    "strictNullChecks": true,
-    "paths": {
-      "@/components/*": ["./components/*"],
-      "@/lib/*": ["./lib/*"],
-      "@/public/*": ["./public/*"],
-      "@/styles/*": ["./styles/*"],
-      "@/types": ["./types"],
-      "@/config": ["./config"],
-      "@/content/*": ["./content/*"],
-      "contentlayer/generated": ["./.contentlayer/generated"],
-      "@/*": ["./*"]
+    "compilerOptions": {
+        "target": "ES2021",
+        "lib": [
+            "dom",
+            "dom.iterable",
+            "esnext"
+        ],
+        "allowJs": true,
+        "skipLibCheck": true,
+        "strict": true,
+        "forceConsistentCasingInFileNames": true,
+        "noEmit": true,
+        "noImplicitAny": false,
+        "esModuleInterop": true,
+        "module": "esnext",
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "jsx": "preserve",
+        "incremental": true,
+        "baseUrl": ".",
+        "strictNullChecks": true,
+        "paths": {
+            "@/components/*": [
+                "./components/*"
+            ],
+            "@/lib/*": [
+                "./lib/*"
+            ],
+            "@/public/*": [
+                "./public/*"
+            ],
+            "@/styles/*": [
+                "./styles/*"
+            ],
+            "@/types": [
+                "./types"
+            ],
+            "@/config": [
+                "./config"
+            ],
+            "@/content/*": [
+                "./content/*"
+            ],
+            "content-collections": [
+                "./.content-collections/generated"
+            ],
+            "@/*": [
+                "./*"
+            ]
+        },
+        "plugins": [
+            {
+                "name": "next"
+            }
+        ]
     },
-    "plugins": [
-      {
-        "name": "next"
-      }
+    "include": [
+        "next-env.d.ts",
+        "**/*.ts",
+        "**/*.tsx",
+        ".next/types/**/*.ts",
+        ".content-collections/generated"
+    ],
+    "exclude": [
+        "node_modules"
     ]
-  },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts",
-    ".contentlayer/generated"
-  ],
-  "exclude": ["node_modules"]
 }

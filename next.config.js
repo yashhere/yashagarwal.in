@@ -1,4 +1,4 @@
-const { withContentlayer } = require("next-contentlayer")
+const { withContentCollections } = require("@content-collections/next")
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -309,4 +309,4 @@ const Redirects = [
   },
 ]
 
-module.exports = withContentlayer(nextConfig)
+module.export = withContentCollections(nextConfig)

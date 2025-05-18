@@ -1,6 +1,4 @@
-import { createHash } from "crypto"
-import { headers } from "next/headers"
-import { Note } from "contentlayer/generated"
+import { Note } from "content-collections"
 
 export function sortNotes(array: Note[]) {
   return array.sort(

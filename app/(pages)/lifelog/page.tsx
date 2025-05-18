@@ -1,12 +1,12 @@
 import CustomMDXComponents from "@/components/mdx"
 import SectionTitle from "@/components/ui/section-title"
-import { allLifeLogs } from "contentlayer/generated"
+import { MDXContent } from "@content-collections/mdx/react"
+import { allLifelogs } from "content-collections"
 import { compareDesc } from "date-fns"
 import moment from "moment"
-import { getMDXComponent } from "next-contentlayer/hooks"
 
 export default function LifeLog() {
-  const notes = allLifeLogs
+  const notes = allLifelogs
   notes.sort((a, b) => {
     return compareDesc(new Date(a.createdOn), new Date(b.createdOn))
   })
@@ -22,7 +22,6 @@ export default function LifeLog() {
       </div>
       <ol className="relative mt-8 border-l border-gray-200">
         {notes.map((note) => {
-          const MdxContent = getMDXComponent(note.body.code)
           return (
             <>
               <li
@@ -41,7 +40,10 @@ export default function LifeLog() {
                   </time>
                 </div>
                 <p className="mb-4 text-lg font-light text-text">
-                  <MdxContent components={CustomMDXComponents} />
+                  <MDXContent
+                    code={note.mdx}
+                    components={CustomMDXComponents}
+                  />
                 </p>
               </li>
             </>
