@@ -1,12 +1,12 @@
-import { defineCollection, defineConfig } from "@content-collections/core";
-import { compileMDX } from "@content-collections/mdx";
-import remarkCallouts from "@portaljs/remark-callouts";
-import GithubSlugger, { slug } from "github-slugger";
-import { default as readTime } from "reading-time";
-import { rehypeAccessibleEmojis } from "rehype-accessible-emojis";
-import rehypeAutolinkHeadings from "rehype-autolink-headings";
-import externalLinks from "rehype-external-links";
-import rehypeKatex from "rehype-katex";
+import { defineCollection, defineConfig } from "@content-collections/core"
+import { compileMDX } from "@content-collections/mdx"
+import remarkCallouts from "@portaljs/remark-callouts"
+import GithubSlugger, { slug } from "github-slugger"
+import { default as readTime } from "reading-time"
+import { rehypeAccessibleEmojis } from "rehype-accessible-emojis"
+import rehypeAutolinkHeadings from "rehype-autolink-headings"
+import externalLinks from "rehype-external-links"
+import rehypeKatex from "rehype-katex"
 import rehypeMermaid from "rehype-mermaid"
 import rehypePrettyCode, { Options } from "rehype-pretty-code"
 import rehypeSlug from "rehype-slug"
@@ -76,6 +76,7 @@ const prettyCodeOptions: Options = {
     if (node.children.length === 0) {
       node.children = [{ type: "text", value: " " }]
     }
+    node.properties.className = [""]
   },
   onVisitHighlightedLine(node) {
     if (!node.properties.className) {
