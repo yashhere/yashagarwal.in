@@ -1,6 +1,6 @@
 import { Metadata, ResolvingMetadata } from "next"
 import { DisqusComments } from "@/components/comments"
-import CustomMDXComponents from "@/components/mdx"
+import { Mdx } from "@/components/mdx"
 import { Series } from "@/components/series"
 import { TableOfContents } from "@/components/table-of-contents"
 import { siteConfig } from "@/config/site"
@@ -145,10 +145,7 @@ export default async function Page({ params }: Props) {
         ) : null}
         <div className="mb-8">
           <div className="prose text-text prose-headings:cursor-pointer">
-            <MDXContent
-              code={article.note.mdx}
-              components={CustomMDXComponents}
-            />
+            <Mdx code={article.note.mdx} />
             {article.note.status === "draft" ? <Draft /> : null}
           </div>
         </div>

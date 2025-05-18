@@ -1,20 +1,22 @@
-import { defineCollection, defineConfig } from "@content-collections/core"
-import { compileMDX } from "@content-collections/mdx"
-import remarkCallouts from "@portaljs/remark-callouts"
-import GithubSlugger, { slug } from "github-slugger"
-import { default as readTime } from "reading-time"
-import { rehypeAccessibleEmojis } from "rehype-accessible-emojis"
-import rehypeAutolinkHeadings from "rehype-autolink-headings"
-import externalLinks from "rehype-external-links"
-import rehypeKatex from "rehype-katex"
+import { defineCollection, defineConfig } from "@content-collections/core";
+import { compileMDX } from "@content-collections/mdx";
+import remarkCallouts from "@portaljs/remark-callouts";
+import GithubSlugger, { slug } from "github-slugger";
+import { default as readTime } from "reading-time";
+import { rehypeAccessibleEmojis } from "rehype-accessible-emojis";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import externalLinks from "rehype-external-links";
+import rehypeKatex from "rehype-katex";
 import rehypeMermaid from "rehype-mermaid"
-import rehypePrettyCode from "rehype-pretty-code"
+import rehypePrettyCode, { Options } from "rehype-pretty-code"
 import rehypeSlug from "rehype-slug"
 import rehypeUnwrapImages from "rehype-unwrap-images"
 import remarkGfm from "remark-gfm"
 import remarkMath from "remark-math"
 import remarkSmartypants from "remark-smartypants"
 import wikiLinkPlugin from "remark-wiki-link"
+import { createHighlighter } from "shiki"
+import { visit } from "unist-util-visit"
 
 import rehypeImageMetadata from "./utils/plugins/image-metadata"
 
@@ -55,6 +57,40 @@ function extractHeadings(content: string) {
   return headings
 }
 
+const prettyCodeOptions: Options = {
+  theme: {
+    dark: "github-dark-dimmed",
+    light: "github-light",
+  },
+  defaultLang: {
+    block: "plaintext",
+    inline: "plaintext",
+  },
+  getHighlighter: (options) =>
+    createHighlighter({
+      ...options,
+    }),
+  onVisitLine(node) {
+    // Prevent lines from collapsing in `display: grid` mode, and allow empty
+    // lines to be copy/pasted
+    if (node.children.length === 0) {
+      node.children = [{ type: "text", value: " " }]
+    }
+  },
+  onVisitHighlightedLine(node) {
+    if (!node.properties.className) {
+      node.properties.className = []
+    }
+    node.properties.className.push("line--highlighted")
+  },
+  onVisitHighlightedChars(node) {
+    if (!node.properties.className) {
+      node.properties.className = []
+    }
+    node.properties.className = ["word--highlighted"]
+  },
+}
+
 const notes = defineCollection({
   name: "notes",
   directory: "content/notes",
@@ -64,7 +100,7 @@ const notes = defineCollection({
     description: z.string().optional(),
     featured: z.boolean().default(false),
     image: z.string().optional(),
-    status: z.enum(["draft", "published"]),
+    status: z.enum(["draft", "published"]).default("draft"),
     tags: z.array(z.string()).optional(),
     series: z
       .object({
@@ -126,31 +162,59 @@ const notes = defineCollection({
             },
           },
         ],
-        [
-          rehypePrettyCode,
-          {
-            theme: {
-              dark: "github-dark-dimmed",
-              light: "github-light",
-            },
-            defaultLang: {
-              block: "plaintext",
-              inline: "plaintext",
-            },
-            onVisitLine(node) {
-              // Prevent lines from collapsing in `display: grid` mode, and
-              // allow empty lines to be copy/pasted
-              if (node.children.length === 0) {
-                node.children = [{ type: "text", value: " " }]
+        () => (tree) => {
+          visit(tree, (node) => {
+            if (node?.type === "element" && node?.tagName === "pre") {
+              const [codeEl] = node.children
+              if (codeEl.tagName !== "code") {
+                return
               }
-              node.properties.className = [""]
-            },
-            onVisitHighlightedLine(node) {
-              // Adding a class to the highlighted line
-              node.properties.className.push("highlighted")
-            },
-          },
-        ],
+              if (codeEl.data?.meta) {
+                // Extract event from meta and pass it down the tree.
+                const regex = /event="([^"]*)"/
+                const match = codeEl.data?.meta.match(regex)
+                if (match) {
+                  node.__event__ = match ? match[1] : null
+                  codeEl.data.meta = codeEl.data.meta.replace(regex, "")
+                }
+              }
+              node.__rawString__ = codeEl.children?.[0].value
+              node.__src__ = node.properties?.__src__
+              node.__style__ = node.properties?.__style__
+            }
+          })
+        },
+        [rehypePrettyCode, prettyCodeOptions],
+        () => (tree) => {
+          visit(tree, (node) => {
+            if (node?.type === "element" && node?.tagName === "figure") {
+              if (!("data-rehype-pretty-code-figure" in node.properties)) {
+                return
+              }
+
+              const preElement = node.children.at(-1)
+              if (preElement.tagName !== "pre") {
+                return
+              }
+
+              preElement.properties["__withMeta__"] =
+                node.children.at(0).tagName === "div"
+              preElement.properties["__rawString__"] = node.__rawString__
+
+              if (node.__src__) {
+                preElement.properties["__src__"] = node.__src__
+              }
+
+              if (node.__event__) {
+                preElement.properties["__event__"] = node.__event__
+              }
+
+              if (node.__style__) {
+                preElement.properties["__style__"] = node.__style__
+              }
+            }
+          })
+        },
       ],
       remarkPlugins: [
         [remarkGfm],
@@ -175,13 +239,17 @@ const notes = defineCollection({
       mdx,
       headings,
       readingTime,
-      slug: document._meta.path,
+      slug: `${document._meta.path}`,
       _raw: {
         sourceFilePath: document._meta.filePath,
         sourceFileName: document._meta.fileName,
         sourceFileDir: document._meta.directory,
         flattenedPath: document._meta.path,
         contentType: "mdx",
+      },
+      body: {
+        raw: document.content,
+        code: mdx,
       },
     }
   },
@@ -210,6 +278,10 @@ const lifelog = defineCollection({
         sourceFileDir: document._meta.directory,
         flattenedPath: document._meta.path,
         contentType: "mdx",
+      },
+      body: {
+        raw: document.content,
+        code: mdx,
       },
     }
   },

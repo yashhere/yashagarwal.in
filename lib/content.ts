@@ -1,4 +1,4 @@
-import { NoteWithMetadata } from "@/types";
+import { NoteWithMetadata } from "@/types"
 import { allNotes, Note } from "content-collections"
 import { compareDesc } from "date-fns"
 import { pick } from "lodash"

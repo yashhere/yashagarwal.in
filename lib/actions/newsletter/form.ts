@@ -1,6 +1,6 @@
-"use server";
+"use server"
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath } from "next/cache"
 import { env } from "@/env.mjs"
 import { google } from "googleapis"
 import { z } from "zod"

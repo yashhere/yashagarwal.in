@@ -21,8 +21,8 @@ module.exports = {
     "^@types/(.*)$",
     "^[./]",
   ],
-  importOrderSeparation: false,
-  importOrderSortSpecifiers: true,
+  // importOrderSeparation: false,
+  // importOrderSortSpecifiers: true,
   importOrderParserPlugins: ["typescript", "jsx", "decorators-legacy"],
   plugins: [
     require.resolve("prettier-plugin-tailwindcss"),

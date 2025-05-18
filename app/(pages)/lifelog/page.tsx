@@ -1,4 +1,4 @@
-import CustomMDXComponents from "@/components/mdx"
+import { Mdx } from "@/components/mdx"
 import SectionTitle from "@/components/ui/section-title"
 import { MDXContent } from "@content-collections/mdx/react"
 import { allLifelogs } from "content-collections"
@@ -40,10 +40,7 @@ export default function LifeLog() {
                   </time>
                 </div>
                 <p className="mb-4 text-lg font-light text-text">
-                  <MDXContent
-                    code={note.mdx}
-                    components={CustomMDXComponents}
-                  />
+                  <Mdx code={note.mdx} />
                 </p>
               </li>
             </>
