@@ -62,7 +62,7 @@ export const Series = ({
       ) : (
         <Title>{series.seriesTitle}</Title>
       )}
-      <hr className="border-t-1 my-4 border-border/60" />
+      <hr className="border-t-1 my-4 border-border" />
       {isOpen && (
         <div>
           <ul className="text-base">
@@ -104,7 +104,7 @@ export const Series = ({
               </li>
             ))}
           </ul>
-          <hr className="border-t-1 my-4 border-border/60" />
+          <hr className="border-t-1 my-4 border-border" />
         </div>
       )}
     </>

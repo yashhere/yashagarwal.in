@@ -150,7 +150,7 @@ export default async function Page({ params }: Props) {
           </div>
         </div>
         <BackLinks backlinks={article.backlinks} />
-        <hr className="border-t-1 border-border/60" />
+        <hr className="border-t-1 border-border" />
         <div className="flex flex-col items-center justify-center space-x-2 space-y-4 py-8 sm:flex-row sm:justify-between sm:space-y-0">
           <Link
             href={`https://twitter.com/intent/tweet?text=${encodedUrl}%20via%20%40yash__here`}
@@ -162,7 +162,7 @@ export default async function Page({ params }: Props) {
           </Link>
           <GoToTop slug={slug} />
         </div>
-        <hr className="border-t-1 border-border/60" />
+        <hr className="border-t-1 border-border" />
         <DisqusComments
           slug={params.slug}
           url={`${siteConfig.url}/notes/${params.slug}`}

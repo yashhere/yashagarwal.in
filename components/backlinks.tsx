@@ -13,7 +13,7 @@ export const BackLinks = ({
 
   return (
     <>
-      <hr className="border-t-1 border-border/60" />
+      <hr className="border-t-1 my-4 border-border" />
       <div className="py-8">
         <div className="mb-4 text-3xl font-semibold">
           Pages that link to this

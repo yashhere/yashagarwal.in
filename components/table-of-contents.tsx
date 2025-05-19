@@ -49,7 +49,7 @@ export const TableOfContents = ({ headings, path, interactive }) => {
       ) : (
         <div className="font-heading text-lg font-bold">Table of Contents</div>
       )}
-      <hr className="border-t-1 my-4 border-border/60" />
+      <hr className="border-t-1 my-4 border-border" />
       {isOpen && (
         <div>
           <div className="ml-2">
@@ -71,7 +71,7 @@ export const TableOfContents = ({ headings, path, interactive }) => {
                 </Link>
               </div>
             ))}
-            <hr className="border-t-1 my-4 border-border/60" />
+            <hr className="border-t-1 my-4 border-border" />
           </div>
         </div>
       )}

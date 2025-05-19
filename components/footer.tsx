@@ -60,7 +60,7 @@ export const Footer: FC = () => {
 
   return (
     <footer className="mt-auto w-full space-y-4 bg-muted/40">
-      <hr className="border-[0.5px] border-border/50" />
+      <hr className="border-t-1 my-4 border-border" />
       <div className="mx-auto max-w-2xl space-y-8 p-4 md:px-0">
         <div className="flex flex-row flex-wrap items-start justify-between md:flex-row">
           <section className="flex flex-col">
