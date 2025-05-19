@@ -26,14 +26,14 @@ const components = {
   img: BlogImage,
   p: ({ className, ...props }: React.HTMLAttributes<HTMLParagraphElement>) => (
     <p
-      className={cn("text-lg text-text not-first:mt-6", className)}
+      className={cn("text-lg text-foreground not-first:mt-6", className)}
       {...props}
     />
   ),
   h1: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h1
       className={cn(
-        "mt-12 scroll-m-6 border-b pb-2 text-[30px] font-bold text-text",
+        "mt-12 scroll-m-6 border-b pb-2 text-[30px] font-bold text-foreground",
         className
       )}
       {...props}
@@ -42,7 +42,7 @@ const components = {
   h2: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h2
       className={cn(
-        "mb-1 mt-8 scroll-m-10 text-[26px] font-semibold first:mt-0 text-text",
+        "mb-1 mt-8 scroll-m-10 text-[26px] font-semibold first:mt-0 text-foreground",
         className
       )}
       {...props}
@@ -51,7 +51,7 @@ const components = {
   h3: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h3
       className={cn(
-        "mt-8 scroll-m-4 text-[22px] font-semibold tracking-tight text-text",
+        "mt-8 scroll-m-4 text-[22px] font-semibold tracking-tight text-foreground",
         className
       )}
       {...props}
@@ -93,7 +93,7 @@ const components = {
         {...props}
         className={cn(
           !isPrettyCode &&
-            "relative rounded-sm bg-code-bg border px-[0.3rem] py-[0.1rem] font-mono text-code-text text-sm",
+            "relative rounded-sm bg-syntax-bg border px-[0.3rem] py-[0.1rem] font-mono text-syntax-txt text-sm",
           props.className
         )}
       />
@@ -106,26 +106,26 @@ const components = {
     <ol {...props} className="mb-6 list-decimal pl-6" />
   ),
   li: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
-    <li {...props} className="text-lg text-text" />
+    <li {...props} className="text-lg text-foreground" />
   ),
-  strong: (props) => <strong className="text-text" {...props} />,
+  strong: (props) => <strong className="text-foreground" {...props} />,
   blockquote: (props) => (
     <blockquote {...props} className="mt-6 border-l-2 pl-6 italic" />
   ),
-  hr: (props) => <hr {...props} className="my-6 border-gray-300" />,
+  hr: (props) => <hr {...props} className="my-6 border-border" />,
   table: ({ className, ...props }: React.HTMLAttributes<HTMLTableElement>) => (
     <table {...props} className="w-full border-collapse text-left" />
   ),
   th: ({ className, ...props }: React.HTMLAttributes<HTMLTableCellElement>) => (
     <th
       {...props}
-      className="cursor-auto border-b border-gray-300 py-3 text-base font-semibold text-gray-600"
+      className="cursor-auto border-b border-border py-3 text-base font-semibold text-muted-foreground"
     />
   ),
   td: ({ className, ...props }: React.HTMLAttributes<HTMLTableCellElement>) => (
     <td
       {...props}
-      className="border-b border-gray-300 py-2 text-base text-text"
+      className="border-b border-border py-2 text-base text-foreground"
     />
   ),
 }

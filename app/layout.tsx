@@ -118,7 +118,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <body
         className={cn(
           "min-h-screen font-body antialiased",
-          "bg-background text-text",
+          "bg-background text-foreground",
           "flex flex-col lg:mx-auto",
           bodyFont.variable,
           monoFont.variable

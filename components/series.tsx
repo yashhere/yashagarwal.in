@@ -13,7 +13,7 @@ type TitleProps = {
 const Title: FC<TitleProps> = ({ children }) => {
   return (
     <div>
-      <div className="font-heading text-base text-text">series</div>
+      <div className="font-heading text-base text-foreground">series</div>
       <div className="flex flex-col justify-start text-lg sm:flex-row sm:items-center sm:space-x-2">
         {children}
       </div>
@@ -44,13 +44,13 @@ export const Series = ({
           <Title>
             <span className="font-bold">{series?.seriesTitle}</span>
             <span className="hidden sm:inline-block">&middot;</span>
-            <span className="text-base text-text">
+            <span className="text-base text-foreground">
               {index} of {series.notes?.length}
             </span>
           </Title>
 
           <div className="ml-auto pl-4">
-            <div className="rounded-full bg-gray-600/10 p-2 text-text group-hover:bg-gray-600/25">
+            <div className="rounded-full bg-muted p-2 text-foreground group-hover:bg-muted/70">
               {isOpen ? (
                 <FiChevronUp className="w-5" />
               ) : (
@@ -62,7 +62,7 @@ export const Series = ({
       ) : (
         <Title>{series.seriesTitle}</Title>
       )}
-      <hr className="border-t-1 my-4 border-gray-300/60" />
+      <hr className="border-t-1 my-4 border-border/60" />
       {isOpen && (
         <div>
           <ul className="text-base">
@@ -72,17 +72,17 @@ export const Series = ({
                 className={cn(
                   "relative my-3 pl-7 before:absolute before:left-1 before:top-[9px] before:size-1.5 before:rounded-full",
                   {
-                    "before:bg-gray-100/10 before:ring-[3px] before:ring-primary before:ring-offset-1 before:ring-offset-gray-100/10":
+                    "before:bg-background/10 before:ring-[3px] before:ring-primary before:ring-offset-1 before:ring-offset-background/10":
                       note.isCurrent,
-                    "before:bg-gray-600":
+                    "before:bg-muted-foreground":
                       note.status === "published" && !note.isCurrent,
-                    "before:bg-gray-300/70": note.status !== "published",
+                    "before:bg-border/70": note.status !== "published",
                   }
                 )}
               >
                 {note.status === "published" ? (
                   note.isCurrent ? (
-                    <span className="text-text">{note.title}</span>
+                    <span className="text-foreground">{note.title}</span>
                   ) : (
                     <Link
                       href={`/notes/${note.slug}`}
@@ -94,7 +94,9 @@ export const Series = ({
                 ) : (
                   <Link
                     href={`/notes/${note.slug}`}
-                    className={cn("font-medium text-text/50 transition-all")}
+                    className={cn(
+                      "font-medium text-foreground/50 transition-all"
+                    )}
                   >
                     Planned: {note.title}
                   </Link>
@@ -102,7 +104,7 @@ export const Series = ({
               </li>
             ))}
           </ul>
-          <hr className="border-t-1 my-4 border-gray-300/60" />
+          <hr className="border-t-1 my-4 border-border/60" />
         </div>
       )}
     </>

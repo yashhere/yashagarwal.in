@@ -14,7 +14,7 @@ export const NotePreview = ({
     <>
       <Link
         href={`/notes/${note.note.slug}`}
-        className="-mx-3 flex flex-col justify-between rounded-md px-3 leading-6 hover:bg-gray-500/10 sm:py-2 md:flex-row md:items-center"
+        className="-mx-3 flex flex-col justify-between rounded-md px-3 leading-6 hover:bg-muted sm:py-2 md:flex-row md:items-center"
         noUnderline
       >
         <div className="flex flex-col">
@@ -22,13 +22,16 @@ export const NotePreview = ({
             {note.note.title}
           </span>
           {homePage && note.note.description && (
-            <span className="mb-[2px] text-base text-gray-700">
+            <span className="mb-[2px] text-base text-muted-foreground">
               {note.note.description}
             </span>
           )}
         </div>
         <span
-          className={cn(homePage ? "hidden" : "", "text-base text-gray-700")}
+          className={cn(
+            homePage ? "hidden" : "",
+            "text-base text-muted-foreground"
+          )}
         >
           {moment(note.note.createdOn).format("MMM DD, YYYY")}
         </span>
