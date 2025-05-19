@@ -1,6 +1,6 @@
 import { siteConfig } from "@/config/site"
 import { sortNotes } from "@/lib/server-utils"
-import { allNotes } from "contentlayer/generated"
+import { allNotes } from "content-collections"
 import { Feed } from "feed"
 
 export async function getFeed() {

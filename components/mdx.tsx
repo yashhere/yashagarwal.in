@@ -4,7 +4,7 @@ import React from "react"
 import Image from "@/components/ui/image"
 import Link from "@/components/ui/link"
 import { cn } from "@/lib/utils"
-import { MDXComponents } from "mdx/types"
+import { useMDXComponent } from "@content-collections/mdx/react"
 
 import Draft from "./ui/draft"
 
@@ -20,44 +20,44 @@ const BlogImage = (props) => {
   return <Image {...props} />
 }
 
-const CustomMDXComponents: MDXComponents = {
+const components = {
   Draft,
   a: BlogLink,
   img: BlogImage,
-  p: ({ className, ...props }) => (
+  p: ({ className, ...props }: React.HTMLAttributes<HTMLParagraphElement>) => (
     <p
       className={cn("text-lg text-text not-first:mt-6", className)}
       {...props}
     />
   ),
-  h1: ({ className, ...props }) => (
+  h1: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h1
       className={cn(
-        "mt-12 scroll-m-6 border-b pb-2 text-[30px] font-bold",
+        "mt-12 scroll-m-6 border-b pb-2 text-[30px] font-bold text-text",
         className
       )}
       {...props}
     />
   ),
-  h2: ({ className, ...props }) => (
+  h2: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h2
       className={cn(
-        "mb-1 mt-8 scroll-m-10 text-[26px] font-semibold first:mt-0",
+        "mb-1 mt-8 scroll-m-10 text-[26px] font-semibold first:mt-0 text-text",
         className
       )}
       {...props}
     />
   ),
-  h3: ({ className, ...props }) => (
+  h3: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h3
       className={cn(
-        "mt-8 scroll-m-4 text-[22px] font-semibold tracking-tight",
+        "mt-8 scroll-m-4 text-[22px] font-semibold tracking-tight text-text",
         className
       )}
       {...props}
     />
   ),
-  h4: ({ className, ...props }) => (
+  h4: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h4
       className={cn(
         "mt-8 scroll-m-4 text-[20px] font-semibold tracking-tight",
@@ -66,42 +66,63 @@ const CustomMDXComponents: MDXComponents = {
       {...props}
     />
   ),
-  pre: ({ className, ...props }) => (
-    <pre
-      className={cn(
-        "no-scrollbar mb-6 mt-4 overflow-x-auto rounded-lg border bg-pre-bg py-2 text-base",
-        className
-      )}
-      {...props}
-    />
+  pre: ({ className, ...props }: React.HTMLAttributes<HTMLPreElement>) => {
+    // Check if this is a code block from rehype-pretty-code
+    const isPrettyCode = Boolean(props["data-theme"])
+
+    return (
+      <pre
+        className={cn(
+          "no-scrollbar overflow-x-auto",
+          // Don't add additional styling for rehype-pretty-code blocks
+          !isPrettyCode && "rounded-lg border py-2 mb-6 mt-4 text-base",
+          className
+        )}
+        {...props}
+      />
+    )
+  },
+  code: (props) => {
+    // Only add custom styling to non-rehype-pretty-code elements
+    const isPrettyCode =
+      props["data-theme"] ||
+      (props.className && props.className.includes("language-"))
+
+    return (
+      <code
+        {...props}
+        className={cn(
+          !isPrettyCode &&
+            "relative rounded-sm bg-code-bg border px-[0.3rem] py-[0.1rem] font-mono text-code-text text-sm",
+          props.className
+        )}
+      />
+    )
+  },
+  ul: ({ className, ...props }: React.HTMLAttributes<HTMLUListElement>) => (
+    <ul {...props} className="mb-6 pl-4 list-disc [&>li]:mt-2" />
   ),
-  code: (props) => (
-    <code
-      {...props}
-      className={cn(
-        !props["data-theme"] &&
-          "relative break-words rounded-sm border bg-code-bg px-[0.3rem] py-[0.1rem] text-base"
-      )}
-    />
+  ol: ({ className, ...props }: React.HTMLAttributes<HTMLOListElement>) => (
+    <ol {...props} className="mb-6 list-decimal pl-6" />
   ),
-  ul: (props) => <ul {...props} className="mb-6 pl-4 list-disc [&>li]:mt-2" />,
-  ol: (props) => <ol {...props} className="mb-6 list-decimal pl-6" />,
-  li: (props) => <li {...props} className="text-lg text-text" />,
+  li: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
+    <li {...props} className="text-lg text-text" />
+  ),
   strong: (props) => <strong className="text-text" {...props} />,
   blockquote: (props) => (
     <blockquote {...props} className="mt-6 border-l-2 pl-6 italic" />
   ),
   hr: (props) => <hr {...props} className="my-6 border-gray-300" />,
-  table: (props) => (
+  table: ({ className, ...props }: React.HTMLAttributes<HTMLTableElement>) => (
     <table {...props} className="w-full border-collapse text-left" />
   ),
-  th: (props) => (
+  th: ({ className, ...props }: React.HTMLAttributes<HTMLTableCellElement>) => (
     <th
       {...props}
       className="cursor-auto border-b border-gray-300 py-3 text-base font-semibold text-gray-600"
     />
   ),
-  td: (props) => (
+  td: ({ className, ...props }: React.HTMLAttributes<HTMLTableCellElement>) => (
     <td
       {...props}
       className="border-b border-gray-300 py-2 text-base text-text"
@@ -109,4 +130,16 @@ const CustomMDXComponents: MDXComponents = {
   ),
 }
 
-export default CustomMDXComponents
+interface MdxProps {
+  code: string
+}
+
+export function Mdx({ code }: MdxProps) {
+  const Component = useMDXComponent(code)
+
+  return (
+    <div className="mdx">
+      <Component components={components} />
+    </div>
+  )
+}

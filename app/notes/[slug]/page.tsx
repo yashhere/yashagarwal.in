@@ -1,6 +1,6 @@
 import { Metadata, ResolvingMetadata } from "next"
 import { DisqusComments } from "@/components/comments"
-import CustomMDXComponents from "@/components/mdx"
+import { Mdx } from "@/components/mdx"
 import { Series } from "@/components/series"
 import { TableOfContents } from "@/components/table-of-contents"
 import { siteConfig } from "@/config/site"
@@ -18,8 +18,8 @@ import Link from "@/components/ui/link"
 import SectionTitle from "@/components/ui/section-title"
 import { env } from "@/env.mjs"
 import { encodeParameter } from "@/lib/utils"
+import { MDXContent } from "@content-collections/mdx/react"
 import moment from "moment"
-import { getMDXComponent } from "next-contentlayer/hooks"
 
 type Props = {
   params: { slug: string }
@@ -113,7 +113,6 @@ export default async function Page({ params }: Props) {
     // TODO: Add 404 here
     notFound()
   }
-  const MdxContent = getMDXComponent(article.note.body.code)
   const encodedUrl = encodeParameter(
     `${env.NEXT_PUBLIC_APP_URL}/notes/${article.note.slug}`
   )
@@ -146,7 +145,7 @@ export default async function Page({ params }: Props) {
         ) : null}
         <div className="mb-8">
           <div className="prose text-text prose-headings:cursor-pointer">
-            <MdxContent components={CustomMDXComponents} />
+            <Mdx code={article.note.mdx} />
             {article.note.status === "draft" ? <Draft /> : null}
           </div>
         </div>

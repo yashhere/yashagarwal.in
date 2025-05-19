@@ -1,43 +1,43 @@
 ---
-title: "Running Adguard with Termux"
-createdOn: 2024-12-25T09:00:00+00:00
-status: "published"
+title: Running Adguard with Termux
+createdOn: 2024-12-25T09:00:00.000Z
+status: published
 tags:
   - Android
   - Homelab
 featured: true
 description: Run Adguard DNS on Android
 toc: false
+updatedOn: 2025-05-18T07:03:14.000Z
 ---
 
 I recently bought a new phone because after serving me faithfully for six years, my Poco F1's was left nearly unusable because of my carelessness. I dropped the phone while riding a bike and the screen cracked due to the impact. I had got the screen and battery replaced quite a few times, so I decided to finally say goodbye to this iconic phone.
-
 
 For the last two months, the phone was lying unused in my closet. Recently somebody posted their homelab setup using their old phone. This post gave me the idea to bring back my Poco to life. So I started exploring the options available to me. I was planning to buy a Raspberry Pi 5, but the unit economics doesn't really work in the favour of RPi because of its rising cost. I think this phone can serve as a good alternative of RPi given that the inbuilt battery can also work as a UPS.
 
 ![The Poco F1](/images/notes/running-adguard-with-termux/poco-f1.jpg "My Poco F1")
 
 # Specs
+
 The Poco F1 was a beast of its time. It was launched in 2018 and came with flagship class [specs](https://www.gsmarena.com/xiaomi_pocophone_f1-9293.php).
+
 1. Chipset - Qualcomm SDM845 Snapdragon 845 (10 nm)
 2. CPU - Octa-core (4x2.8 GHz Kryo 385 Gold & 4x1.8 GHz Kryo 385 Silver)
 3. GPU - Adreno 630
 4. Memory - 64GB 6GB RAM
 
-
 I had unlocked it in the first month of purchase and installed and used quite a few custom ROMs on it. It is still a community favorite. Alas, companies don't manufacture phones like this anymore 😔
 
 # The plan
-So, given the beefy specs, I was very tempted to set something on it. There were two options available to me -
-1. Installed something like [PostMarketOS](https://wiki.postmarketos.org/wiki/Xiaomi_POCO_F1_(xiaomi-beryllium)) or [mobile-nixos](https://github.com/mobile-nixos/mobile-nixos/pull/672)
-2. Root the phone, install [Termux](https://termux.dev/en/) and install all services with it
 
+So, given the beefy specs, I was very tempted to set something on it. There were two options available to me -
+
+1. Installed something like [PostMarketOS](<https://wiki.postmarketos.org/wiki/Xiaomi_POCO_F1_(xiaomi-beryllium)>) or [mobile-nixos](https://github.com/mobile-nixos/mobile-nixos/pull/672)
+2. Root the phone, install [Termux](https://termux.dev/en/) and install all services with it
 
 There is support for Linux installation on Poco, but I have some essential Google services running on this phone which can't be substituted. So I abandoned this idea.
 
-
 I have previously rooted a number of phones, so rooting this phone was a trivial task. There are a number of tutorials available on the Internet if you are interested.
-
 
 # Initial Setup
 
@@ -120,9 +120,11 @@ unbound-checkconf $PREFIX/etc/unbound/unbound.conf
 ```
 
 # Start services on boot
+
 Currently, the Adguard instance is running in a terminal. As soon as the terminal is killed, the Adguard process will also stop. For a critical DNS service, this is unacceptable. So, we need to run Adguard as a standalone background service. We also need to ensure that if the device is rebooted, the services are autostarted. Termus [provides](https://f-droid.org/en/packages/com.termux.boot/) a separate [Termux:Boot](https://wiki.termux.com/wiki/Termux:Boot) app to allow running scripts immediately after boot. The [caveat](https://github.com/termux/termux-boot/issues/58#issuecomment-1132533697) is that the user needs to unlock the phone and open termux for the Termux:boot to trigger an event which signals Termux to execute the scripts. I couldn't find a way around this limitation.
 
 First install the `Termux:Boot` apk and open it at least once (as mentioned in the [docs](https://wiki.termux.com/wiki/Termux:Boot)). After that you can execute the following script to set up the boot scripts. The script performs the following actions -
+
 1. Create a script to start unbound on boot.
 2. Create a script to start Adguard on boot.
 3. Check if the services are running and create a log file.
@@ -215,6 +217,7 @@ chmod +x $HOME_DIR/.termux/boot/*.sh
 Test by rebooting your device. Once rebooted, unlock the device and open Termux and wait for 1-2 minutes. Your services should be up and running. Ensure to give forever root access to the Termux app as the services need root access to work.
 
 # Setting up Adguard
+
 Once Adguard is up, use `ifconfig` to know the ip of the phone and open `<ip_address>:3000` in another computer on the same subnet. The Adguard UI should show up and you can configure the settings. Below is the `AdGuardHome.yaml` that I used. You can place it in `$HOME_DIR/services/adguard/AdGuardHome.yaml` so that the boot script can use this to initialize your Adguard instance.
 
 ```yaml
@@ -397,6 +400,5 @@ schema_version: 29
 Please make sure that you modify this configuration according to your network setup. For example, you may want to use your router's address in the `local_ptr_upstreams` field.
 
 ![Adguard Dashboard](/images/notes/running-adguard-with-termux/adguard.png "Adguard Dashboard")
-
 
 That brings us to the end of this post. Please keep sharing it if you find it useful.

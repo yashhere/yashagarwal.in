@@ -34,8 +34,8 @@ npm-debug.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# contentlayer
-.contentlayer
-
 # aider
 **/*.aider*
+
+# content-collections
+.content-collections

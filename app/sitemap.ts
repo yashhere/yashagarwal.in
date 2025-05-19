@@ -1,5 +1,5 @@
 import { siteConfig } from "@/config/site"
-import { allNotes } from "contentlayer/generated"
+import { allNotes } from "content-collections"
 
 export default async function sitemap() {
   const siteUrl: string = siteConfig.url

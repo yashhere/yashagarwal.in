@@ -2,7 +2,7 @@ import { Metadata } from "next"
 import TagCloud from "@/components/tag-cloud"
 import SectionTitle from "@/components/ui/section-title"
 import { siteConfig } from "@/config/site"
-import { allNotes } from "contentlayer/generated"
+import { allNotes } from "content-collections"
 
 export const metadata: Metadata = {
   title: "Tags | Yash Agarwal",

@@ -21,7 +21,7 @@ Below is a brief list of websites I took some inspiration from -
 Wanna know what I used to build it without diving too far into the source code? Yeah?! Well, here you go.
 
 - Framework (NextJs13): [Next.js](https://nextjs.org)
-- Content: [contentlayer](https://www.contentlayer.dev)
+- Content: [content-collections](https://www.content-collections.dev/)
 - Design: [tailwindcss](https://tailwindcss.com)
 - Database: [Planetscale](https://planetscale.com)
 - ORM: [Prisma](https://www.prisma.io/) and [Kysely](https://github.com/kysely-org/kysely)
@@ -72,7 +72,7 @@ The repository is structure as follows
 
 ```bash
 ./
-├── .contentlayer/
+├── .content-collections/
 ├── .husky/
 ├── .next/
 ├── .vscode/
@@ -94,7 +94,7 @@ The repository is structure as follows
 ├── .prettierignore
 ├── .prettierrc.js
 ├── README.md
-├── contentlayer.config.js
+├── content-collections.ts
 ├── env.mjs
 ├── giscus.json
 ├── middleware.tsx
