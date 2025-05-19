@@ -309,4 +309,4 @@ const Redirects = [
   },
 ]
 
-module.export = withContentCollections(nextConfig)
+module.exports = withContentCollections(nextConfig)
