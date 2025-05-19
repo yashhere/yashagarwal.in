@@ -66,24 +66,39 @@ const components = {
       {...props}
     />
   ),
-  pre: ({ className, ...props }: React.HTMLAttributes<HTMLPreElement>) => (
-    <pre
-      className={cn(
-        "no-scrollbar mb-6 mt-4 overflow-x-auto rounded-lg border py-2 text-base",
-        className
-      )}
-      {...props}
-    />
-  ),
-  code: (props) => (
-    <code
-      {...props}
-      className={cn(
-        !props["data-theme"] &&
-          "relative break-words rounded-sm border px-[0.3rem] py-[0.1rem] text-base"
-      )}
-    />
-  ),
+  pre: ({ className, ...props }: React.HTMLAttributes<HTMLPreElement>) => {
+    // Check if this is a code block from rehype-pretty-code
+    const isPrettyCode = Boolean(props["data-theme"])
+
+    return (
+      <pre
+        className={cn(
+          "no-scrollbar overflow-x-auto",
+          // Don't add additional styling for rehype-pretty-code blocks
+          !isPrettyCode && "rounded-lg border py-2 mb-6 mt-4 text-base",
+          className
+        )}
+        {...props}
+      />
+    )
+  },
+  code: (props) => {
+    // Only add custom styling to non-rehype-pretty-code elements
+    const isPrettyCode =
+      props["data-theme"] ||
+      (props.className && props.className.includes("language-"))
+
+    return (
+      <code
+        {...props}
+        className={cn(
+          !isPrettyCode &&
+            "relative rounded-sm bg-code-bg border px-[0.3rem] py-[0.1rem] font-mono text-code-text text-sm",
+          props.className
+        )}
+      />
+    )
+  },
   ul: ({ className, ...props }: React.HTMLAttributes<HTMLUListElement>) => (
     <ul {...props} className="mb-6 pl-4 list-disc [&>li]:mt-2" />
   ),

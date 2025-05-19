@@ -11,25 +11,47 @@
 
 /* INLINE CODE STYLE START */
 span[data-rehype-pretty-code-figure] {
-  display: inline-flex;
-  vertical-align: middle;
+  display: inline;
+  max-width: 100%;
+  margin: 0;
+  position: relative;
 }
 
 span[data-rehype-pretty-code-figure] code {
-  padding: 2px;
+  padding: 0.1em 0.4em;
   margin: 0;
-  font-size: 0.875em;
   border-radius: 4px;
+  font-size: 0.85em;
   font-family: var(--font-mono);
   background-color: hsl(var(--color-syntax-bg));
   color: hsl(var(--color-text));
-  white-space: nowrap;
+  display: inline;
+  white-space: break-spaces;
+  word-break: break-word;
+  overflow-wrap: break-word;
   border: none;
+  line-height: 1.7;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+@media (max-width: 640px) {
+  span[data-rehype-pretty-code-figure] code {
+    font-size: 0.8em; /* Slightly smaller on mobile */
+    padding: 0.05em 0.3em; /* Tighter padding on mobile */
+  }
 }
 
 span[data-rehype-pretty-code-figure] code span[data-line] {
-  border-radius: 0;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  white-space: break-spaces;
   background: transparent;
+}
+
+p span[data-rehype-pretty-code-figure],
+li span[data-rehype-pretty-code-figure] {
+  display: inline;
 }
 
 /* Dark mode styling */
@@ -51,24 +73,56 @@ span[data-rehype-pretty-code-figure] code[data-language="plaintext"] {
 
 /* CODE BLOCK STYLE START */
 figure[data-rehype-pretty-code-figure] {
-  @apply overflow-hidden rounded-md border;
+  @apply my-6 overflow-hidden rounded-md border;
 }
 
 figure[data-rehype-pretty-code-figure] pre {
-  @apply overflow-x-auto p-0 text-sm;
+  @apply overflow-x-auto py-2 text-[14px] leading-relaxed;
   background-color: transparent !important;
   border-width: 0 !important;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
 }
 
 figure[data-rehype-pretty-code-figure] code {
   @apply grid w-full;
   counter-reset: line;
   box-decoration-break: clone;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  line-height: 1.6;
 }
 
-/* Ensure correct padding and look for each line */
 figure[data-rehype-pretty-code-figure] code [data-line] {
-  @apply border-l-2 border-l-transparent px-4 py-[1px];
+  @apply border-l-2 border-l-transparent px-4;
+  padding-top: 0.125rem;
+  padding-bottom: 0.125rem;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 640px) {
+  figure[data-rehype-pretty-code-figure] pre {
+    font-size: 13px; /* Slightly smaller on mobile */
+  }
+
+  figure[data-rehype-pretty-code-figure] code {
+    font-size: 0.8125rem; /* 13px on mobile */
+  }
+
+  figure[data-rehype-pretty-code-figure] code [data-line] {
+    @apply px-3; /* Slightly less horizontal padding on mobile */
+  }
+
+  /* Smaller line numbers on mobile */
+  figure[data-rehype-pretty-code-figure]
+    code[data-line-numbers]
+    > [data-line]::before {
+    font-size: 0.75rem;
+    width: 0.875rem;
+    margin-right: 1rem;
+  }
 }
 
 /* Fix code text colors in dark mode */
@@ -102,6 +156,7 @@ figure[data-rehype-pretty-code-figure]
   margin-right: 1.5rem;
   text-align: right;
   color: hsl(var(--color-gray-400));
+  font-size: 0.8rem;
 }
 
 .dark

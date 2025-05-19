@@ -18,8 +18,8 @@
     "lint:staged": "lint-staged",
     "typecheck": "content-collections build && tsc --noEmit",
     "postinstall": "bunx playwright install",
-    "format:write": "prettier --write \"**/*.{ts,tsx,mdx}\" --cache",
-    "format:check": "prettier --check \"**/*.{ts,tsx,mdx}\" --cache"
+    "format:write": "prettier --write \"**/*.{ts,tsx}\" --cache",
+    "format:check": "prettier --check \"**/*.{ts,tsx}\" --cache"
   },
   "dependencies": {
     "@fontsource/fira-code": "^5.0.16",
