@@ -33,7 +33,7 @@ const components = {
   h1: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h1
       className={cn(
-        "mt-12 scroll-m-6 border-b pb-2 text-[30px] font-bold",
+        "mt-12 scroll-m-6 border-b pb-2 text-[30px] font-bold text-text",
         className
       )}
       {...props}
@@ -42,7 +42,7 @@ const components = {
   h2: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h2
       className={cn(
-        "mb-1 mt-8 scroll-m-10 text-[26px] font-semibold first:mt-0",
+        "mb-1 mt-8 scroll-m-10 text-[26px] font-semibold first:mt-0 text-text",
         className
       )}
       {...props}
@@ -51,7 +51,7 @@ const components = {
   h3: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h3
       className={cn(
-        "mt-8 scroll-m-4 text-[22px] font-semibold tracking-tight",
+        "mt-8 scroll-m-4 text-[22px] font-semibold tracking-tight text-text",
         className
       )}
       {...props}
@@ -69,7 +69,7 @@ const components = {
   pre: ({ className, ...props }: React.HTMLAttributes<HTMLPreElement>) => (
     <pre
       className={cn(
-        "no-scrollbar mb-6 mt-4 overflow-x-auto rounded-lg border bg-pre-bg py-2 text-base",
+        "no-scrollbar mb-6 mt-4 overflow-x-auto rounded-lg border py-2 text-base",
         className
       )}
       {...props}
@@ -80,7 +80,7 @@ const components = {
       {...props}
       className={cn(
         !props["data-theme"] &&
-          "relative break-words rounded-sm border bg-code-bg px-[0.3rem] py-[0.1rem] text-base"
+          "relative break-words rounded-sm border px-[0.3rem] py-[0.1rem] text-base"
       )}
     />
   ),

@@ -66,10 +66,6 @@ const prettyCodeOptions: Options = {
     block: "plaintext",
     inline: "plaintext",
   },
-  getHighlighter: (options) =>
-    createHighlighter({
-      ...options,
-    }),
   onVisitLine(node) {
     // Prevent lines from collapsing in `display: grid` mode, and allow empty
     // lines to be copy/pasted
@@ -88,7 +84,7 @@ const prettyCodeOptions: Options = {
     if (!node.properties.className) {
       node.properties.className = []
     }
-    node.properties.className = ["word--highlighted"]
+    node.properties.className.push("word--highlighted")
   },
 }
 
@@ -157,9 +153,10 @@ const notes = defineCollection({
         [
           rehypeAutolinkHeadings,
           {
-            behaviour: "wrap",
+            behavior: "wrap",
             properties: {
               className: ["anchor"],
+              ariaLabel: "Link to section",
             },
           },
         ],
@@ -186,36 +183,36 @@ const notes = defineCollection({
           })
         },
         [rehypePrettyCode, prettyCodeOptions],
-        () => (tree) => {
-          visit(tree, (node) => {
-            if (node?.type === "element" && node?.tagName === "figure") {
-              if (!("data-rehype-pretty-code-figure" in node.properties)) {
-                return
-              }
+        // () => (tree) => {
+        //   visit(tree, (node) => {
+        //     if (node?.type === "element" && node?.tagName === "figure") {
+        //       if (!("data-rehype-pretty-code-figure" in node.properties)) {
+        //         return
+        //       }
 
-              const preElement = node.children.at(-1)
-              if (preElement.tagName !== "pre") {
-                return
-              }
+        //       const preElement = node.children.at(-1)
+        //       if (preElement.tagName !== "pre") {
+        //         return
+        //       }
 
-              preElement.properties["__withMeta__"] =
-                node.children.at(0).tagName === "div"
-              preElement.properties["__rawString__"] = node.__rawString__
+        //       preElement.properties["__withMeta__"] =
+        //         node.children.at(0).tagName === "div"
+        //       preElement.properties["__rawString__"] = node.__rawString__
 
-              if (node.__src__) {
-                preElement.properties["__src__"] = node.__src__
-              }
+        //       if (node.__src__) {
+        //         preElement.properties["__src__"] = node.__src__
+        //       }
 
-              if (node.__event__) {
-                preElement.properties["__event__"] = node.__event__
-              }
+        //       if (node.__event__) {
+        //         preElement.properties["__event__"] = node.__event__
+        //       }
 
-              if (node.__style__) {
-                preElement.properties["__style__"] = node.__style__
-              }
-            }
-          })
-        },
+        //       if (node.__style__) {
+        //         preElement.properties["__style__"] = node.__style__
+        //       }
+        //     }
+        //   })
+        // },
       ],
       remarkPlugins: [
         [remarkGfm],

@@ -1,29 +1,72 @@
+const colors = require("tailwindcss/colors")
+
+const linkHeadingStyles = {
+  color: colors.gray[100],
+  borderBottomColor: "transparent",
+  borderRadius: 3,
+  boxShadow: `0 0 0 0.4rem transparent`,
+  "&:hover": {
+    color: "none",
+    borderBottomColor: "transparent",
+    background: colors.gray[100],
+    boxShadow: `0 0 0 0.4rem ${colors.gray[100]}`,
+  },
+}
+
 const customCss = {
-    pre: false,
-    code: false,
-    "pre code": { content: "none !important" },
-    "blockquote": {
-        "& p:first-of-type::before": { content: "none !important" },
-        "& p:last-of-type::after": { content: "none !important" },
-        "& p::before": { content: "none !important" },
-        "& p::after": { content: "none !important" }
+  "h2 a": linkHeadingStyles,
+  "h3 a": linkHeadingStyles,
+  "h4 a": linkHeadingStyles,
+  "h5 a": linkHeadingStyles,
+  "h6 a": linkHeadingStyles,
+  "h3 a:has(code)": {
+    boxShadow: `0 0 0 0.3rem transparent`,
+    "&:hover": {
+      background: colors.teal[900],
+      boxShadow: `0 0 0 0.3rem ${colors.teal[900]}`,
     },
-    "code": {
-        "&::before": { content: "none !important" },
-        "&::after": { content: "none !important" }
+  },
+  pre: false,
+  code: false,
+  "pre code": { content: "none !important" },
+  blockquote: {
+    "& p:first-of-type::before": { content: "none !important" },
+    "& p:last-of-type::after": { content: "none !important" },
+    "& p::before": { content: "none !important" },
+    "& p::after": { content: "none !important" },
+  },
+  code: {
+    color: "#86e1fc",
+    "&::before": { content: `unset !important` },
+    "&::after": { content: `unset !important` },
+    fontWeight: "normal",
+  },
+  "> ul > li > *:first-child": {
+    marginTop: 0,
+  },
+  "> ul > li > *:last-child": {
+    marginBottom: 0,
+  },
+  "> ol > li > *:first-child": {
+    marginTop: 0,
+  },
+  "> ol > li > *:last-child": {
+    marginBottom: 0,
+  },
+  "[data-rehype-pretty-code-fragment]:nth-of-type(2) pre": {
+    "[data-line]::before": {
+      content: "counter(line)",
+      counterIncrement: "line",
+      display: "inline-block",
+      width: "1rem",
+      marginRight: "1rem",
+      textAlign: "right",
+      color: colors.slate[600],
     },
-    "> ul > li > *:first-child": {
-        marginTop: 0,
+    "[data-highlighted-line]::before": {
+      color: colors.slate[400],
     },
-    "> ul > li > *:last-child": {
-        marginBottom: 0,
-    },
-    "> ol > li > *:first-child": {
-        marginTop: 0,
-    },
-    "> ol > li > *:last-child": {
-        marginBottom: 0,
-    },
+  },
 }
 
 /** @type {import('tailwindcss').Config} */
@@ -99,10 +142,6 @@ module.exports = {
       },
       typography: ({ theme }) => ({
         DEFAULT: { css: customCss },
-        sm: { css: customCss },
-        lg: { css: customCss },
-        xl: { css: customCss },
-        "2xl": { css: customCss },
       }),
     },
   },
