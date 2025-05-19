@@ -8,18 +8,20 @@
   },
   "scripts": {
     "dev": "next dev --turbo",
-    "build": "content-collections build && next build",
+    "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "lint:fix": "next lint --fix",
-    "prepare": "husky",
     "preview": "bun run build && bun run start",
     "debug": "NODE_OPTIONS='--inspect' bun dev",
+    "lint": "next lint",
+    "lint:fix": "next lint --fix",
     "lint:staged": "lint-staged",
-    "typecheck": "content-collections build && tsc --noEmit",
-    "postinstall": "bunx playwright install",
     "format:write": "prettier --write \"**/*.{ts,tsx}\" --cache",
-    "format:check": "prettier --check \"**/*.{ts,tsx}\" --cache"
+    "format:check": "prettier --check \"**/*.{ts,tsx}\" --cache",
+    "typecheck": "tsc --noEmit",
+    "check": "bun run lint && bun run format:check && bun run typecheck",
+    "fix": "bun run lint:fix && bun run format:write",
+    "prepare": "husky",
+    "postinstall": "bunx playwright install"
   },
   "dependencies": {
     "@fontsource/fira-code": "^5.0.16",

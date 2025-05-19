@@ -128,9 +128,7 @@ const notes = defineCollection({
       .optional(),
     slug: z.string().optional(),
   }),
-  onSuccess: (docs) => {
-    console.log(`generated collection with ${docs.length}`)
-  },
+  onSuccess: (docs) => {},
   transform: async (document, context) => {
     // const readingTime = JSON.parse(JSON.stringify(readTime(document.content)))
     const readingTime = readTime(document.content)
