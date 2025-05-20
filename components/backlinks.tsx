@@ -15,7 +15,7 @@ export const BackLinks = ({
     <>
       <hr className="border-t-1 my-4 border-border" />
       <div className="py-8">
-        <div className="mb-4 text-3xl font-semibold">
+        <div className="mb-4 text-2xl font-semibold">
           Pages that link to this
         </div>
         <ul className="list-inside list-disc text-base leading-7">

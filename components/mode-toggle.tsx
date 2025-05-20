@@ -35,10 +35,10 @@ export const DarkToggle = () => {
         }}
       >
         {resolvedTheme === "light" ? (
-          <FiSun className="size-6 text-foreground" />
+          <FiSun className="size-5 text-foreground" />
         ) : null}
         {resolvedTheme === "dark" ? (
-          <FiMoon className="size-6 text-foreground" />
+          <FiMoon className="size-5 text-foreground" />
         ) : null}
       </motion.div>
     </div>
