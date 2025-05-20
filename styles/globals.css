@@ -2,125 +2,28 @@
 
 @config '../tailwind.config.js';
 
-@utility h-plus-p {
-  @apply mt-6;
-}
-
-@utility no-scrollbar {
-  /*
-    https://github.com/tailwindlabs/tailwindcss/discussions/2394
-    https://github.com/tailwindlabs/tailwindcss/pull/5732
-*/
-  /* Chrome, Safari and Opera */
-  &::-webkit-scrollbar {
-    display: none;
-  }
-  -ms-overflow-style: none;
-  /* IE and Edge */
-  scrollbar-width: none;
-  /* Firefox */
-}
-
-@layer base {
-  :root {
-    --color-text: 222 22% 5%;
-    --color-background: 0 0% 100%;
-    --color-blurred-background: 0 0% 100% 0.85;
-    --color-primary: 245 100% 60%;
-    --color-secondary: 333 100% 45%;
-    --color-tertiary: 255 85% 30%;
-    --color-decorative: 200 75% 65%;
-    --color-muted: 210 55% 92%;
-    --color-muted-background: 210 55% 92% 0.85;
-    --color-info: 245 100% 60%;
-    --color-error: 340 95% 50%;
-    --color-error-background: 340 95% 43% 0.1;
-    --color-alert: 37 100% 50%;
-    --color-alert-background: 52 100% 50% 0.25;
-    --color-gray-100: 225 25% 95%;
-    --color-gray-200: 225 16% 90%;
-    --color-gray-300: 225 8% 80%;
-    --color-gray-400: 225 8% 70%;
-    --color-gray-500: 225 7% 60%;
-    --color-gray-600: 225 15% 50%;
-    --color-gray-700: 225 12% 40%;
-    --color-gray-900: 225 25% 20%;
-    --color-gray-1000: 225 15% 15%;
-    --color-subtle-background: 225 25% 95%;
-    --color-subtle-floating: 0 0% 100%;
-    --color-homepage-light: 204 67% 85%;
-    --color-homepage-dark: 202 71% 90%;
-    --color-homepage-bg: 204 67% 85%;
-    --color-syntax-bg: 225 25% 97%;
-    --color-syntax-highlight: 225 25% 93%;
-    --color-syntax-txt: #2a2a2a;
-    --color-syntax-comment: #467790;
-    --color-syntax-prop: #da0079;
-    --color-syntax-bool: #bf00b8;
-    --color-syntax-val: #78909c;
-    --color-syntax-str: #651fff;
-    --color-syntax-name: #aa00ff;
-    --color-syntax-del: rgb(255 85 85);
-    --color-syntax-regex: #3600d6;
-    --color-syntax-fn: #3d5afe;
-  }
-
-  .dark {
-    --color-text: 0 0% 100%;
-    --color-background: 210 30% 8%;
-    --color-blurred-background: 210 30% 8% 0.85;
-    --color-primary: 230 100% 69%;
-    --color-secondary: 333 100% 52%;
-    --color-tertiary: 53 100% 50%;
-    --color-decorative: 200 50% 60%;
-    --color-muted: 210 38% 15%;
-    --color-muted-background: 210 38% 15% 0.85;
-    --color-info: 230 100% 69%;
-    --color-success: 160 100% 40%;
-    --color-success-background: 160 100% 40% 0.1;
-    --color-error: 340 95% 60%;
-    --color-error-background: 340 95% 43% 0.1;
-    --color-alert: 30 100% 50%;
-    --color-alert-background: 40 13% 13%;
-    --color-venn-0: 250 100% 50%;
-    --color-venn-1: 175 100% 50%;
-    --color-gray-100: 210 15% 20%;
-    --color-gray-200: 210 15% 25%;
-    --color-gray-300: 210 10% 40%;
-    --color-gray-400: 210 9% 45%;
-    --color-gray-500: 210 8% 50%;
-    --color-gray-600: 210 12% 55%;
-    --color-gray-700: 210 14% 66%;
-    --color-gray-900: 210 25% 88%;
-    --color-gray-1000: 210 25% 96%;
-    --color-subtle-background: 210 30% 8%;
-    --color-subtle-floating: 210 22% 15%;
-    --color-homepage-light: 200 100% 85% 0;
-    --color-homepage-dark: 200 100% 85% 0.1;
-    --color-homepage-bg: 210 30% 8%;
-    --color-syntax-bg: 210 30% 12%;
-    --color-syntax-highlight: 210 30% 18%;
-    --color-syntax-txt: #fff;
-    --color-syntax-comment: #6c8998;
-    --color-syntax-prop: #ff39a8;
-    --color-syntax-bool: #ffd600;
-    --color-syntax-val: #718e9c;
-    --color-syntax-str: rgb(155 109 255);
-    --color-syntax-name: #c653ff;
-    --color-syntax-del: #ff5555;
-    --color-syntax-regex: #ffd700;
-    --color-syntax-fn: rgb(0 190 255);
-  }
-}
-
-@layer base {
-  body {
-    @apply bg-background text-foreground;
-    font-feature-settings: "rlig" 1 "calt" 1;
-  }
-}
-
 @layer utilities {
+  /* Add bottom margin when headings are followed by paragraphs */
+  h1 + p,
+  h2 + p,
+  h3 + p,
+  h4 + p,
+  h5 + p,
+  h6 + p {
+    @apply mt-6;
+  }
+
+  /* Hide scrollbars while maintaining functionality */
+  .no-scrollbar {
+    /* Chrome, Safari and Opera */
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  /* Fix for Safari lazy loading images */
   @supports (font: -apple-system-body) and (-webkit-appearance: none) {
     img[loading="lazy"] {
       clip-path: inset(0.6px);
@@ -128,13 +31,92 @@
   }
 }
 
-@layer utilities {
-  h1 + p,
-  h2 + p,
-  h3 + p,
-  h4 + p,
-  h5 + p,
-  h6 + p {
-    @apply h-plus-p;
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222 47% 11%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    --primary: 245 100% 60%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 333 100% 45%;
+    --secondary-foreground: 222 47% 11%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222 47% 11%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222 47% 11%;
+
+    --radius: 0.5rem;
+
+    /* Code syntax highlighting */
+    --syntax-bg: 225 25% 97%;
+    --syntax-highlight: 225 25% 93%;
+    --syntax-txt: 0 0% 17%;
+    --syntax-comment: 200 27% 43%;
+    --syntax-prop: 327 100% 42%;
+    --syntax-bool: 299 100% 36%;
+    --syntax-value: 200 13% 55%;
+    --syntax-string: 263 100% 52%;
+  }
+
+  .dark {
+    --background: 210 30% 8%;
+    --foreground: 0 0% 100%;
+
+    --card: 222 47% 11%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222 47% 11%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 230 100% 69%;
+    --primary-foreground: 222 47% 11%;
+
+    --secondary: 333 100% 52%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 210 38% 15%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 50.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+
+    /* Code syntax highlighting */
+    --syntax-bg: 210 30% 12%;
+    --syntax-highlight: 210 30% 18%;
+    --syntax-txt: 0 0% 100%;
+    --syntax-comment: 197 16% 51%;
+    --syntax-prop: 327 100% 61%;
+    --syntax-bool: 54 100% 50%;
+    --syntax-value: 200 15% 53%;
+    --syntax-string: 271 100% 71%;
+  }
+
+  /* Basic element styling */
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1 "calt" 1;
   }
 }

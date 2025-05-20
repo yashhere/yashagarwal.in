@@ -21,7 +21,7 @@ export default function Colophon() {
   return (
     <>
       <SectionTitle data={null} title="colophon" />
-      <section className="prose prose-lg leading-7 text-text">
+      <section className="prose prose-lg leading-7 text-foreground">
         <section>
           <p>
             I designed and built this website myself. Being a backend developer,
@@ -37,7 +37,7 @@ export default function Colophon() {
         </section>
 
         <section>
-          <h3 className="text-text">Technologies</h3>
+          <h3 className="text-foreground">Technologies</h3>
           <p>
             The site is primarily built with Next.js. Most of the site is
             statically rendered at the build time. Vercel takes care of hosting
@@ -54,7 +54,7 @@ export default function Colophon() {
         </section>
 
         <section>
-          <h3 className="text-text">Content Editing</h3>
+          <h3 className="text-foreground">Content Editing</h3>
           <p>
             I use MDX files to write content for this site. There is no fancy
             one-click pipeline or a WYSIWYG editor. Whenever I want to create a
@@ -68,7 +68,7 @@ export default function Colophon() {
         </section>
 
         <section>
-          <h3 className="text-text">Typography</h3>
+          <h3 className="text-foreground">Typography</h3>
           <p>
             Wotfard font family by{" "}
             <Link href="https://www.atipofoundry.com/fonts/wotfard">

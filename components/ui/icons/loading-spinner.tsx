@@ -16,7 +16,6 @@ export default function LoadingSpinner({ className }: { className?: string }) {
             key={i}
             style={{
               animationDelay: `${-1.2 + 0.1 * i}s`,
-              background: "gray",
               position: "absolute",
               borderRadius: "1rem",
               width: "30%",
@@ -25,7 +24,7 @@ export default function LoadingSpinner({ className }: { className?: string }) {
               top: "-4%",
               transform: `rotate(${30 * i}deg) translate(120%)`,
             }}
-            className="animate-spinner"
+            className="animate-spinner bg-foreground/80"
           />
         ))}
       </div>

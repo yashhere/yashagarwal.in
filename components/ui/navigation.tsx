@@ -41,9 +41,9 @@ export const Navigation = () => {
                   key={path}
                   href={path}
                   className={cn(
-                    "flex align-middle text-xl transition-all hover:text-text md:text-2xl",
+                    "flex align-middle text-xl transition-all hover:text-foreground md:text-2xl",
                     {
-                      "text-text/60": !isActive,
+                      "text-foreground/60": !isActive,
                     }
                   )}
                 >
@@ -54,7 +54,7 @@ export const Navigation = () => {
           </div>
 
           <div className="flex flex-row items-center justify-end space-x-5">
-            <span className="text-text">
+            <span className="text-foreground">
               <DarkToggle />
             </span>
           </div>

@@ -48,7 +48,7 @@ const CustomImage = forwardRef<HTMLImageElement, CustomImageProps>(
           {...otherProps}
         />
         {title && (
-          <figcaption className="z-10 mt-5 text-sm italic text-gray-400">
+          <figcaption className="z-10 mt-5 text-sm italic text-muted-foreground">
             {title}
           </figcaption>
         )}

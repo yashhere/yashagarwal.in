@@ -37,7 +37,7 @@ export const TableOfContents = ({ headings, path, interactive }) => {
           </div>
 
           <div className="ml-auto pl-4">
-            <div className="rounded-full bg-gray-600/10 p-2 text-text group-hover:bg-gray-600/25">
+            <div className="rounded-full bg-muted p-2 text-foreground group-hover:bg-muted/70">
               {isOpen ? (
                 <FiChevronUp className="w-5" />
               ) : (
@@ -49,7 +49,7 @@ export const TableOfContents = ({ headings, path, interactive }) => {
       ) : (
         <div className="font-heading text-lg font-bold">Table of Contents</div>
       )}
-      <hr className="border-t-1 my-4 border-gray-300/60" />
+      <hr className="border-t-1 my-4 border-border" />
       {isOpen && (
         <div>
           <div className="ml-2">
@@ -65,13 +65,13 @@ export const TableOfContents = ({ headings, path, interactive }) => {
                 <Link
                   noUnderline
                   href={`#${heading.slug}`}
-                  className="text-base text-text/80 hover:text-primary"
+                  className="text-base text-foreground/80 hover:text-primary"
                 >
                   {heading.text}
                 </Link>
               </div>
             ))}
-            <hr className="border-t-1 my-4 border-gray-300/60" />
+            <hr className="border-t-1 my-4 border-border" />
           </div>
         </div>
       )}

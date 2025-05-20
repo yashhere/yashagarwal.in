@@ -1,15 +1,15 @@
 const colors = require("tailwindcss/colors")
 
 const linkHeadingStyles = {
-  color: colors.gray[100],
+  color: "hsl(var(--foreground))",
   borderBottomColor: "transparent",
   borderRadius: 3,
   boxShadow: `0 0 0 0.4rem transparent`,
   "&:hover": {
     color: "none",
     borderBottomColor: "transparent",
-    background: colors.gray[100],
-    boxShadow: `0 0 0 0.4rem ${colors.gray[100]}`,
+    background: "hsl(var(--muted))",
+    boxShadow: `0 0 0 0.4rem hsl(var(--muted))`,
   },
 }
 
@@ -36,7 +36,7 @@ const customCss = {
     "& p::after": { content: "none !important" },
   },
   code: {
-    color: "#86e1fc",
+    color: "hsl(var(--syntax-string))",
     "&::before": { content: `unset !important` },
     "&::after": { content: `unset !important` },
     fontWeight: "normal",
@@ -61,10 +61,10 @@ const customCss = {
       width: "1rem",
       marginRight: "1rem",
       textAlign: "right",
-      color: colors.slate[600],
+      color: "hsl(var(--muted-foreground))",
     },
     "[data-highlighted-line]::before": {
-      color: colors.slate[400],
+      color: "hsl(var(--foreground))",
     },
   },
 }
@@ -109,31 +109,55 @@ module.exports = {
         7: "30px",
       },
       colors: {
-        text: "hsl(var(--color-text))",
-        muted: "hsl(var(--color-muted))",
-        info: "hsl(var(--color-info))",
-        foreground: "hsl(var(--color-foreground))",
-        primary: "hsl(var(--color-primary))",
-        secondary: "hsl(var(--color-secondary))",
-        tertiary: "hsl(var(--color-tertiary))",
-        background: "hsl(var(--color-background))",
-        "background-muted": "hsl(var(--color-muted-background))",
-        "background-subtle": "hsl(var(--color-subtle-background))",
-        "pre-bg": "#151f28",
-        "code-bg": "#737d8c2b",
-        "code-text": "hsl(var(--color-syntax-txt))",
-        gray: {
-          DEFAULT: "hsl(var(--color-gray-400))",
-          100: "hsl(var(--color-gray-100))",
-          200: "hsl(var(--color-gray-200))",
-          300: "hsl(var(--color-gray-300))",
-          400: "hsl(var(--color-gray-400))",
-          500: "hsl(var(--color-gray-500))",
-          600: "hsl(var(--color-gray-600))",
-          700: "hsl(var(--color-gray-700))",
-          900: "hsl(var(--color-gray-900))",
-          1000: "hsl(var(--color-gray-1000))",
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
         },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
+        // Syntax highlighting colors
+        syntax: {
+          bg: "hsl(var(--syntax-bg))",
+          highlight: "hsl(var(--syntax-highlight))",
+          text: "hsl(var(--syntax-txt))",
+          comment: "hsl(var(--syntax-comment))",
+          prop: "hsl(var(--syntax-prop))",
+          bool: "hsl(var(--syntax-bool))",
+          value: "hsl(var(--syntax-value))",
+          string: "hsl(var(--syntax-string))",
+        },
+      },
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 0.125rem)",
+        sm: "calc(var(--radius) - 0.25rem)",
       },
       fontFamily: {
         mono: ["var(--font-mono)"],

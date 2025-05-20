@@ -4,7 +4,7 @@
 /* Trying to replicate prose-headings because the link tag styles take precedence */
 .prose .anchor {
   font-weight: bold;
-  color: hsl(var(--color-text));
+  color: hsl(var(--foreground));
   text-decoration: none;
   cursor: pointer;
 }
@@ -23,8 +23,8 @@ span[data-rehype-pretty-code-figure] code {
   border-radius: 4px;
   font-size: 0.85em;
   font-family: var(--font-mono);
-  background-color: hsl(var(--color-syntax-bg));
-  color: hsl(var(--color-text));
+  background-color: hsl(var(--syntax-bg));
+  color: hsl(var(--foreground));
   display: inline;
   white-space: break-spaces;
   word-break: break-word;
@@ -56,13 +56,13 @@ li span[data-rehype-pretty-code-figure] {
 
 /* Dark mode styling */
 .dark span[data-rehype-pretty-code-figure] code {
-  background-color: hsl(var(--color-syntax-bg));
-  color: hsl(var(--color-text));
+  background-color: hsl(var(--syntax-bg));
+  color: hsl(var(--syntax-txt));
 }
 
 /* Add subtle border for better distinction in light mode */
 .light span[data-rehype-pretty-code-figure] code {
-  border: 1px solid hsl(var(--color-gray-200));
+  border: 1px solid hsl(var(--border));
 }
 
 /* Specific styling for the data-language="plaintext" */
@@ -138,7 +138,7 @@ figure[data-rehype-pretty-code-figure] code [data-line] {
 /* Line highlighting */
 figure[data-rehype-pretty-code-figure] code .line--highlighted {
   @apply w-full rounded-none border-l-2;
-  background-color: hsl(var(--color-muted));
+  background-color: hsl(var(--muted));
 }
 
 /* Line numbers for code blocks */
@@ -155,7 +155,7 @@ figure[data-rehype-pretty-code-figure]
   width: 1rem;
   margin-right: 1.5rem;
   text-align: right;
-  color: hsl(var(--color-gray-400));
+  color: hsl(var(--muted-foreground));
   font-size: 0.8rem;
 }
 
@@ -163,26 +163,26 @@ figure[data-rehype-pretty-code-figure]
   figure[data-rehype-pretty-code-figure]
   code[data-line-numbers]
   > [data-line]::before {
-  color: hsl(var(--color-gray-600));
+  color: hsl(var(--muted-foreground));
 }
 
 /* Character highlighting styles */
 figure[data-rehype-pretty-code-figure] code .word--highlighted {
   @apply rounded px-1 py-0.5;
-  background-color: hsla(var(--color-primary), 0.15);
-  box-shadow: 0 0 0 1px hsla(var(--color-primary), 0.2);
+  background-color: hsla(var(--primary), 0.15);
+  box-shadow: 0 0 0 1px hsla(var(--primary), 0.2);
   font-weight: 500;
 }
 
 .dark figure[data-rehype-pretty-code-figure] code .word--highlighted {
-  background-color: hsla(var(--color-primary), 0.3);
-  box-shadow: 0 0 0 1px hsla(var(--color-primary), 0.4);
+  background-color: hsla(var(--primary), 0.3);
+  box-shadow: 0 0 0 1px hsla(var(--primary), 0.4);
   font-weight: 500;
 }
 
 /* Filename display at the top of code blocks */
 [data-rehype-pretty-code-title] {
-  @apply rounded-t-md border-b border-gray-200 bg-gray-100 px-4 py-2 font-mono text-sm dark:border-gray-700 dark:bg-gray-800;
+  @apply border-border bg-muted rounded-t-md border-b px-4 py-2 font-mono text-sm;
 }
 
 /* Make code scrollable on small screens */
@@ -201,7 +201,7 @@ figure[data-rehype-pretty-code-figure] pre::-webkit-scrollbar-track {
 }
 
 figure[data-rehype-pretty-code-figure] pre::-webkit-scrollbar-thumb {
-  @apply rounded-full bg-gray-300 dark:bg-gray-700;
+  @apply bg-border dark:bg-muted rounded-full;
 }
 /* CODE BLOCK STYLE END */
 
@@ -216,7 +216,7 @@ svg p {
 }
 
 [id^="mermaid-"] text {
-  fill: hsl(var(--color-text)) !important;
+  fill: hsl(var(--foreground)) !important;
 }
 
 [id^="mermaid-"] .actor,
@@ -224,8 +224,8 @@ svg p {
 [id^="mermaid-"] polygon,
 [id^="mermaid-"] circle,
 [id^="mermaid-"] ellipse {
-  stroke: hsl(var(--color-text)) !important;
-  fill: hsl(var(--color-background)) !important;
+  stroke: hsl(var(--foreground)) !important;
+  fill: hsl(var(--background)) !important;
   border-radius: 0.375rem;
 }
 
@@ -234,51 +234,51 @@ svg p {
 [id^="mermaid-"] .flowchart-link,
 [id^="mermaid-"] line,
 [id^="mermaid-"] path {
-  stroke: hsl(var(--color-text)) !important;
+  stroke: hsl(var(--foreground)) !important;
 }
 
 [id^="mermaid-"] .marker,
 .mermaid-diagram .marker {
-  fill: hsl(var(--color-text)) !important;
+  fill: hsl(var(--foreground)) !important;
 }
 
 [id^="mermaid-"] .flowchart-label {
-  color: hsl(var(--color-text)) !important;
-  fill: hsl(var(--color-text)) !important;
+  color: hsl(var(--foreground)) !important;
+  fill: hsl(var(--foreground)) !important;
 }
 
 /* Additional selectors for more diagram types */
 [id^="mermaid-"] .arrowheadPath,
 [id^="mermaid-"] .edgePath .path {
-  stroke: hsl(var(--color-text)) !important;
-  fill: hsl(var(--color-text)) !important;
+  stroke: hsl(var(--foreground)) !important;
+  fill: hsl(var(--foreground)) !important;
 }
 
 /* For gantt charts */
 [id^="mermaid-"] .taskText,
 [id^="mermaid-"] .taskTextOutsideRight {
-  fill: hsl(var(--color-text)) !important;
+  fill: hsl(var(--foreground)) !important;
 }
 
 /* For sequence diagrams */
 [id^="mermaid-"] .note {
-  fill: hsl(var(--color-muted)) !important;
-  stroke: hsl(var(--color-text)) !important;
+  fill: hsl(var(--muted)) !important;
+  stroke: hsl(var(--foreground)) !important;
 }
 
 [id^="mermaid-"] .noteText {
-  fill: hsl(var(--color-text)) !important;
+  fill: hsl(var(--foreground)) !important;
 }
 
 /* Style edge labels in Mermaid diagrams */
 [id^="mermaid-"] .edgeLabel {
-  color: hsl(var(--color-text)) !important;
+  color: hsl(var(--foreground)) !important;
   background-color: transparent !important;
   font-weight: normal;
 }
 
 [id^="mermaid-"] .edgeLabel p {
-  color: hsl(var(--color-text)) !important;
+  color: hsl(var(--foreground)) !important;
   background-color: transparent !important;
   font-weight: normal;
 }
@@ -290,7 +290,7 @@ svg p {
 /* Fix line breaks in edge labels */
 [id^="mermaid-"] .edgeLabel .label div,
 [id^="mermaid-"] .messageText {
-  color: hsl(var(--color-text)) !important;
+  color: hsl(var(--foreground)) !important;
   line-height: 1.2 !important;
   font-size: 14px !important;
   text-align: center;
@@ -300,19 +300,19 @@ svg p {
 /* Additional styling for sequence diagram messages */
 [id^="mermaid-"] .messageLine0,
 [id^="mermaid-"] .messageLine1 {
-  stroke: hsl(var(--color-text)) !important;
+  stroke: hsl(var(--foreground)) !important;
 }
 
 /* Make sure notes and other text elements are properly styled */
 [id^="mermaid-"] .noteText,
 [id^="mermaid-"] text.actor,
 [id^="mermaid-"] .loopText {
-  fill: hsl(var(--color-text)) !important;
+  fill: hsl(var(--foreground)) !important;
 }
 
 /* Ensure all text spans are visible */
 [id^="mermaid-"] tspan {
-  fill: hsl(var(--color-text)) !important;
+  fill: hsl(var(--foreground)) !important;
 }
 
 /* MERMAID STYLE END */

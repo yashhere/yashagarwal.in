@@ -16,6 +16,15 @@ export async function GET(req: NextRequest) {
   ).then((res) => res.arrayBuffer())
   const fontData = await font
 
+  // Note: OG images can't use CSS variables, so we use static colors
+  // that match our design system
+  const colors = {
+    muted: "#f1f5f9", // Matches --muted in light mode
+    border: "#e2e8f0", // Matches --border in light mode
+    mutedForeground: "#64748b", // Matches --muted-foreground in light mode
+    foreground: "#020617", // Matches --foreground in light mode
+  }
+
   return new ImageResponse(
     (
       <div
@@ -38,9 +47,11 @@ export async function GET(req: NextRequest) {
         <main tw="flex grow pb-3 flex-col items-center justify-center">
           <div tw="flex">
             <div
-              tw="rounded-md bg-stone-100 tracking-wide p-4 text-6xl leading-snug font-medium text-center max-w-(--breakpoint-xl) text-slate-500"
+              tw="rounded-md tracking-wide p-4 text-6xl leading-snug font-medium text-center max-w-(--breakpoint-xl)"
               style={{
                 fontFamily: "Wotfard",
+                backgroundColor: colors.muted,
+                color: colors.foreground,
                 boxShadow: "4px 4px 8px 1px rgba(184,182,184,1)",
               }}
             >
@@ -49,8 +60,11 @@ export async function GET(req: NextRequest) {
           </div>
           {meta ? (
             <div
-              tw="mt-12 flex items-center justify-center text-4xl text-gray-500"
-              style={{ fontFamily: "Wotfard" }}
+              tw="mt-12 flex items-center justify-center text-4xl"
+              style={{
+                fontFamily: "Wotfard",
+                color: colors.mutedForeground,
+              }}
             >
               {meta}
             </div>
@@ -58,13 +72,21 @@ export async function GET(req: NextRequest) {
 
           {tags && tags.length > 0 ? (
             <div
-              tw="text-2xl mt-10 flex flex-row flex-wrap justify-center items-center flex-wrap max-w-(--breakpoint-xl) text-gray-600"
-              style={{ fontFamily: "Wotfard" }}
+              tw="text-2xl mt-10 flex flex-row flex-wrap justify-center items-center flex-wrap max-w-(--breakpoint-xl)"
+              style={{
+                fontFamily: "Wotfard",
+                color: colors.mutedForeground,
+              }}
             >
               {tags?.slice(0, 3).map((tag, index) => (
                 <span
                   key={index}
-                  tw="mb-4 mr-4 rounded-md border px-3 py-1 text-slate-500 bg-stone-100"
+                  tw="mb-4 mr-4 rounded-md border px-3 py-1"
+                  style={{
+                    backgroundColor: colors.muted,
+                    borderColor: colors.border,
+                    color: colors.foreground,
+                  }}
                 >
                   #{tag}
                 </span>

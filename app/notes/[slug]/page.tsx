@@ -122,7 +122,7 @@ export default async function Page({ params }: Props) {
       <div>
         <section className="mb-8 space-y-2">
           <SectionTitle data={null} title={article.note.title} />
-          <div className="flex flex-col pb-4 font-body text-base text-gray-600 sm:flex-row sm:justify-between">
+          <div className="flex flex-col pb-4 font-body text-base text-muted sm:flex-row sm:justify-between">
             <span className="text-base">
               {moment(article.note.createdOn).format("MMM DD, YYYY")}
             </span>
@@ -144,25 +144,25 @@ export default async function Page({ params }: Props) {
           </div>
         ) : null}
         <div className="mb-8">
-          <div className="prose text-text prose-headings:cursor-pointer">
+          <div className="prose text-foreground prose-headings:cursor-pointer">
             <Mdx code={article.note.mdx} />
             {article.note.status === "draft" ? <Draft /> : null}
           </div>
         </div>
         <BackLinks backlinks={article.backlinks} />
-        <hr className="border-t-1 border-gray-300/60" />
+        <hr className="border-t-1 border-border" />
         <div className="flex flex-col items-center justify-center space-x-2 space-y-4 py-8 sm:flex-row sm:justify-between sm:space-y-0">
           <Link
             href={`https://twitter.com/intent/tweet?text=${encodedUrl}%20via%20%40yash__here`}
             className="text-lg text-primary"
             noUnderline
           >
-            <span className="text-text/80">Share this article on</span>{" "}
+            <span className="text-foreground/80">Share this article on</span>{" "}
             <span>Twitter</span>
           </Link>
           <GoToTop slug={slug} />
         </div>
-        <hr className="border-t-1 border-gray-300/60" />
+        <hr className="border-t-1 border-border" />
         <DisqusComments
           slug={params.slug}
           url={`${siteConfig.url}/notes/${params.slug}`}
