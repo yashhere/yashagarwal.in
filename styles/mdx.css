@@ -69,6 +69,14 @@ li span[data-rehype-pretty-code-figure] {
 span[data-rehype-pretty-code-figure] code[data-language="plaintext"] {
   font-family: var(--font-mono);
 }
+
+/* Hide backticks from inline code blocks */
+span[data-rehype-pretty-code-figure] code::before,
+span[data-rehype-pretty-code-figure] code::after {
+  content: "" !important;
+  display: none !important;
+}
+
 /* INLINE CODE STYLE END */
 
 /* CODE BLOCK STYLE START */
