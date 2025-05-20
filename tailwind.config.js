@@ -1,8 +1,8 @@
 const headingStyles = {
   fontWeight: 600,
-  lineHeight: 1.2, // Tightened for headings
-  marginTop: "1.5em",
-  marginBottom: "0.5em", // Reduced for better spacing
+  lineHeight: 1.2,
+  marginTop: "1.5rem",
+  marginBottom: "0.5rem",
 }
 
 const linkStyles = {
@@ -23,33 +23,33 @@ const typographyStyles = {
       lineHeight: "1.6", // Consistent line height
       h1: {
         ...headingStyles,
-        fontSize: "1.875rem", // Slightly smaller (was 2rem)
+        fontSize: "1.875rem",
         marginTop: "0",
       },
       h2: {
         ...headingStyles,
-        fontSize: "1.5rem", // Slightly smaller (was 1.65rem)
+        fontSize: "1.5rem",
       },
       h3: {
         ...headingStyles,
-        fontSize: "1.25rem", // Slightly smaller (was 1.35rem)
+        fontSize: "1.25rem",
       },
       h4: {
         ...headingStyles,
-        fontSize: "1.1rem", // Slightly smaller (was 1.15rem)
+        fontSize: "1.1rem",
       },
       a: linkStyles,
       p: {
-        marginTop: "1.1em", // Reduced slightly
-        marginBottom: "1.1em", // Reduced slightly
-        lineHeight: "1.65", // Improved reading experience
+        marginTop: "1.1rem",
+        marginBottom: "1.1rem",
+        lineHeight: "1.65",
       },
       "ul, ol": {
         paddingLeft: "1.25rem",
       },
       li: {
-        marginTop: "0.5em",
-        marginBottom: "0.5em",
+        marginTop: "0.5rem",
+        marginBottom: "0.5rem",
         lineHeight: "1.65", // Consistent with paragraphs
       },
       blockquote: {
@@ -58,8 +58,8 @@ const typographyStyles = {
         borderLeftWidth: "0.25rem",
         borderLeftColor: "hsl(var(--border))",
         paddingLeft: "1rem",
-        marginTop: "1.5em",
-        marginBottom: "1.5em",
+        marginTop: "1.5rem",
+        marginBottom: "1.5rem",
         "& p:first-of-type::before": { content: "none" },
         "& p:last-of-type::after": { content: "none" },
         "& p": {
@@ -78,7 +78,7 @@ const typographyStyles = {
         backgroundColor: "hsl(var(--muted) / 0.5)",
         padding: "0.2rem 0.4rem",
         borderRadius: "0.25rem",
-        fontSize: "0.875em",
+        fontSize: "0.875rem",
         fontWeight: "400",
         "&::before": { content: "none" },
         "&::after": { content: "none" },
@@ -90,8 +90,8 @@ const typographyStyles = {
       },
       // Code highlighting styles
       "[data-rehype-pretty-code-fragment]": {
-        marginTop: "1.5em",
-        marginBottom: "1.5em",
+        marginTop: "1.5rem",
+        marginBottom: "1.5rem",
 
         // Line numbers and highlighting
         pre: {
