@@ -18,7 +18,7 @@ export const NotePreview = ({
         noUnderline
       >
         <div className="flex flex-col">
-          <span className="mb-[2px] font-heading text-lg font-medium">
+          <span className="mb-[2px] font-heading text-lg font-medium text-foreground/90">
             {note.note.title}
           </span>
           {homePage && note.note.description && (
