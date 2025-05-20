@@ -18,11 +18,11 @@ export const NotePreview = ({
         noUnderline
       >
         <div className="flex flex-col">
-          <span className="mb-[2px] font-sans text-lg font-medium text-foreground/90">
+          <span className="mb-[2px] font-sans text-base text-foreground/90">
             {note.note.title}
           </span>
           {homePage && note.note.description && (
-            <span className="mb-[2px] text-base text-muted-foreground">
+            <span className="mb-[2px] text-sm text-muted-foreground">
               {note.note.description}
             </span>
           )}
@@ -30,7 +30,7 @@ export const NotePreview = ({
         <span
           className={cn(
             homePage ? "hidden" : "",
-            "text-base text-muted-foreground"
+            "text-sm text-muted-foreground sm:text-base"
           )}
         >
           {moment(note.note.createdOn).format("MMM DD, YYYY")}

@@ -1,12 +1,15 @@
-import Balancer from "react-wrap-balancer"
-
-export default function SectionTitle({ title, data }) {
+export default function SectionTitle({
+  data,
+  title,
+}: {
+  data: any
+  title: string
+}) {
   return (
-    <h1 className="mb-8 text-4xl font-semibold">
-      <Balancer>{title}</Balancer>
-      {data && data.length !== 0 && (
-        <span className="pl-2 text-sm text-foreground/60">{data.length}</span>
-      )}
-    </h1>
+    <div className="mb-4">
+      <h1 className="mt-2 font-sans text-2xl font-semibold text-foreground sm:text-2xl md:text-3xl">
+        {title}
+      </h1>
+    </div>
   )
 }

@@ -1,8 +1,8 @@
 const headingStyles = {
   fontWeight: 600,
-  lineHeight: 1.25,
+  lineHeight: 1.2, // Tightened for headings
   marginTop: "1.5em",
-  marginBottom: "0.75em",
+  marginBottom: "0.5em", // Reduced for better spacing
 }
 
 const linkStyles = {
@@ -19,28 +19,30 @@ const typographyStyles = {
     css: {
       color: "hsl(var(--foreground))",
       maxWidth: "none",
+      fontSize: "0.95rem", // Make default prose text slightly smaller
+      lineHeight: "1.6", // Consistent line height
       h1: {
         ...headingStyles,
-        fontSize: "2.25rem",
+        fontSize: "1.875rem", // Slightly smaller (was 2rem)
         marginTop: "0",
       },
       h2: {
         ...headingStyles,
-        fontSize: "1.875rem",
+        fontSize: "1.5rem", // Slightly smaller (was 1.65rem)
       },
       h3: {
         ...headingStyles,
-        fontSize: "1.5rem",
+        fontSize: "1.25rem", // Slightly smaller (was 1.35rem)
       },
       h4: {
         ...headingStyles,
-        fontSize: "1.25rem",
+        fontSize: "1.1rem", // Slightly smaller (was 1.15rem)
       },
       a: linkStyles,
       p: {
-        marginTop: "1.25em",
-        marginBottom: "1.25em",
-        lineHeight: "1.75",
+        marginTop: "1.1em", // Reduced slightly
+        marginBottom: "1.1em", // Reduced slightly
+        lineHeight: "1.65", // Improved reading experience
       },
       "ul, ol": {
         paddingLeft: "1.25rem",
@@ -48,6 +50,7 @@ const typographyStyles = {
       li: {
         marginTop: "0.5em",
         marginBottom: "0.5em",
+        lineHeight: "1.65", // Consistent with paragraphs
       },
       blockquote: {
         fontWeight: "400",
@@ -59,19 +62,23 @@ const typographyStyles = {
         marginBottom: "1.5em",
         "& p:first-of-type::before": { content: "none" },
         "& p:last-of-type::after": { content: "none" },
+        "& p": {
+          lineHeight: "1.5", // Slightly tighter for quotes
+        },
       },
       pre: {
         backgroundColor: "hsl(var(--syntax-bg))",
         borderRadius: "0.375rem",
         padding: "1rem",
         overflowX: "auto",
+        fontSize: "0.9rem", // Better code readability
       },
       code: {
         color: "hsl(var(--syntax-string))",
         backgroundColor: "hsl(var(--muted) / 0.5)",
-        padding: "0.25rem",
+        padding: "0.2rem 0.3rem", // Better padding
         borderRadius: "0.25rem",
-        fontSize: "0.875em",
+        fontSize: "0.85em", // Reduced slightly
         fontWeight: "400",
         "&::before": { content: "none" },
         "&::after": { content: "none" },
@@ -79,6 +86,7 @@ const typographyStyles = {
       "pre code": {
         backgroundColor: "transparent",
         padding: "0",
+        fontSize: "inherit", // Use parent size
       },
       // Code highlighting styles
       "[data-rehype-pretty-code-fragment]": {
@@ -88,6 +96,7 @@ const typographyStyles = {
         // Line numbers and highlighting
         pre: {
           padding: "1rem",
+          fontSize: "0.9rem", // Consistent with code
         },
         "[data-line]": {
           paddingLeft: "1rem",
@@ -136,14 +145,14 @@ module.exports = {
       fontSize: {
         xs: ["0.75rem", { lineHeight: "1rem" }],
         sm: ["0.875rem", { lineHeight: "1.25rem" }],
-        base: ["1rem", { lineHeight: "1.5rem" }],
-        lg: ["1.125rem", { lineHeight: "1.75rem" }],
-        xl: ["1.25rem", { lineHeight: "1.75rem" }],
-        "2xl": ["1.5rem", { lineHeight: "2rem" }],
-        "3xl": ["1.875rem", { lineHeight: "2.25rem" }],
-        "4xl": ["2.25rem", { lineHeight: "2.5rem" }],
-        "5xl": ["3rem", { lineHeight: "1" }],
-        "6xl": ["3.75rem", { lineHeight: "1" }],
+        base: ["1rem", { lineHeight: "1.6" }], // Slightly reduced line height
+        lg: ["1.125rem", { lineHeight: "1.6" }], // Slightly reduced line height
+        xl: ["1.25rem", { lineHeight: "1.5" }], // Slightly reduced line height
+        "2xl": ["1.5rem", { lineHeight: "1.35" }], // Better for headings
+        "3xl": ["1.75rem", { lineHeight: "1.3" }], // Better for headings
+        "4xl": ["2rem", { lineHeight: "1.25" }], // Better for headings
+        "5xl": ["2.5rem", { lineHeight: "1.2" }], // Better for headings
+        "6xl": ["3rem", { lineHeight: "1.1" }], // Better for headings
       },
       colors: {
         border: "hsl(var(--border))",

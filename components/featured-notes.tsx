@@ -30,14 +30,14 @@ export async function FeaturedNotes({ count }: { count: number }) {
   notesFiltered.sort((a, b) => b.note.updatedOn - a.note.updatedOn)
   return (
     <>
-      <div className="group mb-8 flex flex-row justify-between">
-        <h2 className="text-xl font-semibold">Popular Notes</h2>
+      <div className="group mb-6 flex flex-row justify-between">
+        <h2 className="text-base font-semibold">Popular Notes</h2>
         <Link
           href="/notes"
-          className="flex items-center space-x-2 align-middle text-xl font-bold hover:text-primary"
+          className="flex items-center space-x-2 align-middle font-medium hover:text-primary"
         >
-          <span className="font-normal">all</span>
-          <FiArrowRight className="size-4" />
+          <span>all</span>
+          <FiArrowRight className="size-3.5" />
         </Link>
       </div>
       <section className="w-full">
