@@ -86,7 +86,7 @@ export const Series = ({
                   ) : (
                     <Link
                       href={`/notes/${note.slug}`}
-                      className={cn("font-medium text-primary transition-all")}
+                      className={cn("text-primary transition-all")}
                     >
                       {note.title}
                     </Link>
@@ -94,9 +94,7 @@ export const Series = ({
                 ) : (
                   <Link
                     href={`/notes/${note.slug}`}
-                    className={cn(
-                      "font-medium text-foreground/50 transition-all"
-                    )}
+                    className={cn("text-foreground/50 transition-all")}
                   >
                     Planned: {note.title}
                   </Link>
