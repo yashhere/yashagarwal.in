@@ -123,7 +123,7 @@ export default async function Page({ params }: Props) {
         <section className="mb-8 space-y-2">
           <SectionTitle data={null} title={article.note.title} />
           <div className="flex flex-col pb-4 font-sans text-base text-muted sm:flex-row sm:justify-between">
-            <span className="text-base">
+            <span className="text-base text-foreground/80">
               {moment(article.note.createdOn).format("MMM DD, YYYY")}
             </span>
           </div>
