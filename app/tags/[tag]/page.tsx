@@ -6,13 +6,14 @@ import { getPreviewNotes } from "@/lib/content"
 import GithubSlugger from "github-slugger"
 
 type Props = {
-  params: { tag: string }
+  params: Promise<{ tag: string }>
 }
 
 export async function generateMetadata(
-  { params }: Props,
+  props: Props,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
+  const params = await props.params
   const siteUrl: string = siteConfig.url
 
   return {
@@ -36,7 +37,8 @@ export async function generateMetadata(
   }
 }
 
-export default async function Page({ params }: Props) {
+export default async function Page(props: Props) {
+  const params = await props.params
   const slugger = new GithubSlugger()
   const previewNotes = await getPreviewNotes()
 

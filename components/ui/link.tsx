@@ -6,6 +6,7 @@ import {
   forwardRef,
   ReactElement,
   ReactNode,
+  type JSX,
 } from "react"
 import Link from "next/link"
 import { siteConfig } from "@/config/site"
@@ -89,7 +90,7 @@ const ExternalLink = forwardRef<HTMLAnchorElement, ExternalLinkProps>(
             {...otherProps}
           >
             {icon &&
-              cloneElement(icon as ReactElement, {
+              cloneElement(icon as ReactElement<any>, {
                 className: "inline size-5 pb-[3px] mr-1",
               })}
             {noExternalLinkIcon ? children : <span>{children}</span>}{" "}

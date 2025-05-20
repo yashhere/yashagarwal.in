@@ -1,10 +1,11 @@
 "use client"
 
+import { useActionState } from "react"
 import { useFormReset } from "@/hooks/use-form-reset"
 import { useToastMessage } from "@/hooks/use-toast-message"
 import submitEmail from "@/lib/actions/newsletter/form"
 import { EMPTY_FORM_STATE } from "@/lib/actions/newsletter/utils"
-import { useFormState, useFormStatus } from "react-dom"
+import { useFormStatus } from "react-dom"
 
 import { FieldError } from "./forms/field-error"
 import LoadingSpinner from "./ui/icons/loading-spinner"
@@ -29,7 +30,7 @@ const SubmitButton = ({ label, loading }: SubmitButtonProps) => {
 }
 
 export default function Newsletter() {
-  const [formState, action] = useFormState(submitEmail, EMPTY_FORM_STATE)
+  const [formState, action] = useActionState(submitEmail, EMPTY_FORM_STATE)
 
   const noScriptFallback = useToastMessage(formState)
   const formRef = useFormReset(formState)

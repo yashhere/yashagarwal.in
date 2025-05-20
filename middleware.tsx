@@ -1,13 +1,14 @@
 // middleware.ts
 import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
+import { ipAddress } from "@vercel/functions"
 
 export function middleware(request: NextRequest) {
   // Clone the request headers so that we don't modify the original headers object
   const requestHeaders = new Headers(request.headers)
 
   // Check if the hosting platform provides the client's IP address and store it in a variable
-  const ip = request.ip || "0.0.0.0"
+  const ip = ipAddress(request) || "0.0.0.0"
 
   // Add the client's IP address to the request headers using the 'x-forwarded-for' field
   requestHeaders.set("x-forwarded-for", ip)
