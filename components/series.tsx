@@ -14,7 +14,7 @@ const Title: FC<TitleProps> = ({ children }) => {
   return (
     <div>
       <div className="font-sans text-base text-foreground">series</div>
-      <div className="flex flex-col justify-start text-lg sm:flex-row sm:items-center sm:space-x-2">
+      <div className="flex flex-col justify-start text-base sm:flex-row sm:items-center sm:space-x-2">
         {children}
       </div>
     </div>
@@ -52,9 +52,9 @@ export const Series = ({
           <div className="ml-auto pl-4">
             <div className="rounded-full bg-muted p-2 text-foreground group-hover:bg-muted/70">
               {isOpen ? (
-                <FiChevronUp className="w-5" />
+                <FiChevronUp className="w-4" />
               ) : (
-                <FiChevronDown className="w-5" />
+                <FiChevronDown className="w-4" />
               )}
             </div>
           </div>

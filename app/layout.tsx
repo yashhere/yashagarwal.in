@@ -16,6 +16,7 @@ const sansFont = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
   display: "swap",
+  style: ["normal", "italic"],
 })
 
 const monoFont = IBM_Plex_Mono({

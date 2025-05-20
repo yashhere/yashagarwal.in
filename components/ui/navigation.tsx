@@ -8,13 +8,13 @@ import { DarkToggle } from "../mode-toggle"
 
 const navItems = {
   "/": {
-    name: "home",
+    name: "Home",
   },
   "/notes": {
-    name: "notes",
+    name: "Notes",
   },
   "/work": {
-    name: "work",
+    name: "Work",
   },
 }
 
@@ -27,7 +27,7 @@ export const Navigation = () => {
   }
 
   return (
-    <aside className="my-8 tracking-tight">
+    <aside className="my-8">
       <div className="lg:sticky lg:top-20">
         <nav
           className="fade relative flex scroll-pr-6 flex-row items-center justify-between px-0 pb-0 md:relative md:overflow-auto"
@@ -41,9 +41,9 @@ export const Navigation = () => {
                   key={path}
                   href={path}
                   className={cn(
-                    "flex align-middle text-xl transition-all hover:text-foreground md:text-2xl",
+                    "flex align-middle transition-all hover:text-foreground text-base leading-relaxed",
                     {
-                      "text-foreground/60": !isActive,
+                      "text-foreground/70": !isActive,
                     }
                   )}
                 >

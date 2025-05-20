@@ -18,10 +18,10 @@ span[data-rehype-pretty-code-figure] {
 }
 
 span[data-rehype-pretty-code-figure] code {
-  padding: 0.1em 0.4em;
+  padding: 0.1rem 0.2rem;
   margin: 0;
-  border-radius: 4px;
-  font-size: 0.85em;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
   font-family: var(--font-mono);
   background-color: hsl(var(--syntax-bg));
   color: hsl(var(--foreground));
@@ -37,8 +37,8 @@ span[data-rehype-pretty-code-figure] code {
 
 @media (max-width: 640px) {
   span[data-rehype-pretty-code-figure] code {
-    font-size: 0.8em; /* Slightly smaller on mobile */
-    padding: 0.05em 0.3em; /* Tighter padding on mobile */
+    font-size: 0.825rem;
+    padding: 0.075rem 0.125rem;
   }
 }
 
@@ -77,42 +77,40 @@ figure[data-rehype-pretty-code-figure] {
 }
 
 figure[data-rehype-pretty-code-figure] pre {
-  @apply overflow-x-auto py-2 text-[14px] leading-relaxed;
+  @apply overflow-x-auto text-sm leading-relaxed;
   background-color: transparent !important;
   border-width: 0 !important;
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
+  padding: 0;
 }
 
 figure[data-rehype-pretty-code-figure] code {
-  @apply grid w-full;
+  @apply grid w-full text-sm;
   counter-reset: line;
   box-decoration-break: clone;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
   font-family: var(--font-mono);
-  font-size: 0.875rem;
+  font-size: 0.9rem;
   line-height: 1.6;
 }
 
 figure[data-rehype-pretty-code-figure] code [data-line] {
-  @apply border-l-2 border-l-transparent px-4;
-  padding-top: 0.125rem;
-  padding-bottom: 0.125rem;
+  @apply border-l-2 border-l-transparent px-5;
+  padding: 0.15rem 1.25rem;
 }
 
 /* Responsive adjustments for smaller screens */
 @media (max-width: 640px) {
   figure[data-rehype-pretty-code-figure] pre {
-    font-size: 13px; /* Slightly smaller on mobile */
+    font-size: 0.875rem;
   }
 
   figure[data-rehype-pretty-code-figure] code {
-    font-size: 0.8125rem; /* 13px on mobile */
+    font-size: 0.875rem;
   }
 
   figure[data-rehype-pretty-code-figure] code [data-line] {
-    @apply px-3; /* Slightly less horizontal padding on mobile */
+    @apply px-4;
   }
 
   /* Smaller line numbers on mobile */
@@ -139,6 +137,8 @@ figure[data-rehype-pretty-code-figure] code [data-line] {
 figure[data-rehype-pretty-code-figure] code .line--highlighted {
   @apply w-full rounded-none border-l-2;
   background-color: hsl(var(--muted));
+  border-left-color: hsl(var(--primary));
+  margin: 0 !important;
 }
 
 /* Line numbers for code blocks */

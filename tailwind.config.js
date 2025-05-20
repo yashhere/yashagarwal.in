@@ -69,16 +69,16 @@ const typographyStyles = {
       pre: {
         backgroundColor: "hsl(var(--syntax-bg))",
         borderRadius: "0.375rem",
-        padding: "1rem",
         overflowX: "auto",
-        fontSize: "0.9rem", // Better code readability
+        fontSize: "0.9375rem",
+        padding: "1rem",
       },
       code: {
         color: "hsl(var(--syntax-string))",
         backgroundColor: "hsl(var(--muted) / 0.5)",
-        padding: "0.2rem 0.3rem", // Better padding
+        padding: "0.2rem 0.4rem",
         borderRadius: "0.25rem",
-        fontSize: "0.85em", // Reduced slightly
+        fontSize: "0.875em",
         fontWeight: "400",
         "&::before": { content: "none" },
         "&::after": { content: "none" },
@@ -95,13 +95,14 @@ const typographyStyles = {
 
         // Line numbers and highlighting
         pre: {
-          padding: "1rem",
-          fontSize: "0.9rem", // Consistent with code
+          fontSize: "0.9375rem",
+          padding: "1rem 0",
         },
         "[data-line]": {
-          paddingLeft: "1rem",
           borderLeftWidth: "2px",
           borderColor: "transparent",
+          paddingLeft: "1.25rem",
+          paddingRight: "1.25rem",
         },
         "[data-highlighted-line]": {
           backgroundColor: "hsl(var(--syntax-highlight) / 0.1)",
