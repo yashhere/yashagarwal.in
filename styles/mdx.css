@@ -76,45 +76,6 @@ h6::after {
   clear: both;
 }
 
-.visually-hidden {
-  border: 0;
-  clip: rect(0 0 0 0);
-  height: auto;
-  margin: 0;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  width: 1px;
-  white-space: nowrap;
-}
-
-.autolink-svg {
-  display: none; /* Hidden by default */
-  margin-left: 0.5rem;
-  vertical-align: middle;
-  width: 1rem;
-  height: 1rem;
-  opacity: 0;
-  transition: opacity 0.2s ease;
-}
-
-/* Show the icon when hovering over the heading */
-.prose h1:hover .autolink-svg,
-.prose h2:hover .autolink-svg,
-.prose h3:hover .autolink-svg,
-.prose h4:hover .autolink-svg,
-.prose h5:hover .autolink-svg,
-.prose h6:hover .autolink-svg {
-  display: inline-block;
-  opacity: 0.75;
-}
-
-/* Icon appearance when focused or hovered directly */
-.prose .anchor:focus .autolink-svg,
-.autolink-svg:hover {
-  opacity: 1;
-}
-
 /* INLINE CODE STYLE START */
 span[data-rehype-pretty-code-figure] {
   display: inline;
