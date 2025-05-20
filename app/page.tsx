@@ -8,8 +8,8 @@ export default async function Page() {
     <div>
       <section className="flex flex-col justify-start">
         <SectionTitle data={null} title="Hey, I'm Yash 👋" />
-        <div className="prose text-lg leading-7 text-foreground">
-          <p>
+        <div className="text-foreground">
+          <p className="text-base leading-relaxed mb-4">
             I&apos;m a Software Engineer crafting efficient solutions for
             intricate problems. Currently I work at{" "}
             <Link
@@ -22,13 +22,13 @@ export default async function Page() {
             </Link>{" "}
             on it&apos;s API security product.
           </p>
-          <p>
+          <p className="text-base leading-relaxed">
             This domain is my little digital nest where I write about my
             experiments with tech and life.
           </p>
         </div>
       </section>
-      <section className="mt-16 flex flex-col justify-start">
+      <section className="mt-12 flex flex-col justify-start">
         <FeaturedNotes count={siteConfig.featuredNotes} />
       </section>
     </div>

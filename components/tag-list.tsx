@@ -13,7 +13,7 @@ export const TagList: FC<TagListProps> = ({ tags }) => {
   }
 
   return (
-    <div className="flex flex-row flex-wrap justify-start font-body text-base">
+    <div className="flex flex-row flex-wrap justify-start font-sans text-base">
       {tags.map((tag) => {
         const slugger = new GithubSlugger()
         const tag_slug = tag ? slugger.slug(tag) : undefined

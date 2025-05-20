@@ -18,7 +18,6 @@ import Link from "@/components/ui/link"
 import SectionTitle from "@/components/ui/section-title"
 import { env } from "@/env.mjs"
 import { encodeParameter } from "@/lib/utils"
-import { MDXContent } from "@content-collections/mdx/react"
 import moment from "moment"
 
 type Props = {
@@ -122,8 +121,8 @@ export default async function Page({ params }: Props) {
       <div>
         <section className="mb-8 space-y-2">
           <SectionTitle data={null} title={article.note.title} />
-          <div className="flex flex-col pb-4 font-body text-base text-muted sm:flex-row sm:justify-between">
-            <span className="text-base">
+          <div className="flex flex-col pb-4 font-sans text-base text-muted sm:flex-row sm:justify-between">
+            <span className="text-base text-foreground/80">
               {moment(article.note.createdOn).format("MMM DD, YYYY")}
             </span>
           </div>
@@ -138,13 +137,12 @@ export default async function Page({ params }: Props) {
           <div className="mb-8">
             <TableOfContents
               headings={article.note.headings}
-              path={`/notes/${article.note.slug}`}
               interactive={true}
             />
           </div>
         ) : null}
         <div className="mb-8">
-          <div className="prose text-foreground prose-headings:cursor-pointer">
+          <div className="prose text-foreground">
             <Mdx code={article.note.mdx} />
             {article.note.status === "draft" ? <Draft /> : null}
           </div>
@@ -154,7 +152,7 @@ export default async function Page({ params }: Props) {
         <div className="flex flex-col items-center justify-center space-x-2 space-y-4 py-8 sm:flex-row sm:justify-between sm:space-y-0">
           <Link
             href={`https://twitter.com/intent/tweet?text=${encodedUrl}%20via%20%40yash__here`}
-            className="text-lg text-primary"
+            className="text-base text-primary"
             noUnderline
           >
             <span className="text-foreground/80">Share this article on</span>{" "}

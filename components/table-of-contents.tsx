@@ -1,26 +1,12 @@
 "use client"
 
-import { FC, ReactNode, useState } from "react"
-import { useRouter } from "next/navigation"
+import { useState } from "react"
 import { cn } from "@/lib/utils"
 import { FiChevronDown, FiChevronUp } from "react-icons/fi"
 
 import Link from "./ui/link"
 
-type TitleProps = {
-  children?: ReactNode
-}
-
-const Title: FC<TitleProps> = ({ children }) => {
-  return (
-    <div>
-      <div className="text-lg font-bold">{children}</div>
-    </div>
-  )
-}
-
-export const TableOfContents = ({ headings, path, interactive }) => {
-  const router = useRouter()
+export const TableOfContents = ({ headings, interactive }) => {
   const [isOpen, setIsOpen] = useState(!interactive)
 
   return (
@@ -32,22 +18,20 @@ export const TableOfContents = ({ headings, path, interactive }) => {
             setIsOpen(!isOpen)
           }}
         >
-          <div className="font-heading text-lg font-bold">
-            Table of Contents
-          </div>
+          <div className="font-sans text-base font-bold">Table of Contents</div>
 
           <div className="ml-auto pl-4">
             <div className="rounded-full bg-muted p-2 text-foreground group-hover:bg-muted/70">
               {isOpen ? (
-                <FiChevronUp className="w-5" />
+                <FiChevronUp className="w-4" />
               ) : (
-                <FiChevronDown className="w-5" />
+                <FiChevronDown className="w-4" />
               )}
             </div>
           </div>
         </button>
       ) : (
-        <div className="font-heading text-lg font-bold">Table of Contents</div>
+        <div className="font-sans text-base font-bold">Table of Contents</div>
       )}
       <hr className="border-t-1 my-4 border-border" />
       {isOpen && (

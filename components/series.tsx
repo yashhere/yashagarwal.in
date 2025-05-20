@@ -13,8 +13,8 @@ type TitleProps = {
 const Title: FC<TitleProps> = ({ children }) => {
   return (
     <div>
-      <div className="font-heading text-base text-foreground">series</div>
-      <div className="flex flex-col justify-start text-lg sm:flex-row sm:items-center sm:space-x-2">
+      <div className="font-sans text-base text-foreground">series</div>
+      <div className="flex flex-col justify-start text-base sm:flex-row sm:items-center sm:space-x-2">
         {children}
       </div>
     </div>
@@ -52,9 +52,9 @@ export const Series = ({
           <div className="ml-auto pl-4">
             <div className="rounded-full bg-muted p-2 text-foreground group-hover:bg-muted/70">
               {isOpen ? (
-                <FiChevronUp className="w-5" />
+                <FiChevronUp className="w-4" />
               ) : (
-                <FiChevronDown className="w-5" />
+                <FiChevronDown className="w-4" />
               )}
             </div>
           </div>
@@ -86,7 +86,7 @@ export const Series = ({
                   ) : (
                     <Link
                       href={`/notes/${note.slug}`}
-                      className={cn("font-medium text-primary transition-all")}
+                      className={cn("text-primary transition-all")}
                     >
                       {note.title}
                     </Link>
@@ -94,9 +94,7 @@ export const Series = ({
                 ) : (
                   <Link
                     href={`/notes/${note.slug}`}
-                    className={cn(
-                      "font-medium text-foreground/50 transition-all"
-                    )}
+                    className={cn("text-foreground/50 transition-all")}
                   >
                     Planned: {note.title}
                   </Link>

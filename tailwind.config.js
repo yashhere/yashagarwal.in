@@ -1,70 +1,146 @@
-const colors = require("tailwindcss/colors")
+const headingStyles = {
+  fontWeight: 600,
+  lineHeight: 1.2,
+  marginTop: "1.5rem",
+  marginBottom: "0.5rem",
+}
 
-const linkHeadingStyles = {
-  color: "hsl(var(--foreground))",
-  borderBottomColor: "transparent",
-  borderRadius: 3,
-  boxShadow: `0 0 0 0.4rem transparent`,
+const linkStyles = {
+  color: "hsl(var(--primary))",
+  textDecoration: "none",
+  fontWeight: 500,
   "&:hover": {
-    color: "none",
-    borderBottomColor: "transparent",
-    background: "hsl(var(--muted))",
-    boxShadow: `0 0 0 0.4rem hsl(var(--muted))`,
+    textDecoration: "underline",
   },
 }
 
-const customCss = {
-  "h2 a": linkHeadingStyles,
-  "h3 a": linkHeadingStyles,
-  "h4 a": linkHeadingStyles,
-  "h5 a": linkHeadingStyles,
-  "h6 a": linkHeadingStyles,
-  "h3 a:has(code)": {
-    boxShadow: `0 0 0 0.3rem transparent`,
-    "&:hover": {
-      background: colors.teal[900],
-      boxShadow: `0 0 0 0.3rem ${colors.teal[900]}`,
-    },
-  },
-  pre: false,
-  code: false,
-  "pre code": { content: "none !important" },
-  blockquote: {
-    "& p:first-of-type::before": { content: "none !important" },
-    "& p:last-of-type::after": { content: "none !important" },
-    "& p::before": { content: "none !important" },
-    "& p::after": { content: "none !important" },
-  },
-  code: {
-    color: "hsl(var(--syntax-string))",
-    "&::before": { content: `unset !important` },
-    "&::after": { content: `unset !important` },
-    fontWeight: "normal",
-  },
-  "> ul > li > *:first-child": {
-    marginTop: 0,
-  },
-  "> ul > li > *:last-child": {
-    marginBottom: 0,
-  },
-  "> ol > li > *:first-child": {
-    marginTop: 0,
-  },
-  "> ol > li > *:last-child": {
-    marginBottom: 0,
-  },
-  "[data-rehype-pretty-code-fragment]:nth-of-type(2) pre": {
-    "[data-line]::before": {
-      content: "counter(line)",
-      counterIncrement: "line",
-      display: "inline-block",
-      width: "1rem",
-      marginRight: "1rem",
-      textAlign: "right",
-      color: "hsl(var(--muted-foreground))",
-    },
-    "[data-highlighted-line]::before": {
+const typographyStyles = {
+  DEFAULT: {
+    css: {
       color: "hsl(var(--foreground))",
+      maxWidth: "none",
+      fontSize: "0.95rem", // Make default prose text slightly smaller
+      lineHeight: "1.6", // Consistent line height
+      h1: {
+        ...headingStyles,
+        fontSize: "1.875rem",
+        marginTop: "0",
+        "& > a": {
+          color: "inherit",
+          fontWeight: "inherit",
+          textDecoration: "none",
+          "&:hover": {
+            textDecoration: "none",
+          },
+        },
+      },
+      h2: {
+        ...headingStyles,
+        fontSize: "1.5rem",
+        "& > a": {
+          color: "inherit",
+          fontWeight: "inherit",
+          textDecoration: "none",
+          "&:hover": {
+            textDecoration: "none",
+          },
+        },
+      },
+      h3: {
+        ...headingStyles,
+        fontSize: "1.25rem",
+        "& > a": {
+          color: "inherit",
+          fontWeight: "inherit",
+          textDecoration: "none",
+          "&:hover": {
+            textDecoration: "none",
+          },
+        },
+      },
+      h4: {
+        ...headingStyles,
+        fontSize: "1.1rem",
+        "& > a": {
+          color: "inherit",
+          fontWeight: "inherit",
+          textDecoration: "none",
+          "&:hover": {
+            textDecoration: "none",
+          },
+        },
+      },
+      a: linkStyles,
+      p: {
+        marginTop: "1.1rem",
+        marginBottom: "1.1rem",
+        lineHeight: "1.65",
+      },
+      "ul, ol": {
+        paddingLeft: "1.25rem",
+      },
+      li: {
+        marginTop: "0.5rem",
+        marginBottom: "0.5rem",
+        lineHeight: "1.65", // Consistent with paragraphs
+      },
+      blockquote: {
+        fontWeight: "400",
+        fontStyle: "italic",
+        borderLeftWidth: "0.25rem",
+        borderLeftColor: "hsl(var(--border))",
+        paddingLeft: "1rem",
+        marginTop: "1.5rem",
+        marginBottom: "1.5rem",
+        "& p:first-of-type::before": { content: "none" },
+        "& p:last-of-type::after": { content: "none" },
+        "& p": {
+          lineHeight: "1.5", // Slightly tighter for quotes
+        },
+      },
+      pre: {
+        backgroundColor: "hsl(var(--syntax-bg))",
+        borderRadius: "0.375rem",
+        overflowX: "auto",
+        fontSize: "0.9375rem",
+        padding: "1rem",
+      },
+      code: {
+        color: "hsl(var(--syntax-string))",
+        backgroundColor: "hsl(var(--muted) / 0.5)",
+        padding: "0.2rem 0.4rem",
+        borderRadius: "0.25rem",
+        fontSize: "0.875rem",
+        fontWeight: "400",
+        "&::before": { content: "none" },
+        "&::after": { content: "none" },
+      },
+      "pre code": {
+        backgroundColor: "transparent",
+        padding: "0",
+        fontSize: "inherit", // Use parent size
+      },
+      // Code highlighting styles
+      "[data-rehype-pretty-code-fragment]": {
+        marginTop: "1.5rem",
+        marginBottom: "1.5rem",
+
+        // Line numbers and highlighting
+        pre: {
+          fontSize: "0.9375rem",
+          padding: "1rem 0",
+        },
+        "[data-line]": {
+          borderLeftWidth: "2px",
+          borderColor: "transparent",
+          paddingLeft: "1.25rem",
+          paddingRight: "1.25rem",
+        },
+        "[data-highlighted-line]": {
+          backgroundColor: "hsl(var(--syntax-highlight))",
+          borderLeftColor: "hsl(var(--primary))",
+        },
+      },
     },
   },
 }
@@ -91,22 +167,25 @@ module.exports = {
     },
     extend: {
       animation: {
-        // Custom spinner animation (for loading-spinner)
         spinner: "spinner 1.2s linear infinite",
       },
       keyframes: {
-        // Custom spinner animation (for loading-spinner)
         spinner: {
-          "0%": {
-            opacity: "1",
-          },
-          "100%": {
-            opacity: "0",
-          },
+          "0%": { opacity: "1" },
+          "100%": { opacity: "0" },
         },
       },
-      lineHeight: {
-        7: "30px",
+      fontSize: {
+        xs: ["0.75rem", { lineHeight: "1rem" }],
+        sm: ["0.875rem", { lineHeight: "1.25rem" }],
+        base: ["1rem", { lineHeight: "1.6" }],
+        lg: ["1.125rem", { lineHeight: "1.75" }],
+        xl: ["1.25rem", { lineHeight: "1.75" }],
+        "2xl": ["1.5rem", { lineHeight: "2rem" }],
+        "3xl": ["1.875rem", { lineHeight: "2.25rem" }],
+        "4xl": ["2.25rem", { lineHeight: "2.5rem" }],
+        "5xl": ["3rem", { lineHeight: "1.2" }],
+        "6xl": ["3.75rem", { lineHeight: "1.1" }],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -142,7 +221,6 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        // Syntax highlighting colors
         syntax: {
           bg: "hsl(var(--syntax-bg))",
           highlight: "hsl(var(--syntax-highlight))",
@@ -160,13 +238,10 @@ module.exports = {
         sm: "calc(var(--radius) - 0.25rem)",
       },
       fontFamily: {
+        sans: ["var(--font-sans)"],
         mono: ["var(--font-mono)"],
-        body: ["var(--font-body)"],
-        heading: ["var(--font-body)"],
       },
-      typography: ({ theme }) => ({
-        DEFAULT: { css: customCss },
-      }),
+      typography: typographyStyles,
     },
   },
   plugins: [require("@tailwindcss/typography")],

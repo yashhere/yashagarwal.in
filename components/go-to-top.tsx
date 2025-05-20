@@ -8,7 +8,7 @@ export function GoToTop({ slug }: { slug: string }) {
   return (
     <div>
       <button
-        className="text-lg text-primary"
+        className="text-base text-primary"
         onClick={() => {
           window.scrollTo({ top: 0 })
           router.push(path)

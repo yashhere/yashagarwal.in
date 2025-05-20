@@ -114,9 +114,16 @@
     --syntax-string: 271 100% 71%;
   }
 
-  /* Basic element styling */
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1 "calt" 1;
+  }
+
+  :focus-visible {
+    @apply ring-primary ring-offset-background ring-2 ring-offset-2 outline-none;
+  }
+
+  a:focus-visible {
+    @apply ring-primary ring-offset-background ring-2 ring-offset-2 outline-none;
   }
 }

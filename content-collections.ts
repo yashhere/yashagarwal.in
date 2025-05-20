@@ -2,6 +2,7 @@ import { defineCollection, defineConfig } from "@content-collections/core"
 import { compileMDX } from "@content-collections/mdx"
 import remarkCallouts from "@portaljs/remark-callouts"
 import GithubSlugger, { slug } from "github-slugger"
+import { h, s } from "hastscript"
 import { default as readTime } from "reading-time"
 import { rehypeAccessibleEmojis } from "rehype-accessible-emojis"
 import rehypeAutolinkHeadings from "rehype-autolink-headings"
@@ -153,8 +154,10 @@ const notes = defineCollection({
           {
             behavior: "wrap",
             properties: {
-              className: ["anchor"],
+              className: "anchor",
               ariaLabel: "Link to section",
+              ariaHidden: true,
+              tabIndex: -1,
             },
           },
         ],

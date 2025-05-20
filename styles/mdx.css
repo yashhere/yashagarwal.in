@@ -9,6 +9,73 @@
   cursor: pointer;
 }
 
+/* Fix for heading anchors - override link styles for heading anchors */
+h1 a.anchor,
+h2 a.anchor,
+h3 a.anchor,
+h4 a.anchor,
+h5 a.anchor,
+h6 a.anchor {
+  font-weight: inherit;
+  color: inherit;
+  text-decoration: none;
+  position: relative;
+}
+
+h1 a.anchor:hover,
+h2 a.anchor:hover,
+h3 a.anchor:hover,
+h4 a.anchor:hover,
+h5 a.anchor:hover,
+h6 a.anchor:hover {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Make anchor links unobtrusive */
+.anchor {
+  @apply float-left pr-2 no-underline;
+}
+
+.anchor:after {
+  content: "#";
+  @apply text-primary ml-2 hidden opacity-0 sm:inline-block;
+  transition: opacity 0.2s ease;
+}
+
+:is(h1, h2, h3, h4, h5, h6):hover .anchor::after {
+  @apply hidden opacity-100 sm:inline-block;
+}
+
+/* Add a mobile-friendly padding for anchors */
+@media (max-width: 640px) {
+  .anchor {
+    @apply -ml-0;
+  }
+}
+
+/* Clear floats to prevent paragraph overflow */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply clear-both;
+}
+
+/* Ensure headings with anchors clear correctly */
+h1::after,
+h2::after,
+h3::after,
+h4::after,
+h5::after,
+h6::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
 /* INLINE CODE STYLE START */
 span[data-rehype-pretty-code-figure] {
   display: inline;
@@ -18,10 +85,10 @@ span[data-rehype-pretty-code-figure] {
 }
 
 span[data-rehype-pretty-code-figure] code {
-  padding: 0.1em 0.4em;
+  padding: 0.1rem 0.2rem;
   margin: 0;
-  border-radius: 4px;
-  font-size: 0.85em;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
   font-family: var(--font-mono);
   background-color: hsl(var(--syntax-bg));
   color: hsl(var(--foreground));
@@ -37,8 +104,8 @@ span[data-rehype-pretty-code-figure] code {
 
 @media (max-width: 640px) {
   span[data-rehype-pretty-code-figure] code {
-    font-size: 0.8em; /* Slightly smaller on mobile */
-    padding: 0.05em 0.3em; /* Tighter padding on mobile */
+    font-size: 0.825rem;
+    padding: 0.075rem 0.125rem;
   }
 }
 
@@ -69,6 +136,14 @@ li span[data-rehype-pretty-code-figure] {
 span[data-rehype-pretty-code-figure] code[data-language="plaintext"] {
   font-family: var(--font-mono);
 }
+
+/* Hide backticks from inline code blocks */
+span[data-rehype-pretty-code-figure] code::before,
+span[data-rehype-pretty-code-figure] code::after {
+  content: "" !important;
+  display: none !important;
+}
+
 /* INLINE CODE STYLE END */
 
 /* CODE BLOCK STYLE START */
@@ -77,42 +152,40 @@ figure[data-rehype-pretty-code-figure] {
 }
 
 figure[data-rehype-pretty-code-figure] pre {
-  @apply overflow-x-auto py-2 text-[14px] leading-relaxed;
+  @apply overflow-x-auto text-sm leading-relaxed;
   background-color: transparent !important;
   border-width: 0 !important;
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
+  padding: 0;
 }
 
 figure[data-rehype-pretty-code-figure] code {
-  @apply grid w-full;
+  @apply grid w-full text-sm;
   counter-reset: line;
   box-decoration-break: clone;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
   font-family: var(--font-mono);
-  font-size: 0.875rem;
+  font-size: 0.9rem;
   line-height: 1.6;
 }
 
 figure[data-rehype-pretty-code-figure] code [data-line] {
-  @apply border-l-2 border-l-transparent px-4;
-  padding-top: 0.125rem;
-  padding-bottom: 0.125rem;
+  @apply border-l-2 border-l-transparent px-5;
+  padding: 0.15rem 1.25rem;
 }
 
 /* Responsive adjustments for smaller screens */
 @media (max-width: 640px) {
   figure[data-rehype-pretty-code-figure] pre {
-    font-size: 13px; /* Slightly smaller on mobile */
+    font-size: 0.875rem;
   }
 
   figure[data-rehype-pretty-code-figure] code {
-    font-size: 0.8125rem; /* 13px on mobile */
+    font-size: 0.875rem;
   }
 
   figure[data-rehype-pretty-code-figure] code [data-line] {
-    @apply px-3; /* Slightly less horizontal padding on mobile */
+    @apply px-4;
   }
 
   /* Smaller line numbers on mobile */
@@ -138,7 +211,9 @@ figure[data-rehype-pretty-code-figure] code [data-line] {
 /* Line highlighting */
 figure[data-rehype-pretty-code-figure] code .line--highlighted {
   @apply w-full rounded-none border-l-2;
-  background-color: hsl(var(--muted));
+  background-color: hsl(var(--syntax-highlight)) !important;
+  border-left-color: hsl(var(--border));
+  margin: 0 !important;
 }
 
 /* Line numbers for code blocks */
@@ -323,6 +398,13 @@ svg p {
 
 .img-unblur {
   animation: img-unblur 0.8s linear;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .img-unblur {
+    animation: none;
+    filter: blur(0);
+  }
 }
 
 @keyframes img-unblur {

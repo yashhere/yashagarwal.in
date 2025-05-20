@@ -20,7 +20,7 @@ const SubmitButton = ({ label, loading }: SubmitButtonProps) => {
   return (
     <button
       type="submit"
-      className="focus:shadow-focus-ring mr-1 h-[30px] w-[80px] rounded-3xl bg-foreground px-1.5 text-sm font-semibold text-background outline-hidden md:w-[104px] md:px-3.5 md:text-sm"
+      className="focus:shadow-focus-ring mr-1 h-[30px] w-[80px] rounded-3xl bg-foreground px-1.5 text-sm text-background outline-hidden md:w-[104px] md:px-3.5 md:text-sm"
       disabled={pending}
     >
       {pending ? loading : label}
@@ -46,7 +46,7 @@ export default function Newsletter() {
           name="email"
           placeholder="Enter your email"
           required
-          className="h-full w-1/5 grow border-none bg-transparent px-3.5 text-lg transition-colors placeholder:text-foreground/60 focus:outline-hidden"
+          className="h-full w-1/5 grow border-none bg-transparent px-3.5 text-base transition-colors placeholder:text-foreground/60 focus:outline-hidden"
         />
         <SubmitButton
           label="Subscribe"

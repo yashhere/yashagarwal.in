@@ -10,10 +10,28 @@ import Draft from "./ui/draft"
 
 const BlogLink = (props) => {
   if (props.href.startsWith("#")) {
-    return <a {...props} />
+    return (
+      <a
+        {...props}
+        className={cn(
+          props.className,
+          "no-underline scroll-m-20",
+          !props.className?.includes("anchor") &&
+            "text-primary hover:underline hover:underline-offset-4"
+        )}
+      />
+    )
   }
 
-  return <Link {...props} className="text-primary" />
+  return (
+    <Link
+      {...props}
+      className={cn(
+        "text-primary transition-colors hover:text-primary/80",
+        props.className
+      )}
+    />
+  )
 }
 
 const BlogImage = (props) => {
@@ -26,14 +44,17 @@ const components = {
   img: BlogImage,
   p: ({ className, ...props }: React.HTMLAttributes<HTMLParagraphElement>) => (
     <p
-      className={cn("text-lg text-foreground not-first:mt-6", className)}
+      className={cn(
+        "text-base leading-relaxed text-foreground not-first:mt-6",
+        className
+      )}
       {...props}
     />
   ),
   h1: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h1
       className={cn(
-        "mt-12 scroll-m-6 border-b pb-2 text-[30px] font-bold text-foreground",
+        "mt-10 mb-4 scroll-m-6 text-3xl sm:text-4xl font-bold text-foreground tracking-tight",
         className
       )}
       {...props}
@@ -42,7 +63,7 @@ const components = {
   h2: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h2
       className={cn(
-        "mb-1 mt-8 scroll-m-10 text-[26px] font-semibold first:mt-0 text-foreground",
+        "mb-3 mt-10 scroll-m-10 text-2xl sm:text-3xl font-semibold first:mt-0 text-foreground tracking-tight",
         className
       )}
       {...props}
@@ -51,7 +72,7 @@ const components = {
   h3: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h3
       className={cn(
-        "mt-8 scroll-m-4 text-[22px] font-semibold tracking-tight text-foreground",
+        "mt-8 mb-3 scroll-m-4 text-xl sm:text-2xl font-semibold tracking-tight text-foreground",
         className
       )}
       {...props}
@@ -60,7 +81,7 @@ const components = {
   h4: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h4
       className={cn(
-        "mt-8 scroll-m-4 text-[20px] font-semibold tracking-tight",
+        "mt-6 mb-3 scroll-m-4 text-lg sm:text-xl font-semibold tracking-tight text-foreground",
         className
       )}
       {...props}
@@ -75,7 +96,8 @@ const components = {
         className={cn(
           "no-scrollbar overflow-x-auto",
           // Don't add additional styling for rehype-pretty-code blocks
-          !isPrettyCode && "rounded-lg border py-2 mb-6 mt-4 text-base",
+          !isPrettyCode &&
+            "rounded-lg border px-4 py-4 mb-6 mt-4 font-mono text-[15px]",
           className
         )}
         {...props}
@@ -93,7 +115,7 @@ const components = {
         {...props}
         className={cn(
           !isPrettyCode &&
-            "relative rounded-sm bg-syntax-bg border px-[0.3rem] py-[0.1rem] font-mono text-syntax-txt text-sm",
+            "relative rounded-sm bg-syntax-bg border px-1.5 py-0.5 font-mono text-syntax-txt text-sm",
           props.className
         )}
       />
@@ -106,11 +128,19 @@ const components = {
     <ol {...props} className="mb-6 list-decimal pl-6" />
   ),
   li: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
-    <li {...props} className="text-lg text-foreground" />
+    <li {...props} className="text-base leading-relaxed text-foreground" />
   ),
-  strong: (props) => <strong className="text-foreground" {...props} />,
+  strong: (props) => (
+    <strong className="font-semibold  text-foreground" {...props} />
+  ),
   blockquote: (props) => (
-    <blockquote {...props} className="mt-6 border-l-2 pl-6 italic" />
+    <blockquote
+      {...props}
+      className="my-6 border-l-2 border-primary/30 pl-6 italic text-muted-foreground"
+    />
+  ),
+  em: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
+    <em {...props} className={cn("italic", className)} />
   ),
   hr: (props) => <hr {...props} className="my-6 border-border" />,
   table: ({ className, ...props }: React.HTMLAttributes<HTMLTableElement>) => (
@@ -126,6 +156,33 @@ const components = {
     <td
       {...props}
       className="border-b border-border py-2 text-base text-foreground"
+    />
+  ),
+  sup: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
+    <sup
+      className={cn("text-xs align-super font-bold", className)}
+      {...props}
+    />
+  ),
+  sub: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
+    <sub className={cn("text-xs align-sub font-bold", className)} {...props} />
+  ),
+  kbd: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
+    <kbd
+      className={cn(
+        "rounded border border-border bg-muted px-1.5 py-0.5 text-xs font-semibold text-foreground shadow-[inset_0_-1px_0_0_var(--tw-border-opacity)]",
+        className
+      )}
+      {...props}
+    />
+  ),
+  mark: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
+    <mark
+      className={cn(
+        "bg-primary/10 text-foreground px-1 py-0.5 rounded",
+        className
+      )}
+      {...props}
     />
   ),
 }
