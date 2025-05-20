@@ -40,7 +40,7 @@ const Page: FC = () => {
         <section className="space-y-8">
           <div>
             <h2 className="text-2xl text-primary">Netskope</h2>
-            <h4 className="text-lg font-normal italic text-primary">
+            <h4 className="text-base font-normal italic text-primary">
               Sr. Software Engineer, 2024-Present
             </h4>
             <p>
@@ -50,7 +50,7 @@ const Page: FC = () => {
               a smooth transition to the next-gen implementations.
             </p>
 
-            <h4 className="text-lg font-normal italic text-primary">
+            <h4 className="text-base font-normal italic text-primary">
               Software Engineer II, 2022-2024
             </h4>
             <p>
@@ -72,7 +72,7 @@ const Page: FC = () => {
           </div>
           <div>
             <h2 className="text-2xl text-primary">Cisco Systems</h2>
-            <h4 className="text-lg font-normal italic text-primary">
+            <h4 className="text-base font-normal italic text-primary">
               Software Engineer I and II, 2018-2021
             </h4>
             <ul>

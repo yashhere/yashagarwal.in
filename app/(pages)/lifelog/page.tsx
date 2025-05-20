@@ -13,7 +13,7 @@ export default function LifeLog() {
   return (
     <>
       <SectionTitle data={null} title={"Recently in life"} />
-      <div className="text-lg text-foreground">
+      <div className="text-base text-foreground">
         <p>
           This is a sporadically updated log of what I am currently doing in
           life.
@@ -37,7 +37,7 @@ export default function LifeLog() {
                   {moment(note.updatedOn).format("MMM DD, YYYY")}
                 </time>
               </div>
-              <p className="mb-4 text-lg font-light text-foreground">
+              <p className="mb-4 text-base font-light text-foreground">
                 <Mdx code={note.mdx} />
               </p>
             </li>

@@ -25,18 +25,50 @@ const typographyStyles = {
         ...headingStyles,
         fontSize: "1.875rem",
         marginTop: "0",
+        "& > a": {
+          color: "inherit",
+          fontWeight: "inherit",
+          textDecoration: "none",
+          "&:hover": {
+            textDecoration: "none",
+          },
+        },
       },
       h2: {
         ...headingStyles,
         fontSize: "1.5rem",
+        "& > a": {
+          color: "inherit",
+          fontWeight: "inherit",
+          textDecoration: "none",
+          "&:hover": {
+            textDecoration: "none",
+          },
+        },
       },
       h3: {
         ...headingStyles,
         fontSize: "1.25rem",
+        "& > a": {
+          color: "inherit",
+          fontWeight: "inherit",
+          textDecoration: "none",
+          "&:hover": {
+            textDecoration: "none",
+          },
+        },
       },
       h4: {
         ...headingStyles,
         fontSize: "1.1rem",
+        "& > a": {
+          color: "inherit",
+          fontWeight: "inherit",
+          textDecoration: "none",
+          "&:hover": {
+            textDecoration: "none",
+          },
+        },
       },
       a: linkStyles,
       p: {
@@ -105,7 +137,7 @@ const typographyStyles = {
           paddingRight: "1.25rem",
         },
         "[data-highlighted-line]": {
-          backgroundColor: "hsl(var(--syntax-highlight) / 0.1)",
+          backgroundColor: "hsl(var(--syntax-highlight))",
           borderLeftColor: "hsl(var(--primary))",
         },
       },
@@ -146,14 +178,14 @@ module.exports = {
       fontSize: {
         xs: ["0.75rem", { lineHeight: "1rem" }],
         sm: ["0.875rem", { lineHeight: "1.25rem" }],
-        base: ["1rem", { lineHeight: "1.6" }], // Slightly reduced line height
-        lg: ["1.125rem", { lineHeight: "1.6" }], // Slightly reduced line height
-        xl: ["1.25rem", { lineHeight: "1.5" }], // Slightly reduced line height
-        "2xl": ["1.5rem", { lineHeight: "1.35" }], // Better for headings
-        "3xl": ["1.75rem", { lineHeight: "1.3" }], // Better for headings
-        "4xl": ["2rem", { lineHeight: "1.25" }], // Better for headings
-        "5xl": ["2.5rem", { lineHeight: "1.2" }], // Better for headings
-        "6xl": ["3rem", { lineHeight: "1.1" }], // Better for headings
+        base: ["1rem", { lineHeight: "1.6" }],
+        lg: ["1.125rem", { lineHeight: "1.75" }],
+        xl: ["1.25rem", { lineHeight: "1.75" }],
+        "2xl": ["1.5rem", { lineHeight: "2rem" }],
+        "3xl": ["1.875rem", { lineHeight: "2.25rem" }],
+        "4xl": ["2.25rem", { lineHeight: "2.5rem" }],
+        "5xl": ["3rem", { lineHeight: "1.2" }],
+        "6xl": ["3.75rem", { lineHeight: "1.1" }],
       },
       colors: {
         border: "hsl(var(--border))",

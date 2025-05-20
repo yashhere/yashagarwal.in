@@ -46,7 +46,7 @@ export default function Newsletter() {
           name="email"
           placeholder="Enter your email"
           required
-          className="h-full w-1/5 grow border-none bg-transparent px-3.5 text-lg transition-colors placeholder:text-foreground/60 focus:outline-hidden"
+          className="h-full w-1/5 grow border-none bg-transparent px-3.5 text-base transition-colors placeholder:text-foreground/60 focus:outline-hidden"
         />
         <SubmitButton
           label="Subscribe"

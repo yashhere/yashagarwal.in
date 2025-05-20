@@ -9,6 +9,112 @@
   cursor: pointer;
 }
 
+/* Fix for heading anchors - override link styles for heading anchors */
+h1 a.anchor,
+h2 a.anchor,
+h3 a.anchor,
+h4 a.anchor,
+h5 a.anchor,
+h6 a.anchor {
+  font-weight: inherit;
+  color: inherit;
+  text-decoration: none;
+  position: relative;
+}
+
+h1 a.anchor:hover,
+h2 a.anchor:hover,
+h3 a.anchor:hover,
+h4 a.anchor:hover,
+h5 a.anchor:hover,
+h6 a.anchor:hover {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Make anchor links unobtrusive */
+.anchor {
+  @apply float-left pr-2 no-underline;
+}
+
+.anchor:after {
+  content: "#";
+  @apply text-primary ml-2 hidden opacity-0 sm:inline-block;
+  transition: opacity 0.2s ease;
+}
+
+:is(h1, h2, h3, h4, h5, h6):hover .anchor::after {
+  @apply hidden opacity-100 sm:inline-block;
+}
+
+/* Add a mobile-friendly padding for anchors */
+@media (max-width: 640px) {
+  .anchor {
+    @apply -ml-0;
+  }
+}
+
+/* Clear floats to prevent paragraph overflow */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply clear-both;
+}
+
+/* Ensure headings with anchors clear correctly */
+h1::after,
+h2::after,
+h3::after,
+h4::after,
+h5::after,
+h6::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.visually-hidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: auto;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  white-space: nowrap;
+}
+
+.autolink-svg {
+  display: none; /* Hidden by default */
+  margin-left: 0.5rem;
+  vertical-align: middle;
+  width: 1rem;
+  height: 1rem;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+/* Show the icon when hovering over the heading */
+.prose h1:hover .autolink-svg,
+.prose h2:hover .autolink-svg,
+.prose h3:hover .autolink-svg,
+.prose h4:hover .autolink-svg,
+.prose h5:hover .autolink-svg,
+.prose h6:hover .autolink-svg {
+  display: inline-block;
+  opacity: 0.75;
+}
+
+/* Icon appearance when focused or hovered directly */
+.prose .anchor:focus .autolink-svg,
+.autolink-svg:hover {
+  opacity: 1;
+}
+
 /* INLINE CODE STYLE START */
 span[data-rehype-pretty-code-figure] {
   display: inline;
@@ -144,8 +250,8 @@ figure[data-rehype-pretty-code-figure] code [data-line] {
 /* Line highlighting */
 figure[data-rehype-pretty-code-figure] code .line--highlighted {
   @apply w-full rounded-none border-l-2;
-  background-color: hsl(var(--muted));
-  border-left-color: hsl(var(--primary));
+  background-color: hsl(var(--syntax-highlight)) !important;
+  border-left-color: hsl(var(--border));
   margin: 0 !important;
 }
 
@@ -331,6 +437,13 @@ svg p {
 
 .img-unblur {
   animation: img-unblur 0.8s linear;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .img-unblur {
+    animation: none;
+    filter: blur(0);
+  }
 }
 
 @keyframes img-unblur {

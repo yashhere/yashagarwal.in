@@ -10,10 +10,28 @@ import Draft from "./ui/draft"
 
 const BlogLink = (props) => {
   if (props.href.startsWith("#")) {
-    return <a {...props} />
+    return (
+      <a
+        {...props}
+        className={cn(
+          props.className,
+          "no-underline scroll-m-20",
+          !props.className?.includes("anchor") &&
+            "text-primary hover:underline hover:underline-offset-4"
+        )}
+      />
+    )
   }
 
-  return <Link {...props} className="text-primary" />
+  return (
+    <Link
+      {...props}
+      className={cn(
+        "text-primary transition-colors hover:text-primary/80",
+        props.className
+      )}
+    />
+  )
 }
 
 const BlogImage = (props) => {
@@ -97,7 +115,7 @@ const components = {
         {...props}
         className={cn(
           !isPrettyCode &&
-            "relative rounded-sm bg-syntax-bg border px-[0.5rem] py-[0.2rem] font-mono text-syntax-txt text-[14px]",
+            "relative rounded-sm bg-syntax-bg border px-1.5 py-0.5 font-mono text-syntax-txt text-sm",
           props.className
         )}
       />

@@ -38,7 +38,9 @@ export default function TagCloud({ tagCounts }) {
           })}
         </div>
       ) : (
-        <div className="text-lg font-semibold text-foreground">Loading ...</div>
+        <div className="text-base font-semibold text-foreground">
+          Loading ...
+        </div>
       )}
     </>
   )
