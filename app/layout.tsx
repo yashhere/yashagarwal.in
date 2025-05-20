@@ -1,6 +1,5 @@
 import { Metadata } from "next"
-import { IBM_Plex_Mono } from "next/font/google"
-import localFont from "next/font/local"
+import { IBM_Plex_Mono, Inter } from "next/font/google"
 import { Analytics } from "@/components/analytics"
 import { Footer } from "@/components/footer"
 import { ThemeProvider } from "@/components/theme-provider"
@@ -13,9 +12,9 @@ import "@/styles/globals.css"
 
 import { Toaster } from "@/components/ui/toast"
 
-const bodyFont = localFont({
-  src: "../public/assets/fonts/wotfard.ttf",
-  variable: "--font-body",
+const sansFont = Inter({
+  subsets: ["latin"],
+  variable: "--font-sans",
   display: "swap",
 })
 
@@ -117,10 +116,10 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <body
         className={cn(
-          "min-h-screen font-body antialiased",
+          "min-h-screen font-sans antialiased",
           "bg-background text-foreground",
           "flex flex-col lg:mx-auto",
-          bodyFont.variable,
+          sansFont.variable,
           monoFont.variable
         )}
       >
