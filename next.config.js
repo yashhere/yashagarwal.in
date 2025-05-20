@@ -3,10 +3,7 @@ const { withContentCollections } = require("@content-collections/next")
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
-  experimental: {
-    serverComponentsExternalPackages: [],
-  },
+  serverExternalPackages: [],
   images: {
     formats: ["image/avif", "image/webp"],
   },

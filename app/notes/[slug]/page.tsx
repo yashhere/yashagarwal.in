@@ -21,13 +21,14 @@ import { encodeParameter } from "@/lib/utils"
 import moment from "moment"
 
 type Props = {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
 export async function generateMetadata(
-  { params }: Props,
+  props: Props,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
+  const params = await props.params
   const previewNotes = await getPreviewNotes()
   const note = previewNotes.find((item) => item.note.slug === params.slug)?.note
   const siteUrl: string = siteConfig.url
@@ -105,7 +106,8 @@ export async function generateStaticParams() {
   }))
 }
 
-export default async function Page({ params }: Props) {
+export default async function Page(props: Props) {
+  const params = await props.params
   const { slug } = params
   const article = await getPartialNote(slug)
   if (!article) {
