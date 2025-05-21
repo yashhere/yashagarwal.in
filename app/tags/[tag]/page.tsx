@@ -52,7 +52,7 @@ export default async function Page(props: Props) {
   })
 
   // find un-slugified tag name
-  const tagName = new Set<string[]>()
+  const tagName = new Set<string>()
   notesWithTag.forEach((item) => {
     const tags = item.note.tags
     if (!tags || tags.length == 0) {
@@ -67,20 +67,18 @@ export default async function Page(props: Props) {
     })
   })
 
-  if (tagName.size === 0) {
-    tagName.add([params.tag])
-  }
+  // If no matching tag found, use the slugified tag
+  const displayTagName =
+    tagName.size === 0 ? params.tag : Array.from(tagName)[0]
 
   return (
     <>
-      <Section data={notesWithTag} title={tagName}>
-        <div className="pb-8">
-          {notesWithTag.length !== 0 ? (
-            <NotesList notes={notesWithTag} noSearchBox />
-          ) : (
-            <p>No notes found for tag {tagName}</p>
-          )}
-        </div>
+      <Section data={notesWithTag} title={displayTagName}>
+        {notesWithTag.length !== 0 ? (
+          <NotesList notes={notesWithTag} noSearchBox />
+        ) : (
+          <p>No notes found for tag {displayTagName}</p>
+        )}
       </Section>
     </>
   )
