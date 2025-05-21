@@ -1,6 +1,6 @@
 import { Metadata } from "next"
 import TagCloud from "@/components/content/tag-cloud"
-import SectionTitle from "@/components/ui/section-title"
+import Section from "@/components/ui/section"
 import { siteConfig } from "@/config/site"
 import { allNotes } from "content-collections"
 
@@ -29,8 +29,9 @@ export default function Page() {
 
   return (
     <>
-      <SectionTitle data={tagCounts} title="Tags" />
-      <TagCloud tagCounts={tagCounts} />
+      <Section data={tagCounts} title="Tags">
+        <TagCloud tagCounts={tagCounts} />
+      </Section>
     </>
   )
 }

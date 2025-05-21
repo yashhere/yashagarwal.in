@@ -15,7 +15,7 @@ import { TagList } from "@/components/content/tag-list"
 import { GoToTop } from "@/components/layout/go-to-top"
 import Draft from "@/components/ui/draft"
 import Link from "@/components/ui/link"
-import SectionTitle from "@/components/ui/section-title"
+import Section from "@/components/ui/section"
 import { env } from "@/env.mjs"
 import { encodeParameter } from "@/lib/utils"
 import moment from "moment"
@@ -122,13 +122,14 @@ export default async function Page(props: Props) {
     <>
       <div>
         <section className="mb-8 space-y-2">
-          <SectionTitle data={null} title={article.note.title} />
-          <div className="flex flex-col pb-4 font-sans text-base text-muted sm:flex-row sm:justify-between">
-            <span className="text-base text-foreground/80">
-              {moment(article.note.createdOn).format("MMM DD, YYYY")}
-            </span>
-          </div>
-          <TagList tags={article.note.tags} />
+          <Section data={null} title={article.note.title}>
+            <div className="flex flex-col pb-4 font-sans text-base text-muted sm:flex-row sm:justify-between">
+              <span className="text-base text-foreground/80">
+                {moment(article.note.createdOn).format("MMM DD, YYYY")}
+              </span>
+            </div>
+            <TagList tags={article.note.tags} />
+          </Section>
         </section>
         {article.series ? (
           <div className="mb-8">

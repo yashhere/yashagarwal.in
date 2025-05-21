@@ -2,6 +2,7 @@ import Link from "next/link"
 import { getPreviewNotes } from "@/lib/content"
 import { FiArrowRight } from "react-icons/fi"
 
+import Section from "../ui/section"
 import { NoteList } from "./notes-list"
 
 export async function FeaturedNotes({ count }: { count: number }) {
@@ -29,20 +30,17 @@ export async function FeaturedNotes({ count }: { count: number }) {
   // Sort them by update date
   notesFiltered.sort((a, b) => b.note.updatedOn - a.note.updatedOn)
   return (
-    <>
-      <div className="group mb-6 flex flex-row justify-between">
-        <h2 className="text-base font-semibold">Popular Notes</h2>
-        <Link
-          href="/notes"
-          className="flex items-center space-x-2 align-middle font-medium hover:text-primary"
-        >
-          <span>all</span>
-          <FiArrowRight className="size-3.5" />
-        </Link>
-      </div>
-      <section className="w-full">
+    <div className="flex flex-col justify-start">
+      <div className="w-full">
         <NoteList homePage={true} notes={notesFiltered.slice(0, count)} />
-      </section>
-    </>
+      </div>
+      <Link
+        href="/notes"
+        className="flex items-center space-x-2 align-middle font-medium hover:text-primary"
+      >
+        <span>all</span>
+        <FiArrowRight className="size-3.5" />
+      </Link>
+    </div>
   )
 }

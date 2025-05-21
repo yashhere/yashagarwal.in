@@ -1,6 +1,6 @@
 import { Metadata } from "next"
 import { NotesList } from "@/components/content/all-notes"
-import SectionTitle from "@/components/ui/section-title"
+import Section from "@/components/ui/section"
 import { siteConfig } from "@/config/site"
 import { getPreviewNotes } from "@/lib/content"
 
@@ -23,11 +23,8 @@ export default async function Page() {
   const notes = await getPreviewNotes()
 
   return (
-    <>
-      <section>
-        <SectionTitle data={notes} title="notes" />
-      </section>
+    <Section data={notes} title="notes">
       <NotesList notes={notes} />
-    </>
+    </Section>
   )
 }
