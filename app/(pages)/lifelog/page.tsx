@@ -28,10 +28,10 @@ export default function LifeLog() {
               className="prose ml-4 pt-24 leading-7 text-foreground first:pt-8"
             >
               <div className="absolute -left-1.5 mt-1.5 size-3 rounded-full border border-background bg-muted-foreground"></div>
-              <time className="mb-1 text-2xl font-semibold leading-none text-foreground">
+              <time className="mb-1 text-2xl leading-none text-foreground">
                 {moment(note.createdOn).format("MMM DD, YYYY")}
               </time>
-              <div className="mt-4 text-base font-semibold leading-none text-muted-foreground">
+              <div className="mt-4 text-base leading-none text-muted-foreground">
                 {" "}
                 Last updated on:{" "}
                 <time className="">

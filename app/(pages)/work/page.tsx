@@ -41,16 +41,14 @@ const WorkExperience: FC<WorkExperienceProps> = ({
 
       <div className="absolute left-0 top-2.5 h-2.5 w-2.5 rounded-full border border-border bg-foreground"></div>
 
-      <h2 className="flex items-center text-2xl font-semibold text-foreground">
-        {company}
-      </h2>
+      <h2 className="flex items-center text-2xl text-foreground">{company}</h2>
 
       <div className="mt-1 flex items-center text-sm text-muted-foreground">
         <FiCalendar className="mr-1.5 h-4 w-4" />
         <span>{period}</span>
       </div>
 
-      <h3 className="mt-2 text-lg font-medium text-foreground">{title}</h3>
+      <h3 className="mt-2 text-lg text-foreground">{title}</h3>
 
       <p className="mt-3 text-foreground">{description}</p>
 
@@ -112,7 +110,7 @@ const Page: FC = () => {
 
         <div className="flex items-center gap-2 mb-8">
           <FiBriefcase className="h-6 w-6 text-foreground" />
-          <h1 className="text-2xl font-semibold tracking-tight">Experience</h1>
+          <h1 className="text-2xl tracking-tight">Experience</h1>
         </div>
 
         <div className="space-y-0">

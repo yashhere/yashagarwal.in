@@ -42,7 +42,7 @@ export const Series = ({
           }}
         >
           <Title>
-            <span className="font-bold">{series?.seriesTitle}</span>
+            <span className="font-medium">{series?.seriesTitle}</span>
             <span className="hidden sm:inline-block">&middot;</span>
             <span className="text-base text-foreground">
               {index} of {series.notes?.length}

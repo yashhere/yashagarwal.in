@@ -3,7 +3,6 @@
 
 /* Trying to replicate prose-headings because the link tag styles take precedence */
 .prose .anchor {
-  font-weight: bold;
   color: hsl(var(--foreground));
   text-decoration: none;
   cursor: pointer;

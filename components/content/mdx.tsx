@@ -54,7 +54,7 @@ const components = {
   h1: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h1
       className={cn(
-        "mt-10 mb-4 scroll-m-6 text-3xl sm:text-4xl font-bold text-foreground tracking-tight",
+        "mt-10 mb-4 scroll-m-6 text-2xl text-foreground ",
         className
       )}
       {...props}
@@ -63,7 +63,7 @@ const components = {
   h2: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h2
       className={cn(
-        "mb-3 mt-10 scroll-m-10 text-2xl sm:text-3xl font-semibold first:mt-0 text-foreground tracking-tight",
+        "mb-3 mt-10 scroll-m-10 text-xl first:mt-0 text-foreground",
         className
       )}
       {...props}
@@ -71,19 +71,13 @@ const components = {
   ),
   h3: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h3
-      className={cn(
-        "mt-8 mb-3 scroll-m-4 text-xl sm:text-2xl font-semibold tracking-tight text-foreground",
-        className
-      )}
+      className={cn("mt-8 mb-3 scroll-m-4 text-lg text-foreground", className)}
       {...props}
     />
   ),
   h4: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h4
-      className={cn(
-        "mt-6 mb-3 scroll-m-4 text-lg sm:text-xl font-semibold tracking-tight text-foreground",
-        className
-      )}
+      className={cn("mt-6 mb-3 scroll-m-4 text-md text-foreground", className)}
       {...props}
     />
   ),
@@ -149,7 +143,7 @@ const components = {
   th: ({ className, ...props }: React.HTMLAttributes<HTMLTableCellElement>) => (
     <th
       {...props}
-      className="cursor-auto border-b border-border py-3 text-base font-semibold text-muted-foreground"
+      className="cursor-auto border-b border-border py-3 text-base font-medium text-muted-foreground"
     />
   ),
   td: ({ className, ...props }: React.HTMLAttributes<HTMLTableCellElement>) => (

@@ -64,7 +64,7 @@ export const Footer: FC = () => {
       <div className="mx-auto max-w-2xl space-y-8 p-4 md:px-0">
         <div className="flex flex-row flex-wrap items-start justify-between md:flex-row">
           <section className="flex flex-col">
-            <h1 className="mb-4 text-base font-bold">Get in touch</h1>
+            <h1 className="mb-4 text-base font-medium">Get in touch</h1>
             <div className="space-y-2">
               {Socials.map((s) => {
                 return (
@@ -83,7 +83,7 @@ export const Footer: FC = () => {
             </div>
           </section>
           <section className="flex w-1/3 flex-col md:w-auto">
-            <h1 className="mb-4 text-base font-bold">Explore</h1>
+            <h1 className="mb-4 text-base font-medium">Explore</h1>
             <div className="flex flex-col space-y-2">
               {Object.entries(navItems).map(([path, { name }]) => {
                 const isActive = path === pathname
@@ -106,7 +106,7 @@ export const Footer: FC = () => {
           </section>
           <div className="mt-8 flex flex-col md:mt-0">
             <section className="">
-              <h1 className="mb-4 text-base font-bold">Prefer RSS 🙂</h1>
+              <h1 className="mb-4 text-base font-medium">Prefer RSS 🙂</h1>
               <div className="mb-6">
                 <Link
                   href={`${env.NEXT_PUBLIC_APP_URL}/atom.xml`}
@@ -120,7 +120,7 @@ export const Footer: FC = () => {
               </div>
             </section>
             <section>
-              <h1 className="mb-4 text-base font-bold">Get email updates</h1>
+              <h1 className="mb-4 text-base font-medium">Get email updates</h1>
               <div className="mb-6 flex flex-col">
                 <Newsletter />
               </div>
