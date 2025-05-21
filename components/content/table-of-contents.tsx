@@ -18,7 +18,9 @@ export const TableOfContents = ({ headings, interactive }) => {
             setIsOpen(!isOpen)
           }}
         >
-          <div className="font-sans text-base font-bold">Table of Contents</div>
+          <div className="font-sans text-base font-medium">
+            Table of Contents
+          </div>
 
           <div className="ml-auto pl-4">
             <div className="rounded-full bg-muted p-2 text-foreground group-hover:bg-muted/70">
@@ -31,7 +33,7 @@ export const TableOfContents = ({ headings, interactive }) => {
           </div>
         </button>
       ) : (
-        <div className="font-sans text-base font-bold">Table of Contents</div>
+        <div className="font-sans text-base font-medium">Table of Contents</div>
       )}
       <hr className="border-t-1 my-4 border-border" />
       {isOpen && (

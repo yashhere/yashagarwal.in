@@ -12,10 +12,10 @@ export default function Draft({ children }: Props) {
         <div className="">
           <FiPenTool className="size-28 text-foreground-accent" />
         </div>
-        <div className="text-6xl font-semibold text-secondary sm:text-7xl">
+        <div className="text-6xl text-secondary sm:text-7xl">
           Work in Progress
         </div>
-        <div className="mx-auto w-4/5 text-center text-2xl font-medium">
+        <div className="mx-auto w-4/5 text-center text-2xl">
           I am still working on this article. It may be a good idea to come back
           later.
         </div>
