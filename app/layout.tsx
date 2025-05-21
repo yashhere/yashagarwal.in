@@ -136,7 +136,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <Toaster closeButton className="pointer-events-auto" />
           <main className="w-full max-w-2xl flex-1 px-4  md:px-0 ">
             <Navigation />
-            <div className="py-6 md:py-12">{children}</div>
+            <div className="py-6">{children}</div>
           </main>
           <Footer />
           <Analytics />

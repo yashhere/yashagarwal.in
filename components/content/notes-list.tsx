@@ -9,12 +9,14 @@ export const NoteList = ({
   homePage?: boolean
 }) => {
   return (
-    <div className="flex flex-col gap-5 sm:gap-0">
+    <ul className="-mx-4 space-y-2">
       {notes?.map((note) => {
         return (
-          <NotePreview homePage={homePage} key={note.note.slug} note={note} />
+          <li key={note.note.slug}>
+            <NotePreview homePage={homePage} key={note.note.slug} note={note} />
+          </li>
         )
       })}
-    </div>
+    </ul>
   )
 }

@@ -97,7 +97,7 @@ const components = {
           "no-scrollbar overflow-x-auto",
           // Don't add additional styling for rehype-pretty-code blocks
           !isPrettyCode &&
-            "rounded-lg border px-4 py-4 mb-6 mt-4 font-mono text-[15px]",
+            "rounded-lg border px-4 py-4 mb-6 mt-4 font-mono text-base",
           className
         )}
         {...props}

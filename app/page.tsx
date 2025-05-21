@@ -8,7 +8,7 @@ import { siteConfig } from "@/config/site"
 
 export default async function Page() {
   return (
-    <div>
+    <>
       <div className="flex flex-row items-center gap-4">
         <div className="relative h-12 w-12">
           <Image
@@ -50,9 +50,9 @@ export default async function Page() {
         </p>
       </div>
 
-      <Section title="Popular Notes">
+      <Section title="Writing">
         <FeaturedNotes count={siteConfig.featuredNotes} />
       </Section>
-    </div>
+    </>
   )
 }
