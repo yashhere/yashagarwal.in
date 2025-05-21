@@ -1,4 +1,4 @@
-import { FeaturedNotes } from "@/components/featured-notes"
+import { FeaturedNotes } from "@/components/content/featured-notes"
 import Link from "@/components/ui/link"
 import SectionTitle from "@/components/ui/section-title"
 import { siteConfig } from "@/config/site"

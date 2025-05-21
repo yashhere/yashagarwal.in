@@ -1,5 +1,5 @@
-import { DarkToggle } from "./mode-toggle"
-import { AnalogClock } from "./ui/clock/clock"
+import { DarkToggle } from "../interactive/mode-toggle"
+import { AnalogClock } from "../ui/clock/clock"
 
 export default function FullWidthFooter() {
   return (

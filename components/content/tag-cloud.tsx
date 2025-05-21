@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import GithubSlugger from "github-slugger"
 
-import Link from "./ui/link"
+import Link from "../ui/link"
 
 export default function TagCloud({ tagCounts }) {
   const [hydrated, setHydrated] = useState(false)

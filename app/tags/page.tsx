@@ -1,5 +1,5 @@
 import { Metadata } from "next"
-import TagCloud from "@/components/tag-cloud"
+import TagCloud from "@/components/content/tag-cloud"
 import SectionTitle from "@/components/ui/section-title"
 import { siteConfig } from "@/config/site"
 import { allNotes } from "content-collections"

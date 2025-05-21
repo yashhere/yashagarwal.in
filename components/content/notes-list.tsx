@@ -1,4 +1,4 @@
-import { NotePreview } from "@/components/note-preview"
+import { NotePreview } from "@/components/content/note-preview"
 import { NoteWithMetadata } from "@/types"
 
 export const NoteList = ({

@@ -7,9 +7,9 @@ import { cn } from "@/lib/utils"
 import { FiGithub, FiLinkedin, FiRss } from "react-icons/fi"
 import { RiAtLine, RiTwitterXFill } from "react-icons/ri"
 
-import Newsletter from "./newsletter"
-import { AnalogClock } from "./ui/clock/clock"
-import Link from "./ui/link"
+import Newsletter from "../interactive/newsletter"
+import { AnalogClock } from "../ui/clock/clock"
+import Link from "../ui/link"
 
 const Socials = [
   {

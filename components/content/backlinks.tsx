@@ -1,6 +1,6 @@
 import { getNoteBacklinks } from "@/lib/content"
 
-import Link from "./ui/link"
+import Link from "../ui/link"
 
 export const BackLinks = ({
   backlinks,

@@ -4,7 +4,7 @@ import { useState } from "react"
 import { cn } from "@/lib/utils"
 import { FiChevronDown, FiChevronUp } from "react-icons/fi"
 
-import Link from "./ui/link"
+import Link from "../ui/link"
 
 export const TableOfContents = ({ headings, interactive }) => {
   const [isOpen, setIsOpen] = useState(!interactive)
