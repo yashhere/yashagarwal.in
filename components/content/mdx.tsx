@@ -6,7 +6,7 @@ import Link from "@/components/ui/link"
 import { cn } from "@/lib/utils"
 import { useMDXComponent } from "@content-collections/mdx/react"
 
-import Draft from "./ui/draft"
+import Draft from "../ui/draft"
 
 const BlogLink = (props) => {
   if (props.href.startsWith("#")) {

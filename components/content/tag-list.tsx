@@ -1,7 +1,7 @@
 import { FC } from "react"
 import GithubSlugger from "github-slugger"
 
-import Link from "./ui/link"
+import Link from "../ui/link"
 
 type TagListProps = {
   tags: string[]

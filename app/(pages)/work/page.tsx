@@ -2,7 +2,6 @@ import { FC } from "react"
 import { Metadata } from "next"
 import SectionTitle from "@/components/ui/section-title"
 import { siteConfig } from "@/config/site"
-import { cn } from "@/lib/utils"
 import { FiBriefcase, FiCalendar, FiChevronsRight } from "react-icons/fi"
 
 export const metadata: Metadata = {

@@ -1,5 +1,5 @@
 import { Metadata, ResolvingMetadata } from "next"
-import { NotesList } from "@/components/all-notes"
+import { NotesList } from "@/components/content/all-notes"
 import SectionTitle from "@/components/ui/section-title"
 import { siteConfig } from "@/config/site"
 import { getPreviewNotes } from "@/lib/content"

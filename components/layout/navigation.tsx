@@ -4,7 +4,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 
-import { DarkToggle } from "../mode-toggle"
+import { DarkToggle } from "../interactive/mode-toggle"
 
 const navItems = {
   "/": {

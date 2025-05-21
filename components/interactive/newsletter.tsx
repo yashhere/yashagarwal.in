@@ -7,8 +7,8 @@ import submitEmail from "@/lib/actions/newsletter/form"
 import { EMPTY_FORM_STATE } from "@/lib/actions/newsletter/utils"
 import { useFormStatus } from "react-dom"
 
-import { FieldError } from "./forms/field-error"
-import LoadingSpinner from "./ui/icons/loading-spinner"
+import { FieldError } from "../forms/field-error"
+import LoadingSpinner from "../ui/icons/loading-spinner"
 
 type SubmitButtonProps = {
   label: string

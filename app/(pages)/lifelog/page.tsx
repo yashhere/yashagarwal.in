@@ -1,4 +1,4 @@
-import { Mdx } from "@/components/mdx"
+import { Mdx } from "@/components/content/mdx"
 import SectionTitle from "@/components/ui/section-title"
 import { allLifelogs } from "content-collections"
 import { compareDesc } from "date-fns"
