@@ -1,5 +1,5 @@
 import { Mdx } from "@/components/content/mdx"
-import SectionTitle from "@/components/ui/section-title"
+import Section from "@/components/ui/section"
 import { allLifelogs } from "content-collections"
 import { compareDesc } from "date-fns"
 import moment from "moment"
@@ -12,13 +12,14 @@ export default function LifeLog() {
 
   return (
     <>
-      <SectionTitle data={null} title={"Recently in life"} />
-      <div className="text-base text-foreground">
-        <p>
-          This is a sporadically updated log of what I am currently doing in
-          life.
-        </p>
-      </div>
+      <Section data={null} title={"Recently in life"}>
+        <div className="text-base text-foreground">
+          <p>
+            This is a sporadically updated log of what I am currently doing in
+            life.
+          </p>
+        </div>
+      </Section>
       <ol className="relative mt-8 border-l border-border/50">
         {notes.map((note) => {
           return (

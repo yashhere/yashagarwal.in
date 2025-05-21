@@ -1,6 +1,6 @@
 import { Metadata, ResolvingMetadata } from "next"
 import { NotesList } from "@/components/content/all-notes"
-import SectionTitle from "@/components/ui/section-title"
+import Section from "@/components/ui/section"
 import { siteConfig } from "@/config/site"
 import { getPreviewNotes } from "@/lib/content"
 import GithubSlugger from "github-slugger"
@@ -73,14 +73,15 @@ export default async function Page(props: Props) {
 
   return (
     <>
-      <section className="pb-8">
-        <SectionTitle data={notesWithTag} title={tagName} />
-      </section>
-      {notesWithTag.length !== 0 ? (
-        <NotesList notes={notesWithTag} noSearchBox />
-      ) : (
-        <p>No notes found for tag {tagName}</p>
-      )}
+      <Section data={notesWithTag} title={tagName}>
+        <div className="pb-8">
+          {notesWithTag.length !== 0 ? (
+            <NotesList notes={notesWithTag} noSearchBox />
+          ) : (
+            <p>No notes found for tag {tagName}</p>
+          )}
+        </div>
+      </Section>
     </>
   )
 }

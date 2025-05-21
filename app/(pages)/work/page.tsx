@@ -1,6 +1,6 @@
 import { FC } from "react"
 import { Metadata } from "next"
-import SectionTitle from "@/components/ui/section-title"
+import Section from "@/components/ui/section"
 import { siteConfig } from "@/config/site"
 import { FiBriefcase, FiCalendar, FiChevronsRight } from "react-icons/fi"
 
@@ -92,70 +92,71 @@ const WorkExperience: FC<WorkExperienceProps> = ({
 const Page: FC = () => {
   return (
     <>
-      <SectionTitle data={null} title="work" />
+      <Section data={null} title="work">
+        <section className="prose prose-lg leading-7 text-foreground mb-8">
+          <p>
+            I am an enthusiastic software developer with a knack for backend
+            development. I&apos;ve got my hands dirty in Python, Golang, and
+            C++. I have mainly worked in cybersecurity domain in my career
+            including things like web-application penetration testing and
+            writing code for both POCs and highly scalable commercial security
+            products.
+          </p>
+          <p className="mt-2">
+            What sets me apart? I am not just about what&apos;s already in the
+            toolkit. A relentless commitment to continuous learning and
+            adaptability. I am always ready to dive into the latest, adapt and
+            turn challenges into victory.
+          </p>
+        </section>
 
-      <section className="prose prose-lg leading-7 text-foreground mb-8">
-        <p>
-          I am an enthusiastic software developer with a knack for backend
-          development. I&apos;ve got my hands dirty in Python, Golang, and C++.
-          I have mainly worked in cybersecurity domain in my career including
-          things like web-application penetration testing and writing code for
-          both POCs and highly scalable commercial security products.
-        </p>
-        <p className="mt-2">
-          What sets me apart? I am not just about what&apos;s already in the
-          toolkit. A relentless commitment to continuous learning and
-          adaptability. I am always ready to dive into the latest, adapt and
-          turn challenges into victory.
-        </p>
-      </section>
+        <div className="flex items-center gap-2 mb-8">
+          <FiBriefcase className="h-6 w-6 text-foreground" />
+          <h1 className="text-2xl font-semibold tracking-tight">Experience</h1>
+        </div>
 
-      <div className="flex items-center gap-2 mb-8">
-        <FiBriefcase className="h-6 w-6 text-foreground" />
-        <h1 className="text-2xl font-semibold tracking-tight">Experience</h1>
-      </div>
+        <div className="space-y-0">
+          <WorkExperience
+            company="Netskope"
+            period="2024 - Present"
+            title="Sr. Software Engineer"
+            description="Working on the next-gen implementation of the CASB API product, while also maintaining two crucial apps from the legacy product, ensuring a smooth transition to the next-gen implementations."
+          />
 
-      <div className="space-y-0">
-        <WorkExperience
-          company="Netskope"
-          period="2024 - Present"
-          title="Sr. Software Engineer"
-          description="Working on the next-gen implementation of the CASB API product, while also maintaining two crucial apps from the legacy product, ensuring a smooth transition to the next-gen implementations."
-        />
+          <WorkExperience
+            company="Netskope"
+            period="2022 - 2024"
+            title="Software Engineer II"
+            description="As part of the API Data Protection Team, I've grown to own end-to-end pipeline for two app implementations."
+            achievements={[
+              "Implemented a system to enable migration of existing customers to the next-gen product without any downtime.",
+              "Took initiative to improve file listing performance for one of the apps and implemented check-pointing logic to prevent retrying duplicate tasks on any API rate limiting.",
+            ]}
+          />
 
-        <WorkExperience
-          company="Netskope"
-          period="2022 - 2024"
-          title="Software Engineer II"
-          description="As part of the API Data Protection Team, I've grown to own end-to-end pipeline for two app implementations."
-          achievements={[
-            "Implemented a system to enable migration of existing customers to the next-gen product without any downtime.",
-            "Took initiative to improve file listing performance for one of the apps and implemented check-pointing logic to prevent retrying duplicate tasks on any API rate limiting.",
-          ]}
-        />
-
-        <WorkExperience
-          company="Cisco Systems"
-          period="2018 - 2021"
-          title="Software Engineer I and II"
-          description=""
-          achievements={[
-            "Did an analysis of Cisco FTD's layer-7 detection capabilities against the open-source WAF ModSecurity and provided suggestions to improve Snort's detection capabilities.",
-            "Later joined Snort team to help improve its layer-7 detection capabilities.",
-            "Worked on implementing monitoring capabilities in Cisco Secure Firewall Cloud Native (SFCN) using open-source Prometheus, Grafana and Telegraf stack using Helm charts.",
-          ]}
-          nestedAchievements={{
-            "Used automated and manual pentesting methodologies to generate the traffic to these tools":
-              [
-                "Standardized the logs generated by these tools and used log-correlation to compare the efficacy and performance of FTD",
-                "Orchestrated and managed the entire supporting infrastructure on AWS.",
+          <WorkExperience
+            company="Cisco Systems"
+            period="2018 - 2021"
+            title="Software Engineer I and II"
+            description=""
+            achievements={[
+              "Did an analysis of Cisco FTD's layer-7 detection capabilities against the open-source WAF ModSecurity and provided suggestions to improve Snort's detection capabilities.",
+              "Later joined Snort team to help improve its layer-7 detection capabilities.",
+              "Worked on implementing monitoring capabilities in Cisco Secure Firewall Cloud Native (SFCN) using open-source Prometheus, Grafana and Telegraf stack using Helm charts.",
+            ]}
+            nestedAchievements={{
+              "Used automated and manual pentesting methodologies to generate the traffic to these tools":
+                [
+                  "Standardized the logs generated by these tools and used log-correlation to compare the efficacy and performance of FTD",
+                  "Orchestrated and managed the entire supporting infrastructure on AWS.",
+                ],
+              "Implemented Portscan feature for FTD platforms": [
+                "Moved functionality from layer-4 (Snort) to layer-2 (ASA) for better performance",
               ],
-            "Implemented Portscan feature for FTD platforms": [
-              "Moved functionality from layer-4 (Snort) to layer-2 (ASA) for better performance",
-            ],
-          }}
-        />
-      </div>
+            }}
+          />
+        </div>
+      </Section>
     </>
   )
 }

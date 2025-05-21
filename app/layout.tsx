@@ -117,8 +117,10 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <body
         className={cn(
-          "min-h-screen font-sans antialiased",
+          "flex flex-col items-center",
+          "min-h-dvh font-sans antialiased optimize-legibility",
           "bg-background text-foreground",
+          "selection:bg-zinc-200/60",
           "flex flex-col lg:mx-auto",
           sansFont.variable,
           monoFont.variable
@@ -132,17 +134,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
           enableSystem
         >
           <Toaster closeButton className="pointer-events-auto" />
-          <div className="flex h-screen flex-auto flex-col">
-            <main className="mx-4 flex max-w-2xl flex-auto flex-col sm:mx-auto sm:w-full">
-              <Navigation />
-              <div className="mb-32">
-                <section className="flex flex-col justify-start">
-                  {children}
-                </section>
-              </div>
-            </main>
-            <Footer />
-          </div>
+          <main className="w-full max-w-2xl flex-1 px-4  md:px-0 ">
+            <Navigation />
+            <div className="py-6 md:py-12">{children}</div>
+          </main>
+          <Footer />
           <Analytics />
           <TailwindIndicator />
         </ThemeProvider>
