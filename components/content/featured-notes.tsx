@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { getPreviewNotes } from "@/lib/content"
-import { FiArrowRight } from "react-icons/fi"
+import { ArrowRightIcon } from "@phosphor-icons/react/dist/ssr"
 
 import Section from "../ui/section"
 import { NoteList } from "./notes-list"
@@ -39,7 +39,7 @@ export async function FeaturedNotes({ count }: { count: number }) {
         className="mt-2 inline-flex items-center gap-2 text-base font-medium text-foreground/80 transition-colors hover:text-primary"
       >
         <span>Explore all my notes</span>
-        <FiArrowRight className="relative top-[1px] h-4 w-4" />
+        <ArrowRightIcon className="relative top-[1px] h-4 w-4" />
       </Link>
     </div>
   )

@@ -14,10 +14,12 @@ import { BackLinks } from "@/components/content/backlinks"
 import { TagList } from "@/components/content/tag-list"
 import { GoToTop } from "@/components/layout/go-to-top"
 import Draft from "@/components/ui/draft"
+import { Heading } from "@/components/ui/heading"
 import Link from "@/components/ui/link"
 import Section from "@/components/ui/section"
 import { env } from "@/env.mjs"
 import { encodeParameter } from "@/lib/utils"
+import { TagSimpleIcon, XLogoIcon } from "@phosphor-icons/react/dist/ssr"
 import moment from "moment"
 
 type Props = {
@@ -122,14 +124,13 @@ export default async function Page(props: Props) {
     <>
       <div>
         <section className="mb-8 space-y-2">
-          <Section data={null} title={article.note.title}>
-            <div className="flex flex-col pb-4 font-sans text-base text-muted sm:flex-row sm:justify-between">
-              <span className="text-sm text-foreground/80">
-                {moment(article.note.createdOn).format("MMM DD, YYYY")}
-              </span>
-            </div>
-            <TagList tags={article.note.tags} />
-          </Section>
+          <div className="text-foreground/80 text-sm tracking-wider uppercase">
+            {article.note.category}
+          </div>
+          <Heading level="h2">{article.note.title}</Heading>
+          <div className="text-foreground/60 text-sm">
+            {moment(article.note.createdOn).format("MMM DD, YYYY")}
+          </div>
         </section>
         {article.series ? (
           <div className="mb-8">
@@ -151,19 +152,25 @@ export default async function Page(props: Props) {
           </div>
         </div>
         <BackLinks backlinks={article.backlinks} />
+
+        {article.note.tags && article.note.tags.length > 0 && (
+          <TagList tags={article.note.tags} />
+        )}
+
         <hr className="border-t-1 border-border" />
-        <div className="flex flex-col items-center justify-center space-x-2 space-y-4 py-8 sm:flex-row sm:justify-between sm:space-y-0">
+        <div className="flex items-center space-x-2 py-8 flex-row justify-between">
           <Link
-            href={`https://twitter.com/intent/tweet?text=${encodedUrl}%20via%20%40yash__here`}
+            href={`https://x.com/intent/tweet?text=${encodedUrl}%20via%20%40yash__here`}
             className="text-base text-primary"
             noUnderline
+            noExternalLinkIcon
           >
-            <span className="text-foreground/80">Share this article on</span>{" "}
-            <span>Twitter</span>
+            <div className="flex items-center rounded-full gap-1 border border-border/80 px-4 py-1 text-base  flex-row text-foreground/80 hover:text-foreground hover:border-border">
+              <XLogoIcon className="w-5 flex" /> Share
+            </div>
           </Link>
           <GoToTop slug={slug} />
         </div>
-        <hr className="border-t-1 border-border" />
         <DisqusComments
           slug={params.slug}
           url={`${siteConfig.url}/notes/${params.slug}`}

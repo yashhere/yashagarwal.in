@@ -1,5 +1,6 @@
 import { getNoteBacklinks } from "@/lib/content"
 
+import { Heading } from "../ui/heading"
 import Link from "../ui/link"
 
 export const BackLinks = ({
@@ -13,14 +14,14 @@ export const BackLinks = ({
 
   return (
     <>
-      <hr className="border-t-1 my-4 border-border" />
-      <div className="py-8">
-        <div className="mb-4 text-2xl">Pages that link to this</div>
-        <ul className="list-inside list-disc text-base leading-7">
+      <hr className=" border-t-1 border-border" />
+      <div className="flex flex-col space-y-4 my-8">
+        <Heading level="h2">Pages that link to this</Heading>
+        <ul className="list-outside list-disc text-base pl-5 space-y-2">
           {backlinks?.map((link) => {
             return (
-              <li key={link.url}>
-                <Link href={link.url} noUnderline className="text-primary">
+              <li key={link.url} className="text-wrap">
+                <Link href={link.url} noUnderline className="break-words">
                   <strong>{link.type}</strong>: {link.title}
                 </Link>
               </li>

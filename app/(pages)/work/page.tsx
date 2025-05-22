@@ -1,8 +1,14 @@
 import { FC } from "react"
 import { Metadata } from "next"
+import Head from "next/head"
+import { Heading } from "@/components/ui/heading"
 import Section from "@/components/ui/section"
 import { siteConfig } from "@/config/site"
-import { FiBriefcase, FiCalendar, FiChevronsRight } from "react-icons/fi"
+import {
+  BriefcaseIcon,
+  CalendarDotsIcon,
+  CaretDoubleRightIcon,
+} from "@phosphor-icons/react/dist/ssr"
 
 export const metadata: Metadata = {
   title: "Work | Yash Agarwal",
@@ -41,10 +47,12 @@ const WorkExperience: FC<WorkExperienceProps> = ({
 
       <div className="absolute left-0 top-2.5 h-2.5 w-2.5 rounded-full border border-border bg-foreground"></div>
 
-      <h2 className="flex items-center text-2xl text-foreground">{company}</h2>
+      <Heading level="h3" className="flex items-center text-foreground">
+        {company}
+      </Heading>
 
       <div className="mt-1 flex items-center text-sm text-muted-foreground">
-        <FiCalendar className="mr-1.5 h-4 w-4" />
+        <CalendarDotsIcon className="mr-1.5 h-4 w-4" />
         <span>{period}</span>
       </div>
 
@@ -56,7 +64,7 @@ const WorkExperience: FC<WorkExperienceProps> = ({
         <ul className="mt-4 space-y-2">
           {achievements.map((achievement, i) => (
             <li key={i} className="flex gap-2">
-              <FiChevronsRight className="h-5 w-5 flex-shrink-0 text-foreground mt-0.5" />
+              <CaretDoubleRightIcon className="h-4 w-4 flex-shrink-0 text-foreground mt-0.5" />
               <span>{achievement}</span>
             </li>
           ))}
@@ -68,7 +76,7 @@ const WorkExperience: FC<WorkExperienceProps> = ({
           {Object.entries(nestedAchievements).map(([key, items], i) => (
             <div key={i}>
               <div className="flex gap-2">
-                <FiChevronsRight className="h-5 w-5 flex-shrink-0 text-foreground mt-0.5" />
+                <CaretDoubleRightIcon className="h-4 w-4 flex-shrink-0 text-foreground mt-0.5" />
                 <span>{key}</span>
               </div>
               <ul className="mt-2 space-y-1 pl-7">
@@ -91,7 +99,7 @@ const Page: FC = () => {
   return (
     <>
       <Section data={null} title="work">
-        <section className="prose prose-lg leading-7 text-foreground mb-8">
+        <section className="prose leading-7 text-foreground mb-8">
           <p>
             I am an enthusiastic software developer with a knack for backend
             development. I&apos;ve got my hands dirty in Python, Golang, and
@@ -109,8 +117,10 @@ const Page: FC = () => {
         </section>
 
         <div className="flex items-center gap-2 mb-8">
-          <FiBriefcase className="h-6 w-6 text-foreground" />
-          <h1 className="text-2xl tracking-tight">Experience</h1>
+          <BriefcaseIcon className="h-6 w-6 text-foreground" />
+          <Heading level="h2" className="text-foreground">
+            Experience
+          </Heading>
         </div>
 
         <div className="space-y-0">

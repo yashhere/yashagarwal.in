@@ -4,7 +4,7 @@ import React, { FC, ReactNode } from "react"
 import Link from "next/link"
 import { getSeries } from "@/lib/content"
 import { cn } from "@/lib/utils"
-import { FiChevronDown, FiChevronUp } from "react-icons/fi"
+import { ArrowDownIcon, ArrowUpIcon } from "@phosphor-icons/react/dist/ssr"
 
 type TitleProps = {
   children?: ReactNode
@@ -52,9 +52,9 @@ export const Series = ({
           <div className="ml-auto pl-4">
             <div className="rounded-full bg-muted p-2 text-foreground group-hover:bg-muted/70">
               {isOpen ? (
-                <FiChevronUp className="w-4" />
+                <ArrowUpIcon className="w-4" />
               ) : (
-                <FiChevronDown className="w-4" />
+                <ArrowDownIcon className="w-4" />
               )}
             </div>
           </div>
@@ -65,12 +65,12 @@ export const Series = ({
       <hr className="border-t-1 my-4 border-border" />
       {isOpen && (
         <div>
-          <ul className="text-base">
+          <ul className="text-base space-y-1.5">
             {series.notes?.map((note) => (
               <li
                 key={note.slug}
                 className={cn(
-                  "relative my-3 pl-7 before:absolute before:left-1 before:top-[9px] before:size-1.5 before:rounded-full",
+                  "relative pl-7 before:absolute before:left-1 before:top-[9px] before:size-1.5 before:rounded-full",
                   {
                     "before:bg-background/10 before:ring-[3px] before:ring-primary before:ring-offset-1 before:ring-offset-background/10":
                       note.isCurrent,
@@ -82,11 +82,13 @@ export const Series = ({
               >
                 {note.status === "published" ? (
                   note.isCurrent ? (
-                    <span className="text-foreground">{note.title}</span>
+                    <span className="text-foreground text-sm">
+                      {note.title}
+                    </span>
                   ) : (
                     <Link
                       href={`/notes/${note.slug}`}
-                      className={cn("text-primary transition-all")}
+                      className="text-primary transition-all text-sm"
                     >
                       {note.title}
                     </Link>
@@ -102,7 +104,7 @@ export const Series = ({
               </li>
             ))}
           </ul>
-          <hr className="border-t-1 my-4 border-border" />
+          <hr className="border-t-1 mt-4 border-border" />
         </div>
       )}
     </>

@@ -100,6 +100,7 @@ const notes = defineCollection({
     image: z.string().optional(),
     status: z.enum(["draft", "published"]).default("draft"),
     tags: z.array(z.string()).optional(),
+    category: z.string().optional(),
     series: z
       .object({
         title: z.string(),
@@ -239,6 +240,7 @@ const notes = defineCollection({
       headings,
       readingTime,
       slug: `${document._meta.path}`,
+      category: document.tags![0] || "Uncategorized",
       _raw: {
         sourceFilePath: document._meta.filePath,
         sourceFileName: document._meta.fileName,

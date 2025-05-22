@@ -3,7 +3,7 @@ import Balancer from "react-wrap-balancer"
 import { Heading } from "./heading"
 
 export default function Section({
-  level = "h2",
+  level = "h3",
   title,
   data,
   children,

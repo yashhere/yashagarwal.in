@@ -1,9 +1,9 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { MoonStarsIcon, SunDimIcon } from "@phosphor-icons/react/dist/ssr"
 import { motion } from "framer-motion"
 import { useTheme } from "next-themes"
-import { FiMoon, FiSun } from "react-icons/fi"
 
 export const DarkToggle = () => {
   const [mounted, setMounted] = useState(false)
@@ -35,10 +35,10 @@ export const DarkToggle = () => {
         }}
       >
         {resolvedTheme === "light" ? (
-          <FiSun className="size-5 text-foreground" />
+          <SunDimIcon className="size-5 text-foreground" />
         ) : null}
         {resolvedTheme === "dark" ? (
-          <FiMoon className="size-5 text-foreground" />
+          <MoonStarsIcon className="size-5 text-foreground" />
         ) : null}
       </motion.div>
     </div>
