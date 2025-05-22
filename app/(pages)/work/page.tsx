@@ -47,16 +47,16 @@ const WorkExperience: FC<WorkExperienceProps> = ({
 
       <div className="absolute left-0 top-2.5 h-2.5 w-2.5 rounded-full border border-border bg-foreground"></div>
 
-      <Heading level="h3" className="flex items-center text-foreground">
+      <Heading level="h4" className="flex items-center text-foreground">
         {company}
       </Heading>
 
-      <div className="mt-1 flex items-center text-sm text-muted-foreground">
+      <div className="mt-1 flex items-center text-sm text-foreground/70">
         <CalendarDotsIcon className="mr-1.5 h-4 w-4" />
         <span>{period}</span>
       </div>
 
-      <h3 className="mt-2 text-lg text-foreground">{title}</h3>
+      <h3 className="mt-2 text-foreground font-medium">{title}</h3>
 
       <p className="mt-3 text-foreground">{description}</p>
 
@@ -99,7 +99,7 @@ const Page: FC = () => {
   return (
     <>
       <Section data={null} title="work">
-        <section className="prose leading-7 text-foreground mb-8">
+        <section className="leading-relaxed text-foreground mb-8">
           <p>
             I am an enthusiastic software developer with a knack for backend
             development. I&apos;ve got my hands dirty in Python, Golang, and
@@ -118,7 +118,7 @@ const Page: FC = () => {
 
         <div className="flex items-center gap-2 mb-8">
           <BriefcaseIcon className="h-6 w-6 text-foreground" />
-          <Heading level="h2" className="text-foreground">
+          <Heading level="h3" className="text-foreground">
             Experience
           </Heading>
         </div>
@@ -126,14 +126,14 @@ const Page: FC = () => {
         <div className="space-y-0">
           <WorkExperience
             company="Netskope"
-            period="2024 - Present"
+            period="Apr 2024 - Present"
             title="Sr. Software Engineer"
             description="Working on the next-gen implementation of the CASB API product, while also maintaining two crucial apps from the legacy product, ensuring a smooth transition to the next-gen implementations."
           />
 
           <WorkExperience
             company="Netskope"
-            period="2022 - 2024"
+            period="Jan 2022 - Apr 2024"
             title="Software Engineer II"
             description="As part of the API Data Protection Team, I've grown to own end-to-end pipeline for two app implementations."
             achievements={[
@@ -144,7 +144,7 @@ const Page: FC = () => {
 
           <WorkExperience
             company="Cisco Systems"
-            period="2018 - 2021"
+            period="Aug 2018 - Jan 2021"
             title="Software Engineer I and II"
             description=""
             achievements={[

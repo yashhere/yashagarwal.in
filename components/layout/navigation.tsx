@@ -64,7 +64,7 @@ export const Navigation = () => {
                     key={path}
                     href={path}
                     className={cn(
-                      "flex align-middle transition-all hover:text-foreground text-base leading-relaxed",
+                      "flex align-middle transition-all hover:text-foreground lowercase text-base leading-relaxed",
                       {
                         "text-foreground/70": !isActive,
                       }
@@ -79,7 +79,7 @@ export const Navigation = () => {
             <div className="flex flex-row space-x-4">
               <Link
                 href={parentPath}
-                className="flex items-center gap-2 text-base leading-relaxed hover:text-foreground text-foreground/70"
+                className="flex items-center gap-2 lowercase text-base leading-relaxed hover:text-foreground text-foreground/70"
               >
                 <ArrowUUpLeftIcon size={16} />
                 <span>Back to {parentName}</span>
