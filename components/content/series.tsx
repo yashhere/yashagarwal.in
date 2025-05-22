@@ -1,25 +1,10 @@
 "use client"
 
-import React, { FC, ReactNode } from "react"
+import React from "react"
 import Link from "next/link"
 import { getSeries } from "@/lib/content"
 import { cn } from "@/lib/utils"
 import { ArrowDownIcon, ArrowUpIcon } from "@phosphor-icons/react/dist/ssr"
-
-type TitleProps = {
-  children?: ReactNode
-}
-
-const Title: FC<TitleProps> = ({ children }) => {
-  return (
-    <div>
-      <div className="font-sans text-base text-foreground">series</div>
-      <div className="flex flex-col justify-start text-base sm:flex-row sm:items-center sm:space-x-2">
-        {children}
-      </div>
-    </div>
-  )
-}
 
 export const Series = ({
   series,
@@ -27,53 +12,54 @@ export const Series = ({
 }: {
   series: NonNullable<ReturnType<typeof getSeries>>
   interactive?: boolean
-  current: string
 }) => {
   const [isOpen, setIsOpen] = React.useState(!interactive)
   const index = series.notes?.findIndex((note) => note?.isCurrent) + 1
 
   return (
-    <>
+    <div className="rounded-md border border-border bg-background p-2.5 text-sm">
       {interactive ? (
         <button
-          className="group flex w-full items-center text-left"
-          onClick={() => {
-            setIsOpen(!isOpen)
-          }}
+          className="group flex w-full items-center justify-between text-left"
+          onClick={() => setIsOpen(!isOpen)}
         >
-          <Title>
-            <span className="font-medium">{series?.seriesTitle}</span>
-            <span className="hidden sm:inline-block">&middot;</span>
-            <span className="text-base text-foreground">
-              {index} of {series.notes?.length}
+          <div className="flex flex-col gap-0.5">
+            <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+              Series
             </span>
-          </Title>
-
-          <div className="ml-auto pl-4">
-            <div className="rounded-full bg-muted p-2 text-foreground group-hover:bg-muted/70">
-              {isOpen ? (
-                <ArrowUpIcon className="w-4" />
-              ) : (
-                <ArrowDownIcon className="w-4" />
-              )}
-            </div>
+            <span className="font-medium text-foreground text-sm">
+              {series.seriesTitle}{" "}
+              <span className="text-muted-foreground font-normal">
+                ({index}/{series.notes?.length})
+              </span>
+            </span>
           </div>
+
+          <span className="flex h-5 w-5 items-center justify-center rounded-md text-muted-foreground transition-colors group-hover:text-foreground">
+            {isOpen ? <ArrowUpIcon size={14} /> : <ArrowDownIcon size={14} />}
+          </span>
         </button>
       ) : (
-        <Title>{series.seriesTitle}</Title>
+        <div className="flex flex-col gap-0.5">
+          <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+            Series
+          </span>
+          <span className="font-medium text-foreground text-sm">
+            {series.seriesTitle}
+          </span>
+        </div>
       )}
-      <hr className="border-t-1 my-4 border-border" />
+
       {isOpen && (
-        <div>
-          <ul className="text-base space-y-1.5">
+        <div className="mt-2 pt-2 border-t border-border space-y-0.5">
+          <ul className="space-y-1">
             {series.notes?.map((note) => (
               <li
                 key={note.slug}
                 className={cn(
-                  "relative pl-7 before:absolute before:left-1 before:top-[9px] before:size-1.5 before:rounded-full",
+                  "relative pl-4 before:absolute before:left-0 before:top-[7px] before:size-1 before:rounded-full",
                   {
-                    "before:bg-background/10 before:ring-[3px] before:ring-primary before:ring-offset-1 before:ring-offset-background/10":
-                      note.isCurrent,
+                    "before:bg-primary": note.isCurrent,
                     "before:bg-muted-foreground":
                       note.status === "published" && !note.isCurrent,
                     "before:bg-border/70": note.status !== "published",
@@ -88,25 +74,21 @@ export const Series = ({
                   ) : (
                     <Link
                       href={`/notes/${note.slug}`}
-                      className="text-primary transition-all text-sm"
+                      className="text-primary hover:underline transition-all text-sm"
                     >
                       {note.title}
                     </Link>
                   )
                 ) : (
-                  <Link
-                    href={`/notes/${note.slug}`}
-                    className={cn("text-foreground/50 transition-all")}
-                  >
+                  <span className="text-muted-foreground text-sm">
                     Planned: {note.title}
-                  </Link>
+                  </span>
                 )}
               </li>
             ))}
           </ul>
-          <hr className="border-t-1 mt-4 border-border" />
         </div>
       )}
-    </>
+    </div>
   )
 }

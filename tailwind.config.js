@@ -6,7 +6,7 @@ const headingStyles = {
 }
 
 const linkStyles = {
-  color: "hsl(var(--primary))",
+  color: "var(--primary)",
   textDecoration: "none",
   fontWeight: 500,
   "&:hover": {
@@ -17,7 +17,7 @@ const linkStyles = {
 const typographyStyles = {
   DEFAULT: {
     css: {
-      color: "hsl(var(--foreground))",
+      color: "var(--foreground)",
       maxWidth: "none",
       fontSize: "0.95rem", // Make default prose text slightly smaller
       lineHeight: "1.6", // Consistent line height
@@ -88,7 +88,7 @@ const typographyStyles = {
         fontWeight: "400",
         fontStyle: "italic",
         borderLeftWidth: "0.25rem",
-        borderLeftColor: "hsl(var(--border))",
+        borderLeftColor: "var(--border)",
         paddingLeft: "1rem",
         marginTop: "1.5rem",
         marginBottom: "1.5rem",
@@ -99,15 +99,15 @@ const typographyStyles = {
         },
       },
       pre: {
-        backgroundColor: "hsl(var(--syntax-bg))",
+        backgroundColor: "var(--syntax-bg)",
         borderRadius: "0.375rem",
         overflowX: "auto",
         fontSize: "0.9375rem",
         padding: "1rem",
       },
       code: {
-        color: "hsl(var(--syntax-string))",
-        backgroundColor: "hsl(var(--muted) / 0.5)",
+        color: "var(--syntax-string)",
+        backgroundColor: "var(--muted) / 0.5",
         padding: "0.2rem 0.4rem",
         borderRadius: "0.25rem",
         fontSize: "0.875rem",
@@ -137,8 +137,8 @@ const typographyStyles = {
           paddingRight: "1.25rem",
         },
         "[data-highlighted-line]": {
-          backgroundColor: "hsl(var(--syntax-highlight))",
-          borderLeftColor: "hsl(var(--primary))",
+          backgroundColor: "var(--syntax-highlight)",
+          borderLeftColor: "var(--primary)",
         },
       },
     },
@@ -188,48 +188,48 @@ module.exports = {
         "6xl": ["3.75rem", { lineHeight: "1.1" }],
       },
       colors: {
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
+        border: "var(--border)",
+        input: "var(--input)",
+        ring: "var(--ring)",
+        background: "var(--background)",
+        foreground: "var(--foreground)",
         primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
+          DEFAULT: "var(--primary)",
+          foreground: "var(--primary-foreground)",
         },
         secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
+          DEFAULT: "var(--secondary)",
+          foreground: "var(--secondary-foreground)",
         },
         destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
+          DEFAULT: "var(--destructive)",
+          foreground: "var(--destructive-foreground)",
         },
         muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
+          DEFAULT: "var(--muted)",
+          foreground: "var(--muted-foreground)",
         },
         accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
+          DEFAULT: "var(--accent)",
+          foreground: "var(--accent-foreground)",
         },
         popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
+          DEFAULT: "var(--popover)",
+          foreground: "var(--popover-foreground)",
         },
         card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
+          DEFAULT: "var(--card)",
+          foreground: "var(--card-foreground)",
         },
         syntax: {
-          bg: "hsl(var(--syntax-bg))",
-          highlight: "hsl(var(--syntax-highlight))",
-          text: "hsl(var(--syntax-txt))",
-          comment: "hsl(var(--syntax-comment))",
-          prop: "hsl(var(--syntax-prop))",
-          bool: "hsl(var(--syntax-bool))",
-          value: "hsl(var(--syntax-value))",
-          string: "hsl(var(--syntax-string))",
+          bg: "var(--syntax-bg)",
+          highlight: "var(--syntax-highlight)",
+          text: "var(--syntax-txt)",
+          comment: "var(--syntax-comment)",
+          prop: "var(--syntax-prop)",
+          bool: "var(--syntax-bool)",
+          value: "var(--syntax-value)",
+          string: "var(--syntax-string)",
         },
       },
       borderRadius: {
