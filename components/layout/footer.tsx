@@ -37,6 +37,11 @@ const Socials = [
     url: "https://www.twitter.com/yash__here",
     icon: TwitterLogoIcon,
   },
+  {
+    name: "RSS",
+    url: `${env.NEXT_PUBLIC_APP_URL}/atom.xml`,
+    icon: RssIcon,
+  },
 ]
 
 // same is present in navigation.tsx as well.
@@ -110,20 +115,6 @@ export const Footer: FC = () => {
             </div>
           </section>
           <div className="mt-8 flex flex-col md:mt-0">
-            <section className="">
-              <h1 className="mb-4 text-base font-medium">Prefer RSS 🙂</h1>
-              <div className="mb-6">
-                <Link
-                  href={`${env.NEXT_PUBLIC_APP_URL}/atom.xml`}
-                  aria-label="rss-icon"
-                  noExternalLinkIcon
-                  className="flex h-10 flex-row items-center gap-2 rounded-3xl border border-border/50 bg-muted px-4 py-1 text-foreground/60 hover:border-border hover:text-foreground"
-                >
-                  <RssIcon className="size-6" />
-                  <span className="text-base">Subscribe via RSS Feed</span>
-                </Link>
-              </div>
-            </section>
             <section>
               <h1 className="mb-4 text-base font-medium">Get email updates</h1>
               <div className="mb-6 flex flex-col">
