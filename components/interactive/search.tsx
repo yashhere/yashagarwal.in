@@ -9,22 +9,22 @@ export const SearchInput = ({
   onChange: (e: ChangeEvent<HTMLInputElement>) => void
 }) => {
   return (
-    <>
-      <form>
-        <div className="relative text-foreground">
-          <div className="pointer-events-none absolute inset-y-0 flex items-center pl-2">
-            <ListMagnifyingGlassIcon className="w-4" />
-          </div>
-          <input
-            type="search"
-            id="default_search"
-            placeholder="Search for a note..."
-            className="block w-full rounded border-none bg-muted p-1 pl-8 placeholder:text-foreground/80 focus-within:border-border focus-within:outline-hidden"
-            value={search}
-            onChange={onChange}
-          />
+    <form className="w-full group">
+      <div className="relative text-foreground">
+        <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+          <ListMagnifyingGlassIcon className="h-4 w-4 text-muted-foreground transition-colors group-focus-within:text-foreground" />
         </div>
-      </form>
-    </>
+        <input
+          type="search"
+          id="default_search"
+          placeholder="Search for a note..."
+          className="block w-full rounded-md border border-input bg-transparent px-3 py-2 pl-10
+            text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring md:text-sm
+            disabled:cursor-not-allowed disabled:opacity-50"
+          value={search}
+          onChange={onChange}
+        />
+      </div>
+    </form>
   )
 }

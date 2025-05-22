@@ -33,85 +33,99 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222 47% 11%;
+    /* Using Tailwind color names directly */
+    --background: theme("colors.white");
+    --foreground: theme("colors.slate.950");
 
-    --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
+    --card: theme("colors.white");
+    --card-foreground: theme("colors.slate.950");
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
+    --popover: theme("colors.white");
+    --popover-foreground: theme("colors.slate.950");
 
-    --primary: 245 100% 60%;
-    --primary-foreground: 210 40% 98%;
+    --primary: theme("colors.blue.600");
+    --primary-foreground: theme("colors.slate.50");
 
-    --secondary: 333 100% 45%;
-    --secondary-foreground: 222 47% 11%;
+    --secondary: theme("colors.rose.600");
+    --secondary-foreground: theme("colors.slate.950");
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: theme("colors.slate.100");
+    --muted-foreground: theme("colors.slate.500");
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222 47% 11%;
+    --accent: theme("colors.slate.100");
+    --accent-foreground: theme("colors.slate.950");
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: theme("colors.red.600");
+    --destructive-foreground: theme("colors.slate.50");
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222 47% 11%;
+    --border: theme("colors.slate.200");
+    --input: theme("colors.slate.200");
+    --ring: theme("colors.slate.950");
 
     --radius: 0.5rem;
 
     /* Code syntax highlighting */
-    --syntax-bg: 225 25% 97%;
-    --syntax-highlight: 225 25% 93%;
-    --syntax-txt: 0 0% 17%;
-    --syntax-comment: 200 27% 43%;
-    --syntax-prop: 327 100% 42%;
-    --syntax-bool: 299 100% 36%;
-    --syntax-value: 200 13% 55%;
-    --syntax-string: 263 100% 52%;
+    --syntax-bg: theme("colors.gray.100");
+    --syntax-highlight: theme("colors.gray.200");
+    --syntax-txt: theme("colors.gray.900");
+    --syntax-comment: theme("colors.slate.500");
+    --syntax-prop: theme("colors.pink.600");
+    --syntax-bool: theme("colors.purple.500");
+    --syntax-value: theme("colors.slate.500");
+    --syntax-string: theme("colors.violet.500");
+
+    /* alpha variants */
+    --primary-15: color-mix(in srgb, var(--primary) 15%, transparent);
+    --primary-20: color-mix(in srgb, var(--primary) 20%, transparent);
+    --primary-30: color-mix(in srgb, var(--primary) 30%, transparent);
+    --primary-40: color-mix(in srgb, var(--primary) 40%, transparent);
   }
 
   .dark {
-    --background: 210 30% 8%;
-    --foreground: 0 0% 100%;
+    /* Dark mode theme colors */
+    --background: theme("colors.slate.950");
+    --foreground: theme("colors.slate.50");
 
-    --card: 222 47% 11%;
-    --card-foreground: 210 40% 98%;
+    --card: theme("colors.slate.900");
+    --card-foreground: theme("colors.slate.50");
 
-    --popover: 222 47% 11%;
-    --popover-foreground: 210 40% 98%;
+    --popover: theme("colors.slate.900");
+    --popover-foreground: theme("colors.slate.50");
 
-    --primary: 230 100% 69%;
-    --primary-foreground: 222 47% 11%;
+    --primary: theme("colors.blue.500");
+    --primary-foreground: theme("colors.slate.900");
 
-    --secondary: 333 100% 52%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: theme("colors.rose.600");
+    --secondary-foreground: theme("colors.slate.50");
 
-    --muted: 210 38% 15%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: theme("colors.slate.800");
+    --muted-foreground: theme("colors.slate.400");
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: theme("colors.slate.800");
+    --accent-foreground: theme("colors.slate.50");
 
-    --destructive: 0 62.8% 50.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: theme("colors.red.900");
+    --destructive-foreground: theme("colors.slate.50");
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --border: theme("colors.slate.800");
+    --input: theme("colors.slate.800");
+    --ring: theme("colors.slate.300");
 
     /* Code syntax highlighting */
-    --syntax-bg: 210 30% 12%;
-    --syntax-highlight: 210 30% 18%;
-    --syntax-txt: 0 0% 100%;
-    --syntax-comment: 197 16% 51%;
-    --syntax-prop: 327 100% 61%;
-    --syntax-bool: 54 100% 50%;
-    --syntax-value: 200 15% 53%;
-    --syntax-string: 271 100% 71%;
+    --syntax-bg: theme("colors.slate.950");
+    --syntax-highlight: theme("colors.slate.800");
+    --syntax-txt: theme("colors.slate.50");
+    --syntax-comment: theme("colors.slate.400");
+    --syntax-prop: theme("colors.pink.400");
+    --syntax-bool: theme("colors.amber.400");
+    --syntax-value: theme("colors.slate.400");
+    --syntax-string: theme("colors.violet.300");
+
+    /* alpha variants */
+    --primary-15: color-mix(in srgb, var(--primary) 15%, transparent);
+    --primary-20: color-mix(in srgb, var(--primary) 20%, transparent);
+    --primary-30: color-mix(in srgb, var(--primary) 30%, transparent);
+    --primary-40: color-mix(in srgb, var(--primary) 40%, transparent);
   }
 
   body {

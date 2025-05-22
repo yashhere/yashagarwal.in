@@ -10,57 +10,51 @@ export const TableOfContents = ({ headings, interactive }) => {
   const [isOpen, setIsOpen] = useState(!interactive)
 
   return (
-    <>
+    <div className="rounded-md border border-border bg-background p-2.5 text-sm">
       {interactive ? (
         <button
-          className="group flex w-full items-center text-left"
-          onClick={() => {
-            setIsOpen(!isOpen)
-          }}
+          className="group flex w-full items-center justify-between text-left"
+          onClick={() => setIsOpen(!isOpen)}
+          aria-expanded={isOpen}
+          aria-controls="toc-content"
         >
-          <div className="font-sans text-base font-medium">
-            Table of Contents
-          </div>
-
-          <div className="ml-auto pl-4">
-            <div className="rounded-full bg-muted p-2 text-foreground group-hover:bg-muted/70">
-              {isOpen ? (
-                <ArrowUpIcon className="w-4" />
-              ) : (
-                <ArrowDownIcon className="w-4" />
-              )}
-            </div>
-          </div>
+          <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+            Contents
+          </span>
+          <span className="flex h-5 w-5 items-center justify-center rounded-md text-muted-foreground transition-colors group-hover:text-foreground">
+            {isOpen ? <ArrowUpIcon size={14} /> : <ArrowDownIcon size={14} />}
+          </span>
         </button>
       ) : (
-        <div className="font-sans text-sm font-medium">Table of Contents</div>
-      )}
-      <hr className="border-t-1 my-4 border-border" />
-      {isOpen && (
-        <div>
-          <div className="ml-2 space-y-1.5">
-            {headings.map((heading) => (
-              <div
-                key={heading.slug}
-                className={cn("line-clamp-1 sm:line-clamp-none", {
-                  "ml-5": heading.heading === 2,
-                  "ml-9": heading.heading === 3,
-                  "ml-14": heading.heading === 4,
-                })}
-              >
-                <Link
-                  noUnderline
-                  href={`#${heading.slug}`}
-                  className="text-sm text-foreground/80 hover:text-primary"
-                >
-                  {heading.text}
-                </Link>
-              </div>
-            ))}
-            <hr className="border-t-1 mt-4 border-border" />
-          </div>
+        <div className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+          Contents
         </div>
       )}
-    </>
+
+      {isOpen && (
+        <div
+          id="toc-content"
+          className="mt-2 space-y-0.5 pt-2 border-t border-border"
+        >
+          {headings.map((heading) => (
+            <div
+              key={heading.slug}
+              style={{
+                paddingLeft: `${(heading.heading - 1) * 0.5}rem`,
+              }}
+              className="line-clamp-1 text-sm"
+            >
+              <Link
+                noUnderline
+                href={`#${heading.slug}`}
+                className="block py-0.5 text-muted-foreground hover:text-primary transition-colors"
+              >
+                {heading.text}
+              </Link>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
   )
 }
