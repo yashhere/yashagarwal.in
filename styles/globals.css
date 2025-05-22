@@ -140,4 +140,18 @@
   a:focus-visible {
     @apply ring-primary ring-offset-background ring-2 ring-offset-2 outline-none;
   }
+
+  /* Fix for https://github.com/disqus/disqus-react/issues/153 */
+  :root,
+  .comments {
+    background-color: #ffffff !important; /* white */
+    color: #0f172a !important; /* slate-950 */
+  }
+
+  /* Dark mode comments - using hex values */
+  :root,
+  .dark .comments {
+    background-color: #020617 !important; /* slate-950 */
+    color: #f8fafc !important; /* slate-50 */
+  }
 }

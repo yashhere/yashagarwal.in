@@ -134,7 +134,7 @@ export default async function Page(props: Props) {
         </section>
         {article.series ? (
           <div className="mb-8">
-            <Series series={article.series} interactive={true} current={slug} />
+            <Series series={article.series} interactive={true} />
           </div>
         ) : null}
         {article.note.toc && article.note.headings.length != 0 ? (
