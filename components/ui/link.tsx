@@ -11,7 +11,7 @@ import {
 import Link from "next/link"
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
-import { FiArrowUpRight } from "react-icons/fi"
+import { ArrowUpRightIcon } from "@phosphor-icons/react/dist/ssr"
 
 interface ExternalLinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
   href: string
@@ -98,7 +98,7 @@ const ExternalLink = forwardRef<HTMLAnchorElement, ExternalLinkProps>(
             {/* Can't help with weird padding hack to center the icon. Yikes! */}
             {!noExternalLinkIcon && (
               <>
-                <FiArrowUpRight className="-mx-1 inline size-5 pb-[3px]" />
+                <ArrowUpRightIcon className="-mx-1 inline size-5 pb-[3px]" />
               </>
             )}
           </a>

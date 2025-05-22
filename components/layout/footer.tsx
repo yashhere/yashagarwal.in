@@ -4,8 +4,13 @@ import { FC } from "react"
 import { usePathname } from "next/navigation"
 import { env } from "@/env.mjs"
 import { cn } from "@/lib/utils"
-import { FiGithub, FiLinkedin, FiRss } from "react-icons/fi"
-import { RiAtLine, RiTwitterXFill } from "react-icons/ri"
+import {
+  AtIcon,
+  GithubLogoIcon,
+  LinkedinLogoIcon,
+  RssIcon,
+  TwitterLogoIcon,
+} from "@phosphor-icons/react/dist/ssr"
 
 import Newsletter from "../interactive/newsletter"
 import { AnalogClock } from "../ui/clock/clock"
@@ -15,22 +20,22 @@ const Socials = [
   {
     name: "Email",
     url: "mailto:yashagarwaljpr+blog@gmail.com",
-    icon: RiAtLine,
+    icon: AtIcon,
   },
   {
     name: "GitHub",
     url: "https://github.com/yashhere",
-    icon: FiGithub,
+    icon: GithubLogoIcon,
   },
   {
     name: "LinkedIn",
     url: "https://www.linkedin.com/in/theyashagarwal/",
-    icon: FiLinkedin,
+    icon: LinkedinLogoIcon,
   },
   {
     name: "Twitter",
     url: "https://www.twitter.com/yash__here",
-    icon: RiTwitterXFill,
+    icon: TwitterLogoIcon,
   },
 ]
 
@@ -114,7 +119,7 @@ export const Footer: FC = () => {
                   noExternalLinkIcon
                   className="flex h-10 flex-row items-center gap-2 rounded-3xl border border-border/50 bg-muted px-4 py-1 text-foreground/60 hover:border-border hover:text-foreground"
                 >
-                  <FiRss className="size-6" />
+                  <RssIcon className="size-6" />
                   <span className="text-base">Subscribe via RSS Feed</span>
                 </Link>
               </div>

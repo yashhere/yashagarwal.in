@@ -1,5 +1,5 @@
 import { ReactNode } from "react"
-import { FiPenTool } from "react-icons/fi"
+import { HammerIcon } from "@phosphor-icons/react/dist/ssr"
 
 interface Props {
   children?: ReactNode
@@ -10,7 +10,7 @@ export default function Draft({ children }: Props) {
     <>
       <div className="mt-16 flex flex-col items-center gap-8 rounded-sm border bg-foreground py-16 text-center shadow-md">
         <div className="">
-          <FiPenTool className="size-28 text-foreground-accent" />
+          <HammerIcon className="size-28 text-foreground-accent" />
         </div>
         <div className="text-6xl text-secondary sm:text-7xl">
           Work in Progress

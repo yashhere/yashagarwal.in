@@ -68,6 +68,7 @@ export async function getPartialNote(slug: string) {
     mdx: note.mdx,
     tags: note.tags,
     status: note.status,
+    category: note.category,
     headings:
       (note.headings as { heading: number; text: string; slug: string }[]) ??
       null,

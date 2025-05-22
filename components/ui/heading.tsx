@@ -10,9 +10,9 @@ export type HeadingProps = ComponentProps<"h1"> &
 const headingStyles = tv({
   variants: {
     level: {
-      h1: "text-2xl font-medium text-zinc-900",
-      h2: "text-xl font-medium text-zinc-900",
-      h3: "text-lg font-medium text-zinc-900",
+      h1: "text-3xl font-medium text-zinc-900",
+      h2: "text-2xl font-medium text-zinc-900",
+      h3: "text-xl font-medium text-zinc-900",
     },
   },
   defaultVariants: {

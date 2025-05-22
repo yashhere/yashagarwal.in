@@ -6,7 +6,7 @@ import Link from "@/components/ui/link"
 import Section from "@/components/ui/section"
 import { siteConfig } from "@/config/site"
 
-export default async function Page() {
+export default function Page() {
   return (
     <>
       <div className="flex flex-row items-center gap-4">
@@ -17,13 +17,17 @@ export default async function Page() {
             className="rounded-full w-full h-full object-cover"
             title="Yash's photo"
             fill={true}
+            placeholder="blur"
+            blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI0MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHN0cm9rZS13aWR0aD0iOCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtZGFzaGFycmF5PSI2MyIgc3Ryb2tlLWRhc2hvZmZzZXQ9IjYzIj4KICAgIDxhbmltYXRlVHJhbnNmb3JtIGF0dHJpYnV0ZU5hbWU9InRyYW5zZm9ybSIgdHlwZT0icm90YXRlIiBmcm9tPSIwIDUwIDUwIiB0bz0iMzYwIDUwIDUwIiBkdXI9IjEuNXMiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIi8+CiAgPC9jaXJjbGU+Cjwvc3ZnPgo="
+            loading="eager"
+            priority
           />
           <div className="absolute -bottom-2 -right-2 rounded-full bg-background px-1 py-0.5 text-sm">
             👋🏽
           </div>
         </div>
         <div className="flex flex-col">
-          <Heading level="h2" className="text-foreground">
+          <Heading level="h3" className="text-foreground">
             Yash Agarwal
           </Heading>
           <p className="mt-0">Engineer / Creator / Explorer</p>

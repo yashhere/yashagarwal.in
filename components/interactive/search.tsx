@@ -1,5 +1,5 @@
 import { ChangeEvent } from "react"
-import { FiSearch } from "react-icons/fi"
+import { ListMagnifyingGlassIcon } from "@phosphor-icons/react/dist/ssr"
 
 export const SearchInput = ({
   search,
@@ -13,7 +13,7 @@ export const SearchInput = ({
       <form>
         <div className="relative text-foreground">
           <div className="pointer-events-none absolute inset-y-0 flex items-center pl-2">
-            <FiSearch className="w-4" />
+            <ListMagnifyingGlassIcon className="w-4" />
           </div>
           <input
             type="search"
