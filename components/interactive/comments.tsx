@@ -41,11 +41,13 @@ export const DisqusComments = ({ url, slug }: ICommentPprops) => {
   return (
     <div className="pt-8" ref={ref}>
       {inView ? (
-        <DiscussionEmbed
-          key={resolvedTheme}
-          shortname={disqusShortname}
-          config={disqusConfig}
-        />
+        <div className="comments">
+          <DiscussionEmbed
+            key={resolvedTheme}
+            shortname={disqusShortname}
+            config={disqusConfig}
+          />
+        </div>
       ) : null}
     </div>
   )
