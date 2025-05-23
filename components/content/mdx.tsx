@@ -8,40 +8,16 @@ import { useMDXComponent } from "@content-collections/mdx/react"
 
 import Draft from "../ui/draft"
 
-const BlogLink = (props) => {
-  if (props.href.startsWith("#")) {
-    return (
-      <a
-        {...props}
-        className={cn(
-          props.className,
-          "no-underline scroll-m-20",
-          !props.className?.includes("anchor") &&
-            "text-primary hover:underline hover:underline-offset-4"
-        )}
-      />
-    )
-  }
-
-  return (
-    <Link
-      {...props}
-      className={cn(
-        "text-primary transition-colors hover:text-primary/80",
-        props.className
-      )}
-    />
-  )
-}
-
-const BlogImage = (props) => {
-  return <Image {...props} />
-}
-
 const components = {
   Draft,
-  a: BlogLink,
-  img: BlogImage,
+  a: ({
+    className,
+    href,
+    ...props
+  }: React.AnchorHTMLAttributes<HTMLAnchorElement>) => (
+    <Link href={href || ""} {...props} variant="inline" />
+  ),
+  img: (props) => <Image {...props} />,
   p: ({ className, ...props }: React.HTMLAttributes<HTMLParagraphElement>) => (
     <p
       className={cn(

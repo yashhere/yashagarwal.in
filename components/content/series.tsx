@@ -1,10 +1,11 @@
 "use client"
 
 import React from "react"
-import Link from "next/link"
 import { getSeries } from "@/lib/content"
 import { cn } from "@/lib/utils"
 import { ArrowDownIcon, ArrowUpIcon } from "@phosphor-icons/react/dist/ssr"
+
+import Link from "../ui/link"
 
 export const Series = ({
   series,
@@ -75,6 +76,7 @@ export const Series = ({
                     <Link
                       href={`/notes/${note.slug}`}
                       className="text-primary hover:underline transition-all text-sm"
+                      variant="clean"
                     >
                       {note.title}
                     </Link>
