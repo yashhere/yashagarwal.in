@@ -55,7 +55,7 @@ export default function Page() {
         </p>
       </div>
 
-      <Section title="Writing">
+      <Section title="Popular Writing">
         <FeaturedNotes count={siteConfig.featuredNotes} />
       </Section>
     </>
