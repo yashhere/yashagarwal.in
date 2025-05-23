@@ -25,7 +25,6 @@ export const BackLinks = ({
             <div key={link.url} className="line-clamp-2">
               <Link
                 href={link.url}
-                noUnderline
                 className="block text-xs text-muted-foreground hover:text-primary transition-colors"
               >
                 <span className="font-medium text-foreground">{link.type}</span>

@@ -15,7 +15,7 @@ export const NotePreview = ({
       <Link
         href={`/notes/${note.note.slug}`}
         className="flex flex-col justify-between rounded-md px-4 md:gap-2 py-1 transition-colors select-none hover:bg-muted md:flex-row md:items-center"
-        noUnderline
+        variant="clean"
       >
         <div className="flex flex-col">
           <span className="mb-1 font-sans text-base text-foreground">

@@ -82,7 +82,6 @@ export const Footer: FC = () => {
                     href={s.url}
                     key={s.name}
                     aria-label={s.name}
-                    noExternalLinkIcon
                     className="flex flex-row items-center gap-4 text-foreground/60 hover:text-foreground hover:no-underline md:gap-2"
                   >
                     <s.icon className="size-5" />

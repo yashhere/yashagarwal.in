@@ -45,9 +45,9 @@ export const TableOfContents = ({ headings, interactive }) => {
               className="line-clamp-1 text-sm"
             >
               <Link
-                noUnderline
                 href={`#${heading.slug}`}
                 className="block py-0.5 text-muted-foreground hover:text-primary transition-colors"
+                variant="clean"
               >
                 {heading.text}
               </Link>

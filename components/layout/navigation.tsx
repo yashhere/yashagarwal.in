@@ -1,11 +1,11 @@
 "use client"
 
-import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { ArrowUUpLeftIcon } from "@phosphor-icons/react/dist/ssr"
 
 import { DarkToggle } from "../interactive/mode-toggle"
+import Link from "../ui/link"
 
 const navItems = {
   "/": {
@@ -63,6 +63,7 @@ export const Navigation = () => {
                   <Link
                     key={path}
                     href={path}
+                    variant="clean"
                     className={cn(
                       "flex align-middle transition-all hover:text-foreground lowercase text-base leading-relaxed",
                       {
@@ -80,6 +81,7 @@ export const Navigation = () => {
               <Link
                 href={parentPath}
                 className="flex items-center gap-2 lowercase text-base leading-relaxed hover:text-foreground text-foreground/70"
+                variant="clean"
               >
                 <ArrowUUpLeftIcon size={16} />
                 <span>Back to {parentName}</span>

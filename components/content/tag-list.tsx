@@ -33,7 +33,7 @@ export const TagList: FC<TagListProps> = ({ tags }) => {
                 key={tag_slug}
                 href={`/tags/${tag_slug}`}
                 className="inline-flex items-center rounded-md bg-muted/50 px-2 py-1 text-xs font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-                noUnderline
+                variant="clean"
               >
                 {tag}
               </Link>

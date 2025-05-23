@@ -1,113 +1,97 @@
 "use client"
 
-import {
-  AnchorHTMLAttributes,
-  cloneElement,
-  forwardRef,
-  ReactElement,
-  ReactNode,
-  type JSX,
-} from "react"
+import { AnchorHTMLAttributes, forwardRef, ReactNode, type JSX } from "react"
 import Link from "next/link"
-import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
 import { ArrowUpRightIcon } from "@phosphor-icons/react/dist/ssr"
 
-interface ExternalLinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
+interface LinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
   href: string
   className?: string
   children?: ReactNode
-  underline?: boolean
-  noUnderline?: boolean
-  noExternalLinkIcon?: boolean
-  noHighlight?: boolean
-  icon?: ReactNode
+  external?: boolean
+  showIcon?: boolean
+  variant?: "default" | "inline" | "clean"
 }
 
-function buildUrl(fromURL, fromQuery) {
-  const url = new URL(fromURL)
-
-  const query = new URLSearchParams(fromQuery)
-  for (const [key, value] of Array.from(new Set(query))) {
-    url.searchParams.set(key, value)
-  }
-
-  return url.toString()
-}
-
-const ExternalLink = forwardRef<HTMLAnchorElement, ExternalLinkProps>(
+const CustomLink = forwardRef<HTMLAnchorElement, LinkProps>(
   (
     {
       href,
       className,
       children,
-      underline,
-      noUnderline,
-      noExternalLinkIcon = false,
-      icon,
-      ...otherProps
-    }: ExternalLinkProps,
+      external,
+      showIcon = true,
+      variant = "default",
+      ...props
+    }: LinkProps,
     ref
   ): JSX.Element => {
-    const isInternalLink = href.startsWith("/") || href.startsWith("#")
-    const hostname = new URL(`${siteConfig.url}`).hostname
-    const isUnderline = underline
-      ? true
-      : (typeof children === "string" || typeof children === "undefined") &&
-          !noUnderline &&
-          isInternalLink
-        ? true
-        : false
+    // Handle anchor links (internal page navigation)
+    if (href.startsWith("#")) {
+      return (
+        <a
+          href={href}
+          className={cn(
+            "no-underline scroll-m-20 transition-colors hover:text-primary",
+            !className?.includes("anchor") && "text-primary",
+            className
+          )}
+          ref={ref}
+          {...props}
+        >
+          {children}
+        </a>
+      )
+    }
+
+    const isExternal =
+      external ?? (!href.startsWith("/") && !href.startsWith("#"))
+
+    const linkClasses = cn(
+      // Base styles
+      "transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+      // Variant styles
+      {
+        // Inline variant for body text links
+        "inline-flex items-center gap-1 font-medium text-primary underline decoration-1 underline-offset-4 decoration-muted-foreground/50 hover:decoration-primary hover:decoration-2":
+          variant === "inline",
+        // Default variant for general use
+        "inline-flex items-center gap-1 font-medium hover:text-foreground":
+          variant === "default",
+        // Clean variant for lists and navigation
+        "inline-flex items-center gap-1 hover:text-foreground":
+          variant === "clean",
+      },
+      className
+    )
+
+    if (isExternal) {
+      return (
+        <a
+          href={href}
+          className={linkClasses}
+          target="_blank"
+          rel="noopener noreferrer"
+          ref={ref}
+          {...props}
+        >
+          <span>{children}</span>
+          {showIcon && variant !== "clean" && (
+            <ArrowUpRightIcon className="h-3.5 w-3.5 flex-shrink-0" />
+          )}
+        </a>
+      )
+    }
 
     return (
-      <>
-        {isInternalLink ? (
-          <Link
-            aria-label="Internal Link"
-            href={href}
-            className={cn(
-              "no-underline transition duration-200",
-              isUnderline && "hover:underline hover:underline-offset-8",
-              className
-            )}
-            ref={ref}
-            {...otherProps}
-          >
-            {children}
-          </Link>
-        ) : (
-          <a
-            href={buildUrl(href, `ref=${hostname}`)}
-            aria-label="External Link"
-            className={cn(
-              "text-primary no-underline transition duration-200",
-              isUnderline && "hover:underline hover:underline-offset-8",
-              className
-            )}
-            target="_blank"
-            rel="noopener noreferrer"
-            ref={ref}
-            {...otherProps}
-          >
-            {icon &&
-              cloneElement(icon as ReactElement<any>, {
-                className: "inline size-5 pb-[3px] mr-1",
-              })}
-            {noExternalLinkIcon ? children : <span>{children}</span>}{" "}
-            {/* have to use inline icon because flex isn't working with multiline text. */}
-            {/* Can't help with weird padding hack to center the icon. Yikes! */}
-            {!noExternalLinkIcon && (
-              <>
-                <ArrowUpRightIcon className="-mx-1 inline size-5 pb-[3px]" />
-              </>
-            )}
-          </a>
-        )}
-      </>
+      <Link href={href} className={linkClasses} ref={ref} {...props}>
+        {children}
+      </Link>
     )
   }
 )
 
-ExternalLink.displayName = "Link"
+CustomLink.displayName = "CustomLink"
 
-export default ExternalLink
+export default CustomLink
