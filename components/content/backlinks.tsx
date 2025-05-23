@@ -1,3 +1,4 @@
+import React from "react"
 import { getNoteBacklinks } from "@/lib/content"
 
 import { Heading } from "../ui/heading"
@@ -13,22 +14,27 @@ export const BackLinks = ({
   }
 
   return (
-    <>
-      <hr className=" border-t-1 border-border" />
-      <div className="flex flex-col space-y-4 my-8">
-        <Heading level="h2">Pages that link to this</Heading>
-        <ul className="list-outside list-disc text-base pl-5 space-y-2">
-          {backlinks?.map((link) => {
-            return (
-              <li key={link.url} className="text-wrap">
-                <Link href={link.url} noUnderline className="break-words">
-                  <strong>{link.type}</strong>: {link.title}
-                </Link>
-              </li>
-            )
-          })}
-        </ul>
+    <div className="rounded-md border border-border bg-background p-2.5 text-sm">
+      <div className="flex flex-col gap-2">
+        <div className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+          Backlinks ({backlinks?.length})
+        </div>
+
+        <div className="space-y-1.5 pt-2 border-t border-border">
+          {backlinks?.map((link) => (
+            <div key={link.url} className="line-clamp-2">
+              <Link
+                href={link.url}
+                noUnderline
+                className="block text-xs text-muted-foreground hover:text-primary transition-colors"
+              >
+                <span className="font-medium text-foreground">{link.type}</span>
+                <span className="ml-1">{link.title}</span>
+              </Link>
+            </div>
+          ))}
+        </div>
       </div>
-    </>
+    </div>
   )
 }
