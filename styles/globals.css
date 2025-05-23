@@ -128,9 +128,14 @@
     --primary-40: color-mix(in srgb, var(--primary) 40%, transparent);
   }
 
+  html {
+    font-display: swap; /* Ensure fonts load predictably */
+  }
+
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1 "calt" 1;
+    font-display: optional;
   }
 
   :focus-visible {
@@ -153,5 +158,18 @@
   .dark .comments {
     background-color: #020617 !important; /* slate-950 */
     color: #f8fafc !important; /* slate-50 */
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  .animate-shimmer {
+    animation: shimmer 2s ease-in-out infinite;
   }
 }

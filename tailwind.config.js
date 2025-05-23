@@ -168,11 +168,16 @@ module.exports = {
     extend: {
       animation: {
         spinner: "spinner 1.2s linear infinite",
+        shimmer: "shimmer 2s ease-in-out infinite",
       },
       keyframes: {
         spinner: {
           "0%": { opacity: "1" },
           "100%": { opacity: "0" },
+        },
+        shimmer: {
+          "0%": { backgroundPosition: "-200% 0" },
+          "100%": { backgroundPosition: "200% 0" },
         },
       },
       fontSize: {
