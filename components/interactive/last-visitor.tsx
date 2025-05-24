@@ -3,6 +3,15 @@ import {
   type LastVisitorLocation,
 } from "@/lib/lastVisitor"
 
+export const LastVisitorSkeleton = () => {
+  return (
+    <div className="flex items-center gap-2">
+      <div className="size-1.5 shrink-0 rounded-full bg-foreground/20 animate-pulse" />
+      <div className="h-4 w-48 bg-foreground/20 animate-pulse rounded" />
+    </div>
+  )
+}
+
 export async function LastVisitor() {
   var location: LastVisitorLocation | null
 

@@ -170,6 +170,7 @@ module.exports = {
         spinner: "spinner 1.2s linear infinite",
         shimmer: "shimmer 2s ease-in-out infinite",
         blink: "blink 1s ease-in-out infinite",
+        wobble: "wobble 1.2s ease-in-out",
       },
       keyframes: {
         spinner: {
@@ -183,6 +184,20 @@ module.exports = {
         blink: {
           "0%, 100%": { opacity: "1" },
           "50%": { opacity: "0.2" },
+        },
+        wobble: {
+          "0%": { transform: "rotate(0deg)" },
+          "10%": { transform: "rotate(20deg)" },
+          "20%": { transform: "rotate(-18deg)" },
+          "30%": { transform: "rotate(16deg)" },
+          "40%": { transform: "rotate(-14deg)" },
+          "50%": { transform: "rotate(12deg)" },
+          "60%": { transform: "rotate(-10deg)" },
+          "70%": { transform: "rotate(8deg)" },
+          "80%": { transform: "rotate(-6deg)" },
+          "90%": { transform: "rotate(4deg)" },
+          "95%": { transform: "rotate(-2deg)" },
+          "100%": { transform: "rotate(0deg)" },
         },
       },
       fontSize: {
