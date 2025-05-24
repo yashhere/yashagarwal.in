@@ -5,107 +5,240 @@ import { decodeParameter } from "@/lib/utils"
 
 export const runtime = "edge"
 
-export async function GET(req: NextRequest) {
-  const { searchParams } = req.nextUrl
-  const noteTitle = decodeParameter(searchParams.get("title"))
-  const meta = decodeParameter(searchParams.get("meta"))
-  const tags = searchParams.get("tags")?.split("|")
-  const hostname = new URL(`${siteConfig.url}`).hostname
-  const font = fetch(
-    new URL("../../public/assets/fonts/wotfard.ttf", import.meta.url)
-  ).then((res) => res.arrayBuffer())
-  const fontData = await font
+// Cache font loading
+let fontCache: ArrayBuffer | null = null
 
-  // Note: OG images can't use CSS variables, so we use static colors
-  // that match our design system
-  const colors = {
-    muted: "#f1f5f9", // Matches --muted in light mode
-    border: "#e2e8f0", // Matches --border in light mode
-    mutedForeground: "#64748b", // Matches --muted-foreground in light mode
-    foreground: "#020617", // Matches --foreground in light mode
+async function loadFont(): Promise<ArrayBuffer> {
+  if (fontCache) {
+    return fontCache
   }
 
-  return new ImageResponse(
-    (
-      <div
-        tw="flex p-10 h-full w-full bg-white flex-col"
-        style={{
-          fontFamily: "Wotfard",
-          backgroundImage:
-            "radial-gradient(circle at 50% 50%, lightgray 2%, transparent 0%), radial-gradient(circle at 100% 100%, lightgray 2%, transparent 0%)",
-          backgroundSize: "75px 75px",
-        }}
-      >
-        <header tw="flex mt-8 text-[44px] w-full">
-          <div tw="font-bold" style={{ fontFamily: "Wotfard" }}>
-            {siteConfig.name}
-          </div>
-          <div tw="grow" />
-          <div>{hostname}</div>
-        </header>
+  try {
+    // Use TTF format instead of wOF2 for better compatibility
+    const response = await fetch(
+      "https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyeAZJhiO-T.ttf",
+      { cache: "force-cache" }
+    )
 
-        <main tw="flex grow pb-3 flex-col items-center justify-center">
-          <div tw="flex">
-            <div
-              tw="rounded-md tracking-wide p-4 text-6xl leading-snug font-medium text-center max-w-(--breakpoint-xl)"
-              style={{
-                fontFamily: "Wotfard",
-                backgroundColor: colors.muted,
-                color: colors.foreground,
-                boxShadow: "4px 4px 8px 1px rgba(184,182,184,1)",
-              }}
-            >
-              {noteTitle}
-            </div>
-          </div>
-          {meta ? (
-            <div
-              tw="mt-12 flex items-center justify-center text-4xl"
-              style={{
-                fontFamily: "Wotfard",
-                color: colors.mutedForeground,
-              }}
-            >
-              {meta}
-            </div>
-          ) : null}
+    if (!response.ok) {
+      throw new Error(`Failed to load font: ${response.status}`)
+    }
 
-          {tags && tags.length > 0 ? (
-            <div
-              tw="text-2xl mt-10 flex flex-row flex-wrap justify-center items-center flex-wrap max-w-(--breakpoint-xl)"
-              style={{
-                fontFamily: "Wotfard",
-                color: colors.mutedForeground,
-              }}
-            >
-              {tags?.slice(0, 3).map((tag, index) => (
-                <span
-                  key={index}
-                  tw="mb-4 mr-4 rounded-md border px-3 py-1"
+    fontCache = await response.arrayBuffer()
+    return fontCache
+  } catch (error) {
+    console.error("Font loading failed:", error)
+    // Return a minimal font buffer or throw to use system fonts
+    throw error
+  }
+}
+
+// Smart text truncation with word boundaries
+function smartTruncate(text: string, maxLength: number): string {
+  if (text.length <= maxLength) return text
+
+  const truncated = text.slice(0, maxLength - 3)
+  const lastSpace = truncated.lastIndexOf(" ")
+
+  // If we can break at a word boundary, do so
+  if (lastSpace > maxLength * 0.7) {
+    return truncated.slice(0, lastSpace) + "..."
+  }
+
+  return truncated + "..."
+}
+
+// Calculate optimal font size based on content length
+function calculateFontSize(title: string): number {
+  if (title.length > 60) return 48 // Smaller for long titles
+  if (title.length > 40) return 56
+  return 64 // Default size
+}
+
+export async function GET(req: NextRequest) {
+  const { searchParams } = req.nextUrl
+  const noteTitle = decodeParameter(searchParams.get("title")) || "Untitled"
+
+  try {
+    const meta = decodeParameter(searchParams.get("meta"))
+    const tagsParam = searchParams.get("tags")
+    const tags = tagsParam
+      ? tagsParam
+          .split("|")
+          .map((tag) => tag.trim())
+          .filter(Boolean)
+      : []
+    const hostname = new URL(siteConfig.url).hostname
+
+    // Enhanced color scheme with better contrast
+    const colors = {
+      muted: "#f8fafc",
+      border: "#e2e8f0",
+      mutedForeground: "#64748b",
+      foreground: "#0f172a",
+      accent: "#3b82f6",
+      shadow: "rgba(15, 23, 42, 0.1)",
+    }
+
+    // Smart truncation
+    const truncatedTitle = smartTruncate(noteTitle, 85)
+    const truncatedMeta = meta ? smartTruncate(meta, 140) : null
+
+    // Dynamic font sizing
+    const titleFontSize = calculateFontSize(truncatedTitle)
+
+    // Load font or use system fonts
+    let fonts: Array<{
+      name: string
+      data: ArrayBuffer
+      style: "normal" | "italic"
+    }> = []
+
+    try {
+      const fontData = await loadFont()
+      fonts = [
+        {
+          name: "Inter",
+          data: fontData,
+          style: "normal" as const,
+        },
+      ]
+    } catch (fontError) {
+      console.warn("Font loading failed, using no custom fonts:", fontError)
+      // Don't add any fonts to the array - ImageResponse will use system fonts
+    }
+
+    return new ImageResponse(
+      (
+        <div
+          tw="flex h-full w-full bg-white flex-col relative"
+          style={{
+            fontFamily:
+              "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+            background: "linear-gradient(135deg, #f8fafc 0%, #ffffff 100%)",
+          }}
+        >
+          {/* Subtle grid pattern */}
+          <div
+            tw="absolute inset-0 opacity-30"
+            style={{
+              backgroundImage:
+                "radial-gradient(circle at 25% 25%, #e2e8f0 1px, transparent 1px), radial-gradient(circle at 75% 75%, #e2e8f0 1px, transparent 1px)",
+              backgroundSize: "60px 60px",
+            }}
+          />
+
+          <div tw="flex h-full w-full flex-col relative z-10 p-12">
+            {/* Header with better spacing */}
+            <header tw="flex items-center justify-between text-3xl mb-8">
+              <div
+                tw="font-bold flex items-center"
+                style={{
+                  color: colors.foreground,
+                }}
+              >
+                <div
+                  tw="w-3 h-3 rounded-full mr-3"
+                  style={{ backgroundColor: colors.accent }}
+                />
+                {siteConfig.name}
+              </div>
+              <div style={{ color: colors.mutedForeground, fontSize: "28px" }}>
+                {hostname}
+              </div>
+            </header>
+
+            {/* Main content area */}
+            <main tw="flex flex-1 flex-col items-center justify-center px-8">
+              {/* Title with dynamic sizing */}
+              <div tw="flex w-full justify-center mb-8">
+                <div
+                  tw="rounded-2xl p-8 text-center max-w-5xl leading-tight font-semibold"
                   style={{
+                    fontSize: `${titleFontSize}px`,
                     backgroundColor: colors.muted,
-                    borderColor: colors.border,
                     color: colors.foreground,
+                    boxShadow: `0 10px 25px ${colors.shadow}`,
+                    border: `1px solid ${colors.border}`,
+                    wordWrap: "break-word",
                   }}
                 >
-                  #{tag}
-                </span>
-              ))}
-            </div>
-          ) : null}
-        </main>
-      </div>
-    ),
-    {
-      width: 1200,
-      height: 630,
-      fonts: [
-        {
-          name: "Wotfard",
-          data: fontData,
-          style: "normal",
-        },
-      ],
-    }
-  )
+                  {truncatedTitle}
+                </div>
+              </div>
+
+              {/* Meta description */}
+              {truncatedMeta && (
+                <div
+                  tw="text-3xl max-w-4xl text-center leading-relaxed mb-8"
+                  style={{
+                    color: colors.mutedForeground,
+                    wordWrap: "break-word",
+                  }}
+                >
+                  {truncatedMeta}
+                </div>
+              )}
+
+              {/* Tags with improved styling */}
+              {tags.length > 0 && (
+                <div tw="flex flex-wrap justify-center items-center max-w-4xl gap-3">
+                  {tags.slice(0, 4).map((tag, index) => (
+                    <span
+                      key={index}
+                      tw="rounded-xl px-4 py-2 text-xl font-medium"
+                      style={{
+                        backgroundColor: colors.muted,
+                        border: `1px solid ${colors.border}`,
+                        color: colors.foreground,
+                      }}
+                    >
+                      #{tag}
+                    </span>
+                  ))}
+                  {tags.length > 4 && (
+                    <span
+                      tw="rounded-xl px-4 py-2 text-xl font-medium"
+                      style={{
+                        backgroundColor: colors.accent,
+                        color: "white",
+                      }}
+                    >
+                      +{tags.length - 4} more
+                    </span>
+                  )}
+                </div>
+              )}
+            </main>
+          </div>
+        </div>
+      ),
+      {
+        width: 1200,
+        height: 630,
+        ...(fonts.length > 0 && { fonts }),
+      }
+    )
+  } catch (error) {
+    console.error("OG Image generation error:", error)
+
+    // Enhanced fallback with better error handling
+    return new ImageResponse(
+      (
+        <div tw="flex h-full w-full bg-gradient-to-br from-gray-50 to-white flex-col items-center justify-center p-12">
+          <div tw="text-7xl font-bold text-gray-800 mb-6">
+            {siteConfig.name}
+          </div>
+          <div tw="text-4xl text-gray-600 text-center max-w-2xl">
+            {noteTitle || "Content Preview"}
+          </div>
+          <div tw="text-2xl text-gray-500 mt-8">yashagarwal.in</div>
+        </div>
+      ),
+      {
+        width: 1200,
+        height: 630,
+      }
+    )
+  }
 }
