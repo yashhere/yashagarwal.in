@@ -42,7 +42,7 @@ export default function Page() {
           <Link href="https://netskope.com" target="_blank" variant="text">
             Netskope
           </Link>{" "}
-          on it&apos;s API security product.
+          on its API security product.
         </p>
         <p className="text-base leading-relaxed">
           This domain is my little digital nest where I write about my
