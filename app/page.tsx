@@ -39,7 +39,7 @@ export default function Page() {
         <p className="text-base leading-relaxed mb-4">
           I&apos;m a Software Engineer crafting efficient solutions for
           intricate problems. Currently I work at{" "}
-          <Link href="https://netskope.com" target="_blank" variant="inline">
+          <Link href="https://netskope.com" target="_blank" variant="text">
             Netskope
           </Link>{" "}
           on it&apos;s API security product.

@@ -27,7 +27,10 @@ export default function Colophon() {
             UI design is not my strongest skill, but playing with latest web
             technologies is an indulgent hobby I don&apos;t want to relinquish.
             The source code of this website is available on{" "}
-            <Link href="https://github.com/yashhere/yashagarwal.in">
+            <Link
+              href="https://github.com/yashhere/yashagarwal.in"
+              variant="text"
+            >
               Github
             </Link>
             , if you&apos;d like to poke around. I started building this version
@@ -67,13 +70,19 @@ export default function Colophon() {
         <Section level="h3" title="Typography">
           <p>
             Inter is the primary font on this site. I first noticed this being
-            used on the <Link href="https://www.leerob.com/">website</Link> of
-            Lee Robinson and instantly loved it. The site deliberately uses a
+            used on the{" "}
+            <Link href="https://www.leerob.com/" variant="text">
+              website
+            </Link>{" "}
+            of Lee Robinson and instantly loved it. The site deliberately uses a
             single font for both headings and body, to reduce complexity.
             <br />
             <br />
             The mono font is the{" "}
-            <Link href="https://fonts.google.com/specimen/IBM+Plex+Mono">
+            <Link
+              href="https://fonts.google.com/specimen/IBM+Plex+Mono"
+              variant="text"
+            >
               IBM Plex Mono
             </Link>
             .

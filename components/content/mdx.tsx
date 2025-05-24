@@ -15,7 +15,7 @@ const components = {
     href,
     ...props
   }: React.AnchorHTMLAttributes<HTMLAnchorElement>) => (
-    <Link href={href || ""} {...props} variant="inline" />
+    <Link href={href || ""} {...props} variant="text" />
   ),
   img: (props) => <Image {...props} />,
   p: ({ className, ...props }: React.HTMLAttributes<HTMLParagraphElement>) => (

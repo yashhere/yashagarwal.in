@@ -76,7 +76,7 @@ export const Series = ({
                     <Link
                       href={`/notes/${note.slug}`}
                       className="text-primary hover:underline transition-all text-sm"
-                      variant="clean"
+                      variant="nav"
                     >
                       {note.title}
                     </Link>

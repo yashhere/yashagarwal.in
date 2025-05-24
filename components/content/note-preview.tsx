@@ -11,11 +11,11 @@ export const NotePreview = ({
   homePage: boolean
 }) => {
   return (
-    <>
+    <div className="flex">
       <Link
         href={`/notes/${note.note.slug}`}
-        className="flex flex-col justify-between rounded-md px-4 md:gap-2 py-1 transition-colors select-none hover:bg-muted md:flex-row md:items-center"
-        variant="clean"
+        className="flex flex-col md:flex-row items-start md:items-center rounded-md mx-4 gap-0 md:gap-2 py-1 transition-colors select-none hover:bg-muted w-full"
+        variant="nav"
       >
         <div className="flex flex-col">
           <span className="mb-1 font-sans text-base text-foreground">
@@ -27,22 +27,15 @@ export const NotePreview = ({
             </span>
           )}
         </div>
-        <span
-          className={cn(
-            homePage ? "hidden" : "",
-            "h-px flex-1 bg-foreground/30"
-          )}
-          aria-hidden
-        />
-        <span
-          className={cn(
-            homePage ? "hidden" : "",
-            "text-sm text-foreground/70 sm:text-base"
-          )}
-        >
-          {moment(note.note.createdOn).format("MM.YY")}
-        </span>
+        {!homePage && (
+          <>
+            <span className="h-px flex-1 bg-foreground/30" aria-hidden />
+            <span className="text-sm text-foreground/70 sm:text-base">
+              {moment(note.note.createdOn).format("MM.YY")}
+            </span>
+          </>
+        )}
       </Link>
-    </>
+    </div>
   )
 }

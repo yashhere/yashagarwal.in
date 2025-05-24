@@ -162,7 +162,8 @@ export default async function Page(props: Props) {
           <Link
             href={`https://x.com/intent/tweet?text=${encodedUrl}%20via%20%40yash__here`}
             className="text-base"
-            variant="clean"
+            variant="nav"
+            showIcon={false}
           >
             <div className="flex items-center rounded-full gap-1 border border-border/80 px-4 py-1 text-base  flex-row text-foreground/80 hover:text-foreground hover:border-border">
               <XLogoIcon className="w-5 flex" /> Share

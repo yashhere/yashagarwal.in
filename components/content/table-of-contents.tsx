@@ -47,7 +47,7 @@ export const TableOfContents = ({ headings, interactive }) => {
               <Link
                 href={`#${heading.slug}`}
                 className="block py-0.5 text-muted-foreground hover:text-primary transition-colors"
-                variant="clean"
+                variant="nav"
               >
                 {heading.text}
               </Link>
