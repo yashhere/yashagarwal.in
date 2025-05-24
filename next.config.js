@@ -4,6 +4,9 @@ const { withContentCollections } = require("@content-collections/next")
 const nextConfig = {
   reactStrictMode: true,
   serverExternalPackages: [],
+  experimental: {
+    viewTransition: true,
+  },
   images: {
     formats: ["image/avif", "image/webp"],
   },
