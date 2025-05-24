@@ -79,17 +79,23 @@ export const Footer: FC = () => {
                 <Newsletter />
               </div>
             </section>
-            <Suspense fallback={null}>
-              <LastVisitor />
-            </Suspense>
           </div>
+          <Suspense fallback={null}>
+            <div className="mt-6 inline-block md:hidden">
+              <LastVisitor />
+            </div>
+          </Suspense>
         </div>
-        <div className="flex flex-col items-start justify-between md:flex-row"></div>
       </div>
 
       <div className="mx-auto max-w-2xl space-y-8 p-4 text-base md:px-0">
         <div className="flex w-full flex-row justify-between">
           <div>Be nice ツ</div>
+          <Suspense fallback={null}>
+            <div className="hidden md:inline-block">
+              <LastVisitor />
+            </div>
+          </Suspense>
           <Suspense fallback={null}>
             <div className="flex flex-row items-center gap-2">
               <div>©</div>
