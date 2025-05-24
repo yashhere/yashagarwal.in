@@ -9,7 +9,7 @@ import {
   GithubLogoIcon,
   LinkedinLogoIcon,
   RssIcon,
-  TwitterLogoIcon,
+  XLogoIcon,
 } from "@phosphor-icons/react/dist/ssr"
 
 import Newsletter from "../interactive/newsletter"
@@ -17,6 +17,16 @@ import { AnalogClock } from "../ui/clock/clock"
 import Link from "../ui/link"
 
 const Socials = [
+  {
+    name: "X",
+    url: "https://www.x.com/yash__here",
+    icon: XLogoIcon,
+  },
+  {
+    name: "RSS",
+    url: `${env.NEXT_PUBLIC_APP_URL}/atom.xml`,
+    icon: RssIcon,
+  },
   {
     name: "Email",
     url: "mailto:yashagarwaljpr+blog@gmail.com",
@@ -31,16 +41,6 @@ const Socials = [
     name: "LinkedIn",
     url: "https://www.linkedin.com/in/theyashagarwal/",
     icon: LinkedinLogoIcon,
-  },
-  {
-    name: "Twitter",
-    url: "https://www.twitter.com/yash__here",
-    icon: TwitterLogoIcon,
-  },
-  {
-    name: "RSS",
-    url: `${env.NEXT_PUBLIC_APP_URL}/atom.xml`,
-    icon: RssIcon,
   },
 ]
 
