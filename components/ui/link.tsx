@@ -53,7 +53,7 @@ const CustomLink = forwardRef<HTMLAnchorElement, LinkProps>(
     const linkClasses = cn(
       // Common styles
       "inline-flex items-center gap-1 transition-all duration-200",
-      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 justify-between",
+      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
 
       // Variant-specific styles
       variant === "text"
