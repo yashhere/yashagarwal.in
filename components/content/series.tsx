@@ -8,6 +8,7 @@ import {
   ArrowUpIcon,
   ListNumbersIcon,
 } from "@phosphor-icons/react/dist/ssr"
+import { AnimatePresence, motion } from "framer-motion"
 
 import Link from "../ui/link"
 
@@ -27,6 +28,8 @@ export const Series = ({
         <button
           className="group flex w-full items-center justify-between text-left"
           onClick={() => setIsOpen(!isOpen)}
+          aria-expanded={isOpen}
+          aria-controls="series-content"
         >
           <div className="flex flex-col gap-0.5">
             <div className="flex items-center gap-1.5">
@@ -43,9 +46,13 @@ export const Series = ({
             </span>
           </div>
 
-          <span className="flex h-5 w-5 items-center justify-center rounded-md text-muted-foreground transition-colors group-hover:text-foreground">
-            {isOpen ? <ArrowUpIcon size={14} /> : <ArrowDownIcon size={14} />}
-          </span>
+          <motion.span
+            className="flex h-5 w-5 items-center justify-center rounded-md text-muted-foreground transition-colors group-hover:text-foreground hover:cursor-pointer"
+            animate={{ rotate: isOpen ? 180 : 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+          >
+            <ArrowDownIcon size={14} />
+          </motion.span>
         </button>
       ) : (
         <div className="flex flex-col gap-0.5">
@@ -58,46 +65,85 @@ export const Series = ({
         </div>
       )}
 
-      {isOpen && (
-        <div className="mt-2 pt-2 border-t border-border space-y-0.5">
-          <ul className="space-y-1">
-            {series.notes?.map((note) => (
-              <li
+      <AnimatePresence initial={false}>
+        {isOpen && (
+          <motion.div
+            id="series-content"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{
+              height: "auto",
+              opacity: 1,
+              transition: {
+                height: { duration: 0.3, ease: "easeInOut" },
+                opacity: { duration: 0.2, delay: 0.1, ease: "easeOut" },
+              },
+            }}
+            exit={{
+              height: 0,
+              opacity: 0,
+              transition: {
+                height: { duration: 0.25, ease: "easeInOut", delay: 0.05 },
+                opacity: { duration: 0.15, ease: "easeIn" },
+              },
+            }}
+            className="mt-2 space-y-0.5 pt-2 border-t border-border overflow-hidden"
+          >
+            {series.notes?.map((note, index) => (
+              <motion.div
                 key={note.slug}
-                className={cn(
-                  "relative pl-4 before:absolute before:left-0 before:top-[7px] before:size-1 before:rounded-full",
-                  {
-                    "before:bg-primary": note.isCurrent,
-                    "before:bg-muted-foreground":
-                      note.status === "published" && !note.isCurrent,
-                    "before:bg-border/70": note.status !== "published",
-                  }
-                )}
+                initial={{ y: -10, opacity: 0 }}
+                animate={{
+                  y: 0,
+                  opacity: 1,
+                  transition: {
+                    delay: 0.15 + index * 0.03,
+                    duration: 0.3,
+                    ease: "easeOut",
+                  },
+                }}
+                exit={{
+                  y: -10,
+                  opacity: 0,
+                  transition: {
+                    duration: 0.2,
+                    ease: "easeIn",
+                  },
+                }}
+                className="flex items-start gap-2 text-sm"
               >
-                {note.status === "published" ? (
-                  note.isCurrent ? (
-                    <span className="text-foreground text-sm">
-                      {note.title}
-                    </span>
+                <div
+                  className={cn("mt-[10px] size-1 rounded-full flex-shrink-0", {
+                    "bg-primary": note.isCurrent,
+                    "bg-muted-foreground": !note.isCurrent,
+                    "bg-muted-foreground/60": note.status !== "published",
+                  })}
+                />
+                <div className="flex-1 min-w-0">
+                  {note.status === "published" ? (
+                    note.isCurrent ? (
+                      <span className="block py-0.5 text-foreground">
+                        {note.title}
+                      </span>
+                    ) : (
+                      <Link
+                        href={`/notes/${note.slug}`}
+                        className="block py-0.5 text-muted-foreground hover:text-primary transition-colors"
+                        variant="nav"
+                      >
+                        {note.title}
+                      </Link>
+                    )
                   ) : (
-                    <Link
-                      href={`/notes/${note.slug}`}
-                      className="text-primary hover:underline transition-all text-sm"
-                      variant="nav"
-                    >
-                      {note.title}
-                    </Link>
-                  )
-                ) : (
-                  <span className="text-muted-foreground text-sm">
-                    Planned: {note.title}
-                  </span>
-                )}
-              </li>
+                    <span className="block py-0.5 text-muted-foreground/60">
+                      Planned: {note.title}
+                    </span>
+                  )}
+                </div>
+              </motion.div>
             ))}
-          </ul>
-        </div>
-      )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }
