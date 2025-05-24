@@ -26,7 +26,10 @@ export const BackLinks = ({
 
         <div className="space-y-1.5 pt-2 border-t border-border">
           {backlinks?.map((link) => (
-            <div key={link.url} className="line-clamp-2">
+            <div
+              key={link.url}
+              className="overflow-hidden text-ellipsis whitespace-nowrap"
+            >
               <Link
                 href={link.url}
                 className="block text-xs text-muted-foreground hover:text-primary transition-colors"

@@ -69,7 +69,6 @@ export async function getNotesWithTaxonomy(type: TaxonomyType, slug: string) {
       return tags.map((tag) => slugger.slug(tag)).includes(slug)
     } else {
       const category = item.note.category
-      console.log("category", category, slug)
       if (!category) return false
 
       slugger.reset()

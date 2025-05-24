@@ -1,13 +1,12 @@
 "use client"
 
 import { useState } from "react"
-import { cn } from "@/lib/utils"
 import {
   ArrowDownIcon,
   ArrowUpIcon,
   ArticleNyTimesIcon,
 } from "@phosphor-icons/react/dist/ssr"
-import { AnimatePresence, motion } from "framer-motion"
+import { AnimatePresence, motion } from "motion/react"
 
 import Link from "../ui/link"
 

@@ -3,12 +3,8 @@
 import React from "react"
 import { getSeries } from "@/lib/content"
 import { cn } from "@/lib/utils"
-import {
-  ArrowDownIcon,
-  ArrowUpIcon,
-  ListNumbersIcon,
-} from "@phosphor-icons/react/dist/ssr"
-import { AnimatePresence, motion } from "framer-motion"
+import { ArrowDownIcon, ListNumbersIcon } from "@phosphor-icons/react/dist/ssr"
+import { AnimatePresence, motion } from "motion/react"
 
 import Link from "../ui/link"
 

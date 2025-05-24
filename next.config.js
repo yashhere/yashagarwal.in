@@ -4,10 +4,17 @@ const { withContentCollections } = require("@content-collections/next")
 const nextConfig = {
   reactStrictMode: true,
   serverExternalPackages: [],
+  pageExtensions: ["js", "jsx", "mdx", "ts", "tsx"],
   experimental: {
     viewTransition: true,
+    mdxRs: {
+      mdxType: "gfm",
+    },
   },
+  transpilePackages: ["shiki"],
   images: {
+    contentDispositionType: "inline",
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     formats: ["image/avif", "image/webp"],
   },
   headers() {
