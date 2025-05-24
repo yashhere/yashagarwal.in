@@ -13,6 +13,7 @@ export async function generateMetadata(props: Props) {
     "categories",
     params.category
   )
+
   return generateCategoryMetadata({
     name: displayName,
     slug: `/tags/${params.category}`,
