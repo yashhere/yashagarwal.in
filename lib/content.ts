@@ -41,6 +41,7 @@ export async function getPreviewNotes() {
           "description",
           "createdOn",
           "updatedOn",
+          "category",
           "slug",
           "tags",
           "image",
