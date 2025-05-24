@@ -10,33 +10,63 @@ export async function getFeed() {
     link: siteConfig.url,
   }
 
+  const baseUrl = siteConfig.url.replace(/\/$/, "") // Remove trailing slash
+  const latestNote = sortNotes(allNotes)[0]
+
   const feed = new Feed({
     title: siteConfig.title,
     description: siteConfig.description,
-    id: siteConfig.url,
-    link: siteConfig.url,
-    favicon: `${siteConfig.url}/favicon.ico`,
-    copyright: `Copyright © 2016 - ${new Date().getFullYear()} ${
-      siteConfig.name
-    }`,
+    id: baseUrl,
+    link: baseUrl,
+    language: "en",
+    favicon: `${baseUrl}/favicon.ico`,
+    copyright: `Copyright © 2016 - ${new Date().getFullYear()} ${siteConfig.name}`,
+    updated: latestNote ? new Date(latestNote.createdOn) : new Date(),
+    generator: "Next.js Feed Library",
     feedLinks: {
-      atom: `${siteConfig.url}/atom.xml`,
-      rss: `${siteConfig.url}/rss.xml`,
+      atom: `${baseUrl}/atom.xml`,
+      rss: `${baseUrl}/rss.xml`,
     },
     author: author,
   })
 
   sortNotes(allNotes).forEach((note) => {
+    if (!note.slug || !note.title || !note.createdOn) {
+      console.warn(`Skipping invalid note: ${note.slug || "unknown"}`)
+      return
+    }
+
+    const noteUrl = `${baseUrl}/notes/${note.slug}`
+
     feed.addItem({
-      id: siteConfig.url + "/notes/" + note.slug,
+      id: noteUrl,
       title: note.title,
-      link: siteConfig.url + "/notes/" + note.slug,
-      description: note.description,
+      link: noteUrl,
+      description: note.description || note.title,
+      content: note.content || note.description,
       author: [author],
       contributor: [author],
       date: new Date(note.createdOn),
+      category: note.category ? [{ name: note.category }] : undefined,
+      image: note.image ? `${baseUrl}${note.image}` : undefined,
     })
   })
+
+  return feed
+}
+
+let feedCache: { feed: Feed; timestamp: number } | null = null
+const CACHE_DURATION = 1000 * 60 * 15 // 15 minutes
+
+export async function getCachedFeed(): Promise<Feed> {
+  const now = Date.now()
+
+  if (feedCache && now - feedCache.timestamp < CACHE_DURATION) {
+    return feedCache.feed
+  }
+
+  const feed = await getFeed()
+  feedCache = { feed, timestamp: now }
 
   return feed
 }
