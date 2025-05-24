@@ -5,6 +5,7 @@ import { TableOfContents } from "@/components/content/table-of-contents"
 import { DisqusComments } from "@/components/interactive/comments"
 import { siteConfig } from "@/config/site"
 import { getPartialNote, getPreviewNotes } from "@/lib/content"
+import GithubSlugger from "github-slugger"
 
 import "@/styles/mdx.css"
 import "katex/dist/katex.css"
@@ -121,12 +122,23 @@ export default async function Page(props: Props) {
     `${env.NEXT_PUBLIC_APP_URL}/notes/${article.note.slug}`
   )
 
+  const slugger = new GithubSlugger()
+  const category_slug = article.note.category
+    ? slugger.slug(article.note.category)
+    : undefined
+
   return (
     <>
       <div>
         <section className="mb-8 space-y-2">
           <div className="text-foreground/80 text-sm tracking-wider uppercase">
-            {article.note.category}
+            <Link
+              key={category_slug}
+              href={`/categories/${category_slug}`}
+              variant="nav"
+            >
+              {article.note.category}
+            </Link>
           </div>
           <Heading level="h2">{article.note.title}</Heading>
           <div className="text-foreground/60 text-sm">

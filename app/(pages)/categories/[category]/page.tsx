@@ -4,7 +4,7 @@ import Section from "@/components/ui/section"
 import { generateTaxonomyMetadata, getNotesWithTaxonomy } from "@/lib/taxonomy"
 
 type Props = {
-  params: Promise<{ tag: string }>
+  params: Promise<{ category: string }>
 }
 
 export async function generateMetadata(
@@ -12,23 +12,23 @@ export async function generateMetadata(
   parent: ResolvingMetadata
 ): Promise<Metadata> {
   const params = await props.params
-  return generateTaxonomyMetadata("tags", params.tag)
+  return generateTaxonomyMetadata("categories", params.category)
 }
 
 export default async function Page(props: Props) {
   const params = await props.params
-  const { notes: notesWithTag, displayName } = await getNotesWithTaxonomy(
-    "tags",
-    params.tag
+  const { notes: notesWithCategory, displayName } = await getNotesWithTaxonomy(
+    "categories",
+    params.category
   )
 
   return (
     <>
-      <Section data={notesWithTag} title={displayName}>
-        {notesWithTag.length !== 0 ? (
-          <NotesList notes={notesWithTag} noSearchBox />
+      <Section data={notesWithCategory} title={displayName}>
+        {notesWithCategory.length !== 0 ? (
+          <NotesList notes={notesWithCategory} noSearchBox />
         ) : (
-          <p>No notes found for tag {displayName}</p>
+          <p>No notes found for category {displayName}</p>
         )}
       </Section>
     </>
