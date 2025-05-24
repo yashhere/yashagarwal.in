@@ -22,7 +22,7 @@ import { env } from "@/env.mjs"
 import { generateArticleMetadata } from "@/lib/seo/metadata"
 import { ArticleStructuredData } from "@/lib/seo/structured-data"
 import { encodeParameter } from "@/lib/utils"
-import { XLogoIcon } from "@phosphor-icons/react/dist/ssr"
+import { DotIcon, XLogoIcon } from "@phosphor-icons/react/dist/ssr"
 import moment from "moment"
 
 type Props = {
@@ -97,14 +97,15 @@ export default async function Page(props: Props) {
             <Link
               key={category_slug}
               href={`/categories/${category_slug}`}
-              variant="nav"
+              variant="text"
+              showIcon={false}
             >
               {article.note.category}
             </Link>
           </div>
           <Heading level="h2">{article.note.title}</Heading>
-          <div className="text-foreground/60 text-sm">
-            {moment(article.note.createdOn).format("MMM DD, YYYY")}
+          <div className="text-foreground/60 text-sm flex flex-row gap-1">
+            <span>{moment(article.note.createdOn).format("MMM DD, YYYY")}</span>
           </div>
         </section>
         {article.series ? (
