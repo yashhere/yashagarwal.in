@@ -16,7 +16,6 @@ import remarkGfm from "remark-gfm"
 import remarkMath from "remark-math"
 import remarkSmartypants from "remark-smartypants"
 import wikiLinkPlugin from "remark-wiki-link"
-import { createHighlighter } from "shiki"
 import { visit } from "unist-util-visit"
 
 import rehypeImageMetadata from "./utils/plugins/image-metadata"
