@@ -2,7 +2,11 @@
 
 import { useState } from "react"
 import { cn } from "@/lib/utils"
-import { ArrowDownIcon, ArrowUpIcon } from "@phosphor-icons/react/dist/ssr"
+import {
+  ArrowDownIcon,
+  ArrowUpIcon,
+  ArticleNyTimesIcon,
+} from "@phosphor-icons/react/dist/ssr"
 
 import Link from "../ui/link"
 
@@ -18,9 +22,12 @@ export const TableOfContents = ({ headings, interactive }) => {
           aria-expanded={isOpen}
           aria-controls="toc-content"
         >
-          <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-            Contents
-          </span>
+          <div className="flex items-center gap-1.5">
+            <ArticleNyTimesIcon className="h-3 w-3 text-muted-foreground" />
+            <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+              On this page
+            </span>
+          </div>
           <span className="flex h-5 w-5 items-center justify-center rounded-md text-muted-foreground transition-colors group-hover:text-foreground">
             {isOpen ? <ArrowUpIcon size={14} /> : <ArrowDownIcon size={14} />}
           </span>

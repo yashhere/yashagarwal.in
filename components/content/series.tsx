@@ -3,7 +3,11 @@
 import React from "react"
 import { getSeries } from "@/lib/content"
 import { cn } from "@/lib/utils"
-import { ArrowDownIcon, ArrowUpIcon } from "@phosphor-icons/react/dist/ssr"
+import {
+  ArrowDownIcon,
+  ArrowUpIcon,
+  ListNumbersIcon,
+} from "@phosphor-icons/react/dist/ssr"
 
 import Link from "../ui/link"
 
@@ -25,9 +29,12 @@ export const Series = ({
           onClick={() => setIsOpen(!isOpen)}
         >
           <div className="flex flex-col gap-0.5">
-            <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-              Series
-            </span>
+            <div className="flex items-center gap-1.5">
+              <ListNumbersIcon className="h-3 w-3 text-muted-foreground" />
+              <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                Series
+              </span>
+            </div>
             <span className="font-medium text-foreground text-sm">
               {series.seriesTitle}{" "}
               <span className="text-muted-foreground font-normal">

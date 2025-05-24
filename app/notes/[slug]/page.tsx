@@ -13,6 +13,7 @@ import { notFound } from "next/navigation"
 import { BackLinks } from "@/components/content/backlinks"
 import { TagList } from "@/components/content/tag-list"
 import { GoToTop } from "@/components/layout/go-to-top"
+import { DecorativeHr } from "@/components/ui/decorative-hr"
 import Draft from "@/components/ui/draft"
 import { Heading } from "@/components/ui/heading"
 import Link from "@/components/ui/link"
@@ -151,14 +152,13 @@ export default async function Page(props: Props) {
             {article.note.status === "draft" ? <Draft /> : null}
           </div>
         </div>
+        <DecorativeHr />
         <BackLinks backlinks={article.backlinks} />
-
         {article.note.tags && article.note.tags.length > 0 && (
           <TagList tags={article.note.tags} />
         )}
-
-        <hr className="border-t-1 border-border" />
-        <div className="flex items-center space-x-2 py-8 flex-row justify-between">
+        <DecorativeHr />
+        <div className="flex items-center space-x-2 my-8 flex-row justify-between">
           <Link
             href={`https://x.com/intent/tweet?text=${encodedUrl}%20via%20%40yash__here`}
             className="text-base"
@@ -171,6 +171,7 @@ export default async function Page(props: Props) {
           </Link>
           <GoToTop slug={slug} />
         </div>
+        <DecorativeHr />
         <DisqusComments
           slug={params.slug}
           url={`${siteConfig.url}/notes/${params.slug}`}
