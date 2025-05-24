@@ -11,7 +11,7 @@ interface LinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
   children?: ReactNode
   external?: boolean
   showIcon?: boolean
-  variant?: "default" | "inline" | "clean"
+  variant?: "text" | "nav"
 }
 
 const CustomLink = forwardRef<HTMLAnchorElement, LinkProps>(
@@ -22,7 +22,7 @@ const CustomLink = forwardRef<HTMLAnchorElement, LinkProps>(
       children,
       external,
       showIcon = true,
-      variant = "default",
+      variant = "text",
       ...props
     }: LinkProps,
     ref
@@ -33,9 +33,10 @@ const CustomLink = forwardRef<HTMLAnchorElement, LinkProps>(
         <a
           href={href}
           className={cn(
-            "no-underline scroll-m-20 transition-colors hover:text-primary",
-            !className?.includes("anchor") && "text-primary",
-            className
+            "scroll-m-20 transition-colors",
+            className?.includes("anchor")
+              ? className
+              : cn("text-primary hover:text-primary", className)
           )}
           ref={ref}
           {...props}
@@ -48,21 +49,17 @@ const CustomLink = forwardRef<HTMLAnchorElement, LinkProps>(
     const isExternal =
       external ?? (!href.startsWith("/") && !href.startsWith("#"))
 
+    // Simplified styling based on variant
     const linkClasses = cn(
-      // Base styles
-      "transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
-      // Variant styles
-      {
-        // Inline variant for body text links
-        "inline-flex items-center gap-1 font-medium text-primary underline decoration-1 underline-offset-4 decoration-muted-foreground/50 hover:decoration-primary hover:decoration-2":
-          variant === "inline",
-        // Default variant for general use
-        "inline-flex items-center gap-1 font-medium hover:text-foreground":
-          variant === "default",
-        // Clean variant for lists and navigation
-        "inline-flex items-center gap-1 hover:text-foreground":
-          variant === "clean",
-      },
+      // Common styles
+      "inline-flex items-center gap-1 transition-all duration-200",
+      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 justify-between",
+
+      // Variant-specific styles
+      variant === "text"
+        ? "text-primary hover:underline hover:decoration-2 hover:underline-offset-4 hover:decoration-primary"
+        : "text-foreground/70 hover:text-foreground",
+
       className
     )
 
@@ -77,7 +74,7 @@ const CustomLink = forwardRef<HTMLAnchorElement, LinkProps>(
           {...props}
         >
           <span>{children}</span>
-          {showIcon && variant !== "clean" && (
+          {showIcon && (
             <ArrowUpRightIcon className="h-3.5 w-3.5 flex-shrink-0" />
           )}
         </a>

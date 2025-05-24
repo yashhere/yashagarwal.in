@@ -63,7 +63,7 @@ export const Navigation = () => {
                   <Link
                     key={path}
                     href={path}
-                    variant="clean"
+                    variant="nav"
                     className={cn(
                       "flex align-middle transition-all hover:text-foreground lowercase text-base leading-relaxed",
                       {
@@ -81,7 +81,7 @@ export const Navigation = () => {
               <Link
                 href={parentPath}
                 className="flex items-center gap-2 lowercase text-base leading-relaxed hover:text-foreground text-foreground/70"
-                variant="clean"
+                variant="nav"
               >
                 <ArrowUUpLeftIcon size={16} />
                 <span>Back to {parentName}</span>

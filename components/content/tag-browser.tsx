@@ -33,7 +33,7 @@ export default function TagBrowser({
               key={tag_slug}
               href={`/tags/${tag_slug}`}
               className="inline-flex items-center gap-1.5 rounded-full border border-border bg-background px-3 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:border-primary hover:text-primary"
-              variant="clean"
+              variant="nav"
             >
               {tag}
               <span className="text-xs text-muted-foreground bg-muted px-1.5 py-0.5 rounded-full">

@@ -75,17 +75,22 @@ export const Footer: FC = () => {
         <div className="flex flex-row flex-wrap items-start justify-between md:flex-row">
           <section className="flex flex-col">
             <h1 className="mb-4 text-base font-medium">Get in touch</h1>
-            <div className="space-y-2">
+            <div className="space-y-2 flex flex-col">
               {Socials.map((s) => {
                 return (
                   <Link
                     href={s.url}
                     key={s.name}
                     aria-label={s.name}
-                    className="flex flex-row items-center gap-4 text-foreground/60 hover:text-foreground hover:no-underline md:gap-2"
+                    className="text-foreground/60 hover:text-foreground"
+                    variant="nav"
+                    external={true}
+                    showIcon={false}
                   >
-                    <s.icon className="size-5" />
-                    <h1 className="text-base">{s.name}</h1>
+                    <div className="flex items-center gap-4 md:gap-2">
+                      <s.icon className="size-5" />
+                      <span className="text-base">{s.name}</span>
+                    </div>
                   </Link>
                 )
               })}
@@ -106,6 +111,7 @@ export const Footer: FC = () => {
                         "text-foreground/60": !isActive,
                       }
                     )}
+                    variant="nav"
                   >
                     {name}
                   </Link>

@@ -26,6 +26,7 @@ export const BackLinks = ({
               <Link
                 href={link.url}
                 className="block text-xs text-muted-foreground hover:text-primary transition-colors"
+                variant="nav"
               >
                 <span className="font-medium text-foreground">{link.type}</span>
                 <span className="ml-1">{link.title}</span>
