@@ -169,6 +169,7 @@ module.exports = {
       animation: {
         spinner: "spinner 1.2s linear infinite",
         shimmer: "shimmer 2s ease-in-out infinite",
+        blink: "blink 1s ease-in-out infinite",
       },
       keyframes: {
         spinner: {
@@ -178,6 +179,10 @@ module.exports = {
         shimmer: {
           "0%": { backgroundPosition: "-200% 0" },
           "100%": { backgroundPosition: "200% 0" },
+        },
+        blink: {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0.2" },
         },
       },
       fontSize: {

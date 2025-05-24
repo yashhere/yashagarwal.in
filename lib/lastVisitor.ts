@@ -3,7 +3,7 @@
 import { headers } from "next/headers"
 import { Redis } from "@upstash/redis"
 
-type LastVisitorLocation = {
+export type LastVisitorLocation = {
   city: string
   country: string
 }
