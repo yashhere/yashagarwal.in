@@ -14,10 +14,8 @@ async function loadFont(): Promise<ArrayBuffer> {
   }
 
   try {
-    // Use TTF format instead of wOF2 for better compatibility
     const response = await fetch(
-      "https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyeAZJhiO-T.ttf",
-      { cache: "force-cache" }
+      new URL("../../public/assets/fonts/inter.ttf", import.meta.url)
     )
 
     if (!response.ok) {
@@ -70,7 +68,6 @@ export async function GET(req: NextRequest) {
       : []
     const hostname = new URL(siteConfig.url).hostname
 
-    // Enhanced color scheme with better contrast
     const colors = {
       muted: "#f8fafc",
       border: "#e2e8f0",
@@ -87,7 +84,6 @@ export async function GET(req: NextRequest) {
     // Dynamic font sizing
     const titleFontSize = calculateFontSize(truncatedTitle)
 
-    // Load font or use system fonts
     let fonts: Array<{
       name: string
       data: ArrayBuffer
@@ -118,7 +114,6 @@ export async function GET(req: NextRequest) {
             background: "linear-gradient(135deg, #f8fafc 0%, #ffffff 100%)",
           }}
         >
-          {/* Subtle grid pattern */}
           <div
             tw="absolute inset-0 opacity-30"
             style={{
@@ -129,7 +124,6 @@ export async function GET(req: NextRequest) {
           />
 
           <div tw="flex h-full w-full flex-col relative z-10 p-12">
-            {/* Header with better spacing */}
             <header tw="flex items-center justify-between text-3xl mb-8">
               <div
                 tw="font-bold flex items-center"
@@ -148,9 +142,7 @@ export async function GET(req: NextRequest) {
               </div>
             </header>
 
-            {/* Main content area */}
             <main tw="flex flex-1 flex-col items-center justify-center px-8">
-              {/* Title with dynamic sizing */}
               <div tw="flex w-full justify-center mb-8">
                 <div
                   tw="rounded-2xl p-8 text-center max-w-5xl leading-tight font-semibold"
@@ -167,7 +159,6 @@ export async function GET(req: NextRequest) {
                 </div>
               </div>
 
-              {/* Meta description */}
               {truncatedMeta && (
                 <div
                   tw="text-3xl max-w-4xl text-center leading-relaxed mb-8"
@@ -180,13 +171,12 @@ export async function GET(req: NextRequest) {
                 </div>
               )}
 
-              {/* Tags with improved styling */}
               {tags.length > 0 && (
-                <div tw="flex flex-wrap justify-center items-center max-w-4xl gap-3">
+                <div tw="flex flex-wrap justify-center items-center max-w-4xl">
                   {tags.slice(0, 4).map((tag, index) => (
                     <span
                       key={index}
-                      tw="rounded-xl px-4 py-2 text-xl font-medium"
+                      tw="rounded-xl px-4 py-2 mx-2 text-xl font-medium"
                       style={{
                         backgroundColor: colors.muted,
                         border: `1px solid ${colors.border}`,
@@ -222,7 +212,6 @@ export async function GET(req: NextRequest) {
   } catch (error) {
     console.error("OG Image generation error:", error)
 
-    // Enhanced fallback with better error handling
     return new ImageResponse(
       (
         <div tw="flex h-full w-full bg-gradient-to-br from-gray-50 to-white flex-col items-center justify-center p-12">
