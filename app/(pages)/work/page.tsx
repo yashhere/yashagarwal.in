@@ -1,28 +1,20 @@
 import { FC } from "react"
 import { Metadata } from "next"
-import Head from "next/head"
 import { Heading } from "@/components/ui/heading"
 import Section from "@/components/ui/section"
-import { siteConfig } from "@/config/site"
+import { generatePageMetadata } from "@/lib/seo/metadata"
 import {
   BriefcaseIcon,
   CalendarDotsIcon,
   CaretDoubleRightIcon,
 } from "@phosphor-icons/react/dist/ssr"
 
-export const metadata: Metadata = {
-  title: "Work | Yash Agarwal",
-  description: "Learn about my professional journey.",
-  alternates: {
-    canonical: `${siteConfig.url}/work`,
-    types: {
-      "application/rss+xml": [
-        { url: "rss.xml", title: "RSS Feed for yashagarwal.in" },
-        { url: "atom.xml", title: "Atom Feed for yashagarwal.in" },
-      ],
-    },
-  },
-}
+export const metadata: Metadata = generatePageMetadata({
+  title: "Work Experience",
+  description:
+    "Explore my backend engineering journey across cyber security industry, building secure, scalable systems with Golang, Python, C++, and cloud-native tools.",
+  canonicalUrl: "/work",
+})
 
 interface WorkExperienceProps {
   company: string

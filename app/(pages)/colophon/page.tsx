@@ -1,21 +1,14 @@
 import { Metadata } from "next"
 import Link from "@/components/ui/link"
 import Section from "@/components/ui/section"
-import { siteConfig } from "@/config/site"
+import { generatePageMetadata } from "@/lib/seo/metadata"
 
-export const metadata: Metadata = {
-  title: "Colophon | Yash Agarwal",
-  description: "Read how I built this site",
-  alternates: {
-    canonical: `${siteConfig.url}/colophon`,
-    types: {
-      "application/rss+xml": [
-        { url: "rss.xml", title: "RSS Feed for yashagarwal.in" },
-        { url: "atom.xml", title: "Atom Feed for yashagarwal.in" },
-      ],
-    },
-  },
-}
+export const metadata: Metadata = generatePageMetadata({
+  title: "Colophon – Tech Behind This Blog",
+  description:
+    "Learn about the tools, technologies, and philosophy behind this blog. Built using Next.js, Tailwind CSS, and deployed on Vercel.",
+  canonicalUrl: "/colophon",
+})
 
 export default function Colophon() {
   return (

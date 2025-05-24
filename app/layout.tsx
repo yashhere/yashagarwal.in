@@ -5,12 +5,16 @@ import { Footer } from "@/components/layout/footer"
 import { Navigation } from "@/components/layout/navigation"
 import { ThemeProvider } from "@/components/layout/theme-provider"
 import { TailwindIndicator } from "@/components/ui/tailwind-indicator"
-import { siteConfig } from "@/config/site"
-import { cn, encodeParameter } from "@/lib/utils"
+import { cn } from "@/lib/utils"
 
 import "@/styles/globals.css"
 
 import { Toaster } from "@/components/ui/toast"
+import { defaultMetadata } from "@/lib/seo/default"
+import {
+  PersonStructuredData,
+  WebsiteStructuredData,
+} from "@/lib/seo/structured-data"
 
 const sansFont = Inter({
   subsets: ["latin"],
@@ -26,80 +30,7 @@ const monoFont = IBM_Plex_Mono({
   weight: "400",
 })
 
-export async function generateMetadata(): Promise<Metadata> {
-  const siteUrl: string = siteConfig.url
-
-  const newOgImage = `/og?title=${encodeParameter(
-    siteConfig.title
-  )}&meta=${encodeParameter(siteConfig.description)}`
-
-  return {
-    metadataBase: new URL(siteUrl),
-    title: siteConfig.title,
-    description: siteConfig.description,
-    keywords: [],
-    authors: [
-      {
-        name: "Yash Agarwal",
-        url: siteUrl,
-      },
-    ],
-    creator: "Yash Agarwal",
-    generator: "Next.js",
-    archives: [`${siteUrl}/notes`],
-    openGraph: {
-      type: "website",
-      locale: "en_US",
-      url: siteConfig.url,
-      title: siteConfig.title,
-      description: siteConfig.description,
-      siteName: siteConfig.title,
-      images: {
-        width: 1200,
-        height: 630,
-        url: newOgImage,
-        type: "image/png",
-      },
-      countryName: "India",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: siteConfig.title,
-      description: siteConfig.description,
-      images: {
-        width: 1200,
-        height: 630,
-        url: newOgImage,
-        type: "image/png",
-      },
-      creator: "@yash__here",
-      site: siteConfig.url,
-    },
-    verification: {
-      google: "",
-    },
-    alternates: {
-      canonical: siteUrl,
-      types: {
-        "application/rss+xml": [
-          { url: "rss.xml", title: "RSS Feed for yashagarwal.in" },
-          { url: "atom.xml", title: "Atom Feed for yashagarwal.in" },
-        ],
-      },
-    },
-    robots: {
-      index: true,
-      follow: true,
-      googleBot: {
-        index: true,
-        follow: true,
-        "max-video-preview": -1,
-        "max-image-preview": "large",
-        "max-snippet": -1,
-      },
-    },
-  }
-}
+export const metadata: Metadata = defaultMetadata
 
 export const viewport = {
   themeColor: [
@@ -115,6 +46,10 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
+      <head>
+        <WebsiteStructuredData />
+        <PersonStructuredData />
+      </head>
       <body
         className={cn(
           "flex flex-col items-center",
