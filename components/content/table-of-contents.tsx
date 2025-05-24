@@ -13,6 +13,20 @@ import Link from "../ui/link"
 export const TableOfContents = ({ headings, interactive }) => {
   const [isOpen, setIsOpen] = useState(!interactive)
 
+  const handleHeadingClick = (e: React.MouseEvent, slug: string) => {
+    e.preventDefault()
+    const element = document.getElementById(slug)
+    if (element) {
+      element.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+        inline: "nearest",
+      })
+      // Update URL without triggering navigation
+      window.history.pushState(null, "", `#${slug}`)
+    }
+  }
+
   return (
     <div className="rounded-md border border-border bg-background p-2.5 text-sm">
       {interactive ? (
@@ -93,8 +107,9 @@ export const TableOfContents = ({ headings, interactive }) => {
               >
                 <Link
                   href={`#${heading.slug}`}
-                  className="block py-0.5 hover:text-primary   text-muted-foreground transition-colors"
+                  className="block py-0.5 hover:text-primary text-muted-foreground transition-colors"
                   variant="nav"
+                  onClick={(e) => handleHeadingClick(e, heading.slug)}
                 >
                   {heading.text}
                 </Link>
