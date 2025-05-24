@@ -1,12 +1,12 @@
 import { Metadata } from "next"
-import { s } from "hastscript"
+import { env } from "@/env.mjs"
 
 export const siteConfig = {
   name: "Yash Agarwal",
   title: "/dev/yash/notes",
   description:
     "Explore backend systems, homelab experiments, networking setups, and full-stack dev insights from an engineer's perspective. Learn, build, and self-host smarter.",
-  url: "https://yashagarwal.in",
+  url: `${env.NEXT_PUBLIC_APP_URL}`,
   ogImage: "/images/og.png",
   twitterImage: "/images/og.png",
   twitterHandle: "@yash__here",
