@@ -100,7 +100,7 @@ export function getNote(slug: string) {
 
 export function getNoteBacklinks(slug: string, urlSegment: string) {
   const backlinksToNote = allNotes.filter((doc) => {
-    if (doc._meta.filePath !== slug) {
+    if (doc._meta.path !== slug) {
       const urlToSearch = `/${urlSegment}/${slug}`
       return doc.content.includes(urlToSearch)
     }
