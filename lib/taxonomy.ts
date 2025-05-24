@@ -1,9 +1,9 @@
 import { Metadata } from "next"
-import { siteConfig } from "@/config/site"
 import { allNotes } from "content-collections"
 import GithubSlugger from "github-slugger"
 
 import { getPreviewNotes } from "./content"
+import { generatePageMetadata } from "./seo/metadata"
 
 export type TaxonomyType = "tags" | "categories"
 
@@ -12,52 +12,16 @@ export interface TaxonomyCount {
   count: number
 }
 
-export function generateTaxonomyMetadata(
-  type: "tags" | "categories",
-  slug: string
-): Metadata {
-  const typeLabel = type === "tags" ? "tag" : "category"
-  const typePath = type === "tags" ? "tags" : "categories"
-
-  return {
-    title: `${slug} | Yash Agarwal`,
-    description: `All notes ${type === "tags" ? "related to" : "in the"} ${slug} ${typeLabel}`,
-    authors: {
-      name: "Yash Agarwal",
-      url: siteConfig.url,
-    },
-    keywords: `${slug}`,
-    creator: "Yash Agarwal",
-    alternates: {
-      canonical: `${siteConfig.url}/${typePath}/${slug}`,
-      types: {
-        "application/rss+xml": [
-          { url: "rss.xml", title: "RSS Feed for yashagarwal.in" },
-          { url: "atom.xml", title: "Atom Feed for yashagarwal.in" },
-        ],
-      },
-    },
-  }
-}
-
 export function generateTaxonomyListMetadata(
   type: "tags" | "categories"
 ): Metadata {
   const typeLabel = type.charAt(0).toUpperCase() + type.slice(1)
 
-  return {
-    title: `${typeLabel} | Yash Agarwal`,
+  return generatePageMetadata({
+    title: `${typeLabel}`,
     description: `${typeLabel} Browser for /dev/yash/notes.`,
-    alternates: {
-      canonical: `${siteConfig.url}/${type}`,
-      types: {
-        "application/rss+xml": [
-          { url: "rss.xml", title: "RSS Feed for yashagarwal.in" },
-          { url: "atom.xml", title: "Atom Feed for yashagarwal.in" },
-        ],
-      },
-    },
-  }
+    canonicalUrl: `${type}`,
+  })
 }
 
 export async function getTaxonomyCounts(

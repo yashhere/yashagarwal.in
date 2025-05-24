@@ -1,18 +1,23 @@
-import { Metadata, ResolvingMetadata } from "next"
 import { NotesList } from "@/components/content/all-notes"
 import Section from "@/components/ui/section"
-import { generateTaxonomyMetadata, getNotesWithTaxonomy } from "@/lib/taxonomy"
+import { generateTagMetadata } from "@/lib/seo/metadata"
+import { getNotesWithTaxonomy } from "@/lib/taxonomy"
 
 type Props = {
   params: Promise<{ tag: string }>
 }
 
-export async function generateMetadata(
-  props: Props,
-  parent: ResolvingMetadata
-): Promise<Metadata> {
+export async function generateMetadata(props: Props) {
   const params = await props.params
-  return generateTaxonomyMetadata("tags", params.tag)
+  const { notes: notesWithTag, displayName } = await getNotesWithTaxonomy(
+    "tags",
+    params.tag
+  )
+  return generateTagMetadata({
+    name: displayName,
+    slug: `/tags/${params.tag}`,
+    postCount: notesWithTag.length,
+  })
 }
 
 export default async function Page(props: Props) {

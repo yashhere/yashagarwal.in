@@ -1,4 +1,4 @@
-import { Metadata, ResolvingMetadata } from "next"
+import { Metadata } from "next"
 import { Mdx } from "@/components/content/mdx"
 import { Series } from "@/components/content/series"
 import { TableOfContents } from "@/components/content/table-of-contents"
@@ -18,87 +18,41 @@ import { DecorativeHr } from "@/components/ui/decorative-hr"
 import Draft from "@/components/ui/draft"
 import { Heading } from "@/components/ui/heading"
 import Link from "@/components/ui/link"
-import Section from "@/components/ui/section"
 import { env } from "@/env.mjs"
+import { generateArticleMetadata } from "@/lib/seo/metadata"
+import { ArticleStructuredData } from "@/lib/seo/structured-data"
 import { encodeParameter } from "@/lib/utils"
-import { TagSimpleIcon, XLogoIcon } from "@phosphor-icons/react/dist/ssr"
+import { XLogoIcon } from "@phosphor-icons/react/dist/ssr"
 import moment from "moment"
 
 type Props = {
   params: Promise<{ slug: string }>
 }
 
-export async function generateMetadata(
-  props: Props,
-  parent: ResolvingMetadata
-): Promise<Metadata> {
+export async function generateMetadata(props: Props): Promise<Metadata> {
   const params = await props.params
   const previewNotes = await getPreviewNotes()
   const note = previewNotes.find((item) => item.note.slug === params.slug)?.note
-  const siteUrl: string = siteConfig.url
   if (!note) {
     return {}
   }
 
-  // access and extend (rather than replace) parent metadata
-  const previousImages = (await parent).openGraph?.images || []
   const newOgImage = note.image
     ? `${note.image}`
     : `/og?title=${encodeParameter(note.title)}&meta=${encodeParameter(
         moment(note.createdOn).format("MMM DD, YYYY")
       )}&tags=${note.tags.join("|")}`
 
-  return {
-    title: `${note.title} | Yash Agarwal`,
+  return generateArticleMetadata({
+    title: note.title,
     description: note.description,
-    authors: {
-      name: "Yash Agarwal",
-      url: siteUrl,
-    },
-    keywords: note.tags?.map((tag) => tag.value),
-    creator: "Yash Agarwal",
-    alternates: {
-      canonical: `${siteConfig.url}/notes/${params.slug}`,
-      types: {
-        "application/rss+xml": [
-          { url: "rss.xml", title: "RSS Feed for yashagarwal.in" },
-          { url: "atom.xml", title: "Atom Feed for yashagarwal.in" },
-        ],
-      },
-    },
-    twitter: {
-      title: note.title,
-      description: note.description,
-      card: "summary_large_image",
-      creator: "@yash__here",
-      images: {
-        width: 1200,
-        height: 630,
-        url: newOgImage,
-        type: "image/png",
-      },
-      site: siteUrl,
-    },
-    openGraph: {
-      title: note.title,
-      description: note.description,
-      type: "article",
-      publishedTime: moment(note.createdOn).format("MMM DD, YYYY"),
-      images: [
-        {
-          width: 1200,
-          height: 630,
-          url: newOgImage,
-          type: "image/png",
-        },
-        ...previousImages,
-      ],
-      locale: "en_US",
-      url: siteConfig.url,
-      siteName: siteConfig.title,
-      countryName: "India",
-    },
-  }
+    excerpt: note.description,
+    tags: note.tags,
+    createdOn: note.createdOn,
+    updatedOn: note.updatedOn,
+    coverImage: newOgImage,
+    slug: params.slug,
+  })
 }
 
 // Return a list of `params` to populate the [slug] dynamic segment
@@ -129,6 +83,14 @@ export default async function Page(props: Props) {
 
   return (
     <>
+      <ArticleStructuredData
+        title={article.note.title}
+        description={article.note.description}
+        publishedAt={article.note.publishedAt}
+        updatedAt={article.note.updatedAt}
+        url={`/notes/${article.note.slug}`}
+        image={article.note.coverImage}
+      />
       <div>
         <section className="mb-8 space-y-2">
           <div className="text-foreground/80 text-sm tracking-wider uppercase">
