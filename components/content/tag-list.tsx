@@ -1,8 +1,7 @@
 import { FC } from "react"
-import { TagSimpleIcon } from "@phosphor-icons/react/dist/ssr"
+import { TagChevronIcon } from "@phosphor-icons/react/dist/ssr"
 import GithubSlugger from "github-slugger"
 
-import { Heading } from "../ui/heading"
 import Link from "../ui/link"
 
 type TagListProps = {
@@ -18,7 +17,7 @@ export const TagList: FC<TagListProps> = ({ tags }) => {
     <div className="rounded-md border border-border bg-background p-2.5 text-sm my-8">
       <div className="flex flex-col gap-2">
         <div className="flex items-center gap-1.5">
-          <TagSimpleIcon className="h-3 w-3 text-muted-foreground" />
+          <TagChevronIcon className="h-3 w-3 text-muted-foreground" />
           <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
             Tags ({tags.length})
           </span>

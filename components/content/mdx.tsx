@@ -112,7 +112,15 @@ const components = {
   em: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
     <em {...props} className={cn("italic", className)} />
   ),
-  hr: (props) => <hr {...props} className="my-6 border-border" />,
+  hr: (props) => (
+    <div className="my-6 flex items-center justify-center">
+      <div className="h-px bg-gradient-to-r from-transparent to-border flex-1"></div>
+      <div className="px-4">
+        <div className="w-2 h-2 bg-border rounded-full shadow-sm"></div>
+      </div>
+      <div className="h-px bg-gradient-to-l from-transparent to-border flex-1"></div>
+    </div>
+  ),
   table: ({ className, ...props }: React.HTMLAttributes<HTMLTableElement>) => (
     <table {...props} className="w-full border-collapse text-left" />
   ),
