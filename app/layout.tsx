@@ -120,7 +120,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           "flex flex-col items-center",
           "min-h-dvh font-sans antialiased optimize-legibility",
           "bg-background text-foreground",
-          "selection:bg-zinc-200/60",
+          "selection:bg-slate-200 selection:text-slate-900 dark:selection:bg-slate-700 dark:selection:text-slate-100",
           "flex flex-col lg:mx-auto",
           sansFont.variable,
           monoFont.variable
