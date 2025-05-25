@@ -71,7 +71,7 @@ export const Navigation = () => {
   let highlightedPath = isFirstLevelRoute ? pathname : parentPath
 
   return (
-    <aside className="my-8">
+    <aside className="my-8 px-4 md:px-0">
       <div className="lg:sticky lg:top-20">
         <nav
           className="fade relative flex scroll-pr-6 flex-row items-center justify-between px-0 pb-0 md:relative md:overflow-auto"

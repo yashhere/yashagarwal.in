@@ -10,6 +10,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next"
 
 import "@/styles/globals.css"
 
+import { AnimatedLayout } from "@/components/layout/animated-layout"
 import { Toaster } from "@/components/ui/toast"
 import { defaultMetadata } from "@/lib/seo/default"
 import {
@@ -72,7 +73,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <Toaster closeButton className="pointer-events-auto" />
           <main className="w-full max-w-2xl flex-1 px-4 md:px-0 pb-18">
             <Navigation />
-            <div className="py-6">{children}</div>
+            <AnimatedLayout>{children}</AnimatedLayout>
           </main>
           <Footer />
           <SpeedInsights />
