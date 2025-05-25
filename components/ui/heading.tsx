@@ -1,6 +1,7 @@
 import type { ComponentProps } from "react"
-import { cn } from "@/lib/utils"
 import { tv, type VariantProps } from "tailwind-variants"
+
+import { cn } from "@/lib/utils"
 
 export type HeadingProps = ComponentProps<"h1"> &
   VariantProps<typeof headingStyles> & {

@@ -1,4 +1,5 @@
 import { Metadata } from "next"
+
 import { env } from "@/env.mjs"
 
 export const siteConfig = {

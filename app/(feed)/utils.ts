@@ -1,7 +1,8 @@
-import { siteConfig } from "@/config/site"
-import { sortNotes } from "@/lib/server-utils"
 import { allNotes } from "content-collections"
 import { Feed } from "feed"
+
+import { siteConfig } from "@/config/site"
+import { sortNotes } from "@/lib/server-utils"
 
 export async function getFeed() {
   const author = {

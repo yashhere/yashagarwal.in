@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react"
+
 import { FormState } from "@/lib/actions/newsletter/utils"
 
 export const useFormReset = (formState: FormState) => {

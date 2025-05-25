@@ -1,5 +1,6 @@
-import { siteConfig } from "@/config/site"
 import { allNotes } from "content-collections"
+
+import { siteConfig } from "@/config/site"
 
 export default async function sitemap() {
   const siteUrl: string = siteConfig.url

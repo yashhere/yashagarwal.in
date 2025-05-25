@@ -17,10 +17,10 @@ export default function Section({
 }) {
   return (
     <>
-      <Heading className="mt-12 mb-4 text-foreground" level={level}>
+      <Heading className="text-foreground mt-12 mb-4" level={level}>
         <Balancer>{title}</Balancer>
         {data && data.length !== 0 && (
-          <span className="pl-2 text-xs text-foreground/60">{data.length}</span>
+          <span className="text-foreground/60 pl-2 text-xs">{data.length}</span>
         )}
       </Heading>
 

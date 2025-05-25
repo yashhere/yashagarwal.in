@@ -1,4 +1,5 @@
 import Image from "next/image"
+
 import { FeaturedNotes } from "@/components/content/featured-notes"
 import { Heading } from "@/components/ui/heading"
 import Link from "@/components/ui/link"
@@ -9,11 +10,11 @@ export default function Page() {
   return (
     <>
       <div className="flex flex-row items-center gap-4">
-        <div className="relative h-14 w-14 group">
+        <div className="group relative h-14 w-14">
           <Image
             alt="Logo"
             src="/images/yash/at-beach.jpeg"
-            className="rounded-full w-full h-full object-cover"
+            className="h-full w-full rounded-full object-cover"
             title="Yash's photo"
             placeholder="blur"
             width={96}
@@ -22,7 +23,7 @@ export default function Page() {
             loading="eager"
             priority
           />
-          <div className="absolute -bottom-2 -right-2 rounded-full bg-background px-1 py-0.5 text-sm group-hover:animate-wobble transition-transform origin-center cursor-pointer">
+          <div className="bg-background group-hover:animate-wobble absolute -right-2 -bottom-2 origin-center cursor-pointer rounded-full px-1 py-0.5 text-sm transition-transform">
             👋🏽
           </div>
         </div>
@@ -35,7 +36,7 @@ export default function Page() {
       </div>
 
       <div className="text-foreground mt-12 leading-relaxed">
-        <p className="text-base leading-relaxed mb-4">
+        <p className="mb-4 text-base leading-relaxed">
           I&apos;m a Software Engineer with a passion for backend development
           and cybersecurity. Currently working as a Sr. Software Engineer at{" "}
           <Link href="https://netskope.com" target="_blank" variant="text">

@@ -2,8 +2,9 @@
 
 import { AnchorHTMLAttributes, forwardRef, ReactNode, type JSX } from "react"
 import Link from "next/link"
-import { cn } from "@/lib/utils"
 import { ArrowUpRightIcon } from "@phosphor-icons/react/dist/ssr"
+
+import { cn } from "@/lib/utils"
 
 interface LinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
   href: string

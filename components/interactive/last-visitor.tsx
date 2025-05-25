@@ -2,7 +2,6 @@ import {
   getCurrentUserLocation,
   getLastVisitorLocation,
 } from "@/lib/lastVisitor"
-
 import { LastVisitorClient } from "./last-visitor-client"
 
 export async function LastVisitor() {

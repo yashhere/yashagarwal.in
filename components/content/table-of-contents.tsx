@@ -3,7 +3,6 @@
 import { useState } from "react"
 import {
   ArrowDownIcon,
-  ArrowUpIcon,
   ArticleNyTimesIcon,
 } from "@phosphor-icons/react/dist/ssr"
 import { AnimatePresence, motion } from "motion/react"
@@ -28,7 +27,7 @@ export const TableOfContents = ({ headings, interactive }) => {
   }
 
   return (
-    <div className="rounded-md border border-border bg-background p-2.5 text-sm">
+    <div className="border-border bg-background rounded-md border p-2.5 text-sm">
       {interactive ? (
         <button
           className="group flex w-full items-center justify-between text-left"
@@ -37,13 +36,13 @@ export const TableOfContents = ({ headings, interactive }) => {
           aria-controls="toc-content"
         >
           <div className="flex items-center gap-1.5">
-            <ArticleNyTimesIcon className="h-3 w-3 text-muted-foreground" />
-            <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+            <ArticleNyTimesIcon className="text-muted-foreground h-3 w-3" />
+            <span className="text-muted-foreground text-xs font-medium tracking-wider uppercase">
               On this page
             </span>
           </div>
           <motion.span
-            className="flex h-5 w-5 items-center justify-center rounded-md text-muted-foreground transition-colors group-hover:text-foreground hover:cursor-pointer"
+            className="text-muted-foreground group-hover:text-foreground flex h-5 w-5 items-center justify-center rounded-md transition-colors hover:cursor-pointer"
             animate={{ rotate: isOpen ? 180 : 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
           >
@@ -51,7 +50,7 @@ export const TableOfContents = ({ headings, interactive }) => {
           </motion.span>
         </button>
       ) : (
-        <div className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+        <div className="text-muted-foreground text-xs font-medium tracking-wider uppercase">
           On this page
         </div>
       )}
@@ -77,7 +76,7 @@ export const TableOfContents = ({ headings, interactive }) => {
                 opacity: { duration: 0.15, ease: "easeIn" },
               },
             }}
-            className="mt-2 space-y-0.5 pt-2 border-t border-border overflow-hidden"
+            className="border-border mt-2 space-y-0.5 overflow-hidden border-t pt-2"
           >
             {headings.map((heading, index) => (
               <motion.div
@@ -107,7 +106,7 @@ export const TableOfContents = ({ headings, interactive }) => {
               >
                 <Link
                   href={`#${heading.slug}`}
-                  className="block py-0.5 hover:text-primary text-muted-foreground transition-colors"
+                  className="hover:text-primary text-muted-foreground block py-0.5 transition-colors"
                   variant="nav"
                   onClick={(e) => handleHeadingClick(e, heading.slug)}
                 >

@@ -1,4 +1,5 @@
 import { Metadata } from "next"
+
 import { NotesList } from "@/components/content/all-notes"
 import Section from "@/components/ui/section"
 import { getPreviewNotes } from "@/lib/content"

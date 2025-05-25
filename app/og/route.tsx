@@ -1,5 +1,6 @@
 import { ImageResponse } from "next/og"
 import { NextRequest } from "next/server"
+
 import { siteConfig } from "@/config/site"
 import { decodeParameter } from "@/lib/utils"
 

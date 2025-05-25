@@ -1,20 +1,21 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { MoonStarsIcon, SunDimIcon } from "@phosphor-icons/react/dist/ssr"
+import { motion } from "motion/react"
+import { useTheme } from "next-themes"
+
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { MoonStarsIcon, SunDimIcon } from "@phosphor-icons/react/dist/ssr"
-import { motion } from "motion/react"
-import { useTheme } from "next-themes"
 
 export const DarkToggleSkeleton = () => {
   return (
-    <div className="cursor-pointer p-1 rounded-md">
-      <div className="size-5.5 bg-foreground/20 border border-border animate-pulse rounded-full" />
+    <div className="cursor-pointer rounded-md p-1">
+      <div className="bg-foreground/20 border-border size-5.5 animate-pulse rounded-full border" />
     </div>
   )
 }
@@ -48,7 +49,7 @@ export const DarkToggle = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               transition={{ type: "spring", stiffness: 400, damping: 30 }}
-              className="cursor-pointer p-1 rounded-md"
+              className="cursor-pointer rounded-md p-1"
               onClick={() => {
                 if (theme == "system") {
                   if (resolvedTheme == "dark") {
@@ -78,7 +79,7 @@ export const DarkToggle = () => {
                     damping: 25,
                   }}
                 >
-                  <SunDimIcon className="size-5.5 text-foreground drop-shadow-sm" />
+                  <SunDimIcon className="text-foreground size-5.5 drop-shadow-sm" />
                 </motion.div>
                 <motion.div
                   className="absolute inset-0 flex items-center justify-center"
@@ -96,7 +97,7 @@ export const DarkToggle = () => {
                     damping: 25,
                   }}
                 >
-                  <MoonStarsIcon className="size-5.5 text-foreground drop-shadow-sm" />
+                  <MoonStarsIcon className="text-foreground size-5.5 drop-shadow-sm" />
                 </motion.div>
               </div>
             </motion.div>

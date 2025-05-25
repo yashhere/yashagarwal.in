@@ -1,9 +1,10 @@
 "use client"
 
 import Script from "next/script"
-import { siteConfig } from "@/config/site"
 import { Analytics as VercelAnalytics } from "@vercel/analytics/react"
 import { Lit } from "litlyx-js"
+
+import { siteConfig } from "@/config/site"
 
 export function Analytics() {
   const siteUrl = siteConfig.url

@@ -1,11 +1,11 @@
 /* eslint-disable jsx-a11y/alt-text */
-/* eslint-disable react/jsx-no-target-blank */
+
 import React from "react"
+import { useMDXComponent } from "@content-collections/mdx/react"
+
 import Image from "@/components/ui/image"
 import Link from "@/components/ui/link"
 import { cn } from "@/lib/utils"
-import { useMDXComponent } from "@content-collections/mdx/react"
-
 import Draft from "../ui/draft"
 
 const components = {
@@ -21,7 +21,7 @@ const components = {
   p: ({ className, ...props }: React.HTMLAttributes<HTMLParagraphElement>) => (
     <p
       className={cn(
-        "text-base leading-relaxed text-foreground not-first:mt-6",
+        "text-foreground text-base leading-relaxed not-first:mt-6",
         className
       )}
       {...props}
@@ -30,7 +30,7 @@ const components = {
   h1: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h1
       className={cn(
-        "mt-10 mb-4 scroll-m-6 text-2xl text-foreground ",
+        "text-foreground mt-10 mb-4 scroll-m-6 text-2xl",
         className
       )}
       {...props}
@@ -39,7 +39,7 @@ const components = {
   h2: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h2
       className={cn(
-        "mb-3 mt-10 scroll-m-10 text-xl first:mt-0 text-foreground",
+        "text-foreground mt-10 mb-3 scroll-m-10 text-xl first:mt-0",
         className
       )}
       {...props}
@@ -47,13 +47,13 @@ const components = {
   ),
   h3: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h3
-      className={cn("mt-8 mb-3 scroll-m-4 text-lg text-foreground", className)}
+      className={cn("text-foreground mt-8 mb-3 scroll-m-4 text-lg", className)}
       {...props}
     />
   ),
   h4: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h4
-      className={cn("mt-6 mb-3 scroll-m-4 text-md text-foreground", className)}
+      className={cn("text-md text-foreground mt-6 mb-3 scroll-m-4", className)}
       {...props}
     />
   ),
@@ -67,7 +67,7 @@ const components = {
           "no-scrollbar overflow-x-auto",
           // Don't add additional styling for rehype-pretty-code blocks
           !isPrettyCode &&
-            "rounded-lg border px-4 py-4 mb-6 mt-4 font-mono text-base",
+            "mt-4 mb-6 rounded-lg border px-4 py-4 font-mono text-base",
           className
         )}
         {...props}
@@ -85,40 +85,40 @@ const components = {
         {...props}
         className={cn(
           !isPrettyCode &&
-            "relative rounded-sm bg-syntax-bg border px-1.5 py-0.5 font-mono text-syntax-txt text-sm",
+            "bg-syntax-bg text-syntax-txt relative rounded-sm border px-1.5 py-0.5 font-mono text-sm",
           props.className
         )}
       />
     )
   },
   ul: ({ className, ...props }: React.HTMLAttributes<HTMLUListElement>) => (
-    <ul {...props} className="mb-6 pl-4 list-disc [&>li]:mt-2" />
+    <ul {...props} className="mb-6 list-disc pl-4 [&>li]:mt-2" />
   ),
   ol: ({ className, ...props }: React.HTMLAttributes<HTMLOListElement>) => (
     <ol {...props} className="mb-6 list-decimal pl-6" />
   ),
   li: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
-    <li {...props} className="text-base leading-relaxed text-foreground" />
+    <li {...props} className="text-foreground text-base leading-relaxed" />
   ),
   strong: (props) => (
-    <strong className="font-semibold  text-foreground" {...props} />
+    <strong className="text-foreground font-semibold" {...props} />
   ),
   blockquote: (props) => (
     <blockquote
       {...props}
-      className="my-6 border-l-2 border-primary/30 pl-6 italic text-muted-foreground"
+      className="border-primary/30 text-muted-foreground my-6 border-l-2 pl-6 italic"
     />
   ),
   em: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
     <em {...props} className={cn("italic", className)} />
   ),
-  hr: (props) => (
+  hr: (_props: React.HTMLAttributes<HTMLHRElement>) => (
     <div className="my-6 flex items-center justify-center">
-      <div className="h-px bg-gradient-to-r from-transparent to-border flex-1"></div>
+      <div className="to-border h-px flex-1 bg-gradient-to-r from-transparent"></div>
       <div className="px-4">
-        <div className="w-2 h-2 bg-border rounded-full shadow-sm"></div>
+        <div className="bg-border h-2 w-2 rounded-full shadow-sm"></div>
       </div>
-      <div className="h-px bg-gradient-to-l from-transparent to-border flex-1"></div>
+      <div className="to-border h-px flex-1 bg-gradient-to-l from-transparent"></div>
     </div>
   ),
   table: ({ className, ...props }: React.HTMLAttributes<HTMLTableElement>) => (
@@ -127,28 +127,28 @@ const components = {
   th: ({ className, ...props }: React.HTMLAttributes<HTMLTableCellElement>) => (
     <th
       {...props}
-      className="cursor-auto border-b border-border py-3 text-base font-medium text-muted-foreground"
+      className="border-border text-muted-foreground cursor-auto border-b py-3 text-base font-medium"
     />
   ),
   td: ({ className, ...props }: React.HTMLAttributes<HTMLTableCellElement>) => (
     <td
       {...props}
-      className="border-b border-border py-2 text-base text-foreground"
+      className="border-border text-foreground border-b py-2 text-base"
     />
   ),
   sup: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
     <sup
-      className={cn("text-xs align-super font-bold", className)}
+      className={cn("align-super text-xs font-bold", className)}
       {...props}
     />
   ),
   sub: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
-    <sub className={cn("text-xs align-sub font-bold", className)} {...props} />
+    <sub className={cn("align-sub text-xs font-bold", className)} {...props} />
   ),
   kbd: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
     <kbd
       className={cn(
-        "rounded border border-border bg-muted px-1.5 py-0.5 text-xs font-semibold text-foreground shadow-[inset_0_-1px_0_0_var(--tw-border-opacity)]",
+        "border-border bg-muted text-foreground rounded border px-1.5 py-0.5 text-xs font-semibold shadow-[inset_0_-1px_0_0_var(--tw-border-opacity)]",
         className
       )}
       {...props}
@@ -157,7 +157,7 @@ const components = {
   mark: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
     <mark
       className={cn(
-        "bg-primary/10 text-foreground px-1 py-0.5 rounded",
+        "bg-primary/10 text-foreground rounded px-1 py-0.5",
         className
       )}
       {...props}

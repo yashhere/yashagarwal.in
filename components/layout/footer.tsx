@@ -7,15 +7,15 @@ export const Footer: FC = () => {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="mt-auto w-full border-t-1  border-border bg-background">
+    <footer className="border-border bg-background mt-auto w-full border-t-1">
       <div className="mx-auto max-w-2xl px-4 py-8 md:px-0">
-        <div className="space-y-4 text-center text-sm text-foreground/70">
+        <div className="text-foreground/70 space-y-4 text-center text-sm">
           <div>
             © {currentYear === 2016 ? currentYear : `2016 - ${currentYear}`}{" "}
             Yash Agarwal. All rights reserved.
           </div>
 
-          <div className="flex flex-row justify-center text-center gap-1">
+          <div className="flex flex-row justify-center gap-1 text-center">
             <span>
               Website{" "}
               <Link

@@ -1,12 +1,13 @@
 import { Metadata } from "next"
 import { IBM_Plex_Mono, Inter } from "next/font/google"
+import { SpeedInsights } from "@vercel/speed-insights/next"
+
 import { Analytics } from "@/components/interactive/analytics"
 import { Footer } from "@/components/layout/footer"
 import { Navigation } from "@/components/layout/navigation"
 import { ThemeProvider } from "@/components/layout/theme-provider"
 import { TailwindIndicator } from "@/components/ui/tailwind-indicator"
 import { cn } from "@/lib/utils"
-import { SpeedInsights } from "@vercel/speed-insights/next"
 
 import "@/styles/globals.css"
 
@@ -55,7 +56,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <body
         className={cn(
           "flex flex-col items-center",
-          "min-h-dvh font-sans antialiased optimize-legibility",
+          "optimize-legibility min-h-dvh font-sans antialiased",
           "bg-background text-foreground",
           "selection:bg-slate-200 selection:text-slate-900 dark:selection:bg-slate-700 dark:selection:text-slate-100",
           "flex flex-col lg:mx-auto",
@@ -71,7 +72,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           enableSystem
         >
           <Toaster closeButton className="pointer-events-auto" />
-          <main className="w-full max-w-2xl flex-1 px-4 md:px-0 pb-18">
+          <main className="w-full max-w-2xl flex-1 px-4 pb-18 md:px-0">
             <Navigation />
             <AnimatedLayout>{children}</AnimatedLayout>
           </main>

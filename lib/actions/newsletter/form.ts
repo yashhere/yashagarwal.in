@@ -1,10 +1,10 @@
 "use server"
 
 import { revalidatePath } from "next/cache"
-import { env } from "@/env.mjs"
 import { google } from "googleapis"
 import { z } from "zod"
 
+import { env } from "@/env.mjs"
 import { FormState, fromErrorToFormState, toFormState } from "./utils"
 
 const submitEmailSchema = z.object({
@@ -15,7 +15,7 @@ const submitEmailSchema = z.object({
 })
 
 export default async function submitEmail(
-  formState: FormState,
+  _formState: FormState,
   formData: FormData
 ) {
   try {
@@ -52,7 +52,9 @@ export default async function submitEmail(
         },
       })
       revalidatePath("/")
-    } catch (error) {}
+    } catch {
+      // Silently handle errors for Google Sheets operation
+    }
   } catch (error) {
     return fromErrorToFormState(error)
   }

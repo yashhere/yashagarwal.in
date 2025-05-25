@@ -1,6 +1,6 @@
-import { getPreviewNotes } from "@/lib/content"
 import { ArrowRightIcon } from "@phosphor-icons/react/dist/ssr"
 
+import { getPreviewNotes } from "@/lib/content"
 import Link from "../ui/link"
 import { NoteList } from "./notes-list"
 
@@ -35,7 +35,7 @@ export async function FeaturedNotes({ count }: { count: number }) {
       </div>
       <Link
         href="/notes"
-        className="group mt-2 inline-flex items-center gap-2 text-base font-medium text-foreground/80 transition-colors hover:text-primary"
+        className="group text-foreground/80 hover:text-primary mt-2 inline-flex items-center gap-2 text-base font-medium transition-colors"
         variant="nav"
       >
         <span>View all notes</span>
