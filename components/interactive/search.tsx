@@ -12,7 +12,7 @@ export const SearchInput = ({
     <form className="w-full group">
       <div className="relative text-foreground">
         <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-          <ListMagnifyingGlassIcon className="h-4 w-4 text-muted-foreground transition-colors group-focus-within:text-foreground" />
+          <ListMagnifyingGlassIcon className="h-4 w-4 text-muted-foreground transition-colors duration-300 ease-out group-focus-within:text-foreground group-focus-within:animate-wobble" />
         </div>
         <input
           type="search"

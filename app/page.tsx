@@ -1,6 +1,5 @@
 import Image from "next/image"
 import { FeaturedNotes } from "@/components/content/featured-notes"
-import { Navigation } from "@/components/layout/navigation"
 import { Heading } from "@/components/ui/heading"
 import Link from "@/components/ui/link"
 import Section from "@/components/ui/section"
@@ -10,7 +9,7 @@ export default function Page() {
   return (
     <>
       <div className="flex flex-row items-center gap-4">
-        <div className="relative h-14 w-14">
+        <div className="relative h-14 w-14 group">
           <Image
             alt="Logo"
             src="/images/yash/at-beach.jpeg"
@@ -23,7 +22,7 @@ export default function Page() {
             loading="eager"
             priority
           />
-          <div className="absolute -bottom-2 -right-2 rounded-full bg-background px-1 py-0.5 text-sm">
+          <div className="absolute -bottom-2 -right-2 rounded-full bg-background px-1 py-0.5 text-sm group-hover:animate-wobble transition-transform origin-center cursor-pointer">
             👋🏽
           </div>
         </div>
@@ -37,16 +36,19 @@ export default function Page() {
 
       <div className="text-foreground mt-12 leading-relaxed">
         <p className="text-base leading-relaxed mb-4">
-          I&apos;m a Software Engineer crafting efficient solutions for
-          intricate problems. Currently I work at{" "}
+          I&apos;m a Software Engineer with a passion for backend development
+          and cybersecurity. Currently working as a Sr. Software Engineer at{" "}
           <Link href="https://netskope.com" target="_blank" variant="text">
             Netskope
           </Link>{" "}
-          on its API security product.
+          on the CASB API security product, with expertise in Python, Golang,
+          and C++.
         </p>
         <p className="text-base leading-relaxed">
           This domain is my little digital nest where I write about my
-          experiments with tech and life.
+          experiments with tech, homelab experiments, and life adventures. What
+          sets me apart is my relentless commitment to continuous learning and
+          turning challenges into victories.
         </p>
       </div>
 

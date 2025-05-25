@@ -1,10 +1,12 @@
 "use client"
 
+import { Suspense } from "react"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { ArrowUUpLeftIcon } from "@phosphor-icons/react/dist/ssr"
 
-import { DarkToggle } from "../interactive/mode-toggle"
+import { DarkToggle, DarkToggleSkeleton } from "../interactive/mode-toggle"
+import { AnalogClock, ClockSkeleton } from "../ui/clock/clock"
 import Link from "../ui/link"
 
 const navItems = {
@@ -90,9 +92,12 @@ export const Navigation = () => {
           )}
 
           <div className="flex flex-row items-center justify-end space-x-5">
-            <span className="text-foreground">
+            <Suspense fallback={<ClockSkeleton />}>
+              <AnalogClock />
+            </Suspense>
+            <Suspense fallback={<DarkToggleSkeleton />}>
               <DarkToggle />
-            </span>
+            </Suspense>
           </div>
         </nav>
       </div>

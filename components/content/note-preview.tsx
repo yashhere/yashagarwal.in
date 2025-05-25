@@ -29,7 +29,10 @@ export const NotePreview = ({
         </div>
         {!homePage && (
           <>
-            <span className="h-px flex-1 bg-foreground/30" aria-hidden />
+            <span
+              className="mx-2 h-px flex-1 bg-transparent border-t border-dotted border-foreground/30"
+              aria-hidden
+            />
             <span className="text-sm text-foreground/70 sm:text-base">
               {moment(note.note.createdOn).format("MM.YY")}
             </span>

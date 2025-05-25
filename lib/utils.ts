@@ -23,10 +23,5 @@ export function encodeParameter(str: string) {
   return encodeURIComponent(str)
 }
 
-export function decodeParameter(str: string | null) {
-  if (str) {
-    return decodeURIComponent(str)
-  } else {
-    return
-  }
-}
+export const decodeParameter = (value: string | null) =>
+  value ? decodeURIComponent(value) : null
