@@ -1,0 +1,140 @@
+---
+title: Migrating from Contentlayer to Content-Collections
+createdOn: 2025-05-25T11:47:24.000Z
+status: published
+series:
+  order: 4
+  title: Building a blog with NextJS
+category: Web Development
+tags:
+  - Blog Setup
+  - Development
+  - NextJs
+  - Content Management
+  - MDX
+  - Static Site Generation
+  - Developer Tools
+  - Contentlayer
+  - Content-Collections
+description: Contentlayer to Content-Collections migration experience
+updatedOn: 2025-05-25T12:26:30.000Z
+---
+
+When I first moved my blog's tech stack to NextJs, [Contentlayer](https://contentlayer.dev/) was a rage. Obviously, I also decided to use it for managing the content here. However, over time, Contentlayer stopped getting updates, and eventually the creator [declared](https://github.com/contentlayerdev/contentlayer/issues/429) their inability to continue its development. Keeping the package version pinned allowed me to avoid any issues for almost a year. Last year, when NextJs 15 dropped, I tried to update my blog to it, but due to Contentlayer's peer dependencies, the update failed. Finally, a few days back, I decided to put in some effort to do the migration. I had two primary choices - [Contentlayer2](https://github.com/timlrx/contentlayer2) and [content-collections](https://www.content-collections.dev/). While Contentlayer2 would have been a straightforward migration, I decided to go with Content-collection, simply because it seems a [better tool](https://sdorra.dev/posts/2024-01-15-content-collections).
+
+The migration mostly went smoothly, apart from a few hiccups. I figured I'd document my thoughts and the steps I took, primarily as a note to myself for when I inevitably forget the implementation details.
+
+If you are more of a code reader, then here is the [PR](https://github.com/yashhere/yashagarwal.in/pull/103) for reference.
+
+## Why the Switch? (The "Why")
+
+With Contentlayer, it was pretty straightforward to get MDX content integrated into my Next.js site. However, its development has almost stalled due to lack of funding, or at least not as active as I'd hoped in the long run.
+
+`content-collections` caught my eye as a more modern and arguably more flexible alternative. It promises similar developer experience while providing a more robust and actively maintained foundation with finer-grained control over the content pipeline. I was particularly drawn to how content-collections structures its transformations and schema definitions. This approach would give me more power to shape my content exactly as needed without fighting the tooling. Though I don't currently need many of its advanced capabilities, having them available for future use is valuable.
+
+## The Migration Journey (The "How")
+
+This wasn't just a find-and-replace operation; it required understanding how my content was processed and rendered by the Contentlayer pipeline.
+
+### 1. Configuration Overhaul
+
+The biggest chunk of work was defining my content collections. Instead of the Contentlayer functions `defineDocumentType` and `defineComputedFields`, I'm now using `defineCollection` and `defineConfig` from `@content-collections/core`.
+
+The filename changes too - `contentlayer.config.ts` -> `content-collections.ts`
+
+I replicated my `notes` and `lifelog` schemas, defining the fields (`title`, `createdOn`, `description`, `tags`, etc.) using Zod for validation, which is a nice touch.
+
+```typescript
+// Old (contentlayer.config.ts - conceptually)
+// export const Note = defineDocumentType(() => ({ ... }))
+
+// New (content-collections.ts)
+const notes = defineCollection({
+  name: "notes",
+  directory: "content/notes",
+  include: "*.mdx",
+  schema: (z) => ({
+    title: z.string(),
+    // ... rest of the schema
+  }),
+  // ... transform function
+})
+
+export default defineConfig({
+  collections: [notes, lifelog],
+})
+```
+
+This new config file, `content-collections.ts`, became the single source of truth for all my content definitions and processing logic.
+
+### 2. MDX Pipeline Reconstruction
+
+This was where content-collections really showed its flexibility, and where I spent a fair bit of time re-wiring. Instead of Contentlayer's direct `mdx` configuration in `makeSource`, content-collections offers a `transform` function within each collection definition. This `transform` function provides significant flexibility.
+
+I now explicitly call `compileMDX` from `@content-collections/mdx` within the `transform` function for both my `notes` and `lifelog` collections. This gave me direct access to the `remark` and `rehype` plugin chains.
+
+```typescript
+// Inside transform function in content-collections.ts
+const mdx = await compileMDX(context, document, {
+  rehypePlugins: [
+    // ... my rehype plugins like rehypeKatex, rehypePrettyCode, rehypeAutolinkHeadings
+  ],
+  remarkPlugins: [
+    // ... my remark plugins like remarkGfm, remarkMath, remarkCallouts, remarkWikiLink
+  ],
+})
+
+return {
+  ...document,
+  mdx, // The compiled MDX code is now available on `document.mdx`
+  // ... other computed fields
+}
+```
+
+This setup also allowed me to explicitly handle custom logic for `readingTime` and `headings` extraction right within the `transform` function, rather than relying on Contentlayer's `computedFields`.
+
+Crucially, the compiled MDX content now lives under `document.mdx` instead of `document.body.code`, which meant updating all my component usage.
+
+### 3. Component & Usage Updates
+
+This was mostly a global find-and-replace, but important nonetheless:
+
+- **Imports**: All instances of `contentlayer/generated` were updated to `content-collections`.
+- **MDX Rendering**: My `MDX` component underwent a significant change.
+  - The `getMDXComponent` from `next-contentlayer/hooks` was replaced by `useMDXComponent` from `@content-collections/mdx/react`.
+  - My `CustomMDXComponents` (now just `components` internally) are passed directly to the `Component` rendered by `useMDXComponent`.
+  - Anywhere I was using `note.body.code`, I switched to `note.mdx`.
+- **Data Access**: In `lib/content.ts`, I had to adjust how I accessed certain properties. For instance, `doc._meta.path` became the new way to get the flattened path (what used to be `slug` for internal filtering), and `doc.content` now holds the raw markdown, replacing `doc.body.raw`. Even the `pick` utility function changed from `contentlayer/client` to `lodash`.
+
+### 4. Tooling and Linting Adjustments
+
+Follow official content-collections [setup guide](https://www.content-collections.dev/docs/quickstart/next) and [migration guide](https://www.content-collections.dev/docs/migration/contentlayer) for up-to-date information.
+
+- **`.gitignore` & `.prettierignore`**: Updated to ignore `.content-collections` directory.
+- **`next.config.js`**: Switched from `withContentlayer` to `withContentCollections`.
+- **`package.json`**: Installed content-collection packages and tweaked the `build` script (no more `contentlayer build` command needed explicitly, as `next build` now handles it through the `withContentCollections` plugin). This is great since I don't have to run two commands in parallel now.
+- **`tsconfig.json`**: Adjusted the `paths` alias for `contentlayer/generated` to `content-collections`.
+
+## Hiccups Along the Way
+
+No migration is completely smooth. I also encountered one significant challenge:
+
+### 1. Code Block Styling Quirks
+
+The most noticeable friction came with `rehype-pretty-code` and how it interacts with the HTML output in content-collections vs. Contentlayer. Since I updated the plugin to its latest version, the code block styling completely broke down. I think the newly generated HTML structure or the way it was injected seemed to have some subtle differences.
+
+My code blocks and inline code looked a bit off after the migration. Styles for line highlighting and character highlighting weren't applying correctly, and the general aesthetics of code blocks changed. I think this was more of a side-effect of updating the plugin `rehype-pretty-code` and not due to the actual migration itself.
+
+I took this opportunity to refactor the styling a bit to make it simpler.
+
+1. The selectors for `rehype-pretty-code` elements needed to be updated (e.g., from `[data-rehype-pretty-code-fragment]` to `figure[data-rehype-pretty-code-figure]`.
+2. I also changed the rehype-pretty-code specific class names to `line--highlighted`, `word--highlighted`.
+
+## Reflections and Takeaways (The "Learnings")
+
+Overall, this migration was a fantastic learning experience. While the migration required several days of focused work, the benefits are tangible:
+
+- **More Control**: I appreciate the explicit `transform` function in content-collections. It feels like I have a clearer mental model of the content processing pipeline, which makes debugging and extending it much easier.
+- **Active Development**: content-collections appears to be more actively maintained and evolving, which gives me more confidence in its long-term viability for my projects.
+
+It was a good investment of time, and I'm happy with the new content pipeline. Here's to more flexible content management and future blog articles!
