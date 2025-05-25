@@ -15,5 +15,9 @@
   "eslint.codeActionsOnSave.mode": "problems",
   "workbench.editor.highlightModifiedTabs": true,
   "workbench.editor.showTabs": "multiple",
-  "editor.detectIndentation": false
+  "editor.detectIndentation": false,
+  "editor.codeActionsOnSave": {
+    "source.removeUnusedImports": "explicit",
+    "source.organizeImports": "explicit"
+  }
 }

@@ -2,6 +2,7 @@
 
 import { forwardRef, useEffect, useState, type JSX } from "react"
 import Image, { ImageProps } from "next/image"
+
 import { cn } from "@/lib/utils"
 
 interface CustomImageProps extends ImageProps {
@@ -94,7 +95,7 @@ const CustomImage = forwardRef<HTMLImageElement, CustomImageProps>(
 
     return (
       <>
-        <figure className="my-6 w-full group">
+        <figure className="group my-6 w-full">
           <div
             className="relative rounded-md shadow-sm shadow-black/5 dark:shadow-white/5"
             style={{
@@ -103,15 +104,15 @@ const CustomImage = forwardRef<HTMLImageElement, CustomImageProps>(
           >
             {/* Loading skeleton */}
             {isLoading && showSkeleton && (
-              <div className="absolute inset-0 rounded-md bg-gradient-to-r from-muted/30 via-muted/50 to-muted/30 bg-[length:200%_100%] animate-shimmer" />
+              <div className="from-muted/30 via-muted/50 to-muted/30 animate-shimmer absolute inset-0 rounded-md bg-gradient-to-r bg-[length:200%_100%]" />
             )}
 
             {/* Error fallback */}
             {hasError && (
-              <div className="absolute inset-0 flex items-center justify-center bg-muted/20 text-muted-foreground">
+              <div className="bg-muted/20 text-muted-foreground absolute inset-0 flex items-center justify-center">
                 <div className="text-center">
                   <svg
-                    className="mx-auto h-6 w-6 mb-2"
+                    className="mx-auto mb-2 h-6 w-6"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -132,7 +133,7 @@ const CustomImage = forwardRef<HTMLImageElement, CustomImageProps>(
             {!hasError && (
               <Image
                 className={cn(
-                  "w-full h-full object-cover rounded-md transition-all duration-300",
+                  "h-full w-full rounded-md object-cover transition-all duration-300",
                   "will-change-auto",
                   expandable &&
                     !isLoading &&
@@ -159,10 +160,10 @@ const CustomImage = forwardRef<HTMLImageElement, CustomImageProps>(
 
             {/* Expand icon hint */}
             {expandable && !isLoading && !hasError && (
-              <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                <div className="bg-black/50 text-white p-1.5 rounded-md backdrop-blur-sm">
+              <div className="absolute top-2 right-2 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+                <div className="rounded-md bg-black/50 p-1.5 text-white backdrop-blur-sm">
                   <svg
-                    className="w-4 h-4"
+                    className="h-4 w-4"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -182,7 +183,7 @@ const CustomImage = forwardRef<HTMLImageElement, CustomImageProps>(
           {/* Caption */}
           {title && !hasError && (
             <figcaption className="mt-3 text-center">
-              <span className="text-sm text-muted-foreground/80">{title}</span>
+              <span className="text-muted-foreground/80 text-sm">{title}</span>
             </figcaption>
           )}
         </figure>
@@ -190,13 +191,13 @@ const CustomImage = forwardRef<HTMLImageElement, CustomImageProps>(
         {/* Modal for expanded image */}
         {isExpanded && (
           <div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-background/50 backdrop-blur-sm p-4"
+            className="bg-background/50 fixed inset-0 z-50 flex items-center justify-center p-4 backdrop-blur-sm"
             onClick={handleCloseModal}
           >
             {isExpandedLoading && (
               <div className="fixed inset-0 z-50 flex items-center justify-center">
                 <div
-                  className="rounded-lg flex items-center justify-center"
+                  className="flex items-center justify-center rounded-lg"
                   style={{
                     maxWidth: "95vw",
                     maxHeight: "85vh",
@@ -206,7 +207,7 @@ const CustomImage = forwardRef<HTMLImageElement, CustomImageProps>(
                   }}
                 >
                   <div className="flex flex-col items-center space-y-3">
-                    <div className="animate-spin rounded-full h-8 w-8 border-2 border-foreground/30 border-t-foreground/80"></div>
+                    <div className="border-foreground/30 border-t-foreground/80 h-8 w-8 animate-spin rounded-full border-2"></div>
                     <p className="text-foreground/80 text-sm">
                       Loading image...
                     </p>
@@ -219,11 +220,11 @@ const CustomImage = forwardRef<HTMLImageElement, CustomImageProps>(
               {!isExpandedLoading && (
                 <button
                   onClick={handleCloseModal}
-                  className="absolute top-10 right-2 z-30 bg-background/90 hover:bg-background text-foreground rounded-full p-2 transition-colors shadow-lg border border-border"
+                  className="bg-background/90 hover:bg-background text-foreground border-border absolute top-10 right-2 z-30 rounded-full border p-2 shadow-lg transition-colors"
                   aria-label="Close expanded image"
                 >
                   <svg
-                    className="w-5 h-5"
+                    className="h-5 w-5"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -245,7 +246,7 @@ const CustomImage = forwardRef<HTMLImageElement, CustomImageProps>(
                 width={Number(width)}
                 height={Number(height)}
                 className={cn(
-                  "max-w-[95vw] max-h-[85vh] object-contain rounded-md cursor-zoom-out transition-opacity duration-300",
+                  "max-h-[85vh] max-w-[95vw] cursor-zoom-out rounded-md object-contain transition-opacity duration-300",
                   isExpandedLoading ? "opacity-0" : "opacity-100"
                 )}
                 onClick={handleCloseModal}
@@ -262,7 +263,7 @@ const CustomImage = forwardRef<HTMLImageElement, CustomImageProps>(
                 </div>
               )} */}
               {title && !isExpandedLoading && (
-                <div className="absolute -bottom-12 left-4 right-4 p-3">
+                <div className="absolute right-4 -bottom-12 left-4 p-3">
                   <p className="text-center text-sm">{title}</p>
                 </div>
               )}

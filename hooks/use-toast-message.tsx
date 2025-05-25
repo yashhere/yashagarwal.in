@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react"
-import { FormState } from "@/lib/actions/newsletter/utils"
 import { toast } from "sonner"
+
+import { FormState } from "@/lib/actions/newsletter/utils"
 
 const useToastMessage = (formState: FormState) => {
   const prevTimestamp = useRef(formState.timestamp)

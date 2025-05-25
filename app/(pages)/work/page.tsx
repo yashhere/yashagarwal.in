@@ -1,13 +1,14 @@
 import { FC } from "react"
 import { Metadata } from "next"
-import { Heading } from "@/components/ui/heading"
-import Section from "@/components/ui/section"
-import { generatePageMetadata } from "@/lib/seo/metadata"
 import {
   BriefcaseIcon,
   CalendarDotsIcon,
   CaretDoubleRightIcon,
 } from "@phosphor-icons/react/dist/ssr"
+
+import { Heading } from "@/components/ui/heading"
+import Section from "@/components/ui/section"
+import { generatePageMetadata } from "@/lib/seo/metadata"
 
 export const metadata: Metadata = generatePageMetadata({
   title: "Work Experience",
@@ -34,29 +35,29 @@ const WorkExperience: FC<WorkExperienceProps> = ({
   nestedAchievements,
 }) => {
   return (
-    <div className="relative pl-8 pb-10 last:pb-0">
-      <div className="absolute left-1 top-0 bottom-0 border-l border-border"></div>
+    <div className="relative pb-10 pl-8 last:pb-0">
+      <div className="border-border absolute top-0 bottom-0 left-1 border-l"></div>
 
-      <div className="absolute left-0 top-2.5 h-2.5 w-2.5 rounded-full border border-border bg-foreground"></div>
+      <div className="border-border bg-foreground absolute top-2.5 left-0 h-2.5 w-2.5 rounded-full border"></div>
 
-      <Heading level="h4" className="flex items-center text-foreground">
+      <Heading level="h4" className="text-foreground flex items-center">
         {company}
       </Heading>
 
-      <div className="mt-1 flex items-center text-sm text-foreground/70">
+      <div className="text-foreground/70 mt-1 flex items-center text-sm">
         <CalendarDotsIcon className="mr-1.5 h-4 w-4" />
         <span>{period}</span>
       </div>
 
-      <h3 className="mt-2 text-foreground font-medium">{title}</h3>
+      <h3 className="text-foreground mt-2 font-medium">{title}</h3>
 
-      <p className="mt-3 text-foreground">{description}</p>
+      <p className="text-foreground mt-3">{description}</p>
 
       {achievements && achievements.length > 0 && (
         <ul className="mt-4 space-y-2">
           {achievements.map((achievement, i) => (
             <li key={i} className="flex gap-2">
-              <CaretDoubleRightIcon className="h-4 w-4 flex-shrink-0 text-foreground mt-0.5" />
+              <CaretDoubleRightIcon className="text-foreground mt-0.5 h-4 w-4 flex-shrink-0" />
               <span>{achievement}</span>
             </li>
           ))}
@@ -68,13 +69,13 @@ const WorkExperience: FC<WorkExperienceProps> = ({
           {Object.entries(nestedAchievements).map(([key, items], i) => (
             <div key={i}>
               <div className="flex gap-2">
-                <CaretDoubleRightIcon className="h-4 w-4 flex-shrink-0 text-foreground mt-0.5" />
+                <CaretDoubleRightIcon className="text-foreground mt-0.5 h-4 w-4 flex-shrink-0" />
                 <span>{key}</span>
               </div>
               <ul className="mt-2 space-y-1 pl-7">
                 {items.map((item, j) => (
                   <li key={j} className="relative pl-4">
-                    <span className="absolute left-0 top-2 block h-1.5 w-1.5 rounded-full bg-foreground"></span>
+                    <span className="bg-foreground absolute top-2 left-0 block h-1.5 w-1.5 rounded-full"></span>
                     {item}
                   </li>
                 ))}
@@ -91,7 +92,7 @@ const Page: FC = () => {
   return (
     <>
       <Section data={null} title="work">
-        <section className="leading-relaxed text-foreground mb-8">
+        <section className="text-foreground mb-8 leading-relaxed">
           <p>
             I am an enthusiastic software developer with a knack for backend
             development. I&apos;ve got my hands dirty in Python, Golang, and
@@ -108,8 +109,8 @@ const Page: FC = () => {
           </p>
         </section>
 
-        <div className="flex items-center gap-2 mb-8">
-          <BriefcaseIcon className="h-6 w-6 text-foreground" />
+        <div className="mb-8 flex items-center gap-2">
+          <BriefcaseIcon className="text-foreground h-6 w-6" />
           <Heading level="h3" className="text-foreground">
             Experience
           </Heading>

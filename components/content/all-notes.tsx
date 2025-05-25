@@ -1,6 +1,7 @@
 "use client"
 
 import { ChangeEvent, useState } from "react"
+
 import { NoteList } from "@/components/content/notes-list"
 import { SearchInput } from "@/components/interactive/search"
 import { NoteWithMetadata } from "@/types"

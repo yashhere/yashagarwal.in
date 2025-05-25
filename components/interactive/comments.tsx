@@ -1,10 +1,11 @@
 "use client"
 
 import React from "react"
-import { useGiscus } from "@/lib/useGiscus"
 import { DiscussionEmbed } from "disqus-react"
 import { useTheme } from "next-themes"
 import { useInView } from "react-intersection-observer"
+
+import { useGiscus } from "@/lib/useGiscus"
 
 interface ICommentPprops {
   url: string

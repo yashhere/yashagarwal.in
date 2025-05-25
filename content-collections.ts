@@ -1,8 +1,7 @@
 import { defineCollection, defineConfig } from "@content-collections/core"
 import { compileMDX } from "@content-collections/mdx"
 import remarkCallouts from "@portaljs/remark-callouts"
-import GithubSlugger, { slug } from "github-slugger"
-import { h, s } from "hastscript"
+import GithubSlugger from "github-slugger"
 import { default as readTime } from "reading-time"
 import { rehypeAccessibleEmojis } from "rehype-accessible-emojis"
 import rehypeAutolinkHeadings from "rehype-autolink-headings"
@@ -129,7 +128,7 @@ const notes = defineCollection({
       .optional(),
     slug: z.string().optional(),
   }),
-  onSuccess: (docs) => {},
+  onSuccess: (_docs) => {},
   transform: async (document, context) => {
     // const readingTime = JSON.parse(JSON.stringify(readTime(document.content)))
     const readingTime = readTime(document.content)

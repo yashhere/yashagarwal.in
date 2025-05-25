@@ -1,4 +1,5 @@
 import { Metadata } from "next"
+
 import Link from "@/components/ui/link"
 import Section from "@/components/ui/section"
 import { generatePageMetadata } from "@/lib/seo/metadata"

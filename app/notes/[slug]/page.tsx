@@ -1,16 +1,20 @@
 import { Metadata } from "next"
+import GithubSlugger from "github-slugger"
+
 import { Mdx } from "@/components/content/mdx"
 import { Series } from "@/components/content/series"
 import { TableOfContents } from "@/components/content/table-of-contents"
 import { DisqusComments } from "@/components/interactive/comments"
 import { siteConfig } from "@/config/site"
 import { getPartialNote, getPreviewNotes } from "@/lib/content"
-import GithubSlugger from "github-slugger"
 
 import "@/styles/mdx.css"
 import "katex/dist/katex.css"
 
 import { notFound } from "next/navigation"
+import { XLogoIcon } from "@phosphor-icons/react/dist/ssr"
+import moment from "moment"
+
 import { BackLinks } from "@/components/content/backlinks"
 import { TagList } from "@/components/content/tag-list"
 import { GoToTop } from "@/components/layout/go-to-top"
@@ -22,8 +26,6 @@ import { env } from "@/env.mjs"
 import { generateArticleMetadata } from "@/lib/seo/metadata"
 import { ArticleStructuredData } from "@/lib/seo/structured-data"
 import { encodeParameter } from "@/lib/utils"
-import { DotIcon, XLogoIcon } from "@phosphor-icons/react/dist/ssr"
-import moment from "moment"
 
 type Props = {
   params: Promise<{ slug: string }>
@@ -104,7 +106,7 @@ export default async function Page(props: Props) {
             </Link>
           </div>
           <Heading level="h2">{article.note.title}</Heading>
-          <div className="text-foreground/60 text-sm flex flex-row gap-1">
+          <div className="text-foreground/60 flex flex-row gap-1 text-sm">
             <span>{moment(article.note.createdOn).format("MMM DD, YYYY")}</span>
           </div>
         </section>
@@ -133,15 +135,15 @@ export default async function Page(props: Props) {
           <TagList tags={article.note.tags} />
         )}
         <DecorativeHr />
-        <div className="flex items-center space-x-2 my-8 flex-row justify-between">
+        <div className="my-8 flex flex-row items-center justify-between space-x-2">
           <Link
             href={`https://x.com/intent/tweet?text=${encodedUrl}%20via%20%40yash__here`}
             className="text-base"
             variant="nav"
             showIcon={false}
           >
-            <div className="flex items-center rounded-full gap-1 border border-border/80 px-4 py-1 text-base  flex-row text-foreground/80 hover:text-foreground hover:border-border">
-              <XLogoIcon className="w-5 flex" /> Share
+            <div className="border-border/80 text-foreground/80 hover:text-foreground hover:border-border flex flex-row items-center gap-1 rounded-full border px-4 py-1 text-base">
+              <XLogoIcon className="flex w-5" /> Share
             </div>
           </Link>
           <GoToTop slug={slug} />

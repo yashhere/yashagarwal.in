@@ -1,7 +1,8 @@
-import { NoteWithMetadata } from "@/types"
 import { allNotes, Note } from "content-collections"
 import { compareDesc } from "date-fns"
 import { pick } from "lodash"
+
+import { NoteWithMetadata } from "@/types"
 
 const URL_SEGMENTS = {
   NOTES: "notes",

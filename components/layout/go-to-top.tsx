@@ -17,11 +17,11 @@ export function GoToTop({ slug }: { slug: string }) {
   return (
     <div>
       <button
-        className="text-foreground/80 hover:text-foreground hover:cursor-pointer flex flex-row justify-between items-center gap-2 text-base transition-colors duration-200 ease-in-out"
+        className="text-foreground/80 hover:text-foreground flex flex-row items-center justify-between gap-2 text-base transition-colors duration-200 ease-in-out hover:cursor-pointer"
         onClick={scrollToTop}
       >
         Back to top
-        <ArrowURightUpIcon className="w-5 h-5" />
+        <ArrowURightUpIcon className="h-5 w-5" />
       </button>
     </div>
   )

@@ -2,9 +2,9 @@
 
 import { Suspense } from "react"
 import { usePathname } from "next/navigation"
-import { cn } from "@/lib/utils"
 import { ArrowUUpLeftIcon } from "@phosphor-icons/react/dist/ssr"
 
+import { cn } from "@/lib/utils"
 import { DarkToggle, DarkToggleSkeleton } from "../interactive/mode-toggle"
 import { AnalogClock, ClockSkeleton } from "../ui/clock/clock"
 import Link from "../ui/link"
@@ -89,7 +89,7 @@ export const Navigation = () => {
                       href={path}
                       variant="nav"
                       className={cn(
-                        "flex align-middle transition-all hover:text-foreground lowercase text-base leading-relaxed",
+                        "hover:text-foreground flex align-middle text-base leading-relaxed lowercase transition-all",
                         {
                           "text-foreground/70": !isActive,
                         }
@@ -104,7 +104,7 @@ export const Navigation = () => {
             <div className="flex flex-row space-x-4">
               <Link
                 href={parentPath}
-                className="flex items-center gap-2 lowercase text-base leading-relaxed hover:text-foreground text-foreground/70"
+                className="hover:text-foreground text-foreground/70 flex items-center gap-2 text-base leading-relaxed lowercase"
                 variant="nav"
               >
                 <ArrowUUpLeftIcon size={16} />

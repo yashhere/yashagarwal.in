@@ -1,7 +1,7 @@
-import Link from "@/components/ui/link"
-import { cn } from "@/lib/utils"
-import { NoteWithMetadata } from "@/types"
 import moment from "moment"
+
+import Link from "@/components/ui/link"
+import { NoteWithMetadata } from "@/types"
 
 export const NotePreview = ({
   note,
@@ -14,15 +14,15 @@ export const NotePreview = ({
     <div className="flex">
       <Link
         href={`/notes/${note.note.slug}`}
-        className="flex flex-col md:flex-row items-start md:items-center rounded-md px-4 gap-0 md:gap-2 py-1 transition-colors select-none hover:bg-muted w-full"
+        className="hover:bg-muted flex w-full flex-col items-start gap-0 rounded-md px-4 py-1 transition-colors select-none md:flex-row md:items-center md:gap-2"
         variant="nav"
       >
         <div className="flex flex-col">
-          <span className="mb-1 font-sans text-base text-foreground">
+          <span className="text-foreground mb-1 font-sans text-base">
             {note.note.title}
           </span>
           {homePage && note.note.description && (
-            <span className="mb-1 text-sm text-foreground/70">
+            <span className="text-foreground/70 mb-1 text-sm">
               {note.note.description}
             </span>
           )}
@@ -30,10 +30,10 @@ export const NotePreview = ({
         {!homePage && (
           <>
             <span
-              className="mx-2 h-px flex-1 bg-transparent border-t border-dotted border-foreground/30"
+              className="border-foreground/30 mx-2 h-px flex-1 border-t border-dotted bg-transparent"
               aria-hidden
             />
-            <span className="text-sm text-foreground/70 font-mono">
+            <span className="text-foreground/70 font-mono text-sm">
               {moment(note.note.createdOn).format("MM/YY")}
             </span>
           </>

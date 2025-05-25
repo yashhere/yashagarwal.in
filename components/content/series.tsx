@@ -1,11 +1,11 @@
 "use client"
 
 import React from "react"
-import { getSeries } from "@/lib/content"
-import { cn } from "@/lib/utils"
 import { ArrowDownIcon, ListNumbersIcon } from "@phosphor-icons/react/dist/ssr"
 import { AnimatePresence, motion } from "motion/react"
 
+import { getSeries } from "@/lib/content"
+import { cn } from "@/lib/utils"
 import Link from "../ui/link"
 
 export const Series = ({
@@ -19,7 +19,7 @@ export const Series = ({
   const index = series.notes?.findIndex((note) => note?.isCurrent) + 1
 
   return (
-    <div className="rounded-md border border-border bg-background p-2.5 text-sm">
+    <div className="border-border bg-background rounded-md border p-2.5 text-sm">
       {interactive ? (
         <button
           className="group flex w-full items-center justify-between text-left"
@@ -29,12 +29,12 @@ export const Series = ({
         >
           <div className="flex flex-col gap-0.5">
             <div className="flex items-center gap-1.5">
-              <ListNumbersIcon className="h-3 w-3 text-muted-foreground" />
-              <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+              <ListNumbersIcon className="text-muted-foreground h-3 w-3" />
+              <span className="text-muted-foreground text-xs font-medium tracking-wider uppercase">
                 Series
               </span>
             </div>
-            <span className="font-medium text-foreground text-sm">
+            <span className="text-foreground text-sm font-medium">
               {series.seriesTitle}{" "}
               <span className="text-muted-foreground font-normal">
                 ({index}/{series.notes?.length})
@@ -43,7 +43,7 @@ export const Series = ({
           </div>
 
           <motion.span
-            className="flex h-5 w-5 items-center justify-center rounded-md text-muted-foreground transition-colors group-hover:text-foreground hover:cursor-pointer"
+            className="text-muted-foreground group-hover:text-foreground flex h-5 w-5 items-center justify-center rounded-md transition-colors hover:cursor-pointer"
             animate={{ rotate: isOpen ? 180 : 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
           >
@@ -52,10 +52,10 @@ export const Series = ({
         </button>
       ) : (
         <div className="flex flex-col gap-0.5">
-          <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+          <span className="text-muted-foreground text-xs font-medium tracking-wider uppercase">
             Series
           </span>
-          <span className="font-medium text-foreground text-sm">
+          <span className="text-foreground text-sm font-medium">
             {series.seriesTitle}
           </span>
         </div>
@@ -82,7 +82,7 @@ export const Series = ({
                 opacity: { duration: 0.15, ease: "easeIn" },
               },
             }}
-            className="mt-2 space-y-0.5 pt-2 border-t border-border overflow-hidden"
+            className="border-border mt-2 space-y-0.5 overflow-hidden border-t pt-2"
           >
             {series.notes?.map((note, index) => (
               <motion.div
@@ -108,29 +108,29 @@ export const Series = ({
                 className="flex items-start gap-2 text-sm"
               >
                 <div
-                  className={cn("mt-[10px] size-1 rounded-full flex-shrink-0", {
+                  className={cn("mt-[10px] size-1 flex-shrink-0 rounded-full", {
                     "bg-primary": note.isCurrent,
                     "bg-muted-foreground": !note.isCurrent,
                     "bg-muted-foreground/60": note.status !== "published",
                   })}
                 />
-                <div className="flex-1 min-w-0">
+                <div className="min-w-0 flex-1">
                   {note.status === "published" ? (
                     note.isCurrent ? (
-                      <span className="block py-0.5 text-foreground">
+                      <span className="text-foreground block py-0.5">
                         {note.title}
                       </span>
                     ) : (
                       <Link
                         href={`/notes/${note.slug}`}
-                        className="block py-0.5 text-muted-foreground hover:text-primary transition-colors"
+                        className="text-muted-foreground hover:text-primary block py-0.5 transition-colors"
                         variant="nav"
                       >
                         {note.title}
                       </Link>
                     )
                   ) : (
-                    <span className="block py-0.5 text-muted-foreground/60">
+                    <span className="text-muted-foreground/60 block py-0.5">
                       Planned: {note.title}
                     </span>
                   )}

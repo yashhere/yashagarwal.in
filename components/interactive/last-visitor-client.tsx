@@ -1,9 +1,8 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { LastVisitorLocation } from "@/lib/lastVisitor"
-import { encodeParameter } from "@/lib/utils"
 
+import { LastVisitorLocation } from "@/lib/lastVisitor"
 import Link from "../ui/link"
 
 interface LastVisitorClientProps {
@@ -19,8 +18,8 @@ interface SessionVisitorData {
 
 export const LoadingSkeleton = () => (
   <div className="flex items-center gap-2">
-    <div className="size-1.5 shrink-0 rounded-full bg-foreground/20 animate-pulse" />
-    <div className="h-4 w-48 bg-foreground/20 animate-pulse rounded" />
+    <div className="bg-foreground/20 size-1.5 shrink-0 animate-pulse rounded-full" />
+    <div className="bg-foreground/20 h-4 w-48 animate-pulse rounded" />
   </div>
 )
 
@@ -113,8 +112,8 @@ export function LastVisitorClient({
   }
 
   return (
-    <div className="flex items-center gap-2 text-sm text-muted-foreground">
-      <div className="size-1.5 shrink-0 rounded-full bg-green-400 animate-blink" />
+    <div className="text-muted-foreground flex items-center gap-2 text-sm">
+      <div className="animate-blink size-1.5 shrink-0 rounded-full bg-green-400" />
       <span>
         Someone from{" "}
         <span className="font-medium underline underline-offset-4">
