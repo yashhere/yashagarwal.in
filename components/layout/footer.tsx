@@ -1,7 +1,6 @@
 import { FC, Suspense } from "react"
-import { env } from "@/env.mjs"
 
-import { LastVisitor, LastVisitorSkeleton } from "../interactive/last-visitor"
+import { LastVisitor } from "../interactive/last-visitor"
 import Link from "../ui/link"
 
 export const Footer: FC = () => {
@@ -43,13 +42,7 @@ export const Footer: FC = () => {
             </div>
           </div>
 
-          <Suspense
-            fallback={
-              <div className="mb-6 flex justify-center">
-                <LastVisitorSkeleton />
-              </div>
-            }
-          >
+          <Suspense fallback={null}>
             <div className="mb-6 flex justify-center">
               <LastVisitor />
             </div>
