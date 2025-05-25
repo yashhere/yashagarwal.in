@@ -1,5 +1,5 @@
 ---
-title: Integrating Contentlayer with NextJs Blog
+title: Integrating Contentlayer with Next.js Blog
 createdOn: 2023-07-30T13:00:24.000Z
 status: published
 series:
@@ -8,26 +8,26 @@ series:
 tags:
   - Blog Setup
   - Development
-  - NextJs
+  - Next.js
   - Contentlayer
-updatedOn: 2025-05-25T12:26:30.000Z
+updatedOn: 2025-05-25T12:33:27.000Z
 featured: true
-description: How I built this blog with NextJs and Contentlayer
+description: How I built this blog with Next.js and Contentlayer
 ---
 
-The second part of this series explores Contentlayer and how to integrate it with a NextJs blog. I will elaborate on my experience managing content on my blog throughout the last eight years using various tools, why I decided to use Contentlayer and how to integrate it into a NextJs blog.
+The second part of this series explores Contentlayer and how to integrate it with a Next.js blog. I will elaborate on my experience managing content on my blog throughout the last eight years using various tools, why I decided to use Contentlayer and how to integrate it into a Next.js blog.
 
 # History
 
-When I was starting out on my journey with NextJs to build the next version of my blog, I had to figure out a way to feed data into my application. I used only traditional static site generators like Jekyll and Hugo until then. SSGs work in this way - One writes the content in local markdown files; the SSG takes these files, extract the front matter and actual body, converts the extracted information to variables and feeds them into the actual server-side rendering logic, which will generate the static HTML files. Storing these content markdown files in Git is what is today called the **Git CMS**. I am a big proponent of keeping the content in a Git repository because it makes it easier to track the writing journey without tying too much into a vendor.
+When I was starting out on my journey with Next.js to build the next version of my blog, I had to figure out a way to feed data into my application. I used only traditional static site generators like Jekyll and Hugo until then. SSGs work in this way - One writes the content in local markdown files; the SSG takes these files, extract the front matter and actual body, converts the extracted information to variables and feeds them into the actual server-side rendering logic, which will generate the static HTML files. Storing these content markdown files in Git is what is today called the **Git CMS**. I am a big proponent of keeping the content in a Git repository because it makes it easier to track the writing journey without tying too much into a vendor.
 
 Although the concept of SSGs came into being with the release of Jekyll in 2008 (at the same time as Github and its iconic [Pages](https://docs.github.com/en/pages/quickstart) feature), I actually started my journey with it in 2015. Since then, technology has advanced by leaps and frogs, and several new approaches to managing content and code have emerged.
 
 I also dabbled with integrating headless CMS ([WordPress](https://wordpress.com/), [Sanity](https://www.sanity.io/) and [Contentful](https://www.contentful.com/)) and GraphQL based [Gatsby](https://www.gatsbyjs.com/) at various points in past few years, however I was never successful because of my unease with JavaScript. My unwillingness to rely on any third-party vendor for storing my content and the costs associated with self-hosting any open source CMS also contributed greatly to my failure to transition.
 
-# Migrating to NextJs
+# Migrating to Next.js
 
-When I was starting to migrate my blog to NextJs, I had a couple of requirements in mind -
+When I was starting to migrate my blog to Next.js, I had a couple of requirements in mind -
 
 1. I preferred using a headless CMS for storing the content. A few reasons are -
    a. My writing was already suffering because of my over-emphasis on coding instead of writing.
@@ -38,15 +38,15 @@ Notion fits nicely into my requirements. It has a well-defined (although with po
 
 So, I reverted back to using markdown for my blog's content. I still write in Notion's excellent editor but then export the file to markdown and manually edit image paths etc., to work with my blog's structure.
 
-However, using `md` and its more advanced sibling `mdx` with NextJs is tedious and error-prone. A bunch of tools need to be integrated to make MDX work with NextJs. `unified`, `remark` and `rehype` ecosystem provides some great tools, but combining these is not trivial. I had already wasted enough time struggling with Notion. I might have abandoned the project altogether if I had wasted a few more days.
+However, using `md` and its more advanced sibling `mdx` with Next.js is tedious and error-prone. A bunch of tools need to be integrated to make MDX work with Next.js. `unified`, `remark` and `rehype` ecosystem provides some great tools, but combining these is not trivial. I had already wasted enough time struggling with Notion. I might have abandoned the project altogether if I had wasted a few more days.
 
 My search finally ended on [Contentlayer](https://www.contentlayer.dev/). Contentlayer is a tool which transforms unstructured markdown content into structured type-safe JSON data structures and provides accessible interfaces to access these data structures. This means I could import all my content in the code files using an `import` statement and work with the data as if working with a Typescript interface. This eliminated the need to struggle with additional boilerplate code needed to use the low-level libraries to interact with the MDX files.
 
-With that in mind, let's see how to integrate Contentlayer in our NextJs blog. In later posts of this series, we will also see how to utilise the extensive plugin ecosystem provided by the `unified` project to enrich the data interfaces exposed by Contentlayer.
+With that in mind, let's see how to integrate Contentlayer in our Next.js blog. In later posts of this series, we will also see how to utilise the extensive plugin ecosystem provided by the `unified` project to enrich the data interfaces exposed by Contentlayer.
 
 # Install and Configure Contentlayer
 
-Contentlayer's [getting started](https://www.contentlayer.dev/docs/getting-started-cddd76b7) guide is a good resource to setup your NextJs project to work with Contentlayer. I have described the same steps below for quick reference -
+Contentlayer's [getting started](https://www.contentlayer.dev/docs/getting-started-cddd76b7) guide is a good resource to setup your Next.js project to work with Contentlayer. I have described the same steps below for quick reference -
 
 First, add `contentlayer` and `next-contentlayer` to the project -
 
@@ -197,7 +197,7 @@ export type Post = {
 
 # Computed Fields
 
-Once Contentlayer has generated the JSON files, the content is ready to consume on our pages. We will use NextJs's [dynamic routes](https://nextjs.org/docs/app/building-your-application/routing/dynamic-routes) to render a single blog post. But before that, we must decide which unique value will be used for navigating the page. File path without the file extension is a standard approach used in the community (called a `slug`), but we currently don't have this value available easily.
+Once Contentlayer has generated the JSON files, the content is ready to consume on our pages. We will use Next.js's [dynamic routes](https://nextjs.org/docs/app/building-your-application/routing/dynamic-routes) to render a single blog post. But before that, we must decide which unique value will be used for navigating the page. File path without the file extension is a standard approach used in the community (called a `slug`), but we currently don't have this value available easily.
 
 That's where Contentlayer's **Computed Fields** come into the picture. It lets us compute new metadata from existing content. For example, it can be used to calculate the estimated reading time from the post content.
 
@@ -335,10 +335,10 @@ export default async function Page({ params }: Props) {
 }
 ```
 
-Contentlayer provides the `getMDXComponent` hook, which can render the `mdx` content on the page as HTML. Under the hood, our `mdx` file was transformed by Contentlayer using a bundler into `JSX` and cached in a JSON file, which was then picked up by NextJs to statically render using React.
+Contentlayer provides the `getMDXComponent` hook, which can render the `mdx` content on the page as HTML. Under the hood, our `mdx` file was transformed by Contentlayer using a bundler into `JSX` and cached in a JSON file, which was then picked up by Next.js to statically render using React.
 
 # Conclusion
 
-Contentlayer greatly abstracts away the intricacies of using MDX content inside a NextJs project by doing most of the heavy lifting for us. It simplifies working with `unified`, `remark` and `rehype` ecosystems while providing interfaces to define a schema to our relatively freeform MDX content and type-safe data structures to access the transformed content.
+Contentlayer greatly abstracts away the intricacies of using MDX content inside a Next.js project by doing most of the heavy lifting for us. It simplifies working with `unified`, `remark` and `rehype` ecosystems while providing interfaces to define a schema to our relatively freeform MDX content and type-safe data structures to access the transformed content.
 
 It is also possible to pass custom MDX components to the `MdxContent` to enable the re-mapping of standard markdown constructs to React components. We will dive deeper into it in future posts of the series.
