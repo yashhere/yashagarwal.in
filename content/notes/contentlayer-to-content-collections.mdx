@@ -9,7 +9,7 @@ category: Web Development
 tags:
   - Blog Setup
   - Development
-  - NextJs
+  - Next.js
   - Content Management
   - MDX
   - Static Site Generation
@@ -17,10 +17,10 @@ tags:
   - Contentlayer
   - Content-Collections
 description: Contentlayer to Content-Collections migration experience
-updatedOn: 2025-05-25T12:26:30.000Z
+updatedOn: 2025-05-25T12:33:27.000Z
 ---
 
-When I first moved my blog's tech stack to NextJs, [Contentlayer](https://contentlayer.dev/) was a rage. Obviously, I also decided to use it for managing the content here. However, over time, Contentlayer stopped getting updates, and eventually the creator [declared](https://github.com/contentlayerdev/contentlayer/issues/429) their inability to continue its development. Keeping the package version pinned allowed me to avoid any issues for almost a year. Last year, when NextJs 15 dropped, I tried to update my blog to it, but due to Contentlayer's peer dependencies, the update failed. Finally, a few days back, I decided to put in some effort to do the migration. I had two primary choices - [Contentlayer2](https://github.com/timlrx/contentlayer2) and [content-collections](https://www.content-collections.dev/). While Contentlayer2 would have been a straightforward migration, I decided to go with Content-collection, simply because it seems a [better tool](https://sdorra.dev/posts/2024-01-15-content-collections).
+When I [first](/notes/how-i-built-a-blog-with-nextjs) moved my blog's tech stack to Next.js, [Contentlayer](https://contentlayer.dev/) was a rage. Obviously, I also [decided](/notes/integrating-contentlayer-with-nextjs-blog) to use it for managing the content here. However, over time, Contentlayer stopped getting updates, and eventually the creator [declared](https://github.com/contentlayerdev/contentlayer/issues/429) their inability to continue its development. Keeping the package version pinned allowed me to avoid any issues for almost a year. Last year, when [Next.js 15](https://nextjs.org/blog/next-15) dropped, I tried to update my blog to it, but due to Contentlayer's peer dependencies, the update failed. Finally, a few days back, I decided to put in some effort to do the migration. I had two primary choices - [Contentlayer2](https://github.com/timlrx/contentlayer2) and [content-collections](https://www.content-collections.dev/). While Contentlayer2 would have been a straightforward migration, I decided to go with Content-collection, simply because it seems a [better tool](https://sdorra.dev/posts/2024-01-15-content-collections).
 
 The migration mostly went smoothly, apart from a few hiccups. I figured I'd document my thoughts and the steps I took, primarily as a note to myself for when I inevitably forget the implementation details.
 
