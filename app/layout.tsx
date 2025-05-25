@@ -6,6 +6,7 @@ import { Navigation } from "@/components/layout/navigation"
 import { ThemeProvider } from "@/components/layout/theme-provider"
 import { TailwindIndicator } from "@/components/ui/tailwind-indicator"
 import { cn } from "@/lib/utils"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 import "@/styles/globals.css"
 
@@ -74,6 +75,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             <div className="py-6">{children}</div>
           </main>
           <Footer />
+          <SpeedInsights />
           <Analytics />
           <TailwindIndicator />
         </ThemeProvider>
