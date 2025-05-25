@@ -9,15 +9,35 @@ import { DarkToggle, DarkToggleSkeleton } from "../interactive/mode-toggle"
 import { AnalogClock, ClockSkeleton } from "../ui/clock/clock"
 import Link from "../ui/link"
 
-const navItems = {
+type NavItem = {
+  name: string
+  show: boolean
+}
+
+type NavItems = {
+  [path: string]: NavItem
+}
+
+const navItems: NavItems = {
   "/": {
     name: "Home",
+    show: true,
   },
   "/notes": {
     name: "Notes",
+    show: true,
   },
   "/work": {
     name: "Work",
+    show: true,
+  },
+  "/tags": {
+    name: "Tags",
+    show: false,
+  },
+  "/categories": {
+    name: "Categories",
+    show: false,
   },
 }
 
@@ -59,24 +79,26 @@ export const Navigation = () => {
         >
           {isFirstLevelRoute ? (
             <div className="flex flex-row space-x-4">
-              {Object.entries(navItems).map(([path, { name }]) => {
-                const isActive = path === highlightedPath
-                return (
-                  <Link
-                    key={path}
-                    href={path}
-                    variant="nav"
-                    className={cn(
-                      "flex align-middle transition-all hover:text-foreground lowercase text-base leading-relaxed",
-                      {
-                        "text-foreground/70": !isActive,
-                      }
-                    )}
-                  >
-                    {name}
-                  </Link>
-                )
-              })}
+              {Object.entries(navItems)
+                .filter(([, { show }]) => show)
+                .map(([path, { name }]) => {
+                  const isActive = path === highlightedPath
+                  return (
+                    <Link
+                      key={path}
+                      href={path}
+                      variant="nav"
+                      className={cn(
+                        "flex align-middle transition-all hover:text-foreground lowercase text-base leading-relaxed",
+                        {
+                          "text-foreground/70": !isActive,
+                        }
+                      )}
+                    >
+                      {name}
+                    </Link>
+                  )
+                })}
             </div>
           ) : (
             <div className="flex flex-row space-x-4">
