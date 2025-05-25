@@ -1,5 +1,3 @@
-// Credit - https://github.com/screfy/screfy.com/blob/9b24b5a4e7272a49efb308aa9a4352db1eb5c4b5/src/utils/visitor.ts
-
 "use server"
 
 import { headers } from "next/headers"
