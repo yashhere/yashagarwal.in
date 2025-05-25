@@ -2,6 +2,9 @@
 
 import { useEffect, useState } from "react"
 import { LastVisitorLocation } from "@/lib/lastVisitor"
+import { encodeParameter } from "@/lib/utils"
+
+import Link from "../ui/link"
 
 interface LastVisitorClientProps {
   serverLocation: LastVisitorLocation | null
@@ -113,7 +116,16 @@ export function LastVisitorClient({
     <div className="flex items-center gap-2 text-sm text-muted-foreground">
       <div className="size-1.5 shrink-0 rounded-full bg-green-400 animate-blink" />
       <span>
-        Last visitor from {displayLocation.city}, {displayLocation.country}
+        Someone from{" "}
+        <span className="font-medium underline underline-offset-4">
+          <Link
+            href={`https://www.google.com/search?q=${encodeURIComponent(`things+to+do+in+${displayLocation.city}+${displayLocation.country}`)}`}
+            variant="nav"
+          >
+            {displayLocation.city}, {displayLocation.country}
+          </Link>
+        </span>{" "}
+        was just here! ✨
       </span>
     </div>
   )
