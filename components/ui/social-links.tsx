@@ -8,7 +8,11 @@ import {
 import Link from "./link"
 
 const socialLinks = [
-  { name: "Email", href: "mailto:hello@yashagarwal.in", icon: EnvelopeIcon },
+  {
+    name: "Email",
+    href: "mailto:yashagarwaljpr+blog@gmail.com",
+    icon: EnvelopeIcon,
+  },
   {
     name: "X",
     href: "https://x.com/yash__here",
@@ -17,7 +21,7 @@ const socialLinks = [
   { name: "GitHub", href: "https://github.com/yashhere", icon: GithubLogoIcon },
   {
     name: "LinkedIn",
-    href: "https://linkedin.com/in/yashagarwal-",
+    href: "https://www.linkedin.com/in/theyashagarwal/",
     icon: LinkedinLogoIcon,
   },
 ]
