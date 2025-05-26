@@ -71,7 +71,6 @@ export default async function Page(props: Props) {
   const { slug } = params
   const article = await getPartialNote(slug)
   if (!article) {
-    // TODO: Add 404 here
     notFound()
   }
   const encodedUrl = encodeParameter(

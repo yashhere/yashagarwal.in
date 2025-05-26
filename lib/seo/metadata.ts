@@ -15,6 +15,7 @@ interface PageMetadataOptions {
   authors?: string[]
   tags?: string[]
   type?: "website" | "article"
+  allowZoom?: boolean
 }
 
 export function generatePageMetadata(options: PageMetadataOptions): Metadata {
@@ -31,6 +32,7 @@ export function generatePageMetadata(options: PageMetadataOptions): Metadata {
     authors = [siteConfig.author],
     tags,
     type = "website",
+    allowZoom = false,
   } = options
 
   const pageTitle = title || siteConfig.title
@@ -90,6 +92,19 @@ export function generatePageMetadata(options: PageMetadataOptions): Metadata {
         ],
       },
     },
+    viewport: allowZoom
+      ? {
+          width: "device-width",
+          initialScale: 1,
+          maximumScale: 5,
+          userScalable: true,
+        }
+      : {
+          width: "device-width",
+          initialScale: 1,
+          maximumScale: 1,
+          userScalable: false,
+        },
   }
 }
 
@@ -114,6 +129,7 @@ export function generateArticleMetadata(article: {
     modifiedTime: article.updatedOn,
     tags: article.tags,
     type: "article",
+    allowZoom: true,
   })
 }
 
@@ -133,6 +149,7 @@ export function generateCategoryMetadata(category: {
     description,
     canonicalUrl: `/categories/${category.slug}`,
     keywords: [category.name, ...siteConfig.keywords],
+    allowZoom: false,
   })
 }
 
@@ -149,5 +166,6 @@ export function generateTagMetadata(tag: {
     description,
     canonicalUrl: `/tags/${tag.slug}`,
     keywords: [tag.name, ...siteConfig.keywords],
+    allowZoom: false,
   })
 }
