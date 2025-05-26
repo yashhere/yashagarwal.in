@@ -39,18 +39,26 @@ export async function getFeed() {
 
     const noteUrl = `${baseUrl}/notes/${note.slug}`
 
-    feed.addItem({
+    const itemData: any = {
       id: noteUrl,
       title: note.title,
       link: noteUrl,
       description: note.description || note.title,
-      content: note.content || note.description,
+      content: note.content || note.description || "",
       author: [author],
       contributor: [author],
       date: new Date(note.createdOn),
-      category: note.category ? [{ name: note.category }] : undefined,
-      image: note.image ? `${baseUrl}${note.image}` : undefined,
-    })
+    }
+
+    if (note.category) {
+      itemData.category = [{ name: note.category }]
+    }
+
+    if (note.image) {
+      itemData.image = `${baseUrl}${note.image}`
+    }
+
+    feed.addItem(itemData)
   })
 
   return feed

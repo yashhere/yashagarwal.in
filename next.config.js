@@ -1,5 +1,9 @@
 const { withContentCollections } = require("@content-collections/next")
 
+const withBundleAnalyzer = require("@next/bundle-analyzer")({
+  enabled: process.env.ANALYZE === "true",
+})
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -10,6 +14,17 @@ const nextConfig = {
     mdxRs: {
       mdxType: "gfm",
     },
+    optimizePackageImports: [
+      "@phosphor-icons/react",
+      "@radix-ui/react-tooltip",
+      "motion",
+      "lodash",
+      "date-fns",
+      "react-intersection-observer",
+      "sonner",
+      "clsx",
+      "tailwind-merge",
+    ],
   },
   transpilePackages: ["shiki"],
   images: {
@@ -316,4 +331,4 @@ const Redirects = [
   },
 ]
 
-module.exports = withContentCollections(nextConfig)
+module.exports = withContentCollections(withBundleAnalyzer(nextConfig))

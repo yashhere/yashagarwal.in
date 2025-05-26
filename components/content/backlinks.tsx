@@ -1,4 +1,3 @@
-import React from "react"
 import { GraphIcon } from "@phosphor-icons/react/dist/ssr"
 
 import { getNoteBacklinks } from "@/lib/content"
