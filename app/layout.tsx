@@ -11,7 +11,10 @@ import { cn } from "@/lib/utils"
 
 import "@/styles/globals.css"
 
+import { Suspense } from "react"
+
 import { AnimatedLayout } from "@/components/layout/animated-layout"
+import { Loading } from "@/components/ui/loading"
 import { Toaster } from "@/components/ui/toast"
 import { defaultMetadata } from "@/lib/seo/default"
 import {
@@ -74,7 +77,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <Toaster closeButton className="pointer-events-auto" />
           <main className="w-full max-w-2xl flex-1 px-4 pb-18 md:px-0">
             <Navigation />
-            <AnimatedLayout>{children}</AnimatedLayout>
+            <Suspense fallback={<Loading />}>
+              <AnimatedLayout>{children}</AnimatedLayout>
+            </Suspense>
           </main>
           <Footer />
           <SpeedInsights />

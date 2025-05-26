@@ -42,7 +42,13 @@ export const Footer: FC = () => {
             </div>
           </div>
 
-          <Suspense fallback={null}>
+          <Suspense
+            fallback={
+              <div className="mb-6 flex justify-center">
+                <div className="bg-muted h-5 w-32 animate-pulse rounded" />
+              </div>
+            }
+          >
             <div className="mb-6 flex justify-center">
               <LastVisitor />
             </div>

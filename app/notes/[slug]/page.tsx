@@ -130,7 +130,7 @@ export default async function Page(props: Props) {
           </div>
         </div>
         <DecorativeHr />
-        <BackLinks backlinks={article.backlinks} />
+        {article.backlinks && <BackLinks backlinks={article.backlinks} />}
         {article.note.tags && article.note.tags.length > 0 && (
           <TagList tags={article.note.tags} />
         )}

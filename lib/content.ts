@@ -106,6 +106,7 @@ export function getNoteBacklinks(slug: string, urlSegment: string) {
       const urlToSearch = `/${urlSegment}/${slug}`
       return doc.content.includes(urlToSearch)
     }
+    return false
   })
 
   return backlinksToNote.map((doc) => ({

@@ -1,23 +1,14 @@
 {
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
-  "prettier.tabWidth": 4,
   "editor.formatOnSave": true,
-  "editor.formatOnSaveMode": "modificationsIfAvailable",
-  "editor.formatOnPaste": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "prettier.requireConfig": true,
-  "prettier.semi": false,
-  "prettier.configPath": "",
-  "prettier.withNodeModules": true,
-  "css.completion.completePropertyWithSemicolon": false,
-  "javascript.format.semicolons": "remove",
-  "typescript.format.semicolons": "remove",
-  "eslint.codeActionsOnSave.mode": "problems",
-  "workbench.editor.highlightModifiedTabs": true,
-  "workbench.editor.showTabs": "multiple",
   "editor.detectIndentation": false,
+  "editor.tabSize": 2,
   "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
     "source.removeUnusedImports": "explicit",
-    "source.organizeImports": "explicit"
+    "source.organizeImports": "never"
   }
 }
