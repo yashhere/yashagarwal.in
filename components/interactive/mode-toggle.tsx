@@ -34,10 +34,26 @@ export const DarkToggle = () => {
   }
 
   const getTooltipText = () => {
-    if (theme === "system") {
-      return `System (${resolvedTheme})`
+    const themes = {
+      light: [
+        "Shine on",
+        "Bright mode",
+        "Stay sunny",
+        "Full glow",
+        "Light it up",
+        "Day mode",
+      ],
+      dark: [
+        "Dark side",
+        "Night mode",
+        "Low light",
+        "Fade in",
+        "Stay dim",
+        "Shadow on",
+      ],
     }
-    return theme === "dark" ? "Dark mode" : "Light mode"
+    const options = resolvedTheme === "dark" ? themes.dark : themes.light
+    return options[Math.floor(Math.random() * options.length)]
   }
 
   return (
