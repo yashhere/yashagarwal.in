@@ -4,6 +4,7 @@ import { FeaturedNotes } from "@/components/content/featured-notes"
 import { Heading } from "@/components/ui/heading"
 import Link from "@/components/ui/link"
 import Section from "@/components/ui/section"
+import { SocialLinks } from "@/components/ui/social-links"
 import { siteConfig } from "@/config/site"
 
 export default function Page() {
@@ -51,6 +52,10 @@ export default function Page() {
           sets me apart is my relentless commitment to continuous learning and
           turning challenges into victories.
         </p>
+      </div>
+
+      <div className="mt-8">
+        <SocialLinks />
       </div>
 
       <Section title="Popular Writing">
