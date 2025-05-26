@@ -23,6 +23,7 @@ import Draft from "@/components/ui/draft"
 import { Heading } from "@/components/ui/heading"
 import Link from "@/components/ui/link"
 import { env } from "@/env.mjs"
+import { articleViewport } from "@/lib/seo/default"
 import { generateArticleMetadata } from "@/lib/seo/metadata"
 import { ArticleStructuredData } from "@/lib/seo/structured-data"
 import { encodeParameter } from "@/lib/utils"
@@ -30,6 +31,8 @@ import { encodeParameter } from "@/lib/utils"
 type Props = {
   params: Promise<{ slug: string }>
 }
+
+export const viewport = articleViewport
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
   const params = await props.params

@@ -16,7 +16,7 @@ import { Suspense } from "react"
 import { AnimatedLayout } from "@/components/layout/animated-layout"
 import { Loading } from "@/components/ui/loading"
 import { Toaster } from "@/components/ui/toast"
-import { defaultMetadata } from "@/lib/seo/default"
+import { defaultMetadata, defaultViewport } from "@/lib/seo/default"
 import {
   PersonStructuredData,
   WebsiteStructuredData,
@@ -37,13 +37,7 @@ const monoFont = IBM_Plex_Mono({
 })
 
 export const metadata: Metadata = defaultMetadata
-
-export const viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: dark)", color: "#0e141b" },
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-  ],
-}
+export const viewport = defaultViewport
 
 interface RootLayoutProps {
   children: React.ReactNode
