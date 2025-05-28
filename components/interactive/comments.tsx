@@ -1,13 +1,12 @@
 "use client"
 
-import React from "react"
 import { DiscussionEmbed } from "disqus-react"
 import { useTheme } from "next-themes"
 import { useInView } from "react-intersection-observer"
 
 import { useGiscus } from "@/lib/useGiscus"
 
-interface ICommentPprops {
+interface ICommentProps {
   url: string
   slug: string
 }
@@ -26,12 +25,13 @@ export const Comments = () => {
   )
 }
 
-export const DisqusComments = ({ url, slug }: ICommentPprops) => {
+export const DisqusComments = ({ url, slug }: ICommentProps) => {
   const { resolvedTheme = "light" } = useTheme()
   const { ref, inView } = useInView({
     threshold: 0,
     triggerOnce: true,
     fallbackInView: true,
+    rootMargin: "100px", // Start loading before user reaches comments
   })
   const disqusShortname = "yashhere"
   const disqusConfig = {
