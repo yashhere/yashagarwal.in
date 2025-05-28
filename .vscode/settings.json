@@ -10,5 +10,6 @@
     "source.fixAll.eslint": "explicit",
     "source.removeUnusedImports": "explicit",
     "source.organizeImports": "never"
-  }
+  },
+  "cSpell.words": ["Disqus"]
 }
