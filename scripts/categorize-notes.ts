@@ -8,6 +8,7 @@ import OpenAI from "openai"
 
 interface NoteFrontmatter {
   title?: string
+  description?: string // Add description field
   category?: string
   categories?: string | string[]
   tags?: string | string[]
@@ -24,12 +25,14 @@ interface NoteContent {
   excerpt: string
   currentCategory: string
   currentTags: string[]
+  currentDescription?: string // Add current description
 }
 
 interface CategorizationResult {
   file: string
   category: string
   tags: string[]
+  description: string // Add description to result
 }
 
 interface BatchResult {
@@ -41,6 +44,7 @@ interface ProcessedFile {
   contentHash: string
   category: string
   tags: string[]
+  description: string // Add description to cache
   timestamp: string
 }
 
@@ -150,7 +154,8 @@ class NoteCategorizer {
     filePath: string,
     contentHash: string,
     category: string,
-    tags: string[]
+    tags: string[],
+    description: string
   ): void {
     const relativePath = path.relative(this.contentDir, filePath)
 
@@ -164,6 +169,7 @@ class NoteCategorizer {
       contentHash,
       category,
       tags,
+      description,
       timestamp: new Date().toISOString(),
     })
   }
@@ -349,6 +355,7 @@ class NoteCategorizer {
           excerpt,
           currentCategory: frontmatter.category || "",
           currentTags,
+          currentDescription: frontmatter.description, // Add current description
         })
       } catch (error) {
         console.error(`Error processing ${filePath}:`, error)
@@ -359,18 +366,35 @@ class NoteCategorizer {
     const systemPrompt = `You are an expert content categorizer for a personal blog. Analyze the provided notes and assign:
 
 1. ONE category per note (choose from existing categories when appropriate, create new ones sparingly)
-2. 3-7 relevant tags per note (mix of existing and new tags as needed)
+2. 2-5 relevant tags per note (fewer is better - focus on quality over quantity)
+3. A concise, engaging description (1-2 sentences, 120-160 characters ideal for SEO)
 
 EXISTING CATEGORIES (${existingCategories.length}): ${existingCategories.join(", ")}
 EXISTING TAGS (showing first 50): ${existingTags.slice(0, 50).join(", ")}
 
-Guidelines:
+TAG QUALITY GUIDELINES:
+- Use BROAD, meaningful themes (e.g., "Technology", "Productivity", "Philosophy")
+- AVOID overly specific details (e.g., "Monsoon", "Decision Making", "Fun")
+- Keep tag names SHORT (1-2 words max, avoid long phrases)
+- Do NOT duplicate the category name as a tag
+- Focus on the CORE themes and concepts, not minor details
+- Prefer existing tags when they fit well
+- Examples of GOOD tags: "Travel", "Tech", "Career", "Learning", "Writing", "Health", "Books", "Startups"
+- Examples of BAD tags: "Morning Walks", "Smartphone Usage", "March Weather", "College Days"
+
+CATEGORY GUIDELINES:
 - Keep total categories under 7 across ALL notes (reuse existing when possible)
 - Categories should be broad themes like "Technology", "Personal", "Learning", "Career", "Travel", "Reviews"
-- Tags should be specific and descriptive
-- Strongly prefer existing categories/tags when they fit well
-- For this personal blog, common categories might be: Technology, Personal, Career, Travel, Learning, Reviews
-- Return JSON format only`
+- Strongly prefer existing categories when they fit well
+
+DESCRIPTION GUIDELINES:
+- Write compelling, concise descriptions that summarize the main point
+- Aim for 120-160 characters for optimal SEO meta descriptions
+- Make it engaging and click-worthy while being accurate
+- Include key concepts but avoid being overly technical
+- Write in a friendly, accessible tone
+
+Return JSON format only`
 
     const userPrompt = `Analyze these blog notes and provide categorization:
 
@@ -382,7 +406,8 @@ Return ONLY a JSON object with this structure:
     {
       "file": "path/to/file.mdx",
       "category": "category_name",
-      "tags": ["tag1", "tag2", "tag3"]
+      "tags": ["tag1", "tag2", "tag3"],
+      "description": "A concise, engaging description of the post content (120-160 chars)"
     }
   ]
 }`
@@ -432,25 +457,65 @@ Return ONLY a JSON object with this structure:
     filePath: string,
     category: string,
     tags: string[],
+    description: string,
     contentHash: string
   ): Promise<void> {
     try {
       const fileContent = await fsPromises.readFile(filePath, "utf-8")
       const parsed = matter(fileContent)
 
-      // Update category and tags
+      // Store the original createdOn value as string to preserve it exactly
+      const originalCreatedOn = parsed.data.createdOn
+
+      // Update category, tags, and description
       parsed.data.category = category
       parsed.data.tags = tags.sort()
+      parsed.data.description = description
 
-      // Convert createdOn from UTC to IST if it's in UTC format
-      if (parsed.data.createdOn && typeof parsed.data.createdOn === "string") {
-        // Check if the date is in UTC format (ends with 'Z' or '.000Z')
-        if (parsed.data.createdOn.endsWith("Z")) {
-          const createdDate = new Date(parsed.data.createdOn)
-          if (!isNaN(createdDate.getTime())) {
-            parsed.data.createdOn = this.convertDateToIST(createdDate)
+      // Handle createdOn timestamp - preserve IST dates, convert UTC to IST
+      if (originalCreatedOn) {
+        let createdOnStr: string = ""
+
+        // Convert to string if it's a Date object
+        if (originalCreatedOn instanceof Date) {
+          createdOnStr = originalCreatedOn.toISOString()
+        } else if (typeof originalCreatedOn === "string") {
+          createdOnStr = originalCreatedOn
+        } else {
+          // Keep as-is if it's neither Date nor string
+          parsed.data.createdOn = originalCreatedOn
+          console.log(
+            `   ⚠️  Unusual createdOn format for ${path.basename(filePath)}: ${typeof originalCreatedOn}`
+          )
+        }
+
+        if (createdOnStr) {
+          if (createdOnStr.endsWith("Z") || createdOnStr.includes(".000Z")) {
+            // Convert UTC to IST
+            const createdDate = new Date(createdOnStr)
+            if (!isNaN(createdDate.getTime())) {
+              parsed.data.createdOn = this.convertDateToIST(createdDate)
+              console.log(
+                `   📅 Converted UTC createdOn to IST for ${path.basename(filePath)}`
+              )
+            } else {
+              // Keep original if parsing fails
+              parsed.data.createdOn = originalCreatedOn
+            }
+          } else if (
+            createdOnStr.includes("+05:30") ||
+            createdOnStr.includes("+0530")
+          ) {
+            // Already in IST format - keep as-is (preserve the exact string)
+            parsed.data.createdOn = createdOnStr
             console.log(
-              `   📅 Converted createdOn to IST for ${path.basename(filePath)}`
+              `   ✅ Preserved IST createdOn for ${path.basename(filePath)}`
+            )
+          } else {
+            // Keep the original value as-is for any other format
+            parsed.data.createdOn = originalCreatedOn
+            console.log(
+              `   📝 Kept original createdOn format for ${path.basename(filePath)}: ${createdOnStr}`
             )
           }
         }
@@ -462,18 +527,24 @@ Return ONLY a JSON object with this structure:
       // Add categorization hash to track processing
       parsed.data._categorized = contentHash
 
-      // Reconstruct file
+      // Reconstruct file with proper YAML formatting
       const newContent = matter.stringify(parsed.content, parsed.data)
 
       // Write back to file
       await fsPromises.writeFile(filePath, newContent, "utf-8")
 
       console.log(
-        `✓ Updated: ${path.basename(filePath)} → Category: ${category}, Tags: ${tags.length}`
+        `✓ Updated: ${path.basename(filePath)} → Category: ${category}, Tags: ${tags.length}, Description: ${description}`
       )
 
       // Add to processing cache
-      this.addToProcessingCache(filePath, contentHash, category, tags)
+      this.addToProcessingCache(
+        filePath,
+        contentHash,
+        category,
+        tags,
+        description
+      )
     } catch (error) {
       console.error(`✗ Error updating ${path.basename(filePath)}:`, error)
     }
@@ -572,6 +643,7 @@ Return ONLY a JSON object with this structure:
                 filePath,
                 result.category,
                 result.tags,
+                result.description,
                 contentHash
               )
             } catch {
@@ -589,7 +661,7 @@ Return ONLY a JSON object with this structure:
           console.log(`🔍 Batch ${i + 1} results (DRY RUN):`)
           for (const result of batchResults.results) {
             console.log(
-              `   📄 ${result.file} → ${result.category} | Tags: ${result.tags.join(", ")}`
+              `   📄 ${result.file} → ${result.category} | Tags: ${result.tags.join(", ")} | Description: ${result.description}`
             )
           }
         }
