@@ -16,6 +16,11 @@ NC='\033[0m' # No Color
 DRY_RUN=false
 CONTENT_DIR="content/notes"
 MODEL="gpt-4o-mini"
+CACHE_FILE=".categorization-cache.json"
+CLEAR_CACHE=false
+SKIP_PROCESSED=true
+SINGLE_BATCH=false
+SINGLE_FILE=""
 
 # Function to display help
 show_help() {
@@ -24,15 +29,30 @@ show_help() {
     echo "Usage: $0 [OPTIONS]"
     echo ""
     echo "Options:"
-    echo "  -k, --api-key <key>     OpenAI API key (or set OPENAI_API_KEY env var)"
-    echo "  -u, --base-url <url>    Custom API base URL (for OpenAI-compatible APIs)"
-    echo "  -m, --model <model>     Model to use (default: gpt-4o-mini)"
-    echo "  -d, --content-dir <dir> Content directory path (default: content/notes)"
-    echo "  -n, --dry-run          Show results without updating files"
-    echo "  -h, --help             Show this help message"
+    echo "  -k, --api-key <key>       OpenAI API key (or set OPENAI_API_KEY env var)"
+    echo "  -u, --base-url <url>      Custom API base URL (for OpenAI-compatible APIs)"
+    echo "  -m, --model <model>       Model to use (default: gpt-4o-mini)"
+    echo "  -d, --content-dir <dir>   Content directory path (default: content/notes)"
+    echo "  -c, --cache-file <file>   Cache file path (default: .categorization-cache.json)"
+    echo "  -n, --dry-run            Show results without updating files"
+    echo "  --clear-cache            Clear the processing cache before running"
+    echo "  --no-skip-processed      Process all files even if already processed"
+    echo "  --single-batch           Process only the first batch (for testing)"
+    echo "  --single-file <files>    Process only specific file(s) - comma-separated partial paths/names"
+    echo "  -h, --help               Show this help message"
+    echo ""
+    echo "Development Options:"
+    echo "  --single-batch           Process only one batch instead of all batches"
+    echo "  --single-file <files>    Process only files matching the given names/paths (comma-separated)"
+    echo "                          Examples: --single-file \"my-note.mdx\""
+    echo "                                   --single-file \"2024,tech-stack\""
     echo ""
     echo "Examples:"
     echo "  $0 --api-key your-key --dry-run"
+    echo "  $0 --clear-cache"
+    echo "  $0 --no-skip-processed"
+    echo "  $0 --single-batch --dry-run"
+    echo "  $0 --single-file \"my-note.mdx\" --dry-run"
     echo "  $0 --base-url https://api.deepinfra.com/v1/openai --model meta-llama/Meta-Llama-3.1-70B-Instruct"
     echo "  OPENAI_API_KEY=your-key $0"
     echo ""
@@ -57,9 +77,29 @@ while [[ $# -gt 0 ]]; do
             CONTENT_DIR="$2"
             shift 2
         ;;
+        -c|--cache-file)
+            CACHE_FILE="$2"
+            shift 2
+        ;;
         -n|--dry-run)
             DRY_RUN=true
             shift
+        ;;
+        --clear-cache)
+            CLEAR_CACHE=true
+            shift
+        ;;
+        --no-skip-processed)
+            SKIP_PROCESSED=false
+            shift
+        ;;
+        --single-batch)
+            SINGLE_BATCH=true
+            shift
+        ;;
+        --single-file)
+            SINGLE_FILE="$2"
+            shift 2
         ;;
         -h|--help)
             show_help
@@ -73,8 +113,8 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-# Check for API key
-if [[ -z "${API_KEY}" && -z "${OPENAI_API_KEY}" ]]; then
+# Check for API key (not required if only clearing cache)
+if [[ -z "${API_KEY}" && -z "${OPENAI_API_KEY}" && "${CLEAR_CACHE}" != "true" ]]; then
     echo -e "${RED}Error: API key is required. Use --api-key option or set OPENAI_API_KEY environment variable.${NC}"
     exit 1
 fi
@@ -85,9 +125,26 @@ FINAL_API_KEY="${API_KEY:-$OPENAI_API_KEY}"
 echo -e "${BLUE}🚀 Starting Note Categorization${NC}"
 echo -e "${YELLOW}📁 Content Directory: ${CONTENT_DIR}${NC}"
 echo -e "${YELLOW}🤖 Model: ${MODEL}${NC}"
+echo -e "${YELLOW}💾 Cache File: ${CACHE_FILE}${NC}"
 
 if [[ "${DRY_RUN}" == "true" ]]; then
     echo -e "${YELLOW}🔍 Dry Run Mode: No files will be modified${NC}"
+fi
+
+if [[ "${CLEAR_CACHE}" == "true" ]]; then
+    echo -e "${YELLOW}🗑️  Clear Cache: Will clear processing cache${NC}"
+fi
+
+if [[ "${SKIP_PROCESSED}" == "false" ]]; then
+    echo -e "${YELLOW}🔄 Skip Processed: Disabled - will process all files${NC}"
+fi
+
+if [[ "${SINGLE_BATCH}" == "true" ]]; then
+    echo -e "${YELLOW}🎯 Single Batch Mode: Will process only first batch${NC}"
+fi
+
+if [[ -n "${SINGLE_FILE}" ]]; then
+    echo -e "${YELLOW}📄 Single File Mode: Processing files matching '${SINGLE_FILE}'${NC}"
 fi
 
 if [[ -n "${BASE_URL}" ]]; then
@@ -106,7 +163,14 @@ else
 fi
 
 # Build the command
-CMD_ARGS=("--api-key" "$FINAL_API_KEY" "--content-dir" "$CONTENT_DIR" "--model" "$MODEL")
+CMD_ARGS=()
+
+# Add API key if available
+if [[ -n "${FINAL_API_KEY}" ]]; then
+    CMD_ARGS+=("--api-key" "$FINAL_API_KEY")
+fi
+
+CMD_ARGS+=("--content-dir" "$CONTENT_DIR" "--model" "$MODEL" "--cache-file" "$CACHE_FILE")
 
 if [[ -n "${BASE_URL}" ]]; then
     CMD_ARGS+=("--base-url" "$BASE_URL")
@@ -114,6 +178,22 @@ fi
 
 if [[ "${DRY_RUN}" == "true" ]]; then
     CMD_ARGS+=("--dry-run")
+fi
+
+if [[ "${CLEAR_CACHE}" == "true" ]]; then
+    CMD_ARGS+=("--clear-cache")
+fi
+
+if [[ "${SKIP_PROCESSED}" == "false" ]]; then
+    CMD_ARGS+=("--no-skip-processed")
+fi
+
+if [[ "${SINGLE_BATCH}" == "true" ]]; then
+    CMD_ARGS+=("--single-batch")
+fi
+
+if [[ -n "${SINGLE_FILE}" ]]; then
+    CMD_ARGS+=("--single-file" "$SINGLE_FILE")
 fi
 
 # Run the categorization script

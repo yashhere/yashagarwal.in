@@ -58,6 +58,8 @@ interface CategorizerConfig {
   excerptLength?: number
   cacheFile?: string
   skipProcessed?: boolean
+  singleBatch?: boolean // Process only one batch for testing
+  singleFile?: string // Process only specific file(s) - comma-separated paths
 }
 
 class NoteCategorizer {
@@ -68,6 +70,8 @@ class NoteCategorizer {
   private model: string
   private cacheFile: string
   private skipProcessed: boolean
+  private singleBatch: boolean
+  private singleFile?: string
   private processingCache: ProcessingCache
 
   constructor(config: CategorizerConfig) {
@@ -80,6 +84,8 @@ class NoteCategorizer {
       excerptLength = 800,
       cacheFile = ".categorization-cache.json",
       skipProcessed = true,
+      singleBatch = false,
+      singleFile,
     } = config
 
     this.client = new OpenAI({
@@ -93,6 +99,8 @@ class NoteCategorizer {
     this.model = model
     this.cacheFile = cacheFile
     this.skipProcessed = skipProcessed
+    this.singleBatch = singleBatch
+    this.singleFile = singleFile
     this.processingCache = { version: "1.0", processedFiles: [] }
   }
 
@@ -225,7 +233,35 @@ class NoteCategorizer {
     batches: string[][]
     skipped: string[]
   }> {
-    const mdxFiles = await glob(`${this.contentDir}/**/*.{md,mdx}`)
+    let mdxFiles = await glob(`${this.contentDir}/**/*.{md,mdx}`)
+
+    // Filter for single file(s) if specified
+    if (this.singleFile) {
+      const targetFiles = this.singleFile.split(",").map((f) => f.trim())
+      mdxFiles = mdxFiles.filter((filePath) => {
+        const relativePath = path.relative(this.contentDir, filePath)
+        const fileName = path.basename(filePath)
+        return targetFiles.some(
+          (target) =>
+            relativePath.includes(target) ||
+            fileName.includes(target) ||
+            filePath.includes(target)
+        )
+      })
+
+      if (mdxFiles.length === 0) {
+        console.log(`❌ No files found matching: ${this.singleFile}`)
+        return { batches: [], skipped: [] }
+      }
+
+      console.log(
+        `🎯 Single file mode: processing ${mdxFiles.length} matching files`
+      )
+      mdxFiles.forEach((file) =>
+        console.log(`   📄 ${path.relative(this.contentDir, file)}`)
+      )
+    }
+
     const batches: string[][] = []
     const skipped: string[] = []
     let currentBatch: string[] = []
@@ -244,12 +280,12 @@ class NoteCategorizer {
           continue
         }
 
-        // Check if already processed
+        // Check if already processed (skip this check in single file mode to allow re-processing)
         const title =
           frontmatter.title || path.basename(filePath, path.extname(filePath))
         const contentHash = this.generateContentHash(content, title)
 
-        if (this.isFileProcessed(filePath, contentHash)) {
+        if (!this.singleFile && this.isFileProcessed(filePath, contentHash)) {
           console.log(`✅ Already processed: ${path.basename(filePath)}`)
           skipped.push(filePath)
           continue
@@ -566,6 +602,12 @@ Return ONLY a JSON object with this structure:
         console.log(`⚠️  Batch ${i + 1} returned no results`)
       }
 
+      // Stop after first batch if single batch mode is enabled
+      if (this.singleBatch) {
+        console.log("🎯 Single batch mode: stopping after first batch")
+        break
+      }
+
       // Add small delay to respect rate limits
       if (i < batches.length - 1) {
         await new Promise((resolve) => setTimeout(resolve, 1000))
@@ -632,6 +674,8 @@ async function main() {
   const dryRun = hasFlag("--dry-run")
   const clearCache = hasFlag("--clear-cache")
   const skipProcessed = !hasFlag("--no-skip-processed")
+  const singleBatch = hasFlag("--single-batch")
+  const singleFile = getArgValue("--single-file")
   const help = hasFlag("--help") || hasFlag("-h")
 
   if (help) {
@@ -647,12 +691,22 @@ Options:
   --dry-run              Show results without updating files
   --clear-cache          Clear the processing cache before running
   --no-skip-processed    Process all files even if already processed
+  --single-batch         Process only the first batch (for testing)
+  --single-file <files>  Process only specific file(s) - comma-separated partial paths/names
   --help, -h             Show this help message
+
+Development Options:
+  --single-batch         Process only one batch instead of all batches
+  --single-file <files>  Process only files matching the given names/paths (comma-separated)
+                        Examples: --single-file "my-note.mdx"
+                                 --single-file "2024,tech-stack"
 
 Examples:
   npx tsx categorize-notes.ts --api-key your-key --dry-run
   npx tsx categorize-notes.ts --clear-cache
   npx tsx categorize-notes.ts --no-skip-processed
+  npx tsx categorize-notes.ts --single-batch --dry-run
+  npx tsx categorize-notes.ts --single-file "my-note.mdx" --dry-run
   OPENAI_API_KEY=your-key npx tsx categorize-notes.ts
 `)
     process.exit(0)
@@ -672,6 +726,8 @@ Examples:
     contentDir,
     cacheFile,
     skipProcessed,
+    singleBatch,
+    singleFile,
   }
 
   const categorizer = new NoteCategorizer(config)
