@@ -1,26 +1,23 @@
 ---
 title: Securing Traefik Docker Proxy
-createdOn: 2025-05-17T03:35:47.000Z
+createdOn: "2025-05-17T09:05:47+05:30"
 status: published
 series:
   order: 3
   title: Homelab Tales
 tags:
-  - Homelab
-  - Traefik
-  - Reverse Proxy
-  - Security
-  - UFW
-  - Fail2Ban
-  - PSAD
   - Docker
-  - iptables
+  - Homelab
   - Linux
   - Networking
-  - Firewall
-description: "Use UFW, Fail2Ban and PSAD to secure Traefik reverse proxy"
+  - Security
+description: >-
+  Learn to secure your Traefik Docker reverse proxy with a layered defense using
+  UFW, Fail2Ban, and PSAD for robust server protection.
 featured: true
-updatedOn: 2025-05-17T10:57:42.000Z
+updatedOn: "2025-05-29T16:17:34+05:30"
+category: Technology
+_categorized: 5fe11ff7fb29c59e3a711fe48558dcb8
 ---
 
 When exposing a reverse proxy like [Traefik](https://traefik.io/) to the public internet, security should be a top priority. I recently deployed Traefik on a public-facing Linux server to route traffic to Docker containers - and I wanted a robust, layered security model to defend against port scans, brute-force attacks, and misbehaving clients.
