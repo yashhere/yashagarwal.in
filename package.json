@@ -24,9 +24,7 @@
     "postinstall": "bunx playwright install",
     "clean": "rm -rf .next out dist",
     "dev:clean": "bun run clean && bun run dev",
-    "categorize": "tsx scripts/categorize-notes.ts",
-    "categorize:dry": "tsx scripts/categorize-notes.ts --dry-run",
-    "update-frontmatter": "tsx scripts/update-frontmatter.ts"
+    "categorize": "bun scripts/categorize-notes.ts --content-dir content/notes && git add content/notes"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10",
