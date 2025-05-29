@@ -1,5 +1,5 @@
 {
-  "**/*.{tsx, ts, js, jsx}": ["eslint --fix", "prettier --write"],
-  "**/*.{md,mdx}": ["node ./scripts/update-frontmatter.ts", "prettier --write"],
+  "**/*.{ts,tsx,js,jsx}": ["next lint --fix --file", "prettier --write"],
+  "**/*.{md,mdx,json}": ["prettier --write"],
   "**/*.css": ["prettier --write"]
 }
