@@ -8,7 +8,7 @@ import OpenAI from "openai"
 
 interface NoteFrontmatter {
   title?: string
-  description?: string // Add description field
+  description?: string
   category?: string
   categories?: string | string[]
   tags?: string | string[]
@@ -25,14 +25,14 @@ interface NoteContent {
   excerpt: string
   currentCategory: string
   currentTags: string[]
-  currentDescription?: string // Add current description
+  currentDescription?: string
 }
 
 interface CategorizationResult {
   file: string
   category: string
   tags: string[]
-  description: string // Add description to result
+  description: string
 }
 
 interface BatchResult {
@@ -44,7 +44,7 @@ interface ProcessedFile {
   contentHash: string
   category: string
   tags: string[]
-  description: string // Add description to cache
+  description: string
   timestamp: string
 }
 
@@ -84,8 +84,8 @@ class NoteCategorizer {
       baseURL,
       model = "gpt-4o-mini",
       contentDir = "content/notes",
-      maxTokensPerBatch = 12000,
-      excerptLength = 800,
+      maxTokensPerBatch = 20000,
+      excerptLength = 4000,
       cacheFile = ".categorization-cache.json",
       skipProcessed = true,
       singleBatch = false,
@@ -355,7 +355,7 @@ class NoteCategorizer {
           excerpt,
           currentCategory: frontmatter.category || "",
           currentTags,
-          currentDescription: frontmatter.description, // Add current description
+          currentDescription: frontmatter.description,
         })
       } catch (error) {
         console.error(`Error processing ${filePath}:`, error)
@@ -367,7 +367,7 @@ class NoteCategorizer {
 
 1. ONE category per note (choose from existing categories when appropriate, create new ones sparingly)
 2. 2-5 relevant tags per note (fewer is better - focus on quality over quantity)
-3. A concise, engaging description (1-2 sentences, 120-160 characters ideal for SEO)
+3. A concise, engaging description (1-2 sentences, 80-120 characters ideal for SEO)
 
 EXISTING CATEGORIES (${existingCategories.length}): ${existingCategories.join(", ")}
 EXISTING TAGS (showing first 50): ${existingTags.slice(0, 50).join(", ")}
