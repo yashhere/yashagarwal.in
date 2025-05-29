@@ -238,7 +238,7 @@ const notes = defineCollection({
       headings,
       readingTime,
       slug: `${document._meta.path}`,
-      category: document.tags![0] || "Uncategorized",
+      category: document.category || document.tags![0] || "Uncategorized",
       _raw: {
         sourceFilePath: document._meta.filePath,
         sourceFileName: document._meta.fileName,
