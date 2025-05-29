@@ -406,6 +406,20 @@ Return ONLY a JSON object with this structure:
       parsed.data.category = category
       parsed.data.tags = tags.sort()
 
+      // Convert createdOn from UTC to IST if it's in UTC format
+      if (parsed.data.createdOn && typeof parsed.data.createdOn === "string") {
+        // Check if the date is in UTC format (ends with 'Z' or '.000Z')
+        if (parsed.data.createdOn.endsWith("Z")) {
+          const createdDate = new Date(parsed.data.createdOn)
+          if (!isNaN(createdDate.getTime())) {
+            parsed.data.createdOn = this.convertDateToIST(createdDate)
+            console.log(
+              `   📅 Converted createdOn to IST for ${path.basename(filePath)}`
+            )
+          }
+        }
+      }
+
       // Update updatedOn timestamp
       parsed.data.updatedOn = this.convertDateToIST(new Date())
 
