@@ -1,5 +1,8 @@
 {
   "**/*.{ts,tsx,js,jsx}": ["next lint --fix --file", "prettier --write"],
   "**/*.{md,mdx,json}": ["prettier --write"],
-  "**/*.css": ["prettier --write"]
+  "**/*.css": ["prettier --write"],
+  "content/notes/**/*.{md,mdx}": [
+    "node -e \"process.env.OPENAI_API_KEY ? require('child_process').execSync('tsx scripts/categorize-notes.ts --content-dir content/notes', {stdio: 'inherit'}) : console.log('⚠️ OPENAI_API_KEY not set, skipping categorization')\""
+  ]
 }

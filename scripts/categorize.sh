@@ -15,7 +15,7 @@ NC='\033[0m' # No Color
 # Default values
 DRY_RUN=false
 CONTENT_DIR="content/notes"
-MODEL="gpt-4o-mini"
+MODEL="gemini-2.5-flash-preview-05-20"
 CACHE_FILE=".categorization-cache.json"
 CLEAR_CACHE=false
 SKIP_PROCESSED=true

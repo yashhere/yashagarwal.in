@@ -81,8 +81,8 @@ class NoteCategorizer {
   constructor(config: CategorizerConfig) {
     const {
       apiKey,
-      baseURL,
-      model = "gpt-4o-mini",
+      baseURL = "https://generativelanguage.googleapis.com/v1beta/openai/",
+      model = "gemini-2.5-flash-preview-05-20",
       contentDir = "content/notes",
       maxTokensPerBatch = 20000,
       excerptLength = 4000,
@@ -96,6 +96,14 @@ class NoteCategorizer {
       apiKey,
       ...(baseURL && { baseURL }),
     })
+
+    console.log(
+      baseURL
+        ? `Using custom API base URL: ${baseURL}`
+        : "Using default OpenAI API"
+    )
+
+    console.log(`Using model: ${model}`)
 
     this.contentDir = contentDir
     this.maxTokensPerBatch = maxTokensPerBatch
@@ -740,7 +748,7 @@ async function main() {
 
   const apiKey = getArgValue("--api-key") || process.env.OPENAI_API_KEY
   const baseURL = getArgValue("--base-url")
-  const model = getArgValue("--model") || "gpt-4o-mini"
+  const model = getArgValue("--model")
   const contentDir = getArgValue("--content-dir") || "content/notes"
   const cacheFile = getArgValue("--cache-file") || ".categorization-cache.json"
   const dryRun = hasFlag("--dry-run")
@@ -757,7 +765,7 @@ Usage: npx tsx categorize-notes.ts [options]
 Options:
   --api-key <key>        OpenAI API key (or set OPENAI_API_KEY env var)
   --base-url <url>       Custom API base URL (for OpenAI-compatible APIs)
-  --model <model>        Model to use (default: gpt-4o-mini)
+  --model <model>        Model to use
   --content-dir <dir>    Content directory path (default: content/notes)
   --cache-file <file>    Cache file path (default: .categorization-cache.json)
   --dry-run              Show results without updating files
