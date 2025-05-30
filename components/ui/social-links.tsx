@@ -36,7 +36,7 @@ export function SocialLinks() {
           external={true}
           showIcon={false}
           variant="nav"
-          className="text-muted-foreground hover:text-foreground hover:bg-muted/50 rounded-md py-2 pr-2 transition-all duration-200"
+          className="text-muted-foreground hover:text-foreground hover:bg-muted/50 -ml-2 rounded-md p-2 transition-all duration-200"
           aria-label={social.name}
         >
           <social.icon size={24} weight="regular" />

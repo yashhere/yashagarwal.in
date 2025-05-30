@@ -6,6 +6,7 @@ import { Analytics } from "@/components/interactive/analytics"
 import { Footer } from "@/components/layout/footer"
 import { Navigation } from "@/components/layout/navigation"
 import { ThemeProvider } from "@/components/layout/theme-provider"
+import { AnimatedGridBackground } from "@/components/ui/animated-grid-background"
 import { TailwindIndicator } from "@/components/ui/tailwind-indicator"
 import { cn } from "@/lib/utils"
 
@@ -61,6 +62,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           monoFont.variable
         )}
       >
+        <AnimatedGridBackground />
         <ThemeProvider
           attribute="class"
           enableColorScheme={false}

@@ -171,6 +171,7 @@ module.exports = {
         shimmer: "shimmer 2s ease-in-out infinite",
         blink: "blink 1s ease-in-out infinite",
         wobble: "wobble 1.2s ease-in-out",
+        "grid-flow": "grid-flow 18s ease-in-out infinite",
       },
       keyframes: {
         spinner: {
@@ -198,6 +199,28 @@ module.exports = {
           "90%": { transform: "rotate(4deg)" },
           "95%": { transform: "rotate(-2deg)" },
           "100%": { transform: "rotate(0deg)" },
+        },
+        "grid-flow": {
+          "0%": {
+            backgroundPosition: "1rem 1rem",
+            transform: "translate(0, 0)",
+          },
+          "25%": {
+            backgroundPosition: "3rem 0rem",
+            transform: "translate(0.5rem, -0.5rem)",
+          },
+          "50%": {
+            backgroundPosition: "0rem 3rem",
+            transform: "translate(-0.25rem, 0.5rem)",
+          },
+          "75%": {
+            backgroundPosition: "2rem 4rem",
+            transform: "translate(0.25rem, 0.75rem)",
+          },
+          "100%": {
+            backgroundPosition: "1rem 1rem",
+            transform: "translate(0, 0)",
+          },
         },
       },
       fontSize: {
