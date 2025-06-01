@@ -36,7 +36,7 @@ export function LastVisitorClient({
     setMounted(true)
 
     const currentLocation = currentUserLocation
-    const SESSION_TTL = 10 * 60 * 1000 // 10 minutes in milliseconds
+    const SESSION_TTL = 1 * 60 * 1000 // 1 minute in milliseconds
     const now = Date.now()
 
     // Get the persisted "last visitor" location for this session
