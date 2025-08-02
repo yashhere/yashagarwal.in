@@ -39,3 +39,6 @@ next-env.d.ts
 
 # content-collections
 .content-collections
+
+# cache
+*cache*
