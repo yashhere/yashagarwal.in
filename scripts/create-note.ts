@@ -164,8 +164,7 @@ class NoteCreator {
 
   private async searchableSelect(
     prompt: string,
-    options: string[],
-    allowNew: boolean = true
+    options: string[]
   ): Promise<string> {
     if (options.length === 0) {
       return await this.question(`${prompt}: `)
@@ -296,11 +295,7 @@ class NoteCreator {
 
       // Category with search
       console.log("")
-      const category = await this.searchableSelect(
-        "📂 Category",
-        categories,
-        true
-      )
+      const category = await this.searchableSelect("📂 Category", categories)
 
       // Tags with multi-select
       console.log("")
