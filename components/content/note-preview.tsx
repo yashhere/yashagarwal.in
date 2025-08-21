@@ -21,11 +21,6 @@ export const NotePreview = ({
           <span className="text-foreground mb-1 font-sans text-base">
             {note.note.title}
           </span>
-          {homePage && note.note.description && (
-            <span className="text-foreground/70 mb-1 text-sm">
-              {note.note.description}
-            </span>
-          )}
         </div>
         {!homePage && (
           <>
