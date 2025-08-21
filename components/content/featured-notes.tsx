@@ -29,13 +29,13 @@ export async function FeaturedNotes({ count }: { count: number }) {
   // Sort them by update date
   notesFiltered.sort((a, b) => b.note.updatedOn - a.note.updatedOn)
   return (
-    <div className="flex flex-col justify-start gap-4 md:gap-12">
+    <div className="flex flex-col justify-start gap-2 md:gap-8">
       <div className="w-full">
         <NoteList homePage={true} notes={notesFiltered.slice(0, count)} />
       </div>
       <Link
         href="/notes"
-        className="group text-foreground/80 hover:text-primary mt-2 inline-flex items-center gap-2 text-base font-medium transition-colors"
+        className="group text-foreground/80 hover:text-primary mt-2 inline-flex items-center gap-1 text-base font-medium transition-colors"
         variant="nav"
       >
         <span>View all notes</span>

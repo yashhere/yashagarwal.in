@@ -1,5 +1,3 @@
-import Image from "next/image"
-
 import { FeaturedNotes } from "@/components/content/featured-notes"
 import { Heading } from "@/components/ui/heading"
 import Link from "@/components/ui/link"
@@ -10,48 +8,69 @@ import { siteConfig } from "@/config/site"
 export default function Page() {
   return (
     <>
-      <div className="flex flex-row items-center gap-4">
-        <div className="group relative h-14 w-14">
-          <Image
-            alt="Logo"
-            src="/images/yash/at-beach.jpeg"
-            className="h-full w-full rounded-full object-cover"
-            title="Yash's photo"
-            placeholder="blur"
-            width={96}
-            height={96}
-            blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI0MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHN0cm9rZS13aWR0aD0iOCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtZGFzaGFycmF5PSI2MyIgc3Ryb2tlLWRhc2hvZmZzZXQ9IjYzIj4KICAgIDxhbmltYXRlVHJhbnNmb3JtIGF0dHJpYnV0ZU5hbWU9InRyYW5zZm9ybSIgdHlwZT0icm90YXRlIiBmcm9tPSIwIDUwIDUwIiB0bz0iMzYwIDUwIDUwIiBkdXI9IjEuNXMiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIi8+CiAgPC9jaXJjbGU+Cjwvc3ZnPgo="
-            loading="eager"
-            priority
-          />
-          <div className="bg-background group-hover:animate-wobble absolute -right-2 -bottom-2 origin-center cursor-pointer rounded-full px-1 py-0.5 text-sm transition-transform">
-            👋🏽
-          </div>
-        </div>
-        <div className="flex flex-col">
-          <Heading level="h3" className="text-foreground">
-            Yash Agarwal
+      <div className="max-w-2xl">
+        <div className="mb-8">
+          <Heading
+            level="h2"
+            className="text-foreground text-2xl font-semibold"
+          >
+            Hey, I&apos;m Yash
           </Heading>
-          <p className="mt-0">Engineer / Creator / Explorer</p>
+          <p className="text-foreground/60 mt-1 text-base italic">
+            Developer / Creator / Explorer
+          </p>
+        </div>
+
+        <div className="text-foreground/90 space-y-6 text-base leading-relaxed">
+          <p>
+            This is my home on the web. I write code at{" "}
+            <Link
+              href="https://netskope.com"
+              target="_blank"
+              variant="text"
+              external={false}
+            >
+              Netskope
+            </Link>{" "}
+            for a living, building CASB security products for SaaS APIs that
+            protect businesses&apos; data at rest.
+          </p>
+          <p>
+            Outside of software I like to tinker with homelab setups, explore
+            cybersecurity, and document my experiments. You can find me on{" "}
+            <Link
+              href="https://x.com/yash__here"
+              target="_blank"
+              variant="text"
+              external={false}
+            >
+              X
+            </Link>{" "}
+            or drop me{" "}
+            <Link
+              href="mailto:yashagarwaljpr+blog@gmail.com"
+              target="_blank"
+              variant="text"
+              external={false}
+            >
+              an email{" "}
+            </Link>
+            .
+          </p>
+
+          <p>
+            Now a days, I write primarily about homelab experiments, security,
+            and backend development.
+          </p>
         </div>
       </div>
 
-      <div className="text-foreground mt-12 leading-relaxed">
-        <p className="text-base leading-relaxed">
-          Software Engineer at{" "}
-          <Link href="https://netskope.com" target="_blank" variant="text">
-            Netskope
-          </Link>{" "}
-          working on API security, passionate about backend development and
-          cybersecurity.
-        </p>
-      </div>
-
-      <div className="mt-12">
+      <div className="mt-8">
         <SocialLinks />
       </div>
 
-      <div className="mt-16">
+      <div className="relative mt-16">
+        <div className="via-border absolute -top-10 left-1/2 h-px w-48 -translate-x-1/2 transform bg-gradient-to-r from-transparent to-transparent"></div>
         <Section title="Popular Writing">
           <FeaturedNotes count={siteConfig.featuredNotes} />
         </Section>

@@ -9,7 +9,7 @@ export const NoteList = ({
   homePage?: boolean
 }) => {
   return (
-    <ul className="-mx-4 space-y-2">
+    <ul className="-mx-4">
       {notes?.map((note) => {
         return (
           <li key={note.note.slug}>
