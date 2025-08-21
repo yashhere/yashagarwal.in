@@ -14,7 +14,7 @@ export const metadata: Metadata = generatePageMetadata({
 export default function Colophon() {
   return (
     <>
-      <Section data={null} title="colophon" className="leading-relaxed">
+      <Section data={null} title="Colophon" className="leading-relaxed">
         <Section level="h3" title="How I built this site">
           <p>
             I designed and built this website myself. Being a backend developer,

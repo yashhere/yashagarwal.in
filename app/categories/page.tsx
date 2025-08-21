@@ -20,7 +20,7 @@ export default async function Page() {
 
   return (
     <>
-      <Section data={formattedCategoryCounts} title="categories">
+      <Section data={formattedCategoryCounts} title="Categories">
         <CategoryBrowser
           categoryCounts={formattedCategoryCounts}
           totalCategorizedPosts={totalCategorizedPosts}
