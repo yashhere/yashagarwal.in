@@ -71,7 +71,7 @@ export const Navigation = () => {
   let highlightedPath = isFirstLevelRoute ? pathname : parentPath
 
   return (
-    <aside className="my-8 px-4 md:px-0">
+    <aside className="my-8">
       <div className="lg:sticky lg:top-20">
         <nav
           className="fade relative flex scroll-pr-6 flex-row items-center justify-between px-0 pb-0 md:relative md:overflow-auto"
@@ -89,9 +89,9 @@ export const Navigation = () => {
                       href={path}
                       variant="nav"
                       className={cn(
-                        "hover:text-foreground flex align-middle text-base leading-relaxed lowercase transition-all",
+                        "hover:text-foreground flex align-middle text-base leading-relaxed font-semibold uppercase transition-all",
                         {
-                          "text-foreground/70": !isActive,
+                          "text-foreground/70 font-normal": !isActive,
                         }
                       )}
                     >

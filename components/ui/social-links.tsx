@@ -5,6 +5,7 @@ import {
   XLogoIcon,
 } from "@phosphor-icons/react/dist/ssr"
 
+import { cn } from "@/lib/utils"
 import Link from "./link"
 
 const socialLinks = [
@@ -36,7 +37,10 @@ export function SocialLinks() {
           external={true}
           showIcon={false}
           variant="nav"
-          className="text-muted-foreground hover:text-foreground hover:bg-muted/50 rounded-md py-2 pr-2 transition-all duration-200"
+          className={cn(
+            "text-muted-foreground hover:text-foreground hover:bg-muted/50 rounded-md p-2 transition-all duration-200",
+            socialLinks[0].name === social.name ? "-ml-2" : ""
+          )}
           aria-label={social.name}
         >
           <social.icon size={24} weight="regular" />

@@ -14,11 +14,11 @@ export const NotePreview = ({
     <div className="flex">
       <Link
         href={`/notes/${note.note.slug}`}
-        className="hover:bg-muted flex w-full flex-col items-start gap-0 rounded-md px-4 py-1 transition-colors select-none md:flex-row md:items-center md:gap-2"
+        className="hover:bg-muted/50 flex w-full flex-col items-start gap-0 rounded-lg px-4 py-2 transition-all duration-200 select-none md:flex-row md:items-center md:gap-2"
         variant="nav"
       >
         <div className="flex flex-col">
-          <span className="text-foreground mb-1 font-sans text-base">
+          <span className="text-foreground hover:text-primary font-sans text-base transition-colors">
             {note.note.title}
           </span>
         </div>
