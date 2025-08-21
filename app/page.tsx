@@ -37,30 +37,25 @@ export default function Page() {
       </div>
 
       <div className="text-foreground mt-12 leading-relaxed">
-        <p className="mb-4 text-base leading-relaxed">
-          I&apos;m a Software Engineer with a passion for backend development
-          and cybersecurity. Currently working as a Sr. Software Engineer at{" "}
+        <p className="text-base leading-relaxed">
+          Software Engineer at{" "}
           <Link href="https://netskope.com" target="_blank" variant="text">
             Netskope
           </Link>{" "}
-          on the CASB API security product, with expertise in Python, Golang,
-          and C++.
-        </p>
-        <p className="text-base leading-relaxed">
-          This domain is my little digital nest where I write about my
-          experiments with tech, homelab experiments, and life adventures. What
-          sets me apart is my relentless commitment to continuous learning and
-          turning challenges into victories.
+          working on API security, passionate about backend development and
+          cybersecurity.
         </p>
       </div>
 
-      <div className="mt-8">
+      <div className="mt-12">
         <SocialLinks />
       </div>
 
-      <Section title="Popular Writing">
-        <FeaturedNotes count={siteConfig.featuredNotes} />
-      </Section>
+      <div className="mt-16">
+        <Section title="Popular Writing">
+          <FeaturedNotes count={siteConfig.featuredNotes} />
+        </Section>
+      </div>
     </>
   )
 }

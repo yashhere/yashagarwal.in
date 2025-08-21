@@ -17,5 +17,5 @@ export const siteConfig: SiteConfig = {
     darkTheme: "dark",
   },
   popularNotes: 3,
-  featuredNotes: 5,
+  featuredNotes: 3,
 }

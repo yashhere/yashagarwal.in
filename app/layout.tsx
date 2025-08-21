@@ -13,7 +13,6 @@ import "@/styles/globals.css"
 
 import { Suspense } from "react"
 
-import { AnimatedLayout } from "@/components/layout/animated-layout"
 import { Loading } from "@/components/ui/loading"
 import { Toaster } from "@/components/ui/toast"
 import { defaultMetadata, defaultViewport } from "@/lib/seo/default"
@@ -71,9 +70,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <Toaster closeButton className="pointer-events-auto" />
           <main className="w-full max-w-2xl flex-1 px-4 pb-18 md:px-0">
             <Navigation />
-            <Suspense fallback={<Loading />}>
-              <AnimatedLayout>{children}</AnimatedLayout>
-            </Suspense>
+            <Suspense fallback={<Loading />}>{children}</Suspense>
           </main>
           <Footer />
           <SpeedInsights />
