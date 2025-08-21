@@ -91,7 +91,7 @@ const WorkExperience: FC<WorkExperienceProps> = ({
 const Page: FC = () => {
   return (
     <>
-      <Section data={null} title="work">
+      <Section data={null} title="Work">
         <section className="text-foreground mb-8 leading-relaxed">
           <p>
             I am an enthusiastic software developer with a knack for backend

@@ -16,7 +16,7 @@ export default async function Page() {
   const notes = await getPreviewNotes()
 
   return (
-    <Section data={notes} title="notes">
+    <Section data={notes} title="Notes">
       <NotesList notes={notes} />
     </Section>
   )

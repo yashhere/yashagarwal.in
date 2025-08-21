@@ -19,7 +19,7 @@ export default function GlobalError({
   return (
     <html>
       <body className="bg-background text-foreground flex min-h-dvh flex-col items-center justify-center px-4 font-sans antialiased">
-        <div className="w-full max-w-2xl">
+        <div className="w-full max-w-xl">
           <div className="flex min-h-[60vh] flex-col justify-center">
             <div className="space-y-6">
               <div className="space-y-3">

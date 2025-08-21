@@ -20,7 +20,7 @@ export default async function Page() {
 
   return (
     <>
-      <Section data={formattedTagCounts} title="tags">
+      <Section data={formattedTagCounts} title="Tags">
         <TagBrowser
           tagCounts={formattedTagCounts}
           totalTaggedPosts={totalTaggedPosts}
