@@ -16,14 +16,12 @@ export default function Page() {
           >
             Yash Agarwal
           </Heading>
-          <p className="text-foreground/60 mt-1 text-base italic">
-            Developer / Creator / Explorer
-          </p>
+          <p className="mt-1 text-base italic">Engineer / Builder / Learner </p>
         </div>
 
         <div className="text-foreground/90 space-y-6 text-base leading-relaxed">
           <p>
-            This is my home on the web. I write code at{" "}
+            Welcome to my corner of the internet. I write code at{" "}
             <Link
               href="https://netskope.com"
               target="_blank"
@@ -36,8 +34,9 @@ export default function Page() {
             protect businesses&apos; data at rest.
           </p>
           <p>
-            Outside of software I like to tinker with homelab setups, explore
-            cybersecurity, and document my experiments. You can find me on{" "}
+            Outside of work, I enjoy tinkering with my homelab, diving into
+            cybersecurity and LLMs, and documenting my experiments. You can
+            connect with me on{" "}
             <Link
               href="https://x.com/yash__here"
               target="_blank"
