@@ -14,7 +14,7 @@ export default function Page() {
             level="h2"
             className="text-foreground text-2xl font-semibold"
           >
-            Hey, I&apos;m Yash
+            Yash Agarwal
           </Heading>
           <p className="text-foreground/60 mt-1 text-base italic">
             Developer / Creator / Explorer

@@ -34,7 +34,7 @@
 @layer base {
   :root {
     /* Using Tailwind color names directly */
-    --background: theme("colors.white");
+    --background: theme("colors.slate.50");
     --foreground: theme("colors.slate.950");
 
     --card: theme("colors.white");
@@ -83,10 +83,10 @@
 
   .dark {
     /* Dark mode theme colors */
-    --background: theme("colors.slate.950");
+    --background: theme("colors.slate.900");
     --foreground: theme("colors.slate.50");
 
-    --card: theme("colors.slate.900");
+    --card: theme("colors.slate.800");
     --card-foreground: theme("colors.slate.50");
 
     --popover: theme("colors.slate.900");
@@ -112,7 +112,7 @@
     --ring: theme("colors.slate.300");
 
     /* Code syntax highlighting */
-    --syntax-bg: theme("colors.slate.950");
+    --syntax-bg: theme("colors.slate.800");
     --syntax-highlight: theme("colors.slate.800");
     --syntax-txt: theme("colors.slate.50");
     --syntax-comment: theme("colors.slate.400");
@@ -152,14 +152,14 @@
   /* Fix for https://github.com/disqus/disqus-react/issues/153 */
   :root,
   .comments {
-    background-color: #ffffff !important; /* white */
+    background-color: #f8fafc !important; /* slate-50 */
     color: #0f172a !important; /* slate-950 */
   }
 
   /* Dark mode comments - using hex values */
   :root,
   .dark .comments {
-    background-color: #020617 !important; /* slate-950 */
+    background-color: #0f172a !important; /* slate-900 */
     color: #f8fafc !important; /* slate-50 */
   }
 
