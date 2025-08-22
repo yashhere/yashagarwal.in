@@ -103,7 +103,7 @@ const typographyStyles = {
         borderRadius: "0.375rem",
         overflowX: "auto",
         fontSize: "0.9375rem",
-        padding: "1rem",
+        padding: "0.75rem",
       },
       code: {
         color: "var(--syntax-string)",
@@ -128,13 +128,13 @@ const typographyStyles = {
         // Line numbers and highlighting
         pre: {
           fontSize: "0.9375rem",
-          padding: "1rem 0",
+          padding: "0.75rem 0",
         },
         "[data-line]": {
           borderLeftWidth: "2px",
           borderColor: "transparent",
-          paddingLeft: "1.25rem",
-          paddingRight: "1.25rem",
+          paddingLeft: "0.75rem",
+          paddingRight: "0.75rem",
         },
         "[data-highlighted-line]": {
           backgroundColor: "var(--syntax-highlight)",

@@ -96,7 +96,6 @@ span[data-rehype-pretty-code-figure] code {
   word-break: break-word;
   overflow-wrap: break-word;
   border: none;
-  line-height: 1.7;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
 }
@@ -158,33 +157,29 @@ figure[data-rehype-pretty-code-figure] pre {
 }
 
 figure[data-rehype-pretty-code-figure] code {
-  @apply grid w-full text-sm;
+  @apply grid w-full py-2;
   counter-reset: line;
   box-decoration-break: clone;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
   font-family: var(--font-mono);
-  font-size: 0.9rem;
-  line-height: 1.6;
+  font-size: 0.85rem;
 }
 
 figure[data-rehype-pretty-code-figure] code [data-line] {
-  @apply border-l-2 border-l-transparent px-5;
-  padding: 0.15rem 1.25rem;
+  @apply border-l-2 border-l-transparent px-2;
 }
 
 /* Responsive adjustments for smaller screens */
 @media (max-width: 640px) {
   figure[data-rehype-pretty-code-figure] pre {
-    font-size: 0.875rem;
+    font-size: 0.825rem;
   }
 
   figure[data-rehype-pretty-code-figure] code {
-    font-size: 0.875rem;
+    font-size: 0.825rem;
   }
 
   figure[data-rehype-pretty-code-figure] code [data-line] {
-    @apply px-4;
+    @apply px-2;
   }
 
   /* Smaller line numbers on mobile */
