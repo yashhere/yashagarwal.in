@@ -38,7 +38,7 @@ export function SocialLinks() {
           showIcon={false}
           variant="nav"
           className={cn(
-            "text-muted-foreground hover:text-foreground hover:bg-muted/50 rounded-md p-2 transition-all duration-200",
+            "text-muted-foreground hover:text-accent-foreground hover:bg-accent rounded-md p-2 transition-all duration-200",
             socialLinks[0].name === social.name ? "-ml-2" : ""
           )}
           aria-label={social.name}

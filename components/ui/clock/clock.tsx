@@ -47,7 +47,7 @@ export const AnalogClock: FC = () => {
 
                 {/* Seconds hand */}
                 <span
-                  className="bg-foreground absolute bottom-[0.66rem] left-[0.71rem] z-30 h-[0.55rem] w-[0.3px] origin-bottom rounded-full"
+                  className="bg-primary absolute bottom-[0.66rem] left-[0.71rem] z-30 h-[0.55rem] w-[0.3px] origin-bottom rounded-full"
                   style={timing.updateSeconds}
                 ></span>
 
