@@ -5,6 +5,7 @@ import { Suspense } from "react"
 import { siteConfig } from "@/config/site"
 import { DarkToggle, DarkToggleSkeleton } from "../interactive/mode-toggle"
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
+import Link from "../ui/link"
 import { NavMenu } from "./nav-menu"
 
 export const Navigation = () => {
@@ -16,7 +17,7 @@ export const Navigation = () => {
           id="nav"
         >
           {/* Left: Avatar */}
-          <div className="cursor-default select-none">
+          <Link href="/" className="cursor-pointer select-none">
             <Avatar className="group size-10 overflow-hidden">
               <AvatarImage
                 src="/images/yash/yash.jpg"
@@ -32,7 +33,7 @@ export const Navigation = () => {
                   .join("")}
               </AvatarFallback>
             </Avatar>
-          </div>
+          </Link>
 
           {/* Right: Nav Menu + Theme Toggle */}
           <div className="flex flex-row items-center gap-2">
