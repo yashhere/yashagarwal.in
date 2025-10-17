@@ -63,7 +63,7 @@ export const NavMenu = () => {
         <DropdownMenuTrigger asChild>
           <button
             className={cn(
-              "hover:bg-accent hover:text-accent-foreground flex items-center gap-1 rounded-md px-3 py-1.5 text-base font-medium transition-colors outline-none",
+              "hover:bg-accent hover:text-accent-foreground flex items-center gap-1 rounded-md border-0 px-3 py-1.5 text-base font-medium ring-0 transition-colors outline-none focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0",
               {
                 "text-foreground": moreNavItems.some((item) =>
                   isActive(item.href)
@@ -81,7 +81,7 @@ export const NavMenu = () => {
         </DropdownMenuTrigger>
         <DropdownMenuContent
           align="end"
-          className="bg-background/80 border-border/50 min-w-[160px] backdrop-blur-md"
+          className="bg-background/80 border-border/50 min-w-[160px] border-0 ring-0 backdrop-blur-md focus-visible:ring-0 focus-visible:ring-offset-0"
         >
           {moreNavItems.map((item) => (
             <DropdownMenuItem key={item.href} asChild>
