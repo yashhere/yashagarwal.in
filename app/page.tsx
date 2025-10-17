@@ -8,7 +8,7 @@ import { siteConfig } from "@/config/site"
 export default function Page() {
   return (
     <>
-      <div className="mt-12 max-w-xl">
+      <div className="mt-12 max-w-full">
         <div className="mb-8">
           <Heading
             level="h2"

@@ -68,7 +68,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           enableSystem
         >
           <Toaster closeButton className="pointer-events-auto" />
-          <main className="w-full max-w-xl flex-1 px-4 pb-18 md:px-0">
+          <main className="w-full max-w-3xl flex-1 px-4 pb-18 md:px-0">
             <Navigation />
             <Suspense fallback={<Loading />}>{children}</Suspense>
           </main>

@@ -1,122 +1,44 @@
 "use client"
 
 import { Suspense } from "react"
-import { usePathname } from "next/navigation"
-import { ArrowUUpLeftIcon } from "@phosphor-icons/react/dist/ssr"
 
-import { cn } from "@/lib/utils"
+import { siteConfig } from "@/config/site"
 import { DarkToggle, DarkToggleSkeleton } from "../interactive/mode-toggle"
-import { AnalogClock, ClockSkeleton } from "../ui/clock/clock"
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
 import Link from "../ui/link"
-
-type NavItem = {
-  name: string
-  show: boolean
-}
-
-type NavItems = {
-  [path: string]: NavItem
-}
-
-const navItems: NavItems = {
-  "/": {
-    name: "Home",
-    show: true,
-  },
-  "/notes": {
-    name: "Notes",
-    show: true,
-  },
-  "/work": {
-    name: "Work",
-    show: true,
-  },
-  "/tags": {
-    name: "Tags",
-    show: false,
-  },
-  "/categories": {
-    name: "Categories",
-    show: false,
-  },
-}
+import { NavMenu } from "./nav-menu"
 
 export const Navigation = () => {
-  let pathname = usePathname() || "/"
-
-  // Check if the current path is a first-level route (either root or direct child)
-  const pathSegments = pathname.split("/").filter(Boolean)
-  const isFirstLevelRoute = pathSegments.length <= 1
-
-  // Compute parent path logically
-  const computeParentPath = () => {
-    // If we're at root, parent is still root
-    if (pathname === "/") return "/"
-
-    // If we're at a first-level route like /notes, parent is /
-    if (pathSegments.length === 1) return "/"
-
-    // For nested routes like /notes/{slug}, parent is /notes
-    if (pathSegments.length > 1) {
-      return `/${pathSegments[0]}`
-    }
-
-    return "/"
-  }
-
-  const parentPath = computeParentPath()
-  const parentName = navItems[parentPath]?.name || "Home"
-
-  // For active tab highlighting, compute highlighted path
-  let highlightedPath = isFirstLevelRoute ? pathname : parentPath
-
   return (
     <aside className="my-8">
       <div className="lg:sticky lg:top-20">
         <nav
-          className="fade relative flex scroll-pr-6 flex-row items-center justify-between px-0 pb-0 md:relative md:overflow-auto"
+          className="fade relative flex scroll-pr-6 flex-row items-center justify-between px-0 pb-0"
           id="nav"
         >
-          {isFirstLevelRoute ? (
-            <div className="flex flex-row space-x-4">
-              {Object.entries(navItems)
-                .filter(([, { show }]) => show)
-                .map(([path, { name }]) => {
-                  const isActive = path === highlightedPath
-                  return (
-                    <Link
-                      key={path}
-                      href={path}
-                      variant="nav"
-                      className={cn(
-                        "hover:text-foreground flex align-middle text-base leading-relaxed font-semibold uppercase transition-all",
-                        {
-                          "text-foreground/70 font-normal": !isActive,
-                        }
-                      )}
-                    >
-                      {name}
-                    </Link>
-                  )
-                })}
-            </div>
-          ) : (
-            <div className="flex flex-row space-x-4">
-              <Link
-                href={parentPath}
-                className="hover:text-foreground text-foreground/70 flex items-center gap-2 text-base leading-relaxed lowercase"
-                variant="nav"
-              >
-                <ArrowUUpLeftIcon size={16} />
-                <span>Back to {parentName}</span>
-              </Link>
-            </div>
-          )}
+          {/* Left: Avatar */}
+          <Link
+            href="/"
+            variant="nav"
+            className="transition-all hover:opacity-80"
+          >
+            <Avatar className="size-10">
+              <AvatarImage
+                src="/images/yash/at-beach.jpeg"
+                alt={siteConfig.name}
+              />
+              <AvatarFallback className="text-sm font-semibold">
+                {siteConfig.name
+                  .split(" ")
+                  .map((n) => n[0])
+                  .join("")}
+              </AvatarFallback>
+            </Avatar>
+          </Link>
 
-          <div className="flex flex-row items-center justify-end space-x-5">
-            <Suspense fallback={<ClockSkeleton />}>
-              <AnalogClock />
-            </Suspense>
+          {/* Right: Nav Menu + Theme Toggle */}
+          <div className="flex flex-row items-center gap-2">
+            <NavMenu />
             <Suspense fallback={<DarkToggleSkeleton />}>
               <DarkToggle />
             </Suspense>
