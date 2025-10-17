@@ -1,15 +1,25 @@
-import { FC } from "react"
+import { FC, Suspense } from "react"
+
+import { AnalogClock, ClockSkeleton } from "../ui/clock/clock"
 
 export const Footer: FC = () => {
   const currentYear = new Date().getFullYear()
 
   return (
     <footer className="border-border bg-background mt-auto w-full border-t-2">
-      <div className="mx-auto max-w-xl py-2">
-        <div className="text-foreground/70 space-y-1 text-center text-sm">
+      <div className="mx-auto max-w-3xl p-4 md:px-0">
+        <div className="text-foreground/70 flex items-center justify-between text-base">
+          {/* Left: Copyright */}
           <div>
             © {currentYear === 2016 ? currentYear : `2016 - ${currentYear}`}{" "}
             Yash Agarwal.
+          </div>
+
+          {/* Right: Clock */}
+          <div className="flex items-center">
+            <Suspense fallback={<ClockSkeleton />}>
+              <AnalogClock />
+            </Suspense>
           </div>
 
           {/* <Suspense
