@@ -1,7 +1,6 @@
 import { FeaturedNotes } from "@/components/content/featured-notes"
 import { Heading } from "@/components/ui/heading"
 import Link from "@/components/ui/link"
-import Section from "@/components/ui/section"
 import { SocialLinks } from "@/components/ui/social-links"
 import { siteConfig } from "@/config/site"
 
@@ -68,11 +67,12 @@ export default function Page() {
         <SocialLinks />
       </div>
 
-      <div className="relative mt-16">
+      <div className="relative mt-12">
         <div className="via-border absolute -top-10 left-1/2 h-px w-48 -translate-x-1/2 transform bg-gradient-to-r from-transparent to-transparent"></div>
-        <Section title="Popular Writing">
-          <FeaturedNotes count={siteConfig.featuredNotes} />
-        </Section>
+        <div className="text-primary mb-4 text-xl font-bold tracking-wide">
+          Popular Writing
+        </div>
+        <FeaturedNotes count={siteConfig.featuredNotes} />
       </div>
     </>
   )
