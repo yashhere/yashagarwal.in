@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react"
 import { usePathname } from "next/navigation"
 import { CaretDownIcon } from "@phosphor-icons/react/dist/ssr"
 
@@ -27,6 +28,7 @@ const moreNavItems: NavItem[] = [
 
 export const NavMenu = () => {
   const pathname = usePathname() || "/"
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
 
   // Determine the active path (first-level route)
   const pathSegments = pathname.split("/").filter(Boolean)
@@ -59,7 +61,7 @@ export const NavMenu = () => {
       ))}
 
       {/* More dropdown */}
-      <DropdownMenu>
+      <DropdownMenu onOpenChange={setIsDropdownOpen}>
         <DropdownMenuTrigger asChild>
           <button
             className={cn(
@@ -76,12 +78,17 @@ export const NavMenu = () => {
             aria-label="More pages"
           >
             More
-            <CaretDownIcon className="size-4" />
+            <CaretDownIcon
+              className={cn(
+                "size-4 transition-transform duration-200",
+                isDropdownOpen && "rotate-180"
+              )}
+            />
           </button>
         </DropdownMenuTrigger>
         <DropdownMenuContent
           align="end"
-          className="bg-background/80 border-border/50 min-w-[160px] border-0 ring-0 backdrop-blur-md focus-visible:ring-0 focus-visible:ring-offset-0"
+          className="bg-background/80 border-border/50 min-w-[160px] border-1 ring-0 backdrop-blur-xs focus-visible:ring-0 focus-visible:ring-offset-0"
         >
           {moreNavItems.map((item) => (
             <DropdownMenuItem key={item.href} asChild>
