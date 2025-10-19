@@ -88,7 +88,7 @@ export const NavMenu = () => {
         </DropdownMenuTrigger>
         <DropdownMenuContent
           align="end"
-          className="bg-background/80 border-border/50 min-w-[160px] border-1 ring-0 backdrop-blur-xs focus-visible:ring-0 focus-visible:ring-offset-0"
+          className="bg-background/80 border-border/50 min-w-[160px] border-1 ring-0 backdrop-blur-sm focus-visible:ring-0 focus-visible:ring-offset-0"
         >
           {moreNavItems.map((item) => (
             <DropdownMenuItem key={item.href} asChild>
