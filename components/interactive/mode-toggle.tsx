@@ -95,7 +95,7 @@ export const DarkToggle = () => {
                     damping: 25,
                   }}
                 >
-                  <SunDimIcon className="text-foreground size-5.5 drop-shadow-sm" />
+                  <SunDimIcon className="text-primary size-5.5 drop-shadow-sm" />
                 </motion.div>
                 <motion.div
                   className="absolute inset-0 flex items-center justify-center"

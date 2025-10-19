@@ -143,15 +143,15 @@
   /* Fix for https://github.com/disqus/disqus-react/issues/153 */
   :root,
   .comments {
-    background-color: oklch(1 0 0) !important;
-    color: oklch(0.141 0.005 285.823) !important;
+    background-color: #ffffff !important; /* white */
+    color: #0f172a !important; /* slate-950 */
   }
 
-  /* Dark mode comments - using OKLCH */
+  /* Dark mode comments - using hex values */
   :root,
   .dark .comments {
-    background-color: oklch(0.141 0.005 285.823) !important;
-    color: oklch(0.985 0 0) !important;
+    background-color: #020617 !important; /* slate-950 */
+    color: #f8fafc !important; /* slate-50 */
   }
 
   @keyframes shimmer {
