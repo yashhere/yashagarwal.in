@@ -5,6 +5,5 @@
     "bash -c 'bun run typecheck'"
   ],
   "**/*.{md,mdx,json}": ["prettier --write"],
-  "**/*.css": ["prettier --write"],
-  "content/notes/**/*.mdx": ["bun run categorize"]
+  "**/*.css": ["prettier --write"]
 }
