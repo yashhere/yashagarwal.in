@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Check, Copy } from "@phosphor-icons/react"
+import { CheckIcon, CopyIcon } from "@phosphor-icons/react/dist/ssr"
 
 import { cn } from "@/lib/utils"
 
@@ -59,12 +59,12 @@ export function CodeBlock({
           >
             {copied ? (
               <>
-                <Check className="h-3.5 w-3.5" />
+                <CheckIcon className="h-3.5 w-3.5" />
                 <span>Copied!</span>
               </>
             ) : (
               <>
-                <Copy className="h-3.5 w-3.5" />
+                <CopyIcon className="h-3.5 w-3.5" />
                 <span>Copy</span>
               </>
             )}
