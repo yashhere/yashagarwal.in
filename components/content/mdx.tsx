@@ -7,6 +7,7 @@ import Image from "@/components/ui/image"
 import Link from "@/components/ui/link"
 import { cn } from "@/lib/utils"
 import Draft from "../ui/draft"
+import { CodeBlock } from "./code-block"
 
 const components = {
   Draft,
@@ -57,23 +58,7 @@ const components = {
       {...props}
     />
   ),
-  pre: ({ className, ...props }: React.HTMLAttributes<HTMLPreElement>) => {
-    // Check if this is a code block from rehype-pretty-code
-    const isPrettyCode = Boolean(props["data-theme"])
-
-    return (
-      <pre
-        className={cn(
-          "no-scrollbar overflow-x-auto",
-          // Don't add additional styling for rehype-pretty-code blocks
-          !isPrettyCode &&
-            "mt-4 mb-6 rounded-lg border px-4 py-4 font-mono text-base",
-          className
-        )}
-        {...props}
-      />
-    )
-  },
+  pre: (props: any) => <CodeBlock {...props} />,
   code: (props) => {
     // Only add custom styling to non-rehype-pretty-code elements
     const isPrettyCode =
