@@ -46,7 +46,7 @@ method of opening the Administrator Command Prompt does not work on Windows 7.
 
 Now execute the following command:
 
-```sh
+```bash
 reg add "HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\TimeZoneInformation" /v RealTimeIsUniversal /d 1 /t REG_DWORD /f
 ```
 
@@ -54,7 +54,7 @@ Windows Time Service, which keeps the clock in Windows OS accurate, will still
 write the local time to the Real-time clock (RTC) regardless of the registry
 settings on shutdown. So I prefer to disable the Windows Time Service.
 
-```sh
+```bash
 sc config w32time start= disabled
 ```
 

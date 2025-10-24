@@ -51,7 +51,7 @@ that contain some code which we may want to retain, so rather than making this
 file from scratch, copy the default version of the file to the user's home
 directory.
 
-```sh
+```bash
 cp /etc/X11/xinit/xinitrc ~/.xinitrc
 ```
 
@@ -63,7 +63,7 @@ An openbox session can be started automatically upon login using shell's startup
 script. Add following to the shell's startup script, `~/.bash_profile` for bash
 and `~/.zprofile` for zsh.
 
-```sh
+```bash
 [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx
 ```
 
@@ -86,7 +86,7 @@ in `/etc/xdg/openbox`, which is well documented, and copying the global
 configuration to the user's directory will give a good starting point to start
 customizing.
 
-```sh
+```bash
 cp -R /etc/xdg/openbox ~/.config/
 ```
 
@@ -103,7 +103,7 @@ package. My personal favorite is `Numix-themes` and
 To see changes after editing a configuration file, the Openbox needs to be
 refreshed. It can be done with the `reconfigure` command.
 
-```sh
+```bash
 openbox --reconfigure
 ```
 
@@ -149,7 +149,7 @@ widely used.
 In order to have `obmenu-generator` make a menu on demand, the `menu.xml` file
 should contain the following code as the only entry.
 
-```sh
+```bash
 <?xml version="1.0" encoding="UTF-8"?>
 <openbox_menu>
     <menu id="root-menu" label="OpenBox 3" execute="/usr/bin/obmenu-generator"></menu>
@@ -188,13 +188,13 @@ hides behind the desktop window. To get the icons and wallpaper, you can use
 other standalone tools such as `idesk` and `feh` or `nitrogen`. To start pcmanfm
 is the desktop mode, add the following to the autostart file.
 
-```sh
+```bash
 pcmanfm --desktop &
 ```
 
 and to stop it for managing desktop
 
-```sh
+```bash
 pcmanfm --desktop-off &
 ```
 
@@ -216,7 +216,7 @@ configuration, although there are a lot of different configuration options if
 you decide to customize the setup. To start compton in background with shadows,
 use this in `autostart` file.
 
-```sh
+```bash
 compton -b -c &
 ```
 
