@@ -44,27 +44,27 @@ ModSecurity requires some dependencies to work correctly. Let's install them -
 
 First, upgrade the Ubuntu system.
 
-```sh
+```bash
 sudo apt-get -y update
 sudo apt-get -y upgrade
 ```
 
 Now install the dependencies.
 
-```sh
+```bash
 sudo apt-get -y install git libtool dh-autoreconf pkgconf gawk libcurl4-gnutls-dev libexpat1-dev libpcre3-dev libssl-dev libxml2-dev libyajl-dev zlibc zlib1g-dev libxml2 libpcre++-dev libxml2-dev libgeoip-dev liblmdb-dev lua5.2-dev iputils-ping locales apache2 apache2-dev ca-certificates wget
 ```
 
 _Optional_: clean up the Ubuntu caches.
 
-```sh
+```bash
 sudo apt-get clean && sudo rm -rf /var/lib/apt/lists/*
 ```
 
 Install `SSDeep` as well (as done
 [here](https://github.com/coreruleset/modsecurity-docker/blob/bf60dcb29fad101c5b90edf272909742e4e85929/v2-apache/Dockerfile))
 
-```sh
+```bash
 cd ~
 git clone https://github.com/ssdeep-project/ssdeep
 cd ssdeep
@@ -78,7 +78,7 @@ sudo make install
 
 Let's clone ModSecurity from Github.
 
-```sh
+```bash
 cd ~
 git clone -b v3/master --single-branch https://github.com/SpiderLabs/ModSecurity
 cd ModSecurity
@@ -95,7 +95,7 @@ sudo make install
 To configure it with Apache, we will require ModSecurity-apache connector. Let's
 install that as well.
 
-```sh
+```bash
 cd ~
 git clone https://github.com/SpiderLabs/ModSecurity-apache
 cd ModSecurity-apache
@@ -109,7 +109,7 @@ sudo make install
 
 Now, let's download CRS rule set as well.
 
-```sh
+```bash
 cd ~
 git clone -b v3.2/dev https://github.com/SpiderLabs/owasp-modsecurity-crs
 sudo mv owasp-modsecurity-crs/ /usr/local/
@@ -117,7 +117,7 @@ sudo mv owasp-modsecurity-crs/ /usr/local/
 
 Rename CRS configuration file -
 
-```sh
+```bash
 sudo mv /usr/local/owasp-modsecurity-crs/crs-setup.conf.example /usr/local/owasp-modsecurity-crs/crs-setup.conf
 ```
 
@@ -139,13 +139,13 @@ As you can see, the last line in the above code block reference a file
 `main.conf` in a folder `modsec`. This folder will not be present by default. We
 need to create that.
 
-```sh
+```bash
 sudo mkdir -p /etc/apache2/modsec
 ```
 
 Setup ModSecurity configuration file -
 
-```sh
+```bash
 # enables Unicode support in ModSecurity
 sudo wget -P /etc/apache2/modsec/ https://raw.githubusercontent.com/SpiderLabs/ModSecurity/v3/master/unicode.mapping
 
@@ -156,13 +156,13 @@ sudo mv /etc/apache2/modsec/modsecurity.conf-recommended /etc/apache2/modsec/mod
 Change the SecRuleEngine directive in the configuration to change from the
 default "detection only" mode to actively dropping malicious traffic.
 
-```sh
+```bash
 sudo sed -i 's/SecRuleEngine DetectionOnly/SecRuleEngine On/' /etc/apache2/modsec/modsecurity.conf
 ```
 
 Change the location of `modsec_audit.log` file to Apache log directory.
 
-```sh
+```bash
 sudo sed -i 's/SecAuditLog \/var\/log\/modsec_audit.log/SecAuditLog \/var\/log\/apache2\/modsec_audit.log/' /etc/apache2/modsec/modsecurity.conf
 ```
 
@@ -177,13 +177,13 @@ Include "/usr/local/owasp-modsecurity-crs/rules/*.conf"
 
 Also enable some Apache modules for better functioning of ModSecurity.
 
-```sh
+```bash
 sudo a2enmod unique_id headers rewrite actions dav dav_fs
 ```
 
 Now restart the Apache server
 
-```sh
+```bash
 sudo systemctl restart apache2
 ```
 
@@ -218,7 +218,7 @@ $ curl 'http://localhost/?q=">
 Now go to Apache log directory and check the contents of `modsec_audit.log`
 file.
 
-```sh
+```bash
 cd /var/log/apache2
 tail modsec_audit.log
 ```
@@ -255,20 +255,20 @@ If you do not see the following content, and the file is empty or it does not
 exist, then ModSecurity was not able to open this file for writing. Use the
 following fix -
 
-```sh
+```bash
 # find out the user, Apache is running as
 apache_user="$(ps -ef | egrep '(httpd|apache2|apache)' | grep -v `whoami` | grep -v root | head -n1 | awk '{print $1}')"
 ```
 
 Add this user to `adm` group which owns the Apache logs directory in Ubuntu.
 
-```sh
+```bash
 sudo usermod -G adm www-data
 ```
 
 Now, change the owner of Apache log directory to `apache_user`.
 
-```sh
+```bash
 sudo chown -R $apache_user:$apache_user /var/log/apache2/*
 ```
 
@@ -320,13 +320,13 @@ SecAuditLogDirMode        0755
 
 Restart Apache server
 
-```sh
+```bash
 sudo systemctl restart apache2
 ```
 
 Now, go to `/var/log/apache2/` directory and create `audit` folder.
 
-```sh
+```bash
 sudo usermod -G adm $apache_user
 
 cd /var/log/apache2
@@ -339,7 +339,7 @@ sudo chown -R $apache_user:$apache_user /var/log/apache2/audit
 Now, ModSecurity should be able to generate JSON logs in this directory.
 ModSecurity generates logs in the following format -
 
-```sh
+```bash
 ubuntu@server:/var/log/apache2$ tree audit
 audit
 └── 20190701

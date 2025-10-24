@@ -150,7 +150,7 @@ figure[data-rehype-pretty-code-figure] {
 }
 
 figure[data-rehype-pretty-code-figure] pre {
-  @apply overflow-x-auto text-sm leading-relaxed;
+  @apply my-2 overflow-x-auto text-sm leading-relaxed;
   background-color: transparent !important;
   border-width: 0 !important;
   padding: 0;

@@ -57,7 +57,7 @@ remove the `.git` folder from the theme folder. Otherwise, the build will fail
 at a later stage. You can try using the git submodule feature to avoid this
 issue. I created a repository `yash2696.github.io` in Github also.
 
-```sh
+```bash
 git init                       #initialized git repository in site root
 git checkout -b source         #created new branch source
 git remote add origin [https://github.com/yash2696/yash2696.github.io](https://github.com/yashhere/yashhere.github.io)
@@ -68,7 +68,7 @@ git push origin source
 
 Then I initialized my master branch as a orphan branch.
 
-```sh
+```bash
 git checkout --orphan master
 git rm -rf .
 rm -f '.gitignore'

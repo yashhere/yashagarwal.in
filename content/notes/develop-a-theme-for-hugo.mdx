@@ -133,7 +133,7 @@ using Hugo. Hugo provides a command to generate new sites. We will use that
 command to scaffold our site. It will create a basic skeleton of your site and
 will give you a basic configuration file.
 
-```sh
+```bash
 $ hugo new site ~/zeo
 $ cd ~/zeo
 $ ls -l
@@ -170,7 +170,7 @@ A small description of this directory structure:
 We will edit the `config.yaml` file to edit some basic configuration of the
 site.
 
-```sh
+```bash
 $ vim config.yaml
 baseURL: /
 title: "My First Blog"
@@ -186,7 +186,7 @@ MetaDataFormat: "yaml"
 Now when you run your site, Hugo will show some errors. It is normal because our
 layouts and themes directories are still empty.
 
-```sh
+```bash
 $ hugo --verbose
 INFO 2018/02/11 11:20:59 Using config file: /home/yash/zeo/config.yaml
 Building sites ... INFO 2018/02/11 11:20:59 syncing static files to /home/yash/zeo/public/
@@ -204,7 +204,7 @@ site. It also stores all static data in this folder.
 
 Let's have a look at the `public` folder.
 
-```sh
+```bash
 $ ls -l public/
 total 16
 drwxr-xr-x 2 yash hogwarts 4096 Feb  11 11:22 categories
@@ -232,7 +232,7 @@ will be ugly but functional.
 Let's create a basic skeleton of the theme. It will create the directory
 structure of the theme and place empty files for you to fill in.
 
-```sh
+```bash
 # run it from the root of your site
 $ hugo new theme zeo
 $ ls -l themes/zeo/
@@ -249,14 +249,14 @@ to outside world.
 
 Now we will edit our `config.yaml` file to use this theme.
 
-```sh
+```bash
 $ vim config.yaml
 theme: "zeo"
 ```
 
 Now that we have an empty theme, let's build the site.
 
-```sh
+```bash
 $ hugo --verbose
 INFO 2018/02/11 11:34:14 Using config file: /home/yash/zeo/config.yaml
 Building sites ... INFO 2018/02/11 11:34:14 syncing static files to /home/yash/zeo/public/
@@ -317,7 +317,7 @@ anything, because it cannot find any HTML file in the public directory.
 
 The command to load web server with `--watch` option is:
 
-```sh
+```bash
 $ hugo server --watch --verbose
 ...
 ...
@@ -378,7 +378,7 @@ list on the home page and on their pages, too.
 Hugo has a command for generating skeleton of posts, just like it did for sites
 and themes.
 
-```sh
+```bash
 $ hugo --verbose new post/first.md
 INFO 2018/02/11 11:40:58 Using config file: /home/yash/zeo/config.yaml
 INFO 2018/02/11 11:40:58 attempting to create "post/first.md" of "post" of ext ".md"
@@ -392,7 +392,7 @@ The `new` command uses an archetype to generate the frontmatter for new posts.
 When we created our site, hugo created a default archetype in the `/archetype`
 folder.
 
-```sh
+```bash
 $ cat archetypes/default.md
 ---
 title: "{{ replace .Name "-" " " | title }}"
@@ -408,7 +408,7 @@ want.
 We will create a new archetype for our posts' frontmatter and delete the default
 `archetype/default.md`.
 
-```sh
+```bash
 $ rm -rf archetype/default.md
 $ vim themes/zeo/archetypes/post.md
 ---
@@ -423,7 +423,7 @@ Categories: []
 
 Create one more post in `content/post` directory.
 
-```sh
+```bash
 $ hugo --verbose new post/second.md
 INFO 2018/02/11 12:13:56 Using config file: /home/yash/zeo/config.yaml
 INFO 2018/02/11 12:13:56 attempting to create "post/second.md" of "post" of ext ".md"
@@ -441,7 +441,7 @@ will need to add some content before you try to build the site.
 
 Let's look at the `content/post/first.md` file, after adding content to it.
 
-```sh
+```bash
 $ cat content/post/first.md
 ---
 title: "First"
@@ -632,7 +632,7 @@ Hi there, you just reached my blog.
 
 Let's generate the site and view the results.
 
-```sh
+```bash
 $ hugo --verbose
 $ ls -l public/
 total 36

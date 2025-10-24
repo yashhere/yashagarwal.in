@@ -34,25 +34,25 @@ Python uses `pip` for package management.
 `pip` depends on setuptools library, which is in official Ubuntu repositories.
 To install it for python2 -
 
-```sh
+```bash
 sudo apt-get install python-setuptools
 ```
 
 Then install `pip` using -
 
-```sh
+```bash
 sudo apt-get install python-pip
 ```
 
 and for python3 -
 
-```sh
+```bash
 sudo apt-get install python3-setuptools
 ```
 
 Then install `pip` using -
 
-```sh
+```bash
 sudo apt-get install python3-pip
 ```
 
@@ -62,7 +62,7 @@ project.
 
 ## Installing a package using pip
 
-```sh
+```bash
 # it will search and install [package]
 pip install [package]
 pip install django
@@ -72,7 +72,7 @@ If you are using python3, then don't forget to use `pip3`.
 
 `pip` can be used to install a specific version of package also.
 
-```sh
+```bash
 # it will search and install [package] with [version]
 pip install [package]==[version]
 pip install django==1.6.5
@@ -80,7 +80,7 @@ pip install django==1.6.5
 
 ## Uninstalling a package using pip
 
-```sh
+```bash
 # it will search and uninstall [package]
 pip uninstall [package]
 pip uninstall django
@@ -88,7 +88,7 @@ pip uninstall django
 
 ## upgrading a package using pip
 
-```sh
+```bash
 # it will upgrade [package] to latest version
 pip install --upgrade [package]
 pip install --upgrade django
@@ -99,7 +99,7 @@ pip install --upgrade django
 It is one of most used and most useful feature of `pip`. It allows you to make a
 list of all the dependencies of your project.
 
-```sh
+```bash
 # it will output the file to current directory
 pip freeze > [file_name.txt]
 ```
@@ -123,7 +123,7 @@ By default, if you install `virtualenv` using `pip`, it will use system's
 default python to create virtual environments. To overcome this problem, we will
 install `virtualenv` using ubuntu package manager.
 
-```sh
+```bash
 sudo apt-get install python-virtualenv
 ```
 
@@ -134,7 +134,7 @@ virtual environments much easier.
 
 To install it -
 
-```sh
+```bash
 sudo pip install virtualenvwrapper
 ```
 
@@ -147,7 +147,7 @@ makes working with projects very easy.
 
 Now open your `.bashrc` and add these two lines to the end -
 
-```sh
+```bash
 # All your projects will be saved in python-dev folder
 export PROJECT_HOME=~/python-dev
 
@@ -163,7 +163,7 @@ be created at that location.
 
 Now restart your terminal to source the `.bashrc` or use -
 
-```sh
+```bash
 source .bashrc
 ```
 
@@ -171,14 +171,14 @@ source .bashrc
 
 Create a virtual environment -
 
-```sh
+```bash
 mkvirtualenv myproject
 ```
 
 It will create `myproject` folder in the python-dev directory. To activate this
 project -
 
-```sh
+```bash
 workon myproject
 ```
 
@@ -191,25 +191,25 @@ projects.
 
 To deactivate a project -
 
-```sh
+```bash
 deactivate
 ```
 
 To delete a virtual environment -
 
-```sh
+```bash
 rmvirtualenv myproject
 ```
 
 List all environments -
 
-```sh
+```bash
 lsvirtualenv
 ```
 
 it will also list all virtual environments -
 
-```sh
+```bash
 workon
 ```
 

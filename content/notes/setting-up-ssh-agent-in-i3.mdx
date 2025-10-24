@@ -30,7 +30,7 @@ is self-explanatory.
 
 To create a new key pair, open a terminal and paste the text below.
 
-```sh
+```bash
 ssh-keygen -t rsa -b 4096 -C "your_email_address"
 ```
 
@@ -46,7 +46,7 @@ steps. Follow your distribution's documentation for more help.
 Once you have downloaded the tools, open a terminal, and type the following
 command.
 
-```sh
+```bash
 gpg --gen-key
 ```
 
@@ -96,7 +96,7 @@ required for the setup of SSH in i3. This step can be safely ignored._
 
 Open i3 configuration file and add an `exec_always` statement -
 
-```sh
+```bash
 exec_always ~/.config/i3/scripts/gnome-keyring.sh
 ```
 
@@ -104,7 +104,7 @@ Obviously, you will need to change the path according to your OS. Now make a new
 file in `~/.config/i3/scripts` with name `gnome-keyring.sh` and paste the below
 text in it.
 
-```sh
+```bash
 eval $(/usr/bin/gnome-keyring-daemon --start --components=gpg,pkcs11,secrets,ssh)
 export GNOME_KEYRING_CONTROL GNOME_KEYRING_PID GPG_AGENT_INFO SSH_AUTH_SOCK
 ```
@@ -120,7 +120,7 @@ Now, reload the i3.
 
 Open `~/.ssh/config` file and add following content to it -
 
-```sh
+```bash
 Host *
   AddKeysToAgent yes
   IdentityFile /home/<your username>/.ssh/id_rsa
