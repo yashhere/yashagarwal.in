@@ -13,8 +13,39 @@ export type SiteConfig = {
   featuredNotes: number
 }
 
-export type NoteWithMetadata = {
+// Explicit type for note preview in lists
+export type NotePreview = {
+  title: string
+  description?: string
+  createdOn: string
+  category?: string
+  slug?: string
+  tags?: string[]
+  image?: string
+}
+
+// Full note with additional metadata
+export type NoteWithFullMetadata = {
   note: Partial<Note>
+  backlinks?: {
+    title: string
+    url: string
+    type: string
+  }[]
+  series?: {
+    seriesTitle: string
+    notes: {
+      title: string
+      slug: string
+      status: "draft" | "published"
+      isCurrent: boolean
+    }[]
+  }
+}
+
+// Note with metadata for preview lists (combines preview + metadata)
+export type NoteWithMetadata = {
+  note: NotePreview
   backlinks?: {
     title: string
     url: string

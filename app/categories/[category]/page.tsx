@@ -9,7 +9,7 @@ type Props = {
 
 export async function generateMetadata(props: Props) {
   const params = await props.params
-  const { notes: notesWithCategory, displayName } = await getNotesWithTaxonomy(
+  const { notes: notesWithCategory, displayName } = getNotesWithTaxonomy(
     "categories",
     params.category
   )
@@ -23,7 +23,7 @@ export async function generateMetadata(props: Props) {
 
 export default async function Page(props: Props) {
   const params = await props.params
-  const { notes: notesWithCategory, displayName } = await getNotesWithTaxonomy(
+  const { notes: notesWithCategory, displayName } = getNotesWithTaxonomy(
     "categories",
     params.category
   )

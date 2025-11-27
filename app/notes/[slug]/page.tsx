@@ -47,7 +47,7 @@ export const viewport = articleViewport
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
   const params = await props.params
-  const previewNotes = await getPreviewNotes()
+  const previewNotes = getPreviewNotes()
   const note = previewNotes.find((item) => item.note.slug === params.slug)?.note
   if (!note) {
     return {}
@@ -57,7 +57,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
     ? `${note.image}`
     : `/og?title=${encodeParameter(note.title)}&meta=${encodeParameter(
         format(new Date(note.createdOn), "MMM dd, yyyy")
-      )}&tags=${note.tags.join("|")}`
+      )}&tags=${note.tags?.join("|") || ""}`
 
   return generateArticleMetadata({
     title: note.title,
@@ -72,7 +72,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 
 // Return a list of `params` to populate the [slug] dynamic segment
 export async function generateStaticParams() {
-  const notes = await getPreviewNotes()
+  const notes = getPreviewNotes()
 
   return notes.map((note) => ({
     slug: note.note.slug,

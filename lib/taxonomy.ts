@@ -24,9 +24,7 @@ export function generateTaxonomyListMetadata(
   })
 }
 
-export async function getTaxonomyCounts(
-  type: TaxonomyType
-): Promise<TaxonomyCount[]> {
+export function getTaxonomyCounts(type: TaxonomyType): TaxonomyCount[] {
   const allItems: string[] = []
 
   if (type === "tags") {
@@ -56,9 +54,9 @@ export function getTotalItemizedPosts(type: TaxonomyType): number {
   }
 }
 
-export async function getNotesWithTaxonomy(type: TaxonomyType, slug: string) {
+export function getNotesWithTaxonomy(type: TaxonomyType, slug: string) {
   const slugger = new GithubSlugger()
-  const previewNotes = await getPreviewNotes()
+  const previewNotes = getPreviewNotes()
 
   const filteredNotes = previewNotes.filter((item) => {
     if (type === "tags") {
