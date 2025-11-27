@@ -25,7 +25,8 @@
     "clean": "rm -rf .next out dist",
     "dev:clean": "bun run clean && bun run dev",
     "categorize": "bun scripts/categorize-notes.ts --content-dir content/notes && git add content/notes",
-    "create-note": "bun scripts/create-note.ts"
+    "create-note": "bun scripts/create-note.ts",
+    "optimize-images": "bun scripts/optimize-images.ts"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10",

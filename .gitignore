@@ -42,3 +42,6 @@ next-env.d.ts
 
 # cache
 *cache*
+
+# image backups
+/public/.originals
