@@ -14,7 +14,6 @@ import "@/styles/globals.css"
 import { Suspense } from "react"
 
 import { Loading } from "@/components/ui/loading"
-import { Toaster } from "@/components/ui/toast"
 import { defaultMetadata, defaultViewport } from "@/lib/seo/default"
 import {
   PersonStructuredData,
@@ -27,6 +26,8 @@ const sansFont = Geist({
   display: "swap",
   style: ["normal"],
   weight: "variable",
+  preload: true,
+  fallback: ["system-ui", "sans-serif"],
 })
 
 const monoFont = IBM_Plex_Mono({
@@ -34,6 +35,8 @@ const monoFont = IBM_Plex_Mono({
   display: "swap",
   subsets: ["latin"],
   weight: "400",
+  preload: true,
+  fallback: ["ui-monospace", "monospace"],
 })
 
 export const metadata: Metadata = defaultMetadata
@@ -68,7 +71,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
           defaultTheme="system"
           enableSystem
         >
-          <Toaster closeButton className="pointer-events-auto" />
           <main className="w-full max-w-3xl flex-1 px-4 pb-18 md:px-0">
             <Navigation />
             <Suspense fallback={<Loading />}>{children}</Suspense>

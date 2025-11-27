@@ -16,7 +16,6 @@ description: >-
   Integrate Disqus comments into your Next.js blog with dark mode support. Learn
   lazy loading and resolve color compatibility for a seamless user experience.
 updatedOn: "2025-05-29T16:17:14+05:30"
-_categorized: 6476df6b4b87ac6efbd8a2e249b1d926
 ---
 
 Disqus is the most popular commenting system available in the market right now. While its free nature comes with downsides (_hint_ - you are the data!), its ease of setup and not having to maintain a self-hosted commenting solution makes it a compelling choice for small blogs like this one.
@@ -207,11 +206,11 @@ When OKLCH colors are used, you'll encounter this error in the browser console:
 Uncaught Error: parseColor received unparseable color: oklch(000)
 ```
 
-![`parseColor` Error](/images/notes/setting-up-disqus-in-nextjs-blog/parseColor-error.jpg "parseColor error in console")
+![`parseColor` Error](/images/notes/setting-up-disqus-in-nextjs-blog/parseColor-error.webp "parseColor error in console")
 
 This happens because Disqus validates color values and expects them to be in RGB or Hex format.
 
-![Disqus code checks for RGB/Hex](/images/notes/setting-up-disqus-in-nextjs-blog/disqus-code-ref.jpg "Disqus code checks for RGB/Hex")
+![Disqus code checks for RGB/Hex](/images/notes/setting-up-disqus-in-nextjs-blog/disqus-code-ref.webp "Disqus code checks for RGB/Hex")
 
 ## The Solution
 

@@ -48,13 +48,13 @@ There a few minor steps to getting up and running.
 
 ### 1. Clone the Repo
 
-```sh
+```bash
 git clone https://github.com/yashhere/yashagarwal.in
 ```
 
 ### 2. Install Dependencies
 
-```sh
+```bash
 bun
 ```
 
@@ -62,7 +62,7 @@ bun
 
 ### 4. Start the Server
 
-```sh
+```bash
 bun dev
 ```
 

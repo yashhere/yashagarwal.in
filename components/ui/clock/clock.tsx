@@ -1,7 +1,7 @@
 "use client"
 
 import { FC, useEffect, useState } from "react"
-import moment from "moment"
+import { format } from "date-fns"
 
 import {
   Tooltip,
@@ -67,7 +67,7 @@ export const AnalogClock: FC = () => {
           </div>
         </TooltipTrigger>
         <TooltipContent className="bg-background text-foreground font-mono">
-          <p>{moment(currentTime).format("hh:mm:ss A")} IST</p>
+          <p>{format(currentTime, "hh:mm:ss a")} IST</p>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>

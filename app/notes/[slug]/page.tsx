@@ -1,10 +1,10 @@
 import { Metadata } from "next"
+import dynamic from "next/dynamic"
 import GithubSlugger from "github-slugger"
 
 import { Mdx } from "@/components/content/mdx"
 import { Series } from "@/components/content/series"
 import { TableOfContents } from "@/components/content/table-of-contents"
-import { DisqusComments } from "@/components/interactive/comments"
 import { siteConfig } from "@/config/site"
 import { getPartialNote, getPreviewNotes } from "@/lib/content"
 
@@ -13,7 +13,7 @@ import "katex/dist/katex.css"
 
 import { notFound } from "next/navigation"
 import { XLogoIcon } from "@phosphor-icons/react/dist/ssr"
-import moment from "moment"
+import { format } from "date-fns"
 
 import { BackLinks } from "@/components/content/backlinks"
 import { TagList } from "@/components/content/tag-list"
@@ -27,6 +27,17 @@ import { articleViewport } from "@/lib/seo/default"
 import { generateArticleMetadata } from "@/lib/seo/metadata"
 import { ArticleStructuredData } from "@/lib/seo/structured-data"
 import { encodeParameter } from "@/lib/utils"
+
+// Lazy load comments component as it's below the fold
+const DisqusComments = dynamic(
+  () =>
+    import("@/components/interactive/comments").then(
+      (mod) => mod.DisqusComments
+    ),
+  {
+    loading: () => <div className="h-20" />,
+  }
+)
 
 type Props = {
   params: Promise<{ slug: string }>
@@ -45,7 +56,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   const newOgImage = note.image
     ? `${note.image}`
     : `/og?title=${encodeParameter(note.title)}&meta=${encodeParameter(
-        moment(note.createdOn).format("MMM DD, YYYY")
+        format(new Date(note.createdOn), "MMM dd, yyyy")
       )}&tags=${note.tags.join("|")}`
 
   return generateArticleMetadata({
@@ -109,7 +120,9 @@ export default async function Page(props: Props) {
           </div>
           <Heading level="h2">{article.note.title}</Heading>
           <div className="text-foreground/60 flex flex-row gap-1 text-sm">
-            <span>{moment(article.note.createdOn).format("MMM DD, YYYY")}</span>
+            <span>
+              {format(new Date(article.note.createdOn), "MMM dd, yyyy")}
+            </span>
           </div>
         </section>
         {article.series ? (
