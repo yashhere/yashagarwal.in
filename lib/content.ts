@@ -41,12 +41,10 @@ export async function getPreviewNotes() {
           "title",
           "description",
           "createdOn",
-          "updatedOn",
           "category",
           "slug",
           "tags",
           "image",
-          "featured",
         ]),
       })
     }
@@ -64,7 +62,6 @@ export async function getPartialNote(slug: string) {
   const trimmedNote: Partial<Note> = {
     title: note.title,
     createdOn: note.createdOn,
-    updatedOn: note.updatedOn,
     slug: note.slug,
     description: note.description,
     mdx: note.mdx,
@@ -75,7 +72,6 @@ export async function getPartialNote(slug: string) {
       (note.headings as { heading: number; text: string; slug: string }[]) ??
       null,
     readingTime: note.readingTime,
-    toc: note.toc,
   }
 
   const article: NoteWithMetadata = {

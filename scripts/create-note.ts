@@ -14,8 +14,6 @@ interface NoteFrontmatter {
   }
   tags?: string[]
   description?: string
-  updatedOn?: string
-  featured: boolean
   category?: string
   image?: string
 }
@@ -344,7 +342,6 @@ class NoteCreator {
         title,
         createdOn: this.formatDateTime(new Date()),
         status: "draft",
-        featured: false,
       }
 
       if (seriesInfo) {
@@ -393,14 +390,12 @@ class NoteCreator {
         fileContent += `  ${frontmatter.description}\n`
       }
 
-      if (frontmatter.image) {
-        fileContent += `image: ${frontmatter.image}\n`
-      }
-
-      fileContent += `featured: ${frontmatter.featured}\n`
-
       if (frontmatter.category) {
         fileContent += `category: ${frontmatter.category}\n`
+      }
+
+      if (frontmatter.image) {
+        fileContent += `image: ${frontmatter.image}\n`
       }
 
       fileContent += "---\n\n"

@@ -65,7 +65,6 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
     excerpt: note.description,
     tags: note.tags,
     createdOn: note.createdOn,
-    updatedOn: note.updatedOn,
     coverImage: newOgImage,
     slug: params.slug,
   })
@@ -101,10 +100,9 @@ export default async function Page(props: Props) {
       <ArticleStructuredData
         title={article.note.title}
         description={article.note.description}
-        publishedAt={article.note.publishedAt}
-        updatedAt={article.note.updatedAt}
+        publishedAt={article.note.createdOn}
         url={`/notes/${article.note.slug}`}
-        image={article.note.coverImage}
+        image={article.note.image}
       />
       <div>
         <section className="mb-8 space-y-2">
@@ -130,7 +128,7 @@ export default async function Page(props: Props) {
             <Series series={article.series} interactive={true} />
           </div>
         ) : null}
-        {article.note.toc && article.note.headings.length != 0 ? (
+        {article.note.headings && article.note.headings.length != 0 ? (
           <div className="mb-8">
             <TableOfContents
               headings={article.note.headings}
