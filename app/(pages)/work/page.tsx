@@ -137,7 +137,7 @@ const Page: FC = () => {
 
           <WorkExperience
             company="Cisco Systems"
-            period="Aug 2018 - Jan 2021"
+            period="Aug 2018 - Jan 2022"
             title="Software Engineer I and II"
             description=""
             achievements={[
