@@ -14,7 +14,6 @@ import "@/styles/globals.css"
 import { Suspense } from "react"
 
 import { Loading } from "@/components/ui/loading"
-import { Toaster } from "@/components/ui/toast"
 import { defaultMetadata, defaultViewport } from "@/lib/seo/default"
 import {
   PersonStructuredData,
@@ -72,7 +71,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
           defaultTheme="system"
           enableSystem
         >
-          <Toaster closeButton className="pointer-events-auto" />
           <main className="w-full max-w-3xl flex-1 px-4 pb-18 md:px-0">
             <Navigation />
             <Suspense fallback={<Loading />}>{children}</Suspense>

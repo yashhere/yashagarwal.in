@@ -4,7 +4,6 @@ import { useActionState } from "react"
 import { useFormStatus } from "react-dom"
 
 import { useFormReset } from "@/hooks/use-form-reset"
-import { useToastMessage } from "@/hooks/use-toast-message"
 import submitEmail from "@/lib/actions/newsletter/form"
 import { EMPTY_FORM_STATE } from "@/lib/actions/newsletter/utils"
 import { FieldError } from "../forms/field-error"
@@ -31,12 +30,10 @@ const SubmitButton = ({ label, loading }: SubmitButtonProps) => {
 
 export default function Newsletter() {
   const [formState, action] = useActionState(submitEmail, EMPTY_FORM_STATE)
-
-  const noScriptFallback = useToastMessage(formState)
   const formRef = useFormReset(formState)
 
   return (
-    <>
+    <div className="space-y-2">
       <form
         className="border-border/50 bg-muted focus-within:border-border flex h-10 items-center justify-between gap-2 overflow-hidden rounded-3xl border focus-within:outline-hidden"
         action={action}
@@ -53,9 +50,21 @@ export default function Newsletter() {
           label="Subscribe"
           loading={<LoadingSpinner className="mx-auto flex flex-row" />}
         />
-        {noScriptFallback}
       </form>
+
+      {/* Inline status messages */}
+      {formState.status === "SUCCESS" && formState.message && (
+        <div className="animate-in fade-in slide-in-from-top-1 text-sm text-green-600 dark:text-green-400">
+          ✓ {formState.message}
+        </div>
+      )}
+      {formState.status === "ERROR" && formState.message && (
+        <div className="animate-in fade-in slide-in-from-top-1 text-sm text-red-600 dark:text-red-400">
+          ✗ {formState.message}
+        </div>
+      )}
+
       <FieldError formState={formState} name="email" />
-    </>
+    </div>
   )
 }
