@@ -1,10 +1,10 @@
 import { Metadata } from "next"
+import dynamic from "next/dynamic"
 import GithubSlugger from "github-slugger"
 
 import { Mdx } from "@/components/content/mdx"
 import { Series } from "@/components/content/series"
 import { TableOfContents } from "@/components/content/table-of-contents"
-import { DisqusComments } from "@/components/interactive/comments"
 import { siteConfig } from "@/config/site"
 import { getPartialNote, getPreviewNotes } from "@/lib/content"
 
@@ -27,6 +27,17 @@ import { articleViewport } from "@/lib/seo/default"
 import { generateArticleMetadata } from "@/lib/seo/metadata"
 import { ArticleStructuredData } from "@/lib/seo/structured-data"
 import { encodeParameter } from "@/lib/utils"
+
+// Lazy load comments component as it's below the fold
+const DisqusComments = dynamic(
+  () =>
+    import("@/components/interactive/comments").then(
+      (mod) => mod.DisqusComments
+    ),
+  {
+    loading: () => <div className="h-20" />,
+  }
+)
 
 type Props = {
   params: Promise<{ slug: string }>

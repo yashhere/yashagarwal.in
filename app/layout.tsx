@@ -27,6 +27,8 @@ const sansFont = Geist({
   display: "swap",
   style: ["normal"],
   weight: "variable",
+  preload: true,
+  fallback: ["system-ui", "sans-serif"],
 })
 
 const monoFont = IBM_Plex_Mono({
@@ -34,6 +36,8 @@ const monoFont = IBM_Plex_Mono({
   display: "swap",
   subsets: ["latin"],
   weight: "400",
+  preload: true,
+  fallback: ["ui-monospace", "monospace"],
 })
 
 export const metadata: Metadata = defaultMetadata
