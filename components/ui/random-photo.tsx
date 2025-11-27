@@ -3,9 +3,9 @@
 import Image from "@/components/ui/image"
 
 const photoSources = [
-  "/images/yash/at-salong-valley.jpeg",
-  // "/images/yash/in-ocean.jpeg",
-  // "/images/yash/at-beach.jpeg",
+  "/images/yash/at-salong-valley.webp",
+  // "/images/yash/in-ocean.webp",
+  // "/images/yash/at-beach.webp",
 ]
 
 export default function RandomPhoto(props: any) {

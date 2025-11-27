@@ -2,7 +2,15 @@
 
 import { useEffect, useState } from "react"
 import { MoonStarsIcon, SunDimIcon } from "@phosphor-icons/react/dist/ssr"
+import { motion } from "motion/react"
 import { useTheme } from "next-themes"
+
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 
 export const DarkToggleSkeleton = () => {
   return (
@@ -49,47 +57,72 @@ export const DarkToggle = () => {
   }
 
   return (
-    <div className="group/toggle relative overflow-hidden">
-      <div
-        className="cursor-pointer rounded-md p-1 transition-transform hover:scale-105 active:scale-95"
-        onClick={() => {
-          if (theme == "system") {
-            if (resolvedTheme == "dark") {
-              setTheme("light")
-            } else {
-              setTheme("dark")
-            }
-          } else {
-            setTheme("system")
-          }
-        }}
-        title={getTooltipText()}
-      >
-        <div className="relative size-5.5">
-          <div
-            className={`absolute inset-0 flex items-center justify-center transition-all duration-300 ease-out ${
-              resolvedTheme === "light"
-                ? "scale-100 rotate-0 opacity-100"
-                : "-translate-y-1 scale-50 -rotate-90 opacity-0"
-            }`}
-          >
-            <SunDimIcon className="text-primary size-5.5 drop-shadow-sm" />
-          </div>
-          <div
-            className={`absolute inset-0 flex items-center justify-center transition-all duration-300 ease-out ${
-              resolvedTheme === "dark"
-                ? "scale-100 rotate-0 opacity-100"
-                : "translate-y-1 scale-50 rotate-90 opacity-0"
-            }`}
-          >
-            <MoonStarsIcon className="text-foreground size-5.5 drop-shadow-sm" />
-          </div>
-        </div>
-      </div>
-      {/* CSS-based tooltip */}
-      <div className="bg-background text-foreground pointer-events-none absolute bottom-full left-1/2 z-50 mb-2 -translate-x-1/2 rounded-md border px-3 py-1.5 text-sm whitespace-nowrap opacity-0 shadow-md transition-opacity group-hover/toggle:opacity-100">
-        {getTooltipText()}
-      </div>
+    <div className="overflow-hidden">
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ type: "spring", stiffness: 400, damping: 30 }}
+              className="cursor-pointer rounded-md p-1"
+              onClick={() => {
+                if (theme == "system") {
+                  if (resolvedTheme == "dark") {
+                    setTheme("light")
+                  } else {
+                    setTheme("dark")
+                  }
+                } else {
+                  setTheme("system")
+                }
+              }}
+            >
+              <div className="relative size-5.5">
+                <motion.div
+                  className="absolute inset-0 flex items-center justify-center"
+                  animate={{
+                    opacity: resolvedTheme === "light" ? 1 : 0,
+                    rotate: resolvedTheme === "light" ? 0 : -90,
+                    scale: resolvedTheme === "light" ? 1 : 0.5,
+                    y: resolvedTheme === "light" ? 0 : -4,
+                  }}
+                  transition={{
+                    duration: 0.3,
+                    ease: [0.25, 0.46, 0.45, 0.94],
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 25,
+                  }}
+                >
+                  <SunDimIcon className="text-primary size-5.5 drop-shadow-sm" />
+                </motion.div>
+                <motion.div
+                  className="absolute inset-0 flex items-center justify-center"
+                  animate={{
+                    opacity: resolvedTheme === "dark" ? 1 : 0,
+                    rotate: resolvedTheme === "dark" ? 0 : 90,
+                    scale: resolvedTheme === "dark" ? 1 : 0.5,
+                    y: resolvedTheme === "dark" ? 0 : 4,
+                  }}
+                  transition={{
+                    duration: 0.3,
+                    ease: [0.25, 0.46, 0.45, 0.94],
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 25,
+                  }}
+                >
+                  <MoonStarsIcon className="text-foreground size-5.5 drop-shadow-sm" />
+                </motion.div>
+              </div>
+            </motion.div>
+          </TooltipTrigger>
+          <TooltipContent className="bg-background text-foreground">
+            <p>{getTooltipText()}</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
     </div>
   )
 }
