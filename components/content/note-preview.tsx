@@ -1,4 +1,4 @@
-import moment from "moment"
+import { format } from "date-fns"
 
 import Link from "@/components/ui/link"
 import { NoteWithMetadata } from "@/types"
@@ -29,7 +29,7 @@ export const NotePreview = ({
               aria-hidden
             />
             <span className="text-foreground/70 font-mono text-sm">
-              {moment(note.note.createdOn).format("MM/YY")}
+              {format(new Date(note.note.createdOn), "MM/yy")}
             </span>
           </>
         )}

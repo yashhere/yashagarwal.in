@@ -20,7 +20,7 @@ export const Navigation = () => {
           <Link href="/" className="cursor-pointer select-none">
             <Avatar className="group size-10 overflow-hidden">
               <AvatarImage
-                src="/images/yash/yash.jpg"
+                src="/images/yash/yash.webp"
                 alt={siteConfig.name}
                 className="transition-transform duration-300 select-none group-hover:scale-110"
                 draggable={false}

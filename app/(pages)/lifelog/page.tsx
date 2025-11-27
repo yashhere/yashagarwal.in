@@ -1,6 +1,5 @@
 import { allLifelogs } from "content-collections"
-import { compareDesc } from "date-fns"
-import moment from "moment"
+import { compareDesc, format } from "date-fns"
 
 import { Mdx } from "@/components/content/mdx"
 import Section from "@/components/ui/section"
@@ -30,13 +29,16 @@ export default function LifeLog() {
             >
               <div className="border-background bg-muted-foreground absolute -left-1.5 mt-1.5 size-3 rounded-full border"></div>
               <time className="text-foreground mb-1 text-2xl leading-none">
-                {moment(note.createdOn).format("MMM DD, YYYY")}
+                {format(new Date(note.createdOn), "MMM dd, yyyy")}
               </time>
               <div className="text-muted-foreground mt-4 text-base leading-none">
                 {" "}
                 Last updated on:{" "}
                 <time className="">
-                  {moment(note.updatedOn).format("MMM DD, YYYY")}
+                  {format(
+                    new Date(note.updatedOn || note.createdOn),
+                    "MMM dd, yyyy"
+                  )}
                 </time>
               </div>
               <p className="text-foreground mb-4 text-base font-light">

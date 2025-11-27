@@ -13,7 +13,7 @@ import "katex/dist/katex.css"
 
 import { notFound } from "next/navigation"
 import { XLogoIcon } from "@phosphor-icons/react/dist/ssr"
-import moment from "moment"
+import { format } from "date-fns"
 
 import { BackLinks } from "@/components/content/backlinks"
 import { TagList } from "@/components/content/tag-list"
@@ -56,7 +56,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   const newOgImage = note.image
     ? `${note.image}`
     : `/og?title=${encodeParameter(note.title)}&meta=${encodeParameter(
-        moment(note.createdOn).format("MMM DD, YYYY")
+        format(new Date(note.createdOn), "MMM dd, yyyy")
       )}&tags=${note.tags.join("|")}`
 
   return generateArticleMetadata({
@@ -120,7 +120,9 @@ export default async function Page(props: Props) {
           </div>
           <Heading level="h2">{article.note.title}</Heading>
           <div className="text-foreground/60 flex flex-row gap-1 text-sm">
-            <span>{moment(article.note.createdOn).format("MMM DD, YYYY")}</span>
+            <span>
+              {format(new Date(article.note.createdOn), "MMM dd, yyyy")}
+            </span>
           </div>
         </section>
         {article.series ? (
