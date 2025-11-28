@@ -10,6 +10,7 @@ import { TailwindIndicator } from "@/components/ui/tailwind-indicator"
 import { cn } from "@/lib/utils"
 
 import "@/styles/globals.css"
+import "@/styles/mdx.css"
 
 import { Suspense } from "react"
 
@@ -71,7 +72,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           defaultTheme="system"
           enableSystem
         >
-          <main className="w-full max-w-3xl flex-1 px-4 pb-18 md:px-0">
+          <main className="w-full max-w-screen-2xl flex-1 px-4 pb-18 md:px-6">
             <Navigation />
             <Suspense fallback={<Loading />}>{children}</Suspense>
           </main>

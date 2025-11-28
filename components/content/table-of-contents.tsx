@@ -7,9 +7,18 @@ import {
 } from "@phosphor-icons/react/dist/ssr"
 import { AnimatePresence, motion } from "motion/react"
 
+import { cn } from "@/lib/utils"
 import Link from "../ui/link"
 
-export const TableOfContents = ({ headings, interactive }) => {
+export const TableOfContents = ({
+  headings,
+  interactive,
+  className,
+}: {
+  headings: any[]
+  interactive?: boolean
+  className?: string
+}) => {
   const [isOpen, setIsOpen] = useState(!interactive)
 
   const handleHeadingClick = (e: React.MouseEvent, slug: string) => {
@@ -27,7 +36,12 @@ export const TableOfContents = ({ headings, interactive }) => {
   }
 
   return (
-    <div className="border-border bg-background rounded-md border p-2.5 text-sm">
+    <div
+      className={cn(
+        "border-border bg-background rounded-md border p-2.5 text-sm",
+        className
+      )}
+    >
       {interactive ? (
         <button
           className="group flex w-full items-center justify-between text-left"
