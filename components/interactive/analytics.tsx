@@ -1,6 +1,7 @@
 "use client"
 
 import Script from "next/script"
+import { Analytics as VercelAnalytics } from "@vercel/analytics/react"
 
 import { siteConfig } from "@/config/site"
 
@@ -23,7 +24,7 @@ export function Analytics() {
 
   return (
     <>
-      {/* <VercelAnalytics /> */}
+      <VercelAnalytics />
       <Script
         async
         defer

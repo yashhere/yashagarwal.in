@@ -20,10 +20,12 @@ export const Navigation = () => {
           <Link href="/" className="cursor-pointer select-none">
             <Avatar className="group size-10 overflow-hidden">
               <AvatarImage
-                src="/images/yash/yash.webp"
+                src="/images/yash/yash-avatar.webp"
                 alt={siteConfig.name}
                 className="transition-transform duration-300 select-none group-hover:scale-110"
                 draggable={false}
+                width={70}
+                height={70}
                 onContextMenu={(e) => e.preventDefault()}
               />
               <AvatarFallback className="text-sm font-semibold">

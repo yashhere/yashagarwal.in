@@ -94,7 +94,6 @@ const notes = defineCollection({
   schema: (z) => ({
     title: z.string(),
     description: z.string().optional(),
-    featured: z.boolean().default(false),
     image: z.string().optional(),
     status: z.enum(["draft", "published"]).default("draft"),
     tags: z.array(z.string()).optional(),
@@ -106,8 +105,6 @@ const notes = defineCollection({
       })
       .optional(),
     createdOn: z.string(),
-    updatedOn: z.string().optional(),
-    toc: z.boolean().default(true),
     mdx: z.string().optional(),
     headings: z
       .array(

@@ -12,8 +12,8 @@ export const metadata: Metadata = generatePageMetadata({
   canonicalUrl: "/notes",
 })
 
-export default async function Page() {
-  const notes = await getPreviewNotes()
+export default function Page() {
+  const notes = getPreviewNotes()
 
   return (
     <Section data={notes} title="Notes">

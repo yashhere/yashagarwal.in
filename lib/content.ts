@@ -1,8 +1,7 @@
 import { allNotes, Note } from "content-collections"
 import { compareDesc } from "date-fns"
-import { pick } from "lodash"
 
-import { NoteWithMetadata } from "@/types"
+import { NoteWithFullMetadata, NoteWithMetadata } from "@/types"
 
 const URL_SEGMENTS = {
   NOTES: "notes",
@@ -28,26 +27,24 @@ export function getNotes() {
   }
 }
 
-export async function getPreviewNotes() {
+export function getPreviewNotes(): NoteWithMetadata[] {
   const notes = getNotes()
 
   const previewNotes: NoteWithMetadata[] = []
-  notes?.forEach(async (note) => {
+  notes?.forEach((note) => {
     // all notes with draft status are omitted from the blog list and popular
     // list. These are navigable only from the series menu.
     if (note.status === "published" || process.env.NODE_ENV === "development") {
       previewNotes.push({
-        note: pick(note, [
-          "title",
-          "description",
-          "createdOn",
-          "updatedOn",
-          "category",
-          "slug",
-          "tags",
-          "image",
-          "featured",
-        ]),
+        note: {
+          title: note.title,
+          description: note.description,
+          createdOn: note.createdOn,
+          category: note.category,
+          slug: note.slug,
+          tags: note.tags,
+          image: note.image,
+        },
       })
     }
   })
@@ -64,7 +61,6 @@ export async function getPartialNote(slug: string) {
   const trimmedNote: Partial<Note> = {
     title: note.title,
     createdOn: note.createdOn,
-    updatedOn: note.updatedOn,
     slug: note.slug,
     description: note.description,
     mdx: note.mdx,
@@ -75,10 +71,9 @@ export async function getPartialNote(slug: string) {
       (note.headings as { heading: number; text: string; slug: string }[]) ??
       null,
     readingTime: note.readingTime,
-    toc: note.toc,
   }
 
-  const article: NoteWithMetadata = {
+  const article: NoteWithFullMetadata = {
     note: trimmedNote,
     // Array destructuring, in case I decide to include backlinks to other types as well
     backlinks: [...getNoteBacklinks(note.slug as string, URL_SEGMENTS.NOTES)],

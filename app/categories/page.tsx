@@ -1,5 +1,5 @@
-import CategoryBrowser from "@/components/content/category-browser"
 import Section from "@/components/ui/section"
+import TaxonomyBrowser from "@/components/ui/taxonomoy"
 import {
   generateTaxonomyListMetadata,
   getTaxonomyCounts,
@@ -8,22 +8,19 @@ import {
 
 export const metadata = generateTaxonomyListMetadata("categories")
 
-export default async function Page() {
-  const categoryCounts = await getTaxonomyCounts("categories")
+export default function Page() {
+  const categoryCounts = getTaxonomyCounts("categories")
   const totalCategorizedPosts = getTotalItemizedPosts("categories")
-
-  // Transform to match CategoryBrowser interface
-  const formattedCategoryCounts = categoryCounts.map((item) => ({
-    category: item.name,
-    count: item.count,
-  }))
 
   return (
     <>
-      <Section data={formattedCategoryCounts} title="Categories">
-        <CategoryBrowser
-          categoryCounts={formattedCategoryCounts}
-          totalCategorizedPosts={totalCategorizedPosts}
+      <Section data={categoryCounts} title="Categories">
+        <TaxonomyBrowser
+          taxonomyCounts={categoryCounts}
+          totalPosts={totalCategorizedPosts}
+          type="categories"
+          singular="category"
+          plural="categories"
         />
       </Section>
     </>
