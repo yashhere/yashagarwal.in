@@ -1,9 +1,8 @@
-"use client"
-
 import { useEffect, useRef, useState } from "react"
-import { ArrowUp, List, X } from "@phosphor-icons/react/dist/ssr"
+import { ArrowUp, List } from "@phosphor-icons/react/dist/ssr"
 import { AnimatePresence, motion } from "motion/react"
 
+import { useOnClickOutside } from "@/hooks/use-on-click-outside"
 import { cn } from "@/lib/utils"
 import { MobileTOC } from "./mobile-toc"
 
@@ -11,6 +10,13 @@ export const MobileActions = ({ headings }: { headings: any[] }) => {
   const [isExpanded, setIsExpanded] = useState(true)
   const [isMounted, setIsMounted] = useState(false)
   const lastScrollY = useRef(0)
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  useOnClickOutside(containerRef, () => {
+    if (isExpanded) {
+      setIsExpanded(false)
+    }
+  })
 
   useEffect(() => {
     // Set initial state based on scroll position
@@ -47,15 +53,14 @@ export const MobileActions = ({ headings }: { headings: any[] }) => {
   return (
     <div className="fixed bottom-6 left-1/2 z-40 -translate-x-1/2 lg:hidden">
       <motion.div
+        ref={containerRef}
         layout
         className={cn(
-          "flex items-center justify-center overflow-hidden shadow-xl backdrop-blur-md",
-          isExpanded
-            ? "bg-background/95 border-border border"
-            : "bg-foreground/20 hover:bg-foreground/40 cursor-pointer"
+          "border-border bg-background/95 flex items-center justify-center overflow-hidden border shadow-xl backdrop-blur-md",
+          !isExpanded && "hover:bg-muted/50 cursor-pointer"
         )}
         style={{
-          borderRadius: isExpanded ? 32 : 100,
+          borderRadius: 32,
         }}
         transition={{
           type: "spring",
@@ -98,32 +103,19 @@ export const MobileActions = ({ headings }: { headings: any[] }) => {
                   Top
                 </span>
               </button>
-
-              <button
-                onClick={(e) => {
-                  e.stopPropagation()
-                  setIsExpanded(false)
-                }}
-                className="text-muted-foreground hover:text-foreground group flex flex-col items-center gap-1 transition-colors"
-                aria-label="Close menu"
-              >
-                <div className="group-hover:bg-muted rounded-full p-2 transition-colors">
-                  <X size={20} weight="regular" />
-                </div>
-                <span className="text-[10px] font-medium tracking-wider uppercase">
-                  Close
-                </span>
-              </button>
             </motion.div>
           ) : (
             <motion.div
               key="handle"
-              initial={{ opacity: 0, width: 0 }}
-              animate={{ opacity: 1, width: 64 }}
-              exit={{ opacity: 0, width: 0 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="h-1.5"
-            />
+              className="px-2 py-5"
+            >
+              <div className="bg-muted-foreground/50 h-1.5 w-12 rounded-full" />
+              <span className="sr-only">Open menu</span>
+            </motion.div>
           )}
         </AnimatePresence>
       </motion.div>
