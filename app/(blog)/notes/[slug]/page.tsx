@@ -106,7 +106,7 @@ export default async function Page(props: Props) {
         image={article.note.image}
       />
 
-      <div className="mx-auto flex w-full max-w-screen-2xl flex-col justify-center gap-8 px-4 py-8 md:px-0 lg:flex-row">
+      <div className="mx-auto flex w-full max-w-screen-2xl flex-col justify-center gap-8 py-8 md:px-0 lg:flex-row">
         {/* Left Column: Sticky TOC (Desktop) */}
         <aside className="hidden w-56 shrink-0 lg:block xl:w-64">
           <div className="sticky top-24 max-h-[calc(100vh-8rem)] overflow-y-auto pb-8">
