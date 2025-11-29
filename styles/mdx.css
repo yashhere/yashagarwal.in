@@ -33,23 +33,41 @@ h6 a.anchor:hover {
 
 /* Make anchor links unobtrusive */
 .anchor {
-  @apply float-left pr-2 no-underline;
+  @apply invisible absolute no-underline;
+  margin-left: -1em;
+  padding-right: 0.5em;
+  width: 80%;
+  max-width: 700px;
+  cursor: pointer;
+}
+
+.anchor:hover {
+  @apply visible;
 }
 
 .anchor:after {
   content: "#";
-  @apply text-primary ml-2 hidden opacity-0 sm:inline-block;
-  transition: opacity 0.2s ease;
+  @apply text-muted-foreground hidden;
+}
+
+*:hover > .anchor {
+  @apply visible;
 }
 
 :is(h1, h2, h3, h4, h5, h6):hover .anchor::after {
-  @apply hidden opacity-100 sm:inline-block;
+  @apply inline-block;
 }
 
 /* Add a mobile-friendly padding for anchors */
 @media (max-width: 640px) {
   .anchor {
-    @apply -ml-0;
+    @apply static float-left pr-2;
+    margin-left: 0;
+    width: auto;
+  }
+
+  .anchor:after {
+    @apply ml-2;
   }
 }
 

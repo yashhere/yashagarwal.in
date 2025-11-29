@@ -1,182 +1,38 @@
 @import "tailwindcss";
 
-@plugin "tailwindcss-animate";
-@plugin "@tailwindcss/typography";
+@config '../tailwind.config.js';
 
-@custom-variant dark (&:where(.dark, .dark *));
-
-@theme {
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-
-  --color-syntax-bg: var(--syntax-bg);
-  --color-syntax-highlight: var(--syntax-highlight);
-  --color-syntax-txt: var(--syntax-txt);
-  --color-syntax-comment: var(--syntax-comment);
-  --color-syntax-prop: var(--syntax-prop);
-  --color-syntax-bool: var(--syntax-bool);
-  --color-syntax-value: var(--syntax-value);
-  --color-syntax-string: var(--syntax-string);
-
-  --radius-lg: var(--radius);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-sm: calc(var(--radius) - 4px);
-
-  --animate-accordion-down: accordion-down 0.2s ease-out;
-  --animate-accordion-up: accordion-up 0.2s ease-out;
-
-  @keyframes accordion-down {
-    from {
-      height: 0;
-    }
-    to {
-      height: var(--radix-accordion-content-height);
-    }
-  }
-  @keyframes accordion-up {
-    from {
-      height: var(--radix-accordion-content-height);
-    }
-    to {
-      height: 0;
-    }
-  }
-
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-mono);
-}
-
-/*
-  The default border color has changed to `currentColor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
-
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
-*/
-@layer base {
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    border-color: var(--color-gray-200, currentColor);
-  }
-}
-
-:root {
-  --background: hsl(0 0% 100%);
-  --foreground: hsl(240 10% 3.9%);
-  --card: hsl(0 0% 100%);
-  --card-foreground: hsl(240 10% 3.9%);
-  --popover: hsl(0 0% 100%);
-  --popover-foreground: hsl(240 10% 3.9%);
-  --primary: hsl(240 5.9% 10%);
-  --primary-foreground: hsl(0 0% 98%);
-  --secondary: hsl(240 4.8% 95.9%);
-  --secondary-foreground: hsl(240 5.9% 10%);
-  --muted: hsl(240 4.8% 95.9%);
-  --muted-foreground: hsl(240 3.8% 46.1%);
-  --accent: hsl(240 4.8% 95.9%);
-  --accent-foreground: hsl(240 5.9% 10%);
-  --destructive: hsl(0 84.2% 60.2%);
-  --destructive-foreground: hsl(0 0% 98%);
-  --border: hsl(240 5.9% 90%);
-  --input: hsl(240 5.9% 90%);
-  --ring: hsl(240 5.9% 10%);
-  --radius: 0.75rem;
-
-  --syntax-bg: hsl(240 5% 96%);
-  --syntax-highlight: hsl(240 5% 90%);
-  --syntax-txt: hsl(240 5% 25%);
-  --syntax-comment: hsl(240 4% 60%);
-  --syntax-prop: hsl(330 70% 50%);
-  --syntax-bool: hsl(25 80% 50%);
-  --syntax-value: hsl(220 70% 50%);
-  --syntax-string: hsl(120 60% 40%);
-}
-
-.dark {
-  --background: hsl(240 10% 3.9%);
-  --foreground: hsl(0 0% 98%);
-  --card: hsl(240 10% 3.9%);
-  --card-foreground: hsl(0 0% 98%);
-  --popover: hsl(240 10% 3.9%);
-  --popover-foreground: hsl(0 0% 98%);
-  --primary: hsl(0 0% 98%);
-  --primary-foreground: hsl(240 5.9% 10%);
-  --secondary: hsl(240 3.7% 15.9%);
-  --secondary-foreground: hsl(0 0% 98%);
-  --muted: hsl(240 3.7% 15.9%);
-  --muted-foreground: hsl(240 5% 64.9%);
-  --accent: hsl(240 3.7% 15.9%);
-  --accent-foreground: hsl(0 0% 98%);
-  --destructive: hsl(0 62.8% 30.6%);
-  --destructive-foreground: hsl(0 0% 98%);
-  --border: hsl(240 3.7% 15.9%);
-  --input: hsl(240 3.7% 15.9%);
-  --ring: hsl(240 4.9% 83.9%);
-
-  --syntax-bg: hsl(240 5% 10%);
-  --syntax-highlight: hsl(240 5% 20%);
-  --syntax-txt: hsl(240 5% 80%);
-  --syntax-comment: hsl(240 4% 50%);
-  --syntax-prop: hsl(330 70% 60%);
-  --syntax-bool: hsl(25 80% 60%);
-  --syntax-value: hsl(220 70% 60%);
-  --syntax-string: hsl(120 60% 50%);
-}
-
-@layer base {
-  * {
-    border-color: var(--border);
-  }
-  body {
-    background-color: var(--background);
-    color: var(--foreground);
-  }
-}
-
-/* Custom scrollbar styles */
 @layer utilities {
+  /* Add bottom margin when headings are followed by paragraphs */
+  h1 + p,
+  h2 + p,
+  h3 + p,
+  h4 + p,
+  h5 + p,
+  h6 + p {
+    @apply mt-6;
+  }
+
+  /* Hide scrollbars while maintaining functionality */
+  .no-scrollbar {
+    /* Chrome, Safari and Opera */
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
   .scroll-pr-6 {
     padding-right: 1.5rem;
   }
-}
 
-@media (min-width: 1024px) {
-  .scroll-pr-6 {
-    padding-right: 0;
+  /* Fix for Safari lazy loading images */
+  @supports (font: -apple-system-body) and (-webkit-appearance: none) {
+    img[loading="lazy"] {
+      clip-path: inset(0.6px);
+    }
   }
-}
-
-/* Smooth scrolling for the whole page */
-html {
-  scroll-behavior: smooth;
 }
 
 /* Optimize legibility */
@@ -186,79 +42,140 @@ html {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Fade in animation for content */
-.fade-in {
-  animation: fadeIn 0.5s ease-in-out;
-}
+@layer base {
+  :root {
+    /* shadcn Yellow theme using OKLCH */
+    --radius: 0.65rem;
+    --background: oklch(1 0 0);
+    --foreground: oklch(0.141 0.005 285.823);
+    --card: oklch(1 0 0);
+    --card-foreground: oklch(0.141 0.005 285.823);
+    --popover: oklch(1 0 0);
+    --popover-foreground: oklch(0.141 0.005 285.823);
+    --primary: oklch(0.795 0.184 86.047);
+    --primary-foreground: oklch(0.421 0.095 57.708);
+    --secondary: oklch(0.967 0.001 286.375);
+    --secondary-foreground: oklch(0.21 0.006 285.885);
+    --muted: oklch(0.967 0.001 286.375);
+    --muted-foreground: oklch(0.552 0.016 285.938);
+    --accent: oklch(0.967 0.001 286.375);
+    --accent-foreground: oklch(0.21 0.006 285.885);
+    --destructive: oklch(0.577 0.245 27.325);
+    --border: oklch(0.92 0.004 286.32);
+    --input: oklch(0.92 0.004 286.32);
+    --ring: oklch(0.795 0.184 86.047);
+    --chart-1: oklch(0.646 0.222 41.116);
+    --chart-2: oklch(0.6 0.118 184.704);
+    --chart-3: oklch(0.398 0.07 227.392);
+    --chart-4: oklch(0.828 0.189 84.429);
+    --chart-5: oklch(0.769 0.188 70.08);
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
+    /* Code syntax highlighting */
+    --syntax-bg: oklch(0.97 0 0);
+    --syntax-highlight: oklch(0.95 0 0);
+    --syntax-txt: oklch(0.145 0 0);
+    --syntax-comment: oklch(0.556 0 0);
+    --syntax-prop: oklch(0.628 0.194 3.58);
+    --syntax-bool: oklch(0.628 0.15 287.29);
+    --syntax-value: oklch(0.556 0 0);
+    --syntax-string: oklch(0.628 0.15 287.29);
+
+    /* alpha variants */
+    --primary-15: color-mix(in srgb, var(--primary) 15%, transparent);
+    --primary-20: color-mix(in srgb, var(--primary) 20%, transparent);
+    --primary-30: color-mix(in srgb, var(--primary) 30%, transparent);
+    --primary-40: color-mix(in srgb, var(--primary) 40%, transparent);
   }
-  to {
-    opacity: 1;
+
+  .dark {
+    /* shadcn Yellow theme dark mode using OKLCH */
+    --background: oklch(0.141 0.005 285.823);
+    --foreground: oklch(0.985 0 0);
+    --card: oklch(0.21 0.006 285.885);
+    --card-foreground: oklch(0.985 0 0);
+    --popover: oklch(0.21 0.006 285.885);
+    --popover-foreground: oklch(0.985 0 0);
+    --primary: oklch(0.795 0.184 86.047);
+    --primary-foreground: oklch(0.421 0.095 57.708);
+    --secondary: oklch(0.274 0.006 286.033);
+    --secondary-foreground: oklch(0.985 0 0);
+    --muted: oklch(0.274 0.006 286.033);
+    --muted-foreground: oklch(0.705 0.015 286.067);
+    --accent: oklch(0.274 0.006 286.033);
+    --accent-foreground: oklch(0.985 0 0);
+    --destructive: oklch(0.704 0.191 22.216);
+    --border: oklch(1 0 0 / 10%);
+    --input: oklch(1 0 0 / 15%);
+    --ring: oklch(0.554 0.135 66.442);
+    --chart-1: oklch(0.488 0.243 264.376);
+    --chart-2: oklch(0.696 0.17 162.48);
+    --chart-3: oklch(0.769 0.188 70.08);
+    --chart-4: oklch(0.627 0.265 303.9);
+    --chart-5: oklch(0.645 0.246 16.439);
+
+    /* Code syntax highlighting */
+    --syntax-bg: oklch(0.205 0 0);
+    --syntax-highlight: oklch(0.269 0 0);
+    --syntax-txt: oklch(0.985 0 0);
+    --syntax-comment: oklch(0.708 0 0);
+    --syntax-prop: oklch(0.707 0.186 3.58);
+    --syntax-bool: oklch(0.838 0.143 110.24);
+    --syntax-value: oklch(0.708 0 0);
+    --syntax-string: oklch(0.831 0.12 287.29);
+
+    /* alpha variants */
+    --primary-15: color-mix(in srgb, var(--primary) 15%, transparent);
+    --primary-20: color-mix(in srgb, var(--primary) 20%, transparent);
+    --primary-30: color-mix(in srgb, var(--primary) 30%, transparent);
+    --primary-40: color-mix(in srgb, var(--primary) 40%, transparent);
   }
-}
 
-.prose .anchor {
-  @apply invisible absolute no-underline;
+  html {
+    font-display: swap; /* Ensure fonts load predictably */
+    scroll-behavior: smooth; /* Smooth scrolling for the whole page */
+  }
 
-  margin-left: -1em;
-  padding-right: 0.5em;
-  width: 80%;
-  max-width: 700px;
-  cursor: pointer;
-}
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1 "calt" 1;
+    font-display: optional;
+    transition:
+      background-color 0.5s ease-in-out,
+      color 0.5s ease-in-out;
+  }
 
-.anchor:hover {
-  @apply visible;
-}
+  :focus-visible {
+    @apply ring-primary ring-offset-background ring-2 ring-offset-2 outline-none;
+  }
 
-.prose .anchor:after {
-  color: var(--muted-foreground);
-  content: "#";
-}
+  a:focus-visible {
+    @apply ring-primary ring-offset-background ring-2 ring-offset-2 outline-none;
+  }
 
-.prose *:hover > .anchor {
-  @apply visible;
-}
+  /* Fix for https://github.com/disqus/disqus-react/issues/153 */
+  :root,
+  .comments {
+    background-color: #ffffff !important; /* white */
+    color: #0f172a !important; /* slate-950 */
+  }
 
-/* Custom styles for footnotes area */
-.footnotes-area {
-  @apply text-muted-foreground text-sm;
-}
+  /* Dark mode comments - using hex values */
+  :root,
+  .dark .comments {
+    background-color: #020617 !important; /* slate-950 */
+    color: #f8fafc !important; /* slate-50 */
+  }
 
-.footnotes-area h2 {
-  @apply text-foreground/80 mt-0 mb-4 text-sm font-medium tracking-wider uppercase;
-}
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
 
-.footnotes-area ol {
-  @apply list-decimal space-y-2 pl-4;
-}
-
-.footnotes-area li {
-  @apply text-muted-foreground text-sm;
-  line-height: 1.5 !important;
-  margin-top: 0.5rem !important;
-  margin-bottom: 0.5rem !important;
-}
-
-.footnotes-area p {
-  @apply inline text-sm;
-  line-height: 1.5 !important;
-  margin: 0 !important;
-}
-
-.footnotes-area a svg {
-  display: none !important;
-}
-
-.footnotes-area a {
-  @apply text-muted-foreground underline underline-offset-2;
-  text-decoration-color: var(--muted-foreground);
-}
-
-.footnotes-area a:hover {
-  @apply text-foreground;
-  text-decoration-color: var(--foreground);
+  .animate-shimmer {
+    animation: shimmer 2s ease-in-out infinite;
+  }
 }

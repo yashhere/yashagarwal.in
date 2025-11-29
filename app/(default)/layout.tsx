@@ -10,6 +10,7 @@ import { TailwindIndicator } from "@/components/ui/tailwind-indicator"
 import { cn } from "@/lib/utils"
 
 import "@/styles/globals.css"
+import "@/styles/mdx.css"
 
 import { Suspense } from "react"
 

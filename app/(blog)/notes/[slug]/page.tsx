@@ -16,9 +16,7 @@ import { XLogoIcon } from "@phosphor-icons/react/dist/ssr"
 import { format } from "date-fns"
 
 import { BackLinks } from "@/components/content/backlinks"
-import { FootnoteMover } from "@/components/content/footnote-mover"
 import { MobileActions } from "@/components/content/mobile-actions"
-import { MobileFootnotes } from "@/components/content/mobile-footnotes"
 import { TagList } from "@/components/content/tag-list"
 import { GoToTop } from "@/components/layout/go-to-top"
 import { DecorativeHr } from "@/components/ui/decorative-hr"
@@ -138,11 +136,7 @@ export default async function Page(props: Props) {
 
         {/* Middle Column: Main Content */}
         <main className="flex w-full max-w-3xl min-w-0 flex-col">
-          {/* Mobile TOC & Footnotes Trigger */}
-          <div className="mb-6 flex gap-4 lg:hidden">
-            <MobileFootnotes />
-          </div>
-
+          {/* Mobile TOC Trigger */}
           <section className="mb-8 space-y-2">
             <div className="text-foreground/80 text-sm tracking-wider uppercase">
               <Link
@@ -201,23 +195,9 @@ export default async function Page(props: Props) {
             url={`${siteConfig.url}/notes/${params.slug}`}
           />
         </main>
-
-        {/* Right Column: Footnotes Portal (Desktop - Sidenotes) */}
-        <aside
-          id="footnote-portal-target"
-          className="footnotes-area relative hidden w-56 shrink-0 lg:block xl:w-64"
-        >
-          {/* Sidenotes are transported here by FootnoteMover */}
-        </aside>
       </div>
 
-      {/* Hidden Storage for Footnotes (when mobile drawer is closed) */}
-      <div id="footnote-storage" className="hidden" />
-
       <MobileActions headings={article.note.headings} />
-
-      {/* Client component to move footnotes */}
-      <FootnoteMover />
     </>
   )
 }
