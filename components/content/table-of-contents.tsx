@@ -26,11 +26,11 @@ export const TableOfContents = ({
   const handleHeadingClick = (e: React.MouseEvent, slug: string) => {
     e.preventDefault()
 
-    const scrollToHeading = () => {
+    const scrollToHeading = (isMobile: boolean) => {
       const element = document.getElementById(slug)
       if (element) {
         element.scrollIntoView({
-          behavior: "smooth",
+          behavior: isMobile ? "auto" : "smooth",
           block: "start",
           inline: "nearest",
         })
@@ -42,9 +42,9 @@ export const TableOfContents = ({
     if (onItemClick) {
       onItemClick()
       // Small delay to allow drawer to close/body scroll to unlock
-      setTimeout(scrollToHeading, 350)
+      setTimeout(() => scrollToHeading(true), 600)
     } else {
-      scrollToHeading()
+      scrollToHeading(false)
     }
   }
 

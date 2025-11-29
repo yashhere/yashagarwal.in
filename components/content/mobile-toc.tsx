@@ -25,7 +25,12 @@ export const MobileTOC = ({ headings }) => {
           <div className="bg-background flex-1 overflow-y-auto rounded-t-[10px] p-4">
             <div className="bg-muted mx-auto mb-6 h-1.5 w-12 flex-shrink-0 rounded-full" />
             <div className="mx-auto max-w-md">
-              <h3 className="mb-4 text-lg font-semibold">Table of Contents</h3>
+              <Drawer.Title className="mb-4 text-lg font-semibold">
+                Table of Contents
+              </Drawer.Title>
+              <Drawer.Description className="sr-only">
+                Table of contents for the current page.
+              </Drawer.Description>
               <TableOfContents
                 headings={headings}
                 interactive={false}
