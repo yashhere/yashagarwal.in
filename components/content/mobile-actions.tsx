@@ -9,9 +9,16 @@ import { MobileTOC } from "./mobile-toc"
 
 export const MobileActions = ({ headings }: { headings: any[] }) => {
   const [isExpanded, setIsExpanded] = useState(true)
+  const [isMounted, setIsMounted] = useState(false)
   const lastScrollY = useRef(0)
 
   useEffect(() => {
+    // Set initial state based on scroll position
+    if (window.scrollY > 100) {
+      setIsExpanded(false)
+    }
+    setIsMounted(true)
+
     const handleScroll = () => {
       const currentScrollY = window.scrollY
 
@@ -35,52 +42,38 @@ export const MobileActions = ({ headings }: { headings: any[] }) => {
     window.scrollTo({ top: 0, behavior: "smooth" })
   }
 
-  if (!headings || headings.length === 0) return null
+  if (!headings || headings.length === 0 || !isMounted) return null
 
   return (
     <div className="fixed bottom-6 left-1/2 z-40 -translate-x-1/2 lg:hidden">
       <motion.div
         layout
-        initial={false}
-        animate={isExpanded ? "expanded" : "collapsed"}
-        variants={{
-          expanded: {
-            width: "auto",
-            height: "auto",
-            borderRadius: 32,
-            padding: "12px 24px",
-            backgroundColor: "var(--background)",
-            borderColor: "var(--border)",
-          },
-          collapsed: {
-            width: 64,
-            height: 6,
-            borderRadius: 100,
-            padding: "0px",
-            backgroundColor: "var(--foreground)",
-            borderColor: "transparent",
-          },
+        className={cn(
+          "flex items-center justify-center overflow-hidden shadow-xl backdrop-blur-md",
+          isExpanded
+            ? "bg-background/95 border-border border"
+            : "bg-foreground/20 hover:bg-foreground/40 cursor-pointer"
+        )}
+        style={{
+          borderRadius: isExpanded ? 32 : 100,
         }}
         transition={{
           type: "spring",
-          stiffness: 400,
-          damping: 30,
+          stiffness: 300,
+          damping: 25,
+          mass: 0.5,
         }}
-        className={cn(
-          "flex items-center justify-center overflow-hidden border shadow-xl backdrop-blur-md",
-          !isExpanded && "cursor-pointer opacity-20 hover:opacity-40"
-        )}
         onClick={() => !isExpanded && setIsExpanded(true)}
       >
         <AnimatePresence mode="popLayout">
-          {isExpanded && (
+          {isExpanded ? (
             <motion.div
               key="actions"
               initial={{ opacity: 0, filter: "blur(4px)" }}
               animate={{ opacity: 1, filter: "blur(0px)" }}
               exit={{ opacity: 0, filter: "blur(4px)" }}
-              transition={{ duration: 0.2, delay: 0.1 }}
-              className="flex items-center gap-6 whitespace-nowrap"
+              transition={{ duration: 0.2 }}
+              className="flex items-center gap-6 px-6 py-3 whitespace-nowrap"
             >
               <MobileTOC headings={headings}>
                 <button className="text-muted-foreground hover:text-foreground group flex flex-col items-center gap-1 transition-colors">
@@ -122,6 +115,15 @@ export const MobileActions = ({ headings }: { headings: any[] }) => {
                 </span>
               </button>
             </motion.div>
+          ) : (
+            <motion.div
+              key="handle"
+              initial={{ opacity: 0, width: 0 }}
+              animate={{ opacity: 1, width: 64 }}
+              exit={{ opacity: 0, width: 0 }}
+              transition={{ duration: 0.2 }}
+              className="h-1.5"
+            />
           )}
         </AnimatePresence>
       </motion.div>
