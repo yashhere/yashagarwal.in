@@ -1,8 +1,10 @@
-import { useEffect, useRef, useState } from "react"
-import { ArrowUp, List } from "@phosphor-icons/react/dist/ssr"
-import { AnimatePresence, motion } from "motion/react"
+"use client"
 
-import { useOnClickOutside } from "@/hooks/use-on-click-outside"
+import { RefObject, useEffect, useRef, useState } from "react"
+import { ArrowUpIcon, ListIcon } from "@phosphor-icons/react/dist/ssr"
+import { AnimatePresence, motion } from "motion/react"
+import { useOnClickOutside } from "usehooks-ts"
+
 import { cn } from "@/lib/utils"
 import { MobileTOC } from "./mobile-toc"
 
@@ -12,7 +14,7 @@ export const MobileActions = ({ headings }: { headings: any[] }) => {
   const lastScrollY = useRef(0)
   const containerRef = useRef<HTMLDivElement>(null)
 
-  useOnClickOutside(containerRef, () => {
+  useOnClickOutside(containerRef as RefObject<HTMLElement>, () => {
     if (isExpanded) {
       setIsExpanded(false)
     }
@@ -78,12 +80,12 @@ export const MobileActions = ({ headings }: { headings: any[] }) => {
               animate={{ opacity: 1, filter: "blur(0px)" }}
               exit={{ opacity: 0, filter: "blur(4px)" }}
               transition={{ duration: 0.2 }}
-              className="flex items-center gap-6 px-6 py-3 whitespace-nowrap"
+              className="flex items-center gap-6 px-6 py-2 whitespace-nowrap"
             >
               <MobileTOC headings={headings}>
                 <button className="text-muted-foreground hover:text-foreground group flex flex-col items-center gap-1 transition-colors">
                   <div className="group-hover:bg-muted rounded-full p-2 transition-colors">
-                    <List size={20} weight="regular" />
+                    <ListIcon size={20} weight="regular" />
                   </div>
                   <span className="text-[10px] font-medium tracking-wider uppercase">
                     Sections
@@ -97,7 +99,7 @@ export const MobileActions = ({ headings }: { headings: any[] }) => {
                 aria-label="Scroll to top"
               >
                 <div className="group-hover:bg-muted rounded-full p-2 transition-colors">
-                  <ArrowUp size={20} weight="regular" />
+                  <ArrowUpIcon size={20} weight="regular" />
                 </div>
                 <span className="text-[10px] font-medium tracking-wider uppercase">
                   Top
@@ -111,9 +113,9 @@ export const MobileActions = ({ headings }: { headings: any[] }) => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="px-2 py-5"
+              className="px-6 py-2"
             >
-              <div className="bg-muted-foreground/50 h-1.5 w-12 rounded-full" />
+              <div className="bg-muted-foreground/50 h-1 w-16 rounded-full" />
               <span className="sr-only">Open menu</span>
             </motion.div>
           )}
