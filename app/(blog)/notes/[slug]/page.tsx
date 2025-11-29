@@ -17,8 +17,8 @@ import { format } from "date-fns"
 
 import { BackLinks } from "@/components/content/backlinks"
 import { FootnoteMover } from "@/components/content/footnote-mover"
+import { MobileActions } from "@/components/content/mobile-actions"
 import { MobileFootnotes } from "@/components/content/mobile-footnotes"
-import { MobileTOC } from "@/components/content/mobile-toc"
 import { TagList } from "@/components/content/tag-list"
 import { GoToTop } from "@/components/layout/go-to-top"
 import { DecorativeHr } from "@/components/ui/decorative-hr"
@@ -140,9 +140,6 @@ export default async function Page(props: Props) {
         <main className="flex w-full max-w-3xl min-w-0 flex-col">
           {/* Mobile TOC & Footnotes Trigger */}
           <div className="mb-6 flex gap-4 lg:hidden">
-            {article.note.headings && article.note.headings.length > 0 && (
-              <MobileTOC headings={article.note.headings} />
-            )}
             <MobileFootnotes />
           </div>
 
@@ -216,6 +213,8 @@ export default async function Page(props: Props) {
 
       {/* Hidden Storage for Footnotes (when mobile drawer is closed) */}
       <div id="footnote-storage" className="hidden" />
+
+      <MobileActions headings={article.note.headings} />
 
       {/* Client component to move footnotes */}
       <FootnoteMover />
