@@ -1,33 +1,35 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { ArrowUp, List, X } from "@phosphor-icons/react/dist/ssr"
 import { AnimatePresence, motion } from "motion/react"
 
-import { useScrollDirection } from "@/hooks/use-scroll-direction"
 import { cn } from "@/lib/utils"
 import { MobileTOC } from "./mobile-toc"
 
 export const MobileActions = ({ headings }: { headings: any[] }) => {
   const [isExpanded, setIsExpanded] = useState(true)
-  const scrollDirection = useScrollDirection()
+  const lastScrollY = useRef(0)
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY < 100) {
+      const currentScrollY = window.scrollY
+
+      // Expand at the very top
+      if (currentScrollY < 100) {
         setIsExpanded(true)
       }
+      // Collapse when scrolling down past threshold
+      else if (currentScrollY > 100 && currentScrollY > lastScrollY.current) {
+        setIsExpanded(false)
+      }
+
+      lastScrollY.current = currentScrollY
     }
 
-    window.addEventListener("scroll", handleScroll)
+    window.addEventListener("scroll", handleScroll, { passive: true })
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
-
-  useEffect(() => {
-    if (scrollDirection === "down" && window.scrollY > 100) {
-      setIsExpanded(false)
-    }
-  }, [scrollDirection])
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" })
