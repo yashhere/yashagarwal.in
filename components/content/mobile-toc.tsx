@@ -1,15 +1,18 @@
 "use client"
 
+import { useState } from "react"
 import { List } from "@phosphor-icons/react/dist/ssr"
 import { Drawer } from "vaul"
 
 import { TableOfContents } from "./table-of-contents"
 
 export const MobileTOC = ({ headings }) => {
+  const [open, setOpen] = useState(false)
+
   if (!headings || headings.length === 0) return null
 
   return (
-    <Drawer.Root>
+    <Drawer.Root open={open} onOpenChange={setOpen}>
       <Drawer.Trigger asChild>
         <button className="border-border bg-background text-foreground hover:bg-muted/50 flex w-full items-center gap-2 rounded-md border px-4 py-2 text-sm font-medium transition-colors">
           <List className="h-4 w-4" />
@@ -27,6 +30,7 @@ export const MobileTOC = ({ headings }) => {
                 headings={headings}
                 interactive={false}
                 className="border-none p-0 shadow-none"
+                onItemClick={() => setOpen(false)}
               />
             </div>
           </div>

@@ -14,24 +14,37 @@ export const TableOfContents = ({
   headings,
   interactive,
   className,
+  onItemClick,
 }: {
   headings: any[]
   interactive?: boolean
   className?: string
+  onItemClick?: () => void
 }) => {
   const [isOpen, setIsOpen] = useState(!interactive)
 
   const handleHeadingClick = (e: React.MouseEvent, slug: string) => {
     e.preventDefault()
-    const element = document.getElementById(slug)
-    if (element) {
-      element.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-        inline: "nearest",
-      })
-      // Update URL without triggering navigation
-      window.history.pushState(null, "", `#${slug}`)
+
+    const scrollToHeading = () => {
+      const element = document.getElementById(slug)
+      if (element) {
+        element.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+          inline: "nearest",
+        })
+        // Update URL without triggering navigation
+        window.history.pushState(null, "", `#${slug}`)
+      }
+    }
+
+    if (onItemClick) {
+      onItemClick()
+      // Small delay to allow drawer to close/body scroll to unlock
+      setTimeout(scrollToHeading, 350)
+    } else {
+      scrollToHeading()
     }
   }
 
