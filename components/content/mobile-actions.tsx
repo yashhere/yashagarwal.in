@@ -41,27 +41,46 @@ export const MobileActions = ({ headings }: { headings: any[] }) => {
     <div className="fixed bottom-6 left-1/2 z-40 -translate-x-1/2 lg:hidden">
       <motion.div
         layout
-        initial={{ borderRadius: 32, width: "auto" }}
-        className={cn(
-          "border-border bg-background/95 flex items-center justify-center overflow-hidden border shadow-xl backdrop-blur-md transition-shadow duration-300",
-          isExpanded
-            ? "px-6 py-3"
-            : "bg-foreground/20 hover:bg-foreground/40 h-1.5 w-16 cursor-pointer border-none px-1 py-1"
-        )}
-        animate={{
-          borderRadius: isExpanded ? 32 : 9999,
-          width: isExpanded ? "auto" : 64,
+        initial={false}
+        animate={isExpanded ? "expanded" : "collapsed"}
+        variants={{
+          expanded: {
+            width: "auto",
+            height: "auto",
+            borderRadius: 32,
+            padding: "12px 24px",
+            backgroundColor: "var(--background)",
+            borderColor: "var(--border)",
+          },
+          collapsed: {
+            width: 64,
+            height: 6,
+            borderRadius: 100,
+            padding: "0px",
+            backgroundColor: "var(--foreground)",
+            borderColor: "transparent",
+          },
         }}
+        transition={{
+          type: "spring",
+          stiffness: 400,
+          damping: 30,
+        }}
+        className={cn(
+          "flex items-center justify-center overflow-hidden border shadow-xl backdrop-blur-md",
+          !isExpanded && "cursor-pointer opacity-20 hover:opacity-40"
+        )}
         onClick={() => !isExpanded && setIsExpanded(true)}
       >
-        <AnimatePresence mode="wait" initial={false}>
+        <AnimatePresence mode="popLayout">
           {isExpanded && (
             <motion.div
               key="actions"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              className="flex items-center gap-6"
+              initial={{ opacity: 0, filter: "blur(4px)" }}
+              animate={{ opacity: 1, filter: "blur(0px)" }}
+              exit={{ opacity: 0, filter: "blur(4px)" }}
+              transition={{ duration: 0.2, delay: 0.1 }}
+              className="flex items-center gap-6 whitespace-nowrap"
             >
               <MobileTOC headings={headings}>
                 <button className="text-muted-foreground hover:text-foreground group flex flex-col items-center gap-1 transition-colors">
