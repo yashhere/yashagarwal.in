@@ -106,9 +106,9 @@ export default async function Page(props: Props) {
         image={article.note.image}
       />
 
-      <div className="mx-auto flex w-full max-w-screen-2xl flex-col justify-center gap-8 py-8 md:px-0 lg:flex-row">
+      <div className="xl:grid-cols-blog-xl mx-auto grid w-full max-w-3xl grid-cols-1 gap-8 py-8 xl:max-w-none">
         {/* Left Column: Sticky TOC (Desktop) */}
-        <aside className="hidden w-56 shrink-0 lg:block xl:w-64">
+        <aside className="hidden xl:block">
           <div className="sticky top-24 max-h-[calc(100vh-8rem)] overflow-y-auto pb-8">
             {article.note.headings && article.note.headings.length > 0 && (
               <>
@@ -135,8 +135,10 @@ export default async function Page(props: Props) {
         </aside>
 
         {/* Middle Column: Main Content */}
-        <main className="flex w-full max-w-3xl min-w-0 flex-col">
+        <main className="mx-auto flex w-full max-w-3xl min-w-0 flex-col px-4 md:px-6">
           {/* Mobile TOC Trigger */}
+          <div className="mb-6 flex gap-4 xl:hidden"></div>
+
           <section className="mb-8 space-y-2">
             <div className="text-foreground/80 text-sm tracking-wider uppercase">
               <Link
@@ -195,6 +197,9 @@ export default async function Page(props: Props) {
             url={`${siteConfig.url}/notes/${params.slug}`}
           />
         </main>
+
+        {/* Right Column: Empty placeholder to balance the layout and center the main content */}
+        <aside className="hidden xl:block" />
       </div>
 
       <MobileActions headings={article.note.headings} />

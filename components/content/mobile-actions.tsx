@@ -53,7 +53,7 @@ export const MobileActions = ({ headings }: { headings: any[] }) => {
   if (!headings || headings.length === 0 || !isMounted) return null
 
   return (
-    <div className="fixed bottom-6 left-1/2 z-40 -translate-x-1/2 lg:hidden">
+    <div className="fixed bottom-6 left-1/2 z-40 -translate-x-1/2 xl:hidden">
       <motion.div
         ref={containerRef}
         layout
