@@ -266,10 +266,6 @@ module.exports = {
         sans: ["var(--font-sans)"],
         mono: ["var(--font-mono)"],
       },
-      gridTemplateColumns: {
-        "blog-lg": "224px minmax(0, 1fr) 224px",
-        "blog-xl": "256px minmax(0, 1fr) 256px",
-      },
       typography: typographyStyles,
     },
   },

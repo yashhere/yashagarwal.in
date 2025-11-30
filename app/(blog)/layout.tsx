@@ -33,7 +33,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <div className="mx-auto w-full max-w-3xl px-4 xl:px-6">
           <Navigation />
         </div>
-        <main className="mx-auto w-full max-w-screen-2xl flex-1 px-4 pb-18 xl:px-6">
+        <main className="mx-auto w-full max-w-screen-2xl flex-1 pb-18">
           <Suspense fallback={<Loading />}>{children}</Suspense>
         </main>
       </SharedLayout>

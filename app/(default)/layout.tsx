@@ -30,7 +30,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <PersonStructuredData />
       </head>
       <SharedLayout>
-        <main className="w-full max-w-3xl flex-1 px-4 pb-18">
+        <main className="w-full max-w-3xl flex-1 px-4 pb-18 xl:px-6">
           <Navigation />
           <Suspense fallback={<Loading />}>{children}</Suspense>
         </main>

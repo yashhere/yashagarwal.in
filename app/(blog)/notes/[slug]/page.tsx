@@ -106,9 +106,9 @@ export default async function Page(props: Props) {
         image={article.note.image}
       />
 
-      <div className="xl:grid-cols-blog-xl mx-auto grid w-full max-w-3xl grid-cols-1 gap-8 py-8 xl:max-w-none">
+      <div className="mx-auto flex w-full max-w-3xl flex-col py-8 xl:max-w-screen-2xl xl:flex-row xl:justify-center">
         {/* Left Column: Sticky TOC (Desktop) */}
-        <aside className="hidden xl:block">
+        <aside className="hidden w-56 shrink-0 pl-4 xl:block xl:w-64 xl:pl-6">
           <div className="sticky top-24 max-h-[calc(100vh-8rem)] overflow-y-auto pb-8">
             {article.note.headings && article.note.headings.length > 0 && (
               <>
@@ -135,7 +135,7 @@ export default async function Page(props: Props) {
         </aside>
 
         {/* Middle Column: Main Content */}
-        <main className="mx-auto flex w-full max-w-3xl min-w-0 flex-col px-4 md:px-6">
+        <main className="mx-auto flex w-full max-w-3xl min-w-0 flex-col px-4 xl:px-6">
           {/* Mobile TOC Trigger */}
           <div className="mb-6 flex gap-4 xl:hidden"></div>
 
@@ -199,7 +199,7 @@ export default async function Page(props: Props) {
         </main>
 
         {/* Right Column: Empty placeholder to balance the layout and center the main content */}
-        <aside className="hidden xl:block" />
+        <aside className="hidden w-56 shrink-0 pr-4 xl:block xl:w-64 xl:pr-6" />
       </div>
 
       <MobileActions headings={article.note.headings} />
