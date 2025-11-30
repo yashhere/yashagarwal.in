@@ -1,24 +1,15 @@
 import { Metadata } from "next"
 import { Geist, IBM_Plex_Mono } from "next/font/google"
-import { SpeedInsights } from "@vercel/speed-insights/next"
-
-import { Analytics } from "@/components/interactive/analytics"
-import { Footer } from "@/components/layout/footer"
-import { Navigation } from "@/components/layout/navigation"
-import { ThemeProvider } from "@/components/layout/theme-provider"
-import { TailwindIndicator } from "@/components/ui/tailwind-indicator"
-import { cn } from "@/lib/utils"
 
 import "@/styles/globals.css"
 
-import { Suspense } from "react"
-
-import { Loading } from "@/components/ui/loading"
 import { defaultMetadata, defaultViewport } from "@/lib/seo/default"
 import {
   PersonStructuredData,
   WebsiteStructuredData,
 } from "@/lib/seo/structured-data"
+import { cn } from "@/lib/utils"
+import { Providers } from "./providers"
 
 const sansFont = Geist({
   subsets: ["latin"],
@@ -64,22 +55,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           monoFont.variable
         )}
       >
-        <ThemeProvider
-          attribute="class"
-          enableColorScheme={false}
-          disableTransitionOnChange={true}
-          defaultTheme="system"
-          enableSystem
-        >
-          <main className="w-full max-w-3xl flex-1 px-4 pb-18 md:px-0">
-            <Navigation />
-            <Suspense fallback={<Loading />}>{children}</Suspense>
-          </main>
-          <Footer />
-          <SpeedInsights />
-          <Analytics />
-          <TailwindIndicator />
-        </ThemeProvider>
+        <Providers>{children}</Providers>
       </body>
     </html>
   )

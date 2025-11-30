@@ -7,7 +7,7 @@ export const Footer: FC = () => {
 
   return (
     <footer className="border-border bg-background mt-auto w-full border-t-2">
-      <div className="mx-auto max-w-3xl px-4 py-2 md:px-0">
+      <div className="mx-auto max-w-3xl px-4 py-2 md:px-6">
         <div className="text-foreground/70 flex items-center justify-between text-base">
           {/* Left: Copyright */}
           <div>
