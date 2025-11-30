@@ -41,9 +41,9 @@ export const MobileTOC = ({
               </Drawer.Description>
               <TableOfContents
                 headings={headings}
-                interactive={false}
                 className="border-none p-0 shadow-none"
                 onItemClick={() => setOpen(false)}
+                mode="mobile"
               />
             </div>
           </div>

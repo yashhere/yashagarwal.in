@@ -113,12 +113,12 @@ export default async function Page(props: Props) {
             {article.note.headings && article.note.headings.length > 0 && (
               <>
                 <div className="text-foreground/80 mb-4 text-sm font-medium tracking-wider uppercase">
-                  Contents
+                  Table of Contents
                 </div>
                 <TableOfContents
                   headings={article.note.headings}
-                  interactive={false}
                   className="border-none bg-transparent p-0"
+                  mode="desktop"
                 />
               </>
             )}

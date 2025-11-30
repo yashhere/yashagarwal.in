@@ -79,6 +79,7 @@ h4,
 h5,
 h6 {
   @apply clear-both;
+  scroll-margin-top: 100px;
 }
 
 /* Ensure headings with anchors clear correctly */
