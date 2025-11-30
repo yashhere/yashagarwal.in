@@ -1,42 +1,24 @@
-import { Metadata } from "next"
+import { Suspense } from "react"
 
 import { Navigation } from "@/components/layout/navigation"
-import { SharedLayout } from "@/components/layout/shared-layout"
+import { Loading } from "@/components/ui/loading"
 
 import "@/styles/globals.css"
 import "@/styles/mdx.css"
 
-import { Suspense } from "react"
-
-import { Loading } from "@/components/ui/loading"
-import { defaultMetadata, defaultViewport } from "@/lib/seo/default"
-import {
-  PersonStructuredData,
-  WebsiteStructuredData,
-} from "@/lib/seo/structured-data"
-
-export const metadata: Metadata = defaultMetadata
-export const viewport = defaultViewport
-
-interface RootLayoutProps {
+interface BlogLayoutProps {
   children: React.ReactNode
 }
 
-export default function RootLayout({ children }: RootLayoutProps) {
+export default function BlogLayout({ children }: BlogLayoutProps) {
   return (
-    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
-      <head>
-        <WebsiteStructuredData />
-        <PersonStructuredData />
-      </head>
-      <SharedLayout>
-        <div className="mx-auto w-full max-w-3xl px-4 xl:px-6">
-          <Navigation />
-        </div>
-        <main className="mx-auto w-full max-w-screen-2xl flex-1 pb-18">
-          <Suspense fallback={<Loading />}>{children}</Suspense>
-        </main>
-      </SharedLayout>
-    </html>
+    <>
+      <div className="mx-auto w-full max-w-3xl px-4 md:px-6">
+        <Navigation />
+      </div>
+      <main className="mx-auto w-full max-w-screen-2xl flex-1 pb-18">
+        <Suspense fallback={<Loading />}>{children}</Suspense>
+      </main>
+    </>
   )
 }
