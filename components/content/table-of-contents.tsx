@@ -2,6 +2,7 @@
 
 import { useActiveItem } from "@/hooks/use-active-item"
 import { cn } from "@/lib/utils"
+import { Heading } from "@/types" // Import Heading interface
 import Link from "../ui/link"
 
 export const TableOfContents = ({
@@ -10,8 +11,7 @@ export const TableOfContents = ({
   onItemClick,
   mode,
 }: {
-  headings: any[]
-  interactive?: boolean
+  headings: Heading[] // Use the Heading interface
   className?: string
   onItemClick?: () => void
   mode?: "desktop" | "mobile"
@@ -20,6 +20,8 @@ export const TableOfContents = ({
     headings.map((h) => h.slug),
     mode
   )
+
+  const SCROLL_DELAY_AFTER_DRAWER_CLOSE = 600
 
   const handleHeadingClick = (e: React.MouseEvent, slug: string) => {
     e.preventDefault()
@@ -40,7 +42,7 @@ export const TableOfContents = ({
     if (onItemClick) {
       onItemClick()
       // Small delay to allow drawer to close/body scroll to unlock
-      setTimeout(() => scrollToHeading(true), 600)
+      setTimeout(() => scrollToHeading(true), SCROLL_DELAY_AFTER_DRAWER_CLOSE)
     } else {
       scrollToHeading(false)
     }

@@ -136,9 +136,6 @@ export default async function Page(props: Props) {
 
         {/* Middle Column: Main Content */}
         <main className="mx-auto flex w-full max-w-3xl min-w-0 flex-col px-4 md:px-6">
-          {/* Mobile TOC Trigger */}
-          <div className="mb-6 flex gap-4 xl:hidden"></div>
-
           <section className="mb-8 space-y-2">
             <div className="text-foreground/80 text-sm tracking-wider uppercase">
               <Link

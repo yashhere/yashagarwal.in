@@ -3,18 +3,22 @@ import { useEffect, useState } from "react"
 export function useActiveItem(itemIds: string[], mode?: "desktop" | "mobile") {
   const [activeId, setActiveId] = useState<string | null>(null)
 
+  const XL_BREAKPOINT = 1280
+
   useEffect(() => {
     // Optimization: Don't run observer if the component shouldn't be active for the current screen size
+
     if (typeof window !== "undefined") {
       if (
         mode === "desktop" &&
-        window.matchMedia("(max-width: 1279px)").matches
+        window.matchMedia(`(max-width: ${XL_BREAKPOINT - 1}px)`).matches
       ) {
         return
       }
+
       if (
         mode === "mobile" &&
-        window.matchMedia("(min-width: 1280px)").matches
+        window.matchMedia(`(min-width: ${XL_BREAKPOINT}px)`).matches
       ) {
         return
       }
@@ -28,6 +32,7 @@ export function useActiveItem(itemIds: string[], mode?: "desktop" | "mobile") {
           }
         })
       },
+
       { rootMargin: `0% 0% -80% 0%` }
     )
 

@@ -6,9 +6,10 @@ import { AnimatePresence, motion } from "motion/react"
 import { useOnClickOutside } from "usehooks-ts"
 
 import { cn } from "@/lib/utils"
+import { Heading } from "@/types"
 import { MobileTOC } from "./mobile-toc"
 
-export const MobileActions = ({ headings }: { headings: any[] }) => {
+export const MobileActions = ({ headings }: { headings: Heading[] }) => {
   const [isExpanded, setIsExpanded] = useState(true)
   const [isMounted, setIsMounted] = useState(false)
   const lastScrollY = useRef(0)
@@ -28,18 +29,20 @@ export const MobileActions = ({ headings }: { headings: any[] }) => {
     setIsMounted(true)
 
     const handleScroll = () => {
-      const currentScrollY = window.scrollY
+      requestAnimationFrame(() => {
+        const currentScrollY = window.scrollY
 
-      // Expand at the very top
-      if (currentScrollY < 100) {
-        setIsExpanded(true)
-      }
-      // Collapse when scrolling down past threshold
-      else if (currentScrollY > 100 && currentScrollY > lastScrollY.current) {
-        setIsExpanded(false)
-      }
+        // Expand at the very top
+        if (currentScrollY < 100) {
+          setIsExpanded(true)
+        }
+        // Collapse when scrolling down past threshold
+        else if (currentScrollY > 100 && currentScrollY > lastScrollY.current) {
+          setIsExpanded(false)
+        }
 
-      lastScrollY.current = currentScrollY
+        lastScrollY.current = currentScrollY
+      })
     }
 
     window.addEventListener("scroll", handleScroll, { passive: true })
@@ -83,7 +86,10 @@ export const MobileActions = ({ headings }: { headings: any[] }) => {
               className="flex items-center gap-6 px-6 py-2 whitespace-nowrap"
             >
               <MobileTOC headings={headings}>
-                <button className="text-muted-foreground hover:text-foreground group flex flex-col items-center gap-1 transition-colors">
+                <button
+                  className="text-muted-foreground hover:text-foreground group flex flex-col items-center gap-1 transition-colors"
+                  aria-label="Table of Contents"
+                >
                   <div className="group-hover:bg-muted rounded-full p-2 transition-colors">
                     <ListIcon size={20} weight="regular" />
                   </div>
