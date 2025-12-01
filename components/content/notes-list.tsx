@@ -1,3 +1,7 @@
+"use client"
+
+import { motion } from "motion/react"
+
 import { NotePreview } from "@/components/content/note-preview"
 import { NoteWithMetadata } from "@/types"
 
@@ -8,15 +12,35 @@ export const NoteList = ({
   notes: NoteWithMetadata[]
   homePage?: boolean
 }) => {
+  const item = {
+    hidden: { opacity: 0, y: 10 },
+    show: (i: number) => {
+      const transition = {
+        delay: Math.min(i * 0.05, 0.3),
+        type: "spring",
+        stiffness: 150,
+        damping: 15,
+      } as any
+      return { opacity: 1, y: 0, transition }
+    },
+  } as any
+
   return (
-    <ul className="-mx-4">
-      {notes?.map((note) => {
+    <motion.ul className="-mx-4">
+      {notes?.map((note, idx) => {
         return (
-          <li key={note.note.slug}>
+          <motion.li
+            key={note.note.slug}
+            variants={item}
+            custom={idx}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+          >
             <NotePreview homePage={homePage} key={note.note.slug} note={note} />
-          </li>
+          </motion.li>
         )
       })}
-    </ul>
+    </motion.ul>
   )
 }
