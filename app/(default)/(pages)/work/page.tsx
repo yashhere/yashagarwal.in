@@ -190,7 +190,7 @@ const Page: FC = () => {
             <motion.div
               key={idx}
               variants={item}
-              custom={idx}
+              custom={idx + 3}
               initial="hidden"
               whileInView="show"
               viewport={{ once: true }}
