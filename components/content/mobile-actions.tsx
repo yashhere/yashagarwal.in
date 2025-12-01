@@ -9,9 +9,10 @@ import { cn } from "@/lib/utils"
 import { Heading } from "@/types"
 import { MobileTOC } from "./mobile-toc"
 
+const SCROLL_THRESHOLD_PX = 100
+
 export const MobileActions = ({ headings }: { headings: Heading[] }) => {
   const [isExpanded, setIsExpanded] = useState(true)
-  const [isMounted, setIsMounted] = useState(false)
   const lastScrollY = useRef(0)
   const containerRef = useRef<HTMLDivElement>(null)
 
@@ -23,37 +24,42 @@ export const MobileActions = ({ headings }: { headings: Heading[] }) => {
 
   useEffect(() => {
     // Set initial state based on scroll position
-    if (window.scrollY > 100) {
+    if (window.scrollY > SCROLL_THRESHOLD_PX) {
       setIsExpanded(false)
     }
-    setIsMounted(true)
-
+    let rafId: number | null = null
     const handleScroll = () => {
-      requestAnimationFrame(() => {
+      if (rafId) cancelAnimationFrame(rafId)
+      rafId = requestAnimationFrame(() => {
         const currentScrollY = window.scrollY
-
         // Expand at the very top
-        if (currentScrollY < 100) {
+        if (currentScrollY < SCROLL_THRESHOLD_PX) {
           setIsExpanded(true)
         }
         // Collapse when scrolling down past threshold
-        else if (currentScrollY > 100 && currentScrollY > lastScrollY.current) {
+        else if (
+          currentScrollY > SCROLL_THRESHOLD_PX &&
+          currentScrollY > lastScrollY.current
+        ) {
           setIsExpanded(false)
         }
-
         lastScrollY.current = currentScrollY
+        rafId = null
       })
     }
-
     window.addEventListener("scroll", handleScroll, { passive: true })
-    return () => window.removeEventListener("scroll", handleScroll)
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll)
+      if (rafId) cancelAnimationFrame(rafId)
+    }
   }, [])
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" })
   }
 
-  if (!headings || headings.length === 0 || !isMounted) return null
+  if (!headings || headings.length === 0) return null
 
   return (
     <div className="fixed bottom-6 left-1/2 z-40 -translate-x-1/2 xl:hidden">

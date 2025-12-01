@@ -51,7 +51,7 @@ export function useActiveItem(itemIds: string[], mode?: "desktop" | "mobile") {
         }
       })
     }
-  }, [itemIds])
+  }, [itemIds, mode])
 
   return activeId
 }
