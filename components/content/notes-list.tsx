@@ -8,15 +8,17 @@ import { NoteWithMetadata } from "@/types"
 export const NoteList = ({
   notes,
   homePage = false,
+  baseDelay = 0,
 }: {
   notes: NoteWithMetadata[]
   homePage?: boolean
+  baseDelay?: number
 }) => {
   const item = {
     hidden: { opacity: 0, y: 10 },
     show: (i: number) => {
       const transition = {
-        delay: Math.min(i * 0.05, 0.3),
+        delay: baseDelay + Math.min(i * 0.05, 0.3),
         type: "spring",
         stiffness: 150,
         damping: 15,
