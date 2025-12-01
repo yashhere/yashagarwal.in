@@ -12,7 +12,7 @@ import "@/styles/mdx.css"
 import "katex/dist/katex.css"
 
 import { notFound } from "next/navigation"
-import { XLogoIcon } from "@phosphor-icons/react/dist/ssr"
+import { ArrowLeftIcon, XLogoIcon } from "@phosphor-icons/react/dist/ssr"
 import { format } from "date-fns"
 
 import { BackLinks } from "@/components/content/backlinks"
@@ -108,7 +108,10 @@ export default async function Page(props: Props) {
 
       <div className="mx-auto flex w-full max-w-3xl flex-col py-8 xl:max-w-screen-2xl xl:flex-row xl:justify-center">
         {/* Left Column: Sticky TOC (Desktop) */}
-        <aside className="hidden w-56 shrink-0 pl-4 xl:block xl:w-64 xl:pl-6">
+        <aside
+          className="hidden w-56 shrink-0 pl-4 xl:block xl:w-64 xl:pl-6"
+          style={{ contain: "layout style paint" }}
+        >
           <div className="sticky top-24 max-h-[calc(100vh-8rem)] overflow-y-auto pb-8">
             {article.note.headings && article.note.headings.length > 0 && (
               <>
@@ -126,9 +129,9 @@ export default async function Page(props: Props) {
               <Link
                 href="/notes"
                 variant="text"
-                className="text-muted-foreground hover:text-foreground text-sm"
+                className="text-muted-foreground"
               >
-                ← Back to Notes
+                <ArrowLeftIcon size={16} /> Back to Notes
               </Link>
             </div>
           </div>
@@ -195,8 +198,11 @@ export default async function Page(props: Props) {
           />
         </main>
 
-        {/* Right Column: Empty placeholder to balance the layout and center the main content */}
-        <aside className="hidden w-56 shrink-0 pr-4 xl:block xl:w-64 xl:pr-6" />
+        {/* Right Column: Empty placeholder to balance the 3-column flex layout */}
+        <aside
+          className="hidden w-56 shrink-0 pr-4 xl:block xl:w-64 xl:pr-6"
+          style={{ contain: "layout style paint" }}
+        />
       </div>
 
       <MobileActions headings={article.note.headings} />
