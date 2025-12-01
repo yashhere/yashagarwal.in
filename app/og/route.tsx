@@ -106,104 +106,102 @@ export async function GET(req: NextRequest) {
     }
 
     return new ImageResponse(
-      (
+      <div
+        tw="flex h-full w-full bg-white flex-col relative"
+        style={{
+          fontFamily:
+            "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+          background: "linear-gradient(135deg, #f8fafc 0%, #ffffff 100%)",
+        }}
+      >
         <div
-          tw="flex h-full w-full bg-white flex-col relative"
+          tw="absolute inset-0 opacity-30"
           style={{
-            fontFamily:
-              "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
-            background: "linear-gradient(135deg, #f8fafc 0%, #ffffff 100%)",
+            backgroundImage:
+              "radial-gradient(circle at 25% 25%, #e2e8f0 1px, transparent 1px), radial-gradient(circle at 75% 75%, #e2e8f0 1px, transparent 1px)",
+            backgroundSize: "60px 60px",
           }}
-        >
-          <div
-            tw="absolute inset-0 opacity-30"
-            style={{
-              backgroundImage:
-                "radial-gradient(circle at 25% 25%, #e2e8f0 1px, transparent 1px), radial-gradient(circle at 75% 75%, #e2e8f0 1px, transparent 1px)",
-              backgroundSize: "60px 60px",
-            }}
-          />
+        />
 
-          <div tw="flex h-full w-full flex-col relative z-10 p-12">
-            <header tw="flex items-center justify-between text-3xl mb-8">
+        <div tw="flex h-full w-full flex-col relative z-10 p-12">
+          <header tw="flex items-center justify-between text-3xl mb-8">
+            <div
+              tw="font-bold flex items-center"
+              style={{
+                color: colors.foreground,
+              }}
+            >
               <div
-                tw="font-bold flex items-center"
+                tw="w-3 h-3 rounded-full mr-3"
+                style={{ backgroundColor: colors.accent }}
+              />
+              {siteConfig.name}
+            </div>
+            <div style={{ color: colors.mutedForeground, fontSize: "28px" }}>
+              {hostname}
+            </div>
+          </header>
+
+          <main tw="flex flex-1 flex-col items-center justify-center px-8">
+            <div tw="flex w-full justify-center mb-8">
+              <div
+                tw="rounded-2xl p-8 text-center max-w-5xl leading-tight font-semibold"
                 style={{
+                  fontSize: `${titleFontSize}px`,
+                  backgroundColor: colors.muted,
                   color: colors.foreground,
+                  boxShadow: `0 10px 25px ${colors.shadow}`,
+                  border: `1px solid ${colors.border}`,
+                  wordWrap: "break-word",
                 }}
               >
-                <div
-                  tw="w-3 h-3 rounded-full mr-3"
-                  style={{ backgroundColor: colors.accent }}
-                />
-                {siteConfig.name}
+                {truncatedTitle}
               </div>
-              <div style={{ color: colors.mutedForeground, fontSize: "28px" }}>
-                {hostname}
+            </div>
+
+            {truncatedMeta && (
+              <div
+                tw="text-3xl max-w-4xl text-center leading-relaxed mb-8"
+                style={{
+                  color: colors.mutedForeground,
+                  wordWrap: "break-word",
+                }}
+              >
+                {truncatedMeta}
               </div>
-            </header>
+            )}
 
-            <main tw="flex flex-1 flex-col items-center justify-center px-8">
-              <div tw="flex w-full justify-center mb-8">
-                <div
-                  tw="rounded-2xl p-8 text-center max-w-5xl leading-tight font-semibold"
-                  style={{
-                    fontSize: `${titleFontSize}px`,
-                    backgroundColor: colors.muted,
-                    color: colors.foreground,
-                    boxShadow: `0 10px 25px ${colors.shadow}`,
-                    border: `1px solid ${colors.border}`,
-                    wordWrap: "break-word",
-                  }}
-                >
-                  {truncatedTitle}
-                </div>
+            {tags.length > 0 && (
+              <div tw="flex flex-wrap justify-center items-center max-w-4xl">
+                {tags.slice(0, 4).map((tag, index) => (
+                  <span
+                    key={index}
+                    tw="rounded-xl px-4 py-2 mx-2 text-xl font-medium"
+                    style={{
+                      backgroundColor: colors.muted,
+                      border: `1px solid ${colors.border}`,
+                      color: colors.foreground,
+                    }}
+                  >
+                    #{tag}
+                  </span>
+                ))}
+                {tags.length > 4 && (
+                  <span
+                    tw="rounded-xl px-4 py-2 text-xl font-medium"
+                    style={{
+                      backgroundColor: colors.accent,
+                      color: "white",
+                    }}
+                  >
+                    +{tags.length - 4} more
+                  </span>
+                )}
               </div>
-
-              {truncatedMeta && (
-                <div
-                  tw="text-3xl max-w-4xl text-center leading-relaxed mb-8"
-                  style={{
-                    color: colors.mutedForeground,
-                    wordWrap: "break-word",
-                  }}
-                >
-                  {truncatedMeta}
-                </div>
-              )}
-
-              {tags.length > 0 && (
-                <div tw="flex flex-wrap justify-center items-center max-w-4xl">
-                  {tags.slice(0, 4).map((tag, index) => (
-                    <span
-                      key={index}
-                      tw="rounded-xl px-4 py-2 mx-2 text-xl font-medium"
-                      style={{
-                        backgroundColor: colors.muted,
-                        border: `1px solid ${colors.border}`,
-                        color: colors.foreground,
-                      }}
-                    >
-                      #{tag}
-                    </span>
-                  ))}
-                  {tags.length > 4 && (
-                    <span
-                      tw="rounded-xl px-4 py-2 text-xl font-medium"
-                      style={{
-                        backgroundColor: colors.accent,
-                        color: "white",
-                      }}
-                    >
-                      +{tags.length - 4} more
-                    </span>
-                  )}
-                </div>
-              )}
-            </main>
-          </div>
+            )}
+          </main>
         </div>
-      ),
+      </div>,
       {
         width: 1200,
         height: 630,
@@ -214,17 +212,13 @@ export async function GET(req: NextRequest) {
     console.error("OG Image generation error:", error)
 
     return new ImageResponse(
-      (
-        <div tw="flex h-full w-full bg-gradient-to-br from-gray-50 to-white flex-col items-center justify-center p-12">
-          <div tw="text-7xl font-bold text-gray-800 mb-6">
-            {siteConfig.name}
-          </div>
-          <div tw="text-4xl text-gray-600 text-center max-w-2xl">
-            {noteTitle || "Content Preview"}
-          </div>
-          <div tw="text-2xl text-gray-500 mt-8">yashagarwal.in</div>
+      <div tw="flex h-full w-full bg-gradient-to-br from-gray-50 to-white flex-col items-center justify-center p-12">
+        <div tw="text-7xl font-bold text-gray-800 mb-6">{siteConfig.name}</div>
+        <div tw="text-4xl text-gray-600 text-center max-w-2xl">
+          {noteTitle || "Content Preview"}
         </div>
-      ),
+        <div tw="text-2xl text-gray-500 mt-8">yashagarwal.in</div>
+      </div>,
       {
         width: 1200,
         height: 630,

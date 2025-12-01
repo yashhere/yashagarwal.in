@@ -13,6 +13,13 @@ export type SiteConfig = {
   featuredNotes: number
 }
 
+// Interface for TOC headings
+export interface Heading {
+  slug: string
+  text: string
+  heading: number
+}
+
 // Explicit type for note preview in lists
 export type NotePreview = {
   title: string

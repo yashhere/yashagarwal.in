@@ -23,12 +23,23 @@
     scrollbar-width: none; /* Firefox */
   }
 
+  .scroll-pr-6 {
+    padding-right: 1.5rem;
+  }
+
   /* Fix for Safari lazy loading images */
   @supports (font: -apple-system-body) and (-webkit-appearance: none) {
     img[loading="lazy"] {
       clip-path: inset(0.6px);
     }
   }
+}
+
+/* Optimize legibility */
+.optimize-legibility {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 @layer base {
@@ -121,6 +132,7 @@
 
   html {
     font-display: swap; /* Ensure fonts load predictably */
+    scroll-behavior: smooth; /* Smooth scrolling for the whole page */
   }
 
   body {
