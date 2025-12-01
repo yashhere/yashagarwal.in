@@ -1,5 +1,7 @@
 "use client"
 
+import { motion } from "motion/react"
+
 import { useActiveItem } from "@/hooks/use-active-item"
 import { cn } from "@/lib/utils"
 import { Heading } from "@/types" // Import Heading interface
@@ -48,6 +50,20 @@ export const TableOfContents = ({
     }
   }
 
+  const item = {
+    hidden: { opacity: 0, x: -10 },
+    show: (i: number) => ({
+      opacity: 1,
+      x: 0,
+      transition: {
+        delay: i * 0.05,
+        type: "spring",
+        stiffness: 150,
+        damping: 15,
+      },
+    }),
+  } as any
+
   return (
     <div
       className={cn(
@@ -56,25 +72,32 @@ export const TableOfContents = ({
       )}
     >
       <div className="flex flex-col space-y-1">
-        {headings.map((heading) => {
+        {headings.map((heading, idx) => {
           const isActive = heading.slug === activeId
 
           return (
-            <Link
+            <motion.div
               key={heading.slug}
-              href={`#${heading.slug}`}
-              variant="nav"
-              className={cn(
-                "hover:text-primary text-muted-foreground relative block py-0.5 transition-colors duration-200",
-                isActive && "text-primary"
-              )}
-              style={{
-                paddingLeft: `calc(0.75rem + ${(heading.heading - 2) * 1}rem)`,
-              }} // Dynamic indentation, adjusted base
-              onClick={(e) => handleHeadingClick(e, heading.slug)}
+              variants={item}
+              custom={idx}
+              initial="hidden"
+              animate="show"
             >
-              {heading.text}
-            </Link>
+              <Link
+                href={`#${heading.slug}`}
+                variant="nav"
+                className={cn(
+                  "hover:text-primary text-muted-foreground relative block py-0.5 transition-colors duration-200",
+                  isActive && "text-primary"
+                )}
+                style={{
+                  paddingLeft: `calc(0.75rem + ${(heading.heading - 2) * 1}rem)`,
+                }} // Dynamic indentation, adjusted base
+                onClick={(e) => handleHeadingClick(e, heading.slug)}
+              >
+                {heading.text}
+              </Link>
+            </motion.div>
           )
         })}
       </div>

@@ -12,10 +12,17 @@ import "@/styles/mdx.css"
 import "katex/dist/katex.css"
 
 import { notFound } from "next/navigation"
-import { ArrowLeftIcon, XLogoIcon } from "@phosphor-icons/react/dist/ssr"
+import { XLogoIcon } from "@phosphor-icons/react/dist/ssr"
 import { format } from "date-fns"
 
 import { BackLinks } from "@/components/content/backlinks"
+import {
+  AnimatedActions,
+  AnimatedBackLinks,
+  AnimatedTagList,
+  ArticleHeader,
+  BackToNotesLink,
+} from "@/components/content/blog-post-animated-wrapper"
 import { MobileActions } from "@/components/content/mobile-actions"
 import { TagList } from "@/components/content/tag-list"
 import { GoToTop } from "@/components/layout/go-to-top"
@@ -116,7 +123,7 @@ export default async function Page(props: Props) {
             {article.note.headings && article.note.headings.length > 0 && (
               <>
                 <div className="text-foreground/80 mb-4 text-sm font-medium tracking-wider uppercase">
-                  Table of Contents
+                  On This Page
                 </div>
                 <TableOfContents
                   headings={article.note.headings}
@@ -126,20 +133,14 @@ export default async function Page(props: Props) {
               </>
             )}
             <div className="mt-8">
-              <Link
-                href="/notes"
-                variant="text"
-                className="text-muted-foreground"
-              >
-                <ArrowLeftIcon size={16} /> Back to Notes
-              </Link>
+              <BackToNotesLink />
             </div>
           </div>
         </aside>
 
         {/* Middle Column: Main Content */}
         <main className="mx-auto flex w-full max-w-3xl min-w-0 flex-col px-4 md:px-6">
-          <section className="mb-8 space-y-2">
+          <ArticleHeader>
             <div className="text-foreground/80 text-sm tracking-wider uppercase">
               <Link
                 key={category_slug}
@@ -156,7 +157,7 @@ export default async function Page(props: Props) {
                 {format(new Date(article.note.createdOn), "MMM dd, yyyy")}
               </span>
             </div>
-          </section>
+          </ArticleHeader>
 
           {article.series ? (
             <div className="mb-8">
@@ -173,12 +174,18 @@ export default async function Page(props: Props) {
           </div>
 
           <DecorativeHr />
-          {article.backlinks && <BackLinks backlinks={article.backlinks} />}
+          {article.backlinks && (
+            <AnimatedBackLinks>
+              <BackLinks backlinks={article.backlinks} />
+            </AnimatedBackLinks>
+          )}
           {article.note.tags && article.note.tags.length > 0 && (
-            <TagList tags={article.note.tags} />
+            <AnimatedTagList>
+              <TagList tags={article.note.tags} />
+            </AnimatedTagList>
           )}
           <DecorativeHr />
-          <div className="my-8 flex flex-row items-center justify-between space-x-2">
+          <AnimatedActions>
             <Link
               href={`https://x.com/intent/tweet?text=${encodedUrl}%20via%20%40yash__here`}
               className="text-base"
@@ -190,7 +197,7 @@ export default async function Page(props: Props) {
               </div>
             </Link>
             <GoToTop slug={slug} />
-          </div>
+          </AnimatedActions>
           <DecorativeHr />
           <DisqusComments
             slug={params.slug}
