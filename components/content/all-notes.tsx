@@ -2,6 +2,7 @@
 
 import { ChangeEvent, useEffect, useMemo, useState } from "react"
 import { useInView } from "react-intersection-observer"
+import { motion } from "motion/react"
 
 import { NoteList } from "@/components/content/notes-list"
 import { SearchInput } from "@/components/interactive/search"
@@ -24,6 +25,11 @@ export const NotesList = ({
   const { ref, inView } = useInView({
     threshold: 0,
   })
+
+  const item = {
+    hidden: { opacity: 0, y: 10 },
+    show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 150, damping: 15 } },
+  } as any // as any workaround for TypeScript
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
@@ -56,9 +62,14 @@ export const NotesList = ({
   return (
     <div className="flex flex-col space-y-2">
       {!noSearchBox ? (
-        <div className="flex flex-col pb-4">
+        <motion.div
+          className="flex flex-col pb-4"
+          variants={item}
+          initial="hidden"
+          animate="show"
+        >
           <SearchInput search={search} onChange={onChange} />
-        </div>
+        </motion.div>
       ) : null}
       <section>
         <NoteList notes={visibleNotes} />
