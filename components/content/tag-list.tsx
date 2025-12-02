@@ -3,7 +3,7 @@
 import { FC } from "react"
 import { TagChevronIcon } from "@phosphor-icons/react/dist/ssr"
 import GithubSlugger from "github-slugger"
-import { motion } from "motion/react"
+import { motion, Variants } from "motion/react"
 
 import Link from "../ui/link"
 
@@ -16,7 +16,7 @@ export const TagList: FC<TagListProps> = ({ tags }) => {
     return null
   }
 
-  const item = {
+  const item: Variants = {
     hidden: { opacity: 0, scale: 0.8 },
     show: (i: number) => ({
       opacity: 1,
@@ -28,7 +28,7 @@ export const TagList: FC<TagListProps> = ({ tags }) => {
         damping: 15,
       },
     }),
-  } as any
+  }
 
   return (
     <div className="border-border bg-background my-8 rounded-md border p-2.5 text-sm">

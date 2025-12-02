@@ -1,6 +1,6 @@
 "use client"
 
-import { motion } from "motion/react"
+import { motion, Variants } from "motion/react"
 
 import { useActiveItem } from "@/hooks/use-active-item"
 import { cn } from "@/lib/utils"
@@ -50,7 +50,7 @@ export const TableOfContents = ({
     }
   }
 
-  const item = {
+  const item: Variants = {
     hidden: { opacity: 0, x: -10 },
     show: (i: number) => ({
       opacity: 1,
@@ -62,7 +62,7 @@ export const TableOfContents = ({
         damping: 15,
       },
     }),
-  } as any
+  }
 
   return (
     <div

@@ -1,7 +1,7 @@
 "use client"
 
 import { GraphIcon } from "@phosphor-icons/react/dist/ssr"
-import { motion } from "motion/react"
+import { motion, Variants } from "motion/react"
 
 import { getNoteBacklinks } from "@/lib/content"
 import Link from "../ui/link"
@@ -15,7 +15,7 @@ export const BackLinks = ({
     return null
   }
 
-  const item = {
+  const item: Variants = {
     hidden: { opacity: 0, x: -10 },
     show: (i: number) => ({
       opacity: 1,
@@ -27,7 +27,7 @@ export const BackLinks = ({
         damping: 15,
       },
     }),
-  } as any
+  }
 
   return (
     <div className="border-border bg-background my-8 rounded-md border p-2.5 text-sm">

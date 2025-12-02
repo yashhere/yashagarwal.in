@@ -102,12 +102,6 @@ export const DarkToggle = () => {
                   return
                 }
 
-                await document.startViewTransition(() => {
-                  flushSync(() => {
-                    toggleTheme()
-                  })
-                }).ready
-
                 const { top, left, width, height } =
                   e.currentTarget.getBoundingClientRect()
                 const x = left + width / 2
@@ -118,6 +112,17 @@ export const DarkToggle = () => {
                   Math.max(left, right),
                   Math.max(top, bottom)
                 )
+
+                try {
+                  await document.startViewTransition(() => {
+                    flushSync(() => {
+                      toggleTheme()
+                    })
+                  }).ready
+                } catch (error) {
+                  console.error("View transition failed:", error)
+                  toggleTheme()
+                }
 
                 document.documentElement.animate(
                   {

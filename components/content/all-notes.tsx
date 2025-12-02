@@ -1,8 +1,8 @@
 "use client"
 
 import { ChangeEvent, useEffect, useMemo, useState } from "react"
+import { motion, Variants } from "motion/react"
 import { useInView } from "react-intersection-observer"
-import { motion } from "motion/react"
 
 import { NoteList } from "@/components/content/notes-list"
 import { SearchInput } from "@/components/interactive/search"
@@ -26,10 +26,14 @@ export const NotesList = ({
     threshold: 0,
   })
 
-  const item = {
+  const item: Variants = {
     hidden: { opacity: 0, y: 10 },
-    show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 150, damping: 15 } },
-  } as any // as any workaround for TypeScript
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: { type: "spring", stiffness: 150, damping: 15 },
+    },
+  }
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()

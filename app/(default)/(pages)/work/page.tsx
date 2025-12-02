@@ -10,6 +10,7 @@ import { motion } from "motion/react"
 
 import { Heading } from "@/components/ui/heading"
 import Section from "@/components/ui/section"
+import { fadeInUpVariants } from "@/lib/animations"
 
 interface WorkExperienceProps {
   company: string
@@ -18,6 +19,7 @@ interface WorkExperienceProps {
   description: string
   achievements?: string[]
   nestedAchievements?: { [key: string]: string[] }
+  index: number
 }
 
 const WorkExperience: FC<WorkExperienceProps> = ({
@@ -27,9 +29,17 @@ const WorkExperience: FC<WorkExperienceProps> = ({
   description,
   achievements,
   nestedAchievements,
+  index,
 }) => {
   return (
-    <>
+    <motion.div
+      className="relative pb-10 pl-8 last:pb-0"
+      variants={fadeInUpVariants}
+      custom={index + 3}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true }}
+    >
       <div className="border-border absolute top-0 bottom-0 left-1 border-l"></div>
 
       <div className="border-border bg-foreground absolute top-2.5 left-0 h-2.5 w-2.5 rounded-full border"></div>
@@ -78,7 +88,7 @@ const WorkExperience: FC<WorkExperienceProps> = ({
           ))}
         </div>
       )}
-    </>
+    </motion.div>
   )
 }
 
@@ -125,25 +135,12 @@ const workExperiences = [
 ]
 
 const Page: FC = () => {
-  const item = {
-    hidden: { opacity: 0, y: 10 },
-    show: (i: number) => {
-      const transition = {
-        delay: Math.min(i * 0.05, 0.3),
-        type: "spring",
-        stiffness: 150,
-        damping: 15,
-      } as any
-      return { opacity: 1, y: 0, transition }
-    },
-  } as any
-
   return (
     <>
       <Section data={null} title="Work">
         <motion.section className="text-foreground mb-8 leading-relaxed">
           <motion.p
-            variants={item}
+            variants={fadeInUpVariants}
             custom={0}
             initial="hidden"
             whileInView="show"
@@ -158,7 +155,7 @@ const Page: FC = () => {
           </motion.p>
           <motion.p
             className="mt-2"
-            variants={item}
+            variants={fadeInUpVariants}
             custom={1}
             initial="hidden"
             whileInView="show"
@@ -173,7 +170,7 @@ const Page: FC = () => {
 
         <motion.div
           className="mb-8 flex items-center gap-2"
-          variants={item}
+          variants={fadeInUpVariants}
           custom={2}
           initial="hidden"
           whileInView="show"
@@ -187,17 +184,7 @@ const Page: FC = () => {
 
         <motion.div className="space-y-0">
           {workExperiences.map((experience, idx) => (
-            <motion.div
-              key={idx}
-              variants={item}
-              custom={idx + 3}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true }}
-              className="relative pb-10 pl-8 last:pb-0"
-            >
-              <WorkExperience {...experience} />
-            </motion.div>
+            <WorkExperience key={idx} {...experience} index={idx} />
           ))}
         </motion.div>
       </Section>

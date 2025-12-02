@@ -16,13 +16,7 @@ import { XLogoIcon } from "@phosphor-icons/react/dist/ssr"
 import { format } from "date-fns"
 
 import { BackLinks } from "@/components/content/backlinks"
-import {
-  AnimatedActions,
-  AnimatedBackLinks,
-  AnimatedTagList,
-  ArticleHeader,
-  BackToNotesLink,
-} from "@/components/content/blog-post-animated-wrapper"
+import { BackToNotesLink } from "@/components/content/blog-post-animated-wrapper"
 import { MobileActions } from "@/components/content/mobile-actions"
 import { TagList } from "@/components/content/tag-list"
 import { GoToTop } from "@/components/layout/go-to-top"
@@ -140,7 +134,7 @@ export default async function Page(props: Props) {
 
         {/* Middle Column: Main Content */}
         <main className="mx-auto flex w-full max-w-3xl min-w-0 flex-col px-4 md:px-6">
-          <ArticleHeader>
+          <section className="mb-8 space-y-2">
             <div className="text-foreground/80 text-sm tracking-wider uppercase">
               <Link
                 key={category_slug}
@@ -157,7 +151,7 @@ export default async function Page(props: Props) {
                 {format(new Date(article.note.createdOn), "MMM dd, yyyy")}
               </span>
             </div>
-          </ArticleHeader>
+          </section>
 
           {article.series ? (
             <div className="mb-8">
@@ -174,18 +168,12 @@ export default async function Page(props: Props) {
           </div>
 
           <DecorativeHr />
-          {article.backlinks && (
-            <AnimatedBackLinks>
-              <BackLinks backlinks={article.backlinks} />
-            </AnimatedBackLinks>
-          )}
+          {article.backlinks && <BackLinks backlinks={article.backlinks} />}
           {article.note.tags && article.note.tags.length > 0 && (
-            <AnimatedTagList>
-              <TagList tags={article.note.tags} />
-            </AnimatedTagList>
+            <TagList tags={article.note.tags} />
           )}
           <DecorativeHr />
-          <AnimatedActions>
+          <div className="my-8 flex flex-row items-center justify-between space-x-2">
             <Link
               href={`https://x.com/intent/tweet?text=${encodedUrl}%20via%20%40yash__here`}
               className="text-base"
@@ -197,7 +185,7 @@ export default async function Page(props: Props) {
               </div>
             </Link>
             <GoToTop slug={slug} />
-          </AnimatedActions>
+          </div>
           <DecorativeHr />
           <DisqusComments
             slug={params.slug}

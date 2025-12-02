@@ -5,28 +5,15 @@ import { motion } from "motion/react"
 import { Heading } from "@/components/ui/heading"
 import Link from "@/components/ui/link"
 import { SocialLinks } from "@/components/ui/social-links"
+import { fadeInUpVariants } from "@/lib/animations"
 
 export const HomeContent = ({ children }: { children: React.ReactNode }) => {
-  const item = {
-    hidden: { opacity: 0, y: 10 },
-    show: (i: number) => ({
-      opacity: 1,
-      y: 0,
-      transition: {
-        delay: i * 0.1,
-        type: "spring",
-        stiffness: 150,
-        damping: 15,
-      },
-    }),
-  } as any
-
   return (
     <>
       <div className="mt-12 max-w-full">
         <motion.div
           className="mb-8"
-          variants={item}
+          variants={fadeInUpVariants}
           custom={0}
           initial="hidden"
           animate="show"
@@ -42,7 +29,7 @@ export const HomeContent = ({ children }: { children: React.ReactNode }) => {
 
         <div className="text-foreground/90 space-y-6 text-base leading-relaxed">
           <motion.p
-            variants={item}
+            variants={fadeInUpVariants}
             custom={1}
             initial="hidden"
             animate="show"
@@ -60,7 +47,7 @@ export const HomeContent = ({ children }: { children: React.ReactNode }) => {
             protect businesses&apos; data at rest.
           </motion.p>
           <motion.p
-            variants={item}
+            variants={fadeInUpVariants}
             custom={2}
             initial="hidden"
             animate="show"
@@ -89,7 +76,7 @@ export const HomeContent = ({ children }: { children: React.ReactNode }) => {
           </motion.p>
 
           <motion.p
-            variants={item}
+            variants={fadeInUpVariants}
             custom={3}
             initial="hidden"
             animate="show"
@@ -102,7 +89,7 @@ export const HomeContent = ({ children }: { children: React.ReactNode }) => {
 
       <motion.div
         className="mt-8"
-        variants={item}
+        variants={fadeInUpVariants}
         custom={4}
         initial="hidden"
         animate="show"
@@ -112,7 +99,7 @@ export const HomeContent = ({ children }: { children: React.ReactNode }) => {
 
       <div className="relative mt-12">
         <motion.div
-          variants={item}
+          variants={fadeInUpVariants}
           custom={5}
           initial="hidden"
           animate="show"

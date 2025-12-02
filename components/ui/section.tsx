@@ -1,6 +1,6 @@
 "use client"
 
-import { motion } from "motion/react"
+import { motion, Variants } from "motion/react"
 import Balancer from "react-wrap-balancer"
 
 import { Heading } from "./heading"
@@ -18,14 +18,14 @@ export default function Section({
   children: React.ReactNode
   className?: string
 }) {
-  const titleVariants = {
+  const titleVariants: Variants = {
     hidden: { opacity: 0, y: 10 },
     show: {
       opacity: 1,
       y: 0,
       transition: { type: "spring", stiffness: 150, damping: 15 },
     },
-  } as any
+  }
 
   return (
     <>
