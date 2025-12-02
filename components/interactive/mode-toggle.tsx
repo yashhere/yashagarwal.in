@@ -122,6 +122,7 @@ export const DarkToggle = () => {
                 } catch (error) {
                   console.error("View transition failed:", error)
                   toggleTheme()
+                  return
                 }
 
                 document.documentElement.animate(

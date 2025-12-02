@@ -1,5 +1,5 @@
+import { AnimatedNoteList } from "@/components/content/animated-note-list"
 import { FeaturedNotesLink } from "@/components/content/featured-notes-link"
-import { NoteList } from "@/components/content/notes-list"
 import { getPreviewNotes } from "@/lib/content"
 
 export function FeaturedNotes({ count }: { count: number }) {
@@ -16,7 +16,11 @@ export function FeaturedNotes({ count }: { count: number }) {
   return (
     <div className="flex flex-col justify-start gap-5">
       <div className="w-full">
-        <NoteList homePage={true} notes={notesFiltered} baseDelay={0.6} />
+        <AnimatedNoteList
+          homePage={true}
+          notes={notesFiltered}
+          baseDelay={0.6}
+        />
       </div>
       <FeaturedNotesLink />
     </div>

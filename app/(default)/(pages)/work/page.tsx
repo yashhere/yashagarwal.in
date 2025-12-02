@@ -35,7 +35,7 @@ const WorkExperience: FC<WorkExperienceProps> = ({
     <motion.div
       className="relative pb-10 pl-8 last:pb-0"
       variants={fadeInUpVariants}
-      custom={index + 3}
+      custom={index}
       initial="hidden"
       whileInView="show"
       viewport={{ once: true }}
@@ -184,7 +184,7 @@ const Page: FC = () => {
 
         <motion.div className="space-y-0">
           {workExperiences.map((experience, idx) => (
-            <WorkExperience key={idx} {...experience} index={idx} />
+            <WorkExperience key={idx} {...experience} index={idx + 1} />
           ))}
         </motion.div>
       </Section>

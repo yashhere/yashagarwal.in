@@ -189,11 +189,11 @@
   z-index: 1;
 }
 ::view-transition-new(root) {
-  z-index: 2147483647;
+  z-index: 9999;
 }
 .dark::view-transition-old(root) {
   z-index: 1;
 }
 .dark::view-transition-new(root) {
-  z-index: 2147483647;
+  z-index: 9999;
 }

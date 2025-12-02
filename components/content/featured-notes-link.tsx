@@ -4,13 +4,18 @@ import { ArrowRightIcon } from "@phosphor-icons/react/dist/ssr"
 import { motion } from "motion/react"
 
 import Link from "@/components/ui/link"
-import { fadeInUpVariants } from "@/lib/animations"
+import { siteConfig } from "@/config/site"
+import { ANIMATION_CONFIG, fadeInUpVariants } from "@/lib/animations"
 
 export const FeaturedNotesLink = () => {
   return (
     <motion.div
       variants={fadeInUpVariants}
-      custom={{ index: 0, baseDelay: 0.9 }}
+      custom={{
+        index: 0,
+        baseDelay:
+          siteConfig.featuredNotes * ANIMATION_CONFIG.STAGGER_DELAY + 0.3,
+      }}
       initial="hidden"
       whileInView="show"
       viewport={{ once: true }}
