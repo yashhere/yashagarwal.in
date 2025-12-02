@@ -1,11 +1,13 @@
 "use client"
 
 import { ChangeEvent, useEffect, useMemo, useState } from "react"
+import { motion } from "motion/react"
 import { useInView } from "react-intersection-observer"
 
 import { NoteList } from "@/components/content/notes-list"
 import { SearchInput } from "@/components/interactive/search"
 import { NoteSkeleton } from "@/components/ui/note-skeleton"
+import { simpleFadeInVariants } from "@/lib/animations"
 import { NoteWithMetadata } from "@/types"
 
 const INITIAL_NOTES = 15
@@ -56,9 +58,14 @@ export const NotesList = ({
   return (
     <div className="flex flex-col space-y-2">
       {!noSearchBox ? (
-        <div className="flex flex-col pb-4">
+        <motion.div
+          className="flex flex-col pb-4"
+          variants={simpleFadeInVariants}
+          initial="hidden"
+          animate="show"
+        >
           <SearchInput search={search} onChange={onChange} />
-        </div>
+        </motion.div>
       ) : null}
       <section>
         <NoteList notes={visibleNotes} />
