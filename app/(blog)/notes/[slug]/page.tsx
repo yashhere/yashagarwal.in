@@ -15,6 +15,7 @@ import { notFound } from "next/navigation"
 import { ArrowLeftIcon, XLogoIcon } from "@phosphor-icons/react/dist/ssr"
 import { format } from "date-fns"
 
+import { BreadcrumbItem, Breadcrumbs } from "@/components/content/breadcrumbs"
 import { DecorativeHr } from "@/components/ui/decorative-hr"
 import Draft from "@/components/ui/draft"
 import { Heading } from "@/components/ui/heading"
@@ -112,6 +113,20 @@ export default async function Page(props: Props) {
     ? slugger.slug(article.note.category)
     : undefined
 
+  const breadcrumbItems: BreadcrumbItem[] = [
+    { label: "Home", href: "/" },
+    { label: "Notes", href: "/notes" },
+  ]
+
+  if (article.note.category && category_slug) {
+    breadcrumbItems.push({
+      label: article.note.category,
+      href: `/categories/${category_slug}`,
+    })
+  }
+
+  breadcrumbItems.push({ label: article.note.title })
+
   return (
     <>
       <ArticleStructuredData
@@ -159,16 +174,7 @@ export default async function Page(props: Props) {
         {/* Middle Column: Main Content */}
         <main className="mx-auto flex w-full max-w-3xl min-w-0 flex-col px-4 md:px-6">
           <section className="mb-8 space-y-2">
-            <div className="text-foreground/80 text-sm tracking-wider uppercase">
-              <Link
-                key={category_slug}
-                href={`/categories/${category_slug}`}
-                variant="text"
-                showIcon={false}
-              >
-                {article.note.category}
-              </Link>
-            </div>
+            <Breadcrumbs items={breadcrumbItems} />
             <Heading level="h2">{article.note.title}</Heading>
             <div className="text-foreground/60 flex flex-row gap-1 text-sm">
               <span>

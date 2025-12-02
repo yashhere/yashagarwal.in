@@ -1,11 +1,14 @@
-"use client"
+"use client";
 
-import React from "react"
-import { CaretDownIcon, ListNumbersIcon } from "@phosphor-icons/react/dist/ssr"
+import React from "react";
+import { CaretDownIcon, ListNumbersIcon } from "@phosphor-icons/react/dist/ssr";
 
-import { getSeries } from "@/lib/content"
-import { cn } from "@/lib/utils"
-import Link from "../ui/link"
+
+
+import { getSeries } from "@/lib/content";
+import { cn } from "@/lib/utils";
+import Link from "../ui/link";
+
 
 export const Series = ({
   series,
@@ -70,7 +73,7 @@ export const Series = ({
           {series.notes?.map((note) => (
             <div key={note.slug} className="flex items-start gap-2 text-sm">
               <div
-                className={cn("mt-2.5 size-1 flex-shrink-0 rounded-full", {
+                className={cn("mt-2.5 size-1 shrink-0 rounded-full", {
                   "bg-primary": note.isCurrent,
                   "bg-muted-foreground": !note.isCurrent,
                   "bg-muted-foreground/60": note.status !== "published",
