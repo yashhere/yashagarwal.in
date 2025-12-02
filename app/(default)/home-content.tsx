@@ -14,7 +14,7 @@ export const HomeContent = ({ children }: { children: React.ReactNode }) => {
         <motion.div
           className="mb-8"
           variants={fadeInUpVariants}
-          custom={0}
+          custom={{ index: 0 }}
           initial="hidden"
           animate="show"
         >
@@ -30,7 +30,7 @@ export const HomeContent = ({ children }: { children: React.ReactNode }) => {
         <div className="text-foreground/90 space-y-6 text-base leading-relaxed">
           <motion.p
             variants={fadeInUpVariants}
-            custom={1}
+            custom={{ index: 1 }}
             initial="hidden"
             animate="show"
           >
@@ -48,7 +48,7 @@ export const HomeContent = ({ children }: { children: React.ReactNode }) => {
           </motion.p>
           <motion.p
             variants={fadeInUpVariants}
-            custom={2}
+            custom={{ index: 2 }}
             initial="hidden"
             animate="show"
           >
@@ -77,7 +77,7 @@ export const HomeContent = ({ children }: { children: React.ReactNode }) => {
 
           <motion.p
             variants={fadeInUpVariants}
-            custom={3}
+            custom={{ index: 3 }}
             initial="hidden"
             animate="show"
           >
@@ -90,7 +90,7 @@ export const HomeContent = ({ children }: { children: React.ReactNode }) => {
       <motion.div
         className="mt-8"
         variants={fadeInUpVariants}
-        custom={4}
+        custom={{ index: 4 }}
         initial="hidden"
         animate="show"
       >
@@ -100,7 +100,7 @@ export const HomeContent = ({ children }: { children: React.ReactNode }) => {
       <div className="relative mt-12">
         <motion.div
           variants={fadeInUpVariants}
-          custom={5}
+          custom={{ index: 5 }}
           initial="hidden"
           animate="show"
         >

@@ -1,13 +1,12 @@
 "use client"
 
-import { memo } from "react"
 import { motion } from "motion/react"
 
 import { NotePreview } from "@/components/content/note-preview"
 import { fadeInUpVariants } from "@/lib/animations"
 import { NoteWithMetadata } from "@/types"
 
-const NoteListComponent = ({
+export const NoteList = ({
   notes,
   homePage = false,
   baseDelay = 0,
@@ -35,5 +34,3 @@ const NoteListComponent = ({
     </motion.ul>
   )
 }
-
-export const NoteList = memo(NoteListComponent)

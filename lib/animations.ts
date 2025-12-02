@@ -13,9 +13,7 @@ export const ANIMATION_CONFIG = {
 
 export const fadeInUpVariants: Variants = {
   hidden: { opacity: 0, y: 10 },
-  show: (custom: number | { index: number; baseDelay?: number }) => {
-    const index = typeof custom === "number" ? custom : custom.index
-    const baseDelay = typeof custom === "number" ? 0 : custom.baseDelay || 0
+  show: ({ index, baseDelay = 0 }: { index: number; baseDelay?: number }) => {
     return {
       opacity: 1,
       y: 0,
