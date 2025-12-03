@@ -1,36 +1,22 @@
-"use client"
-
-import { motion } from "motion/react"
-
 import { NotePreview } from "@/components/content/note-preview"
-import { fadeInUpVariants } from "@/lib/animations"
 import { NoteWithMetadata } from "@/types"
 
 export const NoteList = ({
   notes,
   homePage = false,
-  baseDelay = 0,
 }: {
   notes: NoteWithMetadata[]
   homePage?: boolean
-  baseDelay?: number
 }) => {
   return (
-    <motion.ul className="-mx-4">
-      {notes?.map((note, idx) => {
+    <ul className="-mx-4">
+      {notes?.map((note) => {
         return (
-          <motion.li
-            key={note.note.slug}
-            variants={fadeInUpVariants}
-            custom={{ index: idx, baseDelay }}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
-          >
+          <li key={note.note.slug}>
             <NotePreview homePage={homePage} key={note.note.slug} note={note} />
-          </motion.li>
+          </li>
         )
       })}
-    </motion.ul>
+    </ul>
   )
 }

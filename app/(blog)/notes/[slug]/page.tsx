@@ -12,11 +12,10 @@ import "@/styles/mdx.css"
 import "katex/dist/katex.css"
 
 import { notFound } from "next/navigation"
-import { XLogoIcon } from "@phosphor-icons/react/dist/ssr"
+import { ArrowLeftIcon, XLogoIcon } from "@phosphor-icons/react/dist/ssr"
 import { format } from "date-fns"
 
 import { BackLinks } from "@/components/content/backlinks"
-import { BackToNotesLink } from "@/components/content/blog-post-animated-wrapper"
 import { MobileActions } from "@/components/content/mobile-actions"
 import { TagList } from "@/components/content/tag-list"
 import { GoToTop } from "@/components/layout/go-to-top"
@@ -117,7 +116,7 @@ export default async function Page(props: Props) {
             {article.note.headings && article.note.headings.length > 0 && (
               <>
                 <div className="text-foreground/80 mb-4 text-sm font-medium tracking-wider uppercase">
-                  On This Page
+                  Table of Contents
                 </div>
                 <TableOfContents
                   headings={article.note.headings}
@@ -127,7 +126,13 @@ export default async function Page(props: Props) {
               </>
             )}
             <div className="mt-8">
-              <BackToNotesLink />
+              <Link
+                href="/notes"
+                variant="text"
+                className="text-muted-foreground"
+              >
+                <ArrowLeftIcon size={16} /> Back to Notes
+              </Link>
             </div>
           </div>
         </aside>
