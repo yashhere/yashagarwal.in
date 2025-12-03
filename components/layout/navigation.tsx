@@ -1,5 +1,3 @@
-"use client"
-
 import { Suspense } from "react"
 
 import { siteConfig } from "@/config/site"
@@ -24,9 +22,6 @@ export const Navigation = () => {
                 alt={siteConfig.name}
                 className="transition-transform duration-300 select-none group-hover:scale-110"
                 draggable={false}
-                width={70}
-                height={70}
-                onContextMenu={(e) => e.preventDefault()}
               />
               <AvatarFallback className="text-sm font-semibold">
                 {siteConfig.name

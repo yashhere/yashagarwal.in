@@ -30,7 +30,7 @@ const socialLinks = [
 export function SocialLinks() {
   return (
     <div className="flex items-center gap-2">
-      {socialLinks.map((social) => (
+      {socialLinks.map((social, index) => (
         <Link
           key={social.name}
           href={social.href}
@@ -39,7 +39,7 @@ export function SocialLinks() {
           variant="nav"
           className={cn(
             "text-muted-foreground hover:text-accent-foreground hover:bg-accent rounded-md p-2 transition-all duration-200",
-            socialLinks[0].name === social.name ? "-ml-2" : ""
+            index === 0 && "-ml-2"
           )}
           aria-label={social.name}
         >
