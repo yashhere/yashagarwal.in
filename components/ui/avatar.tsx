@@ -50,4 +50,15 @@ function AvatarFallback({
   )
 }
 
-export { Avatar, AvatarImage, AvatarFallback }
+function AvatarSkeleton({ className }: { className?: string }) {
+  return (
+    <div
+      className={cn(
+        "bg-muted size-10 shrink-0 animate-pulse rounded-full",
+        className
+      )}
+    />
+  )
+}
+
+export { Avatar, AvatarImage, AvatarFallback, AvatarSkeleton }

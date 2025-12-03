@@ -13,8 +13,8 @@ import useClock from "@/lib/useClock"
 
 export const ClockSkeleton = () => {
   return (
-    <div className="cursor-pointer rounded-md p-1">
-      <div className="bg-foreground/20 border-border size-5.5 animate-pulse rounded-full border" />
+    <div className="rounded-md p-1">
+      <div className="bg-muted size-5.5 animate-pulse rounded-full" />
     </div>
   )
 }

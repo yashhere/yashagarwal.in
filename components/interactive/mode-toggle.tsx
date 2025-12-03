@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react"
 import { MoonStarsIcon, SunDimIcon } from "@phosphor-icons/react/dist/ssr"
-import { motion } from "motion/react"
 import { useTheme } from "next-themes"
 
 import {
@@ -14,8 +13,8 @@ import {
 
 export const DarkToggleSkeleton = () => {
   return (
-    <div className="cursor-pointer rounded-md p-1">
-      <div className="bg-foreground/20 border-border size-5.5 animate-pulse rounded-full border" />
+    <div className="rounded-md p-1">
+      <div className="bg-muted size-5.5 animate-pulse rounded-full" />
     </div>
   )
 }
@@ -61,11 +60,8 @@ export const DarkToggle = () => {
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ type: "spring", stiffness: 400, damping: 30 }}
-              className="cursor-pointer rounded-md p-1"
+            <div
+              className="cursor-pointer rounded-md p-1 transition-transform hover:scale-105 active:scale-95"
               onClick={() => {
                 if (theme == "system") {
                   if (resolvedTheme == "dark") {
@@ -79,44 +75,26 @@ export const DarkToggle = () => {
               }}
             >
               <div className="relative size-5.5">
-                <motion.div
-                  className="absolute inset-0 flex items-center justify-center"
-                  animate={{
+                <div
+                  className="absolute inset-0 flex items-center justify-center transition-all duration-300"
+                  style={{
                     opacity: resolvedTheme === "light" ? 1 : 0,
-                    rotate: resolvedTheme === "light" ? 0 : -90,
-                    scale: resolvedTheme === "light" ? 1 : 0.5,
-                    y: resolvedTheme === "light" ? 0 : -4,
-                  }}
-                  transition={{
-                    duration: 0.3,
-                    ease: [0.25, 0.46, 0.45, 0.94],
-                    type: "spring",
-                    stiffness: 300,
-                    damping: 25,
+                    transform: `rotate(${resolvedTheme === "light" ? 0 : -90}deg) scale(${resolvedTheme === "light" ? 1 : 0.5}) translateY(${resolvedTheme === "light" ? 0 : -4}px)`,
                   }}
                 >
                   <SunDimIcon className="text-primary size-5.5 drop-shadow-sm" />
-                </motion.div>
-                <motion.div
-                  className="absolute inset-0 flex items-center justify-center"
-                  animate={{
+                </div>
+                <div
+                  className="absolute inset-0 flex items-center justify-center transition-all duration-300"
+                  style={{
                     opacity: resolvedTheme === "dark" ? 1 : 0,
-                    rotate: resolvedTheme === "dark" ? 0 : 90,
-                    scale: resolvedTheme === "dark" ? 1 : 0.5,
-                    y: resolvedTheme === "dark" ? 0 : 4,
-                  }}
-                  transition={{
-                    duration: 0.3,
-                    ease: [0.25, 0.46, 0.45, 0.94],
-                    type: "spring",
-                    stiffness: 300,
-                    damping: 25,
+                    transform: `rotate(${resolvedTheme === "dark" ? 0 : 90}deg) scale(${resolvedTheme === "dark" ? 1 : 0.5}) translateY(${resolvedTheme === "dark" ? 0 : 4}px)`,
                   }}
                 >
                   <MoonStarsIcon className="text-foreground size-5.5 drop-shadow-sm" />
-                </motion.div>
+                </div>
               </div>
-            </motion.div>
+            </div>
           </TooltipTrigger>
           <TooltipContent className="bg-background text-foreground">
             <p>{getTooltipText()}</p>
