@@ -3,6 +3,7 @@ import { Geist, IBM_Plex_Mono } from "next/font/google"
 
 import "@/styles/globals.css"
 
+import { ThemeColor } from "@/components/ui/theme-color"
 import { defaultMetadata, defaultViewport } from "@/lib/seo/default"
 import {
   PersonStructuredData,
@@ -41,6 +42,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <head>
+        <meta name="theme-color" content="#ffffff" />
         <WebsiteStructuredData />
         <PersonStructuredData />
       </head>
@@ -55,7 +57,10 @@ export default function RootLayout({ children }: RootLayoutProps) {
           monoFont.variable
         )}
       >
-        <Providers>{children}</Providers>
+        <Providers>
+          <ThemeColor />
+          {children}
+        </Providers>
       </body>
     </html>
   )

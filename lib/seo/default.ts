@@ -89,26 +89,18 @@ export const defaultMetadata: Metadata = {
   },
 }
 
-// Default viewport (no zoom)
+// Default viewport
 export const defaultViewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
-  themeColor: [
-    { media: "(prefers-color-scheme: dark)", color: "#020617" }, // slate-950
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" }, // white
-  ],
+  maximumScale: 5,
+  userScalable: true,
 }
 
-// Article viewport (with zoom)
+// Article viewport
 export const articleViewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
   userScalable: true,
-  themeColor: [
-    { media: "(prefers-color-scheme: dark)", color: "#020617" }, // slate-950
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" }, // white
-  ],
 }
