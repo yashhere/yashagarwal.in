@@ -65,46 +65,60 @@ export const MobileActions = ({ headings }: { headings: Heading[] }) => {
       <div
         ref={containerRef}
         className={cn(
-          "border-border bg-background/95 flex items-center justify-center overflow-hidden rounded-[32px] border shadow-xl backdrop-blur-md transition-all duration-300",
+          "border-border bg-background/95 relative flex items-center justify-center overflow-hidden rounded-full border shadow-xl backdrop-blur-md transition-all duration-300",
           !isExpanded && "hover:bg-muted/50 cursor-pointer"
         )}
         onClick={() => !isExpanded && setIsExpanded(true)}
       >
-        {isExpanded ? (
-          <div className="animate-in fade-in flex items-center gap-6 px-6 py-2 whitespace-nowrap duration-200">
-            <MobileTOC headings={headings}>
-              <button
-                className="text-muted-foreground hover:text-foreground group flex flex-col items-center gap-1 transition-colors"
-                aria-label="Table of Contents"
-              >
-                <div className="group-hover:bg-muted rounded-full p-2 transition-colors">
-                  <ListIcon size={20} weight="regular" />
-                </div>
-                <span className="text-[10px] font-medium tracking-wider uppercase">
-                  Sections
-                </span>
-              </button>
-            </MobileTOC>
-
+        {/* Expanded state */}
+        <div
+          className={cn(
+            "flex items-center gap-6 px-6 py-2 whitespace-nowrap transition-all duration-200",
+            isExpanded
+              ? "pointer-events-auto opacity-100"
+              : "pointer-events-none absolute opacity-0"
+          )}
+        >
+          <MobileTOC headings={headings}>
             <button
-              onClick={scrollToTop}
               className="text-muted-foreground hover:text-foreground group flex flex-col items-center gap-1 transition-colors"
-              aria-label="Scroll to top"
+              aria-label="Table of Contents"
             >
               <div className="group-hover:bg-muted rounded-full p-2 transition-colors">
-                <ArrowUpIcon size={20} weight="regular" />
+                <ListIcon size={20} weight="regular" />
               </div>
               <span className="text-[10px] font-medium tracking-wider uppercase">
-                Top
+                Sections
               </span>
             </button>
-          </div>
-        ) : (
-          <div className="animate-in fade-in px-6 py-2 duration-200">
-            <div className="bg-muted-foreground/50 h-1 w-16 rounded-full" />
-            <span className="sr-only">Open menu</span>
-          </div>
-        )}
+          </MobileTOC>
+
+          <button
+            onClick={scrollToTop}
+            className="text-muted-foreground hover:text-foreground group flex flex-col items-center gap-1 transition-colors"
+            aria-label="Scroll to top"
+          >
+            <div className="group-hover:bg-muted rounded-full p-2 transition-colors">
+              <ArrowUpIcon size={20} weight="regular" />
+            </div>
+            <span className="text-[10px] font-medium tracking-wider uppercase">
+              Top
+            </span>
+          </button>
+        </div>
+
+        {/* Collapsed state */}
+        <div
+          className={cn(
+            "px-6 py-2 transition-all duration-200",
+            !isExpanded
+              ? "pointer-events-auto opacity-100"
+              : "pointer-events-none absolute opacity-0"
+          )}
+        >
+          <div className="bg-muted-foreground/50 h-1 w-16 rounded-full" />
+          <span className="sr-only">Open menu</span>
+        </div>
       </div>
     </div>
   )

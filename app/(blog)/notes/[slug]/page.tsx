@@ -116,7 +116,7 @@ export default async function Page(props: Props) {
             {article.note.headings && article.note.headings.length > 0 && (
               <>
                 <div className="text-foreground/80 mb-4 text-sm font-medium tracking-wider uppercase">
-                  Table of Contents
+                  On this Page
                 </div>
                 <TableOfContents
                   headings={article.note.headings}

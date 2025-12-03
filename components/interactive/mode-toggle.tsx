@@ -10,6 +10,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { cn } from "@/lib/utils"
 
 export const DarkToggleSkeleton = () => {
   return (
@@ -76,20 +77,22 @@ export const DarkToggle = () => {
             >
               <div className="relative size-5.5">
                 <div
-                  className="absolute inset-0 flex items-center justify-center transition-all duration-300"
-                  style={{
-                    opacity: resolvedTheme === "light" ? 1 : 0,
-                    transform: `rotate(${resolvedTheme === "light" ? 0 : -90}deg) scale(${resolvedTheme === "light" ? 1 : 0.5}) translateY(${resolvedTheme === "light" ? 0 : -4}px)`,
-                  }}
+                  className={cn(
+                    "absolute inset-0 flex items-center justify-center transition-all duration-300",
+                    resolvedTheme === "light"
+                      ? "scale-100 opacity-100"
+                      : "-translate-y-1 scale-50 -rotate-90 opacity-0"
+                  )}
                 >
                   <SunDimIcon className="text-primary size-5.5 drop-shadow-sm" />
                 </div>
                 <div
-                  className="absolute inset-0 flex items-center justify-center transition-all duration-300"
-                  style={{
-                    opacity: resolvedTheme === "dark" ? 1 : 0,
-                    transform: `rotate(${resolvedTheme === "dark" ? 0 : 90}deg) scale(${resolvedTheme === "dark" ? 1 : 0.5}) translateY(${resolvedTheme === "dark" ? 0 : 4}px)`,
-                  }}
+                  className={cn(
+                    "absolute inset-0 flex items-center justify-center transition-all duration-300",
+                    resolvedTheme === "dark"
+                      ? "scale-100 opacity-100"
+                      : "translate-y-1 scale-50 rotate-90 opacity-0"
+                  )}
                 >
                   <MoonStarsIcon className="text-foreground size-5.5 drop-shadow-sm" />
                 </div>

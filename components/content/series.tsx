@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { ArrowDownIcon, ListNumbersIcon } from "@phosphor-icons/react/dist/ssr"
+import { ListNumbersIcon, PlusIcon } from "@phosphor-icons/react/dist/ssr"
 
 import { getSeries } from "@/lib/content"
 import { cn } from "@/lib/utils"
@@ -42,10 +42,12 @@ export const Series = ({
           </div>
 
           <span
-            className="text-muted-foreground group-hover:text-foreground flex h-5 w-5 items-center justify-center rounded-md transition-all duration-300 hover:cursor-pointer"
-            style={{ transform: isOpen ? "rotate(180deg)" : "rotate(0deg)" }}
+            className={cn(
+              "text-muted-foreground group-hover:text-foreground flex h-5 w-5 items-center justify-center rounded-md transition-all duration-300 hover:cursor-pointer",
+              isOpen && "rotate-45"
+            )}
           >
-            <ArrowDownIcon size={14} />
+            <PlusIcon size={14} weight="bold" />
           </span>
         </button>
       ) : (
@@ -67,7 +69,7 @@ export const Series = ({
           {series.notes?.map((note) => (
             <div key={note.slug} className="flex items-start gap-2 text-sm">
               <div
-                className={cn("mt-[10px] size-1 flex-shrink-0 rounded-full", {
+                className={cn("mt-2.5 size-1 flex-shrink-0 rounded-full", {
                   "bg-primary": note.isCurrent,
                   "bg-muted-foreground": !note.isCurrent,
                   "bg-muted-foreground/60": note.status !== "published",

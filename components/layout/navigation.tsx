@@ -28,7 +28,7 @@ export const Navigation = () => {
                 height={70}
                 onContextMenu={(e) => e.preventDefault()}
               />
-              <AvatarFallback className="animate-pulse text-sm font-semibold">
+              <AvatarFallback className="text-sm font-semibold">
                 {siteConfig.name
                   .split(" ")
                   .map((n) => n[0])
