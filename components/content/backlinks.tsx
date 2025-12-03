@@ -1,7 +1,7 @@
 import { GraphIcon } from "@phosphor-icons/react/dist/ssr"
 
-import { AnimatedBacklinksList } from "@/components/content/animated-backlinks-list"
 import { getNoteBacklinks } from "@/lib/content"
+import Link from "../ui/link"
 
 export const BackLinks = ({
   backlinks,
@@ -22,7 +22,23 @@ export const BackLinks = ({
           </span>
         </div>
 
-        <AnimatedBacklinksList links={backlinks || []} />
+        <div className="border-border space-y-1.5 border-t pt-2">
+          {backlinks?.map((link) => (
+            <div
+              key={link.url}
+              className="overflow-hidden text-ellipsis whitespace-nowrap"
+            >
+              <Link
+                href={link.url}
+                className="text-muted-foreground hover:text-primary block text-xs transition-colors"
+                variant="nav"
+              >
+                <span className="text-foreground font-medium">{link.type}</span>
+                <span className="ml-1">{link.title}</span>
+              </Link>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   )

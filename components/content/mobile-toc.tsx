@@ -24,7 +24,7 @@ export const MobileTOC = ({
         {children || (
           <button className="border-border bg-background text-foreground hover:bg-muted/50 flex w-full items-center gap-2 rounded-md border px-4 py-2 text-sm font-medium transition-colors">
             <ListIcon className="h-4 w-4" />
-            On This Page
+            Table of Contents
           </button>
         )}
       </Drawer.Trigger>
@@ -38,7 +38,7 @@ export const MobileTOC = ({
             <div className="bg-muted mx-auto mb-6 h-1.5 w-12 flex-shrink-0 rounded-full" />
             <div className="mx-auto max-w-md">
               <Drawer.Title className="mb-4 text-lg font-semibold">
-                On This Page
+                Table of Contents
               </Drawer.Title>
               <Drawer.Description className="sr-only">
                 Table of contents for the current page.

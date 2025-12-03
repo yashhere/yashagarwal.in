@@ -4,7 +4,6 @@ import { useEffect, useState } from "react"
 import { MoonStarsIcon, SunDimIcon } from "@phosphor-icons/react/dist/ssr"
 import { motion } from "motion/react"
 import { useTheme } from "next-themes"
-import { flushSync } from "react-dom"
 
 import {
   Tooltip,
@@ -67,77 +66,16 @@ export const DarkToggle = () => {
               whileTap={{ scale: 0.95 }}
               transition={{ type: "spring", stiffness: 400, damping: 30 }}
               className="cursor-pointer rounded-md p-1"
-              onClick={async (e) => {
-                const newTheme =
-                  theme === "system"
-                    ? resolvedTheme === "dark"
-                      ? "light"
-                      : "dark"
-                    : "system"
-
-                const toggleTheme = () => {
-                  setTheme(newTheme)
-
-                  // Force DOM update for View Transition snapshot
-                  const systemTheme = window.matchMedia(
-                    "(prefers-color-scheme: dark)"
-                  ).matches
-                    ? "dark"
-                    : "light"
-                  const effectiveTheme =
-                    newTheme === "system" ? systemTheme : newTheme
-
-                  if (effectiveTheme === "dark") {
-                    document.documentElement.classList.add("dark")
+              onClick={() => {
+                if (theme == "system") {
+                  if (resolvedTheme == "dark") {
+                    setTheme("light")
                   } else {
-                    document.documentElement.classList.remove("dark")
+                    setTheme("dark")
                   }
+                } else {
+                  setTheme("system")
                 }
-
-                if (
-                  !document.startViewTransition ||
-                  window.matchMedia("(prefers-reduced-motion: reduce)").matches
-                ) {
-                  toggleTheme()
-                  return
-                }
-
-                const { top, left, width, height } =
-                  e.currentTarget.getBoundingClientRect()
-                const x = left + width / 2
-                const y = top + height / 2
-                const right = window.innerWidth - left
-                const bottom = window.innerHeight - top
-                const maxRadius = Math.hypot(
-                  Math.max(left, right),
-                  Math.max(top, bottom)
-                )
-
-                try {
-                  await document.startViewTransition(() => {
-                    flushSync(() => {
-                      toggleTheme()
-                    })
-                  }).ready
-                } catch (error) {
-                  console.error("View transition failed:", error)
-                  toggleTheme()
-                  return
-                }
-
-                document.documentElement.animate(
-                  {
-                    clipPath: [
-                      `circle(0px at ${x}px ${y}px)`,
-                      `circle(${maxRadius}px at ${x}px ${y}px)`,
-                    ],
-                  },
-                  {
-                    duration: 500,
-                    easing: "ease-in-out",
-                    pseudoElement: "::view-transition-new(root)",
-                  }
-                )
               }}
             >
               <div className="relative size-5.5">

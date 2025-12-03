@@ -94,7 +94,7 @@ export const MobileActions = ({ headings }: { headings: Heading[] }) => {
               <MobileTOC headings={headings}>
                 <button
                   className="text-muted-foreground hover:text-foreground group flex flex-col items-center gap-1 transition-colors"
-                  aria-label="On This Page"
+                  aria-label="Table of Contents"
                 >
                   <div className="group-hover:bg-muted rounded-full p-2 transition-colors">
                     <ListIcon size={20} weight="regular" />
