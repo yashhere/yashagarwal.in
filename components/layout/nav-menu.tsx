@@ -65,7 +65,7 @@ export const NavMenu = () => {
         <DropdownMenuTrigger asChild>
           <button
             className={cn(
-              "hover:bg-accent hover:text-accent-foreground flex items-center gap-1 rounded-md border-0 px-3 py-1.5 text-base font-medium ring-0 transition-colors outline-none focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0",
+              "hover:bg-accent hover:text-accent-foreground flex items-center gap-1 rounded-md border-0 px-3 py-1 font-medium ring-0 transition-colors outline-none focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0",
               {
                 "text-foreground": moreNavItems.some((item) =>
                   isActive(item.href)
