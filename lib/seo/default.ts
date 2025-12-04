@@ -2,12 +2,19 @@ import { Metadata, Viewport } from "next"
 
 import { env } from "@/env.mjs"
 
+const getBaseUrl = () => {
+  if (process.env.NODE_ENV === "development") {
+    return "http://localhost:3000"
+  }
+  return env.NEXT_PUBLIC_APP_URL
+}
+
 export const siteConfig = {
   name: "Yash Agarwal",
   title: "/dev/yash/notes",
   description:
     "Explore backend systems, homelab experiments, networking setups, and full-stack dev insights from an engineer's perspective. Learn, build, and self-host smarter.",
-  url: `${env.NEXT_PUBLIC_APP_URL}`,
+  url: getBaseUrl(),
   ogImage: "/images/og.png",
   twitterImage: "/images/og.png",
   twitterHandle: "@yash__here",

@@ -74,9 +74,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 
   const newOgImage = note.image
     ? `${note.image}`
-    : `/og?title=${encodeParameter(note.title)}&meta=${encodeParameter(
-        format(new Date(note.createdOn), "MMM dd, yyyy")
-      )}&tags=${note.tags?.join("|") || ""}`
+    : `/og/${encodeParameter(note.slug ?? params.slug)}`
 
   return generateArticleMetadata({
     title: note.title,
