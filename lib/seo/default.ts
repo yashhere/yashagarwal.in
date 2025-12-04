@@ -15,8 +15,8 @@ export const siteConfig = {
   description:
     "Explore backend systems, homelab experiments, networking setups, and full-stack dev insights from an engineer's perspective. Learn, build, and self-host smarter.",
   url: getBaseUrl(),
-  ogImage: "/images/og.png",
-  twitterImage: "/images/og.png",
+  ogImage: "/og/home",
+  twitterImage: "/og/home",
   twitterHandle: "@yash__here",
   keywords: [
     "backend engineering",
