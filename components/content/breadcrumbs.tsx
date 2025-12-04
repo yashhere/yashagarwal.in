@@ -26,7 +26,7 @@ export function Breadcrumbs({ items, className }: BreadcrumbsProps) {
         {items.map((item, index) => {
           const isLast = index === items.length - 1
           return (
-            <Fragment key={item.label}>
+            <Fragment key={item.href || `${item.label}-${index}`}>
               <li>
                 {item.href && !isLast ? (
                   <Link
