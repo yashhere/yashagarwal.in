@@ -15,11 +15,6 @@ function getISTTime() {
 
 const useClock: ClockHook = () => {
   const [currentTime, setCurrentTime] = useState(getISTTime())
-  const [timing, setTiming] = useState({
-    updateSeconds: {},
-    updateMinutes: {},
-    updateHours: {},
-  })
 
   const updateTime = () => {
     setCurrentTime(getISTTime())
@@ -31,21 +26,19 @@ const useClock: ClockHook = () => {
     return () => clearInterval(interval)
   }, [])
 
-  useEffect(() => {
-    setTiming({
-      updateSeconds: {
-        transform: `rotate(${currentTime.getSeconds() * 6}deg)`,
-      },
-      updateMinutes: {
-        transform: `rotate(${currentTime.getMinutes() * 6}deg)`,
-      },
-      updateHours: {
-        transform: `rotate(${
-          currentTime.getHours() * 30 + currentTime.getMinutes() / 2
-        }deg)`,
-      },
-    })
-  }, [currentTime])
+  const timing = {
+    updateSeconds: {
+      transform: `rotate(${currentTime.getSeconds() * 6}deg)`,
+    },
+    updateMinutes: {
+      transform: `rotate(${currentTime.getMinutes() * 6}deg)`,
+    },
+    updateHours: {
+      transform: `rotate(${
+        currentTime.getHours() * 30 + currentTime.getMinutes() / 2
+      }deg)`,
+    },
+  }
 
   return [timing, currentTime]
 }
