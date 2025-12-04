@@ -30,20 +30,25 @@ export const MobileActions = ({ headings }: { headings: Heading[] }) => {
     const handleScroll = () => {
       if (rafId) cancelAnimationFrame(rafId)
       rafId = requestAnimationFrame(() => {
-        const currentScrollY = window.scrollY
-        // Expand at the very top
-        if (currentScrollY < SCROLL_THRESHOLD_PX) {
-          setIsExpanded(true)
+        try {
+          const currentScrollY = window.scrollY
+          // Expand at the very top
+          if (currentScrollY < SCROLL_THRESHOLD_PX) {
+            setIsExpanded(true)
+          }
+          // Collapse when scrolling down past threshold
+          else if (
+            currentScrollY > SCROLL_THRESHOLD_PX &&
+            currentScrollY > lastScrollY.current
+          ) {
+            setIsExpanded(false)
+          }
+          lastScrollY.current = currentScrollY
+        } catch (error) {
+          console.error("Scroll handler error:", error)
+        } finally {
+          rafId = null
         }
-        // Collapse when scrolling down past threshold
-        else if (
-          currentScrollY > SCROLL_THRESHOLD_PX &&
-          currentScrollY > lastScrollY.current
-        ) {
-          setIsExpanded(false)
-        }
-        lastScrollY.current = currentScrollY
-        rafId = null
       })
     }
     window.addEventListener("scroll", handleScroll, { passive: true })
@@ -65,7 +70,7 @@ export const MobileActions = ({ headings }: { headings: Heading[] }) => {
       <div
         ref={containerRef}
         className={cn(
-          "border-border bg-background/95 relative flex items-center justify-center overflow-hidden rounded-full border shadow-xl backdrop-blur-md transition-all duration-300",
+          "border-border bg-background/95 relative flex items-center justify-center overflow-hidden rounded-full border shadow-xl backdrop-blur-md transition-all duration-200",
           !isExpanded && "hover:bg-muted/50 cursor-pointer"
         )}
         onClick={() => !isExpanded && setIsExpanded(true)}

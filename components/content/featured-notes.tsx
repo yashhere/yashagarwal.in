@@ -4,7 +4,7 @@ import { getPreviewNotes } from "@/lib/content"
 import Link from "../ui/link"
 import { NoteList } from "./notes-list"
 
-export async function FeaturedNotes({ count }: { count: number }) {
+export function FeaturedNotes({ count }: { count: number }) {
   const notes = getPreviewNotes()
   // Get the most recent notes
   const notesFiltered = notes.slice(0, count)

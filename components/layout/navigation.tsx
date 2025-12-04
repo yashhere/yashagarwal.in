@@ -20,7 +20,7 @@ export const Navigation = () => {
               <AvatarImage
                 src="/images/yash/yash-avatar.webp"
                 alt={siteConfig.name}
-                className="transition-transform duration-300 select-none group-hover:scale-110"
+                className="transition-transform duration-200 select-none group-hover:scale-110"
                 draggable={false}
               />
               <AvatarFallback className="text-sm font-semibold">

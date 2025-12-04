@@ -78,7 +78,7 @@ export const DarkToggle = () => {
               <div className="relative size-5.5">
                 <div
                   className={cn(
-                    "absolute inset-0 flex items-center justify-center transition-all duration-300",
+                    "absolute inset-0 flex items-center justify-center transition-all duration-200",
                     resolvedTheme === "light"
                       ? "scale-100 opacity-100"
                       : "-translate-y-1 scale-50 -rotate-90 opacity-0"
@@ -88,7 +88,7 @@ export const DarkToggle = () => {
                 </div>
                 <div
                   className={cn(
-                    "absolute inset-0 flex items-center justify-center transition-all duration-300",
+                    "absolute inset-0 flex items-center justify-center transition-all duration-200",
                     resolvedTheme === "dark"
                       ? "scale-100 opacity-100"
                       : "translate-y-1 scale-50 rotate-90 opacity-0"

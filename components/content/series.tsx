@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { ListNumbersIcon, PlusIcon } from "@phosphor-icons/react/dist/ssr"
+import { CaretDownIcon, ListNumbersIcon } from "@phosphor-icons/react/dist/ssr"
 
 import { getSeries } from "@/lib/content"
 import { cn } from "@/lib/utils"
@@ -43,11 +43,11 @@ export const Series = ({
 
           <span
             className={cn(
-              "text-muted-foreground group-hover:text-foreground flex h-5 w-5 items-center justify-center rounded-md transition-all duration-300 hover:cursor-pointer",
-              isOpen && "rotate-45"
+              "text-muted-foreground group-hover:text-foreground flex h-5 w-5 items-center justify-center rounded-md transition-all duration-200 hover:cursor-pointer",
+              isOpen && "rotate-180"
             )}
           >
-            <PlusIcon size={14} weight="bold" />
+            <CaretDownIcon size={16} weight="bold" />
           </span>
         </button>
       ) : (
@@ -64,7 +64,8 @@ export const Series = ({
       {isOpen && (
         <div
           id="series-content"
-          className="border-border animate-in fade-in slide-in-from-top-2 mt-2 space-y-0.5 overflow-hidden border-t pt-2 duration-300"
+          className="border-border animate-in fade-in slide-in-from-top-2 data-[state=closed]:animate-out data-[state=closed]:fade-out data-[state=closed]:slide-out-to-top-2 mt-2 space-y-0.5 overflow-hidden border-t pt-2 duration-200"
+          data-state={isOpen ? "open" : "closed"}
         >
           {series.notes?.map((note) => (
             <div key={note.slug} className="flex items-start gap-2 text-sm">
