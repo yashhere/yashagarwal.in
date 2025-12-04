@@ -139,12 +139,6 @@ const notes = defineCollection({
         [rehypeImgSize as any, { dir: "public" }],
         [rehypeAccessibleEmojis],
         [rehypeUnwrapImages],
-        // [
-        //   rehypeMermaid as any,
-        //   {
-        //     strategy: "inline-svg",
-        //   },
-        // ],
         [
           rehypeMermaid,
           {
