@@ -6,9 +6,11 @@ import {
   CaretDoubleRightIcon,
 } from "@phosphor-icons/react/dist/ssr"
 
+import { BreadcrumbItem, Breadcrumbs } from "@/components/content/breadcrumbs"
 import { Heading } from "@/components/ui/heading"
 import Section from "@/components/ui/section"
 import { generatePageMetadata } from "@/lib/seo/metadata"
+import { BreadcrumbStructuredData } from "@/lib/seo/structured-data"
 
 export const metadata: Metadata = generatePageMetadata({
   title: "Work Experience",
@@ -89,9 +91,21 @@ const WorkExperience: FC<WorkExperienceProps> = ({
 }
 
 const Page: FC = () => {
+  const breadcrumbItems: BreadcrumbItem[] = [
+    { label: "Home", href: "/" },
+    { label: "Work" },
+  ]
+
   return (
     <>
+      <BreadcrumbStructuredData
+        items={[
+          { name: "Home", url: "/" },
+          { name: "Work", url: "/work" },
+        ]}
+      />
       <Section data={null} title="Work">
+        <Breadcrumbs items={breadcrumbItems} className="mb-6" />
         <section className="text-foreground mb-8 leading-relaxed">
           <p>
             I am an enthusiastic software developer with a knack for backend

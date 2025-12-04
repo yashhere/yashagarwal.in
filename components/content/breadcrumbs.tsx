@@ -27,7 +27,7 @@ export function Breadcrumbs({ items, className }: BreadcrumbsProps) {
           const isLast = index === items.length - 1
           return (
             <Fragment key={item.label}>
-              <li className="flex items-center">
+              <li>
                 {item.href && !isLast ? (
                   <Link
                     href={item.href}
@@ -48,7 +48,7 @@ export function Breadcrumbs({ items, className }: BreadcrumbsProps) {
               {!isLast && (
                 <li
                   aria-hidden="true"
-                  className="text-muted-foreground/50 ml-2 select-none"
+                  className="text-muted-foreground/50 select-none"
                 >
                   /
                 </li>
