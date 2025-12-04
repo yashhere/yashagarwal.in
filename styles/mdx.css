@@ -165,7 +165,7 @@ span[data-rehype-pretty-code-figure] code::after {
 
 /* CODE BLOCK STYLE START */
 figure[data-rehype-pretty-code-figure] {
-  @apply my-6 overflow-hidden rounded-md border;
+  @apply border-border my-6 overflow-hidden rounded border;
 }
 
 figure[data-rehype-pretty-code-figure] pre {

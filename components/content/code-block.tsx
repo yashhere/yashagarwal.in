@@ -49,23 +49,21 @@ export function CodeBlock({
     <div className="group relative">
       {isCodeBlock && (
         <div className="bg-muted flex items-center justify-between px-2 py-1">
-          <span className="text-muted-foreground text-xs font-medium capitalize">
+          <span className="text-muted-foreground text-sm font-medium capitalize">
             {language || "code"}
           </span>
           <button
             onClick={handleCopy}
-            className="text-muted-foreground hover:text-foreground hover:bg-accent flex items-center gap-1.5 rounded px-2 py-1 text-xs transition-colors"
+            className="text-muted-foreground hover:text-accent-foreground hover:bg-accent flex items-center gap-1.5 rounded px-2 py-1 text-sm transition-colors"
             aria-label="Copy code"
           >
             {copied ? (
               <>
-                <CheckIcon className="h-3.5 w-3.5" />
-                <span>Copied!</span>
+                <CheckIcon className="h-4 w-4" />
               </>
             ) : (
               <>
-                <CopyIcon className="h-3.5 w-3.5" />
-                <span>Copy</span>
+                <CopyIcon className="h-4 w-4" />
               </>
             )}
           </button>
