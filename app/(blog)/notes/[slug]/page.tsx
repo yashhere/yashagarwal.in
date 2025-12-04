@@ -15,6 +15,7 @@ import { notFound } from "next/navigation"
 import { ArrowLeftIcon, XLogoIcon } from "@phosphor-icons/react/dist/ssr"
 import { format } from "date-fns"
 
+import { BreadcrumbItem, Breadcrumbs } from "@/components/content/breadcrumbs"
 import { DecorativeHr } from "@/components/ui/decorative-hr"
 import Draft from "@/components/ui/draft"
 import { Heading } from "@/components/ui/heading"
@@ -22,7 +23,10 @@ import Link from "@/components/ui/link"
 import { env } from "@/env.mjs"
 import { articleViewport } from "@/lib/seo/default"
 import { generateArticleMetadata } from "@/lib/seo/metadata"
-import { ArticleStructuredData } from "@/lib/seo/structured-data"
+import {
+  ArticleStructuredData,
+  BreadcrumbStructuredData,
+} from "@/lib/seo/structured-data"
 import { encodeParameter } from "@/lib/utils"
 
 // Lazy load below-the-fold components
@@ -112,6 +116,38 @@ export default async function Page(props: Props) {
     ? slugger.slug(article.note.category)
     : undefined
 
+  const breadcrumbItems: BreadcrumbItem[] = [
+    { label: "Home", href: "/" },
+    { label: "Notes", href: "/notes" },
+  ]
+
+  if (article.note.category && category_slug) {
+    breadcrumbItems.push({
+      label: article.note.category,
+      href: `/categories/${category_slug}`,
+    })
+  }
+
+  breadcrumbItems.push({ label: article.note.title })
+
+  // Build breadcrumb structured data with category if available
+  const breadcrumbStructuredDataItems = [
+    { name: "Home", url: "/" },
+    { name: "Notes", url: "/notes" },
+  ]
+
+  if (article.note.category && category_slug) {
+    breadcrumbStructuredDataItems.push({
+      name: article.note.category,
+      url: `/categories/${category_slug}`,
+    })
+  }
+
+  breadcrumbStructuredDataItems.push({
+    name: article.note.title,
+    url: `/notes/${article.note.slug}`,
+  })
+
   return (
     <>
       <ArticleStructuredData
@@ -124,6 +160,7 @@ export default async function Page(props: Props) {
         tags={article.note.tags}
         wordCount={article.note.readingTime?.words}
       />
+      <BreadcrumbStructuredData items={breadcrumbStructuredDataItems} />
 
       <div className="mx-auto flex w-full max-w-3xl flex-col py-8 xl:max-w-screen-2xl xl:flex-row xl:justify-center">
         {/* Left Column: Sticky TOC (Desktop) */}
@@ -159,17 +196,8 @@ export default async function Page(props: Props) {
         {/* Middle Column: Main Content */}
         <main className="mx-auto flex w-full max-w-3xl min-w-0 flex-col px-4 md:px-6">
           <section className="mb-8 space-y-2">
-            <div className="text-foreground/80 text-sm tracking-wider uppercase">
-              <Link
-                key={category_slug}
-                href={`/categories/${category_slug}`}
-                variant="text"
-                showIcon={false}
-              >
-                {article.note.category}
-              </Link>
-            </div>
-            <Heading level="h2">{article.note.title}</Heading>
+            <Breadcrumbs items={breadcrumbItems} />
+            <Heading level="h1">{article.note.title}</Heading>
             <div className="text-foreground/60 flex flex-row gap-1 text-sm">
               <span>
                 {format(new Date(article.note.createdOn), "MMM dd, yyyy")}

@@ -1,8 +1,10 @@
 import { allLifelogs } from "content-collections"
 import { compareDesc, format } from "date-fns"
 
+import { BreadcrumbItem, Breadcrumbs } from "@/components/content/breadcrumbs"
 import { Mdx } from "@/components/content/mdx"
 import Section from "@/components/ui/section"
+import { BreadcrumbStructuredData } from "@/lib/seo/structured-data"
 
 export default function LifeLog() {
   const notes = allLifelogs
@@ -10,9 +12,21 @@ export default function LifeLog() {
     return compareDesc(new Date(a.createdOn), new Date(b.createdOn))
   })
 
+  const breadcrumbItems: BreadcrumbItem[] = [
+    { label: "Home", href: "/" },
+    { label: "Lifelog" },
+  ]
+
   return (
     <>
+      <BreadcrumbStructuredData
+        items={[
+          { name: "Home", url: "/" },
+          { name: "Lifelog", url: "/lifelog" },
+        ]}
+      />
       <Section data={null} title={"Recently in life"}>
+        <Breadcrumbs items={breadcrumbItems} className="mb-6" />
         <div className="text-foreground text-base">
           <p>
             This is a sporadically updated log of what I am currently doing in

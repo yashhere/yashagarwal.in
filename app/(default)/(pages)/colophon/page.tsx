@@ -1,8 +1,10 @@
 import { Metadata } from "next"
 
+import { BreadcrumbItem, Breadcrumbs } from "@/components/content/breadcrumbs"
 import Link from "@/components/ui/link"
 import Section from "@/components/ui/section"
 import { generatePageMetadata } from "@/lib/seo/metadata"
+import { BreadcrumbStructuredData } from "@/lib/seo/structured-data"
 
 export const metadata: Metadata = generatePageMetadata({
   title: "Colophon – Tech Behind This Blog",
@@ -12,9 +14,21 @@ export const metadata: Metadata = generatePageMetadata({
 })
 
 export default function Colophon() {
+  const breadcrumbItems: BreadcrumbItem[] = [
+    { label: "Home", href: "/" },
+    { label: "Colophon" },
+  ]
+
   return (
     <>
+      <BreadcrumbStructuredData
+        items={[
+          { name: "Home", url: "/" },
+          { name: "Colophon", url: "/colophon" },
+        ]}
+      />
       <Section data={null} title="Colophon" className="leading-relaxed">
+        <Breadcrumbs items={breadcrumbItems} className="mb-6" />
         <Section level="h3" title="How I built this site">
           <p>
             I designed and built this website myself. Being a backend developer,

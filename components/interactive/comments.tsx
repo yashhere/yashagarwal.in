@@ -24,7 +24,7 @@ export const DisqusComments = ({ url, slug }: ICommentProps) => {
   }
 
   return (
-    <div className="pt-8" ref={ref}>
+    <div id="comments-section" className="pt-8" ref={ref}>
       {inView ? (
         <div className="comments">
           <DiscussionEmbed

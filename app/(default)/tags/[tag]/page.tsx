@@ -1,6 +1,7 @@
 import GithubSlugger from "github-slugger"
 
 import { NotesList } from "@/components/content/all-notes"
+import { BreadcrumbItem, Breadcrumbs } from "@/components/content/breadcrumbs"
 import Section from "@/components/ui/section"
 import { generateTagMetadata } from "@/lib/seo/metadata"
 import { getNotesWithTaxonomy, getTaxonomyCounts } from "@/lib/taxonomy"
@@ -38,9 +39,16 @@ export default async function Page(props: Props) {
     params.tag
   )
 
+  const breadcrumbItems: BreadcrumbItem[] = [
+    { label: "Home", href: "/" },
+    { label: "Tags", href: "/tags" },
+    { label: displayName },
+  ]
+
   return (
     <>
       <Section data={notesWithTag} title={displayName}>
+        <Breadcrumbs items={breadcrumbItems} className="mb-6" />
         {notesWithTag.length !== 0 ? (
           <NotesList notes={notesWithTag} noSearchBox />
         ) : (

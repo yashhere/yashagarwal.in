@@ -12,6 +12,8 @@ const SCROLL_THRESHOLD_PX = 100
 
 export const MobileActions = ({ headings }: { headings: Heading[] }) => {
   const [isExpanded, setIsExpanded] = useState(true)
+  const [visibleSections, setVisibleSections] = useState<Set<string>>(new Set())
+  const shouldHide = visibleSections.size > 0
   const lastScrollY = useRef(0)
   const containerRef = useRef<HTMLDivElement>(null)
   const previousFocusRef = useRef<HTMLElement | null>(null)
@@ -35,6 +37,39 @@ export const MobileActions = ({ headings }: { headings: Heading[] }) => {
       setIsExpanded(true)
     }
   }
+
+  useEffect(() => {
+    const targets = [
+      document.querySelector("footer"),
+      document.getElementById("comments-section"),
+    ].filter(Boolean) as Element[]
+
+    if (targets.length === 0) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        setVisibleSections((prev) => {
+          const next = new Set(prev)
+          entries.forEach((entry) => {
+            const id = entry.target.id || entry.target.tagName
+            if (entry.isIntersecting) {
+              next.add(id)
+            } else {
+              next.delete(id)
+            }
+          })
+          return next
+        })
+      },
+      {
+        root: null,
+        threshold: 0,
+      }
+    )
+
+    targets.forEach((target) => observer.observe(target))
+    return () => observer.disconnect()
+  }, [])
 
   useEffect(() => {
     // Set initial state based on scroll position
@@ -81,7 +116,12 @@ export const MobileActions = ({ headings }: { headings: Heading[] }) => {
   if (!headings || headings.length === 0) return null
 
   return (
-    <div className="fixed bottom-6 left-1/2 z-40 -translate-x-1/2 xl:hidden">
+    <div
+      className={cn(
+        "fixed bottom-6 left-1/2 z-40 -translate-x-1/2 transition-transform duration-300 ease-in-out xl:hidden",
+        shouldHide && "translate-y-[200%]"
+      )}
+    >
       <div
         ref={containerRef}
         className={cn(

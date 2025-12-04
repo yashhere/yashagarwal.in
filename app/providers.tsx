@@ -6,6 +6,8 @@ import { Analytics } from "@/components/interactive/analytics"
 import { Footer } from "@/components/layout/footer"
 import { ThemeProvider } from "@/components/layout/theme-provider"
 import { TailwindIndicator } from "@/components/ui/tailwind-indicator"
+import { ThemeColor } from "@/components/ui/theme-color"
+import { TooltipProvider } from "@/components/ui/tooltip"
 
 interface ProvidersProps {
   children: React.ReactNode
@@ -13,18 +15,21 @@ interface ProvidersProps {
 
 export const Providers = ({ children }: ProvidersProps) => {
   return (
-    <ThemeProvider
-      attribute="class"
-      enableColorScheme={false}
-      disableTransitionOnChange={true}
-      defaultTheme="system"
-      enableSystem
-    >
-      {children}
-      <Footer />
-      <SpeedInsights />
-      <Analytics />
-      <TailwindIndicator />
-    </ThemeProvider>
+    <TooltipProvider delayDuration={300}>
+      <ThemeProvider
+        attribute="class"
+        enableColorScheme={false}
+        disableTransitionOnChange={true}
+        defaultTheme="system"
+        enableSystem
+      >
+        <ThemeColor />
+        {children}
+        <Footer />
+        <SpeedInsights />
+        <Analytics />
+        <TailwindIndicator />
+      </ThemeProvider>
+    </TooltipProvider>
   )
 }

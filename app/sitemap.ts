@@ -18,11 +18,21 @@ export default async function sitemap() {
   const allTags = [...new Set(allNotes.flatMap((note) => note.tags || []))]
   const allCategories = [...new Set(allNotes.flatMap((note) => note.category))]
 
+  // Calculate the latest modification date from all notes
+  const lastModifiedDate =
+    allNotes.length > 0
+      ? new Date(
+          Math.max(
+            ...allNotes.map((note) => new Date(note.createdOn).getTime())
+          )
+        ).toISOString()
+      : new Date().toISOString()
+
   // Generate URLs for tag pages with proper slugification
   const tagSlugger = new GithubSlugger()
   const tagUrls = allTags.map((tag) => ({
     url: `${siteUrl}/tags/${tagSlugger.slug(tag)}`,
-    lastModified: new Date().toISOString(),
+    lastModified: lastModifiedDate,
     changeFrequency: "weekly" as const,
     priority: 0.6,
   }))
@@ -33,7 +43,7 @@ export default async function sitemap() {
     .filter((category): category is string => !!category)
     .map((category) => ({
       url: `${siteUrl}/categories/${categorySlugger.slug(category)}`,
-      lastModified: new Date().toISOString(),
+      lastModified: lastModifiedDate,
       changeFrequency: "weekly" as const,
       priority: 0.6,
     }))
@@ -42,44 +52,37 @@ export default async function sitemap() {
   const routeUrls = [
     {
       url: siteUrl,
-      lastModified: new Date().toISOString(),
+      lastModified: lastModifiedDate,
       changeFrequency: "weekly" as const,
       priority: 1.0,
     },
     {
       url: `${siteUrl}/work`,
-      lastModified: new Date().toISOString(),
+      lastModified: lastModifiedDate,
       changeFrequency: "monthly" as const,
       priority: 0.8,
     },
     {
       url: `${siteUrl}/colophon`,
-      lastModified: new Date().toISOString(),
+      lastModified: lastModifiedDate,
       changeFrequency: "weekly" as const,
       priority: 0.6,
     },
     {
       url: `${siteUrl}/notes`,
-      lastModified:
-        allNotes.length > 0
-          ? new Date(
-              Math.max(
-                ...allNotes.map((note) => new Date(note.createdOn).getTime())
-              )
-            ).toISOString()
-          : new Date().toISOString(),
+      lastModified: lastModifiedDate,
       changeFrequency: "weekly" as const,
       priority: 0.9,
     },
     {
       url: `${siteUrl}/tags`,
-      lastModified: new Date().toISOString(),
+      lastModified: lastModifiedDate,
       changeFrequency: "weekly" as const,
       priority: 0.7,
     },
     {
       url: `${siteUrl}/categories`,
-      lastModified: new Date().toISOString(),
+      lastModified: lastModifiedDate,
       changeFrequency: "weekly" as const,
       priority: 0.7,
     },

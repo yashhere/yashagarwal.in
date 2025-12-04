@@ -49,7 +49,7 @@ export const NavMenu = () => {
           href={item.href}
           variant="nav"
           className={cn(
-            "hover:bg-accent hover:text-accent-foreground rounded-md px-3 py-1.5 text-base font-medium transition-colors",
+            "hover:bg-accent hover:text-accent-foreground rounded-md px-3 py-1 font-medium transition-colors",
             {
               "text-foreground": isActive(item.href),
               "text-muted-foreground": !isActive(item.href),
@@ -65,7 +65,7 @@ export const NavMenu = () => {
         <DropdownMenuTrigger asChild>
           <button
             className={cn(
-              "hover:bg-accent hover:text-accent-foreground flex items-center gap-1 rounded-md border-0 px-3 py-1.5 text-base font-medium ring-0 transition-colors outline-none focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0",
+              "hover:bg-accent hover:text-accent-foreground flex items-center gap-1 rounded-md border-0 px-3 py-1 font-medium ring-0 transition-colors outline-none focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0",
               {
                 "text-foreground": moreNavItems.some((item) =>
                   isActive(item.href)
@@ -88,7 +88,7 @@ export const NavMenu = () => {
         </DropdownMenuTrigger>
         <DropdownMenuContent
           align="end"
-          className="bg-background/80 border-border/50 min-w-[160px] border-1 ring-0 backdrop-blur-sm focus-visible:ring-0 focus-visible:ring-offset-0"
+          className="bg-background/80 border-border/50 min-w-[160px] border ring-0 backdrop-blur-sm focus-visible:ring-0 focus-visible:ring-offset-0"
         >
           {moreNavItems.map((item) => (
             <DropdownMenuItem key={item.href} asChild>

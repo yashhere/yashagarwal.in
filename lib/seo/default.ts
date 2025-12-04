@@ -15,8 +15,8 @@ export const siteConfig = {
   description:
     "Explore backend systems, homelab experiments, networking setups, and full-stack dev insights from an engineer's perspective. Learn, build, and self-host smarter.",
   url: getBaseUrl(),
-  ogImage: "/images/og.png",
-  twitterImage: "/images/og.png",
+  ogImage: "/og/home",
+  twitterImage: "/og/home",
   twitterHandle: "@yash__here",
   keywords: [
     "backend engineering",
@@ -31,6 +31,13 @@ export const siteConfig = {
     "web infrastructure",
   ] as string[],
   author: "Yash Agarwal",
+  authorJobTitle: "Sr. Software Engineer",
+  authorCompany: "Netskope",
+  authorSameAs: [
+    "https://twitter.com/yash__here",
+    "https://github.com/yashhere",
+    "https://www.linkedin.com/in/yash-agarwal-here/",
+  ],
 } as const
 
 export const defaultMetadata: Metadata = {

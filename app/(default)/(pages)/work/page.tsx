@@ -6,9 +6,11 @@ import {
   CaretDoubleRightIcon,
 } from "@phosphor-icons/react/dist/ssr"
 
+import { BreadcrumbItem, Breadcrumbs } from "@/components/content/breadcrumbs"
 import { Heading } from "@/components/ui/heading"
 import Section from "@/components/ui/section"
 import { generatePageMetadata } from "@/lib/seo/metadata"
+import { BreadcrumbStructuredData } from "@/lib/seo/structured-data"
 
 export const metadata: Metadata = generatePageMetadata({
   title: "Work Experience",
@@ -57,7 +59,7 @@ const WorkExperience: FC<WorkExperienceProps> = ({
         <ul className="mt-4 space-y-2">
           {achievements.map((achievement, i) => (
             <li key={i} className="flex gap-2">
-              <CaretDoubleRightIcon className="text-foreground mt-0.5 h-4 w-4 flex-shrink-0" />
+              <CaretDoubleRightIcon className="text-foreground mt-0.5 h-4 w-4 shrink-0" />
               <span>{achievement}</span>
             </li>
           ))}
@@ -69,7 +71,7 @@ const WorkExperience: FC<WorkExperienceProps> = ({
           {Object.entries(nestedAchievements).map(([key, items], i) => (
             <div key={i}>
               <div className="flex gap-2">
-                <CaretDoubleRightIcon className="text-foreground mt-0.5 h-4 w-4 flex-shrink-0" />
+                <CaretDoubleRightIcon className="text-foreground mt-0.5 h-4 w-4 shrink-0" />
                 <span>{key}</span>
               </div>
               <ul className="mt-2 space-y-1 pl-7">
@@ -89,9 +91,21 @@ const WorkExperience: FC<WorkExperienceProps> = ({
 }
 
 const Page: FC = () => {
+  const breadcrumbItems: BreadcrumbItem[] = [
+    { label: "Home", href: "/" },
+    { label: "Work" },
+  ]
+
   return (
     <>
+      <BreadcrumbStructuredData
+        items={[
+          { name: "Home", url: "/" },
+          { name: "Work", url: "/work" },
+        ]}
+      />
       <Section data={null} title="Work">
+        <Breadcrumbs items={breadcrumbItems} className="mb-6" />
         <section className="text-foreground mb-8 leading-relaxed">
           <p>
             I am an enthusiastic software developer with a knack for backend
