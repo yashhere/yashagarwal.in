@@ -22,12 +22,7 @@ export default function Page() {
         <div className="text-foreground/90 space-y-6 text-base leading-relaxed">
           <p>
             Welcome to my corner of the internet. I write code at{" "}
-            <Link
-              href="https://netskope.com"
-              target="_blank"
-              variant="text"
-              external={false}
-            >
+            <Link href="https://netskope.com" target="_blank" variant="text">
               Netskope
             </Link>{" "}
             for a living, building CASB security products for SaaS APIs that
@@ -41,7 +36,6 @@ export default function Page() {
               href="https://x.com/yash__here"
               target="_blank"
               variant="text"
-              external={false}
             >
               X
             </Link>{" "}
@@ -50,7 +44,6 @@ export default function Page() {
               href="mailto:yashagarwaljpr+blog@gmail.com"
               target="_blank"
               variant="text"
-              external={false}
             >
               an email{" "}
             </Link>

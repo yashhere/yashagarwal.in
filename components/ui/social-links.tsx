@@ -34,7 +34,6 @@ export function SocialLinks() {
         <Link
           key={social.name}
           href={social.href}
-          external={true}
           showIcon={false}
           variant="nav"
           className={cn(

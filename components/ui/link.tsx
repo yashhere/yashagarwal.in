@@ -10,7 +10,6 @@ interface LinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
   href: string
   className?: string
   children?: ReactNode
-  external?: boolean
   showIcon?: boolean
   variant?: "text" | "nav"
 }
@@ -21,7 +20,6 @@ const CustomLink = forwardRef<HTMLAnchorElement, LinkProps>(
       href,
       className,
       children,
-      external,
       showIcon = true,
       variant = "text",
       ...props
@@ -47,8 +45,7 @@ const CustomLink = forwardRef<HTMLAnchorElement, LinkProps>(
       )
     }
 
-    const isExternal =
-      external ?? (!href.startsWith("/") && !href.startsWith("#"))
+    const isExternal = !href.startsWith("/") && !href.startsWith("#")
 
     // Simplified styling based on variant
     const linkClasses = cn(
@@ -58,8 +55,8 @@ const CustomLink = forwardRef<HTMLAnchorElement, LinkProps>(
 
       // Variant-specific styles
       variant === "text"
-        ? "text-primary hover:underline hover:decoration-2 hover:underline-offset-4 hover:decoration-primary"
-        : "text-foreground/70 hover:text-foreground",
+        ? "underline underline-offset-4 decoration-foreground/50 hover:decoration-foreground"
+        : "text-muted-foreground hover:text-foreground",
 
       className
     )
@@ -74,7 +71,7 @@ const CustomLink = forwardRef<HTMLAnchorElement, LinkProps>(
           ref={ref}
           {...props}
         >
-          <span>{children}</span>
+          {children}
           {showIcon && <ArrowUpRightIcon className="h-3.5 w-3.5 shrink-0" />}
         </a>
       )
