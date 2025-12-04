@@ -16,7 +16,7 @@ export function FeaturedNotes({ count }: { count: number }) {
       <Link
         href="/notes"
         className="group text-foreground/80 hover:text-primary text-md mt-3 inline-flex items-center gap-1 font-medium transition-colors"
-        variant="text"
+        variant="nav"
       >
         <span>View all notes</span>
         <ArrowRightIcon className="relative top-px h-4 w-4 transition-transform duration-200 ease-out group-hover:translate-x-1" />

@@ -184,7 +184,7 @@ export default async function Page(props: Props) {
             <div className="mt-8">
               <Link
                 href="/notes"
-                variant="text"
+                variant="nav"
                 className="text-muted-foreground"
               >
                 <ArrowLeftIcon size={16} /> Back to Notes

@@ -6,12 +6,9 @@ const headingStyles = {
 }
 
 const linkStyles = {
-  color: "var(--primary)",
+  color: "inherit",
   textDecoration: "none",
-  fontWeight: 500,
-  "&:hover": {
-    textDecoration: "underline",
-  },
+  fontWeight: "inherit",
 }
 
 const typographyStyles = {
