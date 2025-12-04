@@ -10,13 +10,16 @@ export function ThemeColor() {
 
   useLayoutEffect(() => {
     // Update theme-color meta tag synchronously before paint
-    const metaThemeColor = document.querySelector('meta[name="theme-color"]')
+    const metaThemeColors = document.querySelectorAll(
+      'meta[name="theme-color"]'
+    )
 
-    if (metaThemeColor) {
+    metaThemeColors.forEach((meta) => {
       const color =
         resolvedTheme === "dark" ? THEME_COLORS.dark : THEME_COLORS.light
-      metaThemeColor.setAttribute("content", color)
-    }
+      meta.setAttribute("content", color)
+      meta.removeAttribute("media")
+    })
   }, [resolvedTheme])
 
   return null

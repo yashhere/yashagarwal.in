@@ -1,14 +1,11 @@
-"use client";
+"use client"
 
-import React from "react";
-import { CaretDownIcon, ListNumbersIcon } from "@phosphor-icons/react/dist/ssr";
+import React from "react"
+import { CaretDownIcon, ListNumbersIcon } from "@phosphor-icons/react/dist/ssr"
 
-
-
-import { getSeries } from "@/lib/content";
-import { cn } from "@/lib/utils";
-import Link from "../ui/link";
-
+import { getSeries } from "@/lib/content"
+import { cn } from "@/lib/utils"
+import Link from "../ui/link"
 
 export const Series = ({
   series,
