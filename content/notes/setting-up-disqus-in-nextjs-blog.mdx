@@ -89,7 +89,7 @@ Now add the following to the `globals.css` file:
 ```css
 @import "tailwindcss";
 
-@config '../tailwind.config.js';
+@config "../tailwind.config.js";
 
 @layer base {
   :root {
@@ -172,7 +172,6 @@ Key Features of this component are -
 1. **Lazy Loading with Intersection Observer**
 
    The component uses `react-intersection-observer` to implement lazy loading:
-
    - Comments only load when the user scrolls to the comments section.
    - `threshold: 0` triggers loading as soon as the element enters the viewport.
    - `triggerOnce: true` ensures the component only loads once.

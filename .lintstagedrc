@@ -1,6 +1,6 @@
 {
   "**/*.{ts,tsx,js,jsx}": [
-    "next lint --fix --file",
+    "eslint --fix",
     "prettier --write",
     "bash -c 'bun run typecheck'"
   ],
