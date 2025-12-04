@@ -1,10 +1,21 @@
+import GithubSlugger from "github-slugger"
+
 import { NotesList } from "@/components/content/all-notes"
 import Section from "@/components/ui/section"
 import { generateTagMetadata } from "@/lib/seo/metadata"
-import { getNotesWithTaxonomy } from "@/lib/taxonomy"
+import { getNotesWithTaxonomy, getTaxonomyCounts } from "@/lib/taxonomy"
 
 type Props = {
   params: Promise<{ tag: string }>
+}
+
+export async function generateStaticParams() {
+  const tags = getTaxonomyCounts("tags")
+  const slugger = new GithubSlugger()
+
+  return tags.map((tag) => ({
+    tag: slugger.slug(tag.name),
+  }))
 }
 
 export async function generateMetadata(props: Props) {
