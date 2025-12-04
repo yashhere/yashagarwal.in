@@ -104,6 +104,9 @@ export default async function Page(props: Props) {
         publishedAt={article.note.createdOn}
         url={`/notes/${article.note.slug}`}
         image={article.note.image}
+        category={article.note.category}
+        tags={article.note.tags}
+        wordCount={article.note.readingTime?.words}
       />
 
       <div className="mx-auto flex w-full max-w-3xl flex-col py-8 xl:max-w-screen-2xl xl:flex-row xl:justify-center">

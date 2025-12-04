@@ -44,7 +44,13 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <head>
         <meta name="theme-color" content="#ffffff" />
         <WebsiteStructuredData />
-        <PersonStructuredData />
+        <PersonStructuredData
+          sameAs={[
+            "https://x.com/yash__here",
+            "https://github.com/yashhere",
+            "https://www.linkedin.com/in/theyashagarwal/",
+          ]}
+        />
       </head>
       <body
         className={cn(
