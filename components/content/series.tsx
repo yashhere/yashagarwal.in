@@ -61,46 +61,55 @@ export const Series = ({
         </div>
       )}
 
-      {isOpen && (
-        <div
-          id="series-content"
-          className="border-border animate-in fade-in slide-in-from-top-2 data-[state=closed]:animate-out data-[state=closed]:fade-out data-[state=closed]:slide-out-to-top-2 mt-2 space-y-0.5 overflow-hidden border-t pt-2 duration-200"
-          data-state={isOpen ? "open" : "closed"}
-        >
-          {series.notes?.map((note) => (
-            <div key={note.slug} className="flex items-start gap-2 text-sm">
-              <div
-                className={cn("mt-2.5 size-1 shrink-0 rounded-full", {
-                  "bg-primary": note.isCurrent,
-                  "bg-muted-foreground": !note.isCurrent,
-                  "bg-muted-foreground/60": note.status !== "published",
-                })}
-              />
-              <div className="min-w-0 flex-1">
-                {note.status === "published" ? (
-                  note.isCurrent ? (
-                    <span className="text-foreground block py-0.5">
-                      {note.title}
-                    </span>
+      <div
+        className={cn(
+          "grid transition-[grid-template-rows] duration-200 ease-in-out",
+          isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+        )}
+      >
+        <div className="overflow-hidden">
+          <div
+            id="series-content"
+            className={cn(
+              "border-border mt-2 space-y-0.5 border-t pt-2 transition-opacity duration-200",
+              isOpen ? "opacity-100" : "opacity-0"
+            )}
+          >
+            {series.notes?.map((note) => (
+              <div key={note.slug} className="flex items-start gap-2 text-sm">
+                <div
+                  className={cn("mt-2.5 size-1 shrink-0 rounded-full", {
+                    "bg-primary": note.isCurrent,
+                    "bg-muted-foreground": !note.isCurrent,
+                    "bg-muted-foreground/60": note.status !== "published",
+                  })}
+                />
+                <div className="min-w-0 flex-1">
+                  {note.status === "published" ? (
+                    note.isCurrent ? (
+                      <span className="text-foreground block py-0.5">
+                        {note.title}
+                      </span>
+                    ) : (
+                      <Link
+                        href={`/notes/${note.slug}`}
+                        className="text-muted-foreground hover:text-primary block py-0.5 transition-colors"
+                        variant="nav"
+                      >
+                        {note.title}
+                      </Link>
+                    )
                   ) : (
-                    <Link
-                      href={`/notes/${note.slug}`}
-                      className="text-muted-foreground hover:text-primary block py-0.5 transition-colors"
-                      variant="nav"
-                    >
-                      {note.title}
-                    </Link>
-                  )
-                ) : (
-                  <span className="text-muted-foreground/60 block py-0.5">
-                    Planned: {note.title}
-                  </span>
-                )}
+                    <span className="text-muted-foreground/60 block py-0.5">
+                      Planned: {note.title}
+                    </span>
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      )}
+      </div>
     </div>
   )
 }
