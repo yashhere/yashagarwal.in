@@ -118,7 +118,7 @@ class NoteCreator {
               seriesMap.set(title, Math.max(currentMax, order))
             }
           }
-        } catch (error) {
+        } catch {
           // Skip files that can't be read
           continue
         }
