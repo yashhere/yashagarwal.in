@@ -137,8 +137,8 @@
     --destructive-foreground: oklch(95% 0 0);
 
     /* UI Elements - Subtle borders */
-    --border: oklch(25% 0 0);
-    --input: oklch(25% 0 0);
+    --border: oklch(32% 0 0);
+    --input: oklch(32% 0 0);
     --ring: oklch(90% 0 0);
 
     /* Chart colors - Grayscale */
@@ -206,15 +206,15 @@
   /* Fix for https://github.com/disqus/disqus-react/issues/153 */
   :root,
   .comments {
-    background-color: #ffffff !important; /* white */
-    color: #0f172a !important; /* slate-950 */
+    background-color: #faf7f5 !important; /* white */
+    color: #161616 !important; /* slate-950 */
   }
 
   /* Dark mode comments - using hex values */
   :root,
   .dark .comments {
-    background-color: #020617 !important; /* slate-950 */
-    color: #f8fafc !important; /* slate-50 */
+    background-color: #0d0d0f !important; /* slate-950 */
+    color: #eeeeee !important; /* slate-50 */
   }
 
   @keyframes shimmer {

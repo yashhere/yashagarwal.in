@@ -1,4 +1,5 @@
 import { FeaturedNotes } from "@/components/content/featured-notes"
+import { DecorativeHr } from "@/components/ui/decorative-hr"
 import { Heading } from "@/components/ui/heading"
 import Link from "@/components/ui/link"
 import { SocialLinks } from "@/components/ui/social-links"
@@ -67,13 +68,11 @@ export default function Page() {
         <SocialLinks />
       </div>
 
-      <div className="relative mt-12">
-        <div className="via-border absolute -top-10 left-1/2 h-px w-48 -translate-x-1/2 transform bg-gradient-to-r from-transparent to-transparent"></div>
-        <div className="text-primary mb-4 text-xl font-bold tracking-wide">
-          Popular Writing
-        </div>
-        <FeaturedNotes count={siteConfig.featuredNotes} />
+      <DecorativeHr variant="dot" />
+      <div className="text-primary mb-4 text-xl font-bold tracking-wide">
+        Popular Writing
       </div>
+      <FeaturedNotes count={siteConfig.featuredNotes} />
     </>
   )
 }
