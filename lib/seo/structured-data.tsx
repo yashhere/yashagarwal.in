@@ -56,29 +56,51 @@ export function generateArticleSchema(article: {
   updatedAt?: string
   url: string
   image?: string
+  wordCount?: number
+  category?: string
+  tags?: string[]
 }) {
+  const fullUrl = `${siteConfig.url}${article.url}`
+
   return {
     "@context": "https://schema.org",
-    "@type": "Article",
+    "@type": "BlogPosting",
     headline: article.title,
     description: article.description,
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": fullUrl,
+    },
     author: {
       "@type": "Person",
       name: siteConfig.author,
+      url: siteConfig.url,
     },
     publisher: {
-      "@type": "Person",
+      "@type": "Organization",
       name: siteConfig.author,
+      logo: {
+        "@type": "ImageObject",
+        url: `${siteConfig.url}/images/yash/yash-avatar.webp`,
+      },
     },
     datePublished: article.publishedAt,
     dateModified: article.updatedAt || article.publishedAt,
-    url: `${siteConfig.url}${article.url}`,
+    url: fullUrl,
     ...(article.image && {
       image: {
         "@type": "ImageObject",
-        url: article.image,
+        url: article.image.startsWith("http")
+          ? article.image
+          : `${siteConfig.url}${article.image}`,
+        width: 1200,
+        height: 630,
       },
     }),
+    ...(article.category && { articleSection: article.category }),
+    ...(article.tags &&
+      article.tags.length > 0 && { keywords: article.tags.join(", ") }),
+    ...(article.wordCount && { wordCount: article.wordCount }),
   }
 }
 

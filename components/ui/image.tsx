@@ -104,7 +104,14 @@ const CustomImage = forwardRef<HTMLImageElement, CustomImageProps>(
           >
             {/* Loading skeleton */}
             {isLoading && showSkeleton && (
-              <div className="from-muted/30 via-muted/50 to-muted/30 animate-shimmer absolute inset-0 rounded-md bg-gradient-to-r bg-[length:200%_100%]" />
+              <div className="bg-muted/20 absolute inset-0 flex items-center justify-center rounded-md">
+                <div className="flex flex-col items-center gap-3">
+                  <div className="border-muted-foreground/30 border-t-muted-foreground h-8 w-8 animate-spin rounded-full border-2" />
+                  <span className="text-muted-foreground text-sm">
+                    Loading image...
+                  </span>
+                </div>
+              </div>
             )}
 
             {/* Error fallback */}
@@ -153,6 +160,7 @@ const CustomImage = forwardRef<HTMLImageElement, CustomImageProps>(
                 width={Number(width)}
                 height={Number(height)}
                 ref={ref}
+                loading="lazy"
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 80vw, (max-width: 1280px) 60vw, 50vw"
                 {...otherProps}
               />

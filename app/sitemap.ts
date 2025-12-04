@@ -1,4 +1,5 @@
 import { allNotes } from "content-collections"
+import GithubSlugger from "github-slugger"
 
 import { siteConfig } from "@/config/site"
 
@@ -17,21 +18,25 @@ export default async function sitemap() {
   const allTags = [...new Set(allNotes.flatMap((note) => note.tags || []))]
   const allCategories = [...new Set(allNotes.flatMap((note) => note.category))]
 
-  // Generate URLs for tag pages
+  // Generate URLs for tag pages with proper slugification
+  const tagSlugger = new GithubSlugger()
   const tagUrls = allTags.map((tag) => ({
-    url: `${siteUrl}/tags/${tag}`,
+    url: `${siteUrl}/tags/${tagSlugger.slug(tag)}`,
     lastModified: new Date().toISOString(),
     changeFrequency: "weekly" as const,
     priority: 0.6,
   }))
 
-  // Generate URLs for category pages
-  const categoryUrls = allCategories.map((category) => ({
-    url: `${siteUrl}/categories/${category}`,
-    lastModified: new Date().toISOString(),
-    changeFrequency: "weekly" as const,
-    priority: 0.6,
-  }))
+  // Generate URLs for category pages with proper slugification
+  const categorySlugger = new GithubSlugger()
+  const categoryUrls = allCategories
+    .filter((category): category is string => !!category)
+    .map((category) => ({
+      url: `${siteUrl}/categories/${categorySlugger.slug(category)}`,
+      lastModified: new Date().toISOString(),
+      changeFrequency: "weekly" as const,
+      priority: 0.6,
+    }))
 
   // Main site routes with appropriate priorities and change frequencies
   const routeUrls = [

@@ -3,6 +3,7 @@ import { Geist, IBM_Plex_Mono } from "next/font/google"
 
 import "@/styles/globals.css"
 
+import { THEME_COLORS } from "@/lib/constants/theme-colors"
 import { defaultMetadata, defaultViewport } from "@/lib/seo/default"
 import {
   PersonStructuredData,
@@ -41,8 +42,20 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <head>
+        <meta name="theme-color" content={THEME_COLORS.light} />
+        <meta
+          name="theme-color"
+          media="(prefers-color-scheme: dark)"
+          content={THEME_COLORS.dark}
+        />
         <WebsiteStructuredData />
-        <PersonStructuredData />
+        <PersonStructuredData
+          sameAs={[
+            "https://x.com/yash__here",
+            "https://github.com/yashhere",
+            "https://www.linkedin.com/in/theyashagarwal/",
+          ]}
+        />
       </head>
       <body
         className={cn(

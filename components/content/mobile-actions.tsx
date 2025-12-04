@@ -2,7 +2,6 @@
 
 import { RefObject, useEffect, useRef, useState } from "react"
 import { ArrowUpIcon, ListIcon } from "@phosphor-icons/react/dist/ssr"
-import { AnimatePresence, motion } from "motion/react"
 import { useOnClickOutside } from "usehooks-ts"
 
 import { cn } from "@/lib/utils"
@@ -15,12 +14,27 @@ export const MobileActions = ({ headings }: { headings: Heading[] }) => {
   const [isExpanded, setIsExpanded] = useState(true)
   const lastScrollY = useRef(0)
   const containerRef = useRef<HTMLDivElement>(null)
+  const previousFocusRef = useRef<HTMLElement | null>(null)
 
   useOnClickOutside(containerRef as RefObject<HTMLElement>, () => {
     if (isExpanded) {
       setIsExpanded(false)
+      // Restore focus when closing
+      if (previousFocusRef.current) {
+        previousFocusRef.current.focus()
+        previousFocusRef.current = null
+      }
     }
   })
+
+  // Handle expand/collapse and focus management
+  const handleExpand = () => {
+    if (!isExpanded) {
+      // Store the currently focused element before expanding
+      previousFocusRef.current = document.activeElement as HTMLElement
+      setIsExpanded(true)
+    }
+  }
 
   useEffect(() => {
     // Set initial state based on scroll position
@@ -29,29 +43,34 @@ export const MobileActions = ({ headings }: { headings: Heading[] }) => {
     }
     let rafId: number | null = null
     const handleScroll = () => {
-      if (rafId) cancelAnimationFrame(rafId)
+      if (rafId !== null) cancelAnimationFrame(rafId)
       rafId = requestAnimationFrame(() => {
-        const currentScrollY = window.scrollY
-        // Expand at the very top
-        if (currentScrollY < SCROLL_THRESHOLD_PX) {
-          setIsExpanded(true)
+        try {
+          const currentScrollY = window.scrollY
+          // Expand at the very top
+          if (currentScrollY < SCROLL_THRESHOLD_PX) {
+            setIsExpanded(true)
+          }
+          // Collapse when scrolling down past threshold
+          else if (
+            currentScrollY > SCROLL_THRESHOLD_PX &&
+            currentScrollY > lastScrollY.current
+          ) {
+            setIsExpanded(false)
+          }
+          lastScrollY.current = currentScrollY
+        } catch (error) {
+          console.error("Scroll handler error:", error)
+        } finally {
+          rafId = null
         }
-        // Collapse when scrolling down past threshold
-        else if (
-          currentScrollY > SCROLL_THRESHOLD_PX &&
-          currentScrollY > lastScrollY.current
-        ) {
-          setIsExpanded(false)
-        }
-        lastScrollY.current = currentScrollY
-        rafId = null
       })
     }
     window.addEventListener("scroll", handleScroll, { passive: true })
 
     return () => {
       window.removeEventListener("scroll", handleScroll)
-      if (rafId) cancelAnimationFrame(rafId)
+      if (rafId !== null) cancelAnimationFrame(rafId)
     }
   }, [])
 
@@ -63,76 +82,70 @@ export const MobileActions = ({ headings }: { headings: Heading[] }) => {
 
   return (
     <div className="fixed bottom-6 left-1/2 z-40 -translate-x-1/2 xl:hidden">
-      <motion.div
+      <div
         ref={containerRef}
-        layout
         className={cn(
-          "border-border bg-background/95 flex items-center justify-center overflow-hidden border shadow-xl backdrop-blur-md",
+          "border-border bg-background/95 relative flex items-center justify-center overflow-hidden rounded-full border shadow-xl backdrop-blur-md transition-all duration-200",
           !isExpanded && "hover:bg-muted/50 cursor-pointer"
         )}
-        style={{
-          borderRadius: 32,
-        }}
-        transition={{
-          type: "spring",
-          stiffness: 300,
-          damping: 25,
-          mass: 0.5,
-        }}
-        onClick={() => !isExpanded && setIsExpanded(true)}
+        onClick={handleExpand}
+        role="button"
+        aria-label={
+          isExpanded ? "Mobile actions menu" : "Expand mobile actions"
+        }
+        aria-expanded={isExpanded}
+        tabIndex={isExpanded ? -1 : 0}
       >
-        <AnimatePresence mode="popLayout">
-          {isExpanded ? (
-            <motion.div
-              key="actions"
-              initial={{ opacity: 0, filter: "blur(4px)" }}
-              animate={{ opacity: 1, filter: "blur(0px)" }}
-              exit={{ opacity: 0, filter: "blur(4px)" }}
-              transition={{ duration: 0.2 }}
-              className="flex items-center gap-6 px-6 py-2 whitespace-nowrap"
-            >
-              <MobileTOC headings={headings}>
-                <button
-                  className="text-muted-foreground hover:text-foreground group flex flex-col items-center gap-1 transition-colors"
-                  aria-label="Table of Contents"
-                >
-                  <div className="group-hover:bg-muted rounded-full p-2 transition-colors">
-                    <ListIcon size={20} weight="regular" />
-                  </div>
-                  <span className="text-[10px] font-medium tracking-wider uppercase">
-                    Sections
-                  </span>
-                </button>
-              </MobileTOC>
-
-              <button
-                onClick={scrollToTop}
-                className="text-muted-foreground hover:text-foreground group flex flex-col items-center gap-1 transition-colors"
-                aria-label="Scroll to top"
-              >
-                <div className="group-hover:bg-muted rounded-full p-2 transition-colors">
-                  <ArrowUpIcon size={20} weight="regular" />
-                </div>
-                <span className="text-[10px] font-medium tracking-wider uppercase">
-                  Top
-                </span>
-              </button>
-            </motion.div>
-          ) : (
-            <motion.div
-              key="handle"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="px-6 py-2"
-            >
-              <div className="bg-muted-foreground/50 h-1 w-16 rounded-full" />
-              <span className="sr-only">Open menu</span>
-            </motion.div>
+        {/* Expanded state */}
+        <div
+          className={cn(
+            "flex items-center gap-6 px-6 py-2 whitespace-nowrap transition-all duration-200",
+            isExpanded
+              ? "pointer-events-auto opacity-100"
+              : "pointer-events-none absolute opacity-0"
           )}
-        </AnimatePresence>
-      </motion.div>
+        >
+          <MobileTOC headings={headings}>
+            <button
+              className="text-muted-foreground hover:text-foreground group flex flex-col items-center gap-1 transition-colors"
+              aria-label="Table of Contents"
+            >
+              <div className="group-hover:bg-muted rounded-full p-2 transition-colors">
+                <ListIcon size={20} weight="regular" />
+              </div>
+              <span className="text-[10px] font-medium tracking-wider uppercase">
+                Sections
+              </span>
+            </button>
+          </MobileTOC>
+
+          <button
+            onClick={scrollToTop}
+            className="text-muted-foreground hover:text-foreground group flex flex-col items-center gap-1 transition-colors"
+            aria-label="Scroll to top"
+          >
+            <div className="group-hover:bg-muted rounded-full p-2 transition-colors">
+              <ArrowUpIcon size={20} weight="regular" />
+            </div>
+            <span className="text-[10px] font-medium tracking-wider uppercase">
+              Top
+            </span>
+          </button>
+        </div>
+
+        {/* Collapsed state */}
+        <div
+          className={cn(
+            "px-6 py-2 transition-all duration-200",
+            !isExpanded
+              ? "pointer-events-auto opacity-100"
+              : "pointer-events-none absolute opacity-0"
+          )}
+        >
+          <div className="bg-muted-foreground/50 h-1 w-16 rounded-full" />
+          <span className="sr-only">Open menu</span>
+        </div>
+      </div>
     </div>
   )
 }

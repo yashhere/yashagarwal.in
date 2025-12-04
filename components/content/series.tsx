@@ -1,8 +1,7 @@
 "use client"
 
 import React from "react"
-import { ArrowDownIcon, ListNumbersIcon } from "@phosphor-icons/react/dist/ssr"
-import { AnimatePresence, motion } from "motion/react"
+import { CaretDownIcon, ListNumbersIcon } from "@phosphor-icons/react/dist/ssr"
 
 import { getSeries } from "@/lib/content"
 import { cn } from "@/lib/utils"
@@ -42,13 +41,14 @@ export const Series = ({
             </span>
           </div>
 
-          <motion.span
-            className="text-muted-foreground group-hover:text-foreground flex h-5 w-5 items-center justify-center rounded-md transition-colors hover:cursor-pointer"
-            animate={{ rotate: isOpen ? 180 : 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
+          <span
+            className={cn(
+              "text-muted-foreground group-hover:text-foreground flex h-5 w-5 items-center justify-center rounded-md transition-all duration-200 hover:cursor-pointer",
+              isOpen && "rotate-180"
+            )}
           >
-            <ArrowDownIcon size={14} />
-          </motion.span>
+            <CaretDownIcon size={16} weight="bold" />
+          </span>
         </button>
       ) : (
         <div className="flex flex-col gap-0.5">
@@ -61,85 +61,46 @@ export const Series = ({
         </div>
       )}
 
-      <AnimatePresence initial={false}>
-        {isOpen && (
-          <motion.div
-            id="series-content"
-            initial={{ height: 0, opacity: 0 }}
-            animate={{
-              height: "auto",
-              opacity: 1,
-              transition: {
-                height: { duration: 0.3, ease: "easeInOut" },
-                opacity: { duration: 0.2, delay: 0.1, ease: "easeOut" },
-              },
-            }}
-            exit={{
-              height: 0,
-              opacity: 0,
-              transition: {
-                height: { duration: 0.25, ease: "easeInOut", delay: 0.05 },
-                opacity: { duration: 0.15, ease: "easeIn" },
-              },
-            }}
-            className="border-border mt-2 space-y-0.5 overflow-hidden border-t pt-2"
-          >
-            {series.notes?.map((note, index) => (
-              <motion.div
-                key={note.slug}
-                initial={{ y: -10, opacity: 0 }}
-                animate={{
-                  y: 0,
-                  opacity: 1,
-                  transition: {
-                    delay: 0.15 + index * 0.03,
-                    duration: 0.3,
-                    ease: "easeOut",
-                  },
-                }}
-                exit={{
-                  y: -10,
-                  opacity: 0,
-                  transition: {
-                    duration: 0.2,
-                    ease: "easeIn",
-                  },
-                }}
-                className="flex items-start gap-2 text-sm"
-              >
-                <div
-                  className={cn("mt-[10px] size-1 flex-shrink-0 rounded-full", {
-                    "bg-primary": note.isCurrent,
-                    "bg-muted-foreground": !note.isCurrent,
-                    "bg-muted-foreground/60": note.status !== "published",
-                  })}
-                />
-                <div className="min-w-0 flex-1">
-                  {note.status === "published" ? (
-                    note.isCurrent ? (
-                      <span className="text-foreground block py-0.5">
-                        {note.title}
-                      </span>
-                    ) : (
-                      <Link
-                        href={`/notes/${note.slug}`}
-                        className="text-muted-foreground hover:text-primary block py-0.5 transition-colors"
-                        variant="nav"
-                      >
-                        {note.title}
-                      </Link>
-                    )
-                  ) : (
-                    <span className="text-muted-foreground/60 block py-0.5">
-                      Planned: {note.title}
+      {isOpen && (
+        <div
+          id="series-content"
+          className="border-border animate-in fade-in slide-in-from-top-2 data-[state=closed]:animate-out data-[state=closed]:fade-out data-[state=closed]:slide-out-to-top-2 mt-2 space-y-0.5 overflow-hidden border-t pt-2 duration-200"
+          data-state={isOpen ? "open" : "closed"}
+        >
+          {series.notes?.map((note) => (
+            <div key={note.slug} className="flex items-start gap-2 text-sm">
+              <div
+                className={cn("mt-2.5 size-1 flex-shrink-0 rounded-full", {
+                  "bg-primary": note.isCurrent,
+                  "bg-muted-foreground": !note.isCurrent,
+                  "bg-muted-foreground/60": note.status !== "published",
+                })}
+              />
+              <div className="min-w-0 flex-1">
+                {note.status === "published" ? (
+                  note.isCurrent ? (
+                    <span className="text-foreground block py-0.5">
+                      {note.title}
                     </span>
-                  )}
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        )}
-      </AnimatePresence>
+                  ) : (
+                    <Link
+                      href={`/notes/${note.slug}`}
+                      className="text-muted-foreground hover:text-primary block py-0.5 transition-colors"
+                      variant="nav"
+                    >
+                      {note.title}
+                    </Link>
+                  )
+                ) : (
+                  <span className="text-muted-foreground/60 block py-0.5">
+                    Planned: {note.title}
+                  </span>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   )
 }

@@ -15,10 +15,6 @@ import { notFound } from "next/navigation"
 import { ArrowLeftIcon, XLogoIcon } from "@phosphor-icons/react/dist/ssr"
 import { format } from "date-fns"
 
-import { BackLinks } from "@/components/content/backlinks"
-import { MobileActions } from "@/components/content/mobile-actions"
-import { TagList } from "@/components/content/tag-list"
-import { GoToTop } from "@/components/layout/go-to-top"
 import { DecorativeHr } from "@/components/ui/decorative-hr"
 import Draft from "@/components/ui/draft"
 import { Heading } from "@/components/ui/heading"
@@ -28,6 +24,28 @@ import { articleViewport } from "@/lib/seo/default"
 import { generateArticleMetadata } from "@/lib/seo/metadata"
 import { ArticleStructuredData } from "@/lib/seo/structured-data"
 import { encodeParameter } from "@/lib/utils"
+
+// Lazy load below-the-fold components
+const BackLinks = dynamic(() =>
+  import("@/components/content/backlinks").then((mod) => ({
+    default: mod.BackLinks,
+  }))
+)
+const TagList = dynamic(() =>
+  import("@/components/content/tag-list").then((mod) => ({
+    default: mod.TagList,
+  }))
+)
+const GoToTop = dynamic(() =>
+  import("@/components/layout/go-to-top").then((mod) => ({
+    default: mod.GoToTop,
+  }))
+)
+const MobileActions = dynamic(() =>
+  import("@/components/content/mobile-actions").then((mod) => ({
+    default: mod.MobileActions,
+  }))
+)
 
 // Lazy load comments component as it's below the fold
 const DisqusComments = dynamic(
@@ -104,6 +122,9 @@ export default async function Page(props: Props) {
         publishedAt={article.note.createdOn}
         url={`/notes/${article.note.slug}`}
         image={article.note.image}
+        category={article.note.category}
+        tags={article.note.tags}
+        wordCount={article.note.readingTime?.words}
       />
 
       <div className="mx-auto flex w-full max-w-3xl flex-col py-8 xl:max-w-screen-2xl xl:flex-row xl:justify-center">
@@ -116,7 +137,7 @@ export default async function Page(props: Props) {
             {article.note.headings && article.note.headings.length > 0 && (
               <>
                 <div className="text-foreground/80 mb-4 text-sm font-medium tracking-wider uppercase">
-                  Table of Contents
+                  On this Page
                 </div>
                 <TableOfContents
                   headings={article.note.headings}

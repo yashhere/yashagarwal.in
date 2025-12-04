@@ -1,7 +1,4 @@
-import { Suspense } from "react"
-
 import { Navigation } from "@/components/layout/navigation"
-import { Loading } from "@/components/ui/loading"
 
 import "@/styles/globals.css"
 import "@/styles/mdx.css"
@@ -17,7 +14,7 @@ export default function BlogLayout({ children }: BlogLayoutProps) {
         <Navigation />
       </div>
       <main className="mx-auto w-full max-w-screen-2xl flex-1 pb-18">
-        <Suspense fallback={<Loading />}>{children}</Suspense>
+        {children}
       </main>
     </>
   )
