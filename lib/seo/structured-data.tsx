@@ -104,6 +104,23 @@ export function generateArticleSchema(article: {
   }
 }
 
+export function generateBreadcrumbSchema(
+  items: { name: string; url: string }[]
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      item: item.url.startsWith("http")
+        ? item.url
+        : `${siteConfig.url}${item.url}`,
+    })),
+  }
+}
+
 // Convenience components
 export function WebsiteStructuredData() {
   return <StructuredData data={generateWebsiteSchema()} />
@@ -119,4 +136,12 @@ export function ArticleStructuredData(
   props: Parameters<typeof generateArticleSchema>[0]
 ) {
   return <StructuredData data={generateArticleSchema(props)} />
+}
+
+export function BreadcrumbStructuredData({
+  items,
+}: {
+  items: { name: string; url: string }[]
+}) {
+  return <StructuredData data={generateBreadcrumbSchema(items)} />
 }

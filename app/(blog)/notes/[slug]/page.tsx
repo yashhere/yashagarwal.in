@@ -23,7 +23,10 @@ import Link from "@/components/ui/link"
 import { env } from "@/env.mjs"
 import { articleViewport } from "@/lib/seo/default"
 import { generateArticleMetadata } from "@/lib/seo/metadata"
-import { ArticleStructuredData } from "@/lib/seo/structured-data"
+import {
+  ArticleStructuredData,
+  BreadcrumbStructuredData,
+} from "@/lib/seo/structured-data"
 import { encodeParameter } from "@/lib/utils"
 
 // Lazy load below-the-fold components
@@ -139,6 +142,13 @@ export default async function Page(props: Props) {
         tags={article.note.tags}
         wordCount={article.note.readingTime?.words}
       />
+      <BreadcrumbStructuredData
+        items={[
+          { name: "Home", url: "/" },
+          { name: "Notes", url: "/notes" },
+          { name: article.note.title, url: `/notes/${article.note.slug}` },
+        ]}
+      />
 
       <div className="mx-auto flex w-full max-w-3xl flex-col py-8 xl:max-w-screen-2xl xl:flex-row xl:justify-center">
         {/* Left Column: Sticky TOC (Desktop) */}
@@ -175,7 +185,7 @@ export default async function Page(props: Props) {
         <main className="mx-auto flex w-full max-w-3xl min-w-0 flex-col px-4 md:px-6">
           <section className="mb-8 space-y-2">
             <Breadcrumbs items={breadcrumbItems} />
-            <Heading level="h2">{article.note.title}</Heading>
+            <Heading level="h1">{article.note.title}</Heading>
             <div className="text-foreground/60 flex flex-row gap-1 text-sm">
               <span>
                 {format(new Date(article.note.createdOn), "MMM dd, yyyy")}
