@@ -1,6 +1,6 @@
 "use client"
 
-import { useLayoutEffect } from "react"
+import { useEffect } from "react"
 import { useTheme } from "next-themes"
 
 import { THEME_COLORS } from "@/lib/constants/theme-colors"
@@ -8,7 +8,7 @@ import { THEME_COLORS } from "@/lib/constants/theme-colors"
 export function ThemeColor() {
   const { resolvedTheme } = useTheme()
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     // Update theme-color meta tag synchronously before paint
     const metaThemeColors = document.querySelectorAll(
       'meta[name="theme-color"]'

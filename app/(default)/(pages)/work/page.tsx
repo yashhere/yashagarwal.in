@@ -59,7 +59,7 @@ const WorkExperience: FC<WorkExperienceProps> = ({
         <ul className="mt-4 space-y-2">
           {achievements.map((achievement, i) => (
             <li key={i} className="flex gap-2">
-              <CaretDoubleRightIcon className="text-foreground mt-0.5 h-4 w-4 flex-shrink-0" />
+              <CaretDoubleRightIcon className="text-foreground mt-0.5 h-4 w-4 shrink-0" />
               <span>{achievement}</span>
             </li>
           ))}
@@ -71,7 +71,7 @@ const WorkExperience: FC<WorkExperienceProps> = ({
           {Object.entries(nestedAchievements).map(([key, items], i) => (
             <div key={i}>
               <div className="flex gap-2">
-                <CaretDoubleRightIcon className="text-foreground mt-0.5 h-4 w-4 flex-shrink-0" />
+                <CaretDoubleRightIcon className="text-foreground mt-0.5 h-4 w-4 shrink-0" />
                 <span>{key}</span>
               </div>
               <ul className="mt-2 space-y-1 pl-7">

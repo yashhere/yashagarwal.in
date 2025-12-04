@@ -40,6 +40,7 @@ export function Breadcrumbs({ items, className }: BreadcrumbsProps) {
                 ) : (
                   <span
                     className={cn(isLast ? "text-foreground font-medium" : "")}
+                    {...(isLast && { "aria-current": "page" })}
                   >
                     {item.label}
                   </span>

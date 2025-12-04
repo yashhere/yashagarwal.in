@@ -75,9 +75,7 @@ const CustomLink = forwardRef<HTMLAnchorElement, LinkProps>(
           {...props}
         >
           <span>{children}</span>
-          {showIcon && (
-            <ArrowUpRightIcon className="h-3.5 w-3.5 flex-shrink-0" />
-          )}
+          {showIcon && <ArrowUpRightIcon className="h-3.5 w-3.5 shrink-0" />}
         </a>
       )
     }

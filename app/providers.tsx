@@ -15,7 +15,7 @@ interface ProvidersProps {
 
 export const Providers = ({ children }: ProvidersProps) => {
   return (
-    <TooltipProvider delayDuration={0}>
+    <TooltipProvider delayDuration={300}>
       <ThemeProvider
         attribute="class"
         enableColorScheme={false}
