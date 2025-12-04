@@ -75,6 +75,12 @@ export function generateArticleSchema(article: {
       "@type": "Person",
       name: siteConfig.author,
       url: siteConfig.url,
+      jobTitle: siteConfig.authorJobTitle,
+      worksFor: {
+        "@type": "Organization",
+        name: siteConfig.authorCompany,
+      },
+      sameAs: siteConfig.authorSameAs,
     },
     publisher: {
       "@type": "Organization",

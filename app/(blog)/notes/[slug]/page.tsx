@@ -130,6 +130,24 @@ export default async function Page(props: Props) {
 
   breadcrumbItems.push({ label: article.note.title })
 
+  // Build breadcrumb structured data with category if available
+  const breadcrumbStructuredDataItems = [
+    { name: "Home", url: "/" },
+    { name: "Notes", url: "/notes" },
+  ]
+
+  if (article.note.category && category_slug) {
+    breadcrumbStructuredDataItems.push({
+      name: article.note.category,
+      url: `/categories/${category_slug}`,
+    })
+  }
+
+  breadcrumbStructuredDataItems.push({
+    name: article.note.title,
+    url: `/notes/${article.note.slug}`,
+  })
+
   return (
     <>
       <ArticleStructuredData
@@ -142,13 +160,7 @@ export default async function Page(props: Props) {
         tags={article.note.tags}
         wordCount={article.note.readingTime?.words}
       />
-      <BreadcrumbStructuredData
-        items={[
-          { name: "Home", url: "/" },
-          { name: "Notes", url: "/notes" },
-          { name: article.note.title, url: `/notes/${article.note.slug}` },
-        ]}
-      />
+      <BreadcrumbStructuredData items={breadcrumbStructuredDataItems} />
 
       <div className="mx-auto flex w-full max-w-3xl flex-col py-8 xl:max-w-screen-2xl xl:flex-row xl:justify-center">
         {/* Left Column: Sticky TOC (Desktop) */}

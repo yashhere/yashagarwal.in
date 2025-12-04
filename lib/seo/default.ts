@@ -31,6 +31,13 @@ export const siteConfig = {
     "web infrastructure",
   ] as string[],
   author: "Yash Agarwal",
+  authorJobTitle: "Sr. Software Engineer",
+  authorCompany: "Netskope",
+  authorSameAs: [
+    "https://twitter.com/yash__here",
+    "https://github.com/yashhere",
+    "https://www.linkedin.com/in/yash-agarwal-here/",
+  ],
 } as const
 
 export const defaultMetadata: Metadata = {
