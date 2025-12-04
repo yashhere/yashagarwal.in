@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 export type SiteConfig = {
   title: string
   name: string

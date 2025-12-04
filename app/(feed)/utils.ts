@@ -63,19 +63,3 @@ export async function getFeed() {
 
   return feed
 }
-
-let feedCache: { feed: Feed; timestamp: number } | null = null
-const CACHE_DURATION = 1000 * 60 * 15 // 15 minutes
-
-export async function getCachedFeed(): Promise<Feed> {
-  const now = Date.now()
-
-  if (feedCache && now - feedCache.timestamp < CACHE_DURATION) {
-    return feedCache.feed
-  }
-
-  const feed = await getFeed()
-  feedCache = { feed, timestamp: now }
-
-  return feed
-}

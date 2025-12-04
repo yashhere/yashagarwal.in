@@ -6,6 +6,7 @@ import { default as readTime } from "reading-time"
 import { rehypeAccessibleEmojis } from "rehype-accessible-emojis"
 import rehypeAutolinkHeadings from "rehype-autolink-headings"
 import externalLinks from "rehype-external-links"
+import rehypeImgSize from "rehype-img-size"
 import rehypeKatex from "rehype-katex"
 import rehypeMermaid from "rehype-mermaid"
 import rehypePrettyCode, { Options } from "rehype-pretty-code"
@@ -16,8 +17,7 @@ import remarkMath from "remark-math"
 import remarkSmartypants from "remark-smartypants"
 import wikiLinkPlugin from "remark-wiki-link"
 import { visit } from "unist-util-visit"
-
-import rehypeImageMetadata from "./utils/plugins/image-metadata"
+import { z } from "zod"
 
 const pageResolver = (name: string) => [
   name.replace(/-/g, "").replace(/ /g, "-").toLowerCase(),
@@ -91,7 +91,7 @@ const notes = defineCollection({
   name: "notes",
   directory: "content/notes",
   include: "*.mdx",
-  schema: (z) => ({
+  schema: z.object({
     title: z.string(),
     description: z.string().optional(),
     image: z.string().optional(),
@@ -105,6 +105,7 @@ const notes = defineCollection({
       })
       .optional(),
     createdOn: z.string(),
+    content: z.string(),
     mdx: z.string().optional(),
     headings: z
       .array(
@@ -127,7 +128,6 @@ const notes = defineCollection({
   }),
   onSuccess: (_docs) => {},
   transform: async (document, context) => {
-    // const readingTime = JSON.parse(JSON.stringify(readTime(document.content)))
     const readingTime = readTime(document.content)
     const headings = extractHeadings(document.content)
 
@@ -136,13 +136,14 @@ const notes = defineCollection({
         [externalLinks, { target: "_blank", rel: ["noopener", "noreferrer"] }],
         [rehypeSlug as any],
         [rehypeKatex as any, { output: "mathml" }],
-        [rehypeImageMetadata],
+        [rehypeImgSize as any, { dir: "public" }],
         [rehypeAccessibleEmojis],
         [rehypeUnwrapImages],
         [
-          rehypeMermaid as any,
+          rehypeMermaid,
           {
-            strategy: "inline-svg",
+            background: "transparent",
+            className: "mermaid-diagram",
           },
         ],
         [
@@ -180,36 +181,6 @@ const notes = defineCollection({
           })
         },
         [rehypePrettyCode, prettyCodeOptions],
-        // () => (tree) => {
-        //   visit(tree, (node) => {
-        //     if (node?.type === "element" && node?.tagName === "figure") {
-        //       if (!("data-rehype-pretty-code-figure" in node.properties)) {
-        //         return
-        //       }
-
-        //       const preElement = node.children.at(-1)
-        //       if (preElement.tagName !== "pre") {
-        //         return
-        //       }
-
-        //       preElement.properties["__withMeta__"] =
-        //         node.children.at(0).tagName === "div"
-        //       preElement.properties["__rawString__"] = node.__rawString__
-
-        //       if (node.__src__) {
-        //         preElement.properties["__src__"] = node.__src__
-        //       }
-
-        //       if (node.__event__) {
-        //         preElement.properties["__event__"] = node.__event__
-        //       }
-
-        //       if (node.__style__) {
-        //         preElement.properties["__style__"] = node.__style__
-        //       }
-        //     }
-        //   })
-        // },
       ],
       remarkPlugins: [
         [remarkGfm],
@@ -255,10 +226,11 @@ const lifelog = defineCollection({
   name: "lifelog",
   directory: "content/lifelog",
   include: "*.mdx",
-  schema: (z) => ({
+  schema: z.object({
     title: z.string(),
     createdOn: z.string(),
     updatedOn: z.string().optional(),
+    content: z.string(),
   }),
   transform: async (document, context) => {
     const mdx = await compileMDX(context, document)

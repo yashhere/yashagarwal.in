@@ -67,7 +67,6 @@ This problem sits at an interesting intersection:
 1. **Architectural Complexity**: Redis Sentinel architecture has two types of connections - connections to Sentinel instances for service discovery, and connections to the actual Redis master for data operations. Both need authentication with ACL enabled.
 
 2. **No Direct Configuration**: RedBeat doesn't provide a `redbeat_redis_username` option or similar. The standard approaches don't work:
-
    - Can't pass username in the URL (RedBeat uses a custom [Sentinel URL](https://redbeat.readthedocs.io/en/latest/config.html#sentinel-support) format)
    - Can't modify `sentinel_kwargs` from configuration (it's hardcoded)
 

@@ -361,9 +361,7 @@ action = iptables-traefik-docker
     - Traefik automatically captures the real client IP when properly configured
     - The `accesslog.format=common` setting ensures these IPs are logged in a format Fail2Ban can parse
 2.  The Custom iptables Action (`iptables-traefik-docker.conf`) modifies iptables to work with Docker's networking:
-
     1. **On Start (actionstart):**
-
        1. `iptables -N f2b-traefik`: Creates a new custom chain called "f2b-traefik"
        2. `iptables -A f2b-traefik -j RETURN`: Adds a default rule that returns traffic flow to the parent chain
        3. `iptables -I FORWARD -p tcp -m multiport --dports 80,443 -j f2b-traefik`: Inserts a rule at the beginning of the FORWARD chain to route HTTP/HTTPS traffic through our custom chain
@@ -371,11 +369,9 @@ action = iptables-traefik-docker
        This setup intercepts packets in the FORWARD chain, which is crucial because Docker traffic typically passes through this chain.
 
     2. **On Ban (actionban):**
-
        - `iptables -I f2b-traefik 1 -s <ip> -j DROP`: Inserts a rule at the beginning of our custom chain to drop packets from the banned IP
 
     3. **On Unban (actionunban):**
-
        - `iptables -D f2b-traefik -s <ip> -j DROP`: Removes the ban rule for the specific IP
 
     4. **On Stop (actionstop):**

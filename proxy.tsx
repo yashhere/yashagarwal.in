@@ -3,7 +3,7 @@ import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
 import { ipAddress } from "@vercel/functions"
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   // Clone the request headers so that we don't modify the original headers object
   const requestHeaders = new Headers(request.headers)
 

@@ -1,4 +1,6 @@
 {
+  "installCommand": "dnf install -y $(cat chrome-dependencies.txt) && bun install",
+  "buildCommand": "bun run build",
   "rewrites": [
     {
       "source": "/stats/:match*",

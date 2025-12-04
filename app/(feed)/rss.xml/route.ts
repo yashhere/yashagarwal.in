@@ -1,14 +1,14 @@
-import { getCachedFeed } from "../utils"
+import { getFeed } from "../utils"
+
+export const dynamic = "force-static"
 
 export async function GET() {
   try {
-    const feed = await getCachedFeed()
+    const feed = await getFeed()
 
     return new Response(feed.rss2(), {
       headers: {
         "Content-Type": "application/rss+xml; charset=utf-8",
-        "Cache-Control": "public, max-age=900, stale-while-revalidate=3600", // 15min cache
-        ETag: `"${Date.now()}"`,
       },
     })
   } catch (error) {

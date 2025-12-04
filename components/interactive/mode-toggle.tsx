@@ -22,6 +22,7 @@ export const DarkToggleSkeleton = () => {
 
 export const DarkToggle = () => {
   const [mounted, setMounted] = useState(false)
+  const [tooltipText, setTooltipText] = useState("")
   const { resolvedTheme, theme, setTheme } = useTheme()
 
   // useEffect only runs on the client, so now we can safely show the UI
@@ -29,11 +30,7 @@ export const DarkToggle = () => {
     setMounted(true)
   }, [])
 
-  if (!mounted) {
-    return <DarkToggleSkeleton />
-  }
-
-  const getTooltipText = () => {
+  useEffect(() => {
     const themes = {
       light: [
         "Shine on",
@@ -53,7 +50,11 @@ export const DarkToggle = () => {
       ],
     }
     const options = resolvedTheme === "dark" ? themes.dark : themes.light
-    return options[Math.floor(Math.random() * options.length)]
+    setTooltipText(options[Math.floor(Math.random() * options.length)])
+  }, [resolvedTheme])
+
+  if (!mounted) {
+    return <DarkToggleSkeleton />
   }
 
   return (
@@ -100,7 +101,7 @@ export const DarkToggle = () => {
             </div>
           </TooltipTrigger>
           <TooltipContent className="bg-background text-foreground">
-            <p>{getTooltipText()}</p>
+            <p>{tooltipText}</p>
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
