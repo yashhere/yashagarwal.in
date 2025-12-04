@@ -3,11 +3,7 @@
 import { useLayoutEffect } from "react"
 import { useTheme } from "next-themes"
 
-// Theme colors matching CSS variables
-const THEME_COLORS = {
-  light: "#ffffff", // oklch(1 0 0)
-  dark: "#020617", // oklch(0.141 0.005 285.823)
-} as const
+import { THEME_COLORS } from "@/lib/constants/theme-colors"
 
 export function ThemeColor() {
   const { resolvedTheme } = useTheme()
