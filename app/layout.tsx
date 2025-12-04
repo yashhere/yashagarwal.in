@@ -3,7 +3,6 @@ import { Geist, IBM_Plex_Mono } from "next/font/google"
 
 import "@/styles/globals.css"
 
-import { ThemeColor } from "@/components/ui/theme-color"
 import { THEME_COLORS } from "@/lib/constants/theme-colors"
 import { defaultMetadata, defaultViewport } from "@/lib/seo/default"
 import {
@@ -43,24 +42,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                try {
-                  const stored = localStorage.getItem('theme');
-                  const theme = stored === 'system' || !stored
-                    ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
-                    : stored;
-                  const color = theme === 'dark' ? '${THEME_COLORS.dark}' : '${THEME_COLORS.light}';
-                  const meta = document.createElement('meta');
-                  meta.name = 'theme-color';
-                  meta.content = color;
-                  document.head.appendChild(meta);
-                } catch (e) {}
-              })();
-            `,
-          }}
+        <meta name="theme-color" content={THEME_COLORS.light} />
+        <meta
+          name="theme-color"
+          media="(prefers-color-scheme: dark)"
+          content={THEME_COLORS.dark}
         />
         <WebsiteStructuredData />
         <PersonStructuredData
@@ -82,10 +68,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           monoFont.variable
         )}
       >
-        <Providers>
-          <ThemeColor />
-          {children}
-        </Providers>
+        <Providers>{children}</Providers>
       </body>
     </html>
   )

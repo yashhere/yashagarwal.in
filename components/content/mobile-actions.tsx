@@ -14,12 +14,27 @@ export const MobileActions = ({ headings }: { headings: Heading[] }) => {
   const [isExpanded, setIsExpanded] = useState(true)
   const lastScrollY = useRef(0)
   const containerRef = useRef<HTMLDivElement>(null)
+  const previousFocusRef = useRef<HTMLElement | null>(null)
 
   useOnClickOutside(containerRef as RefObject<HTMLElement>, () => {
     if (isExpanded) {
       setIsExpanded(false)
+      // Restore focus when closing
+      if (previousFocusRef.current) {
+        previousFocusRef.current.focus()
+        previousFocusRef.current = null
+      }
     }
   })
+
+  // Handle expand/collapse and focus management
+  const handleExpand = () => {
+    if (!isExpanded) {
+      // Store the currently focused element before expanding
+      previousFocusRef.current = document.activeElement as HTMLElement
+      setIsExpanded(true)
+    }
+  }
 
   useEffect(() => {
     // Set initial state based on scroll position
@@ -28,7 +43,7 @@ export const MobileActions = ({ headings }: { headings: Heading[] }) => {
     }
     let rafId: number | null = null
     const handleScroll = () => {
-      if (rafId) cancelAnimationFrame(rafId)
+      if (rafId !== null) cancelAnimationFrame(rafId)
       rafId = requestAnimationFrame(() => {
         try {
           const currentScrollY = window.scrollY
@@ -55,7 +70,7 @@ export const MobileActions = ({ headings }: { headings: Heading[] }) => {
 
     return () => {
       window.removeEventListener("scroll", handleScroll)
-      if (rafId) cancelAnimationFrame(rafId)
+      if (rafId !== null) cancelAnimationFrame(rafId)
     }
   }, [])
 
@@ -73,7 +88,13 @@ export const MobileActions = ({ headings }: { headings: Heading[] }) => {
           "border-border bg-background/95 relative flex items-center justify-center overflow-hidden rounded-full border shadow-xl backdrop-blur-md transition-all duration-200",
           !isExpanded && "hover:bg-muted/50 cursor-pointer"
         )}
-        onClick={() => !isExpanded && setIsExpanded(true)}
+        onClick={handleExpand}
+        role="button"
+        aria-label={
+          isExpanded ? "Mobile actions menu" : "Expand mobile actions"
+        }
+        aria-expanded={isExpanded}
+        tabIndex={isExpanded ? -1 : 0}
       >
         {/* Expanded state */}
         <div
