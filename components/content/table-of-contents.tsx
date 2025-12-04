@@ -65,12 +65,14 @@ export const TableOfContents = ({
               href={`#${heading.slug}`}
               variant="nav"
               className={cn(
-                "hover:text-primary text-muted-foreground relative block py-0.5 transition-colors duration-200",
-                isActive && "text-primary"
+                "hover:text-primary relative block py-0.5 transition-colors duration-200",
+                isActive
+                  ? "text-foreground font-semibold"
+                  : "text-muted-foreground font-normal"
               )}
               style={{
-                paddingLeft: `calc(0.75rem + ${(heading.heading - 2) * 1}rem)`,
-              }} // Dynamic indentation, adjusted base
+                paddingLeft: `${0.75 + (heading.heading - 2) * 1}rem`,
+              }}
               onClick={(e) => handleHeadingClick(e, heading.slug)}
             >
               {heading.text}
