@@ -22,7 +22,7 @@ export function Breadcrumbs({ items, className }: BreadcrumbsProps) {
         className
       )}
     >
-      <ol className="flex flex-wrap items-center space-x-2">
+      <ol className="flex flex-wrap items-center space-x-2 gap-y-1">
         {items.map((item, index) => {
           const isLast = index === items.length - 1
           return (

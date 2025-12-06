@@ -12,6 +12,7 @@ const nextConfig = {
   experimental: {
     turbopackFileSystemCacheForDev: true, // filesystem caching
     viewTransition: true,
+    optimizeCss: true, // inline critical css
     mdxRs: {
       mdxType: "gfm",
     },

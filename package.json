@@ -82,6 +82,7 @@
     "@types/react-dom": "19.2.3",
     "@typescript-eslint/parser": "^8.48.1",
     "babel-plugin-react-compiler": "^1.0.0",
+    "critical": "^7.2.1",
     "eslint": "^9.39.1",
     "eslint-config-next": "16.0.7",
     "eslint-config-prettier": "^10.1.8",
