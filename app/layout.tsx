@@ -1,5 +1,5 @@
 import { Metadata } from "next"
-import { Geist, IBM_Plex_Mono } from "next/font/google"
+import { Geist, IBM_Plex_Mono, Newsreader } from "next/font/google"
 
 import "@/styles/globals.css"
 
@@ -31,6 +31,16 @@ const monoFont = IBM_Plex_Mono({
   fallback: ["ui-monospace", "monospace"],
 })
 
+const serifFont = Newsreader({
+  variable: "--font-serif",
+  display: "swap",
+  style: ["normal", "italic"],
+  subsets: ["latin"],
+  weight: "variable",
+  preload: true,
+  fallback: ["Georgia", "serif"],
+})
+
 export const metadata: Metadata = defaultMetadata
 export const viewport = defaultViewport
 
@@ -40,7 +50,12 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
+    <html
+      lang="en"
+      className="scroll-smooth"
+      suppressHydrationWarning
+      data-scroll-behavior="smooth"
+    >
       <head>
         <meta name="theme-color" content={THEME_COLORS.light} />
         <meta
@@ -65,7 +80,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
           "selection:bg-slate-200 selection:text-slate-900 dark:selection:bg-slate-700 dark:selection:text-slate-100",
           "flex flex-col lg:mx-auto",
           sansFont.variable,
-          monoFont.variable
+          monoFont.variable,
+          serifFont.variable
         )}
       >
         <Providers>{children}</Providers>

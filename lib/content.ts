@@ -40,6 +40,7 @@ export function getPreviewNotes(): NoteWithMetadata[] {
           title: note.title,
           description: note.description,
           createdOn: note.createdOn,
+          updatedOn: note.updatedOn,
           category: note.category,
           slug: note.slug,
           tags: note.tags,
@@ -61,6 +62,7 @@ export async function getPartialNote(slug: string) {
   const trimmedNote: Partial<Note> = {
     title: note.title,
     createdOn: note.createdOn,
+    updatedOn: note.updatedOn,
     slug: note.slug,
     description: note.description,
     mdx: note.mdx,
@@ -71,6 +73,7 @@ export async function getPartialNote(slug: string) {
       (note.headings as { heading: number; text: string; slug: string }[]) ??
       null,
     readingTime: note.readingTime,
+    related: note.related,
   }
 
   const article: NoteWithFullMetadata = {

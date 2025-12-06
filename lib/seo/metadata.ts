@@ -99,6 +99,7 @@ export function generateArticleMetadata(article: {
   excerpt?: string
   tags?: string[]
   createdOn?: string
+  updatedOn?: string
   coverImage?: string
   slug: string
 }): Metadata {
@@ -110,7 +111,7 @@ export function generateArticleMetadata(article: {
     ogImage: article.coverImage,
     twitterImage: article.coverImage,
     publishedTime: article.createdOn,
-    modifiedTime: article.createdOn,
+    modifiedTime: article.updatedOn || article.createdOn,
     tags: article.tags,
     type: "article",
   })

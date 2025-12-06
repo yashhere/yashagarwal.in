@@ -7,6 +7,7 @@ import Image from "@/components/ui/image"
 import Link from "@/components/ui/link"
 import { cn } from "@/lib/utils"
 import Draft from "../ui/draft"
+import { Heading } from "../ui/heading"
 import { CodeBlock } from "./code-block"
 
 const components = {
@@ -19,8 +20,8 @@ const components = {
     <Link href={href || ""} {...props} variant="text" />
   ),
   img: (props) => <Image {...props} />,
-  p: ({ className, ...props }: React.HTMLAttributes<HTMLParagraphElement>) => (
-    <p
+  p: ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
+    <div
       className={cn(
         "text-foreground text-base leading-relaxed not-first:mt-6",
         className
@@ -29,32 +30,34 @@ const components = {
     />
   ),
   h1: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h1
-      className={cn(
-        "text-foreground mt-10 mb-4 scroll-m-6 text-2xl",
-        className
-      )}
+    <Heading
+      level="h2"
+      as="h2"
+      className={cn("mt-10 mb-4 scroll-m-6", className)}
       {...props}
     />
   ),
   h2: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h2
-      className={cn(
-        "text-foreground mt-10 mb-3 scroll-m-10 text-xl first:mt-0",
-        className
-      )}
+    <Heading
+      level="h3"
+      as="h3"
+      className={cn("mt-10 mb-3 scroll-m-10 first:mt-0", className)}
       {...props}
     />
   ),
   h3: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h3
-      className={cn("text-foreground mt-8 mb-3 scroll-m-4 text-lg", className)}
+    <Heading
+      level="h4"
+      as="h4"
+      className={cn("mt-8 mb-3 scroll-m-4", className)}
       {...props}
     />
   ),
   h4: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h4
-      className={cn("text-md text-foreground mt-6 mb-3 scroll-m-4", className)}
+    <Heading
+      level="h4"
+      as="h5"
+      className={cn("text-foreground mt-6 mb-3 scroll-m-4", className)}
       {...props}
     />
   ),

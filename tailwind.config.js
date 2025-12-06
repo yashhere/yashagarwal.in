@@ -1,4 +1,5 @@
 const headingStyles = {
+  fontFamily: "var(--font-serif)",
   fontWeight: 600,
   lineHeight: 1.2,
   marginTop: "1.5rem",
@@ -262,6 +263,7 @@ module.exports = {
       fontFamily: {
         sans: ["var(--font-sans)"],
         mono: ["var(--font-mono)"],
+        serif: ["var(--font-serif)"],
       },
       typography: typographyStyles,
     },

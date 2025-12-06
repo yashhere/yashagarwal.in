@@ -16,6 +16,8 @@ import { ArrowLeftIcon, XLogoIcon } from "@phosphor-icons/react/dist/ssr"
 import { format } from "date-fns"
 
 import { BreadcrumbItem, Breadcrumbs } from "@/components/content/breadcrumbs"
+import { ReadingProgress } from "@/components/content/reading-progress"
+import { RelatedNotes } from "@/components/content/related-notes"
 import { DecorativeHr } from "@/components/ui/decorative-hr"
 import Draft from "@/components/ui/draft"
 import { Heading } from "@/components/ui/heading"
@@ -86,6 +88,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
     excerpt: note.description,
     tags: note.tags,
     createdOn: note.createdOn,
+    updatedOn: note.updatedOn,
     coverImage: newOgImage,
     slug: params.slug,
   })
@@ -150,10 +153,12 @@ export default async function Page(props: Props) {
 
   return (
     <>
+      <ReadingProgress targetId="article-body" />
       <ArticleStructuredData
         title={article.note.title}
         description={article.note.description}
         publishedAt={article.note.createdOn}
+        updatedAt={article.note.updatedOn}
         url={`/notes/${article.note.slug}`}
         image={article.note.image}
         category={article.note.category}
@@ -198,10 +203,20 @@ export default async function Page(props: Props) {
           <section className="mb-8 space-y-2">
             <Breadcrumbs items={breadcrumbItems} />
             <Heading level="h1">{article.note.title}</Heading>
-            <div className="text-foreground/60 flex flex-row gap-1 text-sm">
+            <div className="text-foreground/60 flex flex-row flex-wrap gap-2 text-sm">
               <span>
+                Published on{" "}
                 {format(new Date(article.note.createdOn), "MMM dd, yyyy")}
               </span>
+              {article.note.updatedOn && (
+                <>
+                  <span className="hidden sm:inline">•</span>
+                  <span className="block sm:inline">
+                    Last updated on{" "}
+                    {format(new Date(article.note.updatedOn), "MMM dd, yyyy")}
+                  </span>
+                </>
+              )}
             </div>
           </section>
 
@@ -213,13 +228,17 @@ export default async function Page(props: Props) {
 
           <div className="mb-8">
             {/* Added max-w-none to override prose default width since we control it via grid */}
-            <div className="prose prose-slate dark:prose-invert text-foreground max-w-none">
+            <div
+              id="article-body"
+              className="prose prose-slate dark:prose-invert text-foreground max-w-none"
+            >
               <Mdx code={article.note.mdx} />
               {article.note.status === "draft" ? <Draft /> : null}
             </div>
           </div>
 
           <DecorativeHr />
+          <RelatedNotes relatedSlugs={article.note.related} />
           {article.backlinks && <BackLinks backlinks={article.backlinks} />}
           {article.note.tags && article.note.tags.length > 0 && (
             <TagList tags={article.note.tags} />

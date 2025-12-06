@@ -11,10 +11,10 @@ export type HeadingProps = ComponentProps<"h1"> &
 const headingStyles = tv({
   variants: {
     level: {
-      h1: "text-3xl",
-      h2: "text-2xl",
-      h3: "text-xl",
-      h4: "text-lg",
+      h1: "font-serif text-4xl md:text-5xl font-medium tracking-tight",
+      h2: "font-serif text-2xl md:text-3xl font-medium tracking-tight",
+      h3: "font-serif text-xl md:text-2xl font-medium tracking-tight",
+      h4: "font-serif text-lg md:text-xl font-medium tracking-tight",
     },
   },
   defaultVariants: {

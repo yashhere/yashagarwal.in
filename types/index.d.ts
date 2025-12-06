@@ -24,6 +24,7 @@ export type NotePreview = {
   title: string
   description?: string
   createdOn: string
+  updatedOn?: string
   category?: string
   slug?: string
   tags?: string[]
