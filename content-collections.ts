@@ -105,6 +105,8 @@ const notes = defineCollection({
       })
       .optional(),
     createdOn: z.string(),
+    updatedOn: z.string().optional(),
+    related: z.array(z.string()).optional(),
     content: z.string(),
     mdx: z.string().optional(),
     headings: z
