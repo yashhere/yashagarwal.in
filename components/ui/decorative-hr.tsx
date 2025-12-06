@@ -39,9 +39,9 @@ export function DecorativeHr({
 
   return (
     <div className={cn("my-8 flex items-center justify-center", className)}>
-      <div className="via-border/80 to-border h-px flex-1 bg-gradient-to-r from-transparent"></div>
+      <div className="via-border/80 to-border h-px flex-1 bg-linear-to-r from-transparent"></div>
       {renderCenter()}
-      <div className="via-border/80 to-border h-px flex-1 bg-gradient-to-l from-transparent"></div>
+      <div className="via-border/80 to-border h-px flex-1 bg-linear-to-l from-transparent"></div>
     </div>
   )
 }

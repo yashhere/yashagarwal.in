@@ -29,7 +29,12 @@ Our application stack includes:
 
 # The Problem
 
-Modern Redis deployments use ACL (Access Control Lists) that require both username and password for authentication. However, when I tried to start RedBeat with Sentinel, I kept getting authentication errors:
+<Highlight color="red">
+  Modern Redis deployments use ACL (Access Control Lists) that require both
+  username and password for authentication.
+</Highlight>
+However, when I tried to start RedBeat with Sentinel, I kept getting
+authentication errors:
 
 ```
 redis.exceptions.AuthenticationError: WRONGPASS invalid username-password pair or user is disabled.
@@ -148,3 +153,40 @@ Setting `ssl=False` is crucial - even though RedBeat sets `connection_kwargs['ss
 This experience demonstrates that production systems often require creative solutions when dealing with the intersection of multiple technologies. Sometimes the "right" answer isn't about writing new code, but about understanding existing code well enough to work within its constraints.
 
 If you're facing similar issues with RedBeat and Redis Sentinel authentication, I hope this helps. And if you maintain a Celery-based application, this might be a good time to check whether your authentication setup is future-proof for ACL-based Redis deployments.
+
+---
+
+## Component Test Cases
+
+Here are some test cases for the newly added MDX components:
+
+### Highlight Component
+
+This is a <Highlight color="green">green highlight to emphasize an important point.
+You can also use a custom color if needed.</Highlight>
+
+### Kbd Component
+
+To save your work, press <Kbd>Cmd</Kbd> + <Kbd>S</Kbd> (or <Kbd>Ctrl</Kbd> + <Kbd>S</Kbd> on Windows).
+To open the command palette, use <Kbd>Shift</Kbd> + <Kbd>Cmd</Kbd> + <Kbd>P</Kbd>.
+
+### Accordion Component
+
+<Accordion title="Click to reveal more details about Redis ACL">
+  Redis Access Control Lists (ACL) provide fine-grained control over user
+  permissions, allowing administrators to define which commands and keys a user
+  can access. This significantly enhances the security posture of a Redis
+  deployment compared to traditional password-only authentication.
+</Accordion>
+
+<Accordion title="Expand for a deeper dive into Celery Beat schedulers">
+  Celery Beat is a scheduler that kicks off tasks periodically. While the
+  default scheduler stores tasks in the local filesystem, RedBeat stores them in
+  Redis, enabling dynamic task management without needing to restart the Beat
+  process.
+</Accordion>
+
+### Tooltip Component
+
+The <Tooltip content="An asynchronous task queue/job queue based on distributed message passing.">Celery</Tooltip> framework is widely used for distributed task processing.
+This workaround involves <Tooltip content="Bypassing a security or functional restriction through unconventional means.">piggybacking</Tooltip> on an existing configuration.
