@@ -35,7 +35,8 @@ export const AnalogClock: FC = () => {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger aria-label="clock" asChild>
-        <div
+        <button
+          type="button"
           className="group relative flex cursor-pointer items-center justify-center rounded-md p-1 text-sm outline-none"
           onMouseEnter={() => setOpen(true)}
           onMouseLeave={() => setOpen(false)}
@@ -67,7 +68,7 @@ export const AnalogClock: FC = () => {
               ></span>
             </section>
           </div>
-        </div>
+        </button>
       </PopoverTrigger>
       <PopoverContent
         className="bg-background text-foreground w-auto px-3 py-1.5 font-mono text-sm"

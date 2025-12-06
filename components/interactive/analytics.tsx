@@ -29,6 +29,7 @@ export function Analytics() {
         async
         defer
         strategy="afterInteractive"
+        rel="preconnect"
         src="https://static.cloudflareinsights.com/beacon.min.js"
         data-cf-beacon='{"token": "e14f712dcb3f4bb7aab3a2f606159e03"}'
       />
