@@ -15,9 +15,6 @@ export function ReadingProgress({
 
   useEffect(() => {
     const updateScrollCompletion = () => {
-      let currentProgress
-      let scrollHeight
-
       if (targetId) {
         const element = document.getElementById(targetId)
         if (element) {
@@ -53,8 +50,8 @@ export function ReadingProgress({
       }
 
       // Fallback to global scroll if no target or target not found
-      currentProgress = window.scrollY
-      scrollHeight = document.body.scrollHeight - window.innerHeight
+      const currentProgress = window.scrollY
+      const scrollHeight = document.body.scrollHeight - window.innerHeight
       if (scrollHeight) {
         setCompletion(Number((currentProgress / scrollHeight).toFixed(2)) * 100)
       }

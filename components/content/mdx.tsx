@@ -20,7 +20,7 @@ const components = {
     <Link href={href || ""} {...props} variant="text" />
   ),
   img: (props) => <Image {...props} />,
-  p: ({ className, ...props }: React.HTMLAttributes<HTMLParagraphElement>) => (
+  p: ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
     <div
       className={cn(
         "text-foreground text-base leading-relaxed not-first:mt-6",
