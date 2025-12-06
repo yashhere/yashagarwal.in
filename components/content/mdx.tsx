@@ -21,7 +21,7 @@ const components = {
   ),
   img: (props) => <Image {...props} />,
   p: ({ className, ...props }: React.HTMLAttributes<HTMLParagraphElement>) => (
-    <p
+    <div
       className={cn(
         "text-foreground text-base leading-relaxed not-first:mt-6",
         className
