@@ -8,10 +8,18 @@ import Link from "@/components/ui/link"
 import { cn } from "@/lib/utils"
 import Draft from "../ui/draft"
 import { Heading } from "../ui/heading"
+import { Accordion } from "./accordion"
 import { CodeBlock } from "./code-block"
+import { Highlight } from "./highlight"
+import { Kbd } from "./kbd"
+import { MdxTooltip } from "./mdx-tooltip"
 
 const components = {
   Draft,
+  Highlight,
+  Kbd,
+  Accordion,
+  Tooltip: MdxTooltip,
   a: ({
     className,
     href,
@@ -102,11 +110,11 @@ const components = {
   ),
   hr: (_props: React.HTMLAttributes<HTMLHRElement>) => (
     <div className="my-6 flex items-center justify-center">
-      <div className="to-border h-px flex-1 bg-gradient-to-r from-transparent"></div>
+      <div className="to-border h-px flex-1 bg-linear-to-r from-transparent"></div>
       <div className="px-4">
         <div className="bg-border h-2 w-2 rounded-full shadow-sm"></div>
       </div>
-      <div className="to-border h-px flex-1 bg-gradient-to-l from-transparent"></div>
+      <div className="to-border h-px flex-1 bg-linear-to-l from-transparent"></div>
     </div>
   ),
   table: ({ className, ...props }: React.HTMLAttributes<HTMLTableElement>) => (
@@ -133,15 +141,7 @@ const components = {
   sub: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
     <sub className={cn("align-sub text-xs font-bold", className)} {...props} />
   ),
-  kbd: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
-    <kbd
-      className={cn(
-        "border-border bg-muted text-foreground rounded border px-1.5 py-0.5 text-xs font-semibold shadow-[inset_0_-1px_0_0_var(--tw-border-opacity)]",
-        className
-      )}
-      {...props}
-    />
-  ),
+  kbd: Kbd,
   mark: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
     <mark
       className={cn(
