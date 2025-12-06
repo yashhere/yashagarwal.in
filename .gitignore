@@ -46,5 +46,6 @@ next-env.d.ts
 # image backups
 /public/.originals
 
-# claude
+# ai
 .claude
+.gemini
