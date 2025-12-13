@@ -7,15 +7,12 @@ interface Props {
   currentSlug: string;
 }
 
-import { getCollection } from 'astro:content';
+import { getSeriesNotes } from '../../lib/content';
 import Heading from '../ui/Heading.astro';
 
 const { series, currentSlug } = Astro.props;
 
-const allNotes = await getCollection('notes');
-const seriesNotes = allNotes
-  .filter((n) => n.data.series?.title === series.title)
-  .sort((a, b) => (a.data.series?.order || 0) - (b.data.series?.order || 0));
+const seriesNotes = await getSeriesNotes(series.title);
 
 const currentIndex = seriesNotes.findIndex((n) => n.slug === currentSlug);
 ---
@@ -35,7 +32,7 @@ const currentIndex = seriesNotes.findIndex((n) => n.slug === currentSlug);
 
   <div class="p-6 pt-0">
     <ol class="space-y-4 border-l border-muted-foreground/40 ml-2">
-        {seriesNotes.map((note, index) => {
+        {seriesNotes.map((note) => {
             const isCurrent = note.slug === currentSlug;
             return (
                 <li class="relative pl-6">
