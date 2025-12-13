@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@astrojs/alpinejs": "^0.4.9",
+    "@astrojs/check": "^0.9.6",
     "@astrojs/cloudflare": "^12.6.12",
     "@astrojs/mdx": "^4.3.13",
     "@astrojs/react": "^4.4.2",
@@ -25,6 +26,7 @@
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "tailwindcss": "^4.1.18",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "typescript": "^5.9.3"
   }
 }

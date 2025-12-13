@@ -1,0 +1,125 @@
+---
+title: Setting up ALM Octane with Docker Compose
+createdOn: "2017-12-26T20:53:35+05:30"
+status: published
+tags:
+  - Containerization
+  - Deployment
+  - Docker
+  - Docker Compose
+  - Homelab
+category: Technology
+description: >-
+  Simplify ALM Octane deployment with Docker Compose. Learn to set up
+  multi-container environments for Oracle DB, Elastic Search, and the Octane
+  Server.
+---
+
+Recently, I got a chance to set up ALM Octane on one of my university servers
+for a course project. From the support page of ALM Octane:
+
+> ALM Octane is a web-based application lifecycle management platform that
+> enables teams to collaborate easily, manage the product delivery pipeline, and
+> visualize the impact of changes.
+
+# Precursor
+
+My [department](http://cse.nitc.ac.in/) insists on using open-source software (a
+plus point, indeed!). But ALM Octane has Oracle DB/MSSQL as a dependency. My
+professor was not very enthusiastic about installing a proprietary database on
+the server. So I came up with a different approach. I set up this database
+([free version](https://www.oracle.com/database/technologies/appdev/xe.html) of
+Oracle DB, the Oracle Database 11g Express Edition) in a Docker container. ALM
+Octane has three components -- Oracle DB, Elastic Search, and the Octane Server
+itself. The problem was to handle the condition that these three components
+should be installed on different machines. I decided to use three separate
+Docker containers for this isolation and then configured them to communicate
+with each other with docker-compose.
+
+## Wait ... Docker Compose?
+
+(Skip this if already know about Docker and Compose)
+
+> Docker-compose is a tool to define and run multi-container Docker
+> applications. Compose uses a compose file to configure the services used by
+> the applications. Then all the services and the application can be run by
+> using a single command.
+
+So before reading this article any further, if you do not know about
+docker-compose, go and read about it.
+
+# The Problem
+
+Three primary services are required for the proper functioning of the Octane
+Server -- Octane, Oracle DB and Elastic Search. The difficulty was to set up
+adequate configuration options for these services and the appropriate setup for
+communication between them. I searched on Docker Hub for any pre-built images.
+Fortunately, I found some pre-built Docker images for my purpose. So I started
+writing my config file.
+
+# The Solution
+
+Here is my config file for easy reference.
+
+```yaml
+version: "2"
+services:
+  octane_oracle:
+    image: alexeiled/docker-oracle-xe-11g
+    shm_size: 2g
+    mem_limit: 4g
+  octane_es:
+    image: elasticsearch:2.4
+    environment:
+      - ES_HEAP_SIZE=4G
+    mem_limit: 4g
+  octane:
+    image: hpsoftware/almoctane
+    ports:
+      - "8080:8080"
+    volumes:
+      - /opt/octane/conf:/opt/octane/conf
+      - /opt/octane/log:/opt/octane/log
+      - /opt/octane/repo:/opt/octane/repo
+    links:
+      - octane_oracle
+      - octane_es
+    mem_limit: 4g
+    env_file:
+      - ./octane.env
+```
+
+The configuration options in the code are for a system with RAM of 8GB. The
+options must be tuned for the best performance before deploying on the
+production server.
+
+In the code, I have exposed port `8080` of the Octane Docker container to the
+port 8080 of the host machine. It will make sure that we can access the Octane
+application on `localhost:8080`. The `octane.env` file contains three variables
+for easy site management.
+
+```bash
+SERVER_DOMAIN="your domain name"
+ADMIN_PASSWORD="your password"
+#This disables the minimum memory check to enable to run on smaller machines.
+DISABLE_VALIDATOR_MEMORY=true
+```
+
+Now, if you try to run the container with `docker-compose up`, you will
+encounter various validation errors. It is because, before starting the server,
+you need to adjust some settings. If you noticed in the config file, there is a
+section to define volumes. These volumes are persistent and are used to keep
+changes saved between two docker-compose runs. I have mapped three volumes from
+the Docker container to the host machine. So you can now edit the files in the
+`/opt/octane/` folder on the host machine, and changes will reflect in the
+Docker container. The file where you will have to make changes is
+`/opt/octane/conf/setup.xml`.
+
+You can read the documentation of ALM Octane to find out which settings to be
+changed. Once you do the necessary changes, fire up the command
+`docker-compose up` and wait for some time. Docker Compose will finish
+processing, and the server can be accessed on `http://localhost:8080` on the
+host machine. While deploying it on the production server, make sure that your
+network administrator has opened the port 8080 for your server. Otherwise, the
+site will not be accessible. Also, the docker-compose can be run in the
+background by issuing command `docker-compose up -d`.

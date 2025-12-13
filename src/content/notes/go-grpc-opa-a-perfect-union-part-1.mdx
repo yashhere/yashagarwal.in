@@ -1,0 +1,105 @@
+---
+title: Go + gRPC + OPA - A Perfect Union - Part 1
+createdOn: "2019-02-10T14:29:08+05:30"
+status: published
+series:
+  order: 1
+  title: Go + gRPC + OPA - A Perfect Union
+tags:
+  - Golang
+  - OPA
+  - gRPC
+category: Development
+description: >-
+  Introduce gRPC and Open Policy Agent (OPA) and outline building a Go-based
+  library service with both gRPC and REST interfaces.
+---
+
+**TL;DR** -- In a series of blog posts, I will be implementing a simple library
+application supporting both gRPC and REST interfaces using Go, gRPC, and OPA. My
+approach might not be the most optimal one, but I am learning these technologies
+currently. Please give your valuable suggestions and be kind :)
+
+I have been learning the basics of microservices and Golang lately. On the work
+front, I got a chance to work on Go, gRPC, and Open Policy Agent as my first
+professional project. In this post, I will be demonstrating what I learned in
+the last few months. We will be implementing a simple gRPC based library
+service, which will be able to serve requests using both gRPC and REST calls. It
+will also incorporate the Open Policy Agent (OPA) to provide the authorization
+to users. Let's begin with a quick introduction to gRPC and OPA.
+
+# gRPC
+
+gRPC is Google's implementation for Remote Procedure Calls(RPC). RPC is mainly
+used in building scalable distributed systems. While REST has a limited set of
+verbs, RPC can define any function calls, including synchronous and asynchronous
+calls.
+
+In gRPC, the client can make procedure calls as if the requests are made to some
+local function. However, the underlying client stub (auto-generated) will send
+the call to the server. The server will have a similar server stub, which will
+be able to handle the requests coming from the client. The server will send the
+response to the client using similar mechanisms over the network. All the
+communication is serialized to binary format, so it is ideal for distributed
+systems as binary format tends to be on the faster side for large amounts of
+data.
+
+For more info about gRPC, visit the official [website](https://grpc.io/).
+
+# Open Policy Agent (OPA)
+
+OPA gives us the ability to define a fine-grained policy control mechanism.
+However, I think the most critical benefit of using OPA is that it gives you the
+ability to decouple your services and the definition of policies from the
+enforcement of it.
+
+There are mainly two parts of OPA -
+
+1. A JSON document store where you can define anything from your users, access
+   roles, permission levels, etc.
+2. A policy is written in a declarative language. This policy gives you new
+   derivative data from the original JSON document store evaluated by the
+   policy. The declarative language is called Rego, and these policies are also
+   documents that generate results according to the defined policy. The users
+   query these results.
+
+This info will be sufficient for our use case. More info about it can be found
+at the official [website](https://www.openpolicyagent.org/).
+
+# The skeleton of our Application
+
+We will be building a command-line library application. This application will
+support adding, deleting, searching, issuing, and returning of books. There are
+three types of users -- student, faculties, and staff. Not all users have a
+similar kind of access level. There are some books which are only reserved for
+students, and some are exclusively reserved for faculties and so on.
+
+I think emulating the
+[library](https://harrypotter.fandom.com/wiki/Hogwarts_Library) at Hogwarts will
+be a good idea here. Students and ordinary people were not allowed inside the
+restricted section of the library. We will emulate that restricted section using
+the authorization mechanisms provided by OPA.
+
+The gRPC protocol will handle the communications part in our app, but not
+everyone in Hogwarts is using gRPC. Wizards are still in love with REST (not a
+bad thing, though), so we will provide them alike the REST interface to interact
+with our service. We do not want to face the wrath of the wizards, after all.
+
+OPA can either be used as a standalone application or be embedded in the Go
+service as well. Both approaches have their pros and cons. I have decided to use
+OPA as an independent service, as it will be more comfortable that way for us to
+push authorization data and policies to it if such a need arises in the future.
+
+One more issue remains - where to store the added books. Shall we persist them?
+In practical scenarios, persistence is always a good idea, but here I do not
+want to complicate things too much. We could use any Object storage servers
+(e.g., Minio) to store the JSON data generated from our gRPC methods, but that
+will unnecessarily add complexity to our simple scenario. Wizards do not like
+complicate stuff, you know!
+
+In the next posts, we will define our gRPC proto file and build the Go service
+around it. Then we will add a REST interface to our service for simple CRUD
+operations in our application. Then we will add OPA authorization to restrict
+our users from adding and viewing books which they are not supposed to access.
+
+Thank you for reading. Cheers 😄

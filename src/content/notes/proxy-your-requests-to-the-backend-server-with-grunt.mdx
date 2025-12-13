@@ -1,0 +1,167 @@
+---
+title: Proxy Your Requests to the Backend Server With Grunt
+createdOn: "2018-05-15T17:14:13+05:30"
+status: published
+tags:
+  - Dev Setup
+  - Development
+  - JavaScript
+  - Tools
+category: Development
+description: >-
+  Overcome CORS issues in web development by learning to proxy frontend requests
+  to your backend server using Grunt and grunt-connect-proxy.
+---
+
+_This article was originally published on
+[zeolearn](https://www.zeolearn.com/magazine/proxy-your-requests-to-the-backend-server-with-grunt)._
+
+If you are working on large projects, it is undoubtedly a good idea to have a
+build script or some task scripts to help to automate some of the repetitive
+parts of the development process. For JavaScript projects, `Grunt` serves a
+similar purpose. It is a JavaScript task/build runner that is written on top of
+NodeJS. Grunt can help you with automatically minifying your JavaScript or CSS
+files, or reload your browser on every file change. It can show you a
+comprehensive list of JavaScript errors, compile your `SASS/LESS` files into CSS
+files automatically, and many other things.
+
+However, the most significant advantage of Grunt that I am going to discuss
+today is its ability to proxy your requests. For example, when you are
+developing your backend with anything other than JavaScript, you will face
+difficulty in accessing the backend data in your frontend without having to
+compile and deploy the code every time you make any changes. It is not possible
+with a typical web server setup because
+[XHR](https://en.wikipedia.org/wiki/XMLHttpRequest) requests are not allowed to
+be cross-domain by browsers due to
+[Cross-origin resource sharing](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)
+(CORS) limitations.
+
+So, the problem here is as follows,
+
+> you are developing the UI of your applications using some frontend JavaScript
+> framework (say Angular) with Grunt as the build runner, and the backend of
+> your application is being designed in some backend framework other than
+> JavaScript/NodeJS (say Laravel), you might face problems accessing the backend
+> while running Grunt server.
+
+It happens because the backend Laravel service runs on port 8000, and the front
+end development server runs on port 8080. The requests from the frontend server
+to the backend-server will result in
+[same-origin policy](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy)
+errors due to the port difference. To fix this issue, we can set up CORS through
+a proxy on Grunt. This proxy will stand in front of your frontend server and the
+backend server and get the required data from the backend and pass it to your
+frontend while letting your browser think that you are all in the same domain.
+
+Grunt has a module
+[grunt-connect-proxy](https://github.com/drewzboto/grunt-connect-proxy) that
+exists to help to solve this issue. It delegates requests that match a given URL
+to the backend of your choice. So for example, you want to access your backend
+using the URL `http://localhost:8080/api`, you can write a proxy rule so that
+whenever your user tries to access this URL in a browser, the proxy will get the
+data from your backend and server it at this particular URL.
+
+The procedure to set up the proxy is simple. First, you will have to add the
+proxy configuration to your `Gruntfile.js`. In this example, I am assuming that
+the backend server is running on the port 8000, and the Grunt server is running
+on the port 8080. This configuration will delegate all requests to
+`http://localhost:8080/api` to `http://localhost:8000/backend`.
+
+```js
+connect: {
+  server: {
+    options: {
+      port: 8080,
+      base: 'public',
+      hostname: 'localhost',
+      livereload: true,
+      middleware: function (connect, options, middlewares) {
+        middlewares.unshift(require('grunt-connect-proxy/lib/utils').proxyRequest);
+        return middlewares;
+      }
+    },
+    proxies: [
+      {
+        context: '/api',
+        host: 'localhost',
+        port: 8000,
+        https: false,
+        rewrite: {
+            '^/api': '/backend'
+        }
+      }
+    ]
+  }
+}
+```
+
+Now register your Grunt server task to run the proxy on Grunt execution.
+
+```js
+grunt.registerTask("server", function (target) {
+  grunt.task.run(["configureProxies:server", "connect:server"])
+})
+```
+
+Let me explain the above two scripts line by line. In the connect section of
+your `Gruntfile`, we add a new section called `proxies`. The options defined in
+the proxies section are explained below.
+
+- **context**: This is the context against which the incoming requests will be
+  matched. Matching requests will be proxied to the backend server.
+- **host**: The host address where the backend server is running. The incoming
+  requests will be proxied to this host.
+- **port**: The port where the backend server is running.
+- **https**: If your backend server is an https endpoint, then set this value to
+  `true`.
+- **rewrite**: This option allows rewriting of URL when proxying. What this
+  means is that when trying to proxy `http://localhost:8080/api` to the backend
+  server, the URL will be rewritten as `http://localhost:8000/backend`. The
+  object's key serves as the regex used in the replacement operation, and the
+  object's value is the context of your backend server's service.
+
+More options can be found in the
+[documentation](https://github.com/drewzboto/grunt-connect-proxy#grunt-connect-proxy)
+of `grunt-connect-proxy`.
+
+You will also need to set up the proxy's middleware in the `options` section of
+the `connect`. The relevant code is as follows.
+
+```js
+...
+middleware: function (connect, options, middlewares) {
+  middlewares.unshift(require('grunt-connect-proxy/lib/utils').proxyRequest);
+  return middlewares;
+}
+...
+```
+
+Finally, include your proxy task in the server task. It is necessary to append
+the proxy task before the connect task. Also, make sure to specify the
+connection target in the `configureProxies` section. In our case, the connect
+target is `server`.
+
+Now you can start your Grunt server via this configured proxy by typing
+`Grunt server` in the command line. You should see something like this in the
+console.
+
+```bash
+$ grunt server
+...
+Running "configureProxies:server" (configureProxies) task
+Rewrite rule created for: [/^\/api/ -> /backend].
+Proxy created for: /api to localhost:8000
+
+Running "connect:server" (connect) task
+Started connect web server on http://localhost:8080
+...
+```
+
+The above output confirms that the proxy is working fine. Some of the example
+URLs are:
+
+1. `http://127.0.0.1:8080/api` points to `http://127.0.0.1:8000/backend`
+2. `http://127.0.0.1:8080/api/x/y` points to `http://127.0.0.1:8000/backend/x/y`
+
+That's all. Now you will not face any problems getting data from any backend of
+your choice.

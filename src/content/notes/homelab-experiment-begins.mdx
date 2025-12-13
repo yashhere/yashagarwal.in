@@ -1,0 +1,82 @@
+---
+title: "Homelab: The experiment begins"
+createdOn: "2024-02-27T14:25:15+05:30"
+status: published
+series:
+  order: 1
+  title: Homelab Tales
+tags:
+  - Docker
+  - Homelab
+  - Linux
+  - Networking
+category: Technology
+description: >-
+  Embark on a long-awaited homelab journey, transforming an old laptop into a
+  powerful server. Explore Linux, Docker, and infrastructure skills.
+---
+
+# Background
+
+I have been planning to set up a homelab for almost six years now. It all started in the last year of my graduation. At that time, the goal was to learn about PC hardware by building a high-end PC. On the other hand, I was already familiar with enterprise level hardware because of my involvement in the [SSL](https://athena.nitc.ac.in/) lab upgradation effort (pity I didn’t get to feel that shiny new server I recommended as the next upgrade for the lab), so I also ventured into setting up a proper server but that was always a distant dream considering the cost to acquire a server and power it.
+
+Later I started looking at Raspberry Pi. My earliest memory of the Raspberry Pi is from 2019 when I was working with Cisco in Bangalore. I did extensive research, prepared a plan but somehow ended up never buying the SBC. A Raspberry Pi is not sufficient alone in most cases - you need a case, an active cooler, cables, power supply, and a UPS. One buys all of this and suddenly the Raspberry Pi starts to look rather unattractive. I couldn't convince myself about the unit economics of buying the Raspberry Pi, so I dropped this plan.
+
+# Why now?
+
+For the last 4-5 months, _since I have decided to focus on my career again_, I have been thinking about exploring the Linux world again. Naturally, the Raspberry Pi came back on my radar. I am going to work from home for the foreseeable future. More importantly, I have a mostly uninterruptible internet connection. The power connection sometimes fluctuates in my area. A RPi would instantly go down in case of a power cut, along with a high probability of data corruption. I was able to circumvent the issue of the router going down on a power cut by buying a [router UPS](https://cuzorlabs.com/products/router-ups-for-12v2a), but buying one for RPi didn't make sense to me.
+
+Being a backend developer, although the sysadmin, devops, networking, and platform skills don't bring any apparent advantages to my day-to-day work, I have decided to invest some time in home-labbing because -
+
+1. It has been my passion for a long time and I want to finally experience it.
+2. A peripheral knowledge of the infra and platform side of things definitely make it easier to design more efficient systems and debug non-trivial issues.
+3. As I progress in my career, I will not be handling just one portion of the product. I intend to take more and more responsibilities. That means wearing more than one hat. A homelab provides me an opportunity to learn one such skill.
+
+# The Hardware
+
+I bought a **[HP Pavilion Notebook - 15-ab516tx](https://support.hp.com/us-en/document/c05030912)** in the third year of my graduation. At that time, it was a pretty powerful laptop and served me well in all my Linux and Windows experiments throughout the college term.
+
+It has been gathering dust in my closet since I started using MacOS and Apple hardware. Getting back to Windows and its keyboard layout has proven to be more difficult than I anticipated. So, my use of this laptop was limited to occasionally using Windows and as an offsite backup destination for some of my old data (that I am keeping only for nostalgia, huh). I was hesitant to keep it powered on 24/7 to preserve it for some more years. But then I convinced myself that in the worst case scenario, I will have to buy a new battery. Apart from that, the possibility of it getting fried is pretty miniscule.
+
+It has an Intel Core-i5 6th generation CPU with four cores. It currently has 8 GB DDR3L-1600 SDRAM installed. The other RAM slot is a DDR type slot, but I am not sure if this is accurate. For now, I assume that I am limited to 8GB of RAM on this system. The ethernet port on this device is the Integrated 10/100 BASE-T Ethernet LAN.
+
+Yet another under-utilised component on this device is the NVIDIA 940M (2 GB DDR3 dedicated). I intend to use it for video transcoding in future however, I am doubtful about the support for it. If this doesn’t work, I might have to settle for Intel’s inbuilt graphic card.
+
+It came with a 1TB 5400 rpm SATA HDD. It got very slow with time, so I purchased a 512 GB SSD and placed it in the SATA slot of my HDD. Later I removed the disk tray from the laptop and installed the unused HDD into its SATA port using a caddy. So, now I have 1.5 TB of storage space. Windows 10 is installed on a 200 GB NTFS partition. Another 500 GB is occupied with my personal files (which I intend to organise later).
+
+# The OS
+
+I have not tinkered with Linux for almost 6 years now. Since I left college, somehow my zeal to explore new stuff also diminished. I had developed a false impression that building something is more important than using what others built. While I still believe in it, I don’t want to restrict myself with such black and white statements. Both activities have their significance. What matters more is to keep the fire burning.
+
+Anyway, I had a couple of choices for the OS on my server - Ubuntu server, Arch Linux, Debian minimal, and a few Virtualisation platforms - Proxmox etc. Proxmox was out of the question because I wasn’t sure that my laptop would be able to spin up more than a few VMs with just 4 cores and 8 GB of RAM.
+
+I don’t have a good experience with Ubuntu in the past, even though it has good support for non-free drivers, especially NVIDIA. Arch Linux may have been a good choice but I wanted to stick with an apt-based distro. In the end, I decided to install [Debian-minimal](https://www.debian.org/CD/netinst/) on a 100 GB dedicated root partition.
+
+For some reason (most likely due to my RTL8723BE wireless card on my laptop), the installer failed a couple of times due to OOM issues. I had to boot up the installer by modifying the GRUB by adding following lines (although I doubt [PCIE errors](https://askubuntu.com/questions/1190813/realtek-rtl8723be-pcie-wireless-network-adapter-is-crashing-my-ubuntu-18-04) can cause OOM, but it worked, so all good) -
+
+```bash
+GRUB_CMDLINE_LINUX_DEFAULT="quiet pci=noaer"
+```
+
+Once the installation finished, I was greeted with the default TTY screen.
+
+# What’s next
+
+The Debian minimal comes with literally nothing. Not even `sudo`. In the next post in this series, I plan to write about setting up the Debian server - networking, SSH, setting up lid-close action etc. Later I will explain how to set up Docker MacVLAN interfaces and make docker containers appear like another device on your network.
+
+As with all other things, it is easy to get lost in many options available for homelab. So I have decided a few minimum required goals that I would like to achieve with this exercise -
+
+1. Create a fully-reproducible setup.
+   1. Host a few of the interesting services - bookmark manager, Plex, Adguard, reverse proxy etc.
+2. Allow outside world access to some of the services and secure the server.
+3. Learn VPNs and configure one.
+4. Document the progress and the concepts learned.
+5. Few of the technologies I plan to learn -
+   1. Docker - I already have a good experience with it, so it would be a refresh for me.
+   2. Ansible - Automate the repetitive work
+   3. Wireguard - I think it would be a good experience to learn how it works behind the scenes. Also explore TailScale later.
+   4. DNS, Port Forwarding, CGNAT, IPv6, reverse proxy, cert management etc - to allow outside world access.
+
+While this is an exciting thing to dive into, I will also be focusing on employing my server for development work. I have planned many exciting things for 2024, most of which will get some mention on this blog.
+
+Stay tuned!
