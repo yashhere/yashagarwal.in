@@ -94,13 +94,13 @@ const encodedUrl = encodeURIComponent(`https://yashagarwal.in/notes/${slug}`);
                  <div class="text-foreground/80 mb-4 text-sm font-medium tracking-wider uppercase">
                    On this Page
                  </div>
-                 <ul class="space-y-2 text-sm text-muted-foreground border-l border-border/50">
+                 <ul class="space-y-1 text-sm flex flex-col">
                     {headings.map((heading) => (
-                        <li style={`padding-left: ${(heading.depth - 2) * 0.75 + 0.5}rem`}>
+                        <li style={`padding-left: ${0.75 + (heading.depth - 2) * 1}rem`}>
                             <a
                                 href={`#${heading.slug}`}
-                                :class="activeHeading === $el.getAttribute('href').substring(1) ? 'text-foreground font-medium border-l-2 border-primary -ml-[calc(0.5rem+1px+0.5rem/*padding*/)] pl-2' : 'hover:text-foreground transition-colors'"
-                                class="block py-0.5 line-clamp-1 border-l-2 border-transparent"
+                                :class="activeHeading === $el.getAttribute('href').substring(1) ? 'text-foreground font-semibold' : 'text-muted-foreground font-normal hover:text-primary'"
+                                class="relative block py-0.5 transition-colors duration-200"
                                 @click="activeHeading = $el.getAttribute('href').substring(1)"
                             >
                                 {heading.text}
