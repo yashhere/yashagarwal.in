@@ -1,0 +1,26 @@
+---
+interface Props {
+  search?: string;
+  onChange?: (e: Event) => void;
+}
+
+const { search = '' } = Astro.props;
+---
+
+<div class="relative w-full">
+  <div class="relative">
+    <input
+      type="text"
+      id="search-input"
+      value={search}
+      placeholder="Search notes..."
+      class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+    />
+    <div class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-muted-foreground">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search">
+        <circle cx="11" cy="11" r="8"></circle>
+        <path d="m21 21-4.3-4.3"></path>
+      </svg>
+    </div>
+  </div>
+</div>

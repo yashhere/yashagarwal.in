@@ -1,0 +1,39 @@
+---
+interface Props {
+  tags?: string[];
+}
+
+import GithubSlugger from 'github-slugger';
+const { tags } = Astro.props;
+---
+
+{tags && tags.length > 0 && (
+  <div class="border-border bg-background my-8 rounded-md border p-2.5 text-sm">
+    <div class="flex flex-col gap-2">
+      <div class="flex items-center gap-1.5">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="text-muted-foreground h-3 w-3">
+             <path d="M5.566 4.635a.75.75 0 0 1 .53.22l4.474 4.474a.75.75 0 0 1 0 1.06l-4.474 4.475a.75.75 0 0 1-1.06-1.06l3.943-3.944-3.943-3.944a.75.75 0 0 1 .53-1.28Z" />
+             <path d="M12.566 4.635a.75.75 0 0 1 .53.22l4.474 4.474a.75.75 0 0 1 0 1.06l-4.474 4.475a.75.75 0 0 1-1.06-1.06l3.943-3.944-3.943-3.944a.75.75 0 0 1 .53-1.28Z" />
+        </svg>
+        <span class="text-muted-foreground text-xs font-medium tracking-wider uppercase">
+          Tags ({tags.length})
+        </span>
+      </div>
+
+      <div class="border-border flex flex-wrap items-center gap-1.5 border-t pt-2">
+        {tags.map((tag) => {
+          const slugger = new GithubSlugger();
+          const tag_slug = slugger.slug(tag);
+          return (
+            <a
+              href={`/tags/${tag_slug}`}
+              class="bg-muted/50 text-muted-foreground hover:bg-muted hover:text-foreground inline-flex items-center rounded-md px-2 py-1 text-xs font-medium transition-colors"
+            >
+              {tag}
+            </a>
+          );
+        })}
+      </div>
+    </div>
+  </div>
+)}

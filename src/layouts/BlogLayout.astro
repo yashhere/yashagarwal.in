@@ -1,6 +1,14 @@
 ---
-import BaseLayout from './BaseLayout.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
 import { format } from 'date-fns';
+import Breadcrumbs from '../components/content/Breadcrumbs.astro';
+import Heading from '../components/ui/Heading.astro';
+import DecorativeHr from '../components/ui/DecorativeHr.astro';
+import TagList from '../components/content/TagList.astro';
+import Series from '../components/content/Series.astro';
+import RelatedNotes from '../components/content/RelatedNotes.astro';
+
+import GithubSlugger from 'github-slugger';
 
 interface Props {
   title: string;
@@ -11,6 +19,13 @@ interface Props {
   category?: string;
   tags?: string[];
   readingTime?: string;
+  headings?: any[];
+  series?: {
+      title: string;
+      order?: number;
+  };
+  related?: string[];
+  slug: string;
 }
 
 const {
@@ -22,107 +37,151 @@ const {
   category,
   tags,
   readingTime,
+  headings,
+  series,
+  related,
+  slug,
 } = Astro.props;
+
+const breadcrumbItems = [
+    { label: "Home", href: "/" },
+    { label: "Notes", href: "/notes" },
+];
+
+if (category) {
+    const slugger = new GithubSlugger();
+    const categorySlug = slugger.slug(category);
+    breadcrumbItems.push({ label: category, href: `/categories/${categorySlug}` });
+}
+
+breadcrumbItems.push({ label: title, href: '#' });
+
+
+// Encode URL for sharing
+const encodedUrl = encodeURIComponent(`https://yashagarwal.in/notes/${slug}`);
+
 ---
 
 <BaseLayout title={title} description={description} image={image}>
-  <div class="container mx-auto px-4 max-w-screen-2xl">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 py-8 lg:py-12">
-      {/* Sidebar / Aside - Placeholder for TOC & Navigation */}
-      <aside class="hidden lg:block lg:col-span-3">
-        <div class="sticky top-24 space-y-8">
-          <div>
-            <p class="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-4">
-              On this page
-            </p>
-            {/* TODO: Add Table of Contents Component */}
-            <div class="text-sm text-muted-foreground italic">
-              Table of Contents (Coming Soon)
-            </div>
-          </div>
+  <div class="mx-auto flex w-full max-w-3xl flex-col py-8 xl:max-w-screen-2xl xl:flex-row xl:justify-center">
+    {/* Left Column: Sticky TOC (Desktop) */}
+    <aside
+      class="hidden w-56 shrink-0 pl-4 xl:block xl:w-64 xl:pl-6"
+      style="contain: layout style paint;"
+    >
+      <div class="sticky top-24 max-h-[calc(100vh-8rem)] overflow-y-auto pb-8">
+          {headings && headings.length > 0 && (
+             <div class="mb-8">
+                 <div class="text-foreground/80 mb-4 text-sm font-medium tracking-wider uppercase">
+                   On this Page
+                 </div>
+                 {/* TOC placeholder - will implement actual link list later or now if simple */}
+                 <ul class="space-y-2 text-sm text-muted-foreground">
+                    {headings.map((heading) => (
+                        <li style={`padding-left: ${(heading.depth - 2) * 0.75}rem`}>
+                            <a href={`#${heading.slug}`} class="hover:text-foreground transition-colors block py-0.5 line-clamp-1">
+                                {heading.text}
+                            </a>
+                        </li>
+                    ))}
+                 </ul>
+             </div>
+          )}
 
-          <div>
-             <a href="/notes" class="text-sm text-primary hover:underline">
-               &larr; Back to Notes
-             </a>
+          <div class="mt-8">
+              <a href="/notes" class="text-muted-foreground hover:text-foreground flex items-center gap-2 text-sm font-medium transition-colors">
+                  &larr; Back to Notes
+              </a>
           </div>
+      </div>
+    </aside>
+
+    {/* Middle Column: Main Content */}
+    <main class="mx-auto flex w-full max-w-3xl min-w-0 flex-col px-4 md:px-6">
+      <section class="mb-8 space-y-2">
+        <Breadcrumbs items={breadcrumbItems} />
+        <Heading level="h1">{title}</Heading>
+        <div class="text-foreground/60 flex flex-row flex-wrap gap-2 text-sm">
+          <span>
+            Published on{' '}
+            {format(createdOn, "MMM dd, yyyy")}
+          </span>
+          {updatedOn && (
+            <>
+              <span class="hidden sm:inline">•</span>
+              <span class="block sm:inline">
+                Last updated on{' '}
+                {format(updatedOn, "MMM dd, yyyy")}
+              </span>
+            </>
+          )}
+           {readingTime && (
+            <>
+               <span class="hidden sm:inline">•</span>
+               <span>{readingTime}</span>
+            </>
+           )}
         </div>
-      </aside>
+      </section>
 
-      {/* Main Content */}
-      <main class="lg:col-span-7">
-        <article class="prose prose-lg dark:prose-invert max-w-none">
-          {/* Article Header */}
-          <header class="mb-8 not-prose">
-            {/* Breadcrumbs Placeholder */}
-            <nav class="flex items-center space-x-2 text-sm text-muted-foreground mb-6">
-              <a href="/" class="hover:text-foreground">Home</a>
-              <span>/</span>
-              <a href="/notes" class="hover:text-foreground">Notes</a>
-              <span>/</span>
-              <span class="text-foreground">{category || 'Uncategorized'}</span>
-            </nav>
+      {series && (
+          <div class="mb-8">
+              <Series series={series} currentSlug={slug} />
+          </div>
+      )}
 
-            <h1 class="text-3xl md:text-4xl lg:text-5xl font-serif font-bold tracking-tight mb-4 text-balanced">
-              {title}
-            </h1>
-
-            <div class="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted-foreground font-mono">
-              <time datetime={createdOn.toISOString()}>
-                {format(createdOn, 'MMMM dd, yyyy')}
-              </time>
-
-              {readingTime && (
-                <>
-                  <span>•</span>
-                  <span>{readingTime}</span>
-                </>
-              )}
-
-              {updatedOn && (
-                <>
-                  <span>•</span>
-                  <span class="text-accent-foreground">
-                    Updated {format(updatedOn, 'MMM dd, yyyy')}
-                  </span>
-                </>
-              )}
-            </div>
-
-            {tags && tags.length > 0 && (
-              <div class="flex flex-wrap gap-2 mt-6">
-                {tags.map((tag) => (
-                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-secondary text-secondary-foreground">
-                    #{tag}
-                  </span>
-                ))}
-              </div>
-            )}
-
-            <hr class="mt-8 border-border" />
-          </header>
-
-          {/* Content Slot */}
+      <div class="mb-8">
+        <div id="article-body" class="prose prose-slate dark:prose-invert text-foreground max-w-none">
           <slot />
-
-          {/* Article Footer */}
-          <footer class="mt-12 pt-8 border-t border-border">
-            {/* TODO: Add Series Navigation */}
-            {/* TODO: Add ConvertKit Form */}
-            {/* TODO: Add Comments Component */}
-            <div class="p-4 rounded-lg bg-muted/50 text-center text-muted-foreground italic">
-              Comments feature coming soon.
-            </div>
-          </footer>
-        </article>
-      </main>
-
-      {/* Right Sidebar - Placeholder for future widgets */}
-      <aside class="hidden xl:block xl:col-span-2">
-        <div class="sticky top-24">
-          {/* Placeholder for extra widgets if needed */}
         </div>
-      </aside>
-    </div>
+      </div>
+
+      <DecorativeHr />
+
+      <RelatedNotes relatedSlugs={related} />
+
+      {tags && tags.length > 0 && (
+        <TagList tags={tags} />
+      )}
+
+      <DecorativeHr />
+
+      <div class="my-8 flex flex-row items-center justify-between space-x-2">
+         <a
+           href={`https://x.com/intent/tweet?text=${encodedUrl}%20via%20%40yash__here`}
+           target="_blank"
+           rel="noopener noreferrer"
+           class="text-base"
+         >
+           <div class="border-border/80 text-foreground/80 hover:text-foreground hover:border-border flex flex-row items-center gap-1 rounded-full border px-4 py-1 text-base">
+             {/* Simple Share Icon */}
+             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="mr-1"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+             Share
+           </div>
+         </a>
+
+         {/* Go To Top Placeholder */}
+         <button
+            onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
+            class="p-2 text-muted-foreground hover:text-foreground transition-colors"
+            aria-label="Back to top"
+         >
+             &uarr; Top
+         </button>
+      </div>
+
+      <DecorativeHr />
+
+      <div class="mt-8 text-center text-muted-foreground italic text-sm">
+          Comments are loading... (Placeholder)
+      </div>
+
+    </main>
+
+     {/* Right Column: Empty placeholder */}
+    <aside
+      class="hidden w-56 shrink-0 pr-4 xl:block xl:w-64 xl:pr-6"
+      style="contain: layout style paint;"
+    />
   </div>
 </BaseLayout>

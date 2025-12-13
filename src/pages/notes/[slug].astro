@@ -1,0 +1,34 @@
+---
+import { getCollection } from 'astro:content';
+import BlogLayout from '../../layouts/BlogLayout.astro';
+import { getReadingTime } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const notes = await getCollection('notes');
+  return notes.map((note) => ({
+    params: { slug: note.slug },
+    props: { note },
+  }));
+}
+
+const { note } = Astro.props;
+const { Content, headings } = await note.render();
+
+const readingTime = getReadingTime(note.body);
+---
+
+<BlogLayout
+  title={note.data.title}
+  description={note.data.description}
+  createdOn={note.data.createdOn}
+  updatedOn={note.data.updatedOn}
+  tags={note.data.tags}
+  category={note.data.category}
+  readingTime={readingTime.text}
+  headings={headings}
+  series={note.data.series}
+  related={note.data.related}
+  slug={note.slug}
+>
+  <Content />
+</BlogLayout>

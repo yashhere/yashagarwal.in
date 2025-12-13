@@ -1,0 +1,25 @@
+---
+import Heading from './Heading.astro';
+
+interface Props {
+  level?: 'h1' | 'h2' | 'h3';
+  title: string;
+  count?: number;
+  class?: string;
+}
+
+const { level = 'h3', title, count, class: className } = Astro.props;
+---
+
+<div class={className}>
+  <Heading class="text-foreground mt-12 mb-4" level={level}>
+    <span>{title}</span>
+    {count !== undefined && count !== 0 && (
+      <span class="text-foreground/60 pl-2 text-xs">{count}</span>
+    )}
+  </Heading>
+
+  <div class={className}>
+    <slot />
+  </div>
+</div>
