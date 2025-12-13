@@ -358,14 +358,14 @@ bun add react react-dom @astrojs/react @phosphor-icons/react
 
 ---
 
-### TASK 24: Create React Theme Toggle Component
+### TASK 24: Create Alpine.js Theme Toggle Component
 **Goal**: Dark mode switcher (client-only)
-**Location**: `/src/components/interactive/ThemeToggle.tsx`
+**Location**: `/src/components/interactive/ThemeToggle.astro`
 **Features**:
 - Toggle dark/light mode
 - Persist to localStorage
-- Use Phosphor icons
-- No dependency on next-themes
+- Use Phosphor icons (SVG)
+- Alpine.js for interactivity
 
 ---
 
