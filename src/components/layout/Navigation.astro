@@ -45,17 +45,49 @@ const moreNavItems = [
           ))}
         </ul>
 
-        {/* More Dropdown - TODO: Replace with Alpine.js dropdown */}
-        <div class="relative">
+        {/* More Dropdown - Alpine.js */}
+        <div
+          class="relative"
+          x-data="{ open: false }"
+          @click.outside="open = false"
+        >
           <button
-            class="block px-3 py-1 text-sm font-medium rounded-md hover:bg-accent hover:text-accent-foreground text-muted-foreground transition-colors flex items-center gap-1"
+            @click="open = !open"
+            :class="open ? 'text-foreground bg-accent' : 'text-muted-foreground'"
+            class="block px-3 py-1 text-sm font-medium rounded-md hover:bg-accent hover:text-accent-foreground transition-colors flex items-center gap-1"
             aria-label="More pages"
           >
             More
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg
+              class="w-4 h-4 transition-transform duration-200"
+              :class="open && 'rotate-180'"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
             </svg>
           </button>
+
+          <!-- Dropdown Menu -->
+          <div
+            x-show="open"
+            x-transition
+            class="absolute right-0 mt-1 w-48 rounded-md border border-border bg-popover text-popover-foreground shadow-md z-50 p-1"
+          >
+            <ul>
+              {moreNavItems.map((item) => (
+                <li>
+                  <a
+                    href={item.href}
+                    class="block px-2 py-1.5 text-sm text-muted-foreground hover:bg-accent hover:text-foreground rounded-sm transition-colors"
+                  >
+                    {item.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
 
         {/* Theme Toggle */}
