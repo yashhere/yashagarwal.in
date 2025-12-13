@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Section from '../../components/ui/Section.astro';
+import Breadcrumbs from '../../components/content/Breadcrumbs.astro';
+import NotePreview from '../../components/content/NotePreview.astro';
+import { getPreviewNotes } from '../../lib/content';
+import GithubSlugger from 'github-slugger';
+
+export async function getStaticPaths() {
+  const notes = await getPreviewNotes();
+  const allCategories = new Set<string>();
+
+  notes.forEach(note => {
+    if (note.data.category) {
+        allCategories.add(note.data.category);
+    }
+  });
+
+  const slugger = new GithubSlugger();
+
+  return Array.from(allCategories).map(category => {
+    const slug = slugger.slug(category);
+    return {
+      params: { category: slug },
+      props: { categoryName: category },
+    };
+  });
+}
+
+const { categoryName } = Astro.props;
+const { category } = Astro.params;
+
+const allNotes = await getPreviewNotes();
+const filteredNotes = allNotes.filter(note => {
+    if (!note.data.category) return false;
+    const slugger = new GithubSlugger();
+    return slugger.slug(note.data.category) === category;
+});
+
+const breadcrumbItems = [
+    { label: "Home", href: "/" },
+    { label: "Categories", href: "/categories" },
+    { label: categoryName },
+];
+---
+
+<BaseLayout title={`Category: ${categoryName}`} description={`Notes in category ${categoryName}`}>
+  <div class="container mx-auto px-4 max-w-3xl pt-16">
+    <Section title={categoryName} count={filteredNotes.length}>
+      <Breadcrumbs items={breadcrumbItems} class="mb-6" />
+
+      <ul class="-mx-4 space-y-2">
+        {filteredNotes.map(note => (
+            <li>
+                <NotePreview note={note} />
+            </li>
+        ))}
+      </ul>
+    </Section>
+  </div>
+</BaseLayout>

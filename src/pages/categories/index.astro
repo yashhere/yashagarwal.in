@@ -1,0 +1,58 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Section from '../../components/ui/Section.astro';
+import Breadcrumbs from '../../components/content/Breadcrumbs.astro';
+import { getPreviewNotes } from '../../lib/content';
+import GithubSlugger from 'github-slugger';
+
+const notes = await getPreviewNotes();
+const categoriesMap = new Map<string, number>();
+
+notes.forEach((note) => {
+  if (note.data.category) {
+    categoriesMap.set(note.data.category, (categoriesMap.get(note.data.category) || 0) + 1);
+  }
+});
+
+const sortedCategories = Array.from(categoriesMap.entries()).sort((a, b) => b[1] - a[1]);
+const slugger = new GithubSlugger();
+
+const breadcrumbItems = [
+    { label: "Home", href: "/" },
+    { label: "Categories" },
+];
+---
+
+<BaseLayout title="All Categories" description="Browse content by categories.">
+  <div class="container mx-auto px-4 max-w-3xl pt-16">
+    <Section title="Categories" count={sortedCategories.length}>
+      <Breadcrumbs items={breadcrumbItems} class="mb-6" />
+
+      <div class="space-y-4">
+        <div class="flex flex-wrap gap-2">
+            {sortedCategories.map(([category, count]) => {
+                const slug = slugger.slug(category);
+                return (
+                    <a
+                        href={`/categories/${slug}`}
+                        class="border-border bg-background text-muted-foreground hover:border-primary hover:text-primary inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm font-medium transition-colors"
+                    >
+                        {category}
+                        <span class="text-muted-foreground bg-muted rounded-full px-1.5 py-0.5 text-xs">
+                            {count}
+                        </span>
+                    </a>
+                )
+            })}
+        </div>
+
+        <div class="border-t border-border pt-4">
+            <p class="text-muted-foreground text-center text-xs">
+              {sortedCategories.length} categories across {notes.length} posts
+            </p>
+        </div>
+      </div>
+
+    </Section>
+  </div>
+</BaseLayout>
