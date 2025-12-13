@@ -1,0 +1,254 @@
+@import "tailwindcss";
+
+@config "../../tailwind.config.js";
+
+@layer utilities {
+  /* Add bottom margin when headings are followed by paragraphs */
+  h1 + p,
+  h2 + p,
+  h3 + p,
+  h4 + p,
+  h5 + p,
+  h6 + p {
+    @apply mt-6;
+  }
+
+  /* Hide scrollbars while maintaining functionality */
+  .no-scrollbar {
+    /* Chrome, Safari and Opera */
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  .scroll-pr-6 {
+    padding-right: 1.5rem;
+  }
+
+  /* Fix for Safari lazy loading images */
+  @supports (font: -apple-system-body) and (-webkit-appearance: none) {
+    img[loading="lazy"] {
+      clip-path: inset(0.6px);
+    }
+  }
+}
+
+/* Optimize legibility */
+.optimize-legibility {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@layer base {
+  :root {
+    /* Simplified theme - Light mode with black text */
+    --radius: 1rem;
+
+    /* Base colors - Cupcake background with black text */
+    --background: oklch(97.788% 0.004 56.375);
+    --foreground: oklch(20% 0 0);
+    --card: oklch(97.788% 0.004 56.375);
+    --card-foreground: oklch(20% 0 0);
+    --popover: oklch(100% 0 0);
+    --popover-foreground: oklch(20% 0 0);
+
+    /* Primary - Dark gray/black for links and interactive elements */
+    --primary: oklch(25% 0 0);
+    --primary-foreground: oklch(98% 0 0);
+
+    /* Secondary - Slightly lighter gray */
+    --secondary: oklch(35% 0 0);
+    --secondary-foreground: oklch(98% 0 0);
+
+    /* Muted - Light gray for backgrounds */
+    --muted: oklch(93.982% 0.007 61.449);
+    --muted-foreground: oklch(45% 0 0);
+
+    /* Accent - Subtle light gray for hover states */
+    --accent: oklch(90% 0 0);
+    --accent-foreground: oklch(20% 0 0);
+
+    /* Destructive - Keep red for errors */
+    --destructive: oklch(50% 0.2 25);
+    --destructive-foreground: oklch(98% 0 0);
+
+    /* UI Elements - Subtle borders */
+    --border: oklch(85% 0 0);
+    --input: oklch(85% 0 0);
+    --ring: oklch(25% 0 0);
+
+    /* Chart colors - Grayscale */
+    --chart-1: oklch(30% 0 0);
+    --chart-2: oklch(40% 0 0);
+    --chart-3: oklch(50% 0 0);
+    --chart-4: oklch(60% 0 0);
+    --chart-5: oklch(70% 0 0);
+
+    /* Code syntax highlighting - Light */
+    --syntax-bg: oklch(95% 0 0);
+    --syntax-highlight: oklch(90% 0 0);
+    --syntax-txt: oklch(20% 0 0);
+    --syntax-comment: oklch(55% 0 0);
+    --syntax-prop: oklch(30% 0 0);
+    --syntax-bool: oklch(35% 0 0);
+    --syntax-value: oklch(40% 0 0);
+    --syntax-string: oklch(35% 0 0);
+
+    /* alpha variants */
+    --primary-15: color-mix(in srgb, var(--primary) 15%, transparent);
+    --primary-20: color-mix(in srgb, var(--primary) 20%, transparent);
+    --primary-30: color-mix(in srgb, var(--primary) 30%, transparent);
+    --primary-40: color-mix(in srgb, var(--primary) 40%, transparent);
+  }
+
+  .dark {
+    /* Simplified theme - Dark mode with white text */
+    --radius: 1rem;
+
+    /* Base colors - Dark cupcake background with white text */
+    --background: oklch(15.939% 0.005 282.887);
+    --foreground: oklch(95% 0 0);
+    --card: oklch(12.721% 0.006 280.994);
+    --card-foreground: oklch(95% 0 0);
+    --popover: oklch(10% 0 0);
+    --popover-foreground: oklch(95% 0 0);
+
+    /* Primary - Light gray/white for links and interactive elements */
+    --primary: oklch(90% 0 0);
+    --primary-foreground: oklch(15% 0 0);
+
+    /* Secondary - Slightly darker white */
+    --secondary: oklch(80% 0 0);
+    --secondary-foreground: oklch(15% 0 0);
+
+    /* Muted - Dark gray for backgrounds */
+    --muted: oklch(20% 0 0);
+    --muted-foreground: oklch(70% 0 0);
+
+    /* Accent - Subtle dark gray for hover states */
+    --accent: oklch(25% 0 0);
+    --accent-foreground: oklch(95% 0 0);
+
+    /* Destructive - Lighter red for dark mode */
+    --destructive: oklch(65% 0.2 25);
+    --destructive-foreground: oklch(95% 0 0);
+
+    /* UI Elements - Subtle borders */
+    --border: oklch(32% 0 0);
+    --input: oklch(32% 0 0);
+    --ring: oklch(90% 0 0);
+
+    /* Chart colors - Grayscale */
+    --chart-1: oklch(70% 0 0);
+    --chart-2: oklch(60% 0 0);
+    --chart-3: oklch(50% 0 0);
+    --chart-4: oklch(40% 0 0);
+    --chart-5: oklch(30% 0 0);
+
+    /* Code syntax highlighting - Dark */
+    --syntax-bg: oklch(30% 0 0);
+    --syntax-highlight: oklch(36% 0 0);
+    --syntax-txt: oklch(95% 0 0);
+    --syntax-comment: oklch(60% 0 0);
+    --syntax-prop: oklch(85% 0 0);
+    --syntax-bool: oklch(80% 0 0);
+    --syntax-value: oklch(75% 0 0);
+    --syntax-string: oklch(80% 0 0);
+
+    /* alpha variants */
+    --primary-15: color-mix(in srgb, var(--primary) 15%, transparent);
+    --primary-20: color-mix(in srgb, var(--primary) 20%, transparent);
+    --primary-30: color-mix(in srgb, var(--primary) 30%, transparent);
+    --primary-40: color-mix(in srgb, var(--primary) 40%, transparent);
+  }
+
+  html {
+    font-display: swap; /* Ensure fonts load predictably */
+    scroll-behavior: smooth; /* Smooth scrolling for the whole page */
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: var(--muted-foreground) var(--background); /* thumb track */
+  }
+
+  /* For Webkit browsers */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--background);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--muted);
+    border-radius: 10px;
+    border: 2px solid var(--background);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: var(--primary);
+  }
+
+  /* Respect user's motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1 "calt" 1;
+    font-display: optional;
+    transition:
+      background-color 0.5s ease-in-out,
+      color 0.5s ease-in-out;
+  }
+
+  :focus-visible {
+    @apply ring-primary ring-offset-background ring-2 ring-offset-2 outline-none;
+  }
+
+  a:focus-visible {
+    @apply ring-primary ring-offset-background ring-2 ring-offset-2 outline-none;
+  }
+
+  /* Fix for https://github.com/disqus/disqus-react/issues/153 */
+  :root,
+  .comments {
+    background-color: #faf7f5 !important; /* white */
+    color: #161616 !important; /* slate-950 */
+  }
+
+  /* Dark mode comments - using hex values */
+  :root,
+  .dark .comments {
+    background-color: #0d0d0f !important; /* slate-950 */
+    color: #eeeeee !important; /* slate-50 */
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  .animate-shimmer {
+    animation: shimmer 2s ease-in-out infinite;
+  }
+}

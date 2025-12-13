@@ -1,0 +1,431 @@
+@import "@portaljs/remark-callouts/styles.css";
+@reference './globals.css';
+
+/* Trying to replicate prose-headings because the link tag styles take precedence */
+.prose .anchor {
+  color: var(--foreground);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Fix for heading anchors - override link styles for heading anchors */
+h1 a.anchor,
+h2 a.anchor,
+h3 a.anchor,
+h4 a.anchor,
+h5 a.anchor,
+h6 a.anchor {
+  font-weight: inherit;
+  color: inherit;
+  text-decoration: none;
+  position: relative;
+}
+
+h1 a.anchor:hover,
+h2 a.anchor:hover,
+h3 a.anchor:hover,
+h4 a.anchor:hover,
+h5 a.anchor:hover,
+h6 a.anchor:hover {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Make anchor links unobtrusive */
+.anchor {
+  @apply invisible absolute no-underline;
+  margin-left: -1em;
+  padding-right: 0.5em;
+  width: 80%;
+  max-width: 700px;
+  cursor: pointer;
+}
+
+.anchor:hover {
+  @apply visible;
+}
+
+.anchor:after {
+  content: "#";
+  @apply text-muted-foreground hidden;
+}
+
+*:hover > .anchor {
+  @apply visible;
+}
+
+:is(h1, h2, h3, h4, h5, h6):hover .anchor::after {
+  @apply inline-block;
+}
+
+/* Add a mobile-friendly padding for anchors */
+@media (max-width: 640px) {
+  .anchor {
+    @apply static float-left pr-2;
+    margin-left: 0;
+    width: auto;
+  }
+
+  .anchor:after {
+    @apply ml-2;
+  }
+}
+
+/* Clear floats to prevent paragraph overflow */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply clear-both;
+  scroll-margin-top: 100px;
+}
+
+/* Ensure headings with anchors clear correctly */
+h1::after,
+h2::after,
+h3::after,
+h4::after,
+h5::after,
+h6::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* INLINE CODE STYLE START */
+span[data-rehype-pretty-code-figure] {
+  display: inline;
+  max-width: 100%;
+  margin: 0;
+  position: relative;
+}
+
+span[data-rehype-pretty-code-figure] code {
+  padding: 0.1rem 0.2rem;
+  margin: 0;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  font-family: var(--font-mono);
+  background-color: var(--syntax-bg);
+  color: var(--foreground);
+  display: inline;
+  white-space: break-spaces;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  border: none;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+@media (max-width: 640px) {
+  span[data-rehype-pretty-code-figure] code {
+    font-size: 0.825rem;
+    padding: 0.075rem 0.125rem;
+  }
+}
+
+span[data-rehype-pretty-code-figure] code span[data-line] {
+  word-break: break-word;
+  overflow-wrap: break-word;
+  white-space: break-spaces;
+  background: transparent;
+}
+
+p span[data-rehype-pretty-code-figure],
+li span[data-rehype-pretty-code-figure] {
+  display: inline;
+}
+
+/* Dark mode styling */
+.dark span[data-rehype-pretty-code-figure] code {
+  background-color: var(--syntax-bg);
+  color: var(--syntax-txt);
+}
+
+/* Add subtle border for better distinction in light mode */
+.light span[data-rehype-pretty-code-figure] code {
+  border: 1px solid var(--border);
+}
+
+/* Specific styling for the data-language="plaintext" */
+span[data-rehype-pretty-code-figure] code[data-language="plaintext"] {
+  font-family: var(--font-mono);
+}
+
+/* Hide backticks from inline code blocks */
+span[data-rehype-pretty-code-figure] code::before,
+span[data-rehype-pretty-code-figure] code::after {
+  content: "" !important;
+  display: none !important;
+}
+
+/* INLINE CODE STYLE END */
+
+/* CODE BLOCK STYLE START */
+figure[data-rehype-pretty-code-figure] {
+  @apply border-border my-6 overflow-hidden rounded border;
+}
+
+figure[data-rehype-pretty-code-figure] pre {
+  @apply my-2 overflow-x-auto text-sm leading-relaxed;
+  background-color: transparent !important;
+  border-width: 0 !important;
+  padding: 0;
+}
+
+figure[data-rehype-pretty-code-figure] code {
+  @apply grid w-full py-2;
+  counter-reset: line;
+  box-decoration-break: clone;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+
+figure[data-rehype-pretty-code-figure] code [data-line] {
+  @apply border-l-2 border-l-transparent px-2;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 640px) {
+  figure[data-rehype-pretty-code-figure] pre {
+    font-size: 0.825rem;
+  }
+
+  figure[data-rehype-pretty-code-figure] code {
+    font-size: 0.825rem;
+  }
+
+  figure[data-rehype-pretty-code-figure] code [data-line] {
+    @apply px-2;
+  }
+
+  /* Smaller line numbers on mobile */
+  figure[data-rehype-pretty-code-figure]
+    code[data-line-numbers]
+    > [data-line]::before {
+    font-size: 0.75rem;
+    width: 0.875rem;
+    margin-right: 1rem;
+  }
+}
+
+/* Fix code text colors in dark mode */
+.dark figure[data-rehype-pretty-code-figure] code [data-line] span {
+  color: var(--shiki-dark, currentColor) !important;
+}
+
+/* Fix code text colors in light mode */
+.light figure[data-rehype-pretty-code-figure] code [data-line] span {
+  color: var(--shiki-light, currentColor) !important;
+}
+
+/* Line highlighting */
+figure[data-rehype-pretty-code-figure] code .line--highlighted {
+  @apply w-full rounded-none border-l-2;
+  background-color: var(--syntax-highlight) !important;
+  border-left-color: var(--border);
+  margin: 0 !important;
+}
+
+/* Line numbers for code blocks */
+figure[data-rehype-pretty-code-figure] code[data-line-numbers] {
+  counter-reset: line;
+}
+
+figure[data-rehype-pretty-code-figure]
+  code[data-line-numbers]
+  > [data-line]::before {
+  counter-increment: line;
+  content: counter(line);
+  display: inline-block;
+  width: 1rem;
+  margin-right: 1.5rem;
+  text-align: right;
+  color: var(--muted-foreground);
+  font-size: 0.8rem;
+}
+
+.dark
+  figure[data-rehype-pretty-code-figure]
+  code[data-line-numbers]
+  > [data-line]::before {
+  color: var(--muted-foreground);
+}
+
+/* Character highlighting styles */
+figure[data-rehype-pretty-code-figure] code .word--highlighted {
+  @apply rounded px-1 py-0.5;
+  background-color: var(--primary-15);
+  box-shadow: 0 0 0 1px var(--primary-20);
+  font-weight: 500;
+}
+
+.dark figure[data-rehype-pretty-code-figure] code .word--highlighted {
+  background-color: var(--primary-30);
+  box-shadow: 0 0 0 1px var(--primary-40);
+  font-weight: 500;
+}
+
+/* Filename display at the top of code blocks */
+[data-rehype-pretty-code-title] {
+  @apply border-border bg-muted rounded-t-md border-b px-4 py-2 font-mono text-sm;
+}
+
+/* Make code scrollable on small screens */
+figure[data-rehype-pretty-code-figure] pre {
+  -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
+  scrollbar-width: thin; /* Firefox */
+}
+
+/* Custom scrollbar for webkit browsers */
+figure[data-rehype-pretty-code-figure] pre::-webkit-scrollbar {
+  height: 6px;
+}
+
+figure[data-rehype-pretty-code-figure] pre::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+figure[data-rehype-pretty-code-figure] pre::-webkit-scrollbar-thumb {
+  @apply bg-border dark:bg-muted rounded-full;
+}
+/* CODE BLOCK STYLE END */
+
+/* MERMAID STYLE START */
+svg p {
+  font-size: unset !important;
+  line-height: normal !important;
+}
+
+[id^="mermaid-"] {
+  background: transparent;
+}
+
+[id^="mermaid-"] text {
+  fill: var(--foreground) !important;
+}
+
+[id^="mermaid-"] .actor,
+[id^="mermaid-"] rect,
+[id^="mermaid-"] polygon,
+[id^="mermaid-"] circle,
+[id^="mermaid-"] ellipse {
+  stroke: var(--foreground) !important;
+  fill: var(--background) !important;
+  border-radius: 0.375rem;
+}
+
+[id^="mermaid-"] .labelBox,
+[id^="mermaid-"] .loopLine,
+[id^="mermaid-"] .flowchart-link,
+[id^="mermaid-"] line,
+[id^="mermaid-"] path {
+  stroke: var(--foreground) !important;
+}
+
+[id^="mermaid-"] .marker,
+.mermaid-diagram .marker {
+  fill: var(--foreground) !important;
+}
+
+[id^="mermaid-"] .flowchart-label {
+  color: var(--foreground) !important;
+  fill: var(--foreground) !important;
+}
+
+/* Additional selectors for more diagram types */
+[id^="mermaid-"] .arrowheadPath,
+[id^="mermaid-"] .edgePath .path {
+  stroke: var(--foreground) !important;
+  fill: var(--foreground) !important;
+}
+
+/* For gantt charts */
+[id^="mermaid-"] .taskText,
+[id^="mermaid-"] .taskTextOutsideRight {
+  fill: var(--foreground) !important;
+}
+
+/* For sequence diagrams */
+[id^="mermaid-"] .note {
+  fill: var(--muted) !important;
+  stroke: var(--foreground) !important;
+}
+
+[id^="mermaid-"] .noteText {
+  fill: var(--foreground) !important;
+}
+
+/* Style edge labels in Mermaid diagrams */
+[id^="mermaid-"] .edgeLabel {
+  color: var(--foreground) !important;
+  background-color: transparent !important;
+  font-weight: normal;
+}
+
+[id^="mermaid-"] .edgeLabel p {
+  color: var(--foreground) !important;
+  background-color: transparent !important;
+  font-weight: normal;
+}
+
+[id^="mermaid-"] .edgeLabel .label foreignObject {
+  overflow: visible;
+}
+
+/* Fix line breaks in edge labels */
+[id^="mermaid-"] .edgeLabel .label div,
+[id^="mermaid-"] .messageText {
+  color: var(--foreground) !important;
+  line-height: 1.2 !important;
+  font-size: 14px !important;
+  text-align: center;
+  background-color: transparent !important;
+}
+
+/* Additional styling for sequence diagram messages */
+[id^="mermaid-"] .messageLine0,
+[id^="mermaid-"] .messageLine1 {
+  stroke: var(--foreground) !important;
+}
+
+/* Make sure notes and other text elements are properly styled */
+[id^="mermaid-"] .noteText,
+[id^="mermaid-"] text.actor,
+[id^="mermaid-"] .loopText {
+  fill: var(--foreground) !important;
+}
+
+/* Ensure all text spans are visible */
+[id^="mermaid-"] tspan {
+  fill: var(--foreground) !important;
+}
+
+/* MERMAID STYLE END */
+
+.img-blur {
+  filter: blur(0.375rem);
+}
+
+.img-unblur {
+  animation: img-unblur 0.8s linear;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .img-unblur {
+    animation: none;
+    filter: blur(0);
+  }
+}
+
+@keyframes img-unblur {
+  from {
+    filter: blur(12px);
+  }
+
+  to {
+    filter: blur(0);
+  }
+}

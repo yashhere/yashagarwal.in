@@ -1,16 +1,21 @@
 ---
-
+import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="Yash Agarwal | Frontend Engineer">
+  <div class="container py-20">
+    <h1 class="text-4xl font-serif font-bold mb-6">Hello, World!</h1>
+    <p class="text-xl mb-4 text-muted-foreground">
+      This is a test of the BaseLayout and Tailwind configuration.
+    </p>
+    <div class="p-6 border rounded-lg bg-card text-card-foreground shadow-sm">
+      <h2 class="text-2xl font-bold mb-2">Theme Test</h2>
+      <p>This card should adapt to light/dark mode.</p>
+      <div class="mt-4 flex gap-2">
+        <span class="px-2 py-1 bg-primary text-primary-foreground rounded text-sm">Primary</span>
+        <span class="px-2 py-1 bg-secondary text-secondary-foreground rounded text-sm">Secondary</span>
+        <span class="px-2 py-1 bg-accent text-accent-foreground rounded text-sm">Accent</span>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

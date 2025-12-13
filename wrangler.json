@@ -1,6 +1,6 @@
 {
 	"main": "dist/_worker.js/index.js",
-    "name": "yashagarwal.in",
+    "name": "yashagarwal-blog",
   "compatibility_date": "2025-12-13",
   "compatibility_flags": [
     "nodejs_compat",
