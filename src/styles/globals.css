@@ -213,9 +213,6 @@
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1 "calt" 1;
     font-display: optional;
-    transition:
-      background-color 0.5s ease-in-out,
-      color 0.5s ease-in-out;
   }
 
   :focus-visible {

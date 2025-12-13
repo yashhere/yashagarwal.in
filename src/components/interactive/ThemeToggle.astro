@@ -2,35 +2,79 @@
 import { Sun, Moon } from '@lucide/astro';
 ---
 
-<button
-  x-data="{
-    theme: localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'),
-    toggle() {
-      this.theme = this.theme === 'dark' ? 'light' : 'dark';
-      localStorage.setItem('theme', this.theme);
-      if (this.theme === 'dark') {
+<theme-toggle>
+  <button
+    type="button"
+    class="relative inline-flex h-9 w-9 items-center justify-center rounded-md bg-transparent transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+    aria-label="Toggle theme"
+  >
+    <div class="relative h-5 w-5">
+      <div
+        class="absolute inset-0 flex items-center justify-center transition-all duration-200 dark:-rotate-90 dark:scale-0 dark:opacity-0"
+      >
+        <Sun class="text-foreground h-5 w-5" />
+      </div>
+      <div
+        class="absolute inset-0 flex items-center justify-center rotate-90 scale-0 opacity-0 transition-all duration-200 dark:rotate-0 dark:scale-100 dark:opacity-100"
+      >
+        <Moon class="text-foreground h-5 w-5" />
+      </div>
+    </div>
+  </button>
+</theme-toggle>
+
+<script>
+  class ThemeToggle extends HTMLElement {
+    constructor() {
+      super();
+
+      const button = this.querySelector('button');
+
+      if (button) {
+        button.addEventListener('click', (e) => {
+          if (e.currentTarget instanceof HTMLButtonElement) {
+             const isDark = document.documentElement.classList.contains('dark');
+             this.setTheme(isDark ? 'light' : 'dark');
+          }
+        });
+      }
+    }
+
+    setTheme(theme) {
+      // Disable transitions temporarily to prevent flash
+      const css = document.createElement('style');
+      css.appendChild(
+        document.createTextNode(
+          `* {
+             -webkit-transition: none !important;
+             -moz-transition: none !important;
+             -o-transition: none !important;
+             -ms-transition: none !important;
+             transition: none !important;
+          }`
+        )
+      );
+      document.head.appendChild(css);
+
+      // Toggle theme
+      if (theme === 'dark') {
         document.documentElement.classList.add('dark');
       } else {
         document.documentElement.classList.remove('dark');
       }
-    },
-    init() {
-        // Sync initial state incase it changed outside
-        this.theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
-    }
-  }"
-  @click="toggle()"
-  type="button"
-  class="relative inline-flex h-9 w-9 items-center justify-center rounded-md bg-transparent transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
-  aria-label="Toggle theme"
->
-  <!-- Sun Icon (Show when Dark) -->
-  <div x-show="theme === 'dark'" style="display: none;">
-    <Sun class="h-4 w-4 transition-all" />
-  </div>
+      localStorage.setItem('theme', theme);
 
-  <!-- Moon Icon (Show when Light) -->
-  <div x-show="theme === 'light'">
-    <Moon class="h-4 w-4 transition-all" />
-  </div>
-</button>
+      // Force reflow
+      const _ = window.getComputedStyle(document.body);
+
+      // Re-enable transitions
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          document.head.removeChild(css);
+        });
+      });
+    }
+  }
+
+  customElements.define('theme-toggle', ThemeToggle);
+</script>

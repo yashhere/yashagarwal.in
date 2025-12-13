@@ -1,5 +1,7 @@
-@import "@portaljs/remark-callouts/styles.css";
 @reference './globals.css';
+
+/* TODO: Install @portaljs/remark-callouts if needed or copy styles */
+/* @import "@portaljs/remark-callouts/styles.css"; */
 
 /* Trying to replicate prose-headings because the link tag styles take precedence */
 .prose .anchor {
@@ -216,9 +218,9 @@ figure[data-rehype-pretty-code-figure] code [data-line] {
   color: var(--shiki-dark, currentColor) !important;
 }
 
-/* Fix code text colors in light mode */
-.light figure[data-rehype-pretty-code-figure] code [data-line] span {
-  color: var(--shiki-light, currentColor) !important;
+/* Fix code text colors - default to light, override by dark above */
+figure[data-rehype-pretty-code-figure] code [data-line] span {
+  color: var(--shiki-light, currentColor);
 }
 
 /* Line highlighting */
@@ -389,6 +391,7 @@ svg p {
 [id^="mermaid-"] .messageLine0,
 [id^="mermaid-"] .messageLine1 {
   stroke: var(--foreground) !important;
+  fill: none !important;
 }
 
 /* Make sure notes and other text elements are properly styled */

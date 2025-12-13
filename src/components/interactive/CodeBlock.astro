@@ -2,28 +2,44 @@
 import { Check, Copy } from '@lucide/astro';
 
 const { class: className, ...props } = Astro.props;
-const lang = props['data-language'] || 'text';
+const lang = props['data-language'];
+// Determine if this is a code block that needs a header.
+// Presence of data-language usually indicates a block, or data-theme.
+const isCodeBlock = props['data-theme'] || lang;
 ---
 
-<div class="relative group my-6 overflow-hidden rounded-lg border border-border">
-  <div class="absolute right-2 top-2 z-20 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-      <span class="text-xs font-mono text-muted-foreground bg-muted/80 backdrop-blur-sm px-2 py-1.5 rounded-md border border-border select-none">
-        {lang}
+<div class="group relative">
+  {isCodeBlock && (
+    <div class="bg-muted flex items-center justify-between px-2 py-1">
+      <span class="text-muted-foreground text-sm font-medium lowercase">
+        {lang || "code"}
       </span>
       <button
         x-data="{ copied: false }"
-        @click="const code = $el.closest('.group').querySelector('code').innerText; navigator.clipboard.writeText(code); copied = true; setTimeout(() => copied = false, 2000);"
-        class="inline-flex h-8 w-8 items-center justify-center rounded-md bg-muted/80 backdrop-blur-sm text-muted-foreground hover:text-foreground transition-colors border border-border"
+        @click="
+            const code = $el.closest('.group').querySelector('pre').innerText;
+            navigator.clipboard.writeText(code);
+            copied = true;
+            setTimeout(() => copied = false, 2000);
+        "
+        class="text-muted-foreground hover:text-accent-foreground hover:bg-accent flex items-center gap-1.5 rounded px-2 py-1 transition-colors"
         aria-label="Copy code"
       >
         <span x-show="!copied">
             <Copy class="h-4 w-4" />
         </span>
-        <span x-show="copied" style="display: none;">
-            <Check class="h-4 w-4 text-green-500" />
+        <span x-show="copied" style="display: none;" x-cloak>
+            <Check class="h-4 w-4" />
         </span>
       </button>
-  </div>
-
-  <pre class={className + " !my-0 !rounded-none"} {...props}><slot /></pre>
+    </div>
+  )}
+  <pre
+    class:list={[
+      className,
+      "overflow-x-auto",
+      isCodeBlock ? "rounded-t-none" : "mt-4 mb-6 rounded-lg border px-4 py-4 font-mono text-base",
+    ]}
+    {...props}
+  ><slot /></pre>
 </div>
