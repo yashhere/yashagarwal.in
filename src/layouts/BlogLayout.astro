@@ -72,15 +72,37 @@ const encodedUrl = encodeURIComponent(`https://yashagarwal.in/notes/${slug}`);
     >
       <div class="sticky top-24 max-h-[calc(100vh-8rem)] overflow-y-auto pb-8">
           {headings && headings.length > 0 && (
-             <div class="mb-8">
+             <div
+                class="mb-8"
+                x-data="{
+                    activeHeading: '',
+                    init() {
+                        const observer = new IntersectionObserver((entries) => {
+                            entries.forEach((entry) => {
+                                if (entry.isIntersecting) {
+                                    this.activeHeading = entry.target.id;
+                                }
+                            });
+                        }, { rootMargin: '-100px 0px -66% 0px' });
+
+                        document.querySelectorAll('#article-body h2, #article-body h3, #article-body h4').forEach((h) => {
+                            observer.observe(h);
+                        });
+                    }
+                }"
+             >
                  <div class="text-foreground/80 mb-4 text-sm font-medium tracking-wider uppercase">
                    On this Page
                  </div>
-                 {/* TOC placeholder - will implement actual link list later or now if simple */}
-                 <ul class="space-y-2 text-sm text-muted-foreground">
+                 <ul class="space-y-2 text-sm text-muted-foreground border-l border-border/50">
                     {headings.map((heading) => (
-                        <li style={`padding-left: ${(heading.depth - 2) * 0.75}rem`}>
-                            <a href={`#${heading.slug}`} class="hover:text-foreground transition-colors block py-0.5 line-clamp-1">
+                        <li style={`padding-left: ${(heading.depth - 2) * 0.75 + 0.5}rem`}>
+                            <a
+                                href={`#${heading.slug}`}
+                                :class="activeHeading === $el.getAttribute('href').substring(1) ? 'text-foreground font-medium border-l-2 border-primary -ml-[calc(0.5rem+1px+0.5rem/*padding*/)] pl-2' : 'hover:text-foreground transition-colors'"
+                                class="block py-0.5 line-clamp-1 border-l-2 border-transparent"
+                                @click="activeHeading = $el.getAttribute('href').substring(1)"
+                            >
                                 {heading.text}
                             </a>
                         </li>
