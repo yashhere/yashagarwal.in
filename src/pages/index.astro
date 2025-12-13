@@ -1,21 +1,95 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { getPreviewNotes } from '../lib/content';
+import { siteConfig } from '../config/site';
+
+const notes = await getPreviewNotes();
+const recentNotes = notes.slice(0, siteConfig.featuredNotes);
+
 ---
 
 <BaseLayout title="Yash Agarwal | Frontend Engineer">
-  <div class="container py-20">
-    <h1 class="text-4xl font-serif font-bold mb-6">Hello, World!</h1>
-    <p class="text-xl mb-4 text-muted-foreground">
-      This is a test of the BaseLayout and Tailwind configuration.
-    </p>
-    <div class="p-6 border rounded-lg bg-card text-card-foreground shadow-sm">
-      <h2 class="text-2xl font-bold mb-2">Theme Test</h2>
-      <p>This card should adapt to light/dark mode.</p>
-      <div class="mt-4 flex gap-2">
-        <span class="px-2 py-1 bg-primary text-primary-foreground rounded text-sm">Primary</span>
-        <span class="px-2 py-1 bg-secondary text-secondary-foreground rounded text-sm">Secondary</span>
-        <span class="px-2 py-1 bg-accent text-accent-foreground rounded text-sm">Accent</span>
+  <div class="container py-16 md:py-24 max-w-3xl mx-auto px-6">
+    {/* Intro Section */}
+    <div class="mb-16">
+      <h1 class="text-3xl font-serif font-bold mb-4">
+        Yash Agarwal
+      </h1>
+      <p class="text-muted-foreground mb-8 text-sm uppercase tracking-wider font-medium">
+        Engineer / Builder / Learner
+      </p>
+
+      <div class="space-y-6 text-foreground/90 leading-relaxed text-lg">
+        <p>
+          Hey there! <span class="animate-wobble inline-block origin-[70%_70%]">👋</span>
+        </p>
+        <p>
+          Welcome to my corner of the internet. I write code at{' '}
+          <a href="https://netskope.com" target="_blank" class="font-medium underline decoration-muted-foreground/30 underline-offset-4 hover:decoration-foreground transition-all">
+            Netskope
+          </a>{' '}
+          for a living, building CASB security products that protect businesses' data at rest.
+        </p>
+        <p>
+          Currently, I'm optimizing my{' '}
+          <span class="font-semibold text-foreground">homelab</span>{' '}
+          infrastructure, delving into latest trends in{' '}
+          <span class="font-semibold text-foreground">LLMs</span>{' '}
+          research, and{' '}
+          <span class="font-semibold text-foreground">Backend Systems</span>.
+        </p>
+      </div>
+
+      {/* Social Links Placeholder */}
+      <div class="mt-8 flex gap-4">
+        {/* TODO: Add SocialLinks Component */}
       </div>
     </div>
+
+    {/* Decorative Break */}
+    <div class="flex items-center gap-2 mb-12">
+        <span class="h-1 w-1 rounded-full bg-muted-foreground/30"></span>
+        <span class="h-1 w-1 rounded-full bg-muted-foreground/30"></span>
+        <span class="h-1 w-1 rounded-full bg-muted-foreground/30"></span>
+    </div>
+
+    {/* Recent Writing Section */}
+    <section>
+      <h2 class="text-2xl font-serif font-bold mb-8 text-primary tracking-tight">
+        Recent Writing
+      </h2>
+
+      <div class="space-y-10">
+        {recentNotes.map((note) => (
+          <article class="group relative flex flex-col items-start">
+            <h3 class="font-serif text-xl font-bold tracking-tight text-foreground mb-2">
+              <div class="absolute -inset-x-4 -inset-y-6 z-0 scale-95 bg-muted/50 opacity-0 transition group-hover:scale-100 group-hover:opacity-100 sm:rounded-2xl"></div>
+              <a href={`/notes/${note.slug}`} class="relative z-10">
+                <span class="absolute -inset-x-4 -inset-y-6 z-20 sm:rounded-2xl"></span>
+                {note.data.title}
+              </a>
+            </h3>
+            <div class="relative z-10 order-first mb-3 flex items-center text-sm text-muted-foreground">
+              <time datetime={note.data.createdOn.toISOString()}>
+                {new Date(note.data.createdOn).toLocaleDateString('en-US', {
+                  month: 'long',
+                  day: 'numeric',
+                  year: 'numeric'
+                })}
+              </time>
+            </div>
+            <p class="relative z-10 mt-2 text-sm text-muted-foreground leading-relaxed line-clamp-3">
+              {note.data.description}
+            </p>
+            <div aria-hidden="true" class="relative z-10 mt-4 flex items-center text-sm font-medium text-primary">
+              Read article
+              <svg viewBox="0 0 16 16" fill="none" class="ml-1 h-4 w-4 stroke-current">
+                <path d="M6.75 5.75 9.25 8l-2.5 2.25" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
   </div>
 </BaseLayout>
