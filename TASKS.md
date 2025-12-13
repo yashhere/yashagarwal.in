@@ -157,7 +157,7 @@ bun add react react-dom @astrojs/react @phosphor-icons/react
 
 ---
 
-### TASK 4: Copy Tailwind Config
+### TASK 4: Copy Tailwind Config ✅
 **Goal**: Migrate Tailwind v4 configuration from Next.js
 **Location**: `/tailwind.config.js`
 **Source**: Copy from `/Users/yash/code/yashagarwal.in/tailwind.config.js`
@@ -170,7 +170,7 @@ bun add react react-dom @astrojs/react @phosphor-icons/react
 
 ---
 
-### TASK 5: Copy Global Styles
+### TASK 5: Copy Global Styles ✅
 **Goal**: Migrate CSS files
 **Locations**:
 - `/src/styles/globals.css` ← `styles/globals.css`
@@ -179,7 +179,7 @@ bun add react react-dom @astrojs/react @phosphor-icons/react
 
 ---
 
-### TASK 6: Set Up Content Collections
+### TASK 6: Set Up Content Collections ✅
 **Goal**: Configure Astro content collections for MDX
 **Location**: `/src/content/config.ts`
 **Collections**:
@@ -189,7 +189,7 @@ bun add react react-dom @astrojs/react @phosphor-icons/react
 
 ---
 
-### TASK 7: Copy MDX Content Files
+### TASK 7: Copy MDX Content Files ✅
 **Goal**: Migrate all 66 blog posts
 **From**: `/Users/yash/code/yashagarwal.in/content/notes/*.mdx`
 **To**: `/src/content/notes/*.mdx`
@@ -197,7 +197,7 @@ bun add react react-dom @astrojs/react @phosphor-icons/react
 
 ---
 
-### TASK 8: Create Content Helper Library
+### TASK 8: Create Content Helper Library ✅
 **Goal**: Build TypeScript utilities for content queries
 **Location**: `/src/lib/content.ts`
 **Functions needed**:
@@ -215,7 +215,7 @@ bun add react react-dom @astrojs/react @phosphor-icons/react
 
 ---
 
-### TASK 9: Create Base Layout Component
+### TASK 9: Create Base Layout Component ✅
 **Goal**: Root HTML layout with theme support
 **Location**: `/src/layouts/BaseLayout.astro`
 **Must include**:
@@ -228,7 +228,7 @@ bun add react react-dom @astrojs/react @phosphor-icons/react
 
 ---
 
-### TASK 10: Create Blog Post Layout
+### TASK 10: Create Blog Post Layout ✅
 **Goal**: Specialized layout for blog posts
 **Location**: `/src/layouts/BlogLayout.astro`
 **Features**:
@@ -240,7 +240,7 @@ bun add react react-dom @astrojs/react @phosphor-icons/react
 
 ---
 
-### TASK 11: Create Navigation Component
+### TASK 11: Create Navigation Component ✅
 **Goal**: Static header with links
 **Location**: `/src/components/layout/Navigation.astro`
 **Includes**:
@@ -251,7 +251,7 @@ bun add react react-dom @astrojs/react @phosphor-icons/react
 
 ---
 
-### TASK 12: Create Footer Component
+### TASK 12: Create Footer Component ✅
 **Goal**: Static footer
 **Location**: `/src/components/layout/Footer.astro`
 **Includes**:
@@ -262,41 +262,38 @@ bun add react react-dom @astrojs/react @phosphor-icons/react
 
 ---
 
-### TASK 13: Create Site Configuration
-**Goal**: Central config constants
+### TASK 13: Create Site Configuration ✅
+**Goal**: Centralize site metadata
 **Location**: `/src/config/site.ts`
-**Exports**:
-```typescript
-export const SITE = {
-  name: "Yash Agarwal",
-  url: "https://yashagarwal.in",
-  description: "Personal blog and portfolio",
-  author: "Yash Agarwal"
-}
-```
+**Details**:
+- Define site name, description, URL, links
+- Export `siteConfig` object
 
 ---
 
-### TASK 14: Create Homepage
-**Goal**: Minimal homepage
+### TASK 14: Create Homepage ✅
+**Goal**: Main landing page
 **Location**: `/src/pages/index.astro`
-**Includes**:
-- Latest 5 published notes preview
-- Basic info/about section
-- Links to notes, work, etc
+**Features**:
+- Use `BaseLayout`
+- Introduction section
+- Social links
+- "Recent Writing" list (top 5 posts)
+- Use `getPreviewNotes` helper
 
 ---
 
-### TASK 15: Create Notes Listing Page
-**Goal**: Display all blog posts
+### TASK 15: Create Notes Page ✅
+**Goal**: Blog archive
 **Location**: `/src/pages/notes/index.astro`
-**Includes**:
-- All published notes with date and description
-- Simple list or grid layout
+**Features**:
+- List all notes
+- Search functionality (client-side)
+- Filter by tag/category links
 
 ---
 
-### TASK 16: Create Dynamic Blog Post Page
+### TASK 16: Create Dynamic Blog Post Page ✅
 **Goal**: Individual post pages
 **Location**: `/src/pages/notes/[slug].astro`
 **Includes**:
@@ -307,7 +304,7 @@ export const SITE = {
 
 ---
 
-### TASK 17: Create Tags System
+### TASK 17: Create Tags System ✅
 **Goal**: Tag-based filtering
 **Files**:
 - `/src/pages/tags/index.astro` - List all tags
@@ -315,7 +312,7 @@ export const SITE = {
 
 ---
 
-### TASK 18: Create Categories System
+### TASK 18: Create Categories System ✅
 **Goal**: Category-based filtering
 **Files**:
 - `/src/pages/categories/index.astro` - List all categories
@@ -323,7 +320,7 @@ export const SITE = {
 
 ---
 
-### TASK 19: Create Static Pages
+### TASK 19: Create Static Pages ✅
 **Goal**: About, work, colophon pages
 **Files**:
 - `/src/pages/work.astro`
@@ -332,7 +329,7 @@ export const SITE = {
 
 ---
 
-### TASK 20: Create RSS Feed
+### TASK 20: Create RSS Feed ✅
 **Goal**: Generate RSS/Atom feeds
 **Location**: `/src/pages/rss.xml.ts` and `/src/pages/atom.xml.ts`
 **Includes**:
@@ -342,19 +339,19 @@ export const SITE = {
 
 ---
 
-### TASK 21: Create Sitemap
+### TASK 21: Create Sitemap ✅
 **Goal**: XML sitemap for SEO
 **Note**: Auto-generated by `@astrojs/sitemap` - just verify it works
 
 ---
 
-### TASK 22: Create Robots.txt
+### TASK 22: Create Robots.txt ✅
 **Goal**: `/robots.txt` endpoint
 **Location**: `/src/pages/robots.txt.ts`
 
 ---
 
-### TASK 23: Copy Public Assets
+### TASK 23: Copy Public Assets ✅
 **Goal**: Migrate static files
 **From**: `/Users/yash/code/yashagarwal.in/public/images/*`
 **To**: `/public/images/*`
