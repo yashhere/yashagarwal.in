@@ -1,51 +1,54 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Navigation from '../components/layout/Navigation.astro';
-import { getPreviewNotes } from '../lib/content';
-import { siteConfig } from '../config/site';
+import SocialLinks from "../components/content/SocialLinks.astro"
+import Navigation from "../components/layout/Navigation.astro"
+import Heading from "../components/ui/Heading.astro"
+import { siteConfig } from "../config/site"
+import BaseLayout from "../layouts/BaseLayout.astro"
+import { getPreviewNotes } from "../lib/content"
 
-const notes = await getPreviewNotes();
-const recentNotes = notes.slice(0, siteConfig.featuredNotes);
-
+const notes = await getPreviewNotes()
+const recentNotes = notes.slice(0, siteConfig.featuredNotes)
 ---
 
 <BaseLayout title="Yash Agarwal | Frontend Engineer">
-  <main class="w-full max-w-3xl flex-1 px-4 md:px-6">
+  <main class="w-full max-w-3xl flex-1 px-4 pb-20 md:px-6">
     <Navigation />
-    <div class="py-16 md:py-24">
-    {/* Intro Section */}
-    <div class="mb-10">
-      <h1 class="text-foreground text-2xl font-semibold tracking-wide mb-4">
-        Yash Agarwal
-      </h1>
-      <p class="text-muted-foreground mt-2 text-sm">
-        Engineer / Builder / Learner
-      </p>
-
+    <div class="mt-16">
+      {/* Intro Section */}
+      <div class="mb-10">
+        <Heading level="h2" as="h1" class="text-foreground font-semibold tracking-wide">
+          Yash Agarwal
+        </Heading>
+        <p class="text-muted-foreground mt-2 text-sm">Engineer / Builder / Learner</p>
+      </div>
       <div class="text-foreground/90 space-y-6 text-base leading-relaxed mt-6">
         <p>
           Hey there! <span class="animate-wobble inline-block origin-[70%_70%]">👋</span>
         </p>
         <p>
-          Welcome to my corner of the internet. I write code at{' '}
-          <a href="https://netskope.com" target="_blank" class="font-medium underline decoration-muted-foreground/30 underline-offset-4 hover:decoration-foreground transition-all">
+          Welcome to my corner of the internet. I write code at{" "}
+          <a
+            href="https://netskope.com"
+            target="_blank"
+            class="font-medium underline decoration-muted-foreground/30 underline-offset-4 hover:decoration-foreground transition-all"
+          >
             Netskope
-          </a>{' '}
+          </a>{" "}
           for a living, building CASB security products that protect businesses' data at rest.
         </p>
         <p>
-          Currently, I'm optimizing my{' '}
-          <span class="font-semibold text-foreground">homelab</span>{' '}
-          infrastructure, delving into latest trends in{' '}
-          <span class="font-semibold text-foreground">LLMs</span>{' '}
-          research, and{' '}
+          Currently, I'm optimizing my{" "}
+          <span class="font-semibold text-foreground">homelab</span>{" "}
+          infrastructure, delving into latest trends in{" "}
+          <span class="font-semibold text-foreground">LLMs</span>{" "}
+          research, and{" "}
           <span class="font-semibold text-foreground">Backend Systems</span>.
         </p>
       </div>
 
-      {/* Social Links Placeholder */}
-      <div class="mt-8 flex gap-4">
-        {/* TODO: Add SocialLinks Component */}
+      {/* Social Links */}
+      <div class="mt-8">
+        <SocialLinks />
       </div>
     </div>
 
@@ -60,52 +63,60 @@ const recentNotes = notes.slice(0, siteConfig.featuredNotes);
 
     {/* Recent Writing Section */}
     <section>
-      <h2 class="text-primary mt-6 mb-2 text-2xl tracking-wide">
+      <Heading level="h3" as="h2" class="text-primary mt-6 mb-2 tracking-wide">
         Recent Writing
-      </h2>
+      </Heading>
 
       <div class="flex flex-col justify-start gap-5">
         <ul class="-mx-3">
-          {recentNotes.map((note) => {
-            // Format date as MM/yy
-            const date = new Date(note.data.createdOn);
-            const dateStr = (date.getMonth() + 1).toString().padStart(2, '0') + '/' + date.getFullYear().toString().slice(-2);
+          {
+            recentNotes.map((note) => {
+              // Format date as MM/yy
+              const date = new Date(note.data.createdOn)
+              const dateStr =
+                (date.getMonth() + 1).toString().padStart(2, "0") +
+                "/" +
+                date.getFullYear().toString().slice(-2)
 
-            return (
-              <li>
-                <a
-                  href={`/notes/${note.slug}`}
-                  class="group hover:bg-accent flex w-full flex-col items-start gap-1 rounded-lg p-3 text-left transition-colors"
-                >
-                  <div class="flex w-full items-baseline justify-between gap-3">
-                    <span class="text-foreground group-hover:text-primary font-sans text-base font-medium transition-colors">
-                      {note.data.title}
-                    </span>
-                    <span class="text-foreground/70 shrink-0 font-mono text-sm">
-                      {dateStr}
-                    </span>
-                  </div>
-                  {note.data.description && (
-                    <p class="text-muted-foreground line-clamp-2 max-w-[85%] text-sm leading-relaxed">
-                      {note.data.description}
-                    </p>
-                  )}
-                </a>
-              </li>
-            );
-          })}
+              return (
+                <li>
+                  <a
+                    href={`/notes/${note.slug}`}
+                    class="group hover:bg-accent flex w-full flex-col items-start gap-1 rounded-lg p-3 text-left transition-colors"
+                  >
+                    <div class="flex w-full items-baseline justify-between gap-3">
+                      <span class="text-foreground group-hover:text-primary font-sans text-base font-medium transition-colors">
+                        {note.data.title}
+                      </span>
+                      <span class="text-foreground/70 shrink-0 font-mono text-sm">{dateStr}</span>
+                    </div>
+                    {note.data.description && (
+                      <p class="text-muted-foreground line-clamp-2 max-w-[85%] text-sm leading-relaxed">
+                        {note.data.description}
+                      </p>
+                    )}
+                  </a>
+                </li>
+              )
+            })
+          }
         </ul>
         <a
           href="/notes"
           class="group text-foreground/80 hover:text-primary text-md mt-3 inline-flex items-center gap-1 font-semibold transition-colors"
         >
           <span>View all notes</span>
-          <svg class="relative top-px h-4 w-4 transition-transform duration-200 ease-out group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+          <svg
+            class="relative top-px h-4 w-4 transition-transform duration-200 ease-out group-hover:translate-x-1"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"
+            ></path>
           </svg>
         </a>
       </div>
     </section>
-    </div>
   </main>
 </BaseLayout>
