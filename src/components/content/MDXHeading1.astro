@@ -1,0 +1,9 @@
+---
+import Heading from '../ui/Heading.astro';
+
+const props = Astro.props;
+---
+
+<Heading level="h2" as="h2" class="mt-10 mb-4 scroll-m-6" {...props}>
+  <slot />
+</Heading>

@@ -391,7 +391,6 @@ svg p {
 [id^="mermaid-"] .messageLine0,
 [id^="mermaid-"] .messageLine1 {
   stroke: var(--foreground) !important;
-  fill: none !important;
 }
 
 /* Make sure notes and other text elements are properly styled */

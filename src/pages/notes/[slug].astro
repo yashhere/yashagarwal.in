@@ -1,26 +1,35 @@
 ---
-import { getCollection } from 'astro:content';
-import BlogLayout from '../../layouts/BlogLayout.astro';
-import { getReadingTime } from '../../lib/content';
+import { getCollection } from "astro:content"
+
+import MDXHeading1 from "../../components/content/MDXHeading1.astro"
+import MDXHeading2 from "../../components/content/MDXHeading2.astro"
+import MDXHeading3 from "../../components/content/MDXHeading3.astro"
+import MDXHeading4 from "../../components/content/MDXHeading4.astro"
+import CodeBlock from "../../components/interactive/CodeBlock.astro"
+import BlogLayout from "../../layouts/BlogLayout.astro"
+import { getReadingTime } from "../../lib/content"
 
 export async function getStaticPaths() {
-  const notes = await getCollection('notes');
+  const notes = await getCollection("notes")
   return notes.map((note) => ({
     params: { slug: note.slug },
     props: { note },
-  }));
+  }))
 }
 
-import CodeBlock from '../../components/interactive/CodeBlock.astro';
-
 const components = {
+  // Map headings: h1→h2, h2→h3, h3→h4, h4→h5
+  h1: MDXHeading1,
+  h2: MDXHeading2,
+  h3: MDXHeading3,
+  h4: MDXHeading4,
   pre: CodeBlock,
-};
+}
 
-const { note } = Astro.props;
-const { Content, headings } = await note.render();
+const { note } = Astro.props
+const { Content, headings } = await note.render()
 
-const readingTime = getReadingTime(note.body ?? "");
+const readingTime = getReadingTime(note.body ?? "")
 ---
 
 <BlogLayout
