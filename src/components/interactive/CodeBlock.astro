@@ -16,12 +16,7 @@ const isCodeBlock = props['data-theme'] || lang;
       </span>
       <div class="relative" x-data="{ copied: false, showTooltip: false }">
         <button
-          @click="
-              const code = $el.closest('.group').querySelector('pre').innerText;
-              navigator.clipboard.writeText(code);
-              copied = true;
-              setTimeout(() => copied = false, 2000);
-          "
+          @click="const code = $el.closest('.group').querySelector('pre').innerText; navigator.clipboard.writeText(code); copied = true; setTimeout(() => copied = false, 2000);"
           @mouseenter="showTooltip = true"
           @mouseleave="showTooltip = false"
           class="text-muted-foreground hover:text-accent-foreground hover:bg-accent flex items-center gap-1.5 rounded px-2 py-1 transition-colors"
@@ -40,7 +35,7 @@ const isCodeBlock = props['data-theme'] || lang;
           x-show="showTooltip || copied"
           x-transition.opacity
           style="display: none;"
-          class="absolute top-full right-0 mt-1 pointer-events-none z-[9999]"
+          class="absolute top-full right-0 mt-1 pointer-events-none z-9999"
         >
           <div class="bg-popover text-popover-foreground border-border rounded-md border px-2 py-1 text-xs shadow-lg whitespace-nowrap">
             <span x-text="copied ? 'Copied!' : 'Copy'"></span>
