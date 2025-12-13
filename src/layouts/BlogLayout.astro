@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Navigation from '../components/layout/Navigation.astro';
 import { format } from 'date-fns';
 import Breadcrumbs from '../components/content/Breadcrumbs.astro';
 import Heading from '../components/ui/Heading.astro';
@@ -64,7 +65,10 @@ const encodedUrl = encodeURIComponent(`https://yashagarwal.in/notes/${slug}`);
 ---
 
 <BaseLayout title={title} description={description} image={image}>
-  <div class="mx-auto flex w-full max-w-3xl flex-col py-8 xl:max-w-screen-2xl xl:flex-row xl:justify-center">
+  <div class="mx-auto w-full max-w-3xl px-4 md:px-6">
+    <Navigation />
+  </div>
+  <main class="mx-auto flex w-full max-w-screen-2xl flex-1 flex-col py-8 xl:flex-row xl:justify-center">
     {/* Left Column: Sticky TOC (Desktop) */}
     <aside
       class="hidden w-56 shrink-0 pl-4 xl:block xl:w-64 xl:pl-6"
@@ -163,7 +167,7 @@ const encodedUrl = encodeURIComponent(`https://yashagarwal.in/notes/${slug}`);
     </aside>
 
     {/* Middle Column: Main Content */}
-    <main class="mx-auto flex w-full max-w-3xl min-w-0 flex-col px-4 md:px-6">
+    <div class="mx-auto flex w-full max-w-3xl min-w-0 flex-col px-4 md:px-6">
       <section class="mb-8 space-y-2">
         <Breadcrumbs items={breadcrumbItems} />
         <Heading level="h1">{title}</Heading>
@@ -242,12 +246,12 @@ const encodedUrl = encodeURIComponent(`https://yashagarwal.in/notes/${slug}`);
           <Comments url={`https://yashagarwal.in/notes/${slug}`} slug={slug} client:visible />
       </div>
 
-    </main>
+    </div>
 
      {/* Right Column: Empty placeholder */}
     <aside
       class="hidden w-56 shrink-0 pr-4 xl:block xl:w-64 xl:pr-6"
       style="contain: layout style paint;"
     />
-  </div>
+  </main>
 </BaseLayout>

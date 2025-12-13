@@ -1,7 +1,4 @@
 ---
-import '@fontsource/geist-sans';
-import '@fontsource/ibm-plex-mono';
-import '@fontsource/newsreader';
 import '../styles/globals.css';
 import Navigation from '../components/layout/Navigation.astro';
 import Footer from '../components/layout/Footer.astro';
@@ -47,6 +44,11 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://yashagar
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content={new URL(image, Astro.url)} />
 
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=IBM+Plex+Mono:wght@400&family=Newsreader:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet" />
+
     <!-- Theme Script -->
     <script is:inline>
       const getThemePreference = () => {
@@ -69,11 +71,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://yashagar
 
     <slot name="head" />
   </head>
-  <body class="flex flex-col min-h-screen bg-background text-foreground antialiased selection:bg-slate-200 selection:text-slate-900 dark:selection:bg-slate-700 dark:selection:text-slate-100 font-sans text-base">
-    <Navigation />
-    <main class="flex-1">
-      <slot />
-    </main>
+  <body class="flex flex-col items-center optimize-legibility min-h-dvh font-sans antialiased bg-background text-foreground selection:bg-slate-200 selection:text-slate-900 dark:selection:bg-slate-700 dark:selection:text-slate-100">
+    <slot />
     <Footer />
   </body>
 </html>

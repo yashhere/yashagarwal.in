@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Navigation from '../components/layout/Navigation.astro';
 import Section from '../components/ui/Section.astro';
 import Breadcrumbs from '../components/content/Breadcrumbs.astro';
 import Heading from '../components/ui/Heading.astro';
@@ -12,7 +13,8 @@ const breadcrumbItems = [
 ---
 
 <BaseLayout title="Work Experience" description="Explore my backend engineering journey across cyber security industry.">
-  <div class="container mx-auto px-4 max-w-3xl pt-16">
+  <main class="w-full max-w-3xl flex-1 px-4 md:px-6">
+    <Navigation />
     <Section title="Work">
       <Breadcrumbs items={breadcrumbItems} class="mb-6" />
 
@@ -85,5 +87,5 @@ const breadcrumbItems = [
       </div>
 
     </Section>
-  </div>
+  </main>
 </BaseLayout>

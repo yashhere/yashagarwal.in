@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Navigation from '../components/layout/Navigation.astro';
 import { getPreviewNotes } from '../lib/content';
 import { siteConfig } from '../config/site';
 
@@ -9,7 +10,9 @@ const recentNotes = notes.slice(0, siteConfig.featuredNotes);
 ---
 
 <BaseLayout title="Yash Agarwal | Frontend Engineer">
-  <div class="container py-16 md:py-24 max-w-3xl mx-auto px-6">
+  <main class="w-full max-w-3xl flex-1 px-4 md:px-6">
+    <Navigation />
+    <div class="py-16 md:py-24">
     {/* Intro Section */}
     <div class="mb-10">
       <h1 class="text-foreground text-2xl font-semibold tracking-wide mb-4">
@@ -103,5 +106,6 @@ const recentNotes = notes.slice(0, siteConfig.featuredNotes);
         </a>
       </div>
     </section>
-  </div>
+    </div>
+  </main>
 </BaseLayout>
