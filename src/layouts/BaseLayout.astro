@@ -4,6 +4,7 @@ import '@fontsource/ibm-plex-mono';
 import '@fontsource/newsreader';
 import '../styles/globals.css';
 import Navigation from '../components/layout/Navigation.astro';
+import Footer from '../components/layout/Footer.astro';
 
 interface Props {
   title?: string;
@@ -73,5 +74,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://yashagar
     <main class="flex-1">
       <slot />
     </main>
+    <Footer />
   </body>
 </html>
