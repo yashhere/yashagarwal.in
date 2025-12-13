@@ -11,6 +11,12 @@ export async function getStaticPaths() {
   }));
 }
 
+import CodeBlock from '../../components/interactive/CodeBlock.astro';
+
+const components = {
+  pre: CodeBlock,
+};
+
 const { note } = Astro.props;
 const { Content, headings } = await note.render();
 
@@ -30,5 +36,5 @@ const readingTime = getReadingTime(note.body);
   related={note.data.related}
   slug={note.slug}
 >
-  <Content />
+  <Content components={components} />
 </BlogLayout>

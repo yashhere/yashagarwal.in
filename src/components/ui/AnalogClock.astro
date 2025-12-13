@@ -1,0 +1,73 @@
+---
+---
+
+<div
+  x-data="{
+    time: new Date(),
+    showTooltip: false,
+
+    getISTTime() {
+       const localTime = new Date();
+       const currentOffset = localTime.getTimezoneOffset();
+       const ISTOffset = 330; // UTC +5:30
+       return new Date(localTime.getTime() + (ISTOffset + currentOffset) * 60000);
+    },
+    update() {
+       this.time = this.getISTTime();
+    },
+    init() {
+       this.update();
+       setInterval(() => this.update(), 1000);
+    },
+    get seconds() { return this.time.getSeconds() * 6; },
+    get minutes() { return this.time.getMinutes() * 6; },
+    get hours() { return this.time.getHours() * 30 + this.time.getMinutes() / 2; },
+    get formatted() {
+       return this.time.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+    }
+  }"
+  class="relative inline-flex items-center justify-center p-1 group cursor-default"
+  @mouseenter="showTooltip = true"
+  @mouseleave="showTooltip = false"
+>
+  <!-- Clock Face -->
+  <div class="relative flex h-6 w-6 flex-col items-center justify-start overflow-hidden rounded-full border border-foreground/30 shadow-sm bg-background">
+
+      <!-- Center Dot -->
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 h-[2px] w-[2px] rounded-full bg-foreground"></div>
+
+      <!-- Hands -->
+      <!-- Second hand -->
+      <div
+          class="absolute bottom-1/2 left-[calc(50%-0.5px)] z-30 h-2.5 w-[1px] origin-bottom rounded-full bg-red-500"
+          :style="`transform: rotate(${seconds}deg)`"
+      ></div>
+
+      <!-- Minute hand -->
+      <div
+          class="absolute bottom-1/2 left-[calc(50%-1px)] z-20 h-2 w-[2px] origin-bottom rounded-full bg-foreground"
+          :style="`transform: rotate(${minutes}deg)`"
+      ></div>
+
+      <!-- Hour hand -->
+      <div
+          class="absolute bottom-1/2 left-[calc(50%-1px)] z-10 h-1.5 w-[2px] origin-bottom rounded-full bg-foreground"
+          :style="`transform: rotate(${hours}deg)`"
+      ></div>
+  </div>
+
+  <!-- Popover / Tooltip -->
+  <div
+      x-show="showTooltip"
+      style="display: none;"
+      x-transition:enter="transition ease-out duration-200"
+      x-transition:enter-start="opacity-0 translate-y-1"
+      x-transition:enter-end="opacity-100 translate-y-0"
+      x-transition:leave="transition ease-in duration-150"
+      x-transition:leave-start="opacity-100 translate-y-0"
+      x-transition:leave-end="opacity-0 translate-y-1"
+      class="absolute bottom-full left-1/2 mb-2 -translate-x-1/2 z-50 whitespace-nowrap rounded-md bg-popover border border-border px-3 py-1.5 text-xs font-mono text-popover-foreground shadow-md"
+  >
+      <span x-text="`${formatted} IST`"></span>
+  </div>
+</div>

@@ -358,7 +358,7 @@ bun add react react-dom @astrojs/react @phosphor-icons/react
 
 ---
 
-### TASK 24: Create Alpine.js Theme Toggle Component
+### TASK 24: Create Alpine.js Theme Toggle Component ✅
 **Goal**: Dark mode switcher (client-only)
 **Location**: `/src/components/interactive/ThemeToggle.astro`
 **Features**:
@@ -369,17 +369,17 @@ bun add react react-dom @astrojs/react @phosphor-icons/react
 
 ---
 
-### TASK 25: Create React CodeBlock Component
+### TASK 25: Create Alpine.js CodeBlock Component ✅
 **Goal**: Code block with copy button
-**Location**: `/src/components/interactive/CodeBlock.tsx`
+**Location**: `/src/components/interactive/CodeBlock.astro`
 **Features**:
 - Syntax highlighting (handled by Shiki in Astro)
-- Copy-to-clipboard button
+- Copy-to-clipboard button using Alpine.js
 - Language label
 
 ---
 
-### TASK 26: Create React Comments Component
+### TASK 26: Create React Comments Component ✅
 **Goal**: Disqus integration
 **Location**: `/src/components/interactive/Comments.tsx`
 **Features**:
@@ -388,26 +388,22 @@ bun add react react-dom @astrojs/react @phosphor-icons/react
 
 ---
 
-### TASK 27: Create React AnalogClock Component
+### TASK 27: Create Alpine.js AnalogClock Component ✅
 **Goal**: Migrate existing clock
-**Location**: `/src/components/ui/Clock.tsx`
-**Source**: Migrate from Next.js with useClock hook
+**Location**: `/src/components/ui/AnalogClock.astro`
 **Features**:
 - Real-time IST clock
 - Popover on hover
-- SVG rendering
+- Alpine.js rendering (no React overhead)
 
 ---
 
-### TASK 28: Create MDX Component Overrides
+### TASK 28: Create MDX Component Overrides ✅
 **Goal**: Map custom MDX components
-**Location**: `/src/components/content/MDXComponents.ts`
+**Location**: `/src/pages/notes/[slug].astro` (inline configuration)
 **Overrides needed**:
-- `a` - Custom link handling
-- `img` - Image component with loading
-- `pre` - Code block wrapper
-- `code` - Inline code
-- Other common elements
+- `pre` - Code block wrapper (CodeBlock.astro)
+- Other common elements (mapped as needed)
 
 ---
 

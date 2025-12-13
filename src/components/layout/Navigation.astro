@@ -1,22 +1,21 @@
 ---
-interface NavItem {
-  name: string;
-  href: string;
-}
+import ThemeToggle from '../interactive/ThemeToggle.astro';
 
-const navItems: NavItem[] = [
-  { name: 'Notes', href: '/notes' },
-  { name: 'Work', href: '/work' },
-  { name: 'About', href: '/about' },
+const primaryNavItems = [
+  { name: 'Notes', href: '/notes' }
 ];
 
-import ThemeToggle from '../interactive/ThemeToggle.astro';
+const moreNavItems = [
+  { name: 'Work', href: '/work' },
+  { name: 'Tags', href: '/tags' },
+  { name: 'Categories', href: '/categories' },
+];
 ---
 
 <aside class="my-8">
   <div class="lg:sticky lg:top-20">
     <nav
-      class="fade relative max-w-3xl mx-auto flex flex-row items-center justify-between px-0 pb-0"
+      class="fade relative max-w-3xl mx-auto flex flex-row items-center justify-between px-6 pb-0"
       id="nav"
     >
       {/* Left: Avatar/Logo */}
@@ -34,7 +33,7 @@ import ThemeToggle from '../interactive/ThemeToggle.astro';
       {/* Right: Navigation Links */}
       <div class="flex flex-row items-center gap-2">
         <ul class="flex items-center gap-1">
-          {navItems.map((item) => (
+          {primaryNavItems.map((item) => (
             <li>
               <a
                 href={item.href}
@@ -46,7 +45,20 @@ import ThemeToggle from '../interactive/ThemeToggle.astro';
           ))}
         </ul>
 
-        {/* Theme Toggle Placeholder */}
+        {/* More Dropdown - TODO: Replace with Alpine.js dropdown */}
+        <div class="relative">
+          <button
+            class="block px-3 py-1 text-sm font-medium rounded-md hover:bg-accent hover:text-accent-foreground text-muted-foreground transition-colors flex items-center gap-1"
+            aria-label="More pages"
+          >
+            More
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+          </button>
+        </div>
+
+        {/* Theme Toggle */}
         <ThemeToggle />
       </div>
     </nav>

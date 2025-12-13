@@ -1,0 +1,34 @@
+---
+import { Check, Copy } from '@lucide/astro';
+
+const { class: className, ...props } = Astro.props;
+const lang = props['data-language'] || 'text';
+---
+
+<div class="relative group my-6 overflow-hidden rounded-lg border border-border">
+  <div class="absolute right-2 top-2 z-20 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+      <span class="text-xs font-mono text-muted-foreground bg-muted/80 backdrop-blur-sm px-2 py-1.5 rounded-md border border-border select-none">
+        {lang}
+      </span>
+      <button
+        x-data="{ copied: false }"
+        @click="
+            const code = $el.closest('.group').querySelector('code').innerText;
+            navigator.clipboard.writeText(code);
+            copied = true;
+            setTimeout(() =&gt; copied = false, 2000);
+        "
+        class="inline-flex h-8 w-8 items-center justify-center rounded-md bg-muted/80 backdrop-blur-sm text-muted-foreground hover:text-foreground transition-colors border border-border"
+        aria-label="Copy code"
+    >
+        <span x-show="!copied">
+            <Copy class="h-4 w-4" />
+        </span>
+        <span x-show="copied" style="display: none;">
+            <Check class="h-4 w-4 text-green-500" />
+        </span>
+      </button>
+  </div>
+
+  <pre class={className + " !my-0 !rounded-none"} {...props}><slot /></pre>
+</div>

@@ -11,15 +11,15 @@ const recentNotes = notes.slice(0, siteConfig.featuredNotes);
 <BaseLayout title="Yash Agarwal | Frontend Engineer">
   <div class="container py-16 md:py-24 max-w-3xl mx-auto px-6">
     {/* Intro Section */}
-    <div class="mb-16">
-      <h1 class="text-3xl font-serif font-bold mb-4">
+    <div class="mb-10">
+      <h1 class="text-foreground text-2xl font-semibold tracking-wide mb-4">
         Yash Agarwal
       </h1>
-      <p class="text-muted-foreground mb-8 text-sm uppercase tracking-wider font-medium">
+      <p class="text-muted-foreground mt-2 text-sm">
         Engineer / Builder / Learner
       </p>
 
-      <div class="space-y-6 text-foreground/90 leading-relaxed text-lg">
+      <div class="text-foreground/90 space-y-6 text-base leading-relaxed mt-6">
         <p>
           Hey there! <span class="animate-wobble inline-block origin-[70%_70%]">👋</span>
         </p>
@@ -46,49 +46,61 @@ const recentNotes = notes.slice(0, siteConfig.featuredNotes);
       </div>
     </div>
 
-    {/* Decorative Break */}
-    <div class="flex items-center gap-2 mb-12">
-        <span class="h-1 w-1 rounded-full bg-muted-foreground/30"></span>
-        <span class="h-1 w-1 rounded-full bg-muted-foreground/30"></span>
-        <span class="h-1 w-1 rounded-full bg-muted-foreground/30"></span>
+    {/* Decorative Break - Dot variant */}
+    <div class="my-8 flex items-center justify-center">
+      <div class="via-border/80 to-border h-px flex-1 bg-linear-to-r from-transparent"></div>
+      <div class="px-4">
+        <div class="bg-border h-2 w-2 rounded-full shadow-sm"></div>
+      </div>
+      <div class="via-border/80 to-border h-px flex-1 bg-linear-to-l from-transparent"></div>
     </div>
 
     {/* Recent Writing Section */}
     <section>
-      <h2 class="text-2xl font-serif font-bold mb-8 text-primary tracking-tight">
+      <h2 class="text-primary mt-6 mb-2 text-2xl tracking-wide">
         Recent Writing
       </h2>
 
-      <div class="space-y-10">
-        {recentNotes.map((note) => (
-          <article class="group relative flex flex-col items-start">
-            <h3 class="font-serif text-xl font-bold tracking-tight text-foreground mb-2">
-              <div class="absolute -inset-x-4 -inset-y-6 z-0 scale-95 bg-muted/50 opacity-0 transition group-hover:scale-100 group-hover:opacity-100 sm:rounded-2xl"></div>
-              <a href={`/notes/${note.slug}`} class="relative z-10">
-                <span class="absolute -inset-x-4 -inset-y-6 z-20 sm:rounded-2xl"></span>
-                {note.data.title}
-              </a>
-            </h3>
-            <div class="relative z-10 order-first mb-3 flex items-center text-sm text-muted-foreground">
-              <time datetime={note.data.createdOn.toISOString()}>
-                {new Date(note.data.createdOn).toLocaleDateString('en-US', {
-                  month: 'long',
-                  day: 'numeric',
-                  year: 'numeric'
-                })}
-              </time>
-            </div>
-            <p class="relative z-10 mt-2 text-sm text-muted-foreground leading-relaxed line-clamp-3">
-              {note.data.description}
-            </p>
-            <div aria-hidden="true" class="relative z-10 mt-4 flex items-center text-sm font-medium text-primary">
-              Read article
-              <svg viewBox="0 0 16 16" fill="none" class="ml-1 h-4 w-4 stroke-current">
-                <path d="M6.75 5.75 9.25 8l-2.5 2.25" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-              </svg>
-            </div>
-          </article>
-        ))}
+      <div class="flex flex-col justify-start gap-5">
+        <ul class="-mx-3">
+          {recentNotes.map((note) => {
+            // Format date as MM/yy
+            const date = new Date(note.data.createdOn);
+            const dateStr = (date.getMonth() + 1).toString().padStart(2, '0') + '/' + date.getFullYear().toString().slice(-2);
+
+            return (
+              <li>
+                <a
+                  href={`/notes/${note.slug}`}
+                  class="group hover:bg-accent flex w-full flex-col items-start gap-1 rounded-lg p-3 text-left transition-colors"
+                >
+                  <div class="flex w-full items-baseline justify-between gap-3">
+                    <span class="text-foreground group-hover:text-primary font-sans text-base font-medium transition-colors">
+                      {note.data.title}
+                    </span>
+                    <span class="text-foreground/70 shrink-0 font-mono text-sm">
+                      {dateStr}
+                    </span>
+                  </div>
+                  {note.data.description && (
+                    <p class="text-muted-foreground line-clamp-2 max-w-[85%] text-sm leading-relaxed">
+                      {note.data.description}
+                    </p>
+                  )}
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+        <a
+          href="/notes"
+          class="group text-foreground/80 hover:text-primary text-md mt-3 inline-flex items-center gap-1 font-semibold transition-colors"
+        >
+          <span>View all notes</span>
+          <svg class="relative top-px h-4 w-4 transition-transform duration-200 ease-out group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+          </svg>
+        </a>
       </div>
     </section>
   </div>
