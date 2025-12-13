@@ -15,7 +15,7 @@ const moreNavItems = [
 <aside class="my-8">
   <div class="lg:sticky lg:top-20">
     <nav
-      class="fade relative max-w-3xl mx-auto flex flex-row items-center justify-between px-6 pb-0"
+      class="relative max-w-3xl mx-auto flex flex-row items-center justify-between px-6 pb-0"
       id="nav"
     >
       {/* Left: Avatar/Logo */}
@@ -73,6 +73,7 @@ const moreNavItems = [
           <div
             x-show="open"
             x-transition
+            x-cloak
             class="absolute right-0 mt-1 w-48 rounded-md border border-border bg-popover text-popover-foreground shadow-md z-50 p-1"
           >
             <ul>

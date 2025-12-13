@@ -170,6 +170,7 @@
     scroll-behavior: smooth; /* Smooth scrolling for the whole page */
     scrollbar-width: thin; /* Firefox */
     scrollbar-color: var(--muted-foreground) var(--background); /* thumb track */
+    scrollbar-gutter: stable; /* Prevent layout shift */
   }
 
   /* For Webkit browsers */
@@ -251,4 +252,8 @@
   .animate-shimmer {
     animation: shimmer 2s ease-in-out infinite;
   }
+}
+
+[x-cloak] {
+  display: none !important;
 }

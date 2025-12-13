@@ -20,7 +20,7 @@ const components = {
 const { note } = Astro.props;
 const { Content, headings } = await note.render();
 
-const readingTime = getReadingTime(note.body);
+const readingTime = getReadingTime(note.body ?? "");
 ---
 
 <BlogLayout

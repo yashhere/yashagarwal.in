@@ -12,15 +12,10 @@ const lang = props['data-language'] || 'text';
       </span>
       <button
         x-data="{ copied: false }"
-        @click="
-            const code = $el.closest('.group').querySelector('code').innerText;
-            navigator.clipboard.writeText(code);
-            copied = true;
-            setTimeout(() =&gt; copied = false, 2000);
-        "
+        @click="const code = $el.closest('.group').querySelector('code').innerText; navigator.clipboard.writeText(code); copied = true; setTimeout(() => copied = false, 2000);"
         class="inline-flex h-8 w-8 items-center justify-center rounded-md bg-muted/80 backdrop-blur-sm text-muted-foreground hover:text-foreground transition-colors border border-border"
         aria-label="Copy code"
-    >
+      >
         <span x-show="!copied">
             <Copy class="h-4 w-4" />
         </span>

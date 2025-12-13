@@ -9,7 +9,8 @@
     "astro": "astro",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "typecheck": "astro check && tsc --noEmit"
+    "typecheck": "astro check && tsc --noEmit",
+    "lint:staged": "lint-staged"
   },
   "dependencies": {
     "@astrojs/alpinejs": "^0.4.9",
@@ -47,6 +48,7 @@
   "devDependencies": {
     "@commitlint/cli": "^20.2.0",
     "@commitlint/config-conventional": "^20.2.0",
+    "@ianvs/prettier-plugin-sort-imports": "^4.7.0",
     "@types/glob": "^9.0.0",
     "@typescript-eslint/eslint-plugin": "^8.49.0",
     "@typescript-eslint/parser": "^8.49.0",
@@ -59,6 +61,7 @@
     "lint-staged": "^16.2.7",
     "playwright": "^1.57.0",
     "prettier": "^3.7.4",
+    "prettier-plugin-tailwindcss": "^0.7.2",
     "rehype-autolink-headings": "^7.1.0",
     "rehype-external-links": "^3.0.0",
     "rehype-katex": "^7.0.1",
