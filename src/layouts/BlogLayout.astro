@@ -76,14 +76,27 @@ const encodedUrl = encodeURIComponent(`https://yashagarwal.in/notes/${slug}`);
                 class="mb-8"
                 x-data="{
                     activeHeading: '',
+                    visibleHeadings: new Set(),
                     init() {
                         const observer = new IntersectionObserver((entries) => {
                             entries.forEach((entry) => {
                                 if (entry.isIntersecting) {
-                                    this.activeHeading = entry.target.id;
+                                    this.visibleHeadings.add(entry.target.id);
+                                } else {
+                                    this.visibleHeadings.delete(entry.target.id);
                                 }
                             });
-                        }, { rootMargin: '0% 0% -80% 0%' });
+
+                            // Determine active heading: prefer the first visible one
+                            // If none are 'visible' (e.g. all above viewport), we might want to keep the last one active,
+                            // but for now, let's just pick the first visible one from the DOM order.
+                            const allHeadings = Array.from(document.querySelectorAll('#article-body h2, #article-body h3, #article-body h4'));
+                            const firstVisible = allHeadings.find(h => this.visibleHeadings.has(h.id));
+
+                            if (firstVisible) {
+                                this.activeHeading = firstVisible.id;
+                            }
+                        }, { rootMargin: '-100px 0px -40% 0px' });
 
                         document.querySelectorAll('#article-body h2, #article-body h3, #article-body h4').forEach((h) => {
                             observer.observe(h);
