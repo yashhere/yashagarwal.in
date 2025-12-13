@@ -14,7 +14,7 @@ const { level = 'h3', title, count, class: className } = Astro.props;
 <div class={className}>
   <Heading class="text-foreground mt-12 mb-4" level={level}>
     <span>{title}</span>
-    {count !== undefined && count !== 0 && (
+    {count !== undefined && (
       <span class="text-foreground/60 pl-2 text-xs">{count}</span>
     )}
   </Heading>
