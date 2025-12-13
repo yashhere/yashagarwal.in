@@ -146,10 +146,7 @@ const typographyStyles = {
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./app/**/*.{ts,tsx}",
-    "./components/**/*.{ts,tsx}",
-    "./lib/**/*.{js,ts}",
-    "./content/**/*.{md,mdx}",
+    "./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}",
   ],
   darkMode: ["class"],
   future: {

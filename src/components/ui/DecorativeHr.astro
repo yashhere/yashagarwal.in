@@ -1,0 +1,38 @@
+---
+interface Props {
+  variant?: 'dot' | 'dots' | 'diamond' | 'star';
+  class?: string;
+}
+
+const { variant = 'dots', class: className } = Astro.props;
+---
+
+<div class:list={["my-8 flex items-center justify-center", className]}>
+  <div class="h-px flex-1 bg-gradient-to-r from-transparent via-border/80 to-border"></div>
+
+  {variant === 'dots' && (
+    <div class="flex space-x-1 px-4">
+      <div class="bg-border h-1 w-1 rounded-full"></div>
+      <div class="bg-border h-1 w-1 rounded-full"></div>
+      <div class="bg-border h-1 w-1 rounded-full"></div>
+    </div>
+  )}
+
+  {variant === 'diamond' && (
+    <div class="px-4">
+      <div class="bg-border h-2 w-2 rotate-45 rounded-sm"></div>
+    </div>
+  )}
+
+  {variant === 'star' && (
+      <div class="text-border px-4 text-lg font-light">✦</div>
+  )}
+
+  {variant === 'dot' && (
+    <div class="px-4">
+      <div class="bg-border h-2 w-2 rounded-full shadow-sm"></div>
+    </div>
+  )}
+
+  <div class="h-px flex-1 bg-gradient-to-l from-transparent via-border/80 to-border"></div>
+</div>

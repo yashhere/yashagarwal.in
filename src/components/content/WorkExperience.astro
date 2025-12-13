@@ -1,0 +1,78 @@
+---
+interface Props {
+  company: string;
+  period: string;
+  title: string;
+  description: string;
+  achievements?: string[];
+  nestedAchievements?: Record<string, string[]>;
+}
+
+import Heading from '../ui/Heading.astro';
+
+const {
+  company,
+  period,
+  title,
+  description,
+  achievements,
+  nestedAchievements,
+} = Astro.props;
+---
+
+<div class="relative pb-10 pl-8 last:pb-0">
+  <div class="border-border absolute top-0 bottom-0 left-1 border-l"></div>
+
+  <div class="border-border bg-foreground absolute top-2.5 left-0 h-2.5 w-2.5 rounded-full border"></div>
+
+  <Heading level="h4" class="text-foreground flex items-center">
+    {company}
+  </Heading>
+
+  <div class="text-foreground/70 mt-1 flex items-center text-sm">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 256 256" fill="currentColor" class="mr-1.5 h-4 w-4">
+          <path d="M208,32H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32ZM184,152a8,8,0,0,1,0,16H168v16a8,8,0,0,1-16,0V168H136a8,8,0,0,1,0-16h16V136a8,8,0,0,1,16,0v16Zm-40,0a8,8,0,0,1,0,16H128v16a8,8,0,0,1-16,0V168H96a8,8,0,0,1,0-16h16V136a8,8,0,0,1,16,0v16Zm-40,0a8,8,0,0,1,0,16H88v16a8,8,0,0,1-16,0V168H56a8,8,0,0,1,0-16H72V136a8,8,0,0,1,16,0v16ZM48,48H208V96H48ZM208,208H48V112H208v96Zm-8-56H184v-16a8,8,0,0,0-16,0v16H152a8,8,0,0,0,0,16h16v16a8,8,0,0,0,16,0V168h16a8,8,0,0,0,0-16Z"></path>
+      </svg>
+    <span>{period}</span>
+  </div>
+
+  <h3 class="text-foreground mt-2 font-medium">{title}</h3>
+
+  <p class="text-foreground mt-3">{description}</p>
+
+  {achievements && achievements.length > 0 && (
+    <ul class="mt-4 space-y-2">
+      {achievements.map((achievement) => (
+        <li class="flex gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 256 256" fill="currentColor" class="text-foreground mt-0.5 h-4 w-4 shrink-0">
+                <path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Zm-56-11.32-80-80a8,8,0,0,0-11.32,11.32L108.69,128,34.34,202.34a8,8,0,0,0,11.32,11.32l80-80A8,8,0,0,0,125.66,122.34Z"></path>
+            </svg>
+          <span>{achievement}</span>
+        </li>
+      ))}
+    </ul>
+  )}
+
+  {nestedAchievements && Object.keys(nestedAchievements).length > 0 && (
+    <div class="mt-4 space-y-4">
+      {Object.entries(nestedAchievements).map(([key, items]) => (
+        <div>
+          <div class="flex gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 256 256" fill="currentColor" class="text-foreground mt-0.5 h-4 w-4 shrink-0">
+                <path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Zm-56-11.32-80-80a8,8,0,0,0-11.32,11.32L108.69,128,34.34,202.34a8,8,0,0,0,11.32,11.32l80-80A8,8,0,0,0,125.66,122.34Z"></path>
+            </svg>
+            <span>{key}</span>
+          </div>
+          <ul class="mt-2 space-y-1 pl-7">
+            {items.map((item) => (
+              <li class="relative pl-4">
+                <span class="bg-foreground absolute top-2 left-0 block h-1.5 w-1.5 rounded-full"></span>
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  )}
+</div>

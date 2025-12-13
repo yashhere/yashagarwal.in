@@ -1,0 +1,103 @@
+---
+interface Props {
+  url: string;
+  slug: string;
+}
+
+const { url, slug } = Astro.props;
+const disqusShortname = "yashhere";
+---
+
+<div
+  id="comments-section"
+  class="pt-8"
+  x-data={`{
+    loaded: false,
+    init() {
+      // Set up IntersectionObserver for lazy loading
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting && !this.loaded) {
+              this.loadDisqus();
+              observer.disconnect();
+            }
+          });
+        },
+        {
+          threshold: 0,
+          rootMargin: '100px' // Start loading before user reaches comments
+        }
+      );
+
+      observer.observe(this.$el);
+
+      // Watch for theme changes and reload Disqus
+      this.watchTheme();
+    },
+
+    loadDisqus() {
+      this.loaded = true;
+
+      // Create Disqus config
+      window.disqus_config = function () {
+        this.page.url = '${url}';
+        this.page.identifier = '${slug}';
+      };
+
+      // Load Disqus embed script
+      const d = document;
+      const s = d.createElement('script');
+      s.src = 'https://${disqusShortname}.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    },
+
+    reloadDisqus() {
+      if (!this.loaded) return;
+
+      // Remove existing Disqus
+      const disqusThread = document.getElementById('disqus_thread');
+      if (disqusThread) {
+        disqusThread.innerHTML = '';
+      }
+
+      // Reset and reload
+      if (window.DISQUS) {
+        window.DISQUS.reset({
+          reload: true,
+          config: function () {
+            this.page.url = '${url}';
+            this.page.identifier = '${slug}';
+          }
+        });
+      }
+    },
+
+    watchTheme() {
+      // Watch for theme changes on documentElement class
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (mutation.attributeName === 'class') {
+            // Delay reload to ensure CSS has updated
+            setTimeout(() => this.reloadDisqus(), 100);
+          }
+        });
+      });
+
+      observer.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class']
+      });
+    }
+  }`}
+>
+  <div x-show="loaded" class="comments">
+    <div id="disqus_thread"></div>
+  </div>
+</div>
+
+<noscript>
+  Please enable JavaScript to view the
+  <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+</noscript>

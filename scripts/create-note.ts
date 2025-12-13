@@ -22,7 +22,7 @@ class NoteCreator {
   private rl: readline.Interface
   private contentDir: string
 
-  constructor(contentDir: string = "content/notes") {
+  constructor(contentDir: string = "src/content/notes") {
     this.contentDir = contentDir
     this.rl = readline.createInterface({
       input: process.stdin,
@@ -468,7 +468,7 @@ Examples:
     process.exit(0)
   }
 
-  const contentDir = process.env.CONTENT_DIR || "content/notes"
+  const contentDir = process.env.CONTENT_DIR || "src/content/notes"
   const creator = new NoteCreator(contentDir)
   await creator.createNote()
 }
