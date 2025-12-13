@@ -9,7 +9,7 @@ import DecorativeHr from '../components/ui/DecorativeHr.astro';
 import TagList from '../components/content/TagList.astro';
 import Series from '../components/content/Series.astro';
 import RelatedNotes from '../components/content/RelatedNotes.astro';
-import Comments from '../components/interactive/Comments';
+import Comments from '../components/interactive/Comments.astro';
 
 import GithubSlugger from 'github-slugger';
 
@@ -244,7 +244,7 @@ const encodedUrl = encodeURIComponent(`https://yashagarwal.in/notes/${slug}`);
       <DecorativeHr />
 
       <div class="mt-8">
-          <Comments url={`https://yashagarwal.in/notes/${slug}`} slug={slug} client:visible />
+          <Comments url={`https://yashagarwal.in/notes/${slug}`} slug={slug} />
       </div>
 
     </div>
