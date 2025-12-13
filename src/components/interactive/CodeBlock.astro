@@ -14,24 +14,39 @@ const isCodeBlock = props['data-theme'] || lang;
       <span class="text-muted-foreground text-sm font-medium lowercase">
         {lang || "code"}
       </span>
-      <button
-        x-data="{ copied: false }"
-        @click="
-            const code = $el.closest('.group').querySelector('pre').innerText;
-            navigator.clipboard.writeText(code);
-            copied = true;
-            setTimeout(() => copied = false, 2000);
-        "
-        class="text-muted-foreground hover:text-accent-foreground hover:bg-accent flex items-center gap-1.5 rounded px-2 py-1 transition-colors"
-        aria-label="Copy code"
-      >
-        <span x-show="!copied">
-            <Copy class="h-4 w-4" />
-        </span>
-        <span x-show="copied" style="display: none;" x-cloak>
-            <Check class="h-4 w-4" />
-        </span>
-      </button>
+      <div class="relative" x-data="{ copied: false, showTooltip: false }">
+        <button
+          @click="
+              const code = $el.closest('.group').querySelector('pre').innerText;
+              navigator.clipboard.writeText(code);
+              copied = true;
+              setTimeout(() => copied = false, 2000);
+          "
+          @mouseenter="showTooltip = true"
+          @mouseleave="showTooltip = false"
+          class="text-muted-foreground hover:text-accent-foreground hover:bg-accent flex items-center gap-1.5 rounded px-2 py-1 transition-colors"
+          aria-label="Copy code"
+        >
+          <span x-show="!copied">
+              <Copy class="h-4 w-4" />
+          </span>
+          <span x-show="copied" x-cloak>
+              <Check class="h-4 w-4" />
+          </span>
+        </button>
+
+        <!-- Tooltip -->
+        <div
+          x-show="showTooltip || copied"
+          x-transition.opacity
+          style="display: none;"
+          class="absolute top-full right-0 mt-1 pointer-events-none z-[9999]"
+        >
+          <div class="bg-popover text-popover-foreground border-border rounded-md border px-2 py-1 text-xs shadow-lg whitespace-nowrap">
+            <span x-text="copied ? 'Copied!' : 'Copy'"></span>
+          </div>
+        </div>
+      </div>
     </div>
   )}
   <pre
