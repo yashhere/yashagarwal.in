@@ -1,0 +1,21 @@
+---
+const currentYear = new Date().getFullYear();
+const copyrightYear = currentYear === 2016 ? currentYear : `2016 - ${currentYear}`;
+---
+
+<footer class="border-t border-border mt-auto w-full py-6">
+  <div class="container mx-auto px-4 max-w-screen-2xl">
+    <div class="flex items-center justify-between text-sm text-muted-foreground">
+      {/* Left: Copyright */}
+      <div>
+        &copy; {copyrightYear} Yash Agarwal.
+      </div>
+
+      {/* Right: Social Links (Placeholder) */}
+      <div class="flex items-center gap-4">
+        {/* TODO: Add AnalogClock Component later */}
+        <span class="italic">IST Clock</span>
+      </div>
+    </div>
+  </div>
+</footer>

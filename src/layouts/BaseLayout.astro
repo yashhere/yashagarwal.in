@@ -3,6 +3,7 @@ import '@fontsource/geist-sans';
 import '@fontsource/ibm-plex-mono';
 import '@fontsource/newsreader';
 import '../styles/globals.css';
+import Navigation from '../components/layout/Navigation.astro';
 
 interface Props {
   title?: string;
@@ -68,6 +69,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://yashagar
     <slot name="head" />
   </head>
   <body class="flex flex-col min-h-screen bg-background text-foreground antialiased selection:bg-slate-200 selection:text-slate-900 dark:selection:bg-slate-700 dark:selection:text-slate-100 font-sans text-base">
-    <slot />
+    <Navigation />
+    <main class="flex-1">
+      <slot />
+    </main>
   </body>
 </html>

@@ -1,0 +1,71 @@
+---
+interface NavItem {
+  name: string;
+  href: string;
+}
+
+const navItems: NavItem[] = [
+  { name: 'Notes', href: '/notes' },
+  { name: 'Work', href: '/work' },
+  { name: 'About', href: '/about' },
+];
+---
+
+<aside class="my-8">
+  <div class="lg:sticky lg:top-20">
+    <nav
+      class="fade relative max-w-3xl mx-auto flex flex-row items-center justify-between px-0 pb-0"
+      id="nav"
+    >
+      {/* Left: Avatar/Logo */}
+      <a href="/" class="group block shrink-0 cursor-pointer select-none">
+        <div class="relative w-10 h-10 rounded-full overflow-hidden ring-2 ring-transparent group-hover:ring-primary transition-all duration-300">
+          <img
+            src="/images/yash/yash-avatar.webp"
+            alt="Yash Agarwal"
+            class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+            draggable="false"
+          />
+        </div>
+      </a>
+
+      {/* Right: Navigation Links */}
+      <div class="flex flex-row items-center gap-2">
+        <ul class="flex items-center gap-1">
+          {navItems.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                class="block px-3 py-1 text-sm font-medium rounded-md hover:bg-accent hover:text-accent-foreground text-muted-foreground transition-colors"
+              >
+                {item.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+
+        {/* Theme Toggle Placeholder */}
+        <button
+          id="theme-toggle"
+          class="p-2 rounded-md hover:bg-accent text-muted-foreground hover:text-foreground transition-colors outline-none focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+          aria-label="Toggle theme"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 dark:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2"></path>
+            <path d="M12 20v2"></path>
+            <path d="M4.93 4.93l1.41 1.41"></path>
+            <path d="M17.66 17.66l1.41 1.41"></path>
+            <path d="M2 12h2"></path>
+            <path d="M20 12h2"></path>
+            <path d="M6.34 17.66l-1.41 1.41"></path>
+            <path d="M19.07 4.93l-1.41 1.41"></path>
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 hidden dark:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+             <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+          </svg>
+        </button>
+      </div>
+    </nav>
+  </div>
+</aside>
