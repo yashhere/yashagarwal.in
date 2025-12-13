@@ -1,4 +1,5 @@
 ---
+import { ChevronDown } from '@lucide/astro';
 import ThemeToggle from '../interactive/ThemeToggle.astro';
 
 const primaryNavItems = [
@@ -37,7 +38,7 @@ const moreNavItems = [
             <li>
               <a
                 href={item.href}
-                class="block px-3 py-1 text-sm font-medium rounded-md hover:bg-accent hover:text-accent-foreground text-muted-foreground transition-colors"
+                class="block px-3 py-1 font-medium rounded-md hover:bg-accent hover:text-accent-foreground text-muted-foreground transition-colors"
               >
                 {item.name}
               </a>
@@ -54,19 +55,14 @@ const moreNavItems = [
           <button
             @click="open = !open"
             :class="open ? 'text-foreground bg-accent' : 'text-muted-foreground'"
-            class="block px-3 py-1 text-sm font-medium rounded-md hover:bg-accent hover:text-accent-foreground transition-colors flex items-center gap-1"
+            class="px-3 py-1 text-sm font-medium rounded-md hover:bg-accent hover:text-accent-foreground transition-colors flex items-center gap-1"
             aria-label="More pages"
           >
             More
-            <svg
+            <ChevronDown
               class="w-4 h-4 transition-transform duration-200"
               :class="open && 'rotate-180'"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-            </svg>
+            />
           </button>
 
           <!-- Dropdown Menu -->
