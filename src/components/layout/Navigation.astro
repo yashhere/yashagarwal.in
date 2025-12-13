@@ -11,6 +11,16 @@ const moreNavItems = [
   { name: 'Tags', href: '/tags' },
   { name: 'Categories', href: '/categories' },
 ];
+const { pathname } = Astro.url;
+const pathSegments = pathname.split('/').filter(Boolean);
+const highlightedPath = pathSegments.length <= 1 ? pathname : `/${pathSegments[0]}`;
+
+const isActive = (href: string) => {
+    if (href === '/') return pathname === '/';
+    return highlightedPath === href;
+};
+
+const isAnySecondaryActive = moreNavItems.some((item) => isActive(item.href));
 ---
 
 <aside class="my-8">
@@ -21,11 +31,11 @@ const moreNavItems = [
     >
       {/* Left: Avatar/Logo */}
       <a href="/" class="group block shrink-0 cursor-pointer select-none">
-        <div class="relative w-10 h-10 rounded-full overflow-hidden ring-2 ring-transparent group-hover:ring-primary transition-all duration-300">
+        <div class="relative w-10 h-10 rounded-full overflow-hidden transition-all duration-200">
           <img
             src="/images/yash/yash-avatar.webp"
             alt="Yash Agarwal"
-            class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+            class="w-full h-full object-cover transition-transform duration-200 group-hover:scale-110"
             draggable="false"
           />
         </div>
@@ -38,7 +48,10 @@ const moreNavItems = [
             <li>
               <a
                 href={item.href}
-                class="block px-3 py-1 font-medium rounded-md hover:bg-accent hover:text-accent-foreground text-muted-foreground transition-colors"
+                class:list={[
+                  "block px-3 py-1 font-medium rounded-md hover:bg-accent hover:text-accent-foreground transition-colors",
+                  isActive(item.href) ? "text-foreground" : "text-muted-foreground"
+                ]}
               >
                 {item.name}
               </a>
@@ -54,8 +67,10 @@ const moreNavItems = [
         >
           <button
             @click="open = !open"
-            :class="open ? 'text-foreground bg-accent' : 'text-muted-foreground'"
-            class="px-3 py-1 font-medium rounded-md hover:bg-accent hover:text-accent-foreground transition-colors flex items-center gap-1"
+            class:list={[
+              "hover:bg-accent hover:text-accent-foreground flex items-center gap-1 rounded-md border-0 px-3 py-1 font-medium ring-0 transition-colors outline-none focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0",
+              isAnySecondaryActive ? "text-foreground" : "text-muted-foreground"
+            ]}
             aria-label="More pages"
           >
             More
@@ -70,14 +85,17 @@ const moreNavItems = [
             x-show="open"
             x-transition
             x-cloak
-            class="absolute right-0 mt-1 w-48 rounded-md border border-border bg-popover text-popover-foreground shadow-md z-50 p-1"
+            class="absolute right-0 mt-1 min-w-[160px] rounded-md border border-border/50 bg-background/80 backdrop-blur-sm shadow-md z-50 p-1 ring-0"
           >
             <ul>
               {moreNavItems.map((item) => (
                 <li>
                   <a
                     href={item.href}
-                    class="block px-2 py-1.5 text-sm text-muted-foreground hover:bg-accent hover:text-foreground rounded-sm transition-colors"
+                    class:list={[
+                      "block px-2 py-1.5 text-sm rounded-sm transition-colors font-medium",
+                      isActive(item.href) ? "text-foreground bg-accent" : "text-muted-foreground hover:bg-accent hover:text-foreground"
+                    ]}
                   >
                     {item.name}
                   </a>
