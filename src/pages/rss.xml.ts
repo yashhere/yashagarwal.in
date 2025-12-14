@@ -1,13 +1,13 @@
-import rss from '@astrojs/rss';
-import { getCollection } from 'astro:content';
-import { siteConfig } from '../config/site';
+import rss from "@astrojs/rss"
+import type { APIRoute } from "astro"
+import { getCollection } from "astro:content"
 
-import type { APIRoute } from 'astro';
+import { siteConfig } from "../config/site"
 
 export const GET: APIRoute = async (context) => {
-  const notes = await getCollection('notes');
+  const notes = await getCollection("notes")
   // Sort posts by date
-  notes.sort((a, b) => b.data.createdOn.valueOf() - a.data.createdOn.valueOf());
+  notes.sort((a, b) => b.data.createdOn.valueOf() - a.data.createdOn.valueOf())
 
   return rss({
     title: siteConfig.name,
@@ -22,5 +22,5 @@ export const GET: APIRoute = async (context) => {
       link: `/notes/${post.slug}/`,
     })),
     customData: `<language>en-us</language>`,
-  });
+  })
 }

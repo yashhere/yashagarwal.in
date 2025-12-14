@@ -1,17 +1,24 @@
-import eslintPluginAstro from 'eslint-plugin-astro';
-import tseslint from 'typescript-eslint';
-import unusedImports from 'eslint-plugin-unused-imports';
+import eslintPluginAstro from "eslint-plugin-astro"
+import unusedImports from "eslint-plugin-unused-imports"
+import tseslint from "typescript-eslint"
 
 export default [
   // Global ignores
   {
-    ignores: [".astro/", "dist/", "node_modules/", ".vercel/", ".husky/", "public/"],
+    ignores: [
+      ".astro/",
+      "dist/",
+      "node_modules/",
+      ".vercel/",
+      ".husky/",
+      "public/",
+    ],
   },
 
   // TypeScript & Astro configs
   ...tseslint.configs.recommended,
   ...eslintPluginAstro.configs.recommended,
-  ...eslintPluginAstro.configs['jsx-a11y-recommended'],
+  ...eslintPluginAstro.configs["jsx-a11y-recommended"],
 
   // Custom Rules
   {
@@ -34,4 +41,4 @@ export default [
       "@typescript-eslint/no-explicit-any": "warn",
     },
   },
-];
+]

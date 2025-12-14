@@ -1,7 +1,7 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection, z } from "astro:content"
 
 const notes = defineCollection({
-  type: 'content',
+  type: "content",
   schema: z.object({
     title: z.string(),
     description: z.string().optional(),
@@ -19,18 +19,18 @@ const notes = defineCollection({
     updatedOn: z.coerce.date().optional(),
     related: z.array(z.string()).optional(),
   }),
-});
+})
 
 const lifelog = defineCollection({
-  type: 'content',
+  type: "content",
   schema: z.object({
     title: z.string(),
     createdOn: z.coerce.date(),
     updatedOn: z.coerce.date().optional(),
   }),
-});
+})
 
 export const collections = {
   notes,
   lifelog,
-};
+}

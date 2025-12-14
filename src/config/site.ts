@@ -1,6 +1,6 @@
 export const siteConfig = {
   name: "Yash Agarwal",
-  description: "Personal blog and portfolio of Yash Agarwal, a Frontend Engineer.",
+  description: "Personal blog and portfolio of Yash Agarwal.",
   url: "https://yashagarwal.in",
   ogImage: "https://yashagarwal.in/og.jpg",
   featuredNotes: 5,
@@ -9,4 +9,4 @@ export const siteConfig = {
     github: "https://github.com/yashhere",
     linkedin: "https://linkedin.com/in/theyashagarwal",
   },
-};
+}
