@@ -138,12 +138,26 @@ export async function getSeriesNotes(
  * Get all notes that link to a specific slug (backlinks)
  * This searches for the slug in the raw content body
  */
-export async function getBacklinks(slug: string): Promise<NoteEntry[]> {
-  const notes = await getPreviewNotes()
-  const searchSlugs = [`/notes/${slug}`, `/${slug}`, `(${slug})`]
+export async function getBacklinks(slug: string): Promise<
+  {
+    title: string
+    url: string
+    type: string
+  }[]
+> {
+  const notes = await getNotes()
+  const urlToSearch = `/notes/${slug}`
 
-  return notes.filter((note) => {
-    if (note.slug === slug) return false
-    return searchSlugs.some((s) => note.body.includes(s))
+  const backlinksToNote = notes.filter((note) => {
+    if (note.slug !== slug && note.body) {
+      return note.body.includes(urlToSearch)
+    }
+    return false
   })
+
+  return backlinksToNote.map((note) => ({
+    title: note.data.title,
+    url: `/notes/${note.slug}`,
+    type: "Note",
+  }))
 }

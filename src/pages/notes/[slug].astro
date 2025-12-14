@@ -8,7 +8,7 @@ import MDXHeading4 from "../../components/content/MDXHeading4.astro"
 import CodeBlock from "../../components/interactive/CodeBlock.astro"
 import Image from "../../components/ui/Image.astro"
 import BlogLayout from "../../layouts/BlogLayout.astro"
-import { getReadingTime } from "../../lib/content"
+import { getReadingTime, getBacklinks } from "../../lib/content"
 
 export async function getStaticPaths() {
   const notes = await getCollection("notes")
@@ -32,6 +32,7 @@ const { note } = Astro.props
 const { Content, headings } = await note.render()
 
 const readingTime = getReadingTime(note.body ?? "")
+const backlinks = await getBacklinks(note.slug)
 ---
 
 <BlogLayout
@@ -45,6 +46,7 @@ const readingTime = getReadingTime(note.body ?? "")
   headings={headings}
   series={note.data.series}
   related={note.data.related}
+  backlinks={backlinks}
   slug={note.slug}
 >
   <Content components={components} />

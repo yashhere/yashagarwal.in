@@ -40,7 +40,7 @@ import { Sun, MoonStar } from '@lucide/astro';
       }
     }
 
-    setTheme(theme) {
+    setTheme(theme: string) {
       // Disable transitions temporarily to prevent flash
       const css = document.createElement('style');
       css.appendChild(

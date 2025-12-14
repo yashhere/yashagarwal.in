@@ -10,6 +10,7 @@ import DecorativeHr from '../components/ui/DecorativeHr.astro';
 import TagList from '../components/content/TagList.astro';
 import Series from '../components/content/Series.astro';
 import RelatedNotes from '../components/content/RelatedNotes.astro';
+import Backlinks from '../components/content/Backlinks.astro';
 import Comments from '../components/interactive/Comments.astro';
 
 import GithubSlugger from 'github-slugger';
@@ -29,6 +30,11 @@ interface Props {
       order?: number;
   };
   related?: string[];
+  backlinks?: {
+    title: string;
+    url: string;
+    type: string;
+  }[];
   slug: string;
 }
 
@@ -44,6 +50,7 @@ const {
   headings,
   series,
   related,
+  backlinks,
   slug,
 } = Astro.props;
 
@@ -209,6 +216,8 @@ const encodedUrl = encodeURIComponent(`https://yashagarwal.in/notes/${slug}`);
       </div>
 
       <DecorativeHr />
+
+      <Backlinks backlinks={backlinks} />
 
       <RelatedNotes relatedSlugs={related} />
 
