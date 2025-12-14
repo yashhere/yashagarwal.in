@@ -67,6 +67,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || "https://yashagar
       }
       const isDark = getThemePreference() === "dark"
       document.documentElement.classList[isDark ? "add" : "remove"]("dark")
+      document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light")
     </script>
 
     <style is:global>

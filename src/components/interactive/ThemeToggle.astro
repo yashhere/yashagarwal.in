@@ -62,6 +62,7 @@ import { MoonStar, Sun } from "@lucide/astro"
       } else {
         document.documentElement.classList.remove("dark")
       }
+      document.documentElement.setAttribute("data-theme", theme)
       localStorage.setItem("theme", theme)
 
       // Force reflow
