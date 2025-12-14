@@ -1,15 +1,20 @@
 ---
 import { getCollection } from "astro:content"
 
+import MDXAccordion from "../../components/content/MDXAccordion.astro"
+import MDXDraft from "../../components/content/MDXDraft.astro"
 import MDXHeading1 from "../../components/content/MDXHeading1.astro"
 import MDXHeading2 from "../../components/content/MDXHeading2.astro"
 import MDXHeading3 from "../../components/content/MDXHeading3.astro"
 import MDXHeading4 from "../../components/content/MDXHeading4.astro"
+import MDXHighlight from "../../components/content/MDXHighlight.astro"
+import MDXKbd from "../../components/content/MDXKbd.astro"
+import MDXTooltip from "../../components/content/MDXTooltip.astro"
 import CodeBlock from "../../components/interactive/CodeBlock.astro"
 import Image from "../../components/ui/Image.astro"
 import Link from "../../components/ui/Link.astro"
 import BlogLayout from "../../layouts/BlogLayout.astro"
-import { getReadingTime, getBacklinks } from "../../lib/content"
+import { getBacklinks, getReadingTime } from "../../lib/content"
 
 export async function getStaticPaths() {
   const notes = await getCollection("notes")
@@ -28,6 +33,12 @@ const components = {
   pre: CodeBlock,
   img: Image,
   a: Link,
+  Highlight: MDXHighlight,
+  Kbd: MDXKbd,
+  kbd: MDXKbd,
+  Accordion: MDXAccordion,
+  Tooltip: MDXTooltip,
+  Draft: MDXDraft,
 }
 
 const { note } = Astro.props
