@@ -250,7 +250,7 @@
   ],
   "headers": [
     {
-      "source": "/_astro/:path*",
+      "source": "/_astro/(.*)",
       "headers": [
         {
           "key": "Cache-Control",
@@ -259,7 +259,7 @@
       ]
     },
     {
-      "source": "/images/:path*",
+      "source": "/images/(.*)",
       "headers": [
         {
           "key": "Cache-Control",
@@ -268,7 +268,7 @@
       ]
     },
     {
-      "source": "/:path*.@(png|jpg|jpeg|gif|webp|svg|ico|avif)",
+      "source": "/(.*)\\.(?:png|jpg|jpeg|gif|webp|svg|ico|avif)",
       "headers": [
         {
           "key": "Cache-Control",
@@ -277,7 +277,7 @@
       ]
     },
     {
-      "source": "/:path*.@(woff|woff2|ttf|otf|eot)",
+      "source": "/(.*)\\.(?:woff|woff2|ttf|otf|eot)",
       "headers": [
         {
           "key": "Cache-Control",
@@ -286,7 +286,7 @@
       ]
     },
     {
-      "source": "/:path*.@(js|css)",
+      "source": "/(.*)\\.(?:js|css)",
       "headers": [
         {
           "key": "Cache-Control",
@@ -313,7 +313,7 @@
       ]
     },
     {
-      "source": "/sitemap-:path*.xml",
+      "source": "/sitemap(.*).xml",
       "headers": [
         {
           "key": "Cache-Control",
@@ -331,7 +331,7 @@
       ]
     },
     {
-      "source": "/:path*",
+      "source": "/(.*)",
       "headers": [
         {
           "key": "Cache-Control",
