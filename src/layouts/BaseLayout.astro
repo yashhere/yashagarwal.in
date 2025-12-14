@@ -1,24 +1,31 @@
 ---
-import '../styles/globals.css';
-import Navigation from '../components/layout/Navigation.astro';
-import Footer from '../components/layout/Footer.astro';
+import "../styles/globals.css"
+// Supports weights 100-900
+import "@fontsource/geist-sans"
+// Supports weights 400
+import "@fontsource/ibm-plex-mono"
+// Supports weights 200-800
+import "@fontsource/newsreader"
+
+import Footer from "../components/layout/Footer.astro"
+import Navigation from "../components/layout/Navigation.astro"
 
 interface Props {
-  title?: string;
-  description?: string;
-  image?: string;
+  title?: string
+  description?: string
+  image?: string
 }
 
 const {
   title = "Yash Agarwal",
   description = "Personal blog and portfolio",
-  image = "/og-image.png"
-} = Astro.props;
+  image = "/og-image.png",
+} = Astro.props
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://yashagarwal.in');
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || "https://yashagarwal.in")
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" class="scroll-smooth">
   <head>
     <meta charset="utf-8" />
@@ -45,33 +52,33 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://yashagar
     <meta property="twitter:image" content={new URL(image, Astro.url)} />
 
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=IBM+Plex+Mono:wght@400&family=Newsreader:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet" />
+    <!-- Self-hosted fonts via Fontsource -->
 
     <!-- Theme Script -->
     <script is:inline>
       const getThemePreference = () => {
-        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
-          return localStorage.getItem('theme');
+        if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
+          return localStorage.getItem("theme")
         }
-        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      };
-      const isDark = getThemePreference() === 'dark';
-      document.documentElement.classList[isDark ? 'add' : 'remove']('dark');
+        return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
+      }
+      const isDark = getThemePreference() === "dark"
+      document.documentElement.classList[isDark ? "add" : "remove"]("dark")
     </script>
 
     <style is:global>
       :root {
-        --font-sans: 'Geist', system-ui, sans-serif;
-        --font-mono: 'IBM Plex Mono', monospace;
-        --font-serif: 'Newsreader', serif;
+        --font-sans: "Geist Sans", system-ui, sans-serif;
+        --font-mono: "IBM Plex Mono", monospace;
+        --font-serif: "Newsreader", serif;
       }
     </style>
 
     <slot name="head" />
   </head>
-  <body class="flex flex-col items-center optimize-legibility min-h-dvh font-sans antialiased bg-background text-foreground selection:bg-slate-200 selection:text-slate-900 dark:selection:bg-slate-700 dark:selection:text-slate-100">
+  <body
+    class="flex flex-col items-center optimize-legibility min-h-dvh font-sans antialiased bg-background text-foreground selection:bg-slate-200 selection:text-slate-900 dark:selection:bg-slate-700 dark:selection:text-slate-100"
+  >
     <slot />
     <Footer />
   </body>
