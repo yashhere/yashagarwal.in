@@ -5,10 +5,10 @@ import mdx from "@astrojs/mdx"
 import react from "@astrojs/react"
 import sitemap from "@astrojs/sitemap"
 import tailwindcss from "@tailwindcss/vite"
+import mermaid from "astro-mermaid"
 import { defineConfig } from "astro/config"
 import rehypeAutolinkHeadings from "rehype-autolink-headings"
 import rehypeKatex from "rehype-katex"
-import rehypeMermaid from "rehype-mermaid"
 import rehypePrettyCode from "rehype-pretty-code"
 import rehypeSlug from "rehype-slug"
 import remarkGfm from "remark-gfm"
@@ -20,6 +20,7 @@ import remarkWikiLink from "remark-wiki-link"
 export default defineConfig({
   site: "https://yashagarwal.in",
   integrations: [
+    mermaid(),
     alpinejs(),
     react(),
     mdx({
@@ -40,7 +41,6 @@ export default defineConfig({
         rehypeSlug,
         [rehypeAutolinkHeadings, { behavior: "wrap" }],
         rehypeKatex,
-        rehypeMermaid,
         [
           rehypePrettyCode,
           {
