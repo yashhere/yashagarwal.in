@@ -1,5 +1,6 @@
 // @ts-check
 import alpinejs from "@astrojs/alpinejs"
+import cloudflare from "@astrojs/cloudflare"
 import mdx from "@astrojs/mdx"
 import react from "@astrojs/react"
 import sitemap from "@astrojs/sitemap"
@@ -18,6 +19,7 @@ import remarkWikiLink from "remark-wiki-link"
 // https://astro.build/config
 export default defineConfig({
   site: "https://yashagarwal.in",
+  output: "static",
   integrations: [
     alpinejs(),
     react(),
@@ -81,7 +83,12 @@ export default defineConfig({
     }),
     sitemap(),
   ],
+
   vite: {
     plugins: [tailwindcss()],
   },
+
+  // Only URLs with a scheme in: file, data, and node are supported by the default ESM loader. Received protocol 'astro:'
+  // Not sure why this is happening, but cloudflare adapter seems to fix it.
+  adapter: cloudflare(),
 })
