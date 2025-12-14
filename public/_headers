@@ -1,11 +1,23 @@
 /*
   Cache-Control: public, max-age=3600, s-maxage=86400
 
-/assets/*
+/_astro/*
   Cache-Control: public, max-age=31536000, immutable
 
-/fonts/*
+/*.png
   Cache-Control: public, max-age=31536000, immutable
 
-/favicon.ico
+/*.jpg
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.jpeg
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.svg
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.ico
   Cache-Control: public, max-age=86400, immutable
