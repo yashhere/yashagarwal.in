@@ -1,0 +1,49 @@
+---
+import { ArrowUpRight } from '@lucide/astro';
+
+interface Props {
+  href: string;
+  class?: string;
+  showIcon?: boolean;
+  variant?: "text" | "nav";
+  [key: string]: any;
+}
+
+const {
+  href,
+  class: className = "",
+  showIcon = true,
+  variant = "text",
+  ...props
+} = Astro.props;
+
+// Handle anchor links (internal page navigation)
+const isAnchor = href.startsWith("#");
+const isExternal = !href.startsWith("/") && !href.startsWith("#");
+
+// Simplified styling based on variant
+const baseClasses = "inline-flex items-center gap-1 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2";
+const variantClasses = variant === "text"
+  ? "underline underline-offset-4 decoration-foreground/50 hover:decoration-foreground"
+  : "text-muted-foreground hover:text-foreground";
+const linkClasses = `${baseClasses} ${variantClasses} ${className}`;
+
+const anchorClasses = className.includes("anchor")
+  ? className
+  : `scroll-m-20 transition-colors text-primary hover:text-primary ${className}`;
+---
+
+{isAnchor ? (
+  <a href={href} class={anchorClasses} {...props}>
+    <slot />
+  </a>
+) : isExternal ? (
+  <a href={href} class={linkClasses} target="_blank" rel="noopener noreferrer" {...props}>
+    <slot />
+    {showIcon && <ArrowUpRight class="h-3.5 w-3.5 shrink-0" />}
+  </a>
+) : (
+  <a href={href} class={linkClasses} {...props}>
+    <slot />
+  </a>
+)}

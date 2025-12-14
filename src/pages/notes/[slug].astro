@@ -7,6 +7,7 @@ import MDXHeading3 from "../../components/content/MDXHeading3.astro"
 import MDXHeading4 from "../../components/content/MDXHeading4.astro"
 import CodeBlock from "../../components/interactive/CodeBlock.astro"
 import Image from "../../components/ui/Image.astro"
+import Link from "../../components/ui/Link.astro"
 import BlogLayout from "../../layouts/BlogLayout.astro"
 import { getReadingTime, getBacklinks } from "../../lib/content"
 
@@ -26,6 +27,7 @@ const components = {
   h4: MDXHeading4,
   pre: CodeBlock,
   img: Image,
+  a: Link,
 }
 
 const { note } = Astro.props

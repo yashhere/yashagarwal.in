@@ -9,13 +9,13 @@ import sitemap from '@astrojs/sitemap';
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from 'astro/config';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
-import rehypeExternalLinks from 'rehype-external-links';
 import rehypeKatex from 'rehype-katex';
 import rehypeMermaid from 'rehype-mermaid';
 import rehypePrettyCode from 'rehype-pretty-code';
 import rehypeSlug from 'rehype-slug';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
+import remarkSmartypants from 'remark-smartypants';
 import remarkWikiLink from 'remark-wiki-link';
 
 
@@ -79,6 +79,7 @@ export default defineConfig({
       remarkPlugins: [
         remarkGfm,
         remarkMath,
+        [remarkSmartypants, { quotes: false, dashes: "oldschool" }],
         [
           remarkWikiLink,
           {
@@ -90,10 +91,6 @@ export default defineConfig({
       rehypePlugins: [
         rehypeSlug,
         [rehypeAutolinkHeadings, { behavior: "wrap" }],
-        [
-          rehypeExternalLinks,
-          { target: "_blank", rel: ["noopener", "noreferrer"] },
-        ],
         rehypeKatex,
         [
           rehypePrettyCode,

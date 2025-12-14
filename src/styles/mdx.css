@@ -3,6 +3,11 @@
 /* TODO: Install @portaljs/remark-callouts if needed or copy styles */
 /* @import "@portaljs/remark-callouts/styles.css"; */
 
+/* Ensure prose links inherit the correct color */
+.prose a {
+  color: inherit;
+}
+
 /* Trying to replicate prose-headings because the link tag styles take precedence */
 .prose .anchor {
   color: var(--foreground);
