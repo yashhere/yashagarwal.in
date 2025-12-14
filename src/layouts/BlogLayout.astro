@@ -4,6 +4,7 @@ import '../styles/mdx.css';
 import 'katex/dist/katex.min.css';
 import Navigation from '../components/layout/Navigation.astro';
 import { format } from 'date-fns';
+import { Calendar, Clock, RefreshCw } from '@lucide/astro';
 import Breadcrumbs from '../components/content/Breadcrumbs.astro';
 import Heading from '../components/ui/Heading.astro';
 import DecorativeHr from '../components/ui/DecorativeHr.astro';
@@ -182,15 +183,17 @@ const encodedUrl = encodeURIComponent(`https://yashagarwal.in/notes/${slug}`);
       <section class="mb-8 space-y-2">
         <Breadcrumbs items={breadcrumbItems} />
         <Heading level="h1">{title}</Heading>
-        <div class="text-foreground/60 flex flex-row flex-wrap gap-2 text-sm">
-          <span>
+        <div class="text-foreground/60 flex flex-col gap-1 text-sm sm:flex-row sm:items-center sm:gap-2">
+          <span class="flex items-center gap-1">
+            <Calendar class="h-3.5 w-3.5" />
             Published on{' '}
             {format(createdOn, "MMM dd, yyyy")}
           </span>
           {updatedOn && (
             <>
               <span class="hidden sm:inline">•</span>
-              <span class="block sm:inline">
+              <span class="flex items-center gap-1">
+                <RefreshCw class="h-3.5 w-3.5" />
                 Last updated on{' '}
                 {format(updatedOn, "MMM dd, yyyy")}
               </span>
@@ -199,7 +202,10 @@ const encodedUrl = encodeURIComponent(`https://yashagarwal.in/notes/${slug}`);
            {readingTime && (
             <>
                <span class="hidden sm:inline">•</span>
-               <span>{readingTime}</span>
+               <span class="flex items-center gap-1">
+                    <Clock class="h-3.5 w-3.5" />
+                    {readingTime}
+               </span>
             </>
            )}
         </div>
