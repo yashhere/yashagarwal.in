@@ -1,0 +1,88 @@
+---
+import Breadcrumbs from "../../components/content/Breadcrumbs.astro"
+import NotePreview from "../../components/content/NotePreview.astro"
+import SearchInput from "../../components/interactive/SearchInput.astro"
+import Navigation from "../../components/layout/Navigation.astro"
+import Section from "../../components/ui/Section.astro"
+import BaseLayout from "../../layouts/BaseLayout.astro"
+import { getPreviewNotes } from "../../lib/content"
+
+const notes = await getPreviewNotes()
+const breadcrumbItems = [{ label: "Home", href: "/" }, { label: "Notes" }]
+---
+
+<BaseLayout
+  title="Notes Archive"
+  description="Browse through my collected thoughts and insights on various topics."
+>
+  <main class="w-full max-w-3xl flex-1 pb-18 px-4 md:px-6">
+    <Navigation />
+
+    <Section title="Notes" count={notes.length}>
+      <Breadcrumbs items={breadcrumbItems} class="mb-6" />
+
+      <div class="flex flex-col space-y-2">
+        <div class="flex flex-col pb-4">
+          <SearchInput />
+        </div>
+
+        <section>
+          <ul class="-mx-4" id="notes-list">
+            {
+              notes.map((note) => (
+                <li>
+                  <NotePreview note={note} />
+                </li>
+              ))
+            }
+          </ul>
+
+          <div id="no-results" class="hidden text-center py-12 text-muted-foreground">
+            No notes found matching your search.
+          </div>
+        </section>
+
+        {
+          notes.length > 0 && (
+            <div class="text-muted-foreground pt-2 text-center text-sm">
+              Showing {notes.length} notes
+            </div>
+          )
+        }
+      </div>
+    </Section>
+  </main>
+</BaseLayout>
+
+<script>
+  // Client-side search and visible count logic
+  const searchInput = document.getElementById("search-input") as HTMLInputElement
+  const notesList = document.getElementById("notes-list")
+  const noResults = document.getElementById("no-results")
+
+  // Note: Pagination/Limit is not strictly implemented here as per 'All Notes' behavior in valid static build
+  // but the search filter is active.
+
+  if (searchInput && notesList) {
+    const listItems = notesList.querySelectorAll("li")
+
+    searchInput.addEventListener("input", (e) => {
+      const term = (e.target as HTMLInputElement).value.toLowerCase()
+      let visibleCount = 0
+
+      listItems.forEach((li) => {
+        const title = li.querySelector("span.font-medium")?.textContent?.toLowerCase() || ""
+        if (title.includes(term)) {
+          li.style.display = ""
+          visibleCount++
+        } else {
+          li.style.display = "none"
+        }
+      })
+
+      if (noResults) {
+        noResults.classList.toggle("hidden", visibleCount > 0)
+      }
+    })
+  }
+</script>

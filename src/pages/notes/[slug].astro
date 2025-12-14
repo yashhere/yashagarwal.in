@@ -1,0 +1,62 @@
+---
+import { getCollection } from "astro:content"
+
+import MDXAccordion from "../../components/content/MDXAccordion.astro"
+import MDXHeading1 from "../../components/content/MDXHeading1.astro"
+import MDXHeading2 from "../../components/content/MDXHeading2.astro"
+import MDXHeading3 from "../../components/content/MDXHeading3.astro"
+import MDXHeading4 from "../../components/content/MDXHeading4.astro"
+import MDXHighlight from "../../components/content/MDXHighlight.astro"
+import MDXTooltip from "../../components/content/MDXTooltip.astro"
+import CodeBlock from "../../components/interactive/CodeBlock.astro"
+import Image from "../../components/ui/Image.astro"
+import Link from "../../components/ui/Link.astro"
+import BlogLayout from "../../layouts/BlogLayout.astro"
+import { getBacklinks, getReadingTime } from "../../lib/content"
+
+export async function getStaticPaths() {
+  const notes = await getCollection("notes")
+  return notes.map((note) => ({
+    params: { slug: note.slug },
+    props: { note },
+  }))
+}
+
+const components = {
+  // Map headings: h1→h2, h2→h3, h3→h4, h4→h5
+  h1: MDXHeading1,
+  h2: MDXHeading2,
+  h3: MDXHeading3,
+  h4: MDXHeading4,
+  pre: CodeBlock,
+  img: Image,
+  a: Link,
+  Highlight: MDXHighlight,
+  Kbd: "kbd",
+  Accordion: MDXAccordion,
+  Tooltip: MDXTooltip,
+}
+
+const { note } = Astro.props
+const { Content, headings } = await note.render()
+
+const readingTime = getReadingTime(note.body ?? "")
+const backlinks = await getBacklinks(note.slug)
+---
+
+<BlogLayout
+  title={note.data.title}
+  description={note.data.description}
+  createdOn={note.data.createdOn}
+  updatedOn={note.data.updatedOn}
+  tags={note.data.tags}
+  category={note.data.category}
+  readingTime={readingTime.text}
+  headings={headings}
+  series={note.data.series}
+  related={note.data.related}
+  backlinks={backlinks}
+  slug={note.slug}
+>
+  <Content components={components} />
+</BlogLayout>

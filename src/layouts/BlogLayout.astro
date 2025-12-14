@@ -1,0 +1,281 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import '../styles/mdx.css';
+import 'katex/dist/katex.min.css';
+import Navigation from '../components/layout/Navigation.astro';
+import { format } from 'date-fns';
+import { Calendar, Clock, RefreshCw } from '@lucide/astro';
+import Breadcrumbs from '../components/content/Breadcrumbs.astro';
+import Heading from '../components/ui/Heading.astro';
+import DecorativeHr from '../components/ui/DecorativeHr.astro';
+import TagList from '../components/content/TagList.astro';
+import Series from '../components/content/Series.astro';
+import RelatedNotes from '../components/content/RelatedNotes.astro';
+import Backlinks from '../components/content/Backlinks.astro';
+import MobileTOC from '../components/content/MobileTOC.astro';
+import MobileActions from '../components/content/MobileActions.astro';
+import Comments from '../components/interactive/Comments.astro';
+
+import GithubSlugger from 'github-slugger';
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  createdOn: Date;
+  updatedOn?: Date;
+  category?: string;
+  tags?: string[];
+  readingTime?: string;
+  headings?: any[];
+  series?: {
+      title: string;
+      order?: number;
+  };
+  related?: string[];
+  backlinks?: {
+    title: string;
+    url: string;
+    type: string;
+  }[];
+  slug: string;
+}
+
+const {
+  title,
+  description,
+  image,
+  createdOn,
+  updatedOn,
+  category,
+  tags,
+  readingTime,
+  headings,
+  series,
+  related,
+  backlinks,
+  slug,
+} = Astro.props;
+
+const breadcrumbItems = [
+    { label: "Home", href: "/" },
+    { label: "Notes", href: "/notes" },
+];
+
+if (category) {
+    const slugger = new GithubSlugger();
+    const categorySlug = slugger.slug(category);
+    breadcrumbItems.push({ label: category, href: `/categories/${categorySlug}` });
+}
+
+breadcrumbItems.push({ label: title, href: '#' });
+
+
+// Encode URL for sharing
+const encodedUrl = encodeURIComponent(`https://yashagarwal.in/notes/${slug}`);
+
+---
+
+<BaseLayout title={title} description={description} image={image}>
+  <div class="mx-auto w-full max-w-3xl px-4 md:px-6">
+    <Navigation />
+  </div>
+  <main class="mx-auto flex w-full max-w-screen-2xl flex-1 flex-col py-8 xl:flex-row xl:justify-center">
+    {/* Left Column: Sticky TOC (Desktop) */}
+    <aside
+      class="hidden w-56 shrink-0 pl-4 xl:block xl:w-64 xl:pl-6"
+      style="contain: layout style paint;"
+    >
+      <div class="sticky top-24 max-h-[calc(100vh-8rem)] overflow-y-auto pb-8">
+          {headings && headings.length > 0 && (
+             <div class="mb-8">
+                 <div class="text-foreground/80 mb-4 text-sm font-medium tracking-wider uppercase">
+                   On this Page
+                 </div>
+                 <ul class="space-y-1 text-sm flex flex-col" id="toc-list">
+                    {headings.map((heading) => (
+                        <li style={`padding-left: ${0.75 + (heading.depth - 2) * 1}rem`}>
+                            <a
+                                href={`#${heading.slug}`}
+                                data-toc-link={heading.slug}
+                                class="toc-link relative block py-0.5 transition-colors duration-200 text-muted-foreground font-normal hover:text-primary"
+                            >
+                                {heading.text}
+                            </a>
+                        </li>
+                    ))}
+                 </ul>
+                 <script is:inline>
+                    function initTOC() {
+                        const linkSelector = '[data-toc-link]';
+                        const headingSelector = '#article-body h1, #article-body h2, #article-body h3, #article-body h4, #article-body h5, #article-body h6';
+
+                        let activeId = null;
+
+                        // Use IntersectionObserver with rootMargin to only highlight headings in top 20% of viewport
+                        // This matches the Next.js implementation behavior
+                        const observer = new IntersectionObserver(
+                            (entries) => {
+                                entries.forEach((entry) => {
+                                    if (entry.isIntersecting) {
+                                        activeId = entry.target.id;
+                                    }
+                                });
+
+                                // Update all links based on activeId
+                                const links = document.querySelectorAll(linkSelector);
+                                links.forEach(link => {
+                                    if (link.getAttribute('data-toc-link') === activeId) {
+                                        link.classList.remove('text-muted-foreground', 'font-normal');
+                                        link.classList.add('text-foreground', 'font-semibold');
+                                    } else {
+                                        link.classList.remove('text-foreground', 'font-semibold');
+                                        link.classList.add('text-muted-foreground', 'font-normal');
+                                    }
+                                });
+                            },
+                            // rootMargin "0% 0% -80% 0%" means:
+                            // Only headings in the top 20% of viewport are considered "intersecting"
+                            // Bottom 80% is excluded via -80% bottom margin
+                            { rootMargin: '0% 0% -80% 0%' }
+                        );
+
+                        const headings = document.querySelectorAll(headingSelector);
+
+                        // On initial page load, if nothing is intersecting yet, highlight the first heading
+                        if (headings.length > 0 && !activeId) {
+                            activeId = headings[0].id;
+                            const links = document.querySelectorAll(linkSelector);
+                            links.forEach(link => {
+                                if (link.getAttribute('data-toc-link') === activeId) {
+                                    link.classList.remove('text-muted-foreground', 'font-normal');
+                                    link.classList.add('text-foreground', 'font-semibold');
+                                }
+                            });
+                        }
+
+                        headings.forEach(heading => {
+                            observer.observe(heading);
+                        });
+                    }
+
+                    // Initialize when page is ready
+                    if (document.readyState === 'loading') {
+                        document.addEventListener('DOMContentLoaded', initTOC);
+                    } else {
+                        // DOM is already loaded
+                        initTOC();
+                    }
+                 </script>
+             </div>
+          )}
+
+          <div class="mt-8">
+              <a href="/notes" class="text-muted-foreground hover:text-foreground flex items-center gap-2 text-sm font-medium transition-colors">
+                  &larr; Back to Notes
+              </a>
+          </div>
+      </div>
+    </aside>
+
+    {/* Middle Column: Main Content */}
+    <div class="mx-auto flex w-full max-w-3xl min-w-0 flex-col pb-18 px-4 md:px-6">
+      <section class="mb-8 space-y-2">
+        <Breadcrumbs items={breadcrumbItems} />
+        <Heading level="h1">{title}</Heading>
+        <div class="text-foreground/60 flex flex-col gap-1 text-sm sm:flex-row sm:items-center sm:gap-2">
+          <span class="flex items-center gap-1">
+            <Calendar class="h-3.5 w-3.5" />
+            Published on{' '}
+            {format(createdOn, "MMM dd, yyyy")}
+          </span>
+          {updatedOn && (
+            <>
+              <span class="hidden sm:inline">•</span>
+              <span class="flex items-center gap-1">
+                <RefreshCw class="h-3.5 w-3.5" />
+                Last updated on{' '}
+                {format(updatedOn, "MMM dd, yyyy")}
+              </span>
+            </>
+          )}
+           {readingTime && (
+            <>
+               <span class="hidden sm:inline">•</span>
+               <span class="flex items-center gap-1">
+                    <Clock class="h-3.5 w-3.5" />
+                    {readingTime}
+               </span>
+            </>
+           )}
+        </div>
+      </section>
+
+      <div class="xl:hidden">
+        <MobileTOC headings={headings ?? []} renderTrigger={false} />
+        <MobileActions />
+      </div>
+
+      {series && (
+          <div class="mb-8">
+              <Series series={series} currentSlug={slug} />
+          </div>
+      )}
+
+      <div class="mb-8">
+        <div id="article-body" class="prose prose-slate dark:prose-invert text-foreground max-w-none">
+          <slot />
+        </div>
+      </div>
+
+      <DecorativeHr />
+
+      <Backlinks backlinks={backlinks} />
+
+      <RelatedNotes relatedSlugs={related} />
+
+      {tags && tags.length > 0 && (
+        <TagList tags={tags} />
+      )}
+
+      <DecorativeHr />
+
+      <div class="my-8 flex flex-row items-center justify-between space-x-2">
+         <a
+           href={`https://x.com/intent/tweet?text=${encodedUrl}%20via%20%40yash__here`}
+           target="_blank"
+           rel="noopener noreferrer"
+           class="text-base"
+         >
+           <div class="border-border/80 text-foreground/80 hover:text-foreground hover:border-border flex flex-row items-center gap-1 rounded-full border px-4 py-1 text-base">
+             {/* Simple Share Icon */}
+             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="mr-1"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+             Share
+           </div>
+         </a>
+
+         {/* Go To Top Placeholder */}
+         <button
+            onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
+            class="p-2 text-muted-foreground hover:text-foreground transition-colors"
+            aria-label="Back to top"
+         >
+             &uarr; Top
+         </button>
+      </div>
+
+      <DecorativeHr />
+
+      <div class="mt-8">
+          <Comments url={`https://yashagarwal.in/notes/${slug}`} slug={slug} />
+      </div>
+
+    </div>
+
+     {/* Right Column: Empty placeholder */}
+    <aside
+      class="hidden w-56 shrink-0 pr-4 xl:block xl:w-64 xl:pr-6"
+      style="contain: layout style paint;"
+    />
+  </main>
+</BaseLayout>

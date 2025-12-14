@@ -1,43 +1,32 @@
-import path from "node:path"
-import { fileURLToPath } from "node:url"
-import { FlatCompat } from "@eslint/eslintrc"
-import js from "@eslint/js"
-import nextCoreWebVitals from "eslint-config-next/core-web-vitals"
+import eslintPluginAstro from "eslint-plugin-astro"
 import unusedImports from "eslint-plugin-unused-imports"
-import { defineConfig } from "eslint/config"
+import tseslint from "typescript-eslint"
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-  recommendedConfig: js.configs.recommended,
-  allConfig: js.configs.all,
-})
-
-export default defineConfig([
+export default [
+  // Global ignores
   {
-    ignores: [".next/", ".vercel/", ".content-collections/", "node_modules/"],
+    ignores: [
+      ".astro/",
+      "dist/",
+      "node_modules/",
+      ".vercel/",
+      ".husky/",
+      "public/",
+    ],
   },
-  ...nextCoreWebVitals,
-  ...compat.extends("prettier"),
+
+  // TypeScript & Astro configs
+  ...tseslint.configs.recommended,
+  ...eslintPluginAstro.configs.recommended,
+  ...eslintPluginAstro.configs["jsx-a11y-recommended"],
+
+  // Custom Rules
   {
     plugins: {
       "unused-imports": unusedImports,
     },
-
-    settings: {
-      next: {
-        rootDir: true,
-      },
-    },
-
     rules: {
-      "@next/next/no-html-link-for-pages": "off",
-      "react/jsx-key": "off",
       "unused-imports/no-unused-imports": "error",
-      "react-hooks/set-state-in-effect": "off",
-      "react-hooks/static-components": "off",
-
       "unused-imports/no-unused-vars": [
         "warn",
         {
@@ -48,8 +37,8 @@ export default defineConfig([
           ignoreRestSiblings: true,
         },
       ],
-
-      "no-unused-vars": "off",
+      "@typescript-eslint/no-unused-vars": "off", // Handled by unused-imports
+      "@typescript-eslint/no-explicit-any": "warn",
     },
   },
-])
+]

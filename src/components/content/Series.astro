@@ -1,0 +1,106 @@
+---
+import { ChevronDown, ListOrdered } from "@lucide/astro"
+
+import { getSeriesNotes } from "../../lib/content"
+
+interface Props {
+  series: {
+    title: string
+    order?: number
+  }
+  currentSlug: string
+}
+
+const { series, currentSlug } = Astro.props
+
+const seriesNotes = await getSeriesNotes(series.title)
+const currentIndex = seriesNotes.findIndex((n) => n.slug === currentSlug)
+const displayIndex = currentIndex + 1
+---
+
+<div
+  class="border-border rounded-md border p-2.5 text-sm transition-all"
+  x-data="{ isOpen: false }"
+>
+  <button
+    class="group flex w-full items-center justify-between text-left"
+    @click="isOpen = !isOpen"
+    :aria-expanded="isOpen"
+    aria-controls="series-content"
+  >
+    <div class="flex flex-col gap-0.5">
+      <div class="flex items-center gap-1.5">
+        <ListOrdered class="text-muted-foreground h-3 w-3" />
+        <span class="text-muted-foreground text-xs font-medium tracking-wider uppercase">
+          Series
+        </span>
+      </div>
+      <span class="text-foreground text-sm font-medium">
+        {series.title}{" "}
+        <span class="text-muted-foreground font-normal">
+          ({displayIndex}/{seriesNotes.length})
+        </span>
+      </span>
+    </div>
+
+    <span
+      class="text-muted-foreground group-hover:text-foreground flex h-5 w-5 items-center justify-center rounded-md transition-all duration-200 hover:cursor-pointer"
+      :class="isOpen && 'rotate-180'"
+    >
+      <ChevronDown class="h-4 w-4" />
+    </span>
+  </button>
+
+  <div
+    class="grid transition-[grid-template-rows] duration-200 ease-in-out"
+    :class="isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'"
+  >
+    <div class="overflow-hidden">
+      <div
+        id="series-content"
+        class="border-border mt-2 space-y-0.5 border-t pt-2 transition-opacity duration-200"
+        :class="isOpen ? 'opacity-100' : 'opacity-0'"
+      >
+        {
+          seriesNotes.map((note) => {
+            const isCurrent = note.slug === currentSlug
+            const isPublished = note.data.status === "published"
+
+            return (
+              <div class="flex items-start gap-2 text-sm">
+                <div
+                  class:list={[
+                    "mt-2.5 size-1 shrink-0 rounded-full",
+                    {
+                      "bg-primary": isCurrent,
+                      "bg-muted-foreground": !isCurrent,
+                      "bg-muted-foreground/60": !isPublished,
+                    },
+                  ]}
+                />
+                <div class="min-w-0 flex-1">
+                  {isPublished ? (
+                    isCurrent ? (
+                      <span class="text-foreground block py-0.5">{note.data.title}</span>
+                    ) : (
+                      <a
+                        href={`/notes/${note.slug}`}
+                        class="text-muted-foreground hover:text-primary block py-0.5 transition-colors"
+                      >
+                        {note.data.title}
+                      </a>
+                    )
+                  ) : (
+                    <span class="text-muted-foreground/60 block py-0.5">
+                      Planned: {note.data.title}
+                    </span>
+                  )}
+                </div>
+              </div>
+            )
+          })
+        }
+      </div>
+    </div>
+  </div>
+</div>

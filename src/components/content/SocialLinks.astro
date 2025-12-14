@@ -1,0 +1,45 @@
+---
+import { GithubIcon, Linkedin, Mail, Twitter } from "@lucide/astro"
+
+const socialLinks = [
+  {
+    name: "Email",
+    href: "mailto:yashagarwaljpr+blog@gmail.com",
+    icon: Mail,
+  },
+  {
+    name: "X",
+    href: "https://x.com/yash__here",
+    icon: Twitter,
+  },
+  {
+    name: "GitHub",
+    href: "https://github.com/yashhere",
+    icon: GithubIcon,
+  },
+  {
+    name: "LinkedIn",
+    href: "https://www.linkedin.com/in/theyashagarwal/",
+    icon: Linkedin,
+  },
+]
+---
+
+<div class="flex items-center gap-2">
+  {
+    socialLinks.map((social, index) => (
+      <a
+        href={social.href}
+        class:list={[
+          "text-muted-foreground hover:text-accent-foreground hover:bg-accent rounded-md p-2 transition-all duration-200",
+          index === 0 && "-ml-2",
+        ]}
+        aria-label={social.name}
+        target={social.name === "Email" ? undefined : "_blank"}
+        rel={social.name === "Email" ? undefined : "noopener noreferrer"}
+      >
+        <social.icon class="h-6 w-6" />
+      </a>
+    ))
+  }
+</div>

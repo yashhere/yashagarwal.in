@@ -1,3 +1,6 @@
+import typography from "@tailwindcss/typography"
+import animate from "tailwindcss-animate"
+
 const headingStyles = {
   fontFamily: "var(--font-serif)",
   fontWeight: 600,
@@ -17,7 +20,7 @@ const typographyStyles = {
     css: {
       color: "var(--foreground)",
       maxWidth: "none",
-      fontSize: "0.95rem", // Make default prose text slightly smaller
+      fontSize: "1rem",
       lineHeight: "1.6", // Consistent line height
       h1: {
         ...headingStyles,
@@ -144,13 +147,8 @@ const typographyStyles = {
 }
 
 /** @type {import('tailwindcss').Config} */
-module.exports = {
-  content: [
-    "./app/**/*.{ts,tsx}",
-    "./components/**/*.{ts,tsx}",
-    "./lib/**/*.{js,ts}",
-    "./content/**/*.{md,mdx}",
-  ],
+const config = {
+  content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
   darkMode: ["class"],
   future: {
     hoverOnlyWhenSupported: true,
@@ -268,5 +266,7 @@ module.exports = {
       typography: typographyStyles,
     },
   },
-  plugins: [require("@tailwindcss/typography"), require("tailwindcss-animate")],
+  plugins: [typography, animate],
 }
+
+export default config
