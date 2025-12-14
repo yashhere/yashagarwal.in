@@ -1,91 +1,94 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Navigation from '../components/layout/Navigation.astro';
-import Section from '../components/ui/Section.astro';
-import Breadcrumbs from '../components/content/Breadcrumbs.astro';
-import Heading from '../components/ui/Heading.astro';
-import WorkExperience from '../components/content/WorkExperience.astro';
+import Breadcrumbs from "../components/content/Breadcrumbs.astro"
+import WorkExperience from "../components/content/WorkExperience.astro"
+import Navigation from "../components/layout/Navigation.astro"
+import Heading from "../components/ui/Heading.astro"
+import Section from "../components/ui/Section.astro"
+import BaseLayout from "../layouts/BaseLayout.astro"
 
-const breadcrumbItems = [
-    { label: "Home", href: "/" },
-    { label: "Work" },
-];
+const breadcrumbItems = [{ label: "Home", href: "/" }, { label: "Work" }]
 ---
 
-<BaseLayout title="Work Experience" description="Explore my backend engineering journey across cyber security industry.">
-  <main class="w-full max-w-3xl flex-1 px-4 md:px-6">
+<BaseLayout
+  title="Work Experience"
+  description="Explore my backend engineering journey across cyber security industry."
+>
+  <main class="w-full max-w-3xl flex-1 px-4 pb-20 md:px-6">
     <Navigation />
     <Section title="Work">
       <Breadcrumbs items={breadcrumbItems} class="mb-6" />
 
       <section class="text-foreground mb-8 leading-relaxed">
-        <p class="mb-4">
-          I am an enthusiastic software developer with a knack for backend
-          development. I've got my hands dirty in Python, Golang, and
-          C++. I have mainly worked in cybersecurity domain in my career
-          including things like web-application penetration testing and
-          writing code for both POCs and highly scalable commercial security
-          products.
-        </p>
         <p>
-          What sets me apart? I am not just about what's already in the
-          toolkit. A relentless commitment to continuous learning and
-          adaptability. I am always ready to dive into the latest, adapt and
-          turn challenges into victory.
+          I am an enthusiastic software developer with a knack for backend development. I've got my
+          hands dirty in Python, Golang, and C++. I have mainly worked in cybersecurity domain in my
+          career including things like web-application penetration testing and writing code for both
+          POCs and highly scalable commercial security products.
+        </p>
+        <p class="mt-2">
+          What sets me apart? I am not just about what's already in the toolkit. A relentless
+          commitment to continuous learning and adaptability. I am always ready to dive into the
+          latest, adapt and turn challenges into victory.
         </p>
       </section>
 
       <div class="mb-8 flex items-center gap-2">
-         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 256 256" fill="currentColor" class="text-foreground h-6 w-6">
-            <path d="M216,40H173.33a48,48,0,0,0-90.66,0H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM128,40a32,32,0,0,1,32,32H96A32,32,0,0,1,128,40Zm88,160H40V56H83.82A47.88,47.88,0,0,0,80,72v8a8,8,0,0,0,8,8h80a8,8,0,0,0,8-8V72a47.88,47.88,0,0,0-3.82-16H216V200Z"></path>
-         </svg>
-        <Heading level="h3" class="text-foreground">
-          Experience
-        </Heading>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 256 256"
+          fill="currentColor"
+          class="text-foreground h-6 w-6"
+        >
+          <path
+            d="M216,40H173.33a48,48,0,0,0-90.66,0H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM128,40a32,32,0,0,1,32,32H96A32,32,0,0,1,128,40Zm88,160H40V56H83.82A47.88,47.88,0,0,0,80,72v8a8,8,0,0,0,8,8h80a8,8,0,0,0,8-8V72a47.88,47.88,0,0,0-3.82-16H216V200Z"
+          ></path>
+        </svg>
+        <Heading level="h3" class="text-foreground"> Experience </Heading>
       </div>
 
       <div class="space-y-0">
-          <WorkExperience
-            company="Netskope"
-            period="Apr 2024 - Present"
-            title="Sr. Software Engineer"
-            description="Working on the next-gen implementation of the CASB API product, while also maintaining two crucial apps from the legacy product, ensuring a smooth transition to the next-gen implementations."
-          />
+        <WorkExperience
+          company="Netskope"
+          period="Apr 2024 - Present"
+          title="Sr. Software Engineer"
+          description="Working on the next-gen implementation of the CASB API product, while also maintaining two crucial apps from the legacy product, ensuring a smooth transition to the next-gen implementations."
+        />
 
-          <WorkExperience
-            company="Netskope"
-            period="Jan 2022 - Apr 2024"
-            title="Software Engineer II"
-            description="As part of the API Data Protection Team, I've grown to own end-to-end pipeline for two app implementations."
-            achievements={[
-              "Implemented a system to enable migration of existing customers to the next-gen product without any downtime.",
-              "Took initiative to improve file listing performance for one of the apps and implemented check-pointing logic to prevent retrying duplicate tasks on any API rate limiting.",
-            ]}
-          />
+        <WorkExperience
+          company="Netskope"
+          period="Jan 2022 - Apr 2024"
+          title="Software Engineer II"
+          description="As part of the API Data Protection Team, I've grown to own end-to-end pipeline for two app implementations."
+          achievements={[
+            "Implemented a system to enable migration of existing customers to the next-gen product without any downtime.",
+            "Took initiative to improve file listing performance for one of the apps and implemented check-pointing logic to prevent retrying duplicate tasks on any API rate limiting.",
+          ]}
+        />
 
-          <WorkExperience
-            company="Cisco Systems"
-            period="Aug 2018 - Jan 2022"
-            title="Software Engineer I and II"
-            description=""
-            achievements={[
-              "Did an analysis of Cisco FTD's layer-7 detection capabilities against the open-source WAF ModSecurity and provided suggestions to improve Snort's detection capabilities.",
-              "Later joined Snort team to help improve its layer-7 detection capabilities.",
-              "Worked on implementing monitoring capabilities in Cisco Secure Firewall Cloud Native (SFCN) using open-source Prometheus, Grafana and Telegraf stack using Helm charts.",
-            ]}
-            nestedAchievements={{
-              "Used automated and manual pentesting methodologies to generate the traffic to these tools":
-                [
-                  "Standardized the logs generated by these tools and used log-correlation to compare the efficacy and performance of FTD",
-                  "Orchestrated and managed the entire supporting infrastructure on AWS.",
-                ],
-              "Implemented Portscan feature for FTD platforms": [
-                "Moved functionality from layer-4 (Snort) to layer-2 (ASA) for better performance",
+        <WorkExperience
+          company="Cisco Systems"
+          period="Aug 2018 - Jan 2022"
+          title="Software Engineer I and II"
+          description=""
+          achievements={[
+            "Did an analysis of Cisco FTD's layer-7 detection capabilities against the open-source WAF ModSecurity and provided suggestions to improve Snort's detection capabilities.",
+            "Later joined Snort team to help improve its layer-7 detection capabilities.",
+            "Worked on implementing monitoring capabilities in Cisco Secure Firewall Cloud Native (SFCN) using open-source Prometheus, Grafana and Telegraf stack using Helm charts.",
+          ]}
+          nestedAchievements={{
+            "Used automated and manual pentesting methodologies to generate the traffic to these tools":
+              [
+                "Standardized the logs generated by these tools and used log-correlation to compare the efficacy and performance of FTD",
+                "Orchestrated and managed the entire supporting infrastructure on AWS.",
               ],
-            }}
-          />
+            "Implemented Portscan feature for FTD platforms": [
+              "Moved functionality from layer-4 (Snort) to layer-2 (ASA) for better performance",
+            ],
+          }}
+        />
       </div>
-
     </Section>
   </main>
 </BaseLayout>

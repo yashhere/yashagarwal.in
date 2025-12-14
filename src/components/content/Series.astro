@@ -1,25 +1,26 @@
 ---
+import { ChevronDown, ListOrdered } from "@lucide/astro"
+
+import { getSeriesNotes } from "../../lib/content"
+
 interface Props {
   series: {
-    title: string;
-    order?: number;
-  };
-  currentSlug: string;
+    title: string
+    order?: number
+  }
+  currentSlug: string
 }
 
-import { getSeriesNotes } from '../../lib/content';
-import { ListOrdered, ChevronDown } from '@lucide/astro';
+const { series, currentSlug } = Astro.props
 
-const { series, currentSlug } = Astro.props;
-
-const seriesNotes = await getSeriesNotes(series.title);
-const currentIndex = seriesNotes.findIndex((n) => n.slug === currentSlug);
-const displayIndex = currentIndex + 1;
+const seriesNotes = await getSeriesNotes(series.title)
+const currentIndex = seriesNotes.findIndex((n) => n.slug === currentSlug)
+const displayIndex = currentIndex + 1
 ---
 
 <div
   class="border-border rounded-md border p-2.5 text-sm transition-all"
-  x-data="{ isOpen: true }"
+  x-data="{ isOpen: false }"
 >
   <button
     class="group flex w-full items-center justify-between text-left"
@@ -60,28 +61,27 @@ const displayIndex = currentIndex + 1;
         class="border-border mt-2 space-y-0.5 border-t pt-2 transition-opacity duration-200"
         :class="isOpen ? 'opacity-100' : 'opacity-0'"
       >
-        {seriesNotes.map((note) => {
-          const isCurrent = note.slug === currentSlug;
-          const isPublished = note.data.status === 'published';
+        {
+          seriesNotes.map((note) => {
+            const isCurrent = note.slug === currentSlug
+            const isPublished = note.data.status === "published"
 
-          return (
-            <div class="flex items-start gap-2 text-sm">
+            return (
+              <div class="flex items-start gap-2 text-sm">
                 <div
                   class:list={[
                     "mt-2.5 size-1 shrink-0 rounded-full",
                     {
-                        "bg-primary": isCurrent,
-                        "bg-muted-foreground": !isCurrent,
-                        "bg-muted-foreground/60": !isPublished
-                    }
+                      "bg-primary": isCurrent,
+                      "bg-muted-foreground": !isCurrent,
+                      "bg-muted-foreground/60": !isPublished,
+                    },
                   ]}
                 />
                 <div class="min-w-0 flex-1">
                   {isPublished ? (
                     isCurrent ? (
-                      <span class="text-foreground block py-0.5">
-                        {note.data.title}
-                      </span>
+                      <span class="text-foreground block py-0.5">{note.data.title}</span>
                     ) : (
                       <a
                         href={`/notes/${note.slug}`}
@@ -96,9 +96,10 @@ const displayIndex = currentIndex + 1;
                     </span>
                   )}
                 </div>
-            </div>
-          );
-        })}
+              </div>
+            )
+          })
+        }
       </div>
     </div>
   </div>

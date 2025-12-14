@@ -13,43 +13,41 @@ const recentNotes = notes.slice(0, siteConfig.featuredNotes)
 <BaseLayout title="Yash Agarwal | Frontend Engineer">
   <main class="w-full max-w-3xl flex-1 px-4 pb-20 md:px-6">
     <Navigation />
-    <div class="mt-16">
-      {/* Intro Section */}
-      <div class="mb-10">
-        <Heading level="h2" as="h1" class="text-foreground font-semibold tracking-wide">
-          Yash Agarwal
-        </Heading>
-        <p class="text-muted-foreground mt-2 text-sm">Engineer / Builder / Learner</p>
-      </div>
-      <div class="text-foreground/90 space-y-6 text-base leading-relaxed mt-6">
-        <p>
-          Hey there! <span class="animate-wobble inline-block origin-[70%_70%]">👋</span>
-        </p>
-        <p>
-          Welcome to my corner of the internet. I write code at{" "}
-          <a
-            href="https://netskope.com"
-            target="_blank"
-            class="font-medium underline decoration-muted-foreground/30 underline-offset-4 hover:decoration-foreground transition-all"
-          >
-            Netskope
-          </a>{" "}
-          for a living, building CASB security products that protect businesses' data at rest.
-        </p>
-        <p>
-          Currently, I'm optimizing my{" "}
-          <span class="font-semibold text-foreground">homelab</span>{" "}
-          infrastructure, delving into latest trends in{" "}
-          <span class="font-semibold text-foreground">LLMs</span>{" "}
-          research, and{" "}
-          <span class="font-semibold text-foreground">Backend Systems</span>.
-        </p>
-      </div>
+    {/* Intro Section */}
+    <div class="mb-10 mt-12">
+      <Heading level="h2" as="h1" class="text-foreground font-semibold tracking-wide">
+        Yash Agarwal
+      </Heading>
+      <p class="text-muted-foreground mt-2 text-sm">Engineer / Builder / Learner</p>
+    </div>
+    <div class="text-foreground/90 space-y-6 text-base leading-relaxed mt-6">
+      <p>
+        Hey there! <span class="animate-wobble inline-block origin-[70%_70%]">👋</span>
+      </p>
+      <p>
+        Welcome to my corner of the internet. I write code at{" "}
+        <a
+          href="https://netskope.com"
+          target="_blank"
+          class="font-medium underline decoration-muted-foreground/30 underline-offset-4 hover:decoration-foreground transition-all"
+        >
+          Netskope
+        </a>{" "}
+        for a living, building CASB security products that protect businesses' data at rest.
+      </p>
+      <p>
+        Currently, I'm optimizing my{" "}
+        <span class="font-semibold text-foreground">homelab</span>{" "}
+        infrastructure, delving into latest trends in{" "}
+        <span class="font-semibold text-foreground">LLMs</span>{" "}
+        research, and{" "}
+        <span class="font-semibold text-foreground">Backend Systems</span>.
+      </p>
+    </div>
 
-      {/* Social Links */}
-      <div class="mt-8">
-        <SocialLinks />
-      </div>
+    {/* Social Links */}
+    <div class="mt-8">
+      <SocialLinks />
     </div>
 
     {/* Decorative Break - Dot variant */}
