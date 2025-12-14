@@ -436,3 +436,9 @@ svg p {
     filter: blur(0);
   }
 }
+
+/* Custom KBD Styling to match MDX component */
+.prose kbd {
+  @apply border-border bg-muted text-foreground rounded border px-1.5 py-0.5 font-mono text-xs font-semibold;
+  box-shadow: inset 0 -1px 0 0 hsl(var(--border));
+}
