@@ -18,6 +18,7 @@ const { headings = [], renderTrigger = true } = Astro.props;
 {headings.length > 0 && (
   <div
     x-data="{ open: false }"
+    x-init="$watch('open', value => document.body.style.overflow = value ? 'hidden' : '')"
     @keydown.escape.window="open = false"
     @open-toc.window="open = true"
   >
@@ -54,7 +55,7 @@ const { headings = [], renderTrigger = true } = Astro.props;
 
             <!-- Drawer Panel -->
             <div
-                class="bg-background border-border relative w-full h-[80vh] rounded-t-[10px] border-t p-4 shadow-xl transition-transform sm:max-w-md sm:rounded-lg sm:border sm:h-auto sm:max-h-[80vh]"
+                class="bg-background border-border relative w-full h-[80vh] rounded-t-[10px] border-t p-4 shadow-xl transition-transform sm:max-w-md sm:rounded-lg sm:border sm:h-auto sm:max-h-[80vh] overscroll-contain"
                 x-show="open"
                 x-transition:enter="transform transition ease-in-out duration-300"
                 x-transition:enter-start="translate-y-full"
@@ -96,6 +97,7 @@ const { headings = [], renderTrigger = true } = Astro.props;
                     {headings.map((heading) => (
                         <a
                             href={`#${heading.slug}`}
+                            data-toc-link={heading.slug}
                             @click="open = false"
                             class="hover:text-primary relative block py-2 transition-colors duration-200 text-muted-foreground font-normal text-base"
                             style={`padding-left: ${0.75 + (heading.depth - 2) * 1}rem`}
