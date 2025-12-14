@@ -306,85 +306,95 @@ svg p {
   line-height: normal !important;
 }
 
-[id^="mermaid-"] {
+:is([id^="mermaid-"], .mermaid-diagram) {
   background: transparent;
+  display: block;
+  margin: 0 auto;
 }
 
-[id^="mermaid-"] text {
+:is([id^="mermaid-"], .mermaid-diagram) text {
   fill: var(--foreground) !important;
 }
 
-[id^="mermaid-"] .actor,
-[id^="mermaid-"] rect,
-[id^="mermaid-"] polygon,
-[id^="mermaid-"] circle,
-[id^="mermaid-"] ellipse {
+:is([id^="mermaid-"], .mermaid-diagram) .actor,
+:is([id^="mermaid-"], .mermaid-diagram) rect,
+:is([id^="mermaid-"], .mermaid-diagram) polygon,
+:is([id^="mermaid-"], .mermaid-diagram) circle,
+:is([id^="mermaid-"], .mermaid-diagram) ellipse {
   stroke: var(--foreground) !important;
   fill: var(--background) !important;
   border-radius: 0.375rem;
 }
 
-[id^="mermaid-"] .labelBox,
-[id^="mermaid-"] .loopLine,
-[id^="mermaid-"] .flowchart-link,
-[id^="mermaid-"] line,
-[id^="mermaid-"] path {
+:is([id^="mermaid-"], .mermaid-diagram) .labelBox,
+:is([id^="mermaid-"], .mermaid-diagram) .loopLine,
+:is([id^="mermaid-"], .mermaid-diagram) .flowchart-link,
+:is([id^="mermaid-"], .mermaid-diagram) line,
+:is([id^="mermaid-"], .mermaid-diagram) path {
   stroke: var(--foreground) !important;
 }
 
-[id^="mermaid-"] .marker,
+:is([id^="mermaid-"], .mermaid-diagram) .marker,
 .mermaid-diagram .marker {
   fill: var(--foreground) !important;
 }
 
-[id^="mermaid-"] .flowchart-label {
+:is([id^="mermaid-"], .mermaid-diagram) .flowchart-label {
+  color: var(--foreground) !important;
+  fill: var(--foreground) !important;
+}
+
+:is([id^="mermaid-"], .mermaid-diagram) .nodeLabel,
+:is([id^="mermaid-"], .mermaid-diagram) .nodeLabel p,
+:is([id^="mermaid-"], .mermaid-diagram) .nodeLabel span,
+:is([id^="mermaid-"], .mermaid-diagram) .nodeLabel div {
   color: var(--foreground) !important;
   fill: var(--foreground) !important;
 }
 
 /* Additional selectors for more diagram types */
-[id^="mermaid-"] .arrowheadPath,
-[id^="mermaid-"] .edgePath .path {
+:is([id^="mermaid-"], .mermaid-diagram) .arrowheadPath,
+:is([id^="mermaid-"], .mermaid-diagram) .edgePath .path {
   stroke: var(--foreground) !important;
   fill: var(--foreground) !important;
 }
 
 /* For gantt charts */
-[id^="mermaid-"] .taskText,
-[id^="mermaid-"] .taskTextOutsideRight {
+:is([id^="mermaid-"], .mermaid-diagram) .taskText,
+:is([id^="mermaid-"], .mermaid-diagram) .taskTextOutsideRight {
   fill: var(--foreground) !important;
 }
 
 /* For sequence diagrams */
-[id^="mermaid-"] .note {
+:is([id^="mermaid-"], .mermaid-diagram) .note {
   fill: var(--muted) !important;
   stroke: var(--foreground) !important;
 }
 
-[id^="mermaid-"] .noteText {
+:is([id^="mermaid-"], .mermaid-diagram) .noteText {
   fill: var(--foreground) !important;
 }
 
 /* Style edge labels in Mermaid diagrams */
-[id^="mermaid-"] .edgeLabel {
+:is([id^="mermaid-"], .mermaid-diagram) .edgeLabel {
   color: var(--foreground) !important;
   background-color: transparent !important;
   font-weight: normal;
 }
 
-[id^="mermaid-"] .edgeLabel p {
+:is([id^="mermaid-"], .mermaid-diagram) .edgeLabel p {
   color: var(--foreground) !important;
   background-color: transparent !important;
   font-weight: normal;
 }
 
-[id^="mermaid-"] .edgeLabel .label foreignObject {
+:is([id^="mermaid-"], .mermaid-diagram) .edgeLabel .label foreignObject {
   overflow: visible;
 }
 
 /* Fix line breaks in edge labels */
-[id^="mermaid-"] .edgeLabel .label div,
-[id^="mermaid-"] .messageText {
+:is([id^="mermaid-"], .mermaid-diagram) .edgeLabel .label div,
+:is([id^="mermaid-"], .mermaid-diagram) .messageText {
   color: var(--foreground) !important;
   line-height: 1.2 !important;
   font-size: 14px !important;
@@ -393,20 +403,20 @@ svg p {
 }
 
 /* Additional styling for sequence diagram messages */
-[id^="mermaid-"] .messageLine0,
-[id^="mermaid-"] .messageLine1 {
+:is([id^="mermaid-"], .mermaid-diagram) .messageLine0,
+:is([id^="mermaid-"], .mermaid-diagram) .messageLine1 {
   stroke: var(--foreground) !important;
 }
 
 /* Make sure notes and other text elements are properly styled */
-[id^="mermaid-"] .noteText,
-[id^="mermaid-"] text.actor,
-[id^="mermaid-"] .loopText {
+:is([id^="mermaid-"], .mermaid-diagram) .noteText,
+:is([id^="mermaid-"], .mermaid-diagram) text.actor,
+:is([id^="mermaid-"], .mermaid-diagram) .loopText {
   fill: var(--foreground) !important;
 }
 
 /* Ensure all text spans are visible */
-[id^="mermaid-"] tspan {
+:is([id^="mermaid-"], .mermaid-diagram) tspan {
   fill: var(--foreground) !important;
 }
 
