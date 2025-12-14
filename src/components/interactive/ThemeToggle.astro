@@ -1,5 +1,5 @@
 ---
-import { Sun, MoonStar } from '@lucide/astro';
+import { MoonStar, Sun } from "@lucide/astro"
 ---
 
 <theme-toggle>
@@ -26,23 +26,23 @@ import { Sun, MoonStar } from '@lucide/astro';
 <script>
   class ThemeToggle extends HTMLElement {
     constructor() {
-      super();
+      super()
 
-      const button = this.querySelector('button');
+      const button = this.querySelector("button")
 
       if (button) {
-        button.addEventListener('click', (e) => {
+        button.addEventListener("click", (e) => {
           if (e.currentTarget instanceof HTMLButtonElement) {
-             const isDark = document.documentElement.classList.contains('dark');
-             this.setTheme(isDark ? 'light' : 'dark');
+            const isDark = document.documentElement.classList.contains("dark")
+            this.setTheme(isDark ? "light" : "dark")
           }
-        });
+        })
       }
     }
 
     setTheme(theme: string) {
       // Disable transitions temporarily to prevent flash
-      const css = document.createElement('style');
+      const css = document.createElement("style")
       css.appendChild(
         document.createTextNode(
           `* {
@@ -53,28 +53,28 @@ import { Sun, MoonStar } from '@lucide/astro';
              transition: none !important;
           }`
         )
-      );
-      document.head.appendChild(css);
+      )
+      document.head.appendChild(css)
 
       // Toggle theme
-      if (theme === 'dark') {
-        document.documentElement.classList.add('dark');
+      if (theme === "dark") {
+        document.documentElement.classList.add("dark")
       } else {
-        document.documentElement.classList.remove('dark');
+        document.documentElement.classList.remove("dark")
       }
-      localStorage.setItem('theme', theme);
+      localStorage.setItem("theme", theme)
 
       // Force reflow
-      const _ = window.getComputedStyle(document.body);
+      void window.getComputedStyle(document.body).opacity
 
       // Re-enable transitions
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
-          document.head.removeChild(css);
-        });
-      });
+          document.head.removeChild(css)
+        })
+      })
     }
   }
 
-  customElements.define('theme-toggle', ThemeToggle);
+  customElements.define("theme-toggle", ThemeToggle)
 </script>
