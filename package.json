@@ -13,7 +13,8 @@
     "lint:staged": "lint-staged",
     "knip": "knip",
     "create-note": "bun scripts/create-note.ts",
-    "optimize-images": "bun scripts/optimize-images.ts"
+    "optimize-images": "bun scripts/optimize-images.ts",
+    "postinstall": "bunx playwright install chromium"
   },
   "dependencies": {
     "@astrojs/alpinejs": "^0.4.9",
