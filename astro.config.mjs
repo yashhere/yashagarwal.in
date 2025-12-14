@@ -1,71 +1,20 @@
-;
-
 // @ts-check
-import alpinejs from '@astrojs/alpinejs';
-import cloudflare from '@astrojs/cloudflare';
-import mdx from '@astrojs/mdx';
-import react from '@astrojs/react';
-import sitemap from '@astrojs/sitemap';
-import tailwindcss from "@tailwindcss/vite";
-import { defineConfig } from 'astro/config';
-import rehypeAutolinkHeadings from 'rehype-autolink-headings';
-import rehypeKatex from 'rehype-katex';
-import rehypePrettyCode from 'rehype-pretty-code';
-import rehypeSlug from 'rehype-slug';
-import remarkGfm from 'remark-gfm';
-import remarkMath from 'remark-math';
-import remarkSmartypants from 'remark-smartypants';
-import remarkWikiLink from 'remark-wiki-link';
-
-
-
-
-
-;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+import alpinejs from "@astrojs/alpinejs"
+import cloudflare from "@astrojs/cloudflare"
+import mdx from "@astrojs/mdx"
+import react from "@astrojs/react"
+import sitemap from "@astrojs/sitemap"
+import tailwindcss from "@tailwindcss/vite"
+import { defineConfig } from "astro/config"
+import rehypeAutolinkHeadings from "rehype-autolink-headings"
+import rehypeKatex from "rehype-katex"
+import rehypeMermaid from "rehype-mermaid"
+import rehypePrettyCode from "rehype-pretty-code"
+import rehypeSlug from "rehype-slug"
+import remarkGfm from "remark-gfm"
+import remarkMath from "remark-math"
+import remarkSmartypants from "remark-smartypants"
+import remarkWikiLink from "remark-wiki-link"
 
 // https://astro.build/config
 export default defineConfig({
@@ -122,7 +71,7 @@ export default defineConfig({
             },
           },
         ],
-        // rehypeMermaid
+        rehypeMermaid,
       ],
     }),
     sitemap(),
