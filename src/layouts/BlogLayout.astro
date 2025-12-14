@@ -11,6 +11,8 @@ import TagList from '../components/content/TagList.astro';
 import Series from '../components/content/Series.astro';
 import RelatedNotes from '../components/content/RelatedNotes.astro';
 import Backlinks from '../components/content/Backlinks.astro';
+import MobileTOC from '../components/content/MobileTOC.astro';
+import MobileActions from '../components/content/MobileActions.astro';
 import Comments from '../components/interactive/Comments.astro';
 
 import GithubSlugger from 'github-slugger';
@@ -202,6 +204,11 @@ const encodedUrl = encodeURIComponent(`https://yashagarwal.in/notes/${slug}`);
            )}
         </div>
       </section>
+
+      <div class="xl:hidden">
+        <MobileTOC headings={headings ?? []} renderTrigger={false} />
+        <MobileActions />
+      </div>
 
       {series && (
           <div class="mb-8">

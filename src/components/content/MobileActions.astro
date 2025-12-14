@@ -1,0 +1,107 @@
+---
+import { List, ArrowUp } from '@lucide/astro';
+
+---
+
+<div
+  x-data="{
+    isExpanded: true,
+    lastScrollY: 0,
+    shouldHide: false,
+    SCROLL_THRESHOLD_PX: 100,
+    init() {
+        this.lastScrollY = window.scrollY;
+
+        // Handle scroll for expand/collapse
+        window.addEventListener('scroll', () => {
+             const currentScrollY = window.scrollY;
+
+             // Expand at the very top
+             if (currentScrollY < this.SCROLL_THRESHOLD_PX) {
+                 this.isExpanded = true;
+             }
+             // Collapse when scrolling down past threshold
+             else if (currentScrollY > this.SCROLL_THRESHOLD_PX && currentScrollY > this.lastScrollY) {
+                 this.isExpanded = false;
+             }
+
+             this.lastScrollY = currentScrollY;
+        }, { passive: true });
+
+        // Handle visibility (hide near footer/comments)
+        const observer = new IntersectionObserver((entries) => {
+            const isIntersecting = entries.some(entry => entry.isIntersecting);
+            this.shouldHide = isIntersecting;
+        }, { rootMargin: '0px' });
+
+        const targets = [
+            document.querySelector('footer'),
+            document.getElementById('comments-section')
+        ].filter(el => el);
+
+        targets.forEach(target => observer.observe(target));
+    },
+    expand() {
+        this.isExpanded = true;
+    },
+    scrollToTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }"
+  @click.outside="isExpanded = false"
+  class="fixed bottom-6 left-1/2 z-40 -translate-x-1/2 transition-transform duration-300 ease-in-out xl:hidden"
+  :class="shouldHide ? 'translate-y-[200%]' : ''"
+  x-cloak
+>
+  <div
+    class="border-border bg-background/95 relative flex items-center justify-center overflow-hidden rounded-full border shadow-xl backdrop-blur-md transition-all duration-200"
+    :class="!isExpanded ? 'hover:bg-muted/50 cursor-pointer' : ''"
+    @click="expand"
+    role="button"
+    :aria-expanded="isExpanded"
+    :tabindex="isExpanded ? -1 : 0"
+  >
+    <!-- Expanded state -->
+    <div
+      class="flex items-center gap-6 px-6 py-2 whitespace-nowrap transition-all duration-200"
+      :class="isExpanded ? 'pointer-events-auto opacity-100' : 'pointer-events-none absolute opacity-0'"
+    >
+      <!-- Sections Button (Triggers MobileTOC) -->
+      <button
+        @click.stop="$dispatch('open-toc')"
+        class="text-muted-foreground hover:text-foreground group flex flex-col items-center gap-1 transition-colors"
+        aria-label="Table of Contents"
+      >
+        <div class="group-hover:bg-muted rounded-full p-2 transition-colors">
+          <List class="h-5 w-5" />
+        </div>
+        <span class="text-[10px] font-medium tracking-wider uppercase">
+          Sections
+        </span>
+      </button>
+
+      <!-- Scroll Top Button -->
+      <button
+        @click.stop="scrollToTop"
+        class="text-muted-foreground hover:text-foreground group flex flex-col items-center gap-1 transition-colors"
+        aria-label="Scroll to top"
+      >
+        <div class="group-hover:bg-muted rounded-full p-2 transition-colors">
+            <ArrowUp class="h-5 w-5" />
+        </div>
+        <span class="text-[10px] font-medium tracking-wider uppercase">
+          Top
+        </span>
+      </button>
+    </div>
+
+    <!-- Collapsed state -->
+    <div
+      class="px-6 py-2 transition-all duration-200"
+      :class="!isExpanded ? 'pointer-events-auto opacity-100' : 'pointer-events-none absolute opacity-0'"
+    >
+      <div class="bg-muted-foreground/50 h-1 w-16 rounded-full" />
+      <span class="sr-only">Open menu</span>
+    </div>
+  </div>
+</div>

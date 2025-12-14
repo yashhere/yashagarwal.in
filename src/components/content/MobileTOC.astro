@@ -1,0 +1,89 @@
+---
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface Props {
+  headings?: Heading[];
+  renderTrigger?: boolean;
+}
+
+import { List } from '@lucide/astro';
+
+const { headings = [], renderTrigger = true } = Astro.props;
+---
+
+{headings.length > 0 && (
+  <div
+    x-data="{ open: false }"
+    @keydown.escape.window="open = false"
+    @open-toc.window="open = true"
+  >
+    <!-- Trigger Button -->
+    {renderTrigger && (
+        <button
+        @click="open = true"
+        class="border-border bg-background text-foreground hover:bg-muted/50 flex w-full items-center gap-2 rounded-md border px-4 py-2 text-sm font-medium uppercase transition-colors"
+        >
+        <List class="h-4 w-4" />
+        On this Page
+        </button>
+    )}
+
+    <!-- Drawer Overlay -->
+    <template x-teleport="body">
+        <div
+            class="fixed inset-0 z-50 flex items-end justify-center sm:items-center"
+            x-show="open"
+            style="display: none;"
+        >
+            <!-- Backdrop -->
+            <div
+                class="fixed inset-0 bg-black/40 transition-opacity"
+                x-show="open"
+                x-transition:enter="ease-out duration-300"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click="open = false"
+            ></div>
+
+            <!-- Drawer Panel -->
+            <div
+                class="bg-background border-border relative w-full h-[80vh] rounded-t-[10px] border-t p-4 shadow-xl transition-transform sm:max-w-md sm:rounded-lg sm:border sm:h-auto sm:max-h-[80vh]"
+                x-show="open"
+                x-transition:enter="transform transition ease-in-out duration-300"
+                x-transition:enter-start="translate-y-full"
+                x-transition:enter-end="translate-y-0"
+                x-transition:leave="transform transition ease-in-out duration-300"
+                x-transition:leave-start="translate-y-0"
+                x-transition:leave-end="translate-y-full"
+                @click.stop
+            >
+                <div class="bg-muted mx-auto mb-6 h-1.5 w-12 shrink-0 rounded-full"></div>
+
+                <div class="mb-4 text-lg font-semibold uppercase">
+                    On this Page
+                </div>
+
+                <div class="flex flex-col space-y-1 overflow-y-auto max-h-[calc(80vh-6rem)]">
+                    {headings.map((heading) => (
+                        <a
+                            href={`#${heading.slug}`}
+                            @click="open = false"
+                            class="hover:text-primary relative block py-2 transition-colors duration-200 text-muted-foreground font-normal text-base"
+                            style={`padding-left: ${0.75 + (heading.depth - 2) * 1}rem`}
+                        >
+                            {heading.text}
+                        </a>
+                    ))}
+                </div>
+            </div>
+        </div>
+    </template>
+  </div>
+)}
