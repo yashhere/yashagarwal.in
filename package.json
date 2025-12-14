@@ -11,7 +11,9 @@
     "format": "prettier --write .",
     "typecheck": "astro check && tsc --noEmit",
     "lint:staged": "lint-staged",
-    "knip": "knip"
+    "knip": "knip",
+    "create-note": "bun scripts/create-note.ts",
+    "optimize-images": "bun scripts/optimize-images.ts"
   },
   "dependencies": {
     "@astrojs/alpinejs": "^0.4.9",
@@ -77,6 +79,7 @@
     "remark-gfm": "^4.0.1",
     "remark-math": "^6.0.0",
     "remark-wiki-link": "^2.0.1",
+    "sharp": "^0.34.5",
     "shiki": "^3.20.0",
     "typescript-eslint": "^8.49.0"
   }
