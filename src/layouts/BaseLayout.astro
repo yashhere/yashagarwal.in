@@ -12,6 +12,7 @@ import "@fontsource/ibm-plex-mono/600.css"
 import "@fontsource-variable/newsreader"
 
 import Footer from "../components/layout/Footer.astro"
+import { siteConfig } from "../config/site"
 
 interface Props {
   title?: string
@@ -36,6 +37,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || "https://yashagar
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <link rel="canonical" href={canonicalURL} />
+    <link rel="alternate" type="application/rss+xml" title={siteConfig.name} href="/rss.xml" />
 
     <title>{title}</title>
     <meta name="description" content={description} />
