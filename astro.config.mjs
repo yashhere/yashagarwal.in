@@ -181,6 +181,12 @@ export default defineConfig({
 
   vite: {
     plugins: [tailwindcss()],
+    ssr: {
+      external: ["@resvg/resvg-js", "sharp", "fs", "path"],
+    },
+    optimizeDeps: {
+      exclude: ["@resvg/resvg-js", "sharp"],
+    },
   },
 
   // Only URLs with a scheme in: file, data, and node are supported by the default ESM loader. Received protocol 'astro:'
