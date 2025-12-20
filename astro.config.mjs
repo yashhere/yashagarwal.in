@@ -152,10 +152,13 @@ export default defineConfig({
         description: "Personal blog and portfolio of Yash Agarwal.",
         theme_color: "#faf7f5",
         background_color: "#faf7f5",
-        display: "minimal-ui",
+        display: "standalone",
+        start_url: "/",
+        scope: "/",
+        orientation: "portrait",
         icons: [
           {
-            src: "icon.svg",
+            src: "/icon.svg",
             sizes: "any",
             type: "image/svg+xml",
             purpose: "maskable any",
@@ -164,17 +167,20 @@ export default defineConfig({
             src: "/icons/pwa-192x192.png",
             sizes: "192x192",
             type: "image/png",
+            purpose: "any maskable",
           },
           {
             src: "/icons/pwa-512x512.png",
             sizes: "512x512",
             type: "image/png",
+            purpose: "any maskable",
           },
         ],
       },
       workbox: {
         navigateFallback: "/404",
-        globPatterns: ["**/*.{css,js,html,svg,png,ico,txt}"],
+        globPatterns: ["**/*.{css,js,html,svg,png,ico,txt,woff,woff2,jpg,jpeg,webp,avif}"],
+        maximumFileSizeToCacheInBytes: 5 * 1024 * 1024, // 5 MiB
       },
     }),
   ],
