@@ -53,17 +53,22 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || "https://yashagar
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content={Astro.url} />
+    <meta property="og:url" content={Astro.url.toString()} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={new URL(image, Astro.url)} />
+    <meta property="og:site_name" content={siteConfig.name} />
+    <meta property="og:image" content={new URL(image, Astro.url).toString()} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/png" />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content={Astro.url} />
+    <meta property="twitter:url" content={Astro.url.toString()} />
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />
-    <meta property="twitter:image" content={new URL(image, Astro.url)} />
+    <meta property="twitter:image" content={new URL(image, Astro.url).toString()} />
+    <meta property="twitter:domain" content={Astro.url.hostname} />
 
     <!-- Fonts -->
     <!-- Self-hosted fonts via Fontsource -->
@@ -128,11 +133,15 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || "https://yashagar
 
     <!-- Cloudflare Web Analytics -->
     {import.meta.env.PROD && (
-      <script
-        defer
-        src="https://static.cloudflareinsights.com/beacon.min.js"
-        data-cf-beacon='{"token": "e14f712dcb3f4bb7aab3a2f606159e03"}'
-      ></script>
+      <script is:inline>
+        if (window.location.hostname === "yashagarwal.in" || window.location.hostname === "www.yashagarwal.in") {
+          const script = document.createElement("script")
+          script.src = "https://static.cloudflareinsights.com/beacon.min.js"
+          script.defer = true
+          script.setAttribute("data-cf-beacon", '{"token": "e14f712dcb3f4bb7aab3a2f606159e03"}')
+          document.head.appendChild(script)
+        }
+      </script>
     )}
   </head>
   <body
