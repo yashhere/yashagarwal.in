@@ -16,6 +16,18 @@ export async function getStaticPaths() {
   }));
 }
 
+// Cache fonts and background image to avoid re-reading on every request
+const fontPath = path.resolve('node_modules/@fontsource/geist-sans/files/geist-sans-latin-700-normal.woff');
+const fontData = fs.readFileSync(fontPath);
+
+const fontRegularPath = path.resolve('node_modules/@fontsource/geist-sans/files/geist-sans-latin-400-normal.woff');
+const fontRegularData = fs.readFileSync(fontRegularPath);
+
+// Use pre-converted PNG instead of converting WebP on every build
+const bgPath = path.resolve('public/images/og.png');
+const bgBuffer = fs.readFileSync(bgPath);
+const bgBase64 = `data:image/png;base64,${bgBuffer.toString('base64')}`;
+
 function getTitleFontSize(text: string): string {
   if (text.length > 60) return '56px';
   if (text.length > 40) return '64px';
@@ -32,19 +44,6 @@ function getDescriptionFontSize(text: string): string {
 export async function GET({ props }) {
   const { note } = props;
   const { title, description, createdOn } = note.data;
-
-  // Load font
-  const fontPath = path.resolve('node_modules/@fontsource/geist-sans/files/geist-sans-latin-700-normal.woff');
-  const fontData = fs.readFileSync(fontPath);
-  
-  // Load regular font for description
-  const fontRegularPath = path.resolve('node_modules/@fontsource/geist-sans/files/geist-sans-latin-400-normal.woff');
-  const fontRegularData = fs.readFileSync(fontRegularPath);
-
-  // Load background image and convert to PNG buffer using sharp for satori compatibility
-  const bgPath = path.resolve('public/images/og.webp');
-  const bgBuffer = await sharp(bgPath).png().toBuffer();
-  const bgBase64 = `data:image/png;base64,${bgBuffer.toString('base64')}`;
 
   const height = 630;
   const width = 1200;
@@ -193,7 +192,12 @@ export async function GET({ props }) {
 
   const image = resvg.render();
 
-  return new Response(image.asPng(), {
+  // Optimize the PNG output
+  const optimizedPng = await sharp(image.asPng())
+    .png({ quality: 90, compressionLevel: 9 })
+    .toBuffer();
+
+  return new Response(optimizedPng, {
     headers: {
       'Content-Type': 'image/png',
       'Cache-Control': 'public, max-age=31536000, immutable',
