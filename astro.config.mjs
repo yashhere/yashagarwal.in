@@ -182,9 +182,9 @@ export default defineConfig({
         ],
       },
       workbox: {
-        navigateFallback: "/404",
         globPatterns: ["**/*.{css,js,html,svg,png,ico,txt,woff,woff2,jpg,jpeg,webp,avif}"],
         maximumFileSizeToCacheInBytes: 5 * 1024 * 1024, // 5 MiB
+        navigateFallbackDenylist: [/^\/404/],
       },
       devOptions: {
         enabled: true,
