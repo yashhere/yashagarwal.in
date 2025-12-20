@@ -163,13 +163,10 @@ export default defineConfig({
         start_url: "/",
         scope: "/",
         orientation: "portrait",
+        lang: "en",
+        dir: "ltr",
+        categories: ["education", "lifestyle"],
         icons: [
-          {
-            src: "/icon.svg",
-            sizes: "any",
-            type: "image/svg+xml",
-            purpose: "any",
-          },
           {
             src: "/icons/pwa-192x192.png",
             sizes: "192x192",
@@ -181,6 +178,12 @@ export default defineConfig({
             sizes: "512x512",
             type: "image/png",
             purpose: "any",
+          },
+          {
+            src: "/icons/pwa-512x512.png",
+            sizes: "512x512",
+            type: "image/png",
+            purpose: "maskable",
           },
         ],
       },
