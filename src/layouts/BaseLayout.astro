@@ -85,6 +85,15 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || "https://yashagar
     </style>
 
     <slot name="head" />
+
+    <!-- Cloudflare Web Analytics -->
+    {import.meta.env.PROD && (
+      <script
+        defer
+        src="https://static.cloudflareinsights.com/beacon.min.js"
+        data-cf-beacon='{"token": "e14f712dcb3f4bb7aab3a2f606159e03"}'
+      ></script>
+    )}
   </head>
   <body
     class="flex flex-col items-center optimize-legibility min-h-dvh font-sans antialiased bg-background text-foreground selection:bg-slate-200 selection:text-slate-900 dark:selection:bg-slate-700 dark:selection:text-slate-100"
