@@ -18,7 +18,7 @@ const formattedDate = format(note.data.createdOn, 'MM/yy');
       class="group hover:bg-accent flex w-full flex-col items-start gap-1 rounded-lg p-3 text-left transition-colors"
     >
       <div class="flex w-full items-baseline justify-between gap-3">
-        <span class="text-foreground group-hover:text-primary font-sans text-base font-medium transition-colors">
+        <span class="text-foreground group-hover:text-primary font-sans text-base font-medium transition-colors" data-note-title>
           {note.data.title}
         </span>
         <span class="text-muted-foreground shrink-0 font-mono text-sm">
@@ -39,7 +39,13 @@ const formattedDate = format(note.data.createdOn, 'MM/yy');
       class="hover:bg-accent flex w-full flex-col items-start gap-0 rounded-lg px-4 py-2 transition-all duration-200 select-none md:flex-row md:items-center md:gap-2"
     >
       <div class="flex flex-col">
-        <span class="text-foreground hover:text-primary font-sans text-base transition-colors">
+        <span
+          class="text-foreground hover:text-primary font-sans text-base transition-colors"
+          data-note-title
+          data-note-description={note.data.description || ''}
+          data-note-tags={note.data.tags?.join(' ') || ''}
+          data-note-category={note.data.category || ''}
+        >
           {note.data.title}
         </span>
       </div>
