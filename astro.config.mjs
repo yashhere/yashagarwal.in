@@ -144,8 +144,12 @@ export default defineConfig({
     }),
     sitemap(),
     AstroPWA({
-      registerType: "autoUpdate",
+      mode: "production",
+      base: "/",
+      scope: "/",
       includeAssets: ["favicon.svg", "favicon.ico", "apple-icon.png"],
+      registerType: "autoUpdate",
+      injectRegister: "auto",
       manifest: {
         name: "Yash Agarwal",
         short_name: "Yash",
@@ -161,19 +165,19 @@ export default defineConfig({
             src: "/icon.svg",
             sizes: "any",
             type: "image/svg+xml",
-            purpose: "maskable any",
+            purpose: "any",
           },
           {
             src: "/icons/pwa-192x192.png",
             sizes: "192x192",
             type: "image/png",
-            purpose: "any maskable",
+            purpose: "any",
           },
           {
             src: "/icons/pwa-512x512.png",
             sizes: "512x512",
             type: "image/png",
-            purpose: "any maskable",
+            purpose: "any",
           },
         ],
       },
@@ -181,6 +185,10 @@ export default defineConfig({
         navigateFallback: "/404",
         globPatterns: ["**/*.{css,js,html,svg,png,ico,txt,woff,woff2,jpg,jpeg,webp,avif}"],
         maximumFileSizeToCacheInBytes: 5 * 1024 * 1024, // 5 MiB
+      },
+      devOptions: {
+        enabled: true,
+        navigateFallback: "/",
       },
     }),
   ],
