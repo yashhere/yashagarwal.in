@@ -44,7 +44,7 @@ const breadcrumbItems = [{ label: "Home", href: "/" }, { label: "Notes" }]
 
         {
           notes.length > 0 && (
-            <div class="text-muted-foreground pt-2 text-center text-sm">
+            <div class="text-muted-foreground pt-2 text-center text-sm" data-bottom-count>
               Showing {notes.length} notes
             </div>
           )
@@ -71,8 +71,19 @@ const breadcrumbItems = [{ label: "Home", href: "/" }, { label: "Notes" }]
       let visibleCount = 0
 
       listItems.forEach((li) => {
-        const title = li.querySelector("span.font-medium")?.textContent?.toLowerCase() || ""
-        if (title.includes(term)) {
+        const titleElement = li.querySelector("[data-note-title]")
+        const title = titleElement?.textContent?.toLowerCase() || ""
+        const description = titleElement?.getAttribute("data-note-description")?.toLowerCase() || ""
+        const tags = titleElement?.getAttribute("data-note-tags")?.toLowerCase() || ""
+        const category = titleElement?.getAttribute("data-note-category")?.toLowerCase() || ""
+
+        // Search across title, description, tags, and category
+        if (
+          title.includes(term) ||
+          description.includes(term) ||
+          tags.includes(term) ||
+          category.includes(term)
+        ) {
           li.style.display = ""
           visibleCount++
         } else {
@@ -82,6 +93,16 @@ const breadcrumbItems = [{ label: "Home", href: "/" }, { label: "Notes" }]
 
       if (noResults) {
         noResults.classList.toggle("hidden", visibleCount > 0)
+      }
+
+      // Update count displays
+      const countElement = document.querySelector('[data-count]')
+      const bottomCount = document.querySelector('[data-bottom-count]')
+      if (countElement) {
+        countElement.textContent = visibleCount.toString()
+      }
+      if (bottomCount) {
+        bottomCount.textContent = `Showing ${visibleCount} note${visibleCount !== 1 ? 's' : ''}`
       }
     })
   }
