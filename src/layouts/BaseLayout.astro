@@ -34,7 +34,11 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || "https://yashagar
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="theme-color" content="#faf7f5" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
     <meta name="generator" content={Astro.generator} />
     <link rel="canonical" href={canonicalURL} />
     <link rel="alternate" type="application/rss+xml" title={siteConfig.name} href="/rss.xml" />
@@ -87,5 +91,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || "https://yashagar
   >
     <slot />
     <Footer />
+    <script src="../pwa.ts"></script>
   </body>
 </html>

@@ -47,6 +47,7 @@ const backlinks = await getBacklinks(note.slug)
 <BlogLayout
   title={note.data.title}
   description={note.data.description}
+  image={`/og/${note.slug}.png`}
   createdOn={note.data.createdOn}
   updatedOn={note.data.updatedOn}
   tags={note.data.tags}
