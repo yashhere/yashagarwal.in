@@ -166,7 +166,6 @@
   }
 
   html {
-    font-display: swap; /* Ensure fonts load predictably */
     scroll-behavior: smooth; /* Smooth scrolling for the whole page */
     scrollbar-width: thin; /* Firefox */
     scrollbar-color: var(--muted-foreground) var(--background); /* thumb track */
@@ -212,7 +211,6 @@
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1 "calt" 1;
-    font-display: optional;
   }
 
   :focus-visible {

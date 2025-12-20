@@ -78,9 +78,44 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || "https://yashagar
 
     <style is:global>
       :root {
-        --font-sans: "Geist Sans", system-ui, sans-serif;
+        --font-sans: "Geist Sans", "Geist Fallback", system-ui, sans-serif;
         --font-mono: "IBM Plex Mono", monospace;
-        --font-serif: "Newsreader Variable", serif;
+        --font-serif: "Newsreader Variable", "Newsreader Fallback", serif;
+      }
+
+      /* Fallback fonts with size-adjust to match actual fonts and prevent CLS */
+      @font-face {
+        font-family: "Geist Fallback";
+        src: local("Arial");
+        size-adjust: 107%;
+        ascent-override: 92%;
+        descent-override: 24%;
+        line-gap-override: 0%;
+      }
+
+      @font-face {
+        font-family: "Newsreader Fallback";
+        src: local("Georgia");
+        size-adjust: 103%;
+        ascent-override: 88%;
+        descent-override: 28%;
+        line-gap-override: 0%;
+      }
+
+      /* Override Fontsource defaults to use font-display: optional */
+      @font-face {
+        font-family: "Geist Sans";
+        font-display: optional;
+      }
+
+      @font-face {
+        font-family: "Newsreader Variable";
+        font-display: optional;
+      }
+
+      @font-face {
+        font-family: "IBM Plex Mono";
+        font-display: optional;
       }
     </style>
 
