@@ -128,11 +128,15 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || "https://yashagar
 
     <!-- Cloudflare Web Analytics -->
     {import.meta.env.PROD && (
-      <script
-        defer
-        src="https://static.cloudflareinsights.com/beacon.min.js"
-        data-cf-beacon='{"token": "e14f712dcb3f4bb7aab3a2f606159e03"}'
-      ></script>
+      <script is:inline>
+        if (window.location.hostname === "yashagarwal.in" || window.location.hostname === "www.yashagarwal.in") {
+          const script = document.createElement("script")
+          script.src = "https://static.cloudflareinsights.com/beacon.min.js"
+          script.defer = true
+          script.setAttribute("data-cf-beacon", '{"token": "e14f712dcb3f4bb7aab3a2f606159e03"}')
+          document.head.appendChild(script)
+        }
+      </script>
     )}
   </head>
   <body
