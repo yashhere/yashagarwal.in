@@ -15,6 +15,7 @@ import Backlinks from '../components/content/Backlinks.astro';
 import MobileTOC from '../components/content/MobileTOC.astro';
 import MobileActions from '../components/content/MobileActions.astro';
 import Comments from '../components/interactive/Comments.astro';
+import ReadingProgress from '../components/content/ReadingProgress.astro';
 
 import GithubSlugger from 'github-slugger';
 
@@ -77,6 +78,7 @@ const encodedUrl = encodeURIComponent(`https://yashagarwal.in/notes/${slug}`);
 ---
 
 <BaseLayout title={title} description={description} image={image}>
+  <ReadingProgress targetId="article-body" />
   <div class="mx-auto w-full max-w-3xl px-4 md:px-6">
     <Navigation />
   </div>

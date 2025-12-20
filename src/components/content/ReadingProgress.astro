@@ -1,0 +1,94 @@
+---
+interface Props {
+  targetId?: string;
+  class?: string;
+}
+
+const { targetId, class: className } = Astro.props;
+---
+
+<reading-progress data-target={targetId} class={className}>
+  <div
+    class="fixed inset-x-0 top-0 z-50 h-1 bg-primary transition-all duration-100 ease-out"
+    data-progress-bar
+  ></div>
+</reading-progress>
+
+<script>
+  class ReadingProgress extends HTMLElement {
+    private progressBar: HTMLElement | null = null;
+    private targetId: string | null = null;
+    private completion: number = 0;
+
+    constructor() {
+      super();
+      this.targetId = this.dataset.target || null;
+      this.progressBar = this.querySelector('[data-progress-bar]');
+      this.updateScrollCompletion = this.updateScrollCompletion.bind(this);
+    }
+
+    connectedCallback() {
+      window.addEventListener('scroll', this.updateScrollCompletion, { passive: true });
+      // Set initial state
+      this.updateScrollCompletion();
+    }
+
+    disconnectedCallback() {
+      window.removeEventListener('scroll', this.updateScrollCompletion);
+    }
+
+    updateScrollCompletion() {
+      if (this.targetId) {
+        const element = document.getElementById(this.targetId);
+        if (element) {
+          const elementOffsetTop = element.getBoundingClientRect().top + window.scrollY;
+          const elementHeight = element.offsetHeight;
+          const windowHeight = window.innerHeight;
+
+          if (elementHeight === 0) {
+            this.setCompletion(0);
+            return;
+          }
+
+          // Calculate start and end points of the scroll
+          // Start: When the top of the element hits the top of the viewport
+          // End: When the bottom of the element hits the bottom of the viewport
+          const start = elementOffsetTop;
+          const end = elementOffsetTop + elementHeight - windowHeight;
+
+          // If content fits in viewport, we are 100% done
+          if (elementHeight <= windowHeight) {
+            this.setCompletion(100);
+            return;
+          }
+
+          const scrollTop = window.scrollY;
+          const progress = (scrollTop - start) / (end - start);
+
+          let p = progress;
+          if (p < 0) p = 0;
+          if (p > 1) p = 1;
+
+          this.setCompletion(p * 100);
+          return;
+        }
+      }
+
+      // Fallback to global scroll if no target or target not found
+      const currentProgress = window.scrollY;
+      const scrollHeight = document.body.scrollHeight - window.innerHeight;
+      if (scrollHeight) {
+        this.setCompletion(Number((currentProgress / scrollHeight).toFixed(2)) * 100);
+      }
+    }
+
+    setCompletion(value: number) {
+      this.completion = value;
+      if (this.progressBar) {
+        this.progressBar.style.width = `${this.completion}%`;
+      }
+    }
+  }
+
+  customElements.define('reading-progress', ReadingProgress);
+</script>
