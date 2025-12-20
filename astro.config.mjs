@@ -21,6 +21,9 @@ import remarkWikiLink from "remark-wiki-link"
 export default defineConfig({
   site: "https://yashagarwal.in",
   output: "static",
+  devToolbar: {
+    enabled: false,
+  },
 
   // Redirect old blog URLs to new notes structure
   redirects: {
