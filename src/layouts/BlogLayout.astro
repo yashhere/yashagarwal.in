@@ -7,6 +7,7 @@ import { format } from 'date-fns';
 import { Calendar, Clock, RefreshCw } from '@lucide/astro';
 import Breadcrumbs from '../components/content/Breadcrumbs.astro';
 import Heading from '../components/ui/Heading.astro';
+import Image from '../components/ui/Image.astro';
 import DecorativeHr from '../components/ui/DecorativeHr.astro';
 import TagList from '../components/content/TagList.astro';
 import Series from '../components/content/Series.astro';
@@ -23,6 +24,7 @@ interface Props {
   title: string;
   description?: string;
   image?: string;
+  headerImage?: string;
   createdOn: Date;
   updatedOn?: Date;
   category?: string;
@@ -46,6 +48,7 @@ const {
   title,
   description,
   image,
+  headerImage,
   createdOn,
   updatedOn,
   category,
@@ -212,6 +215,17 @@ const encodedUrl = encodeURIComponent(`https://yashagarwal.in/notes/${slug}`);
            )}
         </div>
       </section>
+
+      {headerImage && (
+        <Image
+          src={headerImage}
+          alt={title}
+          class="mb-12 w-full"
+          imageClass="rounded-none object-cover"
+          showSkeleton={true}
+          expandable={false}
+        />
+      )}
 
       <div class="xl:hidden">
         <MobileTOC headings={headings ?? []} renderTrigger={false} />
