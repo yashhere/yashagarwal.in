@@ -15,11 +15,14 @@ description: >-
   How a missing monkey.patch_all() turned my async Flask service into a synchronous bottleneck, creating zombie requests and wasting resources.
 ---
 
+import MDXHighlight from "../../components/content/MDXHighlight.astro"
+import MDXTooltip from "../../components/content/MDXTooltip.astro"
+
 I recently worked on a Flask based microservice at work. While everything worked normally for first few weeks, a few heavy traffic days brought in front a critical bug I had introduced while coding. This post is a detailed analysis of what went wrong and how I debugged and fixed the issue.
 
 ## The Background
 
-I have been working with distributed systems primarily written in Python with Gevent for concurrency for the last several years. However, I never got a chance to actually write a service that uses Gevent. Most of the services I have worked with were implemented by other teams and were in production for years before I started working on them. So, I never really got to experience writing a Gevent-based Python microservice from scratch. Recently, I got an opportunity to do just that. I was tasked with writing a new microservice that was supposed to act as an email notification service for our platform. This service was replacing another service that belonged to a different product which is getting deprecated.
+I have been working with distributed systems primarily written in Python with <MDXTooltip content="Gevent is a coroutine-based Python networking library that uses greenlets for lightweight concurrency">Gevent</MDXTooltip> for concurrency for the last several years. However, I never got a chance to actually write a service that uses Gevent. Most of the services I have worked with were implemented by other teams and were in production for years before I started working on them. So, I never really got to experience writing a Gevent-based Python microservice from scratch. Recently, I got an opportunity to do just that. I was tasked with writing a new microservice that was supposed to act as an email notification service for our platform. This service was replacing another service that belonged to a different product which is getting deprecated.
 
 ## Service Implementation
 
@@ -28,7 +31,7 @@ While I initially proposed using FastAPI for the new service, the team decided t
 For the discussion in this post, the service had following tech stack -
 
 - Flask as the Web framework for implementing the business logic
-- Gevent-based WSGI server as the Application server to handle HTTP requests
+- Gevent-based <MDXTooltip content="Web Server Gateway Interface - the standard interface between Python web servers and web applications">WSGI</MDXTooltip> server as the Application server to handle HTTP requests
 
 I used Jaeger for distributed tracing so that we could trace requests across multiple services. We tested it for a couple of days in our staging environment, and everything seemed to be working fine. The service was able to handle a decent amount of load, and the traces were showing up correctly in Jaeger.
 
@@ -57,42 +60,40 @@ So, in summary, the server was processing unusually high number of requests but 
 
 ## Finally a breakthrough!
 
-Since I was not seeing any jaeger spans from the Flask framework side, I suspected that the requests were not reaching the Flask server at all and were timing out (but not dropped) at the WSGI server layer itself. When the client reached its timeout (10s), Go cancels the context and closes the socket by calling the `close()` syscall. While I didn't debug the TCP layer, I suspect the client sent RST packet causing an abrupt close. When the server receives a RST packet, any reads on the socket will result in `connection reset by peer` and writes will result in `Broken pipe` error. Gevent WSGI server catches these errors, logs them and then discards the response.
+Since I was not seeing any jaeger spans from the Flask framework side, I suspected that the requests were not reaching the Flask server at all and were timing out (but not dropped) at the WSGI server layer itself. When the client reached its timeout (10s), Go cancels the context and closes the socket by calling the `close()` syscall. While I didn't debug the TCP layer, I suspect the client sent <MDXTooltip content="TCP Reset packet - signals an abrupt connection termination">RST packet</MDXTooltip> causing an abrupt close. When the server received the RST packet, any reads on the socket will result in `connection reset by peer` and writes will result in <MDXTooltip content="Error that occurs when trying to write to a closed socket">Broken pipe</MDXTooltip> error. Gevent WSGI server catches these errors, logs them and then discards the response.
 
-Here are two possible scenarios that were in picture during this issue -
+Here are two possible scenarios that were in picture during this issue:
 
-1. WSGI server read the entire request but Flask hasn't started processing
-   - HTTP request is **already buffered** in server memory
-   - Client RST doesn't affect buffered data
-   - When the greenlet runs, it processes the request normally
-   - Flask executes appropriate handler
-   - When trying to send response: BrokenPipe occurs.
-   - Gevent catches exception, logs warning, continues
-   - Work is done, but client never knows = ZOMBIE REQUEST
-2. WSGI server read the request and Flask started processing
-   - Client RST arrives while handler is executing
-   - Python doesn't check socket state during processing
-   - Handler completes normally
-   - When trying to send response: BrokenPipe occurs.
-   - Gevent catches exception, logs warning, continues
-   - Again a Zombie request: work done, client never notified
+**Scenario 1: WSGI server read the entire request but Flask hasn't started processing**
+
+- HTTP request is **already buffered** in server memory
+- Client RST doesn't affect buffered data
+- When the greenlet runs, it processes the request normally
+- Flask executes appropriate handler
+- When trying to send response: BrokenPipe occurs
+- Gevent catches exception, logs warning, continues
+- Work is done, but client never knows = <MDXHighlight color="red">ZOMBIE REQUEST</MDXHighlight>
+
+**Scenario 2: WSGI server read the request and Flask started processing**
+
+- Client RST arrives while handler is executing
+- Python doesn't check socket state during processing
+- Handler completes normally
+- When trying to send response: BrokenPipe occurs
+- Gevent catches exception, logs warning, continues
+- Again a <MDXHighlight color="red">Zombie request</MDXHighlight>: work done, client never notified
 
 Since the requests already accepted by the server were not dropped even when the client sent RST packet, every retry added more requests to the server queue. These were all duplicate requests! Flask was able to process all these queued requests eventually; bombarding the email service with additional duplicate requests. That explains increased throughput on Flask and email service.
 
-Since, I was suspecting a high number of queued requests on the server side, I also decided to check the memory metrics for the flask pods. And voila, I saw increased significant memory usage on the pods. The CPU usage was moderate at about 50% usage consistently. But memory usage was above 80% mark. In this process, I also find a minor bug in HPA configuration which prevented autoscaling on high memory usage.
+Since I was suspecting a high number of queued requests on the server side, I also decided to check the memory metrics for the flask pods. And voila, I saw increased significant memory usage on the pods. The CPU usage was moderate at about 50% usage consistently. But memory usage was above 80% mark. In this process, I also find a minor bug in HPA configuration which prevented autoscaling on high memory usage.
 
-So, the high memory usage answered what was happening. My hypothesis was clear now -
-
-- The clients were sending a high number of requests
-- Gevent WSGI server was accepting all these requests and spawning Greenlets to keep the requests in the memory.
-- Flask was also processing a high number of requests but it was still not enough to process all the Greenlets.
-- Since some of the requests were timing out at the server layer, client kept retrying the requests, adding to the load on the server.
+So, the high memory usage answered what was happening. My hypothesis was clear now - clients were sending a high number of requests, the Gevent WSGI server was accepting all these requests and spawning <MDXTooltip content="Ultra-lightweight cooperative threads that share the same OS thread and explicitly yield control to each other">Greenlets</MDXTooltip> to keep the requests in the memory. Flask was processing a high number of requests but it was still not enough to process all the Greenlets. Since some of the requests were timing out at the server layer, client kept retrying the requests, adding to the load on the server.
 
 But, why was the Flask framework not able to process all the requests?
 
 ## A tale of Python's single threaded nature, Gevent and monkey patching
 
-Python is fundamentally single threaded due to [GIL](https://realpython.com/python-gil/). Flask is no different. When a `socket.recv()` or `requests.get()` is executed, the entire process just blocks and does nothing until this I/O completes. This is particularly bad for web applications because the process can't handle more than one request at a time.
+Python is fundamentally single threaded due to <MDXTooltip content="Global Interpreter Lock - Python's mechanism that prevents multiple threads from executing Python bytecode simultaneously">GIL</MDXTooltip>. Flask is no different. When a `socket.recv()` or `requests.get()` is executed, the entire process just blocks and does nothing until this I/O completes. This is particularly bad for web applications because the process can't handle more than one request at a time.
 
 That's where Gevent shines. The solution is to use Greenlets instead of threads. Think of Greenlets as ultra-lightweight "pseudo-threads" that share the same OS thread. Instead of the operating system deciding when to switch between them (preemptive multitasking), Greenlets explicitly **yield control** to each other (cooperative multitasking).
 
@@ -105,14 +106,14 @@ Before talking about the actual fix, let's revisit our server configuration.
 - That meant no two Greenlets were able to call Flask simultaneously.
 - This was evident from the memory charts (which spiked due to Greenlets in memory) and timeout errors we saw in client (Greenlets were not able to process requests).
 
-Here's where I messed up. I forgot to replace Python's standard blocking I/O with Gevent-compatible versions.
+Here's where I messed up. I forgot to replace Python's standard blocking I/O with <MDXHighlight color="orange">Gevent-compatible versions</MDXHighlight>.
 
 ```python
 from gevent import monkey
 monkey.patch_all()
 ```
 
-The above code replaces Python's standard library at runtime. After it runs:
+The above code <MDXTooltip content="Replaces Python's standard library functions at runtime with Gevent's non-blocking equivalents">replaces Python's standard library at runtime</MDXTooltip>. After it runs:
 
 - `import socket` → You get Gevent's socket (non-blocking)
 - `import ssl` → You get Gevent's ssl (yields during handshake)
@@ -148,19 +149,20 @@ server.serve_forever()
 
 I was using WSGI from Gevent, so I thought I was good. Here's what actually happened when two requests arrived:
 
-Request A arrives:
+**Request A arrives:**
 
 - Flask starts processing
 - Calls `requests.post()` to external API
-- BLOCKS on `socket.send()` (using `stdlib` socket!)
+- <MDXHighlight color="red">BLOCKS on socket.send()</MDXHighlight> (using
+  `stdlib` socket!)
 - Entire server frozen for 500ms
 
-Request B arrives while A is blocked:
+**Request B arrives while A is blocked:**
 
 - Connection accepted by Gevent
 - Request read into memory
 - Queued for processing (greenlet created!)
-- But it is stuck waiting because A's greenlet won't yield.
+- But it is stuck waiting because A's greenlet won't yield
 
 ![Request processing without monkey patching](/images/notes/my-bug-of-the-year-and-how-i-fixed-it/request-processing-without-monkey-patching.webp "Request processing without monkey patching")
 
@@ -191,14 +193,14 @@ The difference between "using Gevent" and "using Gevent correctly" was a single 
 
 After deploying the monkey patch fix to production:
 
-| Metric                | Before            | After        | Improvement        |
-| --------------------- | ----------------- | ------------ | ------------------ |
-| P95 Latency           | ~8-10s            | ~500ms       | 8x faster          |
-| Request Timeout Rate  | ~30%              | < 0.1%       | 300x reduction     |
-| Memory Usage          | 85% (growing)     | 45% (stable) | Stabilized         |
-| Client Retry Attempts | 15-17 per request | 0            | Eliminated         |
-| Email Service Load    | 700 req/min       | 30 req/min   | Back to normal     |
-| Requests processed    | 2000 req/sec      | 50 req/sec   | no retries anymore |
+| Metric                | Before            | After                                                   | Improvement                                                   |
+| --------------------- | ----------------- | ------------------------------------------------------- | ------------------------------------------------------------- |
+| P95 Latency           | ~8-10s            | <MDXHighlight color="green">~500ms</MDXHighlight>       | <MDXHighlight color="green">15x faster</MDXHighlight>         |
+| Request Timeout Rate  | ~30%              | <MDXHighlight color="green">< 0.1%</MDXHighlight>       | <MDXHighlight color="green">300x reduction</MDXHighlight>     |
+| Memory Usage          | 85% (growing)     | <MDXHighlight color="green">50% (stable)</MDXHighlight> | <MDXHighlight color="green">Stabilized</MDXHighlight>         |
+| Client Retry Attempts | 15-17 per request | <MDXHighlight color="green">0</MDXHighlight>            | <MDXHighlight color="green">Eliminated</MDXHighlight>         |
+| Email Service Load    | 700 req/min       | <MDXHighlight color="green">30 req/min</MDXHighlight>   | <MDXHighlight color="green">Back to normal</MDXHighlight>     |
+| Requests processed    | 2000 req/sec      | <MDXHighlight color="green">50 req/sec</MDXHighlight>   | <MDXHighlight color="green">no retries anymore</MDXHighlight> |
 
 The fix went live during a low-traffic window. Within 15 minutes, timeout errors dropped to near-zero.
 
@@ -224,6 +226,6 @@ The three biggest lessons:
 2. **Question your metrics** - When client and server metrics don't match, dig deeper.
 3. **Distributed tracing is your friend** - Missing server spans pointed directly to the problem.
 
-The fix was embarrassingly simple. The debugging was not. But that's software engineering –sometimes the smallest oversights create the biggest problems.
+The fix was embarrassingly simple. The debugging was not. But that's software engineering – sometimes the smallest oversights create the biggest problems.
 
 And now I have a great story for "Tell me about a time you debugged a tricky production issue" interviews.
