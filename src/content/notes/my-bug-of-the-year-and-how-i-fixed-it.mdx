@@ -18,15 +18,15 @@ description: >-
 import MDXHighlight from "../../components/content/MDXHighlight.astro"
 import MDXTooltip from "../../components/content/MDXTooltip.astro"
 
-I recently worked on a Flask based microservice at work. While everything worked normally for first few weeks, a few heavy traffic days brought in front a critical bug I had introduced while coding. This post is a detailed analysis of what went wrong and how I debugged and fixed the issue.
+I recently worked on a Flask based microservice at work. While everything worked normally for first few weeks, a few heavy traffic days unleashed a critical bug I had introduced inadvertently during development. This post is a detailed analysis of what went wrong and how I debugged and fixed the issue.
 
 ## The Background
 
-I have been working with distributed systems primarily written in Python with <MDXTooltip content="Gevent is a coroutine-based Python networking library that uses greenlets for lightweight concurrency">Gevent</MDXTooltip> for concurrency for the last several years. However, I never got a chance to actually write a service that uses Gevent. Most of the services I have worked with were implemented by other teams and were in production for years before I started working on them. So, I never really got to experience writing a Gevent-based Python microservice from scratch. Recently, I got an opportunity to do just that. I was tasked with writing a new microservice that was supposed to act as an email notification service for our platform. This service was replacing another service that belonged to a different product which is getting deprecated.
+I have been working with Python-based distributed systems with <MDXTooltip content="Gevent is a coroutine-based Python networking library that uses greenlets for lightweight concurrency">Gevent</MDXTooltip> for concurrency for the last several years. However, I never got a chance to actually write a service that uses Gevent. Most of the services I have worked with were implemented by other teams and were in production for years before I started working on them. So, I never really got to experience writing a Gevent-based Python microservice from scratch. Recently, I got an opportunity to do just that. I was tasked with writing a new microservice that was to act as an email notification service for our platform. This service was replacing another service that belonged to a different product about to reach EOL.
 
 ## Service Implementation
 
-While I initially proposed using FastAPI for the new service, the team decided to go with Flask since most of our existing services were already using Flask. So, I started working on a new Flask-based microservice that exposed REST endpoints for the internal clients. Clients would call these endpoints with the alert payload, and the service would process the alerts and send email notifications by calling another downstream service over the network within same K8s cluster.
+While I initially proposed using FastAPI for the new service, the team decided to go with Flask since most of our existing services were already using Flask. So, I started working on a new Flask-based microservice that exposed REST endpoints for the internal clients. Clients would call these endpoints with the request payload. The new notification service would process the payload and send email notifications by calling another downstream service over the network within same K8s cluster.
 
 For the discussion in this post, the service had following tech stack -
 
@@ -37,9 +37,9 @@ I used Jaeger for distributed tracing so that we could trace requests across mul
 
 ## Deploying to Production
 
-After about two weeks of testing in staging, I came up with a phase wise rollout plan for deploying the new service to different production clusters. I started rollout by routing a small percentage of the traffic to the new service while keeping the rest of the traffic going to the old service. I monitored the service closely for any issues. I gradually increased the traffic to the new service in phases until all the traffic was routed to the new service.
+After about two weeks of testing in staging, I came up with a phase-wise rollout plan for deploying the new service to different production clusters. I started by routing a small percentage of the traffic to the new service while keeping the rest of the traffic going to the old service. I monitored the service closely for any issues. I gradually increased the traffic to the new service in phases until all the traffic was routed to the new service.
 
-Things were looking good until this point. In fact, the service didn't show any issues for first few weeks. However, after about a month of running in the production environment, I started noticing some anomalies in the downstream email sending service. The email service started showing abnormally high number of incoming requests from the new notification service. Initially, I thought that the clients were simply sending more alerts than before. The email service started throttling requests from the notification service due to the high load. The Grafana charts were all showing high number of HTTP requests being processed by the notification service and an equally high number of incoming requests on the email service side. However, the logs from the clients sending alerts to the notification service didn't show any increase in the number of requests being sent. This was puzzling.
+Things were looking good until this point. In fact, the service didn't show any issues for first few weeks. However, after about a month of running in the production environment, I started noticing some anomalies in the downstream email sending service. The email service started showing abnormally high number of incoming requests from the new notification service. Initially, I thought that the clients were simply sending more requests than before. The email service started throttling requests from the notification service due to the high load. The Grafana charts were all showing high number of HTTP requests being processed by the notification service and an equally high number of incoming requests on the email service side. However, the logs from the clients sending alerts to the notification service didn't show any increase in the number of requests being sent. This was puzzling.
 
 ## Symptoms starts appearing
 
@@ -60,7 +60,7 @@ So, in summary, the server was processing unusually high number of requests but 
 
 ## Finally a breakthrough!
 
-Since I was not seeing any jaeger spans from the Flask framework side, I suspected that the requests were not reaching the Flask server at all and were timing out (but not dropped) at the WSGI server layer itself. When the client reached its timeout (10s), Go cancels the context and closes the socket by calling the `close()` syscall. While I didn't debug the TCP layer, I suspect the client sent <MDXTooltip content="TCP Reset packet - signals an abrupt connection termination">RST packet</MDXTooltip> causing an abrupt close. When the server received the RST packet, any reads on the socket will result in `connection reset by peer` and writes will result in <MDXTooltip content="Error that occurs when trying to write to a closed socket">Broken pipe</MDXTooltip> error. Gevent WSGI server catches these errors, logs them and then discards the response.
+Since I was not seeing any Jaeger spans from the Flask framework side, I suspected that the requests were not reaching the Flask server at all and were timing out (but not dropped) at the WSGI server layer itself. When the client reached its timeout (10s), Go cancels the context and closes the socket by calling the `close()` syscall. While I didn't debug the TCP layer, I suspect the client sent <MDXTooltip content="TCP Reset packet - signals an abrupt connection termination">RST packet</MDXTooltip> causing an abrupt close. When a server receives a RST packet, any reads on the socket will result in `connection reset by peer` and writes will result in <MDXTooltip content="Error that occurs when trying to write to a closed socket">Broken pipe</MDXTooltip> error. Gevent WSGI server catches these errors, logs them and then discards the response.
 
 Here are two possible scenarios that were in picture during this issue:
 
@@ -70,7 +70,7 @@ Here are two possible scenarios that were in picture during this issue:
 - Client RST doesn't affect buffered data
 - When the greenlet runs, it processes the request normally
 - Flask executes appropriate handler
-- When trying to send response: BrokenPipe occurs
+- When trying to send response: `BrokenPipe` occurs
 - Gevent catches exception, logs warning, continues
 - Work is done, but client never knows = <MDXHighlight color="red">ZOMBIE REQUEST</MDXHighlight>
 
@@ -79,17 +79,17 @@ Here are two possible scenarios that were in picture during this issue:
 - Client RST arrives while handler is executing
 - Python doesn't check socket state during processing
 - Handler completes normally
-- When trying to send response: BrokenPipe occurs
+- When trying to send response: `BrokenPipe` occurs
 - Gevent catches exception, logs warning, continues
 - Again a <MDXHighlight color="red">Zombie request</MDXHighlight>: work done, client never notified
 
-Since the requests already accepted by the server were not dropped even when the client sent RST packet, every retry added more requests to the server queue. These were all duplicate requests! Flask was able to process all these queued requests eventually; bombarding the email service with additional duplicate requests. That explains increased throughput on Flask and email service.
+Since the requests already accepted by the server were not dropped even when the client sent RST packet, every retry added more requests to the server queue. These were all duplicate requests! Flask was able to process all these queued requests eventually; bombarding the email service with additional duplicate requests. That explained increased throughput on Flask and email service.
 
-Since I was suspecting a high number of queued requests on the server side, I also decided to check the memory metrics for the flask pods. And voila, I saw increased significant memory usage on the pods. The CPU usage was moderate at about 50% usage consistently. But memory usage was above 80% mark. In this process, I also find a minor bug in HPA configuration which prevented autoscaling on high memory usage.
+Since I was suspecting a high number of queued requests on the server side, I also decided to check the memory metrics for the Flask pods. And voila, I saw increased significant memory usage on the pods. The CPU usage was moderate at about 50% usage consistently. But memory usage was above 80% mark. In this process, I also find a minor bug in HPA configuration which prevented autoscaling on high memory usage.
 
 So, the high memory usage answered what was happening. My hypothesis was clear now - clients were sending a high number of requests, the Gevent WSGI server was accepting all these requests and spawning <MDXTooltip content="Ultra-lightweight cooperative threads that share the same OS thread and explicitly yield control to each other">Greenlets</MDXTooltip> to keep the requests in the memory. Flask was processing a high number of requests but it was still not enough to process all the Greenlets. Since some of the requests were timing out at the server layer, client kept retrying the requests, adding to the load on the server.
 
-But, why was the Flask framework not able to process all the requests?
+But, why was the Flask app not able to process all the requests?
 
 ## A tale of Python's single threaded nature, Gevent and monkey patching
 

@@ -10,19 +10,14 @@ interface Props {
 const { content, class: className, ...props } = Astro.props;
 ---
 
-<span class="group relative inline-block">
-  <span
-    class={cn(
-      "decoration-muted-foreground hover:text-foreground hover:decoration-foreground cursor-help underline decoration-dotted underline-offset-4 transition-colors",
-      className
-    )}
-    {...props}
-  >
-    <slot />
-  </span>
-  <span
-    class="pointer-events-none invisible absolute bottom-full left-1/2 z-50 mb-2 -translate-x-1/2 whitespace-normal break-words rounded-md bg-popover px-3 py-1.5 text-center text-sm text-popover-foreground shadow-md opacity-0 transition-all group-hover:visible group-hover:opacity-100 w-max max-w-xs border border-border"
-  >
-    {content}
-  </span>
+<span
+  x-data
+  x-tooltip.raw={content}
+  class={cn(
+    "decoration-muted-foreground hover:text-foreground hover:decoration-foreground cursor-help underline decoration-dotted underline-offset-4 transition-colors",
+    className
+  )}
+  {...props}
+>
+  <slot />
 </span>

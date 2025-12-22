@@ -85,7 +85,9 @@ export default defineConfig({
   },
 
   integrations: [
-    alpinejs(),
+    alpinejs({
+      entrypoint: "/src/alpine-plugins.ts",
+    }),
     react(),
     mdx({
       syntaxHighlight: false,
