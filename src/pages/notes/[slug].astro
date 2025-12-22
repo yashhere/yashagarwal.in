@@ -48,6 +48,7 @@ const backlinks = await getBacklinks(note.slug)
   title={note.data.title}
   description={note.data.description}
   image={`/og/${note.slug}.png`}
+  headerImage={note.data.image}
   createdOn={note.data.createdOn}
   updatedOn={note.data.updatedOn}
   tags={note.data.tags}
