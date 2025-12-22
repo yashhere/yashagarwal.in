@@ -12,7 +12,6 @@ category: Development
 description: >-
   A deep dive into solving RedBeat's Redis Sentinel username authentication
   limitation through a configuration workaround.
-image: /images/headers/redbeat-redis-sentinel-header.png
 ---
 
 A few weeks ago, while working on a new microservice at work, I encountered an interesting authentication issue with Celery's RedBeat scheduler when connecting to Redis Sentinel with username-based authentication. What seemed like a simple configuration problem turned out to be a non-trivial limitation in RedBeat's implementation. This post documents the problem, the solution, and why it matters.

@@ -28,6 +28,7 @@
     "@fontsource/ibm-plex-mono": "^5.2.7",
     "@fontsource/newsreader": "^5.2.10",
     "@lucide/astro": "^0.561.0",
+    "@ryangjchandler/alpine-tooltip": "^2.0.1",
     "@tailwindcss/typography": "^0.5.19",
     "@tailwindcss/vite": "^4.1.18",
     "@types/alpinejs": "^3.13.11",

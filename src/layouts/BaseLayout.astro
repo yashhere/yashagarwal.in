@@ -1,6 +1,7 @@
 ---
 import "../styles/globals.css"
 import "../styles/fonts.css"
+import "../styles/tooltip.css"
 
 // Import font files with ?url to get hashed paths for preloading
 import geistSans400 from "@fontsource/geist-sans/files/geist-sans-latin-400-normal.woff2?url"
@@ -70,6 +71,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || "https://yashagar
     <link rel="preload" href={geistSans400} as="font" type="font/woff2" crossorigin="anonymous" />
     <link rel="preload" href={geistSans500} as="font" type="font/woff2" crossorigin="anonymous" />
     <link rel="preload" href={geistSans600} as="font" type="font/woff2" crossorigin="anonymous" />
+
+    <!-- Tippy.js CSS for tooltips -->
+    <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/dist/tippy.css" />
 
     <!-- Theme Script -->
     <script is:inline>

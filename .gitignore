@@ -1,7 +1,11 @@
 # build output
 dist/
+
 # generated types
 .astro/
+
+# original files
+public/.originals
 
 # dependencies
 node_modules/
@@ -26,4 +30,5 @@ pnpm-debug.log*
 # claude
 .claude
 
+# vercel
 .vercel
