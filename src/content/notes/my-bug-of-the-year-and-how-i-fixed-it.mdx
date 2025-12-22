@@ -18,7 +18,7 @@ description: >-
 import MDXHighlight from "../../components/content/MDXHighlight.astro"
 import MDXTooltip from "../../components/content/MDXTooltip.astro"
 
-I recently worked on a Flask based microservice at work. While everything worked normally for first few weeks, a few heavy traffic days unleashed a critical bug I had introduced inadvertently during development. This post is a detailed analysis of what went wrong and how I debugged and fixed the issue.
+I recently worked on a Flask based microservice at work. While everything worked normally for the first few weeks, a few heavy traffic days unleashed a critical bug I had introduced inadvertently during development. This post is a detailed analysis of what went wrong and how I debugged and fixed the issue.
 
 ## The Background
 
@@ -26,7 +26,7 @@ I have been working with Python-based distributed systems with <MDXTooltip conte
 
 ## Service Implementation
 
-While I initially proposed using FastAPI for the new service, the team decided to go with Flask since most of our existing services were already using Flask. So, I started working on a new Flask-based microservice that exposed REST endpoints for the internal clients. Clients would call these endpoints with the request payload. The new notification service would process the payload and send email notifications by calling another downstream service over the network within same K8s cluster.
+While I initially proposed using FastAPI for the new service, the team decided to go with Flask since most of our existing services were already using Flask. So, I started working on a new Flask-based microservice that exposed REST endpoints for the internal clients. Clients would call these endpoints with the request payload. The new notification service would process the payload and send email notifications by calling another downstream service over the network within the same K8s cluster.
 
 For the discussion in this post, the service had following tech stack -
 
@@ -39,28 +39,28 @@ I used Jaeger for distributed tracing so that we could trace requests across mul
 
 After about two weeks of testing in staging, I came up with a phase-wise rollout plan for deploying the new service to different production clusters. I started by routing a small percentage of the traffic to the new service while keeping the rest of the traffic going to the old service. I monitored the service closely for any issues. I gradually increased the traffic to the new service in phases until all the traffic was routed to the new service.
 
-Things were looking good until this point. In fact, the service didn't show any issues for first few weeks. However, after about a month of running in the production environment, I started noticing some anomalies in the downstream email sending service. The email service started showing abnormally high number of incoming requests from the new notification service. Initially, I thought that the clients were simply sending more requests than before. The email service started throttling requests from the notification service due to the high load. The Grafana charts were all showing high number of HTTP requests being processed by the notification service and an equally high number of incoming requests on the email service side. However, the logs from the clients sending alerts to the notification service didn't show any increase in the number of requests being sent. This was puzzling.
+Things were looking good until this point. In fact, the service didn't show any issues for the first few weeks. However, after about a month of running in the production environment, I started noticing some anomalies in the downstream email sending service. The email service started showing an abnormally high number of incoming requests from the new notification service. Initially, I thought that the clients were simply sending more requests than before. The email service started throttling requests from the notification service due to the high load. The Grafana charts were all showing a high number of HTTP requests being processed by the notification service and an equally high number of incoming requests on the email service side. However, the logs from the clients didn't show any increase in the number of requests being sent. This was puzzling.
 
-## Symptoms starts appearing
+## Symptoms start appearing
 
-The sudden increase in the load on the email service raised quite a few eyebrows. I started investigating the issue from notification service side to ensure that we were not dropping any notifications meant for the clients due to email service throttling. The service showed high throughput meaning the service was processing high number of requests – an indicator of good performance in general. However the client side didn't show a significant increase in requests to the notification service. Though the number of requests from clients had increased, it was not corresponding to the number of requests being processed on the server.
+The sudden increase in the load on the email service raised quite a few eyebrows. I started investigating the issue from the notification service side to ensure that we were not dropping any notifications meant for the clients due to email service throttling. The service showed high throughput meaning the service was processing a high number of requests – an indicator of good performance in general. However the client side didn't show a significant increase in requests to the notification service. Though the number of requests from clients had increased, it was not corresponding to the number of requests being processed on the server.
 
-Another interesting observation was that the number of `context deadline exceeded` errors increased on the client. The clients were written in Golang and this error generally means that the requests were timing out. In fact, the client's http client was configured to timeout after 10 seconds. Once the timeout occurs, the client will retry the requests. This was an important finding.
+Another interesting observation was that the number of `context deadline exceeded` errors increased on the client. The clients were written in Golang and this error generally means that the requests were timing out. In fact, the client's http client was configured to timeout after 10 seconds. Once the timeout occurs, the client retries the requests. This was an important finding.
 
 Another thing I observed was the lack of tracing spans on the server side. I was able to find traces showing requests going out from the clients, but the spans from the Flask app layer were missing. This indicated that the Flask app was not processing requests. But then, how were the Grafana charts showing increased throughput?
 
 From the above findings, I was able to deduce a few things -
 
-- The client throughput had definitely increased but it was not consistent. The throughput would increase only during business hours.
-- The client was getting timeouts from the server and hence it was retrying – with exponential backoff however. The client timeout was 10 seconds per attempt, with retries continuing for up to 10 minutes total (15-17 retry attempts).
+- The client throughput had definitely increased but it was not consistently high. The throughput would increase only during business hours.
+- The client was getting timeouts from the server and hence it was retrying with exponential backoff. The client timeout was 10 seconds per attempt, with retries continuing for up to 10 minutes total (15-17 retry attempts).
 - The server was showing high throughput but it was not enough to process all requests from the client within the 10s timeout window.
-- The downstream email service latency was around 500ms which isn't too high.
+- The downstream email service latency was around 500ms which wasn't concerning.
 
-So, in summary, the server was processing unusually high number of requests but still not able to process all the client requests. The client on the other hand showed a usual rate of requests in the logs (we didn't have any metrics on client side to show the outgoing request rate at that time) and high number of timeout errors.
+So, in summary, the server was processing an unusually high number of requests but was still not able to process all the client requests. The client on the other hand showed a usual rate of requests in the logs (we didn't have any metrics on client side to show the outgoing request rate at that time) and high number of timeout errors.
 
 ## Finally a breakthrough!
 
-Since I was not seeing any Jaeger spans from the Flask framework side, I suspected that the requests were not reaching the Flask server at all and were timing out (but not dropped) at the WSGI server layer itself. When the client reached its timeout (10s), Go cancels the context and closes the socket by calling the `close()` syscall. While I didn't debug the TCP layer, I suspect the client sent <MDXTooltip content="TCP Reset packet - signals an abrupt connection termination">RST packet</MDXTooltip> causing an abrupt close. When a server receives a RST packet, any reads on the socket will result in `connection reset by peer` and writes will result in <MDXTooltip content="Error that occurs when trying to write to a closed socket">Broken pipe</MDXTooltip> error. Gevent WSGI server catches these errors, logs them and then discards the response.
+Since I was not seeing any Jaeger spans from the Flask framework side, I suspected that the requests were not reaching the Flask server at all and were timing out (but not dropped!) at the WSGI server layer itself. When the client reaches its timeout (10s), Go cancels the context and closes the socket by calling the `close()` syscall. While I didn't debug the TCP layer, I suspect the client sent <MDXTooltip content="TCP Reset packet - signals an abrupt connection termination">RST packets</MDXTooltip> causing an abrupt close. When a server receives a RST packet, any reads on the socket will result in `connection reset by peer` and writes will result in <MDXTooltip content="Error that occurs when trying to write to a closed socket">Broken pipe</MDXTooltip> error. Gevent WSGI server catches these errors, logs them and then discards the response.
 
 Here are two possible scenarios that were in picture during this issue:
 
@@ -83,19 +83,19 @@ Here are two possible scenarios that were in picture during this issue:
 - Gevent catches exception, logs warning, continues
 - Again a <MDXHighlight color="red">Zombie request</MDXHighlight>: work done, client never notified
 
-Since the requests already accepted by the server were not dropped even when the client sent RST packet, every retry added more requests to the server queue. These were all duplicate requests! Flask was able to process all these queued requests eventually; bombarding the email service with additional duplicate requests. That explained increased throughput on Flask and email service.
+Since the requests already accepted by the server were not dropped even when the client sent an RST packet, every retry added more requests to the server queue. These were all duplicate requests! Flask was able to process all these queued requests eventually; along with bombarding the email service with additional duplicate requests as a side effect. That explained increased throughput on Flask and email service.
 
-Since I was suspecting a high number of queued requests on the server side, I also decided to check the memory metrics for the Flask pods. And voila, I saw increased significant memory usage on the pods. The CPU usage was moderate at about 50% usage consistently. But memory usage was above 80% mark. In this process, I also find a minor bug in HPA configuration which prevented autoscaling on high memory usage.
+Since I was suspecting a high number of queued requests on the server side, I also decided to check the memory metrics for the Flask pods. And voila, I observed significantly increased memory usage on the pods. The CPU usage was moderate at about 50% usage consistently. But memory usage was above the 80% mark. In this process, I also found a minor bug in HPA configuration which prevented autoscaling on high memory usage. If the pods had autoscaled, the issue would not have come to light so quickly.
 
-So, the high memory usage answered what was happening. My hypothesis was clear now - clients were sending a high number of requests, the Gevent WSGI server was accepting all these requests and spawning <MDXTooltip content="Ultra-lightweight cooperative threads that share the same OS thread and explicitly yield control to each other">Greenlets</MDXTooltip> to keep the requests in the memory. Flask was processing a high number of requests but it was still not enough to process all the Greenlets. Since some of the requests were timing out at the server layer, client kept retrying the requests, adding to the load on the server.
+So, the high memory usage answered what was happening. My hypothesis was clear now - clients were sending a high number of requests, the Gevent WSGI server was accepting all these requests and spawning <MDXTooltip content="Ultra-lightweight cooperative threads that share the same OS thread and explicitly yield control to each other">Greenlets</MDXTooltip> to keep the requests in the memory. Flask was processing a high number of requests but it was still not enough to process all the Greenlets. Since some of the requests were timing out at the server layer, the client kept retrying the requests, adding to the load on the server.
 
 But, why was the Flask app not able to process all the requests?
 
 ## A tale of Python's single threaded nature, Gevent and monkey patching
 
-Python is fundamentally single threaded due to <MDXTooltip content="Global Interpreter Lock - Python's mechanism that prevents multiple threads from executing Python bytecode simultaneously">GIL</MDXTooltip>. Flask is no different. When a `socket.recv()` or `requests.get()` is executed, the entire process just blocks and does nothing until this I/O completes. This is particularly bad for web applications because the process can't handle more than one request at a time.
+Python is fundamentally single threaded due to <MDXTooltip content="Global Interpreter Lock - Python's mechanism that prevents multiple threads from executing Python bytecode simultaneously">GIL</MDXTooltip>. Flask is also bound by this Python limitation. When a `socket.recv()` or `requests.get()` is executed, the entire process just blocks and does nothing until this I/O completes. This is particularly bad for web applications because the process can't handle more than one request at a time.
 
-That's where Gevent shines. The solution is to use Greenlets instead of threads. Think of Greenlets as ultra-lightweight "pseudo-threads" that share the same OS thread. Instead of the operating system deciding when to switch between them (preemptive multitasking), Greenlets explicitly **yield control** to each other (cooperative multitasking).
+That's where Gevent shines. The solution is to use Greenlets instead of threads. Think of Greenlets as ultra-lightweight "pseudo-threads" that share the same OS thread. Instead of the operating system deciding when to switch between them (<MDXTooltip content="Operating system forcibly switches between tasks at any time, regardless of whether the task is ready to yield control">preemptive multitasking</MDXTooltip>), Greenlets explicitly **yield control** to each other (<MDXTooltip content="Tasks voluntarily yield control to each other; each task must explicitly give up CPU time for others to run">cooperative multitasking</MDXTooltip>).
 
 Before talking about the actual fix, let's revisit our server configuration.
 
@@ -104,9 +104,9 @@ Before talking about the actual fix, let's revisit our server configuration.
 - Every time a new request came, Gevent spawned a new greenlet.
 - However, since the Flask application was still single-threaded, it didn't know about Gevent's event loop or Greenlets. It still processed requests sequentially and blocked on I/O calls like `requests.get`.
 - That meant no two Greenlets were able to call Flask simultaneously.
-- This was evident from the memory charts (which spiked due to Greenlets in memory) and timeout errors we saw in client (Greenlets were not able to process requests).
+- This was evident from the memory charts (which spiked due to Greenlets in memory) and timeout errors we saw in clients (Greenlets were not able to process requests).
 
-Here's where I messed up. I forgot to replace Python's standard blocking I/O with <MDXHighlight color="orange">Gevent-compatible versions</MDXHighlight>.
+Here's where I messed up. I completely missed replacing Python's standard blocking I/O with <MDXHighlight color="orange">Gevent-compatible versions</MDXHighlight> during the development phase.
 
 ```python
 from gevent import monkey
@@ -209,7 +209,7 @@ All services immediately showed the significant impact of the fix. Once new pods
 ![Request Throughput](/images/notes/my-bug-of-the-year-and-how-i-fixed-it/notification-service-request-throughput.webp "Graph showing dramatic drop in request throughput after monkey patch fix was deployed.")
 ![Request Latency](/images/notes/my-bug-of-the-year-and-how-i-fixed-it/notification-service-http-latency.webp "Graph showing significant drop in latency.")
 
-Email service incoming request rate also showed similar trend.
+Email service incoming request rate also showed a similar trend.
 ![Email service Incoming](/images/notes/my-bug-of-the-year-and-how-i-fixed-it/emailservice-api-request-rate.webp "Email service incoming request rate.")
 
 Lastly, the memory usage pattern of the Flask pods stabilized completely. The HPA bug I found earlier was also fixed during this deployment. The pods no longer showed increasing memory usage over time.
@@ -218,14 +218,14 @@ Lastly, the memory usage pattern of the Flask pods stabilized completely. The HP
 
 ## What I Learned
 
-This bug taught me that understanding your framework's internals isn't optional – it's essential. I thought I was using Gevent because I imported `WSGIServer`. I wasn't. I was using Gevent's connection handling with Python's blocking I/O, getting the worst of both worlds.
+This bug taught me that understanding your framework's internals isn't optional – it's essential. I thought I was using Gevent because I imported `gevent.pywsgi`. I wasn't. I was using Gevent's connection handling with Python's blocking I/O, getting the worst of both worlds.
 
 The three biggest lessons:
 
-1. **Read the docs thoroughly** - Gevent's [documentation](https://www.gevent.org/intro.html#monkey-patching) mentions monkey patching in the first paragraph. I skimmed it.
+1. **Read the docs thoroughly** - Gevent's [documentation](https://www.gevent.org/intro.html#monkey-patching) mentions monkey patching on the first page. I skimmed it.
 2. **Question your metrics** - When client and server metrics don't match, dig deeper.
 3. **Distributed tracing is your friend** - Missing server spans pointed directly to the problem.
 
 The fix was embarrassingly simple. The debugging was not. But that's software engineering – sometimes the smallest oversights create the biggest problems.
 
-And now I have a great story for "Tell me about a time you debugged a tricky production issue" interviews.
+And now I have a great story for "Tell me about a time you debugged a tricky production issue" question during interviews.
