@@ -102,6 +102,9 @@
     --primary-20: color-mix(in srgb, var(--primary) 20%, transparent);
     --primary-30: color-mix(in srgb, var(--primary) 30%, transparent);
     --primary-40: color-mix(in srgb, var(--primary) 40%, transparent);
+
+    /* Initialize Global Sidenote Counter */
+    counter-reset: sidenote-counter;
   }
 
   .dark {

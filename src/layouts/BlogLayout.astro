@@ -2,7 +2,6 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import '../styles/mdx.css';
 import 'katex/dist/katex.min.css';
-import Navigation from '../components/layout/Navigation.astro';
 import { format } from 'date-fns';
 import { Calendar, Clock, RefreshCw } from '@lucide/astro';
 import Breadcrumbs from '../components/content/Breadcrumbs.astro';
@@ -80,12 +79,13 @@ const encodedUrl = encodeURIComponent(`https://yashagarwal.in/notes/${slug}`);
 
 ---
 
-<BaseLayout title={title} description={description} image={image}>
-  <ReadingProgress targetId="article-body" />
-  <div class="mx-auto w-full max-w-3xl px-4 md:px-6">
-    <Navigation />
-  </div>
-  <main class="mx-auto flex w-full max-w-screen-2xl flex-1 flex-col py-8 xl:flex-row xl:justify-center">
+<BaseLayout
+    title={title}
+    description={description}
+    image={image}
+    mainClass="mx-auto grid w-full max-w-screen-2xl grid-cols-1 gap-0 py-8 xl:grid-cols-[16rem_minmax(0,48rem)_16rem] xl:justify-center"
+>
+  <ReadingProgress targetId="article-body" class="absolute" />
     {/* Left Column: Sticky TOC (Desktop) */}
     <aside
       class="hidden w-56 shrink-0 pl-4 xl:block xl:w-64 xl:pl-6"
@@ -175,6 +175,13 @@ const encodedUrl = encodeURIComponent(`https://yashagarwal.in/notes/${slug}`);
              </div>
           )}
 
+          <div class="border-t border-border pt-4">
+            <button onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" class="text-muted-foreground hover:text-foreground flex items-center gap-2 text-sm font-medium transition-colors cursor-pointer bg-transparent border-0 p-0">
+              <span class="uppercase">Top</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 9l5-5 5 5"/><path d="M4 20h7a4 4 0 0 0 4-4V4"/></svg>
+            </button>
+          </div>
+
           <div class="mt-8">
               <a href="/notes" class="text-muted-foreground hover:text-foreground flex items-center gap-2 text-sm font-medium transition-colors">
                   &larr; Back to Notes
@@ -241,7 +248,7 @@ const encodedUrl = encodeURIComponent(`https://yashagarwal.in/notes/${slug}`);
       )}
 
       <div class="mb-8">
-        <div id="article-body" class="prose prose-slate dark:prose-invert text-foreground max-w-none">
+        <div id="article-body" class="relative prose prose-slate dark:prose-invert text-foreground max-w-none">
           <slot />
         </div>
       </div>
@@ -295,5 +302,4 @@ const encodedUrl = encodeURIComponent(`https://yashagarwal.in/notes/${slug}`);
       class="hidden w-56 shrink-0 pr-4 xl:block xl:w-64 xl:pr-6"
       style="contain: layout style paint;"
     />
-  </main>
 </BaseLayout>

@@ -2,7 +2,6 @@
 import Breadcrumbs from "../../components/content/Breadcrumbs.astro"
 import NotePreview from "../../components/content/NotePreview.astro"
 import SearchInput from "../../components/interactive/SearchInput.astro"
-import Navigation from "../../components/layout/Navigation.astro"
 import Section from "../../components/ui/Section.astro"
 import BaseLayout from "../../layouts/BaseLayout.astro"
 import { getPreviewNotes } from "../../lib/content"
@@ -14,9 +13,8 @@ const breadcrumbItems = [{ label: "Home", href: "/" }, { label: "Notes" }]
 <BaseLayout
   title="Notes Archive"
   description="Browse through my collected thoughts and insights on various topics."
+  mainClass="mx-auto w-full max-w-3xl pb-18 px-4 md:px-6"
 >
-  <main class="w-full max-w-3xl flex-1 pb-18 px-4 md:px-6">
-    <Navigation />
 
     <Section title="Notes" count={notes.length}>
       <Breadcrumbs items={breadcrumbItems} class="mb-6" />
@@ -51,7 +49,6 @@ const breadcrumbItems = [{ label: "Home", href: "/" }, { label: "Notes" }]
         }
       </div>
     </Section>
-  </main>
 </BaseLayout>
 
 <script>
