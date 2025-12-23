@@ -3,7 +3,6 @@ import GithubSlugger from "github-slugger"
 
 import Breadcrumbs from "../../components/content/Breadcrumbs.astro"
 import NotePreview from "../../components/content/NotePreview.astro"
-import Navigation from "../../components/layout/Navigation.astro"
 import Section from "../../components/ui/Section.astro"
 import BaseLayout from "../../layouts/BaseLayout.astro"
 import { getPreviewNotes } from "../../lib/content"
@@ -46,9 +45,7 @@ const breadcrumbItems = [
 ]
 ---
 
-<BaseLayout title={`Category: ${categoryName}`} description={`Notes in category ${categoryName}`}>
-  <main class="w-full max-w-3xl flex-1 pb-18 px-4 md:px-6">
-    <Navigation />
+<BaseLayout title={`Category: ${categoryName}`} description={`Notes in category ${categoryName}`} mainClass="mx-auto w-full max-w-3xl pb-18 px-4 md:px-6">
     <Section title={categoryName} count={filteredNotes.length}>
       <Breadcrumbs items={breadcrumbItems} class="mb-6" />
 
@@ -62,5 +59,4 @@ const breadcrumbItems = [
         }
       </ul>
     </Section>
-  </main>
 </BaseLayout>

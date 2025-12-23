@@ -9,18 +9,22 @@ import geistSans500 from "@fontsource/geist-sans/files/geist-sans-latin-500-norm
 import geistSans600 from "@fontsource/geist-sans/files/geist-sans-latin-600-normal.woff2?url"
 
 import Footer from "../components/layout/Footer.astro"
+import Navigation from "../components/layout/Navigation.astro"
 import { siteConfig } from "../config/site"
+import { cn } from "../lib/utils"
 
 interface Props {
   title?: string
   description?: string
   image?: string
+  mainClass?: string
 }
 
 const {
   title = "Yash Agarwal",
   description = "Personal blog and portfolio",
   image = "/og-image.png",
+  mainClass = "mx-auto w-full max-w-3xl px-4 pb-20 md:px-6",
 } = Astro.props
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site || "https://yashagarwal.in")
@@ -112,9 +116,14 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || "https://yashagar
     )}
   </head>
   <body
-    class="flex flex-col items-center optimize-legibility min-h-dvh font-sans antialiased bg-background text-foreground selection:bg-slate-200 selection:text-slate-900 dark:selection:bg-slate-700 dark:selection:text-slate-100"
+    class="grid grid-rows-[auto_1fr_auto] optimize-legibility min-h-dvh font-sans antialiased bg-background text-foreground selection:bg-slate-200 selection:text-slate-900 dark:selection:bg-slate-700 dark:selection:text-slate-100"
   >
-    <slot />
+    <div class="mx-auto w-full max-w-3xl px-4 md:px-6">
+      <Navigation />
+    </div>
+    <main class={cn(mainClass)}>
+      <slot />
+    </main>
     <Footer />
     <script src="../pwa.ts"></script>
   </body>

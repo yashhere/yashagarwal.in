@@ -2,7 +2,6 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import '../styles/mdx.css';
 import 'katex/dist/katex.min.css';
-import Navigation from '../components/layout/Navigation.astro';
 import { format } from 'date-fns';
 import { Calendar, Clock, RefreshCw } from '@lucide/astro';
 import Breadcrumbs from '../components/content/Breadcrumbs.astro';
@@ -80,12 +79,13 @@ const encodedUrl = encodeURIComponent(`https://yashagarwal.in/notes/${slug}`);
 
 ---
 
-<BaseLayout title={title} description={description} image={image}>
-  <ReadingProgress targetId="article-body" />
-  <div class="mx-auto w-full max-w-3xl px-4 md:px-6">
-    <Navigation />
-  </div>
-  <main class="mx-auto flex w-full max-w-screen-2xl flex-1 flex-col py-8 xl:flex-row xl:justify-center">
+<BaseLayout
+    title={title}
+    description={description}
+    image={image}
+    mainClass="mx-auto grid w-full max-w-screen-2xl grid-cols-1 gap-0 py-8 xl:grid-cols-[16rem_minmax(0,48rem)_16rem] xl:justify-center"
+>
+  <ReadingProgress targetId="article-body" class="absolute" />
     {/* Left Column: Sticky TOC (Desktop) */}
     <aside
       class="hidden w-56 shrink-0 pl-4 xl:block xl:w-64 xl:pl-6"
@@ -295,5 +295,4 @@ const encodedUrl = encodeURIComponent(`https://yashagarwal.in/notes/${slug}`);
       class="hidden w-56 shrink-0 pr-4 xl:block xl:w-64 xl:pr-6"
       style="contain: layout style paint;"
     />
-  </main>
 </BaseLayout>
