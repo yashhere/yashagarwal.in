@@ -51,6 +51,7 @@
     "react-dom": "^19.2.3"
   },
   "devDependencies": {
+    "@alpinejs/collapse": "^3.15.3",
     "@commitlint/cli": "^20.2.0",
     "@commitlint/config-conventional": "^20.2.0",
     "@ianvs/prettier-plugin-sort-imports": "^4.7.0",

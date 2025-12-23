@@ -1,7 +1,10 @@
 import type { Alpine } from "alpinejs"
+import collapse from "@alpinejs/collapse"
 import tooltip from "@ryangjchandler/alpine-tooltip"
 
 export default (Alpine: Alpine) => {
+  Alpine.plugin(collapse)
+
   // Configure default tooltip options with Tippy.js defaults
   Alpine.plugin(tooltip, {
     theme: 'custom',
