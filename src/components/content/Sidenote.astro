@@ -1,0 +1,57 @@
+---
+interface Props {
+  title?: string
+  class?: string
+}
+
+const { title, class: className } = Astro.props
+const displayTitle = title || "Note"
+---
+
+<span x-data="{ open: false }" class:list={["sidenote-wrapper inline relative", className]}
+  ><button
+    @click="open = !open"
+    class="sidenote-trigger cursor-pointer text-primary font-bold text-xs align-super hover:underline decoration-primary/50 underline-offset-2 transition-all select-none bg-transparent border-0 p-0 m-0 leading-none"
+    aria-label="Toggle note"><span class="sr-only">Note</span></button
+  ><span
+    x-show="open"
+    x-collapse
+    @click="open = false"
+    class="sidenote-content xl:hidden block my-4 mx-4 p-4 bg-muted/30 border-l-2 border-primary rounded-r-md text-sm text-muted-foreground prose-sm cursor-pointer hover:bg-muted/50 transition-colors"
+    ><span class="block"
+      ><span
+        class="sidenote-number mb-1 block font-medium text-foreground text-xs uppercase tracking-wider"
+        ><span class="ml-1">{displayTitle}</span></span
+      ><span class="block leading-snug"><slot /></span></span
+    ></span
+  ><span
+    class="sidenote-content hidden xl:block float-right clear-right mr-[-16rem] w-56 text-sm text-muted-foreground bg-transparent relative z-10"
+    style="margin-top: 0.2rem;"
+    ><span class="block mb-4"
+      ><span
+        class="sidenote-number mb-1 block font-medium text-foreground text-xs uppercase tracking-wider"
+        ><span class="ml-1">{displayTitle}</span></span
+      ><span class="prose-sm leading-snug block"><slot /></span></span
+    ></span
+  ></span
+>
+
+<style>
+  /* Increment counter on the wrapper */
+  .sidenote-wrapper {
+    counter-increment: sidenote-counter;
+  }
+
+  /* Trigger displays the number */
+  .sidenote-trigger::after {
+    content: counter(sidenote-counter);
+    padding: 0;
+  }
+
+  /* Sidenote Title displays the SAME number with a dot */
+  .sidenote-number::before {
+    content: counter(sidenote-counter) ".";
+    color: var(--primary);
+    font-weight: 700;
+  }
+</style>
