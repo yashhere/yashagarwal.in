@@ -104,15 +104,23 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || "https://yashagar
 
     <!-- Cloudflare Web Analytics -->
     {import.meta.env.PROD && (
-      <script is:inline>
-        if (window.location.hostname === "yashagarwal.in" || window.location.hostname === "www.yashagarwal.in") {
-          const script = document.createElement("script")
-          script.src = "https://static.cloudflareinsights.com/beacon.min.js"
-          script.defer = true
-          script.setAttribute("data-cf-beacon", '{"token": "e14f712dcb3f4bb7aab3a2f606159e03"}')
-          document.head.appendChild(script)
-        }
-      </script>
+      <>
+        <script is:inline>
+          if (window.location.hostname === "yashagarwal.in" || window.location.hostname === "www.yashagarwal.in") {
+            const script = document.createElement("script")
+            script.src = "https://static.cloudflareinsights.com/beacon.min.js"
+            script.defer = true
+            script.setAttribute("data-cf-beacon", '{"token": "e14f712dcb3f4bb7aab3a2f606159e03"}')
+            document.head.appendChild(script)
+          }
+        </script>
+        <!-- Umami Analytics -->
+        <script
+          defer
+          src="https://analytics.yashagarwal.in/script.js"
+          data-website-id="e65b4c74-a2c2-4ddc-968b-45b4dc2152ce"
+        ></script>
+      </>
     )}
   </head>
   <body

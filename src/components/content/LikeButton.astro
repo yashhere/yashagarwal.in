@@ -1,0 +1,37 @@
+---
+interface Props {
+  slug: string;
+  class?: string;
+}
+const { slug, class: className } = Astro.props;
+---
+
+<div x-data={`likeButton('${slug}')`} class={className}>
+  <button
+    @click="toggleLike"
+    :disabled="submitting"
+    class="flex items-center gap-2 rounded-lg border border-border px-3 py-1.5 text-sm transition-all hover:border-primary hover:bg-primary/5 disabled:opacity-50 disabled:cursor-not-allowed"
+    :class="{ 'border-primary bg-primary/10 text-primary': hasLiked, 'text-muted-foreground': !hasLiked }"
+    aria-label="Like this post"
+  >
+    <!-- Heart icon (filled when liked) -->
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      :fill="hasLiked ? 'currentColor' : 'none'"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="transition-all"
+      :class="{ 'scale-110': submitting }"
+    >
+      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+    </svg>
+
+    <span x-text="likes" class="font-medium"></span>
+    <span x-show="loading" class="animate-pulse" style="display: none">···</span>
+  </button>
+</div>

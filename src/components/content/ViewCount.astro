@@ -1,0 +1,16 @@
+---
+interface Props {
+  slug: string;
+  class?: string;
+}
+const { slug, class: className } = Astro.props;
+---
+
+<div x-data={`viewCounter('${slug}')`} class={className}>
+  <span x-show="loading" class="text-muted-foreground text-sm">
+    <span class="inline-block animate-pulse">···</span>
+  </span>
+  <span x-show="!loading && views !== null" class="text-muted-foreground text-sm" style="display: none">
+    <span x-text="views?.toLocaleString()"></span> views
+  </span>
+</div>

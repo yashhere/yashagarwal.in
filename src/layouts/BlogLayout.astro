@@ -16,6 +16,8 @@ import MobileTOC from '../components/content/MobileTOC.astro';
 import MobileActions from '../components/content/MobileActions.astro';
 import Comments from '../components/interactive/Comments.astro';
 import ReadingProgress from '../components/content/ReadingProgress.astro';
+import ViewCount from '../components/content/ViewCount.astro';
+import LikeButton from '../components/content/LikeButton.astro';
 
 import GithubSlugger from 'github-slugger';
 
@@ -220,6 +222,12 @@ const encodedUrl = encodeURIComponent(`https://yashagarwal.in/notes/${slug}`);
                </span>
             </>
            )}
+        </div>
+        
+        <div class="flex items-center gap-3 text-sm mt-3 pt-3 border-t border-border/40">
+            <ViewCount slug={slug} />
+            <span class="text-muted-foreground">•</span>
+            <LikeButton slug={slug} />
         </div>
       </section>
 
