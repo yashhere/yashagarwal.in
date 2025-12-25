@@ -44,11 +44,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || "https://yashagar
     <link rel="canonical" href={canonicalURL} />
     <link rel="alternate" type="application/rss+xml" title={siteConfig.name} href="/rss.xml" />
 
-    <!-- Preconnect to Cloudflare Analytics for faster script loading -->
-    {import.meta.env.PROD && (
-      <link rel="preconnect" href="https://static.cloudflareinsights.com" crossorigin="anonymous" />
-    )}
-
     <title>{title}</title>
     <meta name="description" content={description} />
 
@@ -102,19 +97,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || "https://yashagar
 
     <slot name="head" />
 
-    <!-- Cloudflare Web Analytics -->
+    <!-- Umami Analytics -->
     {import.meta.env.PROD && (
       <>
-        <script is:inline>
-          if (window.location.hostname === "yashagarwal.in" || window.location.hostname === "www.yashagarwal.in") {
-            const script = document.createElement("script")
-            script.src = "https://static.cloudflareinsights.com/beacon.min.js"
-            script.defer = true
-            script.setAttribute("data-cf-beacon", '{"token": "e14f712dcb3f4bb7aab3a2f606159e03"}')
-            document.head.appendChild(script)
-          }
-        </script>
-        <!-- Umami Analytics -->
         <script
           defer
           src="https://analytics.yashagarwal.in/script.js"
