@@ -141,12 +141,26 @@ export default (Alpine: Alpine) => {
       // Listen for storage events to sync across tabs
       window.addEventListener("storage", this.handleStorageChange.bind(this))
 
+      // Listen for same-page like state changes
+      window.addEventListener("likeStateChanged", this.handleLikeStateChange.bind(this) as EventListener)
+
       await this.fetchLikes()
     },
 
     destroy() {
-      // Cleanup event listener when component is destroyed
+      // Cleanup event listeners when component is destroyed
       window.removeEventListener("storage", this.handleStorageChange.bind(this))
+      window.removeEventListener("likeStateChanged", this.handleLikeStateChange.bind(this) as EventListener)
+    },
+
+    handleLikeStateChange(e: Event) {
+      // Sync state when another like button on the same page changes
+      const customEvent = e as CustomEvent<{ slug: string; hasLiked: boolean }>
+      if (customEvent.detail.slug === this.slug) {
+        this.hasLiked = customEvent.detail.hasLiked
+        // Optionally refetch to get accurate count
+        this.fetchLikes()
+      }
     },
 
     handleStorageChange(e: StorageEvent) {
@@ -279,6 +293,11 @@ export default (Alpine: Alpine) => {
         }
 
         setLikedPosts(likedPosts)
+
+        // Dispatch custom event for same-page sync (storage event only works cross-tab)
+        window.dispatchEvent(new CustomEvent('likeStateChanged', {
+          detail: { slug: this.slug, hasLiked: shouldAdd }
+        }))
       } catch (_e) {
         console.error("Failed to update localStorage:", _e)
       }

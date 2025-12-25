@@ -9,24 +9,24 @@ const { slug, class: className } = Astro.props;
 ---
 
 <div x-data="likeButton" data-slug={slug} class={className}>
-  <button
-    @click="toggleLike"
-    :disabled="submitting || loading"
-    class="flex items-center gap-2 rounded-lg border border-border px-3 py-1.5 text-sm transition-all hover:border-primary hover:bg-primary/5 disabled:opacity-50 disabled:cursor-not-allowed"
-    :class="{ 'border-primary bg-primary/10 text-primary': !loading && hasLiked, 'text-muted-foreground': !loading && !hasLiked }"
-    aria-label="Like this post"
-  >
-    <span class="w-4 h-4 flex items-center justify-center shrink-0">
-      <!-- Heart icon (shows correct liked state) -->
-      <span x-show="!submitting" :class="{ 'fill-current': !loading && hasLiked }">
-        <Heart size={16} :fill="!loading && hasLiked ? 'currentColor' : 'none'" />
-      </span>
+    <button
+      @click="toggleLike"
+      :disabled="submitting || loading"
+      class="flex items-center gap-2 rounded-lg border border-border px-3 py-1.5 text-sm transition-all hover:border-red-500 hover:bg-red-500/5 disabled:opacity-50 disabled:cursor-not-allowed"
+      :class="{ 'border-red-500 bg-red-500/10 text-red-500': !loading && hasLiked, 'text-muted-foreground': !loading && !hasLiked }"
+      aria-label="Like this post"
+    >
+      <span class="w-4 h-4 flex items-center justify-center shrink-0">
+        <!-- Heart icon (shows correct liked state) -->
+        <span x-show="!submitting" :class="{ 'fill-current text-red-500': !loading && hasLiked }">
+          <Heart size={16} :fill="!loading && hasLiked ? 'currentColor' : 'none'" />
+        </span>
 
-      <!-- Spinner when submitting -->
-      <span x-show="submitting" x-cloak class="animate-spin">
-        <LoaderCircle size={16} />
+        <!-- Spinner when submitting -->
+        <span x-show="submitting" x-cloak class="animate-spin">
+          <LoaderCircle size={16} />
+        </span>
       </span>
-    </span>
 
     <!-- Only animate the count number, not the icon -->
     <span class="font-medium inline-flex items-center justify-center min-w-[1.5rem] min-h-[1.25rem] tabular-nums">

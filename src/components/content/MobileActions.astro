@@ -92,13 +92,13 @@ const { postSlug } = Astro.props;
             @click.stop="toggleLike"
             :disabled="submitting || loading"
             class="group flex flex-col items-center gap-1 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-            :class="hasLiked ? 'text-primary' : 'text-muted-foreground hover:text-foreground'"
+            :class="(!loading && hasLiked) ? 'text-red-500' : 'text-muted-foreground hover:text-foreground'"
             aria-label="Like this post"
           >
-            <div class="rounded-full p-2 transition-colors" :class="hasLiked ? 'bg-primary/10' : 'group-hover:bg-muted'">
+            <div class="rounded-full p-2 transition-colors" :class="(!loading && hasLiked) ? 'bg-red-500/10' : 'group-hover:bg-muted'">
               <span class="w-5 h-5 flex items-center justify-center">
                 <span x-show="!submitting">
-                  <Heart size={20} :fill="hasLiked ? 'currentColor' : 'none'" />
+                  <Heart size={20} :fill="(!loading && hasLiked) ? 'currentColor' : 'none'" />
                 </span>
                 <span x-show="submitting" x-cloak class="animate-spin">
                   <LoaderCircleIcon size={20} />
