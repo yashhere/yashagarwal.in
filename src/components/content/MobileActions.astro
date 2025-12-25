@@ -1,6 +1,11 @@
 ---
-import { List, ArrowUp } from '@lucide/astro';
+import { List, Heart, LoaderCircleIcon } from '@lucide/astro';
 
+interface Props {
+  postSlug?: string;
+}
+
+const { postSlug } = Astro.props;
 ---
 
 <div
@@ -80,19 +85,32 @@ import { List, ArrowUp } from '@lucide/astro';
         </span>
       </button>
 
-      <!-- Scroll Top Button -->
-      <button
-        @click.stop="scrollToTop"
-        class="text-muted-foreground hover:text-foreground group flex flex-col items-center gap-1 transition-colors"
-        aria-label="Scroll to top"
-      >
-        <div class="group-hover:bg-muted rounded-full p-2 transition-colors">
-            <ArrowUp class="h-5 w-5" />
+      <!-- Like Button -->
+      {postSlug && (
+        <div x-data="likeButton" data-slug={postSlug}>
+          <button
+            @click.stop="toggleLike"
+            :disabled="submitting || loading"
+            class="group flex flex-col items-center gap-1 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            :class="hasLiked ? 'text-primary' : 'text-muted-foreground hover:text-foreground'"
+            aria-label="Like this post"
+          >
+            <div class="rounded-full p-2 transition-colors" :class="hasLiked ? 'bg-primary/10' : 'group-hover:bg-muted'">
+              <span class="w-5 h-5 flex items-center justify-center">
+                <span x-show="!submitting">
+                  <Heart size={20} :fill="hasLiked ? 'currentColor' : 'none'" />
+                </span>
+                <span x-show="submitting" x-cloak class="animate-spin">
+                  <LoaderCircleIcon size={20} />
+                </span>
+              </span>
+            </div>
+            <span class="text-[10px] font-medium tracking-wider uppercase">
+              Like
+            </span>
+          </button>
         </div>
-        <span class="text-[10px] font-medium tracking-wider uppercase">
-          Top
-        </span>
-      </button>
+      )}
     </div>
 
     <!-- Collapsed state -->

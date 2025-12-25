@@ -60,17 +60,7 @@ function setLikedPosts(posts: string[]) {
 
 export default (Alpine: Alpine) => {
   Alpine.plugin(collapse)
-
-  // Configure default tooltip options with Tippy.js defaults
-  Alpine.plugin(tooltip, {
-    theme: "custom",
-    placement: "top",
-    arrow: false,
-    interactive: true, // Allow touch interaction on mobile
-    touch: ["hold", 500], // Show on long press (500ms)
-    hideOnClick: true,
-    maxWidth: "none", // We handle max-width in CSS
-  })
+  Alpine.plugin(tooltip)
 
   // View Counter Component
   Alpine.data("viewCounter", () => ({
@@ -101,6 +91,15 @@ export default (Alpine: Alpine) => {
 
     async fetchViews() {
       try {
+        // Return mock data in dev to avoid polluting production stats
+        if (IS_DEV) {
+          await new Promise((resolve) => setTimeout(resolve, 500)) // Simulate network delay
+          this.views = Math.floor(Math.random() * 100) + 50 // Random 50-150
+          this.loading = false
+          console.log("[DEV] Mock views for", this.slug, ":", this.views)
+          return
+        }
+
         const response = await fetchWithTimeout(
           `${API_BASE_URL}/api/query/${encodeURIComponent(this.slug)}`
         )
@@ -173,6 +172,19 @@ export default (Alpine: Alpine) => {
 
     async fetchLikes() {
       try {
+        // Return mock data in dev to avoid polluting production stats
+        if (IS_DEV) {
+          await new Promise((resolve) => setTimeout(resolve, 500)) // Simulate network delay
+          const likedPosts = getLikedPosts()
+          const mockLikes = Math.floor(Math.random() * 20) + 5 // Random 5-25
+          this.likes = likedPosts.includes(this.slug)
+            ? mockLikes
+            : mockLikes - 1
+          this.loading = false
+          console.log("[DEV] Mock likes for", this.slug, ":", this.likes)
+          return
+        }
+
         const response = await fetchWithTimeout(
           `${API_BASE_URL}/api/likes/${encodeURIComponent(this.slug)}`
         )
@@ -202,6 +214,21 @@ export default (Alpine: Alpine) => {
       this.likes += this.hasLiked ? 1 : -1
 
       try {
+        // Mock like/unlike in dev to avoid polluting production stats
+        if (IS_DEV) {
+          await new Promise((resolve) => setTimeout(resolve, 300)) // Simulate network delay
+          // Update localStorage
+          this.updateLocalStorage(this.hasLiked)
+          console.log(
+            "[DEV] Mock like action:",
+            this.hasLiked ? "like" : "unlike",
+            "for",
+            this.slug
+          )
+          this.submitting = false
+          return
+        }
+
         // Send like/unlike action to new DO-based endpoint with timeout
         const response = await fetchWithTimeout(
           `${API_BASE_URL}/api/likes/${encodeURIComponent(this.slug)}`,
