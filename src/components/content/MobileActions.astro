@@ -105,7 +105,7 @@ const { postSlug } = Astro.props;
                 </span>
               </span>
             </div>
-            <span class="text-[10px] font-medium tracking-wider uppercase">
+            <span class="text-[10px] font-medium tracking-wider uppercase" x-text="hasLiked ? 'Unlike' : 'Like'">
               Like
             </span>
           </button>
