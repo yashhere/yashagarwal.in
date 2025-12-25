@@ -9,6 +9,7 @@ const IS_DEV =
     window.location.hostname === "127.0.0.1")
 const API_BASE_URL = IS_DEV ? "" : "https://analytics.yashagarwal.in"
 const REQUEST_TIMEOUT = 8000 // 8 seconds
+const LIKED_POSTS_KEY = "liked_posts" as const
 
 // Fetch with timeout to prevent hanging requests
 async function fetchWithTimeout(
@@ -39,7 +40,7 @@ function getLikedPosts(): string[] {
   if (likedPostsCache !== null) return likedPostsCache
 
   try {
-    const stored = localStorage.getItem("liked_posts")
+    const stored = localStorage.getItem(LIKED_POSTS_KEY)
     if (stored) {
       const parsed = JSON.parse(stored)
       likedPostsCache = Array.isArray(parsed) ? parsed : []
@@ -47,15 +48,15 @@ function getLikedPosts(): string[] {
       likedPostsCache = []
     }
   } catch {
-    localStorage.removeItem("liked_posts")
+    localStorage.removeItem(LIKED_POSTS_KEY)
     likedPostsCache = []
   }
   return likedPostsCache
 }
 
-function setLikedPosts(posts: string[]) {
+function setLikedPosts(posts: string[]): void {
   likedPostsCache = posts
-  localStorage.setItem("liked_posts", JSON.stringify(posts))
+  localStorage.setItem(LIKED_POSTS_KEY, JSON.stringify(posts))
 }
 
 export default (Alpine: Alpine) => {
@@ -89,7 +90,7 @@ export default (Alpine: Alpine) => {
       observer.observe(this.$el)
     },
 
-    async fetchViews() {
+    async fetchViews(): Promise<void> {
       try {
         // Return mock data in dev to avoid polluting production stats
         if (IS_DEV) {
@@ -107,7 +108,8 @@ export default (Alpine: Alpine) => {
         const data = await response.json()
 
         // Use the exact count from Umami (it handles session deduplication)
-        this.views = data.views || 0
+        // Validate response type to ensure numeric value
+        this.views = typeof data.views === 'number' ? data.views : 0
       } catch (error) {
         console.error("Failed to load views:", error)
         this.views = null
@@ -163,9 +165,9 @@ export default (Alpine: Alpine) => {
       }
     },
 
-    handleStorageChange(e: StorageEvent) {
+    handleStorageChange(e: StorageEvent): void {
       // Sync liked state when another tab updates localStorage
-      if (e.key === "liked_posts" && e.newValue) {
+      if (e.key === LIKED_POSTS_KEY && e.newValue) {
         try {
           const likedPosts = JSON.parse(e.newValue)
           const wasLiked = this.hasLiked
@@ -184,7 +186,7 @@ export default (Alpine: Alpine) => {
       }
     },
 
-    async fetchLikes() {
+    async fetchLikes(): Promise<void> {
       try {
         // Return mock data in dev to avoid polluting production stats
         if (IS_DEV) {
@@ -204,7 +206,8 @@ export default (Alpine: Alpine) => {
         )
         if (!response.ok) throw new Error(`HTTP ${response.status}`)
         const data = await response.json()
-        this.likes = data.likes || 0
+        // Validate response type to ensure numeric value
+        this.likes = typeof data.likes === 'number' ? data.likes : 0
       } catch (error) {
         console.error("Failed to load likes:", error)
       } finally {
@@ -212,7 +215,7 @@ export default (Alpine: Alpine) => {
       }
     },
 
-    async toggleLike() {
+    async toggleLike(): Promise<void> {
       // Atomic check-and-set to prevent race condition from rapid clicks
       if (this.submitting) return
       this.submitting = true
@@ -257,9 +260,10 @@ export default (Alpine: Alpine) => {
 
         if (!response.ok) throw new Error(`HTTP ${response.status}`)
 
-        // Backend returns the updated count - use it (overrides optimistic update)
+        // Backend returns the updated count - intentionally overrides optimistic update
+        // to ensure server is the source of truth and handle concurrent updates correctly
         const data = await response.json()
-        if (data.likes !== undefined) {
+        if (typeof data.likes === 'number') {
           this.likes = data.likes
         }
 
@@ -270,13 +274,13 @@ export default (Alpine: Alpine) => {
         this.hasLiked = wasLiked
         this.likes = previousLikes
         console.error("Failed to update like:", error)
-        alert("Failed to update like. Please try again.")
+        // Error is silently handled - button state reverts to show user the action failed
       } finally {
         this.submitting = false
       }
     },
 
-    updateLocalStorage(shouldAdd: boolean) {
+    updateLocalStorage(shouldAdd: boolean): void {
       // Atomic read-modify-write using cached value to prevent race conditions
       try {
         const likedPosts = getLikedPosts()
