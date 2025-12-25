@@ -4,6 +4,7 @@ import WorkExperience from "../components/content/WorkExperience.astro"
 import Heading from "../components/ui/Heading.astro"
 import Section from "../components/ui/Section.astro"
 import BaseLayout from "../layouts/BaseLayout.astro"
+import { Icon } from 'astro-icon/components'
 
 const breadcrumbItems = [{ label: "Home", href: "/" }, { label: "Work" }]
 ---
@@ -30,18 +31,7 @@ const breadcrumbItems = [{ label: "Home", href: "/" }, { label: "Work" }]
       </section>
 
       <div class="mb-8 flex items-center gap-2">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 256 256"
-          fill="currentColor"
-          class="text-foreground h-6 w-6"
-        >
-          <path
-            d="M216,40H173.33a48,48,0,0,0-90.66,0H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM128,40a32,32,0,0,1,32,32H96A32,32,0,0,1,128,40Zm88,160H40V56H83.82A47.88,47.88,0,0,0,80,72v8a8,8,0,0,0,8,8h80a8,8,0,0,0,8-8V72a47.88,47.88,0,0,0-3.82-16H216V200Z"
-          ></path>
-        </svg>
+        <Icon name="lucide:briefcase" class="text-foreground h-6 w-6" />
         <Heading level="h3" class="text-foreground"> Experience </Heading>
       </div>
 

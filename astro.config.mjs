@@ -7,6 +7,7 @@ import sitemap from "@astrojs/sitemap"
 import tailwindcss from "@tailwindcss/vite"
 import AstroPWA from "@vite-pwa/astro"
 import { defineConfig } from "astro/config"
+import icon from "astro-icon"
 import rehypeAutolinkHeadings from "rehype-autolink-headings"
 import rehypeKatex from "rehype-katex"
 import rehypeMermaid from "rehype-mermaid"
@@ -116,6 +117,7 @@ export default defineConfig({
   },
 
   integrations: [
+    icon(),
     alpinejs({
       entrypoint: "/src/alpine-plugins.ts",
     }),

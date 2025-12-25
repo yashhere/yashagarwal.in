@@ -1,5 +1,5 @@
 ---
-import { MoonStar, Sun } from "@lucide/astro"
+import { Icon } from 'astro-icon/components'
 ---
 
 <theme-toggle>
@@ -12,12 +12,12 @@ import { MoonStar, Sun } from "@lucide/astro"
       <div
         class="absolute inset-0 flex items-center justify-center transition-all duration-200 dark:-rotate-90 dark:scale-0 dark:opacity-0"
       >
-        <Sun class="text-foreground h-5 w-5" />
+        <Icon name="lucide:sun" class="text-foreground h-5 w-5" />
       </div>
       <div
         class="absolute inset-0 flex items-center justify-center rotate-90 scale-0 opacity-0 transition-all duration-200 dark:rotate-0 dark:scale-100 dark:opacity-100"
       >
-        <MoonStar class="text-foreground h-5 w-5" />
+        <Icon name="lucide:moon-star" class="text-foreground h-5 w-5" />
       </div>
     </div>
   </button>

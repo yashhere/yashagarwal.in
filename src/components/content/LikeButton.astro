@@ -1,5 +1,5 @@
 ---
-import { Heart, LoaderCircle } from '@lucide/astro';
+import { Icon } from 'astro-icon/components';
 
 interface Props {
   slug: string;
@@ -19,19 +19,19 @@ const { slug, class: className } = Astro.props;
       <span class="w-4 h-4 flex items-center justify-center shrink-0">
         <!-- Heart icon (shows correct liked state) -->
         <span x-show="!submitting" :class="{ 'fill-current text-red-500': !loading && hasLiked }">
-          <Heart size={16} :fill="!loading && hasLiked ? 'currentColor' : 'none'" />
+          <Icon name="lucide:heart" width="16" height="16" :fill="!loading && hasLiked ? 'currentColor' : 'none'" />
         </span>
 
         <!-- Spinner when submitting -->
         <span x-show="submitting" x-cloak class="animate-spin">
-          <LoaderCircle size={16} />
+          <Icon name="lucide:loader-circle" width="16" height="16" />
         </span>
       </span>
 
     <!-- Only animate the count number, not the icon -->
     <span class="font-medium inline-flex items-center justify-center min-w-[1.5rem] min-h-[1.25rem] tabular-nums">
       <span x-show="loading" class="animate-spin">
-        <LoaderCircle size={14} />
+        <Icon name="lucide:loader-circle" width="14" height="14" />
       </span>
       <span x-show="!loading" x-cloak x-text="likes"></span>
     </span>

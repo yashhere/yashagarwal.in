@@ -1,5 +1,5 @@
 ---
-import { List, Heart, LoaderCircleIcon } from '@lucide/astro';
+import { Icon } from 'astro-icon/components';
 
 interface Props {
   postSlug?: string;
@@ -78,7 +78,7 @@ const { postSlug } = Astro.props;
         aria-label="Table of Contents"
       >
         <div class="group-hover:bg-muted rounded-full p-2 transition-colors">
-          <List class="h-5 w-5" />
+          <Icon name="lucide:list" class="h-5 w-5" />
         </div>
         <span class="text-[10px] font-medium tracking-wider uppercase">
           Sections
@@ -98,10 +98,10 @@ const { postSlug } = Astro.props;
             <div class="rounded-full p-2 transition-colors" :class="(!loading && hasLiked) ? 'bg-red-500/10' : 'group-hover:bg-muted'">
               <span class="w-5 h-5 flex items-center justify-center">
                 <span x-show="!submitting">
-                  <Heart size={20} :fill="(!loading && hasLiked) ? 'currentColor' : 'none'" />
+                  <Icon name="lucide:heart" width="20" height="20" :fill="(!loading && hasLiked) ? 'currentColor' : 'none'" />
                 </span>
                 <span x-show="submitting" x-cloak class="animate-spin">
-                  <LoaderCircleIcon size={20} />
+                  <Icon name="lucide:loader-circle" width="20" height="20" />
                 </span>
               </span>
             </div>

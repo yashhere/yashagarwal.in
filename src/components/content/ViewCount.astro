@@ -1,5 +1,5 @@
 ---
-import { Eye, LoaderCircle } from '@lucide/astro';
+import { Icon } from 'astro-icon/components';
 
 interface Props {
   slug: string;
@@ -10,11 +10,11 @@ const { slug, class: className } = Astro.props;
 
 <div x-data="viewCounter" data-slug={slug} class={className}>
   <span class="flex items-center gap-1">
-    <Eye class="h-3.5 w-3.5" />
+    <Icon name="lucide:eye" class="h-3.5 w-3.5" />
     
     <span class="inline-flex items-center tabular-nums">
       <span x-show="loading" class="animate-spin">
-        <LoaderCircle class="h-3.5 w-3.5" />
+        <Icon name="lucide:loader-circle" class="h-3.5 w-3.5" />
       </span>
       <span x-show="!loading && views !== null" x-cloak x-text="views?.toLocaleString()"></span>
     </span>

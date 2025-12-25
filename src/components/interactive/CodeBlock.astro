@@ -1,5 +1,5 @@
 ---
-import { Check, Copy } from '@lucide/astro';
+import { Icon } from 'astro-icon/components';
 
 const { class: className, ...props } = Astro.props;
 const lang = props['data-language'];
@@ -23,10 +23,10 @@ const isCodeBlock = props['data-theme'] || lang;
           aria-label="Copy code"
         >
           <span x-show="!copied">
-              <Copy class="h-4 w-4" />
+              <Icon name="lucide:copy" class="h-4 w-4" />
           </span>
           <span x-show="copied" x-cloak>
-              <Check class="h-4 w-4" />
+              <Icon name="lucide:check" class="h-4 w-4" />
           </span>
         </button>
 

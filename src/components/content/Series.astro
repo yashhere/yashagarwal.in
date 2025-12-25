@@ -1,5 +1,5 @@
 ---
-import { ChevronDown, ListOrdered } from "@lucide/astro"
+import { Icon } from 'astro-icon/components'
 
 import { getSeriesNotes } from "../../lib/content"
 
@@ -30,7 +30,7 @@ const displayIndex = currentIndex + 1
   >
     <div class="flex flex-col gap-0.5">
       <div class="flex items-center gap-1.5">
-        <ListOrdered class="text-muted-foreground h-3 w-3" />
+        <Icon name="lucide:list-ordered" class="text-muted-foreground h-3 w-3" />
         <span class="text-muted-foreground text-xs font-medium tracking-wider uppercase">
           Series
         </span>
@@ -47,7 +47,7 @@ const displayIndex = currentIndex + 1
       class="text-muted-foreground group-hover:text-foreground flex h-5 w-5 items-center justify-center rounded-md transition-all duration-200 hover:cursor-pointer"
       :class="isOpen && 'rotate-180'"
     >
-      <ChevronDown class="h-4 w-4" />
+      <Icon name="lucide:chevron-down" class="h-4 w-4" />
     </span>
   </button>
 
