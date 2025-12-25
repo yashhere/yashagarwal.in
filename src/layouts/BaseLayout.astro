@@ -118,7 +118,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || "https://yashagar
         <script
           defer
           src="https://analytics.yashagarwal.in/script.js"
-          data-website-id="e65b4c74-a2c2-4ddc-968b-45b4dc2152ce"
+          data-website-id={siteConfig.analytics.umamiWebsiteId}
         ></script>
       </>
     )}

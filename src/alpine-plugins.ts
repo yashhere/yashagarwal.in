@@ -1,18 +1,43 @@
-import type { Alpine } from "alpinejs"
 import collapse from "@alpinejs/collapse"
 import tooltip from "@ryangjchandler/alpine-tooltip"
+import type { Alpine } from "alpinejs"
 
 // Environment detection - calculated once at module level
-const IS_DEV = typeof window !== 'undefined' && 
-  (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")
+const IS_DEV =
+  typeof window !== "undefined" &&
+  (window.location.hostname === "localhost" ||
+    window.location.hostname === "127.0.0.1")
 const API_BASE_URL = IS_DEV ? "" : "https://analytics.yashagarwal.in"
+const REQUEST_TIMEOUT = 8000 // 8 seconds
+
+// Fetch with timeout to prevent hanging requests
+async function fetchWithTimeout(
+  url: string,
+  options: RequestInit = {},
+  timeout = REQUEST_TIMEOUT
+): Promise<Response> {
+  const controller = new AbortController()
+  const timeoutId = setTimeout(() => controller.abort(), timeout)
+
+  try {
+    const response = await fetch(url, {
+      ...options,
+      signal: controller.signal,
+    })
+    clearTimeout(timeoutId)
+    return response
+  } catch (error) {
+    clearTimeout(timeoutId)
+    throw error
+  }
+}
 
 // localStorage cache for liked posts
 let likedPostsCache: string[] | null = null
 
 function getLikedPosts(): string[] {
   if (likedPostsCache !== null) return likedPostsCache
-  
+
   try {
     const stored = localStorage.getItem("liked_posts")
     if (stored) {
@@ -69,15 +94,15 @@ export default (Alpine: Alpine) => {
             observer.disconnect()
           }
         },
-        { rootMargin: "100px" },
+        { rootMargin: "100px" }
       )
       observer.observe(this.$el)
     },
 
     async fetchViews() {
       try {
-        const response = await fetch(
-          `${API_BASE_URL}/api/query/${encodeURIComponent(this.slug)}`,
+        const response = await fetchWithTimeout(
+          `${API_BASE_URL}/api/query/${encodeURIComponent(this.slug)}`
         )
         if (!response.ok) throw new Error(`HTTP ${response.status}`)
         const data = await response.json()
@@ -131,7 +156,7 @@ export default (Alpine: Alpine) => {
         try {
           const likedPosts = JSON.parse(e.newValue)
           const wasLiked = this.hasLiked
-          
+
           // Invalidate cache and update
           likedPostsCache = Array.isArray(likedPosts) ? likedPosts : []
           this.hasLiked = likedPostsCache.includes(this.slug)
@@ -148,8 +173,8 @@ export default (Alpine: Alpine) => {
 
     async fetchLikes() {
       try {
-        const response = await fetch(
-          `${API_BASE_URL}/api/likes/${encodeURIComponent(this.slug)}`,
+        const response = await fetchWithTimeout(
+          `${API_BASE_URL}/api/likes/${encodeURIComponent(this.slug)}`
         )
         if (!response.ok) throw new Error(`HTTP ${response.status}`)
         const data = await response.json()
@@ -162,9 +187,13 @@ export default (Alpine: Alpine) => {
     },
 
     async toggleLike() {
+      // Atomic check-and-set to prevent race condition from rapid clicks
       if (this.submitting) return
-
       this.submitting = true
+
+      // Yield to allow DOM update (button disable) before processing
+      await new Promise((resolve) => setTimeout(resolve, 0))
+
       const wasLiked = this.hasLiked
       const previousLikes = this.likes
 
@@ -173,8 +202,8 @@ export default (Alpine: Alpine) => {
       this.likes += this.hasLiked ? 1 : -1
 
       try {
-        // Send like/unlike action to new DO-based endpoint
-        const response = await fetch(
+        // Send like/unlike action to new DO-based endpoint with timeout
+        const response = await fetchWithTimeout(
           `${API_BASE_URL}/api/likes/${encodeURIComponent(this.slug)}`,
           {
             method: "POST",
@@ -182,7 +211,7 @@ export default (Alpine: Alpine) => {
             body: JSON.stringify({
               action: this.hasLiked ? "like" : "unlike",
             }),
-          },
+          }
         )
 
         if (!response.ok) throw new Error(`HTTP ${response.status}`)
