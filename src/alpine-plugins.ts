@@ -45,6 +45,8 @@ export default (Alpine: Alpine) => {
         )
         if (!response.ok) throw new Error(`HTTP ${response.status}`)
         const data = await response.json()
+
+        // Use the exact count from Umami (it handles session deduplication)
         this.views = data.views || 0
       } catch (error) {
         console.error("Failed to load views:", error)
@@ -112,36 +114,24 @@ export default (Alpine: Alpine) => {
         const isDev = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
         const baseUrl = isDev ? "" : "https://analytics.yashagarwal.in"
 
-        // Send Umami event to /api/send
+        // Send like/unlike action to new DO-based endpoint
         const response = await fetch(
-          `${baseUrl}/api/send`,
+          `${baseUrl}/api/likes/${encodeURIComponent(slug)}`,
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-              website: "e65b4c74-a2c2-4ddc-968b-45b4dc2152ce",
-              url: `/notes/${slug}`,
-              hostname: window.location.hostname,
-              name: this.hasLiked ? "like" : "unlike",
-              data: {
-                slug: slug,
-                action: this.hasLiked ? "like" : "unlike",
-              },
+              action: this.hasLiked ? "like" : "unlike",
             }),
           },
         )
 
         if (!response.ok) throw new Error(`HTTP ${response.status}`)
 
-        // If the backend returns the updated count, use it.
-        // Otherwise keep the optimistic count.
-        try {
-            const data = await response.json()
-            if (data.likes !== undefined) {
-                this.likes = data.likes
-            }
-        } catch (e) {
-            // Ignore JSON parse error if response is empty
+        // Backend returns the updated count - use it (overrides optimistic update)
+        const data = await response.json()
+        if (data.likes !== undefined) {
+          this.likes = data.likes
         }
 
         // Update localStorage
