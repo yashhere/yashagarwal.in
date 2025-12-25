@@ -181,63 +181,64 @@ export default defineConfig({
       ],
     }),
     sitemap(),
-    AstroPWA({
-      mode: "production",
-      base: "/",
-      scope: "/",
-      includeAssets: ["favicon.svg", "favicon.ico", "apple-icon.png"],
-      registerType: "autoUpdate",
-      injectRegister: "auto",
-      manifest: {
-        name: "Yash Agarwal",
-        short_name: "Yash",
-        description: "Personal blog and portfolio of Yash Agarwal.",
-        theme_color: "#faf7f5",
-        background_color: "#faf7f5",
-        display: "standalone",
-        start_url: "/",
-        scope: "/",
-        orientation: "portrait",
-        lang: "en",
-        dir: "ltr",
-        categories: ["education", "lifestyle"],
-        icons: [
-          {
-            src: "/icons/pwa-192x192.png",
-            sizes: "192x192",
-            type: "image/png",
-            purpose: "any",
-          },
-          {
-            src: "/icons/pwa-512x512.png",
-            sizes: "512x512",
-            type: "image/png",
-            purpose: "any",
-          },
-          {
-            src: "/icons/pwa-512x512.png",
-            sizes: "512x512",
-            type: "image/png",
-            purpose: "maskable",
-          },
-        ],
-      },
-      workbox: {
-        cleanupOutdatedCaches: true,
-        clientsClaim: true,
-        skipWaiting: true,
-        globPatterns: [
-          "**/*.{css,js,html,svg,png,ico,txt,woff,woff2,jpg,jpeg,webp,avif}",
-        ],
-        globIgnores: ["**/og-image.png", "**/404", "**/404.html"],
-        maximumFileSizeToCacheInBytes: 5 * 1024 * 1024, // 5 MiB
-        navigateFallbackDenylist: [/^\/404/],
-      },
-      devOptions: {
-        enabled: true,
-        navigateFallback: "/",
-      },
-    }),
+    // AstroPWA - Disabled
+    // AstroPWA({
+    //   mode: "production",
+    //   base: "/",
+    //   scope: "/",
+    //   includeAssets: ["favicon.svg", "favicon.ico", "apple-icon.png"],
+    //   registerType: "autoUpdate",
+    //   injectRegister: "auto",
+    //   manifest: {
+    //     name: "Yash Agarwal",
+    //     short_name: "Yash",
+    //     description: "Personal blog and portfolio of Yash Agarwal.",
+    //     theme_color: "#faf7f5",
+    //     background_color: "#faf7f5",
+    //     display: "standalone",
+    //     start_url: "/",
+    //     scope: "/",
+    //     orientation: "portrait",
+    //     lang: "en",
+    //     dir: "ltr",
+    //     categories: ["education", "lifestyle"],
+    //     icons: [
+    //       {
+    //         src: "/icons/pwa-192x192.png",
+    //         sizes: "192x192",
+    //         type: "image/png",
+    //         purpose: "any",
+    //       },
+    //       {
+    //         src: "/icons/pwa-512x512.png",
+    //         sizes: "512x512",
+    //         type: "image/png",
+    //         purpose: "any",
+    //       },
+    //       {
+    //         src: "/icons/pwa-512x512.png",
+    //         sizes: "512x512",
+    //         type: "image/png",
+    //         purpose: "maskable",
+    //       },
+    //     ],
+    //   },
+    //   workbox: {
+    //     cleanupOutdatedCaches: true,
+    //     clientsClaim: true,
+    //     skipWaiting: true,
+    //     globPatterns: [
+    //       "**/*.{css,js,html,svg,png,ico,txt,woff,woff2,jpg,jpeg,webp,avif}",
+    //     ],
+    //     globIgnores: ["**/og-image.png", "**/404", "**/404.html"],
+    //     maximumFileSizeToCacheInBytes: 5 * 1024 * 1024, // 5 MiB
+    //     navigateFallbackDenylist: [/^\/404/],
+    //   },
+    //   devOptions: {
+    //     enabled: true,
+    //     navigateFallback: "/",
+    //   },
+    // }),
   ],
 
   vite: {
