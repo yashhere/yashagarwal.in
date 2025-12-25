@@ -2,6 +2,37 @@ import type { Alpine } from "alpinejs"
 import collapse from "@alpinejs/collapse"
 import tooltip from "@ryangjchandler/alpine-tooltip"
 
+// Environment detection - calculated once at module level
+const IS_DEV = typeof window !== 'undefined' && 
+  (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")
+const API_BASE_URL = IS_DEV ? "" : "https://analytics.yashagarwal.in"
+
+// localStorage cache for liked posts
+let likedPostsCache: string[] | null = null
+
+function getLikedPosts(): string[] {
+  if (likedPostsCache !== null) return likedPostsCache
+  
+  try {
+    const stored = localStorage.getItem("liked_posts")
+    if (stored) {
+      const parsed = JSON.parse(stored)
+      likedPostsCache = Array.isArray(parsed) ? parsed : []
+    } else {
+      likedPostsCache = []
+    }
+  } catch {
+    localStorage.removeItem("liked_posts")
+    likedPostsCache = []
+  }
+  return likedPostsCache
+}
+
+function setLikedPosts(posts: string[]) {
+  likedPostsCache = posts
+  localStorage.setItem("liked_posts", JSON.stringify(posts))
+}
+
 export default (Alpine: Alpine) => {
   Alpine.plugin(collapse)
 
@@ -45,12 +76,8 @@ export default (Alpine: Alpine) => {
 
     async fetchViews() {
       try {
-        // Use local API in development, Workers proxy in production
-        const isDev = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
-        const baseUrl = isDev ? "" : "https://analytics.yashagarwal.in"
-
         const response = await fetch(
-          `${baseUrl}/api/query/${encodeURIComponent(this.slug)}`,
+          `${API_BASE_URL}/api/query/${encodeURIComponent(this.slug)}`,
         )
         if (!response.ok) throw new Error(`HTTP ${response.status}`)
         const data = await response.json()
@@ -83,8 +110,9 @@ export default (Alpine: Alpine) => {
         return
       }
 
-      // Check localStorage for optimistic UI
-      this.updateLikedStateFromStorage()
+      // Check localStorage for optimistic UI using cached value
+      const likedPosts = getLikedPosts()
+      this.hasLiked = likedPosts.includes(this.slug)
 
       // Listen for storage events to sync across tabs
       window.addEventListener("storage", this.handleStorageChange.bind(this))
@@ -103,38 +131,25 @@ export default (Alpine: Alpine) => {
         try {
           const likedPosts = JSON.parse(e.newValue)
           const wasLiked = this.hasLiked
-          this.hasLiked = Array.isArray(likedPosts) && likedPosts.includes(this.slug)
+          
+          // Invalidate cache and update
+          likedPostsCache = Array.isArray(likedPosts) ? likedPosts : []
+          this.hasLiked = likedPostsCache.includes(this.slug)
 
           // If state changed, refetch likes count
           if (wasLiked !== this.hasLiked) {
             this.fetchLikes()
           }
-        } catch (e) {
-          console.error("Failed to parse storage event:", e)
-        }
-      }
-    },
-
-    updateLikedStateFromStorage() {
-      const stored = localStorage.getItem("liked_posts")
-      if (stored) {
-        try {
-          const likedPosts = JSON.parse(stored)
-          this.hasLiked = Array.isArray(likedPosts) && likedPosts.includes(this.slug)
-        } catch (e) {
-          localStorage.removeItem("liked_posts")
+        } catch (_e) {
+          console.error("Failed to parse storage event:", _e)
         }
       }
     },
 
     async fetchLikes() {
       try {
-        // Use local API in development, Workers proxy in production
-        const isDev = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
-        const baseUrl = isDev ? "" : "https://analytics.yashagarwal.in"
-
         const response = await fetch(
-          `${baseUrl}/api/likes/${encodeURIComponent(this.slug)}`,
+          `${API_BASE_URL}/api/likes/${encodeURIComponent(this.slug)}`,
         )
         if (!response.ok) throw new Error(`HTTP ${response.status}`)
         const data = await response.json()
@@ -158,13 +173,9 @@ export default (Alpine: Alpine) => {
       this.likes += this.hasLiked ? 1 : -1
 
       try {
-        // Use local API in development, Workers proxy in production
-        const isDev = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
-        const baseUrl = isDev ? "" : "https://analytics.yashagarwal.in"
-
         // Send like/unlike action to new DO-based endpoint
         const response = await fetch(
-          `${baseUrl}/api/likes/${encodeURIComponent(this.slug)}`,
+          `${API_BASE_URL}/api/likes/${encodeURIComponent(this.slug)}`,
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -196,23 +207,24 @@ export default (Alpine: Alpine) => {
     },
 
     updateLocalStorage(shouldAdd: boolean) {
-      // Atomic read-modify-write to prevent race conditions
+      // Atomic read-modify-write using cached value to prevent race conditions
       try {
-        const stored = localStorage.getItem("liked_posts") || "[]"
-        let likedPosts = JSON.parse(stored)
-        if (!Array.isArray(likedPosts)) likedPosts = []
+        const likedPosts = getLikedPosts()
 
         if (shouldAdd) {
           if (!likedPosts.includes(this.slug)) {
             likedPosts.push(this.slug)
           }
         } else {
-          likedPosts = likedPosts.filter((s: string) => s !== this.slug)
+          const index = likedPosts.indexOf(this.slug)
+          if (index > -1) {
+            likedPosts.splice(index, 1)
+          }
         }
 
-        localStorage.setItem("liked_posts", JSON.stringify(likedPosts))
-      } catch (e) {
-        console.error("Failed to update localStorage:", e)
+        setLikedPosts(likedPosts)
+      } catch (_e) {
+        console.error("Failed to update localStorage:", _e)
       }
     },
   }))
