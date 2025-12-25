@@ -17,11 +17,20 @@ export default (Alpine: Alpine) => {
   })
 
   // View Counter Component
-  Alpine.data("viewCounter", (slug: string) => ({
+  Alpine.data("viewCounter", () => ({
     views: null as number | null,
     loading: true,
+    slug: "" as string,
 
     async init() {
+      // Read slug from data attribute to prevent XSS
+      this.slug = this.$el.dataset.slug || ""
+      if (!this.slug) {
+        console.error("ViewCounter: missing data-slug attribute")
+        this.loading = false
+        return
+      }
+
       const observer = new IntersectionObserver(
         async (entries) => {
           if (entries[0].isIntersecting) {
@@ -41,7 +50,7 @@ export default (Alpine: Alpine) => {
         const baseUrl = isDev ? "" : "https://analytics.yashagarwal.in"
 
         const response = await fetch(
-          `${baseUrl}/api/query/${encodeURIComponent(slug)}`,
+          `${baseUrl}/api/query/${encodeURIComponent(this.slug)}`,
         )
         if (!response.ok) throw new Error(`HTTP ${response.status}`)
         const data = await response.json()
@@ -58,25 +67,64 @@ export default (Alpine: Alpine) => {
   }))
 
   // Like Button Component
-  Alpine.data("likeButton", (slug: string) => ({
+  Alpine.data("likeButton", () => ({
     likes: 0,
     hasLiked: false,
     loading: true,
     submitting: false,
+    slug: "" as string,
 
     async init() {
+      // Read slug from data attribute to prevent XSS
+      this.slug = this.$el.dataset.slug || ""
+      if (!this.slug) {
+        console.error("LikeButton: missing data-slug attribute")
+        this.loading = false
+        return
+      }
+
       // Check localStorage for optimistic UI
+      this.updateLikedStateFromStorage()
+
+      // Listen for storage events to sync across tabs
+      window.addEventListener("storage", this.handleStorageChange.bind(this))
+
+      await this.fetchLikes()
+    },
+
+    destroy() {
+      // Cleanup event listener when component is destroyed
+      window.removeEventListener("storage", this.handleStorageChange.bind(this))
+    },
+
+    handleStorageChange(e: StorageEvent) {
+      // Sync liked state when another tab updates localStorage
+      if (e.key === "liked_posts" && e.newValue) {
+        try {
+          const likedPosts = JSON.parse(e.newValue)
+          const wasLiked = this.hasLiked
+          this.hasLiked = Array.isArray(likedPosts) && likedPosts.includes(this.slug)
+
+          // If state changed, refetch likes count
+          if (wasLiked !== this.hasLiked) {
+            this.fetchLikes()
+          }
+        } catch (e) {
+          console.error("Failed to parse storage event:", e)
+        }
+      }
+    },
+
+    updateLikedStateFromStorage() {
       const stored = localStorage.getItem("liked_posts")
       if (stored) {
         try {
           const likedPosts = JSON.parse(stored)
-          this.hasLiked = Array.isArray(likedPosts) && likedPosts.includes(slug)
+          this.hasLiked = Array.isArray(likedPosts) && likedPosts.includes(this.slug)
         } catch (e) {
           localStorage.removeItem("liked_posts")
         }
       }
-
-      await this.fetchLikes()
     },
 
     async fetchLikes() {
@@ -86,7 +134,7 @@ export default (Alpine: Alpine) => {
         const baseUrl = isDev ? "" : "https://analytics.yashagarwal.in"
 
         const response = await fetch(
-          `${baseUrl}/api/likes/${encodeURIComponent(slug)}`,
+          `${baseUrl}/api/likes/${encodeURIComponent(this.slug)}`,
         )
         if (!response.ok) throw new Error(`HTTP ${response.status}`)
         const data = await response.json()
@@ -116,7 +164,7 @@ export default (Alpine: Alpine) => {
 
         // Send like/unlike action to new DO-based endpoint
         const response = await fetch(
-          `${baseUrl}/api/likes/${encodeURIComponent(slug)}`,
+          `${baseUrl}/api/likes/${encodeURIComponent(this.slug)}`,
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -134,17 +182,8 @@ export default (Alpine: Alpine) => {
           this.likes = data.likes
         }
 
-        // Update localStorage
-        const stored = localStorage.getItem("liked_posts") || "[]"
-        let likedPosts = JSON.parse(stored)
-        if (!Array.isArray(likedPosts)) likedPosts = []
-
-        if (this.hasLiked) {
-          if (!likedPosts.includes(slug)) likedPosts.push(slug)
-        } else {
-          likedPosts = likedPosts.filter((s: string) => s !== slug)
-        }
-        localStorage.setItem("liked_posts", JSON.stringify(likedPosts))
+        // Update localStorage with atomic read-modify-write
+        this.updateLocalStorage(this.hasLiked)
       } catch (error) {
         // Revert on error
         this.hasLiked = wasLiked
@@ -153,6 +192,27 @@ export default (Alpine: Alpine) => {
         alert("Failed to update like. Please try again.")
       } finally {
         this.submitting = false
+      }
+    },
+
+    updateLocalStorage(shouldAdd: boolean) {
+      // Atomic read-modify-write to prevent race conditions
+      try {
+        const stored = localStorage.getItem("liked_posts") || "[]"
+        let likedPosts = JSON.parse(stored)
+        if (!Array.isArray(likedPosts)) likedPosts = []
+
+        if (shouldAdd) {
+          if (!likedPosts.includes(this.slug)) {
+            likedPosts.push(this.slug)
+          }
+        } else {
+          likedPosts = likedPosts.filter((s: string) => s !== this.slug)
+        }
+
+        localStorage.setItem("liked_posts", JSON.stringify(likedPosts))
+      } catch (e) {
+        console.error("Failed to update localStorage:", e)
       }
     },
   }))

@@ -6,7 +6,7 @@ interface Props {
 const { slug, class: className } = Astro.props;
 ---
 
-<div x-data={`likeButton('${slug}')`} class={className}>
+<div x-data="likeButton" data-slug={slug} class={className}>
   <button
     @click="toggleLike"
     :disabled="submitting"
