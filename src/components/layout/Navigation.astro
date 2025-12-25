@@ -1,5 +1,5 @@
 ---
-import { ChevronDown } from "@lucide/astro"
+import { Icon } from 'astro-icon/components'
 
 import ThemeToggle from "../interactive/ThemeToggle.astro"
 
@@ -64,7 +64,8 @@ const isAnySecondaryActive = moreNavItems.some((item) => isActive(item.href))
             aria-label="More pages"
           >
             More
-            <ChevronDown
+            <Icon
+              name="lucide:chevron-down"
               class="w-4 h-4 transition-transform duration-200"
               :class="open && 'rotate-180'"
             />

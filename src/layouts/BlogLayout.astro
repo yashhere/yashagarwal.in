@@ -3,7 +3,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import '../styles/mdx.css';
 import 'katex/dist/katex.min.css';
 import { format } from 'date-fns';
-import { Calendar, Clock, RefreshCw } from '@lucide/astro';
 import Breadcrumbs from '../components/content/Breadcrumbs.astro';
 import Heading from '../components/ui/Heading.astro';
 import Image from '../components/ui/Image.astro';
@@ -16,6 +15,9 @@ import MobileTOC from '../components/content/MobileTOC.astro';
 import MobileActions from '../components/content/MobileActions.astro';
 import Comments from '../components/interactive/Comments.astro';
 import ReadingProgress from '../components/content/ReadingProgress.astro';
+import ViewCount from '../components/content/ViewCount.astro';
+import LikeButton from '../components/content/LikeButton.astro';
+import { Icon } from 'astro-icon/components';
 
 import GithubSlugger from 'github-slugger';
 
@@ -175,10 +177,11 @@ const encodedUrl = encodeURIComponent(`https://yashagarwal.in/notes/${slug}`);
              </div>
           )}
 
-          <div class="border-t border-border pt-4">
+          <div class="border-t border-border pt-4 flex items-center justify-between gap-3">
+            <LikeButton slug={slug} />
             <button onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" class="text-muted-foreground hover:text-foreground flex items-center gap-2 text-sm font-medium transition-colors cursor-pointer bg-transparent border-0 p-0">
               <span class="uppercase">Top</span>
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 9l5-5 5 5"/><path d="M4 20h7a4 4 0 0 0 4-4V4"/></svg>
+              <Icon name="lucide:corner-right-up" class="h-3.5 w-3.5" />
             </button>
           </div>
 
@@ -197,7 +200,7 @@ const encodedUrl = encodeURIComponent(`https://yashagarwal.in/notes/${slug}`);
         <Heading level="h1">{title}</Heading>
         <div class="text-foreground/60 flex flex-col gap-1 text-sm sm:flex-row sm:items-center sm:gap-2">
           <span class="flex items-center gap-1">
-            <Calendar class="h-3.5 w-3.5" />
+            <Icon name="lucide:calendar" class="h-3.5 w-3.5" />
             Published on{' '}
             {format(createdOn, "MMM dd, yyyy")}
           </span>
@@ -205,7 +208,7 @@ const encodedUrl = encodeURIComponent(`https://yashagarwal.in/notes/${slug}`);
             <>
               <span class="hidden sm:inline">•</span>
               <span class="flex items-center gap-1">
-                <RefreshCw class="h-3.5 w-3.5" />
+                <Icon name="lucide:refresh-cw" class="h-3.5 w-3.5" />
                 Last updated on{' '}
                 {format(updatedOn, "MMM dd, yyyy")}
               </span>
@@ -215,11 +218,17 @@ const encodedUrl = encodeURIComponent(`https://yashagarwal.in/notes/${slug}`);
             <>
                <span class="hidden sm:inline">•</span>
                <span class="flex items-center gap-1">
-                    <Clock class="h-3.5 w-3.5" />
+                    <Icon name="lucide:clock" class="h-3.5 w-3.5" />
                     {readingTime}
                </span>
             </>
            )}
+           <span class="hidden sm:inline">•</span>
+           <ViewCount slug={slug} />
+        </div>
+        
+        <div class="flex items-center gap-3 text-sm mt-3 pt-3 border-t border-border/40">
+            
         </div>
       </section>
 
@@ -238,7 +247,7 @@ const encodedUrl = encodeURIComponent(`https://yashagarwal.in/notes/${slug}`);
 
       <div class="xl:hidden">
         <MobileTOC headings={headings ?? []} renderTrigger={false} />
-        <MobileActions />
+        <MobileActions postSlug={slug} />
       </div>
 
       {series && (
@@ -273,8 +282,7 @@ const encodedUrl = encodeURIComponent(`https://yashagarwal.in/notes/${slug}`);
            class="text-base"
          >
            <div class="border-border/80 text-foreground/80 hover:text-foreground hover:border-border flex flex-row items-center gap-1 rounded-full border px-4 py-1 text-base">
-             {/* Simple Share Icon */}
-             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="mr-1"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+             <Icon name="simple-icons:x" class="mr-1 h-4 w-4" />
              Share
            </div>
          </a>

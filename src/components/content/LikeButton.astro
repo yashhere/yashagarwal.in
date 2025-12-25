@@ -1,0 +1,51 @@
+---
+import { Icon } from 'astro-icon/components';
+
+interface Props {
+  slug: string;
+  class?: string;
+}
+const { slug, class: className } = Astro.props;
+---
+
+<div x-data="likeButton" data-slug={slug} class={className}>
+    <button
+      @click="toggleLike"
+      :disabled="submitting || loading"
+      class="flex items-center gap-2 rounded-lg border border-border px-3 py-1.5 text-sm transition-all hover:border-red-500 hover:bg-red-500/5 disabled:opacity-50 disabled:cursor-not-allowed"
+      :class="{ 'border-red-500 bg-red-500/10 text-red-500': !loading && hasLiked, 'text-muted-foreground': !loading && !hasLiked }"
+      aria-label="Like this post"
+    >
+      <span class="w-4 h-4 flex items-center justify-center shrink-0">
+        <!-- Heart icon using inline SVG for dynamic fill control -->
+        <span x-show="!submitting">
+          <svg 
+            xmlns="http://www.w3.org/2000/svg" 
+            width="16" 
+            height="16" 
+            viewBox="0 0 24 24" 
+            :fill="!loading && hasLiked ? 'currentColor' : 'none'" 
+            stroke="currentColor" 
+            stroke-width="2" 
+            stroke-linecap="round" 
+            stroke-linejoin="round"
+          >
+            <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+          </svg>
+        </span>
+
+        <!-- Spinner when submitting -->
+        <span x-show="submitting" x-cloak class="animate-spin">
+          <Icon name="lucide:loader-circle" width="16" height="16" />
+        </span>
+      </span>
+
+    <!-- Only animate the count number, not the icon -->
+    <span class="font-medium inline-flex items-center justify-center min-w-[1.5rem] min-h-[1.25rem] tabular-nums">
+      <span x-show="loading" class="animate-spin">
+        <Icon name="lucide:loader-circle" width="14" height="14" />
+      </span>
+      <span x-show="!loading" x-cloak x-text="likes"></span>
+    </span>
+  </button>
+</div>

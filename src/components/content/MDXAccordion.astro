@@ -1,5 +1,5 @@
 ---
-import { ChevronRight } from "@lucide/astro"
+import { Icon } from 'astro-icon/components'
 
 import { cn } from "../../lib/utils"
 
@@ -22,7 +22,8 @@ const { title, class: className, ...props } = Astro.props
   <summary
     class="text-foreground hover:bg-muted/50 focus-visible:ring-ring flex cursor-pointer items-center gap-2 p-4 font-medium transition-colors focus-visible:ring-2 focus-visible:outline-none"
   >
-    <ChevronRight
+    <Icon
+      name="lucide:chevron-right"
       class="text-muted-foreground h-4 w-4 shrink-0 transition-transform duration-200 group-open:rotate-90"
     />
     <span class="flex-1">{title}</span>

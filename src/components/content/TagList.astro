@@ -4,6 +4,7 @@ interface Props {
 }
 
 import GithubSlugger from 'github-slugger';
+import { Icon } from 'astro-icon/components';
 const { tags } = Astro.props;
 ---
 
@@ -11,10 +12,7 @@ const { tags } = Astro.props;
   <div class="border-border bg-background my-8 rounded-md border p-2.5 text-sm">
     <div class="flex flex-col gap-2">
       <div class="flex items-center gap-1.5">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="text-muted-foreground h-3 w-3">
-             <path d="M5.566 4.635a.75.75 0 0 1 .53.22l4.474 4.474a.75.75 0 0 1 0 1.06l-4.474 4.475a.75.75 0 0 1-1.06-1.06l3.943-3.944-3.943-3.944a.75.75 0 0 1 .53-1.28Z" />
-             <path d="M12.566 4.635a.75.75 0 0 1 .53.22l4.474 4.474a.75.75 0 0 1 0 1.06l-4.474 4.475a.75.75 0 0 1-1.06-1.06l3.943-3.944-3.943-3.944a.75.75 0 0 1 .53-1.28Z" />
-        </svg>
+        <Icon name="lucide:chevrons-right" class="text-muted-foreground h-3 w-3" />
         <span class="text-muted-foreground text-xs font-medium tracking-wider uppercase">
           Tags ({tags.length})
         </span>

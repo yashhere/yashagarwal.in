@@ -1,6 +1,11 @@
 ---
-import { List, ArrowUp } from '@lucide/astro';
+import { Icon } from 'astro-icon/components';
 
+interface Props {
+  postSlug?: string;
+}
+
+const { postSlug } = Astro.props;
 ---
 
 <div
@@ -73,26 +78,53 @@ import { List, ArrowUp } from '@lucide/astro';
         aria-label="Table of Contents"
       >
         <div class="group-hover:bg-muted rounded-full p-2 transition-colors">
-          <List class="h-5 w-5" />
+          <Icon name="lucide:list" class="h-5 w-5" />
         </div>
         <span class="text-[10px] font-medium tracking-wider uppercase">
           Sections
         </span>
       </button>
 
-      <!-- Scroll Top Button -->
-      <button
-        @click.stop="scrollToTop"
-        class="text-muted-foreground hover:text-foreground group flex flex-col items-center gap-1 transition-colors"
-        aria-label="Scroll to top"
-      >
-        <div class="group-hover:bg-muted rounded-full p-2 transition-colors">
-            <ArrowUp class="h-5 w-5" />
+      <!-- Like Button -->
+      {postSlug && (
+        <div x-data="likeButton" data-slug={postSlug}>
+          <button
+            @click.stop="toggleLike"
+            :disabled="submitting || loading"
+            class="group flex flex-col items-center gap-1 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            :class="(!loading && hasLiked) ? 'text-red-500' : 'text-muted-foreground hover:text-foreground'"
+            aria-label="Like this post"
+          >
+            <div class="rounded-full p-2 transition-colors" :class="(!loading && hasLiked) ? 'bg-red-500/10' : 'group-hover:bg-muted'">
+              <span class="w-5 h-5 flex items-center justify-center">
+                <!-- Heart icon using inline SVG for dynamic fill control -->
+                <span x-show="!submitting">
+                  <svg 
+                    xmlns="http://www.w3.org/2000/svg" 
+                    width="20" 
+                    height="20" 
+                    viewBox="0 0 24 24" 
+                    :fill="!loading && hasLiked ? 'currentColor' : 'none'" 
+                    stroke="currentColor" 
+                    stroke-width="2" 
+                    stroke-linecap="round" 
+                    stroke-linejoin="round"
+                  >
+                    <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+                  </svg>
+                </span>
+                <!-- Spinner when submitting -->
+                <span x-show="submitting" x-cloak class="animate-spin">
+                  <Icon name="lucide:loader-circle" width="20" height="20" />
+                </span>
+              </span>
+            </div>
+            <span class="text-[10px] font-medium tracking-wider uppercase" x-text="hasLiked ? 'Unlike' : 'Like'">
+              Like
+            </span>
+          </button>
         </div>
-        <span class="text-[10px] font-medium tracking-wider uppercase">
-          Top
-        </span>
-      </button>
+      )}
     </div>
 
     <!-- Collapsed state -->
