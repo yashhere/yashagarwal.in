@@ -1,0 +1,151 @@
+---
+slug: "making-redbeat-work-with-redis-sentinel-username-auth"
+title: Making RedBeat Work with Redis Sentinel Username Auth
+createdOn: "2025-10-23T21:35:00+05:30"
+status: published
+tags:
+  - Celery
+  - Redis
+  - RedBeat
+  - Python
+  - Backend
+category: Development
+description: >-
+  A deep dive into solving RedBeat's Redis Sentinel username authentication
+  limitation through a configuration workaround.
+---
+
+A few weeks ago, while working on a new microservice at work, I encountered an interesting authentication issue with Celery's RedBeat scheduler when connecting to Redis Sentinel with username-based authentication. What seemed like a simple configuration problem turned out to be a non-trivial limitation in RedBeat's implementation. This post documents the problem, the solution, and why it matters.
+
+# The Setup
+
+Our application stack includes:
+
+- **Celery** for distributed task processing
+- **RedBeat** as our dynamic Beat scheduler
+- **Redis Sentinel** for high availability
+- **Redis ACL** for username/password authentication
+
+[RedBeat](https://github.com/sibson/redbeat) is fantastic for managing dynamic schedules - you can add or modify tasks without restarting the beat process. Redis Sentinel adds high availability by automatically handling failovers when the master goes down. Both work beautifully in isolation, but combining them with Redis ACL authentication revealed an unexpected gap.
+
+# The Problem
+
+Modern Redis deployments use ACL (Access Control Lists) that require both username and password for authentication. However, when I tried to start RedBeat with Sentinel, I kept getting authentication errors:
+
+```
+redis.exceptions.AuthenticationError: WRONGPASS invalid username-password pair or user is disabled.
+```
+
+At first, I thought it was a configuration mistake on my end. I double-checked credentials, verified Sentinel configuration, and confirmed that the username/password combination worked perfectly when connecting directly to Redis. Everything seemed correct.
+
+Eventually, after digging through RedBeat's source code, I found the issue. When RedBeat [initializes](https://github.com/sibson/redbeat/blob/b5df9bfb766b2011376aec00c84d9449cede422d/redbeat/schedulers.py#L138) its Sentinel client in the `get_redis()` function, it only passes specific authentication parameters:
+
+```python
+# From RedBeat's get_redis() function
+elif conf.redis_url.startswith('redis-sentinel') and 'sentinels' in redis_options:
+    connection_kwargs = {}
+    if isinstance(conf.redis_use_ssl, dict):
+        connection_kwargs['ssl'] = True
+        connection_kwargs.update(conf.redis_use_ssl)
+
+    sentinel = Sentinel(
+        redis_options['sentinels'],
+        socket_timeout=redis_options.get('socket_timeout'),
+        password=redis_options.get('password'),  # ⚠️ Only password
+        db=redis_options.get('db', 0),
+        decode_responses=True,
+        sentinel_kwargs=redis_options.get('sentinel_kwargs'),
+        **connection_kwargs,  # SSL options spread here
+    )
+```
+
+Notice the missing `username` parameter? RedBeat explicitly extracts `password` from `redis_options` and pass it to the Sentinel object, but there's no corresponding username extraction. This isn't a bug per se - it's a limitation. The underlying `redis-py` library fully supports username authentication, and Celery's Redis transport handles it fine. RedBeat simply doesn't expose this capability for Sentinel connections.
+
+# Why This is Non-Trivial
+
+This problem sits at an interesting intersection:
+
+1. **Architectural Complexity**: Redis Sentinel architecture has two types of connections - connections to Sentinel instances for service discovery, and connections to the actual Redis master for data operations. Both need authentication with ACL enabled.
+
+2. **No Direct Configuration**: RedBeat doesn't provide a `redbeat_redis_username` option or similar. The standard approaches don't work:
+   - Can't pass username in the URL (RedBeat uses a custom [Sentinel URL](https://redbeat.readthedocs.io/en/latest/config.html#sentinel-support) format)
+   - Can't modify `sentinel_kwargs` from configuration (it's hardcoded)
+
+3. **Security Constraints**: Our production Redis deployments require ACL authentication. The default user is disabled, and password-only auth is not allowed. Downgrading security wasn't an option.
+
+# The Workaround
+
+After studying RedBeat's code more carefully, I noticed something crucial. Look at the Sentinel initialization code again:
+
+```python
+connection_kwargs = {}
+if isinstance(conf.redis_use_ssl, dict):
+    connection_kwargs['ssl'] = True
+    connection_kwargs.update(conf.redis_use_ssl)  # ← Key line!
+
+sentinel = Sentinel(
+    redis_options['sentinels'],
+    # ... other explicit parameters ...
+    **connection_kwargs,  # ← This spreads our dict!
+)
+```
+
+The `redis_use_ssl` configuration (which maps to `redbeat_redis_use_ssl` in [Celery config](https://redbeat.readthedocs.io/en/latest/config.html#redbeat-redis-use-ssl)) gets unpacked directly into the Sentinel constructor via `**connection_kwargs`. This happens _after_ all the explicit parameters are set, which means anything in that dictionary gets passed through to the Sentinel client.
+
+This is our injection point. Since the `redis-py` Sentinel class accepts `username` as a parameter, we can smuggle it through this SSL configuration dictionary. Here's how I leveraged this:
+
+```python
+def setup_redis_sentinel_config(app_config, sentinel_nodes, auth_info):
+    """
+    Configure Celery and RedBeat for authenticated Sentinel connections.
+
+    Args:
+        app_config: Main application configuration dict
+        sentinel_nodes: List of (host, port) tuples for Sentinel nodes
+        auth_info: Dict containing 'username' and 'password'
+    """
+    service_name = "myredis-master"
+
+    # Configure Celery's broker and backend
+    app_config.broker_url = f"sentinel://localhost:26379"
+    app_config.result_backend = f"sentinel://localhost:26379"
+
+    # Celery's broker transport handles its own auth correctly
+    app_config.broker_transport_options = {
+        "master_name": service_name,
+        "sentinels": sentinel_nodes,
+        "sentinel_kwargs": {"password": None},  # Sentinels don't need auth
+        "username": auth_info["username"],
+        "password": auth_info["password"],
+    }
+
+    # RedBeat's standard config for master connections
+    app_config.redbeat_redis_url = "redis-sentinel://"
+    app_config.redbeat_redis_options = {
+        "sentinels": sentinel_nodes,
+        "service_name": service_name,
+        "db": 0,
+        "sentinel_kwargs": {"password": None},
+        "password": auth_info["password"],
+    }
+
+    # THE WORKAROUND: Piggyback on redis_use_ssl to inject username
+    # RedBeat unpacks this dict into connection_kwargs which gets spread
+    # into the Sentinel constructor, bypassing RedBeat's parameter filtering
+    app_config.redbeat_redis_use_ssl = {
+        "username": auth_info["username"],
+        "ssl": False,  # Critical: prevent actual SSL from being enabled
+    }
+
+    return app_config
+```
+
+The beauty of this approach is that `redbeat_redis_use_ssl` skips RedBeat's normal parameter validation. The dictionary contents get unpacked via `**connection_kwargs` directly into `Sentinel()`, allowing us to pass the `username` parameter that RedBeat's explicit parameter list ignores.
+
+Setting `ssl=False` is crucial - even though RedBeat sets `connection_kwargs['ssl'] = True` when it detects the config, our explicit `False` in the spread dict takes precedence.
+
+# Conclusion
+
+This experience demonstrates that production systems often require creative solutions when dealing with the intersection of multiple technologies. Sometimes the "right" answer isn't about writing new code, but about understanding existing code well enough to work within its constraints.
+
+If you're facing similar issues with RedBeat and Redis Sentinel authentication, I hope this helps. And if you maintain a Celery-based application, this might be a good time to check whether your authentication setup is future-proof for ACL-based Redis deployments.

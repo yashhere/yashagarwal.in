@@ -98,13 +98,12 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || "https://yashagar
 
     <!-- Umami Analytics -->
     {import.meta.env.PROD && (
-      <>
-        <script
-          defer
-          src="https://analytics.yashagarwal.in/script.js"
-          data-website-id={siteConfig.analytics.umamiWebsiteId}
-        ></script>
-      </>
+      <script
+        is:inline
+        defer
+        src="https://analytics.yashagarwal.in/script.js"
+        data-website-id={siteConfig.analytics.umamiWebsiteId}
+      ></script>
     )}
   </head>
   <body

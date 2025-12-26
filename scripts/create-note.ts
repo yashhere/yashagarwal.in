@@ -6,6 +6,7 @@ import { glob } from "glob"
 
 interface NoteFrontmatter {
   title: string
+  slug: string
   createdOn: string
   status: "draft" | "published"
   series?: {
@@ -65,6 +66,11 @@ class NoteCreator {
         .format(date)
         .replace(", ", "T") + "+05:30"
     )
+  }
+  
+  private formatDateOnly(date: Date): string {
+     // YYYY-MM-DD
+     return date.toISOString().split("T")[0];
   }
 
   private async getExistingData(): Promise<{
@@ -137,10 +143,10 @@ class NoteCreator {
     }
   }
 
-  private async fileExists(filename: string): Promise<boolean> {
+  private async dirExists(dirname: string): Promise<boolean> {
     try {
-      await fs.access(path.join(this.contentDir, filename))
-      return true
+      const stats = await fs.stat(path.join(this.contentDir, dirname))
+      return stats.isDirectory()
     } catch {
       return false
     }
@@ -272,19 +278,20 @@ class NoteCreator {
         }
       }
 
-      // Generate and validate filename
+      // Generate slugs and paths
       const baseSlug = this.createSlug(title)
-      let filename = `${baseSlug}.mdx`
+      const now = new Date();
+      const dateStr = this.formatDateOnly(now);
+      
+      let dirName = `${dateStr}-${baseSlug}`;
       let counter = 1
 
-      while (await this.fileExists(filename)) {
-        filename = `${baseSlug}-${counter}.mdx`
+      while (await this.dirExists(dirName)) {
+        dirName = `${dateStr}-${baseSlug}-${counter}`
         counter++
       }
 
-      if (counter > 1) {
-        console.log(`📁 File will be created as: ${filename}`)
-      }
+      console.log(`📁 Directory will be created as: ${dirName}/`)
 
       // Description (optional)
       const description = await this.question("📖 Description (optional): ")
@@ -335,13 +342,23 @@ class NoteCreator {
       this.displaySection("Advanced Options")
 
       // Image
-      const image = await this.question("🖼️  Image path (optional): ")
+      console.log("💡 Tip: For images, place the file in the new folder after creation and reference it as './image.ext'");
+      const image = await this.question("🖼️  Image path (optional, e.g. ./cover.png): ")
 
       // Create frontmatter
       const frontmatter: NoteFrontmatter = {
         title,
-        createdOn: this.formatDateTime(new Date()),
+        slug: baseSlug + (counter > 1 ? `-${counter}` : ""), // Use original slug or suffixed
+        createdOn: this.formatDateTime(now),
         status: "draft",
+      }
+      
+      if (counter > 1) {
+          // If we had to change the dir name, should we change the slug too?
+          // Usually yes, to avoid URL collision if slug is unique key.
+          frontmatter.slug = `${baseSlug}-${counter}`;
+      } else {
+          frontmatter.slug = baseSlug;
       }
 
       if (seriesInfo) {
@@ -365,10 +382,11 @@ class NoteCreator {
       }
 
       // Create file content
-      let fileContent = "---\n"
+      let fileContent = "---"
 
       // Add frontmatter fields in specific order
       fileContent += `title: ${JSON.stringify(frontmatter.title)}\n`
+      fileContent += `slug: ${JSON.stringify(frontmatter.slug)}\n`
       fileContent += `createdOn: ${JSON.stringify(frontmatter.createdOn)}\n`
       fileContent += `status: ${frontmatter.status}\n`
 
@@ -398,7 +416,9 @@ class NoteCreator {
         fileContent += `image: ${frontmatter.image}\n`
       }
 
-      fileContent += "---\n\n"
+      fileContent += "---"
+
+      fileContent += "\n\n"
       fileContent += "# Introduction\n\n"
       fileContent += "Write your content here...\n"
 
@@ -413,17 +433,22 @@ class NoteCreator {
       const shouldCreate = await this.confirm("✅ Create this note?")
 
       if (shouldCreate) {
-        const filePath = path.join(this.contentDir, filename)
+        const dirPath = path.join(this.contentDir, dirName);
+        await fs.mkdir(dirPath, { recursive: true });
+        
+        const filePath = path.join(dirPath, "index.mdx");
         await fs.writeFile(filePath, fileContent, "utf-8")
 
         console.log("\n" + "=".repeat(60))
         console.log("🎉 SUCCESS!")
         console.log("=".repeat(60))
         console.log(`📝 Note created: ${filePath}`)
+        console.log(`📂 Folder: ${dirPath}`)
         console.log(`🚀 Ready to start writing!`)
         console.log("")
         console.log("💡 Next steps:")
-        console.log("   • Open the file in your editor")
+        console.log("   • Open the folder in your editor")
+        console.log("   • Place any images in this folder")
         console.log("   • Write your amazing content")
         console.log("   • Change status to 'published' when ready")
         console.log("")
