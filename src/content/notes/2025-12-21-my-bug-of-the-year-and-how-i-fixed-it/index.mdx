@@ -18,6 +18,8 @@ description: >-
 
 import MDXHighlight from "../../../components/content/MDXHighlight.astro"
 import MDXTooltip from "../../../components/content/MDXTooltip.astro"
+import ExcalidrawSVG from "../../../components/content/ExcalidrawSVG.astro"
+import requestProcessingDiagram from "./request-processing-without-monkey-patching.svg"
 
 I recently worked on a Flask based microservice at work. While everything worked normally for the first few weeks, a few heavy traffic days unleashed a critical bug I had introduced inadvertently during development. This post is a detailed analysis of what went wrong and how I debugged and fixed the issue.
 
@@ -165,7 +167,11 @@ I was using WSGI from Gevent, so I thought I was good. Here's what actually happ
 - Queued for processing (greenlet created!)
 - But it is stuck waiting because A's greenlet won't yield
 
-![Request processing without monkey patching](./request-processing-without-monkey-patching.webp "Request processing without monkey patching")
+<ExcalidrawSVG
+  src={requestProcessingDiagram}
+  alt="Request processing without monkey patching - showing how requests queue up when Flask blocks on I/O"
+  caption="Request processing without monkey patching: Request B waits in queue while Request A blocks the entire server"
+/>
 
 WSGI Server handles connection acceptance using Gevent's non-blocking event loop. But once the request reaches the Flask code and encounters a `requests.post()`, that uses the standard library socket, which blocks the entire greenlet.
 
