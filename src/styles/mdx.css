@@ -314,6 +314,7 @@ svg p {
 
 :is([id^="mermaid-"], .mermaid-diagram) text {
   fill: var(--foreground) !important;
+  font-family: var(--font-sans) !important;
 }
 
 :is([id^="mermaid-"], .mermaid-diagram) .actor,
@@ -350,6 +351,7 @@ svg p {
 :is([id^="mermaid-"], .mermaid-diagram) .nodeLabel div {
   color: var(--foreground) !important;
   fill: var(--foreground) !important;
+  font-family: var(--font-sans) !important;
 }
 
 /* Additional selectors for more diagram types */
@@ -378,18 +380,32 @@ svg p {
 /* Style edge labels in Mermaid diagrams */
 :is([id^="mermaid-"], .mermaid-diagram) .edgeLabel {
   color: var(--foreground) !important;
-  background-color: transparent !important;
+  background-color: var(--background) !important;
   font-weight: normal;
+  font-family: var(--font-sans) !important;
 }
 
 :is([id^="mermaid-"], .mermaid-diagram) .edgeLabel p {
   color: var(--foreground) !important;
-  background-color: transparent !important;
+  background-color: var(--background) !important;
   font-weight: normal;
+  font-family: var(--font-sans) !important;
 }
 
 :is([id^="mermaid-"], .mermaid-diagram) .edgeLabel .label foreignObject {
   overflow: visible;
+}
+
+/* Override foreignObject width constraints in nodes */
+:is([id^="mermaid-"], .mermaid-diagram) .node foreignObject {
+  overflow: visible !important;
+  width: 100% !important;
+}
+
+:is([id^="mermaid-"], .mermaid-diagram) .node foreignObject > div {
+  max-width: none !important;
+  white-space: break-spaces !important;
+  width: 100% !important;
 }
 
 /* Fix line breaks in edge labels */
@@ -399,7 +415,8 @@ svg p {
   line-height: 1.2 !important;
   font-size: 14px !important;
   text-align: center;
-  background-color: transparent !important;
+  background-color: var(--background) !important;
+  font-family: var(--font-sans) !important;
 }
 
 /* Additional styling for sequence diagram messages */
@@ -413,11 +430,13 @@ svg p {
 :is([id^="mermaid-"], .mermaid-diagram) text.actor,
 :is([id^="mermaid-"], .mermaid-diagram) .loopText {
   fill: var(--foreground) !important;
+  font-family: var(--font-sans) !important;
 }
 
 /* Ensure all text spans are visible */
 :is([id^="mermaid-"], .mermaid-diagram) tspan {
   fill: var(--foreground) !important;
+  font-family: var(--font-sans) !important;
 }
 
 /* MERMAID STYLE END */
