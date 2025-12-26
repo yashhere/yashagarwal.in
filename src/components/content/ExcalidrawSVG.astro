@@ -1,0 +1,196 @@
+---
+import { cn } from "../../lib/utils";
+
+interface Props {
+  src: ImageMetadata | string;
+  alt: string;
+  caption?: string;
+  class?: string;
+}
+
+const { src, alt, caption, class: className } = Astro.props;
+
+// Get the image URL - handle both ImageMetadata and string paths
+const imageSrc = typeof src === "string" ? src : src.src;
+---
+
+<figure class={cn("excalidraw-container my-8", className)}>
+  <div class="excalidraw-wrapper" data-excalidraw-svg>
+    <img src={imageSrc} alt={alt} class="excalidraw-svg" />
+  </div>
+  {caption && <figcaption class="text-muted-foreground mt-2 text-center text-sm">{caption}</figcaption>}
+</figure>
+
+<script>
+  function modifySvg() {
+    const containers = document.querySelectorAll("[data-excalidraw-svg]");
+
+    function hexToRgb(hex: string): { r: number; g: number; b: number } | null {
+      const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+      return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+      } : null;
+    }
+
+    function isAccentColor(color: string | null): boolean {
+      if (!color) return false;
+      if (!color.startsWith('#')) return false;
+
+      const rgb = hexToRgb(color);
+      if (!rgb) return false;
+
+      const { r, g, b } = rgb;
+
+      // Check if it's a grayscale color (black, white, or gray)
+      const isGrayscale = Math.abs(r - g) < 10 && Math.abs(g - b) < 10 && Math.abs(r - b) < 10;
+
+      // If not grayscale, it's an accent color
+      return !isGrayscale;
+    }
+
+    function isInsideColoredBox(textElement: Element): boolean {
+      // In Excalidraw SVGs, text and its background are in sibling groups
+      // Structure: <g><path fill="#color"/></g><g><text/></g>
+      // We need to check if the previous sibling g contains a colored path
+
+      const textGroup = textElement.parentElement;
+      if (!textGroup) return false;
+
+      const prevSibling = textGroup.previousElementSibling;
+      if (!prevSibling) return false;
+
+      // Check if the previous sibling contains a path with accent color fill
+      const paths = prevSibling.querySelectorAll('path[fill]');
+      for (const path of paths) {
+        const fill = path.getAttribute('fill');
+        if (fill && fill !== 'none' && isAccentColor(fill)) {
+          console.log(`Text "${(textElement as any).textContent?.trim()}" has colored background (${fill})`);
+          return true;
+        }
+      }
+
+      return false;
+    }
+
+    containers.forEach((container) => {
+      const img = container.querySelector("img.excalidraw-svg");
+      if (!img || !(img instanceof HTMLImageElement)) return;
+
+      fetch(img.src)
+        .then((response) => response.text())
+        .then((svgText) => {
+          const parser = new DOMParser();
+          const svgDoc = parser.parseFromString(svgText, "image/svg+xml");
+          const svg = svgDoc.querySelector("svg");
+
+          if (!svg) return;
+
+          // Set responsive dimensions
+          svg.setAttribute("width", "100%");
+          svg.setAttribute("height", "100%");
+          svg.style.maxWidth = "100%";
+          svg.style.height = "auto";
+          svg.classList.add("excalidraw-svg");
+
+          // Replace img with SVG first so we can measure positions
+          img.replaceWith(svg);
+
+          // Now process colors after SVG is in DOM
+          requestAnimationFrame(() => {
+            // Process all elements with fill or stroke
+            const allElements = svg.querySelectorAll('[fill], [stroke]');
+            console.log(`Processing ${allElements.length} elements`);
+
+            let textThemeAwareCount = 0;
+            let textInBoxCount = 0;
+
+            allElements.forEach((el) => {
+              const fill = el.getAttribute('fill');
+              const stroke = el.getAttribute('stroke');
+
+              // Skip if already has accent color
+              if (isAccentColor(fill) || isAccentColor(stroke)) return;
+
+              // Check if it's a text element
+              if (el.tagName === 'text' || el.tagName === 'tspan') {
+                // Check if text has a colored background (based on SVG structure)
+                if (isInsideColoredBox(el)) {
+                  // Keep original color (black) for text with colored backgrounds
+                  el.classList.add('text-in-box');
+                  textInBoxCount++;
+                } else {
+                  // Make theme-aware for all other text
+                  if (fill) {
+                    console.log(`Removing fill ${fill} from text:`, el.textContent?.trim());
+                    el.removeAttribute('fill');
+                  }
+                  el.classList.add('text-theme-aware');
+                  textThemeAwareCount++;
+                }
+              } else {
+                // For non-text elements (lines, arrows, boxes without color)
+                // Make them theme-aware
+                if (fill && (fill.includes('#000') || fill.includes('#fff') || fill.includes('#1e1e1e'))) {
+                  el.removeAttribute('fill');
+                  el.classList.add('fill-theme-aware');
+                }
+                if (stroke && (stroke.includes('#000') || stroke.includes('#fff') || stroke.includes('#1e1e1e'))) {
+                  el.removeAttribute('stroke');
+                  el.classList.add('stroke-theme-aware');
+                }
+              }
+            });
+
+            console.log(`Text theme-aware: ${textThemeAwareCount}, Text in box: ${textInBoxCount}`);
+          });
+        })
+        .catch((error) => {
+          console.error("Error loading SVG:", error);
+        });
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", modifySvg);
+  } else {
+    modifySvg();
+  }
+
+  document.addEventListener("astro:page-load", modifySvg);
+</script>
+
+<style>
+  .excalidraw-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Responsive SVG */
+  .excalidraw-container :global(.excalidraw-svg) {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Text inside colored boxes - keep original (black) */
+  .excalidraw-container :global(.text-in-box) {
+    fill: #000000 !important;
+  }
+
+  /* Text outside colored boxes - make theme-aware */
+  .excalidraw-container :global(.text-theme-aware) {
+    fill: var(--foreground);
+  }
+
+  /* Fill for non-text elements */
+  .excalidraw-container :global(.fill-theme-aware) {
+    fill: var(--foreground);
+  }
+
+  /* Stroke for non-text elements */
+  .excalidraw-container :global(.stroke-theme-aware) {
+    stroke: var(--foreground);
+  }
+</style>
