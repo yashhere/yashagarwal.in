@@ -2,10 +2,11 @@ import { defineCollection, z } from "astro:content"
 
 const notes = defineCollection({
   type: "content",
-  schema: z.object({
+  schema: ({ image }) => z.object({
     title: z.string(),
     description: z.string().optional(),
-    image: z.string().optional(),
+    image: image().optional(),
+    slug: z.string().optional(),
     status: z.enum(["draft", "published"]).default("draft"),
     tags: z.array(z.string()).optional(),
     category: z.string().optional(),

@@ -18,6 +18,7 @@ import ReadingProgress from '../components/content/ReadingProgress.astro';
 import ViewCount from '../components/content/ViewCount.astro';
 import LikeButton from '../components/content/LikeButton.astro';
 import { Icon } from 'astro-icon/components';
+import type { ImageMetadata } from 'astro';
 
 import GithubSlugger from 'github-slugger';
 
@@ -25,7 +26,7 @@ interface Props {
   title: string;
   description?: string;
   image?: string;
-  headerImage?: string;
+  headerImage?: string | ImageMetadata;
   createdOn: Date;
   updatedOn?: Date;
   category?: string;

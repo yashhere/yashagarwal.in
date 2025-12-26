@@ -1,0 +1,154 @@
+---
+slug: "cassandra-a-decentralized-structured-storage-system"
+title: Cassandra - A Decentralized Structured Storage System
+createdOn: "2020-05-08T07:21:55+05:30"
+status: published
+tags:
+  - Architecture
+  - Databases
+  - Distributed Systems
+  - NoSQL
+  - Research Paper
+category: Technology
+description: >-
+  A technical overview of Cassandra's architecture, data model, and distributed
+  system principles, including routing, partitioning, and replication.
+---
+
+Cassandra is a distributed storage system that can spread over thousands of
+nodes and store terabytes of structured data. Cassandra was developed at
+Facebook to solve performance issues during searches in Facebook Inbox.
+Cassandra can provide a highly available service without a single point of
+failure.
+
+Cassandra borrows some of its architecture choices from Google's
+[BigTable](https://static.googleusercontent.com/media/research.google.com/en//archive/bigtable-osdi06.pdf)
+and Amazon's
+[Dynamo](https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf).
+In some ways, Cassandra resembles the traditional databases, yet it does not
+support the relational data model completely.
+
+# Data Model
+
+Cassandra uses a tabular data structure like relational databases. A table in
+Cassandra is a distributed multi-dimensional map indexed by a key. Every row
+operation is atomic per replica, no matter how many columns are being read or
+written into. Cassandra groups columns into sets called column family. A column
+family is of two types - Simple and Super (column family within column family).
+Cassandra can sort columns using name or time. Time-based sorting is useful when
+used in a setting like Inbox searches where most recent messages should be
+displayed first.
+
+Cassandra provides following methods -
+
+1. $insert(table, key, rowMutation)$
+2. $get(table, key, tableName)$
+3. $delete(table, key, tableName)$
+
+# Architecture
+
+A data storage system should satisfy some requirements - data persistence,
+scalability, membership, failure detection and handling, data partitioning,
+request routing, among others. Cassandra uses a variety of techniques to solve
+these issues.
+
+## Routing
+
+Any node can attend an incoming read/write request with a key. Each node in the
+Cassandra cluster knows about other nodes. The serving node uses this
+information and the request's key to determine the route of the request to the
+appropriate node.
+
+In the case of write requests, the system routes the request to all replicas and
+waits for a quorum of replicas to acknowledge the completion of the writes.
+
+For reads, the system either routes the requests to the nearest replica with
+required data or forwards the request to all the replicas and waits for a quorum
+of responses before replying. Which method, the system utilizes, depends on the
+consistency requirements of the client.
+
+## Partitioning
+
+Cassandra uses
+[consistent hashing](https://en.wikipedia.org/wiki/Consistent_hashing) with an
+order-preserving hash. The consistent hash function is used to hash the data key
+to generate identifiers. The output range of the hash function is treated as a
+ring (the largest hash value generated wraps around the smallest hash value).
+Each node is assigned a random hash, which becomes its position on the ring.
+Each node is responsible for the region in the ring between it and its
+predecessor node.
+
+For each data item with a key, its hash is generated using the key. The ring is
+traversed clockwise, and the first node with the position hash value greater
+than the item's hash value is assigned to the data item. This node is deemed the
+coordinator of the key.
+
+However, consistent hashing can result in an imbalance in the load distribution
+and non-uniformity of data distribution. Cassandra solves these issues by
+periodically analyzing the load information in the ring and repositioning the
+lightly loaded nodes on the ring to alleviate high load nodes.
+
+## Replication
+
+Each data item is replicated at $N$ nodes in the ring. As mentioned above, each
+data item's key is assigned to a coordinator node, which is responsible for the
+replication of data items falling within its range (the region between it and
+its predecessor node). For fault tolerance, in addition to locally storing keys,
+the coordinator node replicates these keys at the $(N-1)$ replicas on the ring.
+Replication policies such as Rack aware, Rack unaware, Datacenter aware are used
+for this purpose.
+
+## Leader Election
+
+Cassandra uses Zookeeper for leader election and fault tolerance. Whenever a new
+node joins the cluster, it contacts the leader who tells them what ranges the
+node is responsible for. The metadata about ranges of a node is cached locally
+as well as on the Zookeeper instance.
+
+## Membership
+
+Cassandra uses Scuttlebutt - an anti-entropy Gossip based protocol to
+disseminate the membership information inside the ring. Whenever a new node
+joins the system, it calculates a token for itself. This token is gossiped
+around the cluster. That's how each node in the system knows about the
+membership and positions of other nodes in the system.
+
+## Failure Detection
+
+Failure detection is a mechanism by which a node can locally determine if any
+other node in the system is up or down. Cassandra uses a modified version of
+$\phi$-Accrual Failure Detector. The basic idea is that the failure detection
+module emits the suspicion level of a node instead of a binary up/down status.
+This suspicion level is $\phi$. The idea is to represent $\phi$ on a dynamically
+adjustable scale, which reflects network and load conditions at the monitored
+nodes.
+
+Every node in the system maintains a sliding window of inter-arrival times of
+gossip messages from other nodes in the cluster. The distribution of these
+inter-arrival times is determined, and $\phi$ is calculated. Cassandra uses
+exponential distribution as an approximation for determining $\phi$. The
+original $\phi$-Accrual Failure Detection Algorithm used Gaussian distribution.
+
+## Scaling
+
+Whenever a new node joins the system, its token is generated such that it falls
+within the range of an existing heavily loaded node. This results in the new
+node splitting the range of the old node. The old node transfers some of its
+data to the new node using kernel-kernel copying techniques.
+
+## Local Persistence
+
+Cassandra uses a commit log as well as an in-memory data structure to store the
+data. Each write is first committed to the commit log. Only after successful
+write into the commit log, the data is saved in the in-memory data structure.
+When the in-memory data structure crosses a predefined threshold, it is dumped
+to the disk along with an index file for fast lookups. A merge process runs
+periodically to merge these disk files.
+
+A read operation first queries the in-memory store. If data is not found there,
+then a disk lookup is required. To avoid looking into multiple files, a bloom
+filter, summarizing the keys in the file, is also used. The bloom filter can
+also be used to check the key existence.
+
+Paper Link:-
+[Cassandra - A Decentralized Structured Storage System](http://www.cs.cornell.edu/Projects/ladis2009/papers/Lakshman-ladis2009.PDF)

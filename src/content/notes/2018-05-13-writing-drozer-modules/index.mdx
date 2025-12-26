@@ -1,0 +1,205 @@
+---
+slug: "writing-drozer-modules"
+title: Writing Drozer Modules
+createdOn: "2018-05-13T17:10:13+05:30"
+status: published
+tags:
+  - Android
+  - Development
+  - Python
+  - Security
+category: Technology
+description: >-
+  Learn to write custom Drozer modules in Python for Android security testing.
+  Explore framework features and practical module development.
+---
+
+This post is a result of my experimentation with Drozer. Drozer is a security
+testing framework for Android, developed by MWR Labs. According the Drozer's
+official
+[documentation](https://labs.f-secure.com/assets/BlogFiles/mwri-drozer-user-guide-2015-03-23.pdf):
+
+> Drozer allows you to assume the role of an Android app and interact with other
+> apps. It can do anything that an installed application can do, such as making
+> use of Android's Inter-Process Communication (IPC) mechanism and interact with
+> the underlying operating system.
+
+Drozer modules are written in Python. The module performs operations on an
+Android device with the help of an agent app installed on the device. The agent
+app, by default, has permission to use the internet connection only. This
+permission is required so that the agent can open a ServerSocket on port 31415
+(default). The agent will listen for the incoming connections on this port. The
+console will connect to the agent on this port.
+
+Drozer modules are inherited Python classes. The parent class is defined in
+[drozer.modules.Module](https://github.com/FSecureLABS/drozer/blob/develop/src/drozer/modules/base.py).
+Drozer console provides commands to create a custom module repository, which is
+very useful for the local development of modules.
+
+You can read more about the structure of a Drozer module
+[here](https://github.com/FSecureLABS/drozer/wiki/Writing-a-Module).
+
+I will explain all the critical parts of a Drozer module with the help of a
+sample module. I will be implementing a module to record and save the sound from
+the inbuilt mic of an Android device.
+
+I initialized a new module repository using the Drozer console using the
+following command.
+
+```text
+dz> module repository create custom
+Initialised repository at custom.
+```
+
+You will see a new directory `custom` in your current directory after executing
+above command. Navigate to this directory and create a new folder with any name.
+I prefer to name this folder same as my module name. In this folder, create a
+file `__init__.py`. Drozer identifies the folder as a module directory if
+`__init__.py` is present in the directory. Now you can implement your module in
+this directory.
+
+To begin implementing our module, create a new file `record.py` in the module
+directory. Drozer has many different utility classes, which we can use to
+simplify our implementation. To use these utility classes
+([mixins](https://github.com/FSecureLABS/drozer/wiki/Using-mixins)), our module
+class must extend _mixins_ using Python's multiple inheritance feature.
+
+We first need to import all the required mixins. The mixins are stored in
+`modules.common` package in the Drozer source tree. After importing mixins and
+extending our class, the code will look like this. You can also import any other
+standard Python module here.
+
+```python
+from drozer.modules import common, Module
+import os, subprocess, time
+
+class Record(Module, common.Shell, common.FileSystem, common.ClassLoader):
+```
+
+Now we will set up the metadata for our module. This information will help
+Drozer to organize and list our module correctly. We can define the name,
+description, author, date, license, path, permissions, and examples. Most of the
+available options are self-explanatory. But _path_ and _permissions_ require
+some explanation.
+
+The _path_ variable defined here is an array that contains the values for the
+namespace of the module. Drozer supports separate namespaces for each module. We
+can combine similar modules in the same namespace using this feature.
+
+The _permissions_ array variable contains all the permissions that this module
+will require for proper functioning. For example, our module will need
+permission to record audio on the device to work correctly. So we define this
+permission in the permissions array. The agent app on the device is required to
+have this permission. Otherwise, our module will throw an error.
+
+The following snippet shows the metadata section of our module.
+
+```text
+name = "Record sound from the inbuilt mic of an Android device."
+description = "Record sound from the inbuilt mic of an Android device. The default save format is 3GPP. Relies on the agent having the RECORD_AUDIO permission."
+examples = """
+dz> run custom.record.record
+Setting up recorder configuration...
+Recording started
+Press any key to stop recording
+
+Recording stopped...downloading recording
+Screenshot captured. Saved at location /home/yash/work/drozer/1524201166.3gp
+"""
+author: "Yash Agarwal"
+date: "2018-04-14"
+license = "BSD (3 clause)"
+path = ["custom", "record"]
+permissions = ["android.permission.RECORD_AUDIO", "com.mwr.dz.permissions.GET_CONTEXT"]
+```
+
+Now we can start implementing the heart of our module, the `execute()` function.
+This function will be invoked by Drozer when the module is run. Every action
+that the module is expected to perform should be implemented in this method.
+
+The implementation of `execute()` method is slightly tricky and requires an
+understanding of different classes and methods provided by the Android API. As
+we are writing a module to record sound, we will look into the documentation of
+[MediaRecorder](https://developer.android.com/guide/topics/media/mediarecorder.html)
+class. Before reading further, go through the documentation about the use of
+reflection API in Drozer
+[here](https://github.com/FSecureLABS/drozer/wiki/Using-Reflection).
+
+The `execute()` function is given below.
+
+```python
+def execute(self, arguments):
+    # unique file names
+    filename = str(int(time.time())) + ".3gp"
+
+    # current working directory of Drozer console
+    cwd = self.workingDir()
+
+    # Magic of Reflection API !!!
+    recorder = self.new("android.media.MediaRecorder")
+    AudioSource = self.klass("android.media.MediaRecorder$AudioSource")
+    OutputFormat = self.klass("android.media.MediaRecorder$OutputFormat")
+    AudioEncoder = self.klass("android.media.MediaRecorder$AudioEncoder")
+
+    recorder.setAudioSource(AudioSource.MIC)
+    recorder.setOutputFormat(OutputFormat.THREE_GPP)
+    recorder.setAudioEncoder(AudioEncoder.AMR_NB)
+    recorder.setOutputFile("%s/recording.3gp" % cwd)
+    recorder.prepare()
+
+    self.stdout.write("Recording started\n")
+    recorder.start()
+    raw_input("Press any key to stop recording\n")
+    recorder.stop()
+    self.stdout.write("Recording stopped...\n")
+    recorder.reset()
+    recorder.release()
+
+    # Download file from device to PC
+    length = self.downloadFile("%s/recording.3gp" % cwd, filename)
+
+    if length != None:
+        self.stdout.write("Recording saved\n")
+
+    else:
+        self.stderr.write("Recording could not be fetched from the device.\n")
+```
+
+I followed the sample use case given on
+[this](https://developer.android.com/reference/android/media/MediaRecorder.html)
+page, to instantiate and use the _MediaRecorder_ object.
+
+After the recording is finished, we want to save this recorded media file to our
+computer. Drozer provides a method,
+[downloadFile](https://github.com/FSecureLABS/drozer/blob/c92d74024c653b6dc7de3378a24e51d276ae2c62/src/drozer/modules/common/file_system.py)
+exactly for this purpose. This method returns the length of the data downloaded
+on success and `None` otherwise. We can use this information to test the success
+or failure of the fetching of the recording.
+
+That's all. We have successfully implemented a Drozer module which can record
+the sound on an Android device without the knowledge of the user. Do you smell
+something fishy here? The whole idea here depends on that particular
+`android.permission.RECORD_AUDIO` permission that our agent app had. It allowed
+our module to record without _user consent_ (actually, the user gave her consent
+unknowingly while installing agent app). Many apps nowadays ask for arbitrarily
+random permissions. Those permissions might not be related to the functionality
+of the app in any way, but because there is no method to install apps without
+granting these permissions, the users grant all permissions to these apps. That
+can be exploited very easily. This tutorial tried to show one of such
+exploitations.
+
+Here are some exercises that you should try if you want to learn more about
+Drozer module development.
+
+- A module to initiate a call on a device.
+- A module to get the clipboard values on a device
+- Try finding a public exploit on Android forums such as XDA and implement that
+  exploit as a Drozer module.
+
+Slightly tougher one.
+
+- A module to terminate a call without user intervention (I do not know if it is
+  possible to do this programmatically. If you implement this successfully, do
+  let me know in the comments section.)
+
+Thanks for reading. Cheers :)

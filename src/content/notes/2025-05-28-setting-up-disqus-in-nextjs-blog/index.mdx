@@ -1,0 +1,238 @@
+---
+slug: "setting-up-disqus-in-nextjs-blog"
+title: Setting Up Disqus in a Next.js Blog
+createdOn: "2025-05-28T16:43:24+05:30"
+status: published
+series:
+  order: 5
+  title: Building a blog with NextJS
+category: Development
+tags:
+  - Blog Setup
+  - Dark Mode
+  - Disqus
+  - Next.js
+  - UI/UX
+description: >-
+  Integrate Disqus comments into your Next.js blog with dark mode support. Learn
+  lazy loading and resolve color compatibility for a seamless user experience.
+---
+
+Disqus is the most popular commenting system available in the market right now. While its free nature comes with downsides (_hint_ - you are the data!), its ease of setup and not having to maintain a self-hosted commenting solution makes it a compelling choice for small blogs like this one.
+
+I have been using Disqus for the last 10 years across various static site generators, so it contains all of my previous comments. While migrating Disqus comments to a different URL scheme is a topic for another day, this article focuses on setting up Disqus in a Next.js blog.
+
+We'll cover how to:
+
+- Create a React component wrapper for Disqus
+- Implement lazy loading when the component is in view
+- Make Disqus respect theme toggling
+- Resolve OKLCH color incompatibility issues
+
+Without further ado, let's begin.
+
+# Prerequisites
+
+1. You should have a Next.js blog.
+2. `next-themes` for handling the dark mode toggling.
+3. `disqus-react` for providing Disqus script.
+4. `react-intersection-observer` to implement lazy-loading.
+
+# Getting Your Disqus Shortname
+
+Before implementing the component, you'll need to:
+
+1. Create a Disqus account at [disqus.com](https://disqus.com)
+2. Register your site and get your shortname
+3. Configure your site settings in the Disqus admin panel
+
+# Install the required packages
+
+```bash
+npm install disqus-react next-themes react-intersection-observer
+# OR
+bun add disqus-react next-themes react-intersection-observer
+```
+
+# Setting up next-themes
+
+Adapt the root layout to match the following snippet -
+
+```tsx
+import { ThemeProvider } from "next-themes"
+
+import "./globals.css"
+
+interface RootLayoutProps {
+  children: React.ReactNode
+}
+
+export default function RootLayout({ children }: RootLayoutProps) {
+  return (
+    <html lang="en" suppressHydrationWarning>
+      <body>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
+      </body>
+    </html>
+  )
+}
+```
+
+Now add the following to the `globals.css` file:
+
+```css
+@import "tailwindcss";
+
+@config "../tailwind.config.js";
+
+@layer base {
+  :root {
+    --background: theme("colors.white");
+    --foreground: theme("colors.slate.950");
+  }
+
+  .dark {
+    --background: theme("colors.slate.950");
+    --foreground: theme("colors.slate.50");
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
+  }
+}
+```
+
+Key features of this setup:
+
+- `suppressHydrationWarning`: Prevents hydration warnings when theme changes on client
+- `attribute="class"`: Uses CSS classes for theme switching (`.dark` class)
+- `defaultTheme="system"`: Respects user's system preference
+- `enableSystem`: Allows automatic system theme detection
+- `disableTransitionOnChange`: Prevents flash during theme transitions
+
+Since I use TailwindCSS v4, the `globals.css` might look a bit different. Another important thing to note is the use of syntax like `theme("colors.slate.950")` for setting the colors. This doesn't play nice with Disqus. We will see how to fix it later.
+
+# Disqus Component
+
+```tsx
+"use client"
+
+import React from "react"
+import { DiscussionEmbed } from "disqus-react"
+import { useTheme } from "next-themes"
+import { useInView } from "react-intersection-observer"
+
+interface CommentProps {
+  url: string
+  slug: string
+}
+
+export const DisqusComments = ({ url, slug }: CommentProps) => {
+  const { resolvedTheme = "light" } = useTheme()
+  const { ref, inView } = useInView({
+    threshold: 0,
+    triggerOnce: true,
+    fallbackInView: true,
+  })
+
+  const disqusShortname = "your-disqus-shortname-here"
+
+  const disqusConfig = {
+    identifier: slug,
+    url: url,
+  }
+
+  return (
+    <div ref={ref}>
+      {inView ? (
+        <div className="comments">
+          <DiscussionEmbed
+            key={resolvedTheme}
+            shortname={disqusShortname}
+            config={disqusConfig}
+          />
+        </div>
+      ) : null}
+    </div>
+  )
+}
+```
+
+Key Features of this component are -
+
+1. **Lazy Loading with Intersection Observer**
+
+   The component uses `react-intersection-observer` to implement lazy loading:
+   - Comments only load when the user scrolls to the comments section.
+   - `threshold: 0` triggers loading as soon as the element enters the viewport.
+   - `triggerOnce: true` ensures the component only loads once.
+   - `fallbackInView: true` provides a fallback for environments where IntersectionObserver isn't available.
+
+2. **Theme-Aware Rendering**
+
+   The most crucial aspect for dark mode support is the `key={resolvedTheme}` prop on the `DiscussionEmbed` component. This forces React to completely remount the Disqus embed whenever the theme changes, ensuring proper color adaptation.
+
+# Using the Disqus component
+
+The component is used in the blog note page `app/notes/[slug]/page.tsx` (such as this one):
+
+```tsx
+<DisqusComments
+  slug={params.slug}
+  url={`${siteConfig.url}/notes/${params.slug}`}
+/>
+```
+
+The URL construction ensures each post has a unique identifier for Disqus threads, while the slug provides a fallback identifier.
+
+# Fixing OKLCH Color Incompatibility
+
+Modern CSS frameworks like Tailwind CSS v4 use [OKLCH](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/oklch) colors for better color accuracy and perceptual uniformity. However, Disqus's embedded iframe doesn't understand OKLCH color values.
+
+When OKLCH colors are used, you'll encounter this error in the browser console:
+
+```js
+Uncaught Error: parseColor received unparseable color: oklch(000)
+```
+
+![`parseColor` Error](./parseColor-error.webp "parseColor error in console")
+
+This happens because Disqus validates color values and expects them to be in RGB or Hex format.
+
+![Disqus code checks for RGB/Hex](./disqus-code-ref.webp "Disqus code checks for RGB/Hex")
+
+## The Solution
+
+Override OKLCH colors with Hex equivalents specifically for the Disqus container:
+
+```css
+/* Fix for https://github.com/disqus/disqus-react/issues/153 */
+:root,
+.comments {
+  background-color: #ffffff !important; /* white */
+  color: #0f172a !important; /* slate-950 */
+}
+
+/* Dark mode comments - using hex values */
+:root,
+.dark .comments {
+  background-color: #020617 !important; /* slate-950 */
+  color: #f8fafc !important; /* slate-50 */
+}
+```
+
+# Performance Considerations
+
+- **Lazy Loading**: Comments only load when visible, reducing initial page load time.
+- **Theme Remounting**: While remounting on theme change might seem expensive, it's necessary for proper theme switching and happens infrequently.
+- **CSS Optimization**: Color fixes are applied at the CSS level, avoiding JavaScript-based solutions that could impact performance.

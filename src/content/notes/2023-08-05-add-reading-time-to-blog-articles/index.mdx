@@ -1,0 +1,122 @@
+---
+slug: "add-reading-time-to-blog-articles"
+title: Add reading time to blog articles
+createdOn: "2023-08-05T23:27:24+05:30"
+status: published
+series:
+  order: 3
+  title: Building a blog with NextJS
+tags:
+  - Blog Setup
+  - Content Management
+  - Development
+  - Next.js
+category: Development
+description: >-
+  Learn to add estimated reading time to your blog articles using Contentlayer
+  and a simple NPM package for enhanced user experience.
+---
+
+This article will show how to add estimated reading time to your posts. This is pretty easy to achieve with Contentlayer’s computed fields.
+
+This article assumes that you have read my [previous post](/notes/integrating-contentlayer-with-nextjs-blog) and integrated Contentlayer into your project accordingly. We will build upon the foundations laid in the last article and add a new computed field to the `Post` document type to display the estimated reading time of the article to the readers.
+
+# How to compute reading time?
+
+Computing the reading time of any text content requires two things -
+
+1. The text content itself, which, thanks to Contentlayer, is available to us in raw form in `post.body.raw` where `post` is the JSON parsed by `contentlayer` from the `mdx` file.
+2. An algorithm to calculate the reading time
+
+We can come up with our own [algorithm](https://www.freecodecamp.org/news/how-to-more-accurately-estimate-read-time-for-medium-articles-in-javascript-fb563ff0282a/) or use a package to do the heavy lifting for us. A number of packages exist on the NPM registry to help with this task -
+
+1. [reading-time](https://www.npmjs.com/package/reading-time)
+2. [read-time-estimate](https://github.com/pritishvaidya/read-time-estimate)
+
+`read-time-estimate` appears to be a more complete package that also takes image read times into consideration, but I am not sure if it is meant as a ready-to-use package. At least I couldn’t get it to work with my setup. So, I decided to go with `reading-time`, a far more popular package.
+
+# Adding a new computed field
+
+After finalising the package to use, it’s time to install it. I will use `yarn` to install the package. You can find a similar command for your package manager.
+
+```bash
+yarn add -D reading-time
+```
+
+This will install `reading-time` as a dev-dependency in our project, which is fine given that we will only be utilising this package at build time.
+
+Once installed, it is time to import and use it in the `contentlayer.config.js` -
+
+```jsx showLineNumbers {2, 23-26}
+import { defineDocumentType, makeSource } from "contentlayer/source-files"
+import readingTime from "reading-time"
+
+const Post = defineDocumentType(() => ({
+  name: "Post",
+  filePathPattern: "posts/*.mdx",
+  contentType: "mdx",
+  fields: {
+    title: { type: "string", required: true },
+    published: { type: "string", required: true },
+    description: { type: "string" },
+    status: {
+      type: "enum",
+      options: ["draft", "published"],
+      required: true,
+    },
+  },
+  computedFields: {
+    slug: {
+      type: "string",
+      resolve: (doc) => doc._raw.sourceFileName.replace(/\.mdx$/, ""),
+    },
+    readingTime: {
+      type: "json",
+      resolve: (doc) => readingTime(doc.body.raw),
+    },
+  },
+}))
+
+export default makeSource({
+  contentDirPath: "content",
+  documentTypes: [Post],
+})
+```
+
+# Rendering it
+
+In the generated JSON files, we will have the `readingTime` property available for use in the components.
+
+```json showLineNumbers {17-22}
+{
+  "title": "Hello World",
+  "published": "2023-07-30T13:05:24.000Z",
+  "status": "published",
+  "body": {
+    "raw": "\nHello world! This is my first post.\n",
+    "code": "var Component=(()=>{var sr=Object.create;..."
+  },
+  "_id": "posts/hello-world.mdx",
+  "_raw": {
+    "sourceFilePath": "posts/hello-world.mdx",
+    "sourceFileName": "hello-world.mdx",
+    "sourceFileDir": "posts",
+    "contentType": "mdx",
+    "flattenedPath": "posts/hello-world"
+  },
+  "readingTime": {
+    "text": "1 min read",
+    "minutes": 0.035,
+    "time": 2100,
+    "words": 7
+  },
+  "type": "Post",
+  "slug": "hello-world"
+}
+```
+
+To use it in the component, we can use the `post.readingTime.minutes` property to show the time-to-read, something like this (here `post` contains the JSON data shown above) -
+
+```html
+<p>Time to read: {Math.round(post.readingTime.minutes)} mins</p>
+```
