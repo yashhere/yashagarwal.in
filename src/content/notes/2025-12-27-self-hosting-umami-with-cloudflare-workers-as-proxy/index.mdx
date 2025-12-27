@@ -26,11 +26,11 @@ import doRetryFlow from "./durable-objects-retry-flow.svg"
 
 # Why?
 
-I have been using [Vercel Analytics](https://vercel.com/docs/analytics) and [Cloudflare Web Analytics](https://www.cloudflare.com/en-in/web-analytics/) for tracking the traffic on this blog. While both services are great, I wanted to explore self-hosting an analytics solution to have more control over my data. After some research, I decided to use [Umami](https://umami.is/), a simple, open-source, privacy-focused web analytics tool. I have used Umami before, when PlanetScale used to have a free tier for their serverless MySQL database. Meanwhile, Umami also migrated from v2 to v3 and with that came the headache of database migration. Since PlanetScale had discontinued their free tier, I ditched Umami and moved to Vercel and Cloudflare for managing the analytics for this blog.
+I have been using [Vercel Analytics](https://vercel.com/docs/analytics) and [Cloudflare Web Analytics](https://www.cloudflare.com/en-in/web-analytics/) for tracking the traffic on this blog. While both services are great, I wanted to explore self-hosting an analytics solution to have more control over my data. After some research, I decided to use [Umami](https://umami.is/), a simple, open-source, privacy-focused web analytics tool. I have used Umami before, when [PlanetScale](https://planetscale.com/docs/plans/hobby-plan-deprecation-faq) used to have a free tier for their serverless MySQL database. Meanwhile, Umami also [migrated](https://docs.umami.is/docs/guides/migrate-v1-v2) from v1 to v2 and with that came the headache of database migration. Since PlanetScale had discontinued their free tier, I ditched Umami and moved to Vercel and Cloudflare for managing the analytics for this blog.
 
-Recently, I bought a Raspberry Pi 5 to set up a home server for various projects. I thought it would be a great opportunity to self-host Umami on my Raspberry Pi. Only one issue &ndash; I don't have a UPS and I can't ensure 24x7 uptime for my Raspberry Pi server. This meant that if my home internet goes down or there's a power outage, my Umami instance would be inaccessible. I needed a solution that would allow me to self-host my Umami instance while accessible on the public internet. I also needed a way to ensure that I don't lose any analytics data during Pi downtime.
+Recently, I bought a Raspberry Pi 5 to set up a home server for various projects. I thought it would be a great opportunity to self-host Umami on my Raspberry Pi. Only one issue &ndash; I don't have a UPS and I can't ensure 24x7 uptime for my Raspberry Pi server. This meant that if my home internet goes down or there's a power outage, my Umami instance would be inaccessible. I needed a solution that would allow me to self-host my Umami instance while being accessible on the public internet. I also needed a way to ensure that I don't lose any analytics data during Pi downtime.
 
-This post outlines various steps I took to build a system matching my requirements using Cloudflare Workers as a proxy server, Cloudflare Durable Objects as temporary storage and Cloudflare KV as a cache, while staying within the free tier limits of Cloudflare.
+This post outlines various steps I took to build a system matching my requirements using Cloudflare Workers as a proxy server and Cloudflare Durable Objects as temporary storage, while staying within the free tier limits of Cloudflare.
 
 
 # Setting up Raspberry Pi
@@ -86,7 +86,7 @@ volumes:
 
 ## Setting up Cloudflare Tunnel
 
-Now comes the interesting part. I **didn't** want to expose my Raspberry Pi directly to the public internet for security reasons. I wanted the tunnel to be accessible **only** by my Cloudflare Workers proxy layer.
+Now comes the interesting part. I wanted to expose my Raspberry Pi directly to the public internet without a static IP or opening any ports on my router. [Cloudflare Tunnels](https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-tunnel/) provide a secure way to expose local services to the internet without needing a public IP address or port forwarding. The tunnel creates an outbound connection from my Raspberry Pi to Cloudflare's network, allowing me to access my Umami instance securely.
 
 Setting up the tunnel was straightforward:
 
@@ -106,10 +106,6 @@ APP_SECRET=<generate-with-openssl-rand-base64-32>
 ```
 
 4. **Configure ingress in the Cloudflare dashboard** - this is where the magic happens. Instead of creating a public hostname like `umami.yourdomain.com`, I configured the ingress to route traffic from the tunnel to `http://umami:3000` (the Umami service in Docker Compose).
-
-**Important:** I did **not** add a public hostname in the tunnel configuration. This keeps the tunnel private - it's only accessible via its internal Cloudflare Tunnel URL (format: `https://<tunnel-id>.cfargotunnel.com`).
-
-This URL is only reachable from within Cloudflare's network, which means only my Workers can access it. The public internet cannot hit my Pi directly.
 
 Start everything with Docker Compose:
 
@@ -163,9 +159,9 @@ Since, I couldn't guarantee 24x7 uptime for my Raspberry Pi, I needed a way to e
 
 # Using Cloudflare Workers as Proxy
 
-As clear from the above diagram, when the Raspberry Pi is offline, any requests to the Umami instance would fail, resulting in lost analytics data. To solve this problem, I decided to use Cloudflare Workers as a proxy layer between my blog and the Umami instance. Cloudflare Workers are serverless functions that run on Cloudflare's edge network, allowing me to intercept and modify requests before they reach the origin server. Since I am already using Cloudflare Tunnels to expose my Umami instance, integrating Cloudflare Workers into the setup was the most obvious choice.
+As clear from the above diagram, when the Raspberry Pi is offline, any requests to the Umami instance would fail, resulting in lost analytics data. To solve this problem, I decided to use Cloudflare Workers as a proxy layer between my blog and the Umami instance. [Cloudflare Workers](https://developers.cloudflare.com/workers/) are serverless functions that run on Cloudflare's edge network, allowing me to intercept and modify requests before they reach the origin server. Since I am already using Cloudflare Tunnels to expose my Umami instance, integrating Cloudflare Workers into the setup was the most obvious choice.
 
-To provide a storage mechanism for buffering analytics data during Pi downtime, I decided to use Cloudflare Durable Objects. Durable Objects provide a way to store stateful data in a distributed manner across Cloudflare's edge network. This meant that when the Raspberry Pi was offline, the Workers could temporarily store the analytics data in Durable Objects and forward them to the Umami instance once it came back online. Durable Objects also provide the alarm feature, which is essentially a timer that can be set to trigger a function after a specified interval. This feature is crucial for retrying the forwarding of buffered analytics data once the Raspberry Pi comes back online.
+To provide a storage mechanism for buffering analytics data during Pi downtime, I decided to use [Cloudflare Durable Objects](https://developers.cloudflare.com/durable-objects/). It is a special type of Cloudflare Workers. Durable Objects provide a way to store stateful data in a distributed manner across Cloudflare's edge network. This meant that when the Raspberry Pi was offline, the Workers could temporarily store the analytics data in a persistent storage and forward them to the Umami instance once it came back online. Durable Objects also provide the [alarm feature](https://developers.cloudflare.com/durable-objects/api/alarms/), which is essentially a timer that can be set to trigger a function after a specified interval. This feature is crucial for retrying the forwarding of buffered analytics data once the Raspberry Pi comes back online.
 
 Below sequence diagram illustrates the request flow when using Cloudflare Workers as a proxy:
 
@@ -188,7 +184,7 @@ Below sequence diagram illustrates the request flow when using Cloudflare Worker
 
 The primary task of the Cloudflare Workers proxy is to intercept requests from the blog domain, and forward them to the Umami instance running on the Raspberry Pi via the Cloudflare Tunnel. The real magic happens when the Pi is offline.
 
-If the event forwarding to the Umami instance fails, it indicates that the Pi is offline. In this case, the Workers store the analytics data in a Durable Object and set an alarm to retry forwarding the data after a specified interval. The client would receive a 202 Accepted response, indicating that the request has been accepted for processing, but the processing is not yet complete.
+If the event forwarding to the Umami instance fails, it indicates that the Pi is offline. In this case, the Workers store the analytics data in its storage and set an alarm to retry forwarding the data after a specified interval. The client would receive a 202 Accepted response, indicating that the request has been accepted for processing, but the processing is not yet complete.
 
 Here is a high-level pseudocode of the Workers proxy logic:
 
@@ -250,7 +246,7 @@ The Durable Object is responsible for storing the analytics data when the Raspbe
 
 When an event is buffered, the Durable Object sets an alarm to trigger a retry after a specified interval. When the alarm goes off, the Durable Object attempts to forward all buffered events to the Umami instance. If the forwarding is successful, the events are removed from the queue. If it fails again, the events remain in the queue for future retries and are retried after exponential backoff. If an event has exceeded maximum retry attempts, we stop doing exponential backoffs and retry every 30 minutes until the event has been in queue for more than 24 hours.
 
-Here is a high-level pseudocode of the Durable Object logic:
+Here is a high-level pseudocode of the event buffering logic:
 
 ```typescript
 // EventBuffer Durable Object
@@ -343,6 +339,6 @@ The retry strategy follows this state flow:
 
 # Conclusion
 
-This setup evolved from my need to self-host Umami on a Raspberry Pi with high availability. I didn't want to spend money on a VPS or third-party offerings, so I leveraged Cloudflare's free tier to build a robust (for now) system. My blog doesn't receive too much traffic, so I hope to remain within the free tier limits of Cloudflare Workers, Durable Objects for the foreseeable future. Workers with Durable Objects provide a solid fallback mechanism to ensure no analytics data is lost during Pi downtime.
+This setup evolved from my need to self-host Umami on a Raspberry Pi with high availability. I didn't want to spend money on a VPS or third-party offerings, so I leveraged Cloudflare's free tier to build a robust (for now!) system. My blog doesn't receive too much traffic, so I hope to remain within the free tier limits of Cloudflare Durable Objects for the foreseeable future. Workers with Durable Objects provide a solid fallback mechanism to ensure no analytics data is lost during Pi downtime.
 
-Hope, you enjoyed reading this post! If you have any questions or suggestions, feel free to reach out to me on [X](https://x.com/its_yash_btw) or via comments below. Do like and share if you found this post helpful!
+I hope you enjoyed reading this post! If you have any questions or suggestions, feel free to reach out to me on [X](https://x.com/its_yash_btw) or via comments below. Do like and share if you found this post helpful!
