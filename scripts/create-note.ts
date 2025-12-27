@@ -67,7 +67,7 @@ class NoteCreator {
         .replace(", ", "T") + "+05:30"
     )
   }
-  
+
   private formatDateOnly(date: Date): string {
      // YYYY-MM-DD
      return date.toISOString().split("T")[0];
@@ -282,7 +282,7 @@ class NoteCreator {
       const baseSlug = this.createSlug(title)
       const now = new Date();
       const dateStr = this.formatDateOnly(now);
-      
+
       let dirName = `${dateStr}-${baseSlug}`;
       let counter = 1
 
@@ -352,7 +352,7 @@ class NoteCreator {
         createdOn: this.formatDateTime(now),
         status: "draft",
       }
-      
+
       if (counter > 1) {
           // If we had to change the dir name, should we change the slug too?
           // Usually yes, to avoid URL collision if slug is unique key.
@@ -382,7 +382,7 @@ class NoteCreator {
       }
 
       // Create file content
-      let fileContent = "---"
+      let fileContent = "---\n"
 
       // Add frontmatter fields in specific order
       fileContent += `title: ${JSON.stringify(frontmatter.title)}\n`
@@ -435,7 +435,7 @@ class NoteCreator {
       if (shouldCreate) {
         const dirPath = path.join(this.contentDir, dirName);
         await fs.mkdir(dirPath, { recursive: true });
-        
+
         const filePath = path.join(dirPath, "index.mdx");
         await fs.writeFile(filePath, fileContent, "utf-8")
 
