@@ -59,10 +59,11 @@ const breadcrumbItems = [{ label: "Home", href: "/" }, { label: "Notes" }]
 
   let pagefind = null
 
-  // Load Pagefind
+  // Load and initialize Pagefind
   async function loadPagefind() {
     if (!pagefind) {
       pagefind = await import("/pagefind/pagefind.js")
+      await pagefind.init()
     }
     return pagefind
   }
@@ -97,44 +98,53 @@ const breadcrumbItems = [{ label: "Home", href: "/" }, { label: "Notes" }]
       }
 
       // Load pagefind and perform search
-      const pf = await loadPagefind()
-      const search = await pf.search(term)
+      try {
+        const pf = await loadPagefind()
+        console.log("Pagefind loaded:", pf)
+        const search = await pf.search(term)
+        console.log("Search results:", search)
 
-      // Get URLs of search results and normalize them
-      const resultUrls = new Set(
-        search.results.map((result) => {
-          // Normalize URL: remove /index.html and trailing slashes
-          return result.url.replace(/\/index\.html$/, '').replace(/\/$/, '')
+        // Get URLs of search results and normalize them
+        const resultUrls = new Set(
+          search.results.map((result) => {
+            // Normalize URL: remove /index.html and trailing slashes
+            const normalized = result.url.replace(/\/index\.html$/, '').replace(/\/$/, '')
+            console.log("Result URL:", result.url, "-> Normalized:", normalized)
+            return normalized
+          })
+        )
+        console.log("Result URLs set:", resultUrls)
+
+        let visibleCount = 0
+
+        listItems.forEach((li) => {
+          const link = li.querySelector("a")
+          const url = link?.getAttribute("href") || ""
+          const normalizedUrl = url.replace(/\/index\.html$/, '').replace(/\/$/, '')
+
+          if (resultUrls.has(normalizedUrl)) {
+            li.style.display = ""
+            visibleCount++
+          } else {
+            li.style.display = "none"
+          }
         })
-      )
 
-      let visibleCount = 0
-
-      listItems.forEach((li) => {
-        const link = li.querySelector("a")
-        const url = link?.getAttribute("href") || ""
-        const normalizedUrl = url.replace(/\/index\.html$/, '').replace(/\/$/, '')
-
-        if (resultUrls.has(normalizedUrl)) {
-          li.style.display = ""
-          visibleCount++
-        } else {
-          li.style.display = "none"
+        if (noResults) {
+          noResults.classList.toggle("hidden", visibleCount > 0)
         }
-      })
 
-      if (noResults) {
-        noResults.classList.toggle("hidden", visibleCount > 0)
-      }
-
-      // Update count displays
-      const countElement = document.querySelector('[data-count]')
-      const bottomCount = document.querySelector('[data-bottom-count]')
-      if (countElement) {
-        countElement.textContent = visibleCount.toString()
-      }
-      if (bottomCount) {
-        bottomCount.textContent = `Showing ${visibleCount} note${visibleCount !== 1 ? 's' : ''}`
+        // Update count displays
+        const countElement = document.querySelector('[data-count]')
+        const bottomCount = document.querySelector('[data-bottom-count]')
+        if (countElement) {
+          countElement.textContent = visibleCount.toString()
+        }
+        if (bottomCount) {
+          bottomCount.textContent = `Showing ${visibleCount} note${visibleCount !== 1 ? 's' : ''}`
+        }
+      } catch (error) {
+        console.error("Pagefind error:", error)
       }
     })
   }
