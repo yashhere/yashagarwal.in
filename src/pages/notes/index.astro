@@ -52,71 +52,67 @@ const breadcrumbItems = [{ label: "Home", href: "/" }, { label: "Notes" }]
 </BaseLayout>
 
 <script is:inline>
-  // Pagefind search
-  const searchInput = document.getElementById("search-input")
-  const notesList = document.getElementById("notes-list")
-  const noResults = document.getElementById("no-results")
+  window.addEventListener('DOMContentLoaded', async () => {
+    console.log('[Pagefind] Script loaded')
 
-  let pagefind = null
+    const searchInput = document.getElementById("search-input")
+    const notesList = document.getElementById("notes-list")
+    const noResults = document.getElementById("no-results")
 
-  // Load and initialize Pagefind
-  async function loadPagefind() {
-    if (!pagefind) {
-      pagefind = await import("/pagefind/pagefind.js")
-      await pagefind.init()
+    console.log('[Pagefind] Elements:', { searchInput, notesList, noResults })
+
+    if (!searchInput || !notesList) {
+      console.error('[Pagefind] Required elements not found')
+      return
     }
-    return pagefind
-  }
 
-  if (searchInput && notesList) {
+    // Initialize Pagefind once at page load
+    console.log('[Pagefind] Loading pagefind...')
+    let pagefind
+    try {
+      pagefind = await import("/pagefind/pagefind.js")
+      console.log('[Pagefind] Imported:', pagefind)
+      await pagefind.init()
+      console.log('[Pagefind] Initialized successfully')
+    } catch (error) {
+      console.error('[Pagefind] Failed to load:', error)
+      return
+    }
+
     const listItems = notesList.querySelectorAll("li")
+    console.log('[Pagefind] Found', listItems.length, 'notes')
 
     searchInput.addEventListener("input", async (e) => {
       const term = e.target.value.trim()
+      console.log('[Pagefind] Search term:', term)
 
       if (term === "") {
-        // Show all notes when search is empty
-        listItems.forEach((li) => {
-          li.style.display = ""
-        })
+        listItems.forEach((li) => { li.style.display = "" })
+        if (noResults) noResults.classList.add("hidden")
 
-        if (noResults) {
-          noResults.classList.add("hidden")
-        }
-
-        // Update count displays
         const countElement = document.querySelector('[data-count]')
         const bottomCount = document.querySelector('[data-bottom-count]')
         const totalCount = listItems.length
-        if (countElement) {
-          countElement.textContent = totalCount.toString()
-        }
-        if (bottomCount) {
-          bottomCount.textContent = `Showing ${totalCount} note${totalCount !== 1 ? 's' : ''}`
-        }
+        if (countElement) countElement.textContent = totalCount.toString()
+        if (bottomCount) bottomCount.textContent = `Showing ${totalCount} note${totalCount !== 1 ? 's' : ''}`
         return
       }
 
-      // Load pagefind and perform search
       try {
-        const pf = await loadPagefind()
-        console.log("Pagefind loaded:", pf)
-        const search = await pf.search(term)
-        console.log("Search results:", search)
+        const search = await pagefind.search(term)
+        console.log('[Pagefind] Search results:', search)
 
-        // Get URLs of search results and normalize them
         const resultUrls = new Set(
           search.results.map((result) => {
-            // Normalize URL: remove /index.html and trailing slashes
             const normalized = result.url.replace(/\/index\.html$/, '').replace(/\/$/, '')
-            console.log("Result URL:", result.url, "-> Normalized:", normalized)
+            console.log('[Pagefind] Result URL:', result.url, '→', normalized)
             return normalized
           })
         )
-        console.log("Result URLs set:", resultUrls)
+
+        console.log('[Pagefind] Result URLs set:', Array.from(resultUrls))
 
         let visibleCount = 0
-
         listItems.forEach((li) => {
           const link = li.querySelector("a")
           const url = link?.getAttribute("href") || ""
@@ -130,22 +126,17 @@ const breadcrumbItems = [{ label: "Home", href: "/" }, { label: "Notes" }]
           }
         })
 
-        if (noResults) {
-          noResults.classList.toggle("hidden", visibleCount > 0)
-        }
+        console.log('[Pagefind] Visible count:', visibleCount)
 
-        // Update count displays
+        if (noResults) noResults.classList.toggle("hidden", visibleCount > 0)
+
         const countElement = document.querySelector('[data-count]')
         const bottomCount = document.querySelector('[data-bottom-count]')
-        if (countElement) {
-          countElement.textContent = visibleCount.toString()
-        }
-        if (bottomCount) {
-          bottomCount.textContent = `Showing ${visibleCount} note${visibleCount !== 1 ? 's' : ''}`
-        }
+        if (countElement) countElement.textContent = visibleCount.toString()
+        if (bottomCount) bottomCount.textContent = `Showing ${visibleCount} note${visibleCount !== 1 ? 's' : ''}`
       } catch (error) {
-        console.error("Pagefind error:", error)
+        console.error('[Pagefind] Search error:', error)
       }
     })
-  }
+  })
 </script>
