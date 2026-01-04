@@ -100,16 +100,22 @@ const breadcrumbItems = [{ label: "Home", href: "/" }, { label: "Notes" }]
       const pf = await loadPagefind()
       const search = await pf.search(term)
 
-      // Get URLs of search results
-      const resultUrls = new Set(search.results.map((result) => result.url))
+      // Get URLs of search results and normalize them
+      const resultUrls = new Set(
+        search.results.map((result) => {
+          // Normalize URL: remove /index.html and trailing slashes
+          return result.url.replace(/\/index\.html$/, '').replace(/\/$/, '')
+        })
+      )
 
       let visibleCount = 0
 
       listItems.forEach((li) => {
         const link = li.querySelector("a")
         const url = link?.getAttribute("href") || ""
+        const normalizedUrl = url.replace(/\/index\.html$/, '').replace(/\/$/, '')
 
-        if (resultUrls.has(url)) {
+        if (resultUrls.has(normalizedUrl)) {
           li.style.display = ""
           visibleCount++
         } else {
