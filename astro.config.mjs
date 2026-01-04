@@ -7,6 +7,7 @@ import sitemap from "@astrojs/sitemap"
 import tailwindcss from "@tailwindcss/vite"
 import { defineConfig } from "astro/config"
 import icon from "astro-icon"
+import pagefind from "astro-pagefind"
 import rehypeAutolinkHeadings from "rehype-autolink-headings"
 import rehypeKatex from "rehype-katex"
 import rehypeMermaid from "rehype-mermaid"
@@ -121,6 +122,11 @@ export default defineConfig({
       entrypoint: "/src/alpine-plugins.ts",
     }),
     react(),
+    pagefind({
+      site: {
+        selector: "[data-pagefind-body]",
+      },
+    }),
     mdx({
       syntaxHighlight: false,
       remarkPlugins: [
