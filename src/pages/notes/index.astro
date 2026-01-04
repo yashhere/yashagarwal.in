@@ -51,36 +51,65 @@ const breadcrumbItems = [{ label: "Home", href: "/" }, { label: "Notes" }]
     </Section>
 </BaseLayout>
 
-<script>
-  // Client-side search and visible count logic
-  const searchInput = document.getElementById("search-input") as HTMLInputElement
+<script is:inline>
+  // Pagefind search
+  const searchInput = document.getElementById("search-input")
   const notesList = document.getElementById("notes-list")
   const noResults = document.getElementById("no-results")
 
-  // Note: Pagination/Limit is not strictly implemented here as per 'All Notes' behavior in valid static build
-  // but the search filter is active.
+  let pagefind = null
+
+  // Load Pagefind
+  async function loadPagefind() {
+    if (!pagefind) {
+      pagefind = await import("/pagefind/pagefind.js")
+    }
+    return pagefind
+  }
 
   if (searchInput && notesList) {
     const listItems = notesList.querySelectorAll("li")
 
-    searchInput.addEventListener("input", (e) => {
-      const term = (e.target as HTMLInputElement).value.toLowerCase()
+    searchInput.addEventListener("input", async (e) => {
+      const term = e.target.value.trim()
+
+      if (term === "") {
+        // Show all notes when search is empty
+        listItems.forEach((li) => {
+          li.style.display = ""
+        })
+
+        if (noResults) {
+          noResults.classList.add("hidden")
+        }
+
+        // Update count displays
+        const countElement = document.querySelector('[data-count]')
+        const bottomCount = document.querySelector('[data-bottom-count]')
+        const totalCount = listItems.length
+        if (countElement) {
+          countElement.textContent = totalCount.toString()
+        }
+        if (bottomCount) {
+          bottomCount.textContent = `Showing ${totalCount} note${totalCount !== 1 ? 's' : ''}`
+        }
+        return
+      }
+
+      // Load pagefind and perform search
+      const pf = await loadPagefind()
+      const search = await pf.search(term)
+
+      // Get URLs of search results
+      const resultUrls = new Set(search.results.map((result) => result.url))
+
       let visibleCount = 0
 
       listItems.forEach((li) => {
-        const titleElement = li.querySelector("[data-note-title]")
-        const title = titleElement?.textContent?.toLowerCase() || ""
-        const description = titleElement?.getAttribute("data-note-description")?.toLowerCase() || ""
-        const tags = titleElement?.getAttribute("data-note-tags")?.toLowerCase() || ""
-        const category = titleElement?.getAttribute("data-note-category")?.toLowerCase() || ""
+        const link = li.querySelector("a")
+        const url = link?.getAttribute("href") || ""
 
-        // Search across title, description, tags, and category
-        if (
-          title.includes(term) ||
-          description.includes(term) ||
-          tags.includes(term) ||
-          category.includes(term)
-        ) {
+        if (resultUrls.has(url)) {
           li.style.display = ""
           visibleCount++
         } else {
