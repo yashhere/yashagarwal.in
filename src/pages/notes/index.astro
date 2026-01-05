@@ -53,38 +53,26 @@ const breadcrumbItems = [{ label: "Home", href: "/" }, { label: "Notes" }]
 
 <script is:inline>
   window.addEventListener('DOMContentLoaded', async () => {
-    console.log('[Pagefind] Script loaded')
-
     const searchInput = document.getElementById("search-input")
     const notesList = document.getElementById("notes-list")
     const noResults = document.getElementById("no-results")
 
-    console.log('[Pagefind] Elements:', { searchInput, notesList, noResults })
-
-    if (!searchInput || !notesList) {
-      console.error('[Pagefind] Required elements not found')
-      return
-    }
+    if (!searchInput || !notesList) return
 
     // Initialize Pagefind once at page load
-    console.log('[Pagefind] Loading pagefind...')
     let pagefind
     try {
       pagefind = await import("/pagefind/pagefind.js")
-      console.log('[Pagefind] Imported:', pagefind)
       await pagefind.init()
-      console.log('[Pagefind] Initialized successfully')
     } catch (error) {
-      console.error('[Pagefind] Failed to load:', error)
+      console.error('Failed to load Pagefind:', error)
       return
     }
 
     const listItems = notesList.querySelectorAll("li")
-    console.log('[Pagefind] Found', listItems.length, 'notes')
 
     searchInput.addEventListener("input", async (e) => {
       const term = e.target.value.trim()
-      console.log('[Pagefind] Search term:', term)
 
       if (term === "") {
         listItems.forEach((li) => { li.style.display = "" })
@@ -100,21 +88,13 @@ const breadcrumbItems = [{ label: "Home", href: "/" }, { label: "Notes" }]
 
       try {
         const search = await pagefind.search(term)
-        console.log('[Pagefind] Search results:', search)
-
-        // Load full data for each result to get URLs
         const results = await Promise.all(search.results.map(r => r.data()))
-        console.log('[Pagefind] Loaded result data:', results)
 
         const resultUrls = new Set(
           results.map((result) => {
-            const normalized = result.url.replace(/\/index\.html$/, '').replace(/\/$/, '')
-            console.log('[Pagefind] Result URL:', result.url, '→', normalized)
-            return normalized
+            return result.url.replace(/\/index\.html$/, '').replace(/\/$/, '')
           })
         )
-
-        console.log('[Pagefind] Result URLs set:', Array.from(resultUrls))
 
         let visibleCount = 0
         listItems.forEach((li) => {
@@ -130,8 +110,6 @@ const breadcrumbItems = [{ label: "Home", href: "/" }, { label: "Notes" }]
           }
         })
 
-        console.log('[Pagefind] Visible count:', visibleCount)
-
         if (noResults) noResults.classList.toggle("hidden", visibleCount > 0)
 
         const countElement = document.querySelector('[data-count]')
@@ -139,7 +117,7 @@ const breadcrumbItems = [{ label: "Home", href: "/" }, { label: "Notes" }]
         if (countElement) countElement.textContent = visibleCount.toString()
         if (bottomCount) bottomCount.textContent = `Showing ${visibleCount} note${visibleCount !== 1 ? 's' : ''}`
       } catch (error) {
-        console.error('[Pagefind] Search error:', error)
+        console.error('Pagefind search error:', error)
       }
     })
   })
