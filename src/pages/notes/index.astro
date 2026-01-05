@@ -102,8 +102,12 @@ const breadcrumbItems = [{ label: "Home", href: "/" }, { label: "Notes" }]
         const search = await pagefind.search(term)
         console.log('[Pagefind] Search results:', search)
 
+        // Load full data for each result to get URLs
+        const results = await Promise.all(search.results.map(r => r.data()))
+        console.log('[Pagefind] Loaded result data:', results)
+
         const resultUrls = new Set(
-          search.results.map((result) => {
+          results.map((result) => {
             const normalized = result.url.replace(/\/index\.html$/, '').replace(/\/$/, '')
             console.log('[Pagefind] Result URL:', result.url, '→', normalized)
             return normalized
