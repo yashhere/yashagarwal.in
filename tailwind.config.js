@@ -5,8 +5,8 @@ const headingStyles = {
   fontFamily: "var(--font-serif)",
   fontWeight: 600,
   lineHeight: 1.2,
-  marginTop: "1.5rem",
-  marginBottom: "0.5rem",
+  marginTop: "2rem",
+  marginBottom: "0.75rem",
   color: "var(--heading)",
 }
 
@@ -84,16 +84,18 @@ const typographyStyles = {
         color: "var(--heading)",
       },
       p: {
-        marginTop: "1.1rem",
-        marginBottom: "1.1rem",
+        marginTop: "1.5rem",
+        marginBottom: "1.5rem",
         lineHeight: "1.75rem", // 28px
       },
       "ul, ol": {
         paddingLeft: "1.25rem",
+        marginTop: "1.5rem",
+        marginBottom: "1.5rem",
       },
       li: {
-        marginTop: "0.5rem",
-        marginBottom: "0.5rem",
+        marginTop: "0.625rem",
+        marginBottom: "0.625rem",
         lineHeight: "1.75rem", // 28px
       },
       blockquote: {
@@ -101,9 +103,9 @@ const typographyStyles = {
         fontStyle: "italic",
         borderLeftWidth: "0.25rem",
         borderLeftColor: "var(--border)",
-        paddingLeft: "1rem",
-        marginTop: "1.5rem",
-        marginBottom: "1.5rem",
+        paddingLeft: "1.25rem",
+        marginTop: "2rem",
+        marginBottom: "2rem",
         "& p:first-of-type::before": { content: "none" },
         "& p:last-of-type::after": { content: "none" },
         "& p": {
@@ -114,7 +116,7 @@ const typographyStyles = {
         backgroundColor: "var(--syntax-bg)",
         borderRadius: "0.375rem",
         overflowX: "auto",
-        fontSize: "0.9375rem",
+        fontSize: "1rem",
         padding: "0.75rem",
       },
       code: {
@@ -122,7 +124,7 @@ const typographyStyles = {
         backgroundColor: "var(--muted) / 0.5",
         padding: "0.2rem 0.4rem",
         borderRadius: "0.25rem",
-        fontSize: "0.875rem",
+        fontSize: "0.9375rem",
         fontWeight: "400",
         "&::before": { content: "none" },
         "&::after": { content: "none" },
@@ -139,7 +141,7 @@ const typographyStyles = {
 
         // Line numbers and highlighting
         pre: {
-          fontSize: "0.9375rem",
+          fontSize: "1rem",
           padding: "0.75rem 0",
         },
         "[data-line]": {

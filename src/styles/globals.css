@@ -49,11 +49,11 @@
 
     /* Base colors - Cupcake background with warm gray text */
     --background: oklch(97.788% 0.004 56.375);
-    --foreground: oklch(44.4% 0.011 73.64); /* #57534d */
+    --foreground: oklch(22% 0.008 70); /* #21201E - darker for better contrast */
     --card: oklch(97.788% 0.004 56.375);
-    --card-foreground: oklch(44.4% 0.011 73.64);
+    --card-foreground: oklch(22% 0.008 70);
     --popover: oklch(100% 0 0);
-    --popover-foreground: oklch(44.4% 0.011 73.64);
+    --popover-foreground: oklch(22% 0.008 70);
 
     /* Primary - Dark gray/black for links and interactive elements */
     --primary: oklch(25% 0 0);
@@ -68,7 +68,7 @@
 
     /* Muted - Light gray for backgrounds */
     --muted: oklch(93.982% 0.007 61.449);
-    --muted-foreground: oklch(45% 0 0);
+    --muted-foreground: oklch(55% 0.01 70); /* Lighter for clear hierarchy */
 
     /* Accent - Subtle light gray for hover states */
     --accent: oklch(90% 0 0);
@@ -91,14 +91,14 @@
     --chart-5: oklch(70% 0 0);
 
     /* Code syntax highlighting - Light */
-    --syntax-bg: oklch(95% 0 0);
-    --syntax-highlight: oklch(90% 0 0);
-    --syntax-txt: oklch(20% 0 0);
-    --syntax-comment: oklch(55% 0 0);
-    --syntax-prop: oklch(30% 0 0);
-    --syntax-bool: oklch(35% 0 0);
-    --syntax-value: oklch(40% 0 0);
-    --syntax-string: oklch(35% 0 0);
+    --syntax-bg: oklch(96% 0.005 60);
+    --syntax-highlight: oklch(92% 0.008 60);
+    --syntax-txt: oklch(35% 0.01 60);
+    --syntax-comment: oklch(55% 0.01 60);
+    --syntax-prop: oklch(40% 0.015 60);
+    --syntax-bool: oklch(45% 0.02 30);
+    --syntax-value: oklch(42% 0.02 45);
+    --syntax-string: oklch(38% 0.015 90);
 
     /* alpha variants */
     --primary-15: color-mix(in srgb, var(--primary) 15%, transparent);
@@ -136,7 +136,7 @@
 
     /* Muted - Dark gray for backgrounds */
     --muted: oklch(18% 0.005 260);
-    --muted-foreground: oklch(55% 0.012 60);
+    --muted-foreground: oklch(48% 0.01 60);
 
     /* Accent - Subtle dark gray for hover states */
     --accent: oklch(22% 0.005 260);
@@ -159,14 +159,14 @@
     --chart-5: oklch(30% 0 0);
 
     /* Code syntax highlighting - Dark */
-    --syntax-bg: oklch(14% 0.005 260);
-    --syntax-highlight: oklch(20% 0.005 260);
-    --syntax-txt: oklch(70% 0.012 60);
-    --syntax-comment: oklch(50% 0.012 60);
-    --syntax-prop: oklch(75% 0.012 60);
-    --syntax-bool: oklch(70% 0.012 60);
-    --syntax-value: oklch(65% 0.012 60);
-    --syntax-string: oklch(70% 0.012 60);
+    --syntax-bg: oklch(16% 0.008 60);
+    --syntax-highlight: oklch(22% 0.01 60);
+    --syntax-txt: oklch(75% 0.01 60);
+    --syntax-comment: oklch(50% 0.01 60);
+    --syntax-prop: oklch(80% 0.015 60);
+    --syntax-bool: oklch(72% 0.02 30);
+    --syntax-value: oklch(70% 0.02 45);
+    --syntax-string: oklch(78% 0.015 90);
 
     /* alpha variants */
     --primary-15: color-mix(in srgb, var(--primary) 15%, transparent);
