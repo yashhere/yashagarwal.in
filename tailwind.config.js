@@ -7,10 +7,11 @@ const headingStyles = {
   lineHeight: 1.2,
   marginTop: "1.5rem",
   marginBottom: "0.5rem",
+  color: "var(--heading)",
 }
 
 const linkStyles = {
-  color: "inherit",
+  color: "var(--heading)",
   textDecoration: "none",
   fontWeight: "inherit",
 }
@@ -72,6 +73,16 @@ const typographyStyles = {
         },
       },
       a: linkStyles,
+      strong: {
+        color: "var(--heading)",
+        fontWeight: "600",
+      },
+      em: {
+        color: "var(--heading)",
+      },
+      "strong em, em strong": {
+        color: "var(--heading)",
+      },
       p: {
         marginTop: "1.1rem",
         marginBottom: "1.1rem",
@@ -214,6 +225,7 @@ const config = {
         ring: "var(--ring)",
         background: "var(--background)",
         foreground: "var(--foreground)",
+        heading: "var(--heading)",
         primary: {
           DEFAULT: "var(--primary)",
           foreground: "var(--primary-foreground)",

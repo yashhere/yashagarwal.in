@@ -47,17 +47,20 @@
     /* Simplified theme - Light mode with black text */
     --radius: 1rem;
 
-    /* Base colors - Cupcake background with black text */
+    /* Base colors - Cupcake background with warm gray text */
     --background: oklch(97.788% 0.004 56.375);
-    --foreground: oklch(20% 0 0);
+    --foreground: oklch(44.4% 0.011 73.64); /* #57534d */
     --card: oklch(97.788% 0.004 56.375);
-    --card-foreground: oklch(20% 0 0);
+    --card-foreground: oklch(44.4% 0.011 73.64);
     --popover: oklch(100% 0 0);
-    --popover-foreground: oklch(20% 0 0);
+    --popover-foreground: oklch(44.4% 0.011 73.64);
 
     /* Primary - Dark gray/black for links and interactive elements */
     --primary: oklch(25% 0 0);
     --primary-foreground: oklch(98% 0 0);
+
+    /* High emphasis - For headings and links */
+    --heading: oklch(20% 0 0);
 
     /* Secondary - Slightly lighter gray */
     --secondary: oklch(35% 0 0);
@@ -108,41 +111,45 @@
   }
 
   .dark {
-    /* Simplified theme - Dark mode with white text */
+    /* Refined dark mode - inspired by interfacecraft.dev */
+    /* Muted warm gray text for reduced eye strain */
     --radius: 1rem;
 
-    /* Base colors - Dark cupcake background with white text */
-    --background: oklch(15.939% 0.005 282.887);
-    --foreground: oklch(95% 0 0);
-    --card: oklch(12.721% 0.006 280.994);
-    --card-foreground: oklch(95% 0 0);
-    --popover: oklch(10% 0 0);
-    --popover-foreground: oklch(95% 0 0);
+    /* Base colors - Near-black background with warm muted text */
+    --background: oklch(11% 0.005 260);
+    --foreground: oklch(70.9% 0.01 56.26);
+    --card: oklch(13% 0.005 260);
+    --card-foreground: oklch(70.9% 0.01 56.26);
+    --popover: oklch(9% 0 0);
+    --popover-foreground: oklch(70% 0.012 60);
 
-    /* Primary - Light gray/white for links and interactive elements */
-    --primary: oklch(90% 0 0);
-    --primary-foreground: oklch(15% 0 0);
+    /* Primary - Slightly brighter for links and interactive elements */
+    --primary: oklch(80% 0.012 60);
+    --primary-foreground: oklch(11% 0 0);
 
-    /* Secondary - Slightly darker white */
-    --secondary: oklch(80% 0 0);
-    --secondary-foreground: oklch(15% 0 0);
+    /* High emphasis - Pure white for headings and links */
+    --heading: oklch(95% 0 0);
+
+    /* Secondary - Slightly dimmer */
+    --secondary: oklch(65% 0.012 60);
+    --secondary-foreground: oklch(11% 0 0);
 
     /* Muted - Dark gray for backgrounds */
-    --muted: oklch(20% 0 0);
-    --muted-foreground: oklch(70% 0 0);
+    --muted: oklch(18% 0.005 260);
+    --muted-foreground: oklch(55% 0.012 60);
 
     /* Accent - Subtle dark gray for hover states */
-    --accent: oklch(25% 0 0);
-    --accent-foreground: oklch(95% 0 0);
+    --accent: oklch(22% 0.005 260);
+    --accent-foreground: oklch(70% 0.012 60);
 
     /* Destructive - Lighter red for dark mode */
     --destructive: oklch(65% 0.2 25);
-    --destructive-foreground: oklch(95% 0 0);
+    --destructive-foreground: oklch(70% 0.012 60);
 
     /* UI Elements - Subtle borders */
-    --border: oklch(32% 0 0);
-    --input: oklch(32% 0 0);
-    --ring: oklch(90% 0 0);
+    --border: oklch(28% 0.005 260);
+    --input: oklch(28% 0.005 260);
+    --ring: oklch(70% 0.012 60);
 
     /* Chart colors - Grayscale */
     --chart-1: oklch(70% 0 0);
@@ -152,14 +159,14 @@
     --chart-5: oklch(30% 0 0);
 
     /* Code syntax highlighting - Dark */
-    --syntax-bg: oklch(30% 0 0);
-    --syntax-highlight: oklch(36% 0 0);
-    --syntax-txt: oklch(95% 0 0);
-    --syntax-comment: oklch(60% 0 0);
-    --syntax-prop: oklch(85% 0 0);
-    --syntax-bool: oklch(80% 0 0);
-    --syntax-value: oklch(75% 0 0);
-    --syntax-string: oklch(80% 0 0);
+    --syntax-bg: oklch(14% 0.005 260);
+    --syntax-highlight: oklch(20% 0.005 260);
+    --syntax-txt: oklch(70% 0.012 60);
+    --syntax-comment: oklch(50% 0.012 60);
+    --syntax-prop: oklch(75% 0.012 60);
+    --syntax-bool: oklch(70% 0.012 60);
+    --syntax-value: oklch(65% 0.012 60);
+    --syntax-string: oklch(70% 0.012 60);
 
     /* alpha variants */
     --primary-15: color-mix(in srgb, var(--primary) 15%, transparent);
@@ -214,6 +221,15 @@
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1 "calt" 1;
+  }
+
+  /* High emphasis elements */
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--heading);
+  }
+
+  a {
+    color: var(--heading);
   }
 
   :focus-visible {
