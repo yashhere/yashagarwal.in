@@ -115,12 +115,12 @@
     /* Muted warm gray text for reduced eye strain */
     --radius: 1rem;
 
-    /* Base colors - Near-black background with warm muted text */
-    --background: oklch(11% 0.005 260);
+    /* Base colors - Warm dark background with warm muted text */
+    --background: oklch(12% 0.005 30); /* #0B0A0A - warm black */
     --foreground: oklch(70.9% 0.01 56.26);
-    --card: oklch(13% 0.005 260);
+    --card: oklch(14% 0.005 30);
     --card-foreground: oklch(70.9% 0.01 56.26);
-    --popover: oklch(9% 0 0);
+    --popover: oklch(10% 0.005 30);
     --popover-foreground: oklch(70% 0.012 60);
 
     /* Primary - Slightly brighter for links and interactive elements */
@@ -135,11 +135,11 @@
     --secondary-foreground: oklch(11% 0 0);
 
     /* Muted - Dark gray for backgrounds */
-    --muted: oklch(18% 0.005 260);
+    --muted: oklch(18% 0.005 30);
     --muted-foreground: oklch(48% 0.01 60);
 
     /* Accent - Subtle dark gray for hover states */
-    --accent: oklch(22% 0.005 260);
+    --accent: oklch(20% 0.005 30);
     --accent-foreground: oklch(70% 0.012 60);
 
     /* Destructive - Lighter red for dark mode */
@@ -147,8 +147,8 @@
     --destructive-foreground: oklch(70% 0.012 60);
 
     /* UI Elements - Subtle borders */
-    --border: oklch(28% 0.005 260);
-    --input: oklch(28% 0.005 260);
+    --border: oklch(25% 0.005 30);
+    --input: oklch(25% 0.005 30);
     --ring: oklch(70% 0.012 60);
 
     /* Chart colors - Grayscale */

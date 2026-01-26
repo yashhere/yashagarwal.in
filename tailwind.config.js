@@ -91,16 +91,18 @@ const typographyStyles = {
       "ul, ol": {
         paddingLeft: "1.25rem",
         marginTop: "1.5rem",
-        marginBottom: "1.5rem",
+        // marginBottom: "1.5rem",
       },
       li: {
-        marginTop: "0.625rem",
-        marginBottom: "0.625rem",
+        marginTop: "0.375rem",
+        marginBottom: "0.375rem",
         lineHeight: "1.75rem", // 28px
       },
       blockquote: {
+        fontFamily: "var(--font-serif)",
         fontWeight: "400",
-        fontStyle: "italic",
+        fontStyle: "normal",
+        color: "var(--heading)",
         borderLeftWidth: "0.25rem",
         borderLeftColor: "var(--border)",
         paddingLeft: "1.25rem",
@@ -110,7 +112,16 @@ const typographyStyles = {
         "& p:last-of-type::after": { content: "none" },
         "& p": {
           lineHeight: "1.5", // Slightly tighter for quotes
+          color: "var(--heading)",
         },
+      },
+      figcaption: {
+        fontFamily: "var(--font-serif)",
+        fontStyle: "italic",
+        color: "var(--muted-foreground)",
+        fontSize: "0.9375rem",
+        marginTop: "0.75rem",
+        textAlign: "center",
       },
       pre: {
         backgroundColor: "var(--syntax-bg)",
