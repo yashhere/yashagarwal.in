@@ -22,7 +22,7 @@ type HeadingLevel = keyof typeof styles
 // ...
 const stylesKey = level as HeadingLevel
 const variantClass = styles[stylesKey]
-const baseClass = "text-foreground"
+const baseClass = "text-heading"
 const finalClass = `${baseClass} ${variantClass} ${className || ""}`
 ---
 

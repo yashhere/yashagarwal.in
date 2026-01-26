@@ -47,17 +47,20 @@
     /* Simplified theme - Light mode with black text */
     --radius: 1rem;
 
-    /* Base colors - Cupcake background with black text */
-    --background: oklch(97.788% 0.004 56.375);
-    --foreground: oklch(20% 0 0);
-    --card: oklch(97.788% 0.004 56.375);
-    --card-foreground: oklch(20% 0 0);
+    /* Base colors - Barely warm white background */
+    --background: oklch(98.5% 0.003 60);
+    --foreground: oklch(22% 0.008 70); /* #21201E - darker for better contrast */
+    --card: oklch(98.5% 0.003 60);
+    --card-foreground: oklch(22% 0.008 70);
     --popover: oklch(100% 0 0);
-    --popover-foreground: oklch(20% 0 0);
+    --popover-foreground: oklch(22% 0.008 70);
 
     /* Primary - Dark gray/black for links and interactive elements */
     --primary: oklch(25% 0 0);
     --primary-foreground: oklch(98% 0 0);
+
+    /* High emphasis - For headings and links */
+    --heading: oklch(20% 0 0);
 
     /* Secondary - Slightly lighter gray */
     --secondary: oklch(35% 0 0);
@@ -65,7 +68,7 @@
 
     /* Muted - Light gray for backgrounds */
     --muted: oklch(93.982% 0.007 61.449);
-    --muted-foreground: oklch(45% 0 0);
+    --muted-foreground: oklch(55% 0.01 70); /* Lighter for clear hierarchy */
 
     /* Accent - Subtle light gray for hover states */
     --accent: oklch(90% 0 0);
@@ -88,14 +91,14 @@
     --chart-5: oklch(70% 0 0);
 
     /* Code syntax highlighting - Light */
-    --syntax-bg: oklch(95% 0 0);
-    --syntax-highlight: oklch(90% 0 0);
-    --syntax-txt: oklch(20% 0 0);
-    --syntax-comment: oklch(55% 0 0);
-    --syntax-prop: oklch(30% 0 0);
-    --syntax-bool: oklch(35% 0 0);
-    --syntax-value: oklch(40% 0 0);
-    --syntax-string: oklch(35% 0 0);
+    --syntax-bg: oklch(96% 0.005 60);
+    --syntax-highlight: oklch(92% 0.008 60);
+    --syntax-txt: oklch(35% 0.01 60);
+    --syntax-comment: oklch(55% 0.01 60);
+    --syntax-prop: oklch(40% 0.015 60);
+    --syntax-bool: oklch(45% 0.02 30);
+    --syntax-value: oklch(42% 0.02 45);
+    --syntax-string: oklch(38% 0.015 90);
 
     /* alpha variants */
     --primary-15: color-mix(in srgb, var(--primary) 15%, transparent);
@@ -108,41 +111,45 @@
   }
 
   .dark {
-    /* Simplified theme - Dark mode with white text */
+    /* Refined dark mode - inspired by interfacecraft.dev */
+    /* Muted warm gray text for reduced eye strain */
     --radius: 1rem;
 
-    /* Base colors - Dark cupcake background with white text */
-    --background: oklch(15.939% 0.005 282.887);
-    --foreground: oklch(95% 0 0);
-    --card: oklch(12.721% 0.006 280.994);
-    --card-foreground: oklch(95% 0 0);
-    --popover: oklch(10% 0 0);
-    --popover-foreground: oklch(95% 0 0);
+    /* Base colors - Warm dark background with warm muted text */
+    --background: oklch(12% 0.005 30); /* #0B0A0A - warm black */
+    --foreground: oklch(70.9% 0.01 56.26);
+    --card: oklch(14% 0.005 30);
+    --card-foreground: oklch(70.9% 0.01 56.26);
+    --popover: oklch(10% 0.005 30);
+    --popover-foreground: oklch(70% 0.012 60);
 
-    /* Primary - Light gray/white for links and interactive elements */
-    --primary: oklch(90% 0 0);
-    --primary-foreground: oklch(15% 0 0);
+    /* Primary - Slightly brighter for links and interactive elements */
+    --primary: oklch(80% 0.012 60);
+    --primary-foreground: oklch(11% 0 0);
 
-    /* Secondary - Slightly darker white */
-    --secondary: oklch(80% 0 0);
-    --secondary-foreground: oklch(15% 0 0);
+    /* High emphasis - Pure white for headings and links */
+    --heading: oklch(95% 0 0);
+
+    /* Secondary - Slightly dimmer */
+    --secondary: oklch(65% 0.012 60);
+    --secondary-foreground: oklch(11% 0 0);
 
     /* Muted - Dark gray for backgrounds */
-    --muted: oklch(20% 0 0);
-    --muted-foreground: oklch(70% 0 0);
+    --muted: oklch(18% 0.005 30);
+    --muted-foreground: oklch(48% 0.01 60);
 
     /* Accent - Subtle dark gray for hover states */
-    --accent: oklch(25% 0 0);
-    --accent-foreground: oklch(95% 0 0);
+    --accent: oklch(20% 0.005 30);
+    --accent-foreground: oklch(70% 0.012 60);
 
     /* Destructive - Lighter red for dark mode */
     --destructive: oklch(65% 0.2 25);
-    --destructive-foreground: oklch(95% 0 0);
+    --destructive-foreground: oklch(70% 0.012 60);
 
     /* UI Elements - Subtle borders */
-    --border: oklch(32% 0 0);
-    --input: oklch(32% 0 0);
-    --ring: oklch(90% 0 0);
+    --border: oklch(25% 0.005 30);
+    --input: oklch(25% 0.005 30);
+    --ring: oklch(70% 0.012 60);
 
     /* Chart colors - Grayscale */
     --chart-1: oklch(70% 0 0);
@@ -152,14 +159,14 @@
     --chart-5: oklch(30% 0 0);
 
     /* Code syntax highlighting - Dark */
-    --syntax-bg: oklch(30% 0 0);
-    --syntax-highlight: oklch(36% 0 0);
-    --syntax-txt: oklch(95% 0 0);
-    --syntax-comment: oklch(60% 0 0);
-    --syntax-prop: oklch(85% 0 0);
-    --syntax-bool: oklch(80% 0 0);
-    --syntax-value: oklch(75% 0 0);
-    --syntax-string: oklch(80% 0 0);
+    --syntax-bg: oklch(16% 0.008 60);
+    --syntax-highlight: oklch(22% 0.01 60);
+    --syntax-txt: oklch(75% 0.01 60);
+    --syntax-comment: oklch(50% 0.01 60);
+    --syntax-prop: oklch(80% 0.015 60);
+    --syntax-bool: oklch(72% 0.02 30);
+    --syntax-value: oklch(70% 0.02 45);
+    --syntax-string: oklch(78% 0.015 90);
 
     /* alpha variants */
     --primary-15: color-mix(in srgb, var(--primary) 15%, transparent);
@@ -214,6 +221,15 @@
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1 "calt" 1;
+  }
+
+  /* High emphasis elements */
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--heading);
+  }
+
+  a {
+    color: var(--heading);
   }
 
   :focus-visible {

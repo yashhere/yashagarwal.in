@@ -5,12 +5,13 @@ const headingStyles = {
   fontFamily: "var(--font-serif)",
   fontWeight: 600,
   lineHeight: 1.2,
-  marginTop: "1.5rem",
-  marginBottom: "0.5rem",
+  marginTop: "2rem",
+  marginBottom: "0.75rem",
+  color: "var(--heading)",
 }
 
 const linkStyles = {
-  color: "inherit",
+  color: "var(--heading)",
   textDecoration: "none",
   fontWeight: "inherit",
 }
@@ -20,8 +21,8 @@ const typographyStyles = {
     css: {
       color: "var(--foreground)",
       maxWidth: "none",
-      fontSize: "1rem",
-      lineHeight: "1.6", // Consistent line height
+      fontSize: "1.125rem", // 18px
+      lineHeight: "1.75rem", // 28px
       h1: {
         ...headingStyles,
         fontSize: "1.875rem",
@@ -72,38 +73,61 @@ const typographyStyles = {
         },
       },
       a: linkStyles,
+      strong: {
+        color: "var(--heading)",
+        fontWeight: "600",
+      },
+      em: {
+        color: "var(--heading)",
+      },
+      "strong em, em strong": {
+        color: "var(--heading)",
+      },
       p: {
-        marginTop: "1.1rem",
-        marginBottom: "1.1rem",
-        lineHeight: "1.65",
+        marginTop: "1.5rem",
+        marginBottom: "1.5rem",
+        lineHeight: "1.75rem", // 28px
       },
       "ul, ol": {
         paddingLeft: "1.25rem",
+        marginTop: "1.5rem",
+        // marginBottom: "1.5rem",
       },
       li: {
-        marginTop: "0.5rem",
-        marginBottom: "0.5rem",
-        lineHeight: "1.65", // Consistent with paragraphs
+        marginTop: "0.375rem",
+        marginBottom: "0.375rem",
+        lineHeight: "1.75rem", // 28px
       },
       blockquote: {
+        fontFamily: "var(--font-serif)",
         fontWeight: "400",
-        fontStyle: "italic",
+        fontStyle: "normal",
+        color: "var(--heading)",
         borderLeftWidth: "0.25rem",
         borderLeftColor: "var(--border)",
-        paddingLeft: "1rem",
-        marginTop: "1.5rem",
-        marginBottom: "1.5rem",
+        paddingLeft: "1.25rem",
+        marginTop: "2rem",
+        marginBottom: "2rem",
         "& p:first-of-type::before": { content: "none" },
         "& p:last-of-type::after": { content: "none" },
         "& p": {
           lineHeight: "1.5", // Slightly tighter for quotes
+          color: "var(--heading)",
         },
+      },
+      figcaption: {
+        fontFamily: "var(--font-serif)",
+        fontStyle: "italic",
+        color: "var(--muted-foreground)",
+        fontSize: "0.9375rem",
+        marginTop: "0.75rem",
+        textAlign: "center",
       },
       pre: {
         backgroundColor: "var(--syntax-bg)",
         borderRadius: "0.375rem",
         overflowX: "auto",
-        fontSize: "0.9375rem",
+        fontSize: "1rem",
         padding: "0.75rem",
       },
       code: {
@@ -111,7 +135,7 @@ const typographyStyles = {
         backgroundColor: "var(--muted) / 0.5",
         padding: "0.2rem 0.4rem",
         borderRadius: "0.25rem",
-        fontSize: "0.875rem",
+        fontSize: "0.9375rem",
         fontWeight: "400",
         "&::before": { content: "none" },
         "&::after": { content: "none" },
@@ -128,7 +152,7 @@ const typographyStyles = {
 
         // Line numbers and highlighting
         pre: {
-          fontSize: "0.9375rem",
+          fontSize: "1rem",
           padding: "0.75rem 0",
         },
         "[data-line]": {
@@ -197,16 +221,16 @@ const config = {
         },
       },
       fontSize: {
-        xs: ["0.75rem", { lineHeight: "1rem" }],
-        sm: ["0.875rem", { lineHeight: "1.25rem" }],
-        base: ["1rem", { lineHeight: "1.6" }],
-        lg: ["1.125rem", { lineHeight: "1.75" }],
-        xl: ["1.25rem", { lineHeight: "1.75" }],
-        "2xl": ["1.5rem", { lineHeight: "2rem" }],
-        "3xl": ["1.875rem", { lineHeight: "2.25rem" }],
-        "4xl": ["2.25rem", { lineHeight: "2.5rem" }],
-        "5xl": ["3rem", { lineHeight: "1.2" }],
-        "6xl": ["3.75rem", { lineHeight: "1.1" }],
+        xs: ["0.875rem", { lineHeight: "1.25rem" }], // 14px / 20px
+        sm: ["1rem", { lineHeight: "1.5rem" }], // 16px / 24px
+        base: ["1.125rem", { lineHeight: "1.75rem" }], // 18px / 28px
+        lg: ["1.25rem", { lineHeight: "1.875rem" }], // 20px / 30px
+        xl: ["1.5rem", { lineHeight: "2rem" }], // 24px / 32px
+        "2xl": ["1.875rem", { lineHeight: "2.25rem" }], // 30px / 36px
+        "3xl": ["2.25rem", { lineHeight: "2.5rem" }], // 36px / 40px
+        "4xl": ["3rem", { lineHeight: "1.2" }], // 48px
+        "5xl": ["3.75rem", { lineHeight: "1.1" }], // 60px
+        "6xl": ["4.5rem", { lineHeight: "1.1" }], // 72px
       },
       colors: {
         border: "var(--border)",
@@ -214,6 +238,7 @@ const config = {
         ring: "var(--ring)",
         background: "var(--background)",
         foreground: "var(--foreground)",
+        heading: "var(--heading)",
         primary: {
           DEFAULT: "var(--primary)",
           foreground: "var(--primary-foreground)",
