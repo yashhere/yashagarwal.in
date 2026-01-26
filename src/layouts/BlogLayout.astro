@@ -94,25 +94,35 @@ const encodedUrl = encodeURIComponent(`https://yashagarwal.in/notes/${slug}`);
       class="hidden w-56 shrink-0 pl-4 xl:block xl:w-64 xl:pl-6"
       style="contain: layout style paint;"
     >
-      <div class="sticky top-24 max-h-[calc(100vh-8rem)] overflow-y-auto pb-8">
+      <div class="sticky top-24 pb-8">
           {headings && headings.length > 0 && (
-             <div class="mb-8">
-                 <div class="text-foreground/80 mb-4 text-sm font-medium tracking-wider uppercase">
-                   On this Page
+             <div class="mb-8" x-data="{ open: false }">
+                 <button
+                   @click="open = !open"
+                   class="flex w-full items-center justify-between text-muted-foreground hover:text-foreground text-sm font-medium tracking-wider uppercase transition-colors cursor-pointer bg-transparent border-0 p-0"
+                 >
+                   <span>On this Page</span>
+                   <Icon name="lucide:chevron-down" class="h-4 w-4 transition-transform duration-200" x-bind:class="open ? 'rotate-180' : ''" />
+                 </button>
+                 <div
+                   x-show="open"
+                   x-collapse
+                   class="mt-4 max-h-[calc(100vh-16rem)] overflow-y-auto"
+                 >
+                   <ul class="space-y-1 text-sm flex flex-col" id="toc-list">
+                      {headings.map((heading) => (
+                          <li style={`padding-left: ${0.75 + (heading.depth - 2) * 1}rem`}>
+                              <a
+                                  href={`#${heading.slug}`}
+                                  data-toc-link={heading.slug}
+                                  class="toc-link relative block py-0.5 transition-colors duration-200 text-muted-foreground font-normal hover:text-primary"
+                              >
+                                  {heading.text}
+                              </a>
+                          </li>
+                      ))}
+                   </ul>
                  </div>
-                 <ul class="space-y-1 text-sm flex flex-col" id="toc-list">
-                    {headings.map((heading) => (
-                        <li style={`padding-left: ${0.75 + (heading.depth - 2) * 1}rem`}>
-                            <a
-                                href={`#${heading.slug}`}
-                                data-toc-link={heading.slug}
-                                class="toc-link relative block py-0.5 transition-colors duration-200 text-muted-foreground font-normal hover:text-primary"
-                            >
-                                {heading.text}
-                            </a>
-                        </li>
-                    ))}
-                 </ul>
                  <script is:inline>
                     function initTOC() {
                         const linkSelector = '[data-toc-link]';
@@ -178,7 +188,7 @@ const encodedUrl = encodeURIComponent(`https://yashagarwal.in/notes/${slug}`);
              </div>
           )}
 
-          <div class="border-t border-border pt-4 flex items-center justify-between gap-3">
+          <div class={`pt-4 flex items-center justify-between gap-3 ${headings && headings.length > 0 ? 'border-t border-border' : ''}`}>
             <LikeButton slug={slug} />
             <button onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" class="text-muted-foreground hover:text-foreground flex items-center gap-2 text-sm font-medium transition-colors cursor-pointer bg-transparent border-0 p-0">
               <span class="uppercase">Top</span>
