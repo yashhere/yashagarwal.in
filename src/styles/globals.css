@@ -47,10 +47,10 @@
     /* Simplified theme - Light mode with black text */
     --radius: 1rem;
 
-    /* Base colors - Cupcake background with warm gray text */
-    --background: oklch(97.788% 0.004 56.375);
+    /* Base colors - Barely warm white background */
+    --background: oklch(98.5% 0.003 60);
     --foreground: oklch(22% 0.008 70); /* #21201E - darker for better contrast */
-    --card: oklch(97.788% 0.004 56.375);
+    --card: oklch(98.5% 0.003 60);
     --card-foreground: oklch(22% 0.008 70);
     --popover: oklch(100% 0 0);
     --popover-foreground: oklch(22% 0.008 70);
