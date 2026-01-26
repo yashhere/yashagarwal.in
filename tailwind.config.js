@@ -20,8 +20,8 @@ const typographyStyles = {
     css: {
       color: "var(--foreground)",
       maxWidth: "none",
-      fontSize: "1rem",
-      lineHeight: "1.6", // Consistent line height
+      fontSize: "1.125rem", // 18px
+      lineHeight: "1.75rem", // 28px
       h1: {
         ...headingStyles,
         fontSize: "1.875rem",
@@ -75,7 +75,7 @@ const typographyStyles = {
       p: {
         marginTop: "1.1rem",
         marginBottom: "1.1rem",
-        lineHeight: "1.65",
+        lineHeight: "1.75rem", // 28px
       },
       "ul, ol": {
         paddingLeft: "1.25rem",
@@ -83,7 +83,7 @@ const typographyStyles = {
       li: {
         marginTop: "0.5rem",
         marginBottom: "0.5rem",
-        lineHeight: "1.65", // Consistent with paragraphs
+        lineHeight: "1.75rem", // 28px
       },
       blockquote: {
         fontWeight: "400",
@@ -197,16 +197,16 @@ const config = {
         },
       },
       fontSize: {
-        xs: ["0.75rem", { lineHeight: "1rem" }],
-        sm: ["0.875rem", { lineHeight: "1.25rem" }],
-        base: ["1rem", { lineHeight: "1.6" }],
-        lg: ["1.125rem", { lineHeight: "1.75" }],
-        xl: ["1.25rem", { lineHeight: "1.75" }],
-        "2xl": ["1.5rem", { lineHeight: "2rem" }],
-        "3xl": ["1.875rem", { lineHeight: "2.25rem" }],
-        "4xl": ["2.25rem", { lineHeight: "2.5rem" }],
-        "5xl": ["3rem", { lineHeight: "1.2" }],
-        "6xl": ["3.75rem", { lineHeight: "1.1" }],
+        xs: ["0.875rem", { lineHeight: "1.25rem" }], // 14px / 20px
+        sm: ["1rem", { lineHeight: "1.5rem" }], // 16px / 24px
+        base: ["1.125rem", { lineHeight: "1.75rem" }], // 18px / 28px
+        lg: ["1.25rem", { lineHeight: "1.875rem" }], // 20px / 30px
+        xl: ["1.5rem", { lineHeight: "2rem" }], // 24px / 32px
+        "2xl": ["1.875rem", { lineHeight: "2.25rem" }], // 30px / 36px
+        "3xl": ["2.25rem", { lineHeight: "2.5rem" }], // 36px / 40px
+        "4xl": ["3rem", { lineHeight: "1.2" }], // 48px
+        "5xl": ["3.75rem", { lineHeight: "1.1" }], // 60px
+        "6xl": ["4.5rem", { lineHeight: "1.1" }], // 72px
       },
       colors: {
         border: "var(--border)",
