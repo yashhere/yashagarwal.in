@@ -5,13 +5,11 @@ import satori from "satori"
 import sharp from "sharp"
 
 // Cache fonts and background image
-const fontPath = path.resolve(
-  "node_modules/@fontsource/geist-sans/files/geist-sans-latin-700-normal.woff"
-)
+const fontPath = path.resolve("public/fonts/geist-sans-latin-700-normal.woff")
 const fontData = fs.readFileSync(fontPath)
 
 const fontRegularPath = path.resolve(
-  "node_modules/@fontsource/geist-sans/files/geist-sans-latin-400-normal.woff"
+  "public/fonts/geist-sans-latin-400-normal.woff"
 )
 const fontRegularData = fs.readFileSync(fontRegularPath)
 
