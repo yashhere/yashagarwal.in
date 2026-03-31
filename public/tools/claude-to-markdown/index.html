@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Output to Markdown</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #f8f9fa;
+    color: #1a1a1a;
+    min-height: 100vh;
+    padding: 2rem;
+  }
+  h1 {
+    text-align: center;
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+    color: #1a1a1a;
+  }
+  .subtitle {
+    text-align: center;
+    color: #666;
+    font-size: 0.85rem;
+    margin-bottom: 1.5rem;
+  }
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .panel {
+    display: flex;
+    flex-direction: column;
+  }
+  .panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+  .panel-header label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #374151;
+  }
+  textarea {
+    width: 100%;
+    height: 500px;
+    background: #fff;
+    color: #1a1a1a;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    padding: 1rem;
+    font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    resize: vertical;
+    tab-size: 2;
+  }
+  textarea:focus { outline: none; border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+  #output { background: #fafafa; cursor: text; }
+  button {
+    padding: 0.4rem 0.9rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 500;
+    transition: background 0.15s;
+  }
+  .btn-primary { background: #2563eb; color: white; }
+  .btn-primary:hover { background: #1d4ed8; }
+  .btn-secondary { background: #e5e7eb; color: #374151; }
+  .btn-secondary:hover { background: #d1d5db; }
+  .btn-group { display: flex; gap: 0.5rem; }
+  .toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: #16a34a;
+    color: white;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    opacity: 0;
+    transition: all 0.3s ease;
+    pointer-events: none;
+  }
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  .preview-panel {
+    grid-column: 1 / -1;
+    margin-top: 0.5rem;
+  }
+  .preview-content {
+    background: #fff;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    padding: 1.5rem;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    overflow-x: auto;
+    min-height: 100px;
+  }
+  .preview-content table {
+    border-collapse: collapse;
+    width: auto;
+    margin: 1rem 0;
+  }
+  .preview-content th, .preview-content td {
+    border: 1px solid #d1d5db;
+    padding: 0.4rem 0.8rem;
+    text-align: left;
+  }
+  .preview-content th {
+    background: #f0f4ff;
+    font-weight: 600;
+    color: #1e3a5f;
+  }
+  .preview-content td { color: #374151; }
+  .preview-content p { margin: 0.5rem 0; }
+  .preview-content h1, .preview-content h2, .preview-content h3 {
+    color: #1a1a1a;
+    margin: 1rem 0 0.5rem;
+  }
+  .preview-content code {
+    background: #f3f4f6;
+    padding: 0.15rem 0.4rem;
+    border-radius: 3px;
+    font-family: 'SF Mono', monospace;
+    font-size: 0.8rem;
+  }
+  .preview-content strong { color: #111827; }
+  .hidden { display: none; }
+  @media (max-width: 768px) {
+    .container { grid-template-columns: 1fr; }
+    textarea { height: 300px; }
+  }
+</style>
+</head>
+<body>
+
+<h1>Claude Output to Markdown</h1>
+<p class="subtitle">Paste Claude terminal output (box-drawing tables, indented text) and get clean markdown</p>
+
+<div class="container">
+  <div class="panel">
+    <div class="panel-header">
+      <label>Claude Output</label>
+      <button class="btn-secondary" onclick="clearInput()">Clear</button>
+    </div>
+    <textarea id="input" placeholder="Paste Claude terminal output here..."></textarea>
+  </div>
+
+  <div class="panel">
+    <div class="panel-header">
+      <label>Markdown</label>
+      <div class="btn-group">
+        <button class="btn-secondary" id="togglePreviewBtn" onclick="togglePreview()">Preview</button>
+        <button class="btn-primary" onclick="copyOutput()">Copy</button>
+      </div>
+    </div>
+    <textarea id="output" readonly></textarea>
+  </div>
+
+  <div class="preview-panel hidden" id="previewPanel">
+    <div class="panel-header">
+      <label>Preview</label>
+    </div>
+    <div class="preview-content" id="previewContent"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast">Copied to clipboard</div>
+
+<script>
+function convert() {
+  const input = document.getElementById('input').value;
+  if (!input.trim()) {
+    document.getElementById('output').value = '';
+    updatePreview('');
+    return;
+  }
+  const result = convertClaudeToMarkdown(input);
+  document.getElementById('output').value = result;
+  updatePreview(result);
+}
+
+function convertClaudeToMarkdown(text) {
+  // Split into lines and process blocks
+  const lines = text.split('\n');
+  const blocks = identifyBlocks(lines);
+  return blocks.map(b => renderBlock(b)).join('\n\n');
+}
+
+function identifyBlocks(lines) {
+  const blocks = [];
+  let i = 0;
+
+  while (i < lines.length) {
+    const line = lines[i];
+    const stripped = line.trimStart();
+
+    // Empty line = paragraph break (preserve as its own block)
+    if (stripped === '') {
+      blocks.push({ type: 'blank' });
+      i++;
+      continue;
+    }
+
+    // Detect box-drawing table
+    if (isTableBorder(stripped) || isTableRow(stripped)) {
+      const tableLines = [];
+      while (i < lines.length) {
+        const l = lines[i];
+        const s = l.trimStart();
+        if (s === '' && tableLines.length > 0) {
+          // Check if next non-empty line is still table
+          let peek = i + 1;
+          while (peek < lines.length && lines[peek].trim() === '') peek++;
+          if (peek < lines.length && (isTableBorder(lines[peek].trimStart()) || isTableRow(lines[peek].trimStart()))) {
+            i++; continue;
+          }
+          break;
+        }
+        if (isTableBorder(s) || isTableRow(s)) {
+          tableLines.push(s);
+          i++;
+        } else {
+          break;
+        }
+      }
+      blocks.push({ type: 'table', lines: tableLines });
+      continue;
+    }
+
+    // Plain text line
+    blocks.push({ type: 'text', lines: [line] });
+    i++;
+  }
+
+  // Merge consecutive text blocks (but blank blocks act as separators)
+  const merged = [];
+  for (const block of blocks) {
+    if (block.type === 'blank') {
+      // Collapse consecutive blanks
+      if (merged.length > 0 && merged[merged.length - 1].type !== 'blank') {
+        merged.push(block);
+      }
+      continue;
+    }
+    if (block.type === 'text' && merged.length > 0 && merged[merged.length - 1].type === 'text') {
+      merged[merged.length - 1].lines.push(...block.lines);
+    } else {
+      merged.push(block);
+    }
+  }
+  // Remove trailing blanks
+  while (merged.length > 0 && merged[merged.length - 1].type === 'blank') merged.pop();
+  return merged;
+}
+
+function renderBlock(block) {
+  if (block.type === 'table') return renderTable(block.lines);
+  if (block.type === 'blank') return '';
+  return renderText(block.lines);
+}
+
+const BOX_CHARS = /[┌┐└┘├┤┬┴┼─│╔╗╚╝╠╣╦╩╬═║]/;
+const BORDER_LINE = /^[┌┐└┘├┤┬┴┼─╔╗╚╝╠╣╦╩╬═]+$/;
+const ROW_LINE = /^│.*│$|^║.*║$/;
+
+function isTableBorder(s) { return BORDER_LINE.test(s); }
+function isTableRow(s) { return ROW_LINE.test(s); }
+
+function renderTable(lines) {
+  // Extract data rows (lines starting and ending with │ or ║)
+  const dataRows = lines.filter(l => ROW_LINE.test(l));
+  if (dataRows.length === 0) return lines.join('\n');
+
+  // Parse cells from each row
+  const parsed = dataRows.map(row => {
+    const sep = row[0]; // │ or ║
+    // Split by separator, remove first and last empty segments
+    const cells = row.split(/[│║]/).slice(1, -1).map(c => c.trim());
+    return cells;
+  });
+
+  // Ensure consistent column count
+  const colCount = Math.max(...parsed.map(r => r.length));
+  const normalized = parsed.map(r => {
+    while (r.length < colCount) r.push('');
+    return r;
+  });
+
+  if (normalized.length === 0) return lines.join('\n');
+
+  // Determine column widths
+  const widths = [];
+  for (let c = 0; c < colCount; c++) {
+    widths[c] = Math.max(3, ...normalized.map(r => r[c].length));
+  }
+
+  // First row is header
+  const header = normalized[0];
+  const body = normalized.slice(1);
+
+  const pad = (s, w) => s + ' '.repeat(Math.max(0, w - s.length));
+
+  const headerLine = '| ' + header.map((c, i) => pad(c, widths[i])).join(' | ') + ' |';
+  const sepLine = '| ' + widths.map(w => '-'.repeat(w)).join(' | ') + ' |';
+  const bodyLines = body.map(row =>
+    '| ' + row.map((c, i) => pad(c, widths[i])).join(' | ') + ' |'
+  );
+
+  return [headerLine, sepLine, ...bodyLines].join('\n');
+}
+
+function renderText(lines) {
+  // Strip common leading whitespace (from Claude's indentation)
+  const nonEmpty = lines.filter(l => l.trim() !== '');
+  if (nonEmpty.length === 0) return '';
+
+  const minIndent = Math.min(...nonEmpty.map(l => l.match(/^(\s*)/)[1].length));
+  const stripped = lines.map(l => l.slice(minIndent));
+
+  // Convert Claude-style markers
+  return stripped.map(line => {
+    // Claude uses ⏺ as a bullet/heading marker
+    let l = line.replace(/^⏺\s*/, '## ');
+    return l;
+  }).join('\n');
+}
+
+function copyOutput() {
+  const output = document.getElementById('output');
+  navigator.clipboard.writeText(output.value).then(() => showToast('Copied to clipboard'));
+}
+
+function clearInput() {
+  document.getElementById('input').value = '';
+  document.getElementById('output').value = '';
+  updatePreview('');
+}
+
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2000);
+}
+
+function togglePreview() {
+  const panel = document.getElementById('previewPanel');
+  const btn = document.getElementById('togglePreviewBtn');
+  panel.classList.toggle('hidden');
+  btn.textContent = panel.classList.contains('hidden') ? 'Preview' : 'Hide Preview';
+  if (!panel.classList.contains('hidden')) {
+    updatePreview(document.getElementById('output').value);
+  }
+}
+
+function updatePreview(md) {
+  const panel = document.getElementById('previewPanel');
+  if (panel.classList.contains('hidden')) return;
+  document.getElementById('previewContent').innerHTML = simpleMarkdownToHtml(md);
+}
+
+function simpleMarkdownToHtml(md) {
+  if (!md.trim()) return '<p style="color:#666">Preview will appear here</p>';
+
+  // Split into blocks by double newline
+  const blocks = md.split(/\n\n+/);
+  let html = '';
+
+  for (const block of blocks) {
+    const trimmed = block.trim();
+    if (!trimmed) continue;
+
+    // Table
+    if (trimmed.includes('|') && trimmed.includes('---')) {
+      html += renderTableHtml(trimmed);
+      continue;
+    }
+
+    // Process line by line for headings, paragraphs
+    const lines = trimmed.split('\n');
+    let blockHtml = '';
+    for (const line of lines) {
+      if (line.startsWith('### ')) {
+        blockHtml += `<h3>${escHtml(line.slice(4))}</h3>`;
+      } else if (line.startsWith('## ')) {
+        blockHtml += `<h2>${escHtml(line.slice(3))}</h2>`;
+      } else if (line.startsWith('# ')) {
+        blockHtml += `<h1>${escHtml(line.slice(2))}</h1>`;
+      } else {
+        blockHtml += `<p>${inlineFormat(escHtml(line))}</p>`;
+      }
+    }
+    html += blockHtml;
+  }
+  return html;
+}
+
+function renderTableHtml(block) {
+  const lines = block.split('\n').filter(l => l.trim());
+  if (lines.length < 2) return `<p>${escHtml(block)}</p>`;
+
+  const parseRow = line => line.split('|').slice(1, -1).map(c => c.trim());
+
+  const header = parseRow(lines[0]);
+  const body = lines.slice(2).map(parseRow);
+
+  let html = '<table><thead><tr>';
+  header.forEach(h => html += `<th>${inlineFormat(escHtml(h))}</th>`);
+  html += '</tr></thead><tbody>';
+  body.forEach(row => {
+    html += '<tr>';
+    row.forEach(c => html += `<td>${inlineFormat(escHtml(c))}</td>`);
+    html += '</tr>';
+  });
+  html += '</tbody></table>';
+  return html;
+}
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function inlineFormat(s) {
+  // Bold
+  s = s.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  // Code
+  s = s.replace(/`(.+?)`/g, '<code>$1</code>');
+  // Italic
+  s = s.replace(/\*(.+?)\*/g, '<em>$1</em>');
+  return s;
+}
+
+// Persist input across refreshes
+const STORAGE_KEY = 'claude-to-md-input';
+const inputEl = document.getElementById('input');
+
+const saved = localStorage.getItem(STORAGE_KEY);
+if (saved) {
+  inputEl.value = saved;
+  convert();
+}
+
+inputEl.addEventListener('input', () => {
+  localStorage.setItem(STORAGE_KEY, inputEl.value);
+  convert();
+});
+
+inputEl.addEventListener('paste', () => {
+  setTimeout(() => {
+    localStorage.setItem(STORAGE_KEY, inputEl.value);
+    convert();
+  }, 0);
+});
+</script>
+</body>
+</html>
