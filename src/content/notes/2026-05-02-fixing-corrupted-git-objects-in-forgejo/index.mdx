@@ -1,0 +1,95 @@
+---
+slug: "fixing-corrupted-git-objects-in-forgejo"
+title: Fixing Corrupted Git Objects in Forgejo
+createdOn: "2026-05-02T11:45:00+05:30"
+status: published
+series:
+  title: Homelab Tales
+tags:
+  - Homelab
+  - Git
+  - Forgejo
+  - Troubleshooting
+category: Technology
+description: >-
+  How I fixed a Forgejo mirror sync failure caused by empty git object files on
+  my Raspberry Pi, and what it tells you about running git infrastructure on SD cards.
+---
+
+I run a self-hosted [Forgejo](https://forgejo.org/) instance on my Raspberry Pi as a mirror for my GitHub repositories. It has been running without any issues for over a year now. This morning, I noticed that one of my mirrors had stopped syncing. The Forgejo logs showed this error:
+
+```
+SyncMirrors [repo: <Repository 14:yash/test-project>]: failed to update mirror repository:
+Stderr: error: object file ./objects/06/28f84b4a6c9f3806e407d2d0820ac5e03f7a96 is empty
+fatal: cannot read existing object info 0628f84b4a6c9f3806e407d2d0820ac5e03f7a96
+fatal: fetch-pack: invalid index-pack output
+Err: exit status 128
+```
+
+The culprit was a corrupted git object. The object file existed on disk but was 0 bytes - an empty husk where a blob, tree, or commit should have been. Git couldn't read it, so `fetch-pack` refused to proceed, and the mirror sync was dead.
+
+# Diagnosing the damage
+
+My first instinct was to check how widespread the corruption was. I exec'd into the Forgejo container and ran `git fsck` on the bare repository:
+
+```bash
+cd /data/git/repositories/yash/test-project.git
+su -c 'git fsck --no-dangling' git
+```
+
+The output was not great. It reported seven empty object files:
+
+```
+error: object file ./objects/02/e97ab7651e0979026b7f0c7da69930a41b1641 is empty
+error: object file ./objects/2f/38790a8961f36ebb2166a5a1a87aba2812716a is empty
+error: object file ./objects/53/27ce8028f5ff373687a87ecba7815e6e6bf2e0 is empty
+error: object file ./objects/9a/508dfc199d6a9352d8bcc5b68ff6a0fbfbe116 is empty
+error: object file ./objects/a5/763dc706b3fa5fa0f0ca67ffe9b1e05cf868dd is empty
+error: object file ./objects/d2/804a537aee1535b7d5188d7e96cc274f6a4972 is empty
+error: object file ./objects/db/d17294a31cc2ab949d8d4d3279867b2fbb999d is empty
+```
+
+All seven objects were corrupted in one go, and all of them were empty. This pattern - multiple zero-byte files in the object store - is a telltale sign of a write operation that got interrupted mid-flush. On a Raspberry Pi with an SD card, this is not exactly surprising. SD cards don't have the same write durability guarantees as SSDs, and a momentary power fluctuation or I/O hiccup can leave partially-written files behind.
+
+# The fix
+
+Since this is a mirror repository - the canonical source is GitHub - the fix is straightforward. The corrupt objects just need to be removed, and the next sync will re-fetch them from upstream.
+
+I deleted all empty object files in one shot:
+
+```bash
+find ./objects -type f -empty -delete
+```
+
+When I tried to re-run `git fsck`, I hit another snag:
+
+```
+fatal: Unable to create '/data/git/repositories/yash/test-project.git/
+./objects/info/commit-graph.lock': File exists.
+```
+
+This was a stale lock file left behind by the crashed git process that caused the corruption in the first place. Removing it is straightforward:
+
+```bash
+rm ./objects/info/commit-graph.lock
+```
+
+After removing the lock, `git fsck` came back clean. I triggered a mirror sync from the Forgejo UI, and the repository started syncing again without issues.
+
+# Why this happens
+
+Git's object store is essentially a content-addressable filesystem. Each object (blob, tree, commit, or tag) is stored as a file named by its SHA-1 hash, split into a two-character directory prefix and a 38-character filename. When git writes a new object, it creates a temporary file, writes the compressed content, and then renames it to the final path. The rename is atomic on most filesystems, but the write preceding it is not.
+
+If the process is interrupted between creating the file and writing its contents - a power cut, a kernel OOM kill, or an SD card I/O timeout - you end up with an empty file at the expected path. Git sees the file exists and assumes it contains valid object data. When it tries to mmap and read it, it fails.
+
+On a Raspberry Pi running off an SD card, this is a known risk. SD cards use flash translation layers that can behave unpredictably under sudden power loss, especially with sustained write workloads like git operations. My RPi's `/data` partition sits on the SD card, and while I have a UPS for the router, the RPi itself has no power protection.
+
+# Preventing recurrence
+
+A few things I'm considering to reduce the likelihood of this happening again:
+
+1. **Move `/data` to a USB SSD.** This will be the most impactful change. SSDs handle power loss far better than SD cards, and USB 3.0 on the RPi 4 provides reasonable throughput. The SD card would only hold the OS at that point. Cost is probably the biggest blocker currently.
+
+2. **Restic backups already cover this.** My nightly backups via Restic to Google Drive mean I can always restore the git data directory if corruption is severe enough to require it. But for a mirror repository, deleting and re-creating the mirror is simpler than restoring from backup.
+
+Overall, the whole fix took about five minutes once I understood what had happened. With SD cards on Raspberry Pis, always assume your storage layer can fail, and design a recovery path robust enough to handle such failures.
