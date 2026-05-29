@@ -24,8 +24,6 @@
     "@astrojs/rss": "^4.0.14",
     "@astrojs/sitemap": "^3.6.0",
     "@base-ui/react": "^1.5.0",
-    "@fontsource-variable/eb-garamond": "^5.2.7",
-    "@fontsource-variable/manrope": "^5.2.8",
     "@ryangjchandler/alpine-tooltip": "^2.0.1",
     "@tailwindcss/typography": "^0.5.19",
     "@tailwindcss/vite": "^4.1.18",
