@@ -58,7 +58,7 @@ const isAnySecondaryActive = moreNavItems.some((item) => isActive(item.href))
           <button
             @click="open = !open"
             class:list={[
-              "flex items-center gap-1 border-0 px-3 py-1 font-medium ring-0 transition-colors outline-none focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0",
+              "flex items-center gap-1 border-0 px-3 py-1 font-medium ring-0 transition-colors outline-none focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 cursor-pointer",
               isAnySecondaryActive ? "text-foreground" : "text-muted-foreground hover:text-foreground",
             ]}
             aria-label="More pages"
