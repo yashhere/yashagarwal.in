@@ -139,10 +139,10 @@
 
     /* Muted */
     --muted: oklch(18% 0 0);
-    --muted-foreground: oklch(48% 0 0);
+    --muted-foreground: oklch(58% 0 0);
 
     /* Accent */
-    --accent: oklch(18% 0 0);
+    --accent: oklch(22% 0 0);
     --accent-foreground: oklch(85% 0 0);
 
     /* Destructive */
@@ -150,8 +150,8 @@
     --destructive-foreground: oklch(85% 0 0);
 
     /* UI Elements */
-    --border: oklch(22% 0 0);
-    --input: oklch(22% 0 0);
+    --border: oklch(25% 0 0);
+    --input: oklch(25% 0 0);
     --ring: oklch(85% 0 0);
 
     /* Chart colors */
