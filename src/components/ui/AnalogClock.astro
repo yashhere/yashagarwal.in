@@ -34,27 +34,27 @@
   class="relative inline-flex items-center justify-center group cursor-default"
 >
   <!-- Clock Face -->
-  <div class="relative flex h-3.5 w-3.5 flex-col items-center justify-start overflow-hidden rounded-full border border-foreground/30 shadow-sm bg-background">
+  <div class="relative flex h-4 w-4 flex-col items-center justify-start overflow-hidden rounded-full border border-foreground/30 shadow-sm bg-background">
 
       <!-- Center Dot -->
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 h-[1px] w-[1px] rounded-full bg-foreground"></div>
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 h-px w-px rounded-full bg-foreground"></div>
 
       <!-- Hands -->
       <!-- Second hand -->
       <div
-          class="absolute bottom-1/2 left-[calc(50%-0.25px)] z-30 h-[45%] w-[0.5px] origin-bottom rounded-full bg-red-500"
+          class="absolute bottom-1/2 left-1/2 z-30 h-2 w-px origin-bottom rounded-full bg-red-500 -translate-x-1/2"
           :style="`transform: rotate(${seconds}deg)`"
       ></div>
 
       <!-- Minute hand -->
       <div
-          class="absolute bottom-1/2 left-[calc(50%-0.5px)] z-20 h-[40%] w-[1px] origin-bottom rounded-full bg-foreground"
+          class="absolute bottom-1/2 left-1/2 z-20 h-1.5 w-px origin-bottom rounded-full bg-foreground -translate-x-1/2"
           :style="`transform: rotate(${minutes}deg)`"
       ></div>
 
       <!-- Hour hand -->
       <div
-          class="absolute bottom-1/2 left-[calc(50%-0.5px)] z-10 h-[30%] w-[1px] origin-bottom rounded-full bg-foreground"
+          class="absolute bottom-1/2 left-1/2 z-10 h-1 w-px origin-bottom rounded-full bg-foreground -translate-x-1/2"
           :style="`transform: rotate(${hours}deg)`"
       ></div>
   </div>
