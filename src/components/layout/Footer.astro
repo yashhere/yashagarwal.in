@@ -57,11 +57,11 @@ const footerLinks = [
           Subscribe
         </button>
       </form>
-      <p id="subscribe-msg" class="text-muted-foreground hidden text-xs"></p>
+      <p id="subscribe-msg" class="text-muted-foreground hidden text-sm"></p>
 
       {/* Bottom row: clock + copyright */}
       <div class="flex items-center justify-between w-full">
-        <p class="text-muted-foreground text-xs">
+        <p class="text-muted-foreground text-sm">
           &copy; {copyrightYear} Yash Agarwal
         </p>
         <AnalogClock />
@@ -98,8 +98,8 @@ const footerLinks = [
           ? 'Subscribed! Check your inbox.'
           : data.message || 'Something went wrong.';
         msg.className = res.ok
-          ? 'text-muted-foreground text-xs'
-          : 'text-destructive text-xs';
+          ? 'text-muted-foreground text-sm'
+          : 'text-destructive text-sm';
       }
 
       if (res.ok) form.reset();
@@ -107,7 +107,7 @@ const footerLinks = [
       if (msg) {
         msg.classList.remove('hidden');
         msg.textContent = 'Something went wrong.';
-        msg.className = 'text-destructive text-xs';
+        msg.className = 'text-destructive text-sm';
       }
     } finally {
       btn.disabled = false;
