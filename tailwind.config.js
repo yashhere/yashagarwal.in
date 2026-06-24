@@ -21,11 +21,11 @@ const typographyStyles = {
     css: {
       color: "var(--foreground)",
       maxWidth: "none",
-      fontSize: "1.125rem", // 18px
-      lineHeight: "1.75rem", // 28px
+      fontSize: "1rem", // 16px
+      lineHeight: "1.625rem", // 26px
       h1: {
         ...headingStyles,
-        fontSize: "1.875rem",
+        fontSize: "1.5rem",
         marginTop: "0",
         "& > a": {
           color: "inherit",
@@ -38,7 +38,7 @@ const typographyStyles = {
       },
       h2: {
         ...headingStyles,
-        fontSize: "1.5rem",
+        fontSize: "1.25rem",
         "& > a": {
           color: "inherit",
           fontWeight: "inherit",
@@ -50,7 +50,7 @@ const typographyStyles = {
       },
       h3: {
         ...headingStyles,
-        fontSize: "1.25rem",
+        fontSize: "1.1rem",
         "& > a": {
           color: "inherit",
           fontWeight: "inherit",
@@ -62,7 +62,7 @@ const typographyStyles = {
       },
       h4: {
         ...headingStyles,
-        fontSize: "1.1rem",
+        fontSize: "1rem",
         "& > a": {
           color: "inherit",
           fontWeight: "inherit",
@@ -84,19 +84,19 @@ const typographyStyles = {
         color: "var(--heading)",
       },
       p: {
-        marginTop: "1.5rem",
-        marginBottom: "1.5rem",
-        lineHeight: "1.75rem", // 28px
+        marginTop: "1.25rem",
+        marginBottom: "1.25rem",
+        lineHeight: "1.625rem", // 26px
       },
       "ul, ol": {
         paddingLeft: "1.25rem",
-        marginTop: "1.5rem",
-        // marginBottom: "1.5rem",
+        marginTop: "1.25rem",
+        // marginBottom: "1.25rem",
       },
       li: {
-        marginTop: "0.375rem",
-        marginBottom: "0.375rem",
-        lineHeight: "1.75rem", // 28px
+        marginTop: "0.25rem",
+        marginBottom: "0.25rem",
+        lineHeight: "1.625rem", // 26px
       },
       blockquote: {
         fontFamily: "var(--font-serif)",
@@ -221,16 +221,16 @@ const config = {
         },
       },
       fontSize: {
-        xs: ["0.875rem", { lineHeight: "1.25rem" }], // 14px / 20px
-        sm: ["1rem", { lineHeight: "1.5rem" }], // 16px / 24px
-        base: ["1.125rem", { lineHeight: "1.75rem" }], // 18px / 28px
-        lg: ["1.25rem", { lineHeight: "1.875rem" }], // 20px / 30px
-        xl: ["1.5rem", { lineHeight: "2rem" }], // 24px / 32px
-        "2xl": ["1.875rem", { lineHeight: "2.25rem" }], // 30px / 36px
-        "3xl": ["2.25rem", { lineHeight: "2.5rem" }], // 36px / 40px
-        "4xl": ["3rem", { lineHeight: "1.2" }], // 48px
-        "5xl": ["3.75rem", { lineHeight: "1.1" }], // 60px
-        "6xl": ["4.5rem", { lineHeight: "1.1" }], // 72px
+        xs: ["0.8125rem", { lineHeight: "1.25rem" }], // 13px / 20px
+        sm: ["0.9375rem", { lineHeight: "1.375rem" }], // 15px / 22px
+        base: ["1rem", { lineHeight: "1.5rem" }], // 16px / 24px
+        lg: ["1.125rem", { lineHeight: "1.625rem" }], // 18px / 26px
+        xl: ["1.25rem", { lineHeight: "1.75rem" }], // 20px / 28px
+        "2xl": ["1.5rem", { lineHeight: "2rem" }], // 24px / 32px
+        "3xl": ["1.875rem", { lineHeight: "2.25rem" }], // 30px / 36px
+        "4xl": ["2.25rem", { lineHeight: "1.2" }], // 36px
+        "5xl": ["3rem", { lineHeight: "1.1" }], // 48px
+        "6xl": ["3.75rem", { lineHeight: "1.1" }], // 60px
       },
       colors: {
         border: "var(--border)",

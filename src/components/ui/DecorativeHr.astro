@@ -7,7 +7,7 @@ interface Props {
 const { variant = 'dots', class: className } = Astro.props;
 ---
 
-<div class:list={["my-8 flex items-center justify-center", className]}>
+<div class:list={["my-6 flex items-center justify-center", className]}>
   <div class="h-px flex-1 bg-gradient-to-r from-transparent via-border/80 to-border"></div>
 
   {variant === 'dots' && (

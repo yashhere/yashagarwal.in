@@ -86,7 +86,7 @@ const encodedUrl = encodeURIComponent(`https://yashagarwal.in/notes/${slug}`);
     title={title}
     description={description}
     image={image}
-    mainClass="mx-auto grid w-full max-w-screen-2xl grid-cols-1 gap-0 py-8 xl:grid-cols-[16rem_minmax(0,48rem)_16rem] xl:justify-center"
+    mainClass="mx-auto grid w-full max-w-screen-2xl grid-cols-1 gap-0 py-4 xl:grid-cols-[16rem_minmax(0,48rem)_16rem] xl:justify-center"
 >
   <ReadingProgress targetId="article-body" class="absolute" />
     {/* Left Column: Sticky TOC (Desktop) */}
@@ -96,7 +96,7 @@ const encodedUrl = encodeURIComponent(`https://yashagarwal.in/notes/${slug}`);
     >
       <div class="sticky top-24 pb-8">
           {headings && headings.length > 0 && (
-             <div class="mb-8" x-data="{ open: false }">
+             <div class="mb-6" x-data="{ open: false }">
                  <button
                    @click="open = !open"
                    class="flex w-full items-center justify-between text-muted-foreground hover:text-foreground text-sm font-medium tracking-wider uppercase transition-colors cursor-pointer bg-transparent border-0 p-0"
@@ -196,8 +196,7 @@ const encodedUrl = encodeURIComponent(`https://yashagarwal.in/notes/${slug}`);
             </button>
           </div>
 
-          <div class="mt-8">
-              <a href="/notes" class="text-muted-foreground hover:text-foreground flex items-center gap-2 text-sm font-medium transition-colors">
+          <div class="mt-6">
                   &larr; Back to Notes
               </a>
           </div>
@@ -205,8 +204,8 @@ const encodedUrl = encodeURIComponent(`https://yashagarwal.in/notes/${slug}`);
     </aside>
 
     {/* Middle Column: Main Content */}
-    <div class="mx-auto flex w-full max-w-3xl min-w-0 flex-col pb-18 px-4 md:px-6">
-      <section class="mb-8 space-y-2">
+    <div class="mx-auto flex w-full max-w-3xl min-w-0 flex-col pb-12 px-4 md:px-6">
+      <section class="mb-6 space-y-2">
         <Breadcrumbs items={breadcrumbItems} />
         <Heading level="h1" data-pagefind-meta="title">{title}</Heading>
         <div class="text-foreground/60 flex flex-col gap-1 text-sm sm:flex-row sm:items-center sm:gap-2">
@@ -249,7 +248,7 @@ const encodedUrl = encodeURIComponent(`https://yashagarwal.in/notes/${slug}`);
           width={1200}
           height={630}
           alt={title}
-          class="mb-12 w-full"
+          class="mb-8 w-full"
           imageClass="rounded-none object-cover"
           showSkeleton={true}
           expandable={false}
@@ -262,12 +261,12 @@ const encodedUrl = encodeURIComponent(`https://yashagarwal.in/notes/${slug}`);
       </div>
 
       {series && (
-          <div class="mb-8">
+          <div class="mb-6">
               <Series series={series} currentSlug={slug} />
           </div>
       )}
 
-      <div class="mb-8">
+      <div class="mb-6">
         <div id="article-body" class="relative prose max-w-none" data-pagefind-body>
           <slot />
         </div>
@@ -285,7 +284,7 @@ const encodedUrl = encodeURIComponent(`https://yashagarwal.in/notes/${slug}`);
 
       <DecorativeHr />
 
-      <div class="my-8 flex flex-row items-center justify-between space-x-2">
+      <div class="my-6 flex flex-row items-center justify-between space-x-2">
          <a
            href={`https://x.com/intent/tweet?text=${encodedUrl}%20via%20%40its_yash_btw`}
            target="_blank"
@@ -310,7 +309,7 @@ const encodedUrl = encodeURIComponent(`https://yashagarwal.in/notes/${slug}`);
 
       <DecorativeHr />
 
-      <div class="mt-8">
+      <div class="mt-6">
           <Comments url={`https://yashagarwal.in/notes/${slug}`} slug={slug} />
       </div>
 

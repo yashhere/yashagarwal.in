@@ -21,7 +21,7 @@ const slugger = new GithubSlugger()
 const breadcrumbItems = [{ label: "Home", href: "/" }, { label: "Categories" }]
 ---
 
-<BaseLayout title="All Categories" description="Browse content by categories." mainClass="mx-auto w-full max-w-3xl pb-18 px-4 md:px-6">
+<BaseLayout title="All Categories" description="Browse content by categories." mainClass="mx-auto w-full max-w-3xl pb-12 px-4 md:px-6">
     <Section title="Categories" count={sortedCategories.length}>
       <Breadcrumbs items={breadcrumbItems} class="mb-6" />
 

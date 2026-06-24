@@ -14,7 +14,7 @@ const { src, alt, caption, class: className } = Astro.props;
 const imageSrc = typeof src === "string" ? src : src.src;
 ---
 
-<figure class={cn("excalidraw-container my-8", className)}>
+<figure class={cn("excalidraw-container my-6", className)}>
   <div class="excalidraw-wrapper" data-excalidraw-svg>
     <img src={imageSrc} alt={alt} class="excalidraw-svg" />
   </div>
