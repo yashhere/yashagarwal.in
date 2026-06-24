@@ -27,10 +27,10 @@ const socialLinks = [
 
 <div class="flex items-center gap-1">
   {
-    socialLinks.map((social) => (
+    socialLinks.map((social, i) => (
       <a
         href={social.href}
-        class="text-muted-foreground hover:text-foreground rounded p-1.5 transition-colors"
+        class={`text-muted-foreground hover:text-foreground rounded px-1 py-1.5 transition-colors ${i === 0 ? '-ml-1' : ''}`}
         aria-label={social.name}
         target={social.name === "Email" ? undefined : "_blank"}
         rel={social.name === "Email" ? undefined : "noopener noreferrer"}
