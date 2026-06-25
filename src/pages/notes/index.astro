@@ -22,7 +22,7 @@ const breadcrumbItems = [{ label: "Home", href: "/" }, { label: "Notes" }]
         <SearchInput />
       </div>
 
-      <ul class="-mx-0.5" id="notes-list">
+      <ul id="notes-list">
         {
           notes.map((note, i) => (
             <NotePreview note={note} index={noteNumbers.get(note.slug)} />
