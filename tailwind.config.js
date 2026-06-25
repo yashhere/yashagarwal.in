@@ -90,21 +90,9 @@ const typographyStyles = {
       },
       "ul, ol": {
         paddingLeft: "1.25rem",
-        marginTop: "1rem",
-        // marginBottom: "1.25rem",
       },
       li: {
-        marginTop: "0.5rem",
-        marginBottom: "0.5rem",
         lineHeight: "1.625rem", // 26px
-        "& p": {
-          marginTop: "0.25rem",
-          marginBottom: "0.25rem",
-        },
-        "& ul, & ol": {
-          marginTop: "0.25rem",
-          marginBottom: "0.25rem",
-        },
       },
       blockquote: {
         fontFamily: "var(--font-serif)",
