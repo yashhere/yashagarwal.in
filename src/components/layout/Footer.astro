@@ -5,6 +5,15 @@ import SocialLinks from '../../components/content/SocialLinks.astro';
 const currentYear = new Date().getFullYear();
 const copyrightYear = currentYear === 2016 ? currentYear : `2016 - ${currentYear}`;
 
+const { pathname } = Astro.url;
+const pathSegments = pathname.split("/").filter(Boolean);
+const highlightedPath = pathSegments.length <= 1 ? pathname : `/${pathSegments[0]}`;
+
+const isActive = (href: string) => {
+  if (href === "/") return pathname === "/";
+  return highlightedPath === href;
+};
+
 const footerLinks = [
   { name: "Home", href: "/" },
   { name: "Notes", href: "/notes" },
@@ -26,7 +35,7 @@ const footerLinks = [
         {footerLinks.map((link) => (
           <a
             href={link.href}
-            class="text-muted-foreground hover:text-foreground transition-colors no-underline"
+            class={`transition-colors no-underline ${isActive(link.href) ? "text-foreground" : "text-muted-foreground hover:text-foreground"}`}
           >
             {link.name}
           </a>
