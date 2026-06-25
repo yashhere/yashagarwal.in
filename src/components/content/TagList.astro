@@ -9,29 +9,24 @@ const { tags } = Astro.props;
 ---
 
 {tags && tags.length > 0 && (
-  <div class="border-border bg-background my-6 rounded-md border p-2.5 text-sm">
-    <div class="flex flex-col gap-2">
-      <div class="flex items-center gap-1.5">
-        <Icon name="lucide:chevrons-right" class="text-muted-foreground h-3 w-3" />
-        <span class="text-muted-foreground text-xs font-medium tracking-wider uppercase">
-          Tags ({tags.length})
-        </span>
-      </div>
-
-      <div class="border-border flex flex-wrap items-center gap-1.5 border-t pt-2">
-        {tags.map((tag) => {
-          const slugger = new GithubSlugger();
-          const tag_slug = slugger.slug(tag);
-          return (
-            <a
-              href={`/tags/${tag_slug}`}
-              class="bg-muted/50 text-muted-foreground hover:bg-muted hover:text-foreground inline-flex items-center rounded-md px-2 py-1 text-xs font-medium transition-colors no-underline"
-            >
-              {tag}
-            </a>
-          );
-        })}
-      </div>
+  <div class="border-border rounded border p-2 text-sm my-6">
+    <div class="flex items-center gap-1.5 mb-2">
+      <Icon name="lucide:tag" class="text-muted-foreground h-3 w-3" />
+      <span class="text-muted-foreground text-xs">Tags</span>
+    </div>
+    <div class="border-border flex flex-wrap gap-1.5 border-t pt-2">
+      {tags.map((tag) => {
+        const slugger = new GithubSlugger();
+        const tag_slug = slugger.slug(tag);
+        return (
+          <a
+            href={`/tags/${tag_slug}`}
+            class="bg-muted/50 text-muted-foreground hover:bg-muted hover:text-foreground inline-flex items-center rounded px-1.5 py-0.5 text-xs transition-colors no-underline"
+          >
+            {tag}
+          </a>
+        );
+      })}
     </div>
   </div>
 )}
