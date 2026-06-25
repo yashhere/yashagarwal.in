@@ -23,8 +23,8 @@ const breadcrumbItems = [{ label: "Home", href: "/" }, { label: "Notes" }]
 
       <ul class="-mx-0.5" id="notes-list">
         {
-          notes.map((note) => (
-            <NotePreview note={note} />
+          notes.map((note, i) => (
+            <NotePreview note={note} index={notes.length - i} />
           ))
         }
       </ul>

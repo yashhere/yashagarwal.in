@@ -5,9 +5,10 @@ import type { CollectionEntry } from 'astro:content';
 interface Props {
   note: CollectionEntry<'notes'>;
   homePage?: boolean;
+  index?: number;
 }
 
-const { note, homePage = false } = Astro.props;
+const { note, homePage = false, index = 0 } = Astro.props;
 const formattedDate = format(note.data.createdOn, 'MM/yy');
 ---
 
@@ -33,10 +34,11 @@ const formattedDate = format(note.data.createdOn, 'MM/yy');
     </a>
   </div>
 ) : (
-  <li class="flex items-baseline justify-between gap-3 py-1 px-0.5">
+  <li class="flex items-baseline gap-3 py-1 px-0.5">
+    <span class="text-muted-foreground/40 shrink-0 tabular-nums text-xs w-5 text-right">{index}</span>
     <a
       href={`/notes/${note.slug}`}
-      class="text-foreground truncate"
+      class="text-foreground truncate flex-1"
       data-note-title
       data-note-description={note.data.description || ''}
       data-note-tags={note.data.tags?.join(' ') || ''}
