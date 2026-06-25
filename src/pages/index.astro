@@ -39,16 +39,14 @@ const recentNotes = notes.slice(0, siteConfig.featuredNotes)
               date.getFullYear().toString().slice(-2)
 
             return (
-              <li>
+              <li class="flex items-baseline justify-between gap-3 py-1 px-0.5">
                 <a
                   href={`/notes/${note.slug}`}
-                  class="flex items-baseline justify-between gap-3 rounded-sm py-1 px-0.5"
+                  class="text-foreground truncate"
                 >
-                  <span class="text-foreground truncate">
-                    {note.data.title}
-                  </span>
-                  <span class="text-muted-foreground shrink-0 font-mono text-xs">{dateStr}</span>
+                  {note.data.title}
                 </a>
+                <span class="text-muted-foreground shrink-0 font-mono text-xs">{dateStr}</span>
               </li>
             )
           })
