@@ -242,12 +242,12 @@
     text-decoration: underline;
     text-decoration-color: var(--muted-foreground);
     text-decoration-thickness: 1px;
-    text-underline-offset: 0.2em;
+    text-underline-offset: 0.3em;
   }
 
   a:hover {
     text-decoration: underline;
-    text-underline-offset: 0.2em;
+    text-underline-offset: 0.3em;
   }
 
   :focus-visible {
