@@ -40,15 +40,23 @@ const recentNotes = notes.slice(0, siteConfig.featuredNotes)
               date.getFullYear().toString().slice(-2)
 
             return (
-              <li class="flex items-baseline gap-3 py-1 px-0.5">
-                <span class="text-muted-foreground/40 shrink-0 tabular-nums text-xs w-5 text-right">{num}</span>
-                <a
-                  href={`/notes/${note.slug}`}
-                  class="text-foreground min-w-0 flex-1 no-underline"
-                >
-                  {note.data.title}
-                </a>
-                <span class="text-muted-foreground shrink-0 font-mono text-xs">{dateStr}</span>
+              <li class="py-1 px-0.5">
+                <div class="flex items-baseline gap-3">
+                  <span class="text-muted-foreground/40 shrink-0 tabular-nums text-xs w-5 text-right">{num}</span>
+                  <a
+                    href={`/notes/${note.slug}`}
+                    class="text-foreground min-w-0 flex-1 no-underline"
+                  >
+                    {note.data.title}
+                  </a>
+                </div>
+                <div class="flex items-baseline gap-3 mt-0.5">
+                  <span class="w-5 shrink-0"></span>
+                  <span class="text-muted-foreground/60 shrink-0 font-mono text-xs">{dateStr}</span>
+                  {note.data.category && (
+                    <span class="text-muted-foreground/40 text-xs">{note.data.category}</span>
+                  )}
+                </div>
               </li>
             )
           })
