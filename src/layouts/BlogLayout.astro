@@ -68,7 +68,7 @@ const breadcrumbItems = [
     title={title}
     description={description}
     image={image}
-    mainClass="mx-auto grid w-full max-w-screen-2xl grid-cols-1 gap-0 py-4 xl:grid-cols-[14rem_minmax(0,42rem)_14rem] xl:justify-center"
+    mainClass="mx-auto grid w-full max-w-screen-2xl grid-cols-1 gap-0 py-4 xl:grid-cols-[16rem_minmax(0,48rem)_16rem] xl:gap-8 xl:justify-center"
 >
   <ReadingProgress targetId="article-body" class="absolute" />
 
@@ -101,10 +101,12 @@ const breadcrumbItems = [
     <section class="mb-6">
       <Breadcrumbs items={breadcrumbItems} />
       <Heading level="h1" data-pagefind-meta="title">{title}</Heading>
-      <div class="text-muted-foreground flex flex-wrap items-center gap-x-3 gap-y-1 mt-2 text-sm">
+      <div class="text-muted-foreground flex items-center gap-x-1.5 gap-y-1 mt-2 text-sm">
         <span>{format(createdOn, "MMM dd, yyyy")}</span>
-        {updatedOn && <span>&middot; Updated {format(updatedOn, "MMM dd, yyyy")}</span>}
-        {readingTime && <span>&middot; {readingTime}</span>}
+        {updatedOn && <span>&middot;</span>}
+        {updatedOn && <span>Updated {format(updatedOn, "MMM dd, yyyy")}</span>}
+        {readingTime && <span>&middot;</span>}
+        {readingTime && <span>{readingTime}</span>}
       </div>
     </section>
 
@@ -148,7 +150,17 @@ const breadcrumbItems = [
     )}
 
     <div class="mt-8 flex items-center justify-between">
-      <LikeButton slug={slug} />
+      <div class="flex items-center gap-3">
+        <LikeButton slug={slug} />
+        <a
+          href={`https://x.com/intent/tweet?text=${encodeURIComponent(`https://yashagarwal.in/notes/${slug}`)}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-muted-foreground hover:text-foreground text-sm no-underline"
+        >
+          Share on X &rarr;
+        </a>
+      </div>
       <a href="/notes" class="text-muted-foreground hover:text-foreground text-sm transition-colors no-underline xl:hidden">
         &larr; Notes
       </a>
@@ -163,11 +175,9 @@ const breadcrumbItems = [
   <aside class="hidden xl:block" />
 </BaseLayout>
 
-<script is:inline>
-  document.addEventListener('DOMContentLoaded', () => {
-    const links = document.querySelectorAll('[data-toc-link]');
-    if (!links.length) return;
-
+<script>
+  const links = document.querySelectorAll('[data-toc-link]');
+  if (links.length) {
     let activeId: string | null = null;
     const observer = new IntersectionObserver((entries) => {
       for (const entry of entries) {
@@ -184,8 +194,8 @@ const breadcrumbItems = [
       });
     }, { rootMargin: '0% 0% -80% 0%' });
 
-    document.querySelectorAll('#article-body h2, #article-body h3, #article-body h4').forEach((h) => {
+    document.querySelectorAll('#article-body h2, #article-body h3, #article-body h4, #article-body h5').forEach((h) => {
       if (h.id) observer.observe(h);
     });
-  });
+  }
 </script>
