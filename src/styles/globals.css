@@ -254,8 +254,11 @@
     @apply ring-primary ring-offset-background ring-2 ring-offset-2 outline-none;
   }
 
-  a:focus-visible {
-    @apply ring-primary ring-offset-background ring-2 ring-offset-2 outline-none;
+  /* Placeholder text that works in both light and dark mode */
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--muted-foreground);
+    opacity: 0.6;
   }
 
   /* Fix for https://github.com/disqus/disqus-react/issues/153 */
