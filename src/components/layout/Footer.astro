@@ -34,14 +34,15 @@ const footerLinks = [
       </nav>
 
       {/* Newsletter */}
-      <div class="border-border border-t pt-4 w-full max-w-xs">
-        <p class="text-muted-foreground text-sm">Occasional updates on what I'm building and learning.</p>
-        <form
-          id="subscribe-form"
-          action="https://newsletter.yashagarwal.in/api/public/subscription"
-          method="POST"
-          class="flex w-full gap-2 mt-2"
-        >
+      <div class="border-y border-border py-4 w-full">
+        <div class="max-w-xs">
+          <p class="text-muted-foreground text-sm">Occasional updates on what I'm building and learning.</p>
+          <form
+            id="subscribe-form"
+            action="https://newsletter.yashagarwal.in/api/public/subscription"
+            method="POST"
+            class="flex w-full gap-2 mt-2"
+          >
         <input
           type="text"
           name="name"
@@ -65,6 +66,7 @@ const footerLinks = [
         </button>
       </form>
       <p id="subscribe-msg" class="text-muted-foreground hidden text-sm"></p>
+        </div>
       </div>
 
       {/* Bottom row: clock + copyright */}
