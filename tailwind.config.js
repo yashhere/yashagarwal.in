@@ -89,9 +89,13 @@ const typographyStyles = {
         lineHeight: "1.625rem", // 26px
       },
       "ul, ol": {
-        paddingLeft: "1.25rem",
+        paddingLeft: "1.625em",
+        marginTop: "1em",
+        marginBottom: "1em",
       },
       li: {
+        marginTop: "0",
+        marginBottom: "0",
         lineHeight: "1.625rem", // 26px
       },
       blockquote: {
