@@ -45,8 +45,16 @@ export function getReadingTime(content: string): ReadTimeResults {
 }
 
 /**
- * Get all unique tags from published notes
+ * Get global numbering for notes (oldest = 1)
  */
+export async function getNoteNumbers(): Promise<Map<string, number>> {
+  const notes = await getPreviewNotes()
+  const map = new Map<string, number>()
+  notes.forEach((note, i) => {
+    map.set(note.slug, notes.length - i)
+  })
+  return map
+}
 export async function getAllTags(): Promise<string[]> {
   const notes = await getPreviewNotes()
   const tags = new Set<string>()

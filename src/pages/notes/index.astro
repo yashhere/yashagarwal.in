@@ -3,9 +3,10 @@ import NotePreview from "../../components/content/NotePreview.astro"
 import SearchInput from "../../components/interactive/SearchInput.astro"
 import Section from "../../components/ui/Section.astro"
 import BaseLayout from "../../layouts/BaseLayout.astro"
-import { getPreviewNotes } from "../../lib/content"
+import { getPreviewNotes, getNoteNumbers } from "../../lib/content"
 
 const notes = await getPreviewNotes()
+const noteNumbers = await getNoteNumbers()
 const breadcrumbItems = [{ label: "Home", href: "/" }, { label: "Notes" }]
 ---
 
@@ -24,7 +25,7 @@ const breadcrumbItems = [{ label: "Home", href: "/" }, { label: "Notes" }]
       <ul class="-mx-0.5" id="notes-list">
         {
           notes.map((note, i) => (
-            <NotePreview note={note} index={notes.length - i} />
+            <NotePreview note={note} index={noteNumbers.get(note.slug)} />
           ))
         }
       </ul>

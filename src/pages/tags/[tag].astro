@@ -4,7 +4,7 @@ import GithubSlugger from "github-slugger"
 import Heading from "../../components/ui/Heading.astro"
 import NotePreview from "../../components/content/NotePreview.astro"
 import BaseLayout from "../../layouts/BaseLayout.astro"
-import { getPreviewNotes } from "../../lib/content"
+import { getPreviewNotes, getNoteNumbers } from "../../lib/content"
 
 export async function getStaticPaths() {
   const notes = await getPreviewNotes()
@@ -23,6 +23,7 @@ const { tagName } = Astro.props
 const { tag } = Astro.params
 
 const allNotes = await getPreviewNotes()
+const noteNumbers = await getNoteNumbers()
 const filteredNotes = allNotes.filter((note) =>
   note.data.tags?.some((t) => {
     const slugger = new GithubSlugger()
@@ -36,7 +37,7 @@ const filteredNotes = allNotes.filter((note) =>
 
   <ul>
     {filteredNotes.map((note, i) => (
-      <NotePreview note={note} index={filteredNotes.length - i} />
+      <NotePreview note={note} index={noteNumbers.get(note.slug)} />
     ))}
   </ul>
 </BaseLayout>
