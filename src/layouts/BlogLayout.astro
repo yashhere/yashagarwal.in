@@ -61,7 +61,6 @@ const breadcrumbItems = [
   { label: "Home", href: "/" },
   { label: "Notes", href: "/notes" },
   ...(category ? [{ label: category, href: `/categories/${category.toLowerCase().replace(/\s+/g, "-")}` }] : []),
-  { label: title },
 ];
 ---
 

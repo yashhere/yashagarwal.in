@@ -12,8 +12,8 @@ const { slug, class: className } = Astro.props;
     <button
       @click="toggleLike"
       :disabled="submitting || loading"
-      class="flex items-center gap-2 rounded-lg border border-border px-3 py-1.5 text-sm transition-all hover:border-red-500 hover:bg-red-500/5 disabled:opacity-50 disabled:cursor-not-allowed"
-      :class="{ 'border-red-500 bg-red-500/10 text-red-500': !loading && hasLiked, 'text-muted-foreground': !loading && !hasLiked }"
+      class="flex items-center gap-1.5 text-sm transition-colors cursor-pointer bg-transparent border-0 p-0"
+      :class="{ 'text-red-500': !loading && hasLiked, 'text-muted-foreground hover:text-red-500': !loading && !hasLiked }"
       aria-label="Like this post"
     >
       <span class="w-4 h-4 flex items-center justify-center shrink-0">
