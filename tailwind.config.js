@@ -90,12 +90,12 @@ const typographyStyles = {
       },
       "ul, ol": {
         paddingLeft: "1.25rem",
-        marginTop: "1.25rem",
+        marginTop: "1rem",
         // marginBottom: "1.25rem",
       },
       li: {
-        marginTop: "0.375rem",
-        marginBottom: "0.375rem",
+        marginTop: "0.25rem",
+        marginBottom: "0.25rem",
         lineHeight: "1.625rem", // 26px
       },
       blockquote: {
