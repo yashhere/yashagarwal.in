@@ -268,11 +268,9 @@
   /* Hex fallbacks for Disqus (can't parse OKLCH) */
   .comments {
     --heading: #1a1a1a;
-    --foreground: #1a1a1a;
     --muted-foreground: #6b6b6b;
     --primary: #1a1a1a;
     --border: #e0e0e0;
-    --background: #ffffff;
     --muted: #f5f5f5;
   }
 
@@ -286,11 +284,9 @@
   /* Hex fallbacks for Disqus dark mode */
   .dark .comments {
     --heading: #e5e5e5;
-    --foreground: #e5e5e5;
     --muted-foreground: #9a9a9a;
     --primary: #e5e5e5;
     --border: #333333;
-    --background: #1a1a1a;
     --muted: #2a2a2a;
   }
 
