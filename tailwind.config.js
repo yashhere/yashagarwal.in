@@ -97,6 +97,10 @@ const typographyStyles = {
         marginTop: "0.25rem",
         marginBottom: "0.25rem",
         lineHeight: "1.625rem", // 26px
+        "& p": {
+          marginTop: "0.25rem",
+          marginBottom: "0.25rem",
+        },
       },
       blockquote: {
         fontFamily: "var(--font-serif)",
