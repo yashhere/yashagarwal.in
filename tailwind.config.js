@@ -101,6 +101,10 @@ const typographyStyles = {
           marginTop: "0.25rem",
           marginBottom: "0.25rem",
         },
+        "& ul, & ol": {
+          marginTop: "0.25rem",
+          marginBottom: "0.25rem",
+        },
       },
       blockquote: {
         fontFamily: "var(--font-serif)",
