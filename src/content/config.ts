@@ -22,16 +22,6 @@ const notes = defineCollection({
   }),
 })
 
-const lifelog = defineCollection({
-  type: "content",
-  schema: z.object({
-    title: z.string(),
-    createdOn: z.coerce.date(),
-    updatedOn: z.coerce.date().optional(),
-  }),
-})
-
 export const collections = {
   notes,
-  lifelog,
 }
