@@ -1,5 +1,4 @@
 ---
-import { Icon } from 'astro-icon/components'
 import Heading from "../components/ui/Heading.astro"
 import { siteConfig } from "../config/site"
 import BaseLayout from "../layouts/BaseLayout.astro"
@@ -41,7 +40,7 @@ const recentNotes = notes.slice(0, siteConfig.featuredNotes)
 
             return (
               <li class="flex items-baseline gap-3 py-1 px-0.5">
-                <span class="text-muted-foreground/40 shrink-0 tabular-nums text-xs w-5 text-right">{num}</span>
+                <span class="text-muted-foreground shrink-0 tabular-nums text-xs w-5 text-right">{num}</span>
                 <a
                   href={`/notes/${note.slug}`}
                   class="text-foreground min-w-0 flex-1 no-underline hover:underline"
@@ -57,10 +56,9 @@ const recentNotes = notes.slice(0, siteConfig.featuredNotes)
 
       <a
         href="/notes"
-        class="group hover:text-primary mt-3 inline-flex items-center gap-1 text-sm font-medium transition-colors"
+        class="text-muted-foreground hover:text-foreground mt-3 inline-flex items-center gap-1 text-sm transition-colors no-underline"
       >
-        <span>View all notes</span>
-        <Icon name="lucide:chevron-right" class="h-3.5 w-3.5 transition-transform duration-200 ease-out group-hover:translate-x-1" />
+        View all notes &rarr;
       </a>
     </section>
 

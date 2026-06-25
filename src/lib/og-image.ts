@@ -4,7 +4,6 @@ import { Resvg } from "@resvg/resvg-js"
 import satori from "satori"
 import sharp from "sharp"
 
-// Cache fonts and background image
 const fontPath = path.resolve(
   "node_modules/@fontsource/geist-sans/files/geist-sans-latin-700-normal.woff"
 )
@@ -15,10 +14,6 @@ const fontRegularPath = path.resolve(
 )
 const fontRegularData = fs.readFileSync(fontRegularPath)
 
-const bgPath = path.resolve("public/images/og.png")
-const bgBuffer = fs.readFileSync(bgPath)
-const bgBase64 = `data:image/png;base64,${bgBuffer.toString("base64")}`
-
 function getTitleFontSize(text: string): string {
   if (text.length > 60) return "56px"
   if (text.length > 40) return "64px"
@@ -26,10 +21,10 @@ function getTitleFontSize(text: string): string {
 }
 
 function getDescriptionFontSize(text: string): string {
-  if (!text) return "36px"
+  if (!text) return "32px"
   if (text.length > 150) return "28px"
-  if (text.length > 100) return "32px"
-  return "36px"
+  if (text.length > 100) return "30px"
+  return "32px"
 }
 
 interface OGImageOptions {
@@ -56,11 +51,10 @@ export async function generateOGImage(
           display: "flex",
           height: "100%",
           width: "100%",
-          backgroundImage: `url('${bgBase64}')`,
-          backgroundSize: "1200px 630px",
+          background: "#ffffff",
           flexDirection: "column",
           justifyContent: "center",
-          padding: "80px",
+          padding: "80px 80px 70px",
           fontFamily: "Geist Sans",
         },
         children: [
@@ -70,10 +64,8 @@ export async function generateOGImage(
               style: {
                 display: "flex",
                 flexDirection: "column",
-                alignItems: "flex-start",
+                flex: 1,
                 justifyContent: "center",
-                maxWidth: "900px",
-                height: "100%",
               },
               children: [
                 date
@@ -81,12 +73,9 @@ export async function generateOGImage(
                       type: "div",
                       props: {
                         style: {
-                          fontSize: "24px",
-                          color: "#9ca3af",
-                          marginBottom: "20px",
-                          fontWeight: 400,
-                          textTransform: "uppercase",
-                          letterSpacing: "2px",
+                          fontSize: "22px",
+                          color: "#999999",
+                          marginBottom: "16px",
                         },
                         children: date,
                       },
@@ -98,10 +87,10 @@ export async function generateOGImage(
                     style: {
                       fontSize: titleFontSize,
                       fontWeight: 700,
-                      color: "#ffffff",
-                      marginBottom: "24px",
-                      lineHeight: 1.1,
-                      letterSpacing: "-1px",
+                      color: "#1a1a1a",
+                      marginBottom: description ? "20px" : "0",
+                      lineHeight: 1.15,
+                      letterSpacing: "-0.5px",
                     },
                     children: title,
                   },
@@ -112,9 +101,9 @@ export async function generateOGImage(
                       props: {
                         style: {
                           fontSize: descriptionFontSize,
-                          color: "#d1d5db",
+                          color: "#666666",
                           lineHeight: 1.4,
-                          fontWeight: 400,
+                          maxWidth: "900px",
                         },
                         children: description,
                       },
@@ -127,37 +116,10 @@ export async function generateOGImage(
             type: "div",
             props: {
               style: {
-                position: "absolute",
-                bottom: "60px",
-                left: "80px",
-                fontSize: "24px",
-                color: "#9ca3af",
-                fontWeight: 700,
-                display: "flex",
-                alignItems: "center",
+                fontSize: "22px",
+                color: "#999999",
               },
-              children: [
-                {
-                  type: "span",
-                  props: {
-                    style: { color: "#ffffff" },
-                    children: "Yash Agarwal",
-                  },
-                },
-                {
-                  type: "span",
-                  props: {
-                    style: { margin: "0 10px", color: "#4b5563" },
-                    children: "/",
-                  },
-                },
-                {
-                  type: "span",
-                  props: {
-                    children: "yashagarwal.in",
-                  },
-                },
-              ],
+              children: "yashagarwal.in",
             },
           },
         ],
@@ -180,7 +142,7 @@ export async function generateOGImage(
           style: "normal",
         },
       ],
-    }
+    },
   )
 
   const resvg = new Resvg(svg, {
