@@ -51,7 +51,7 @@ export async function generateOGImage(
           display: "flex",
           height: "100%",
           width: "100%",
-          background: "#0a0a0a",
+          background: "#ffffff",
           flexDirection: "column",
           justifyContent: "center",
           padding: "80px 80px 70px",
