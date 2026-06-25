@@ -38,7 +38,7 @@ const anchorClasses = className.includes("anchor")
   ) : isExternal ? (
     <a href={href} class={linkClasses} target="_blank" rel="noopener noreferrer" {...props}>
       <slot />
-      {showIcon && <Icon name="lucide:arrow-up-right" class="h-3.5 w-3.5 inline-block ml-0.5" />}
+      {showIcon && <Icon name="lucide:arrow-up-right" class="h-3 w-3 inline-block ml-0.5" />}
     </a>
   ) : (
     <a href={href} class={linkClasses} {...props}>

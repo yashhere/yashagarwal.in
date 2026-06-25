@@ -15,7 +15,7 @@
 
 ## Tailwind
 
-15 - Mostly use built-in values, occasionally allow dynamic values, rarely globals
+15 - Use standard Tailwind values. No arbitrary `[value]` in class strings — define custom values in tailwind.config.js instead
 16 - Always use v4 + global CSS file format + shadcn/ui
 
 ## Next

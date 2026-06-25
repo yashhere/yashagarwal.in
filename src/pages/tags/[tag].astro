@@ -1,28 +1,21 @@
 ---
 import GithubSlugger from "github-slugger"
 
-import Breadcrumbs from "../../components/content/Breadcrumbs.astro"
+import Heading from "../../components/ui/Heading.astro"
 import NotePreview from "../../components/content/NotePreview.astro"
-import Section from "../../components/ui/Section.astro"
 import BaseLayout from "../../layouts/BaseLayout.astro"
-import { getPreviewNotes } from "../../lib/content"
+import { getPreviewNotes, getNoteNumbers } from "../../lib/content"
 
 export async function getStaticPaths() {
   const notes = await getPreviewNotes()
   const allTags = new Set<string>()
-
   notes.forEach((note) => {
     note.data.tags?.forEach((tag) => allTags.add(tag))
   })
-
   const slugger = new GithubSlugger()
-
   return Array.from(allTags).map((tag) => {
     const slug = slugger.slug(tag)
-    return {
-      params: { tag: slug },
-      props: { tagName: tag },
-    }
+    return { params: { tag: slug }, props: { tagName: tag } }
   })
 }
 
@@ -30,32 +23,21 @@ const { tagName } = Astro.props
 const { tag } = Astro.params
 
 const allNotes = await getPreviewNotes()
+const noteNumbers = await getNoteNumbers()
 const filteredNotes = allNotes.filter((note) =>
   note.data.tags?.some((t) => {
     const slugger = new GithubSlugger()
     return slugger.slug(t) === tag
   })
 )
-
-const breadcrumbItems = [
-  { label: "Home", href: "/" },
-  { label: "Tags", href: "/tags" },
-  { label: tagName },
-]
 ---
 
-<BaseLayout title={`Tagged: ${tagName}`} description={`Notes tagged with ${tagName}`} mainClass="mx-auto w-full max-w-3xl pb-18 px-4 md:px-6">
-    <Section title={tagName} count={filteredNotes.length}>
-      <Breadcrumbs items={breadcrumbItems} class="mb-6" />
+<BaseLayout title={tagName} description={`Notes tagged with ${tagName}`} mainClass="mx-auto w-full max-w-3xl pb-12 px-4 md:px-6">
+  <Heading level="h2" as="h1" class="mt-6 mb-4">{tagName}</Heading>
 
-      <ul class="-mx-4 space-y-2">
-        {
-          filteredNotes.map((note) => (
-            <li>
-              <NotePreview note={note} />
-            </li>
-          ))
-        }
-      </ul>
-    </Section>
+  <ul>
+    {filteredNotes.map((note, i) => (
+      <NotePreview note={note} index={noteNumbers.get(note.slug)} />
+    ))}
+  </ul>
 </BaseLayout>

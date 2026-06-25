@@ -3,13 +3,12 @@ import { Icon } from 'astro-icon/components'
 
 import ThemeToggle from "../interactive/ThemeToggle.astro"
 
-const primaryNavItems = [{ name: "Notes", href: "/notes" }]
-
-const moreNavItems = [
+const primaryNavItems = [
+  { name: "Notes", href: "/notes" },
   { name: "Work", href: "/work" },
-  { name: "Tags", href: "/tags" },
-  { name: "Categories", href: "/categories" },
 ]
+
+const moreNavItems: { name: string; href: string }[] = []
 const { pathname } = Astro.url
 const pathSegments = pathname.split("/").filter(Boolean)
 const highlightedPath = pathSegments.length <= 1 ? pathname : `/${pathSegments[0]}`
@@ -22,7 +21,7 @@ const isActive = (href: string) => {
 const isAnySecondaryActive = moreNavItems.some((item) => isActive(item.href))
 ---
 
-<aside class="my-8">
+<aside class="my-4">
   <div class="lg:sticky lg:top-20">
     <nav class="relative flex flex-row items-center justify-between px-0 pb-0" id="nav">
       {/* Left: Avatar/Logo */}
@@ -44,8 +43,8 @@ const isAnySecondaryActive = moreNavItems.some((item) => isActive(item.href))
             <a
               href={item.href}
               class:list={[
-                "block px-3 py-1 font-medium rounded-md hover:bg-accent hover:text-accent-foreground transition-colors",
-                isActive(item.href) ? "text-foreground" : "text-muted-foreground",
+                "block px-3 py-1 font-medium transition-colors no-underline",
+                isActive(item.href) ? "text-foreground" : "text-muted-foreground hover:text-foreground",
               ]}
             >
               {item.name}
@@ -54,12 +53,13 @@ const isAnySecondaryActive = moreNavItems.some((item) => isActive(item.href))
         }
 
         {/* More Dropdown - Alpine.js */}
+        {moreNavItems.length > 0 && (
         <div class="relative" x-data="{ open: false }" @click.outside="open = false">
           <button
             @click="open = !open"
             class:list={[
-              "hover:bg-accent hover:text-accent-foreground flex items-center gap-1 rounded-md border-0 px-3 py-1 font-medium ring-0 transition-colors outline-none focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0",
-              isAnySecondaryActive ? "text-foreground" : "text-muted-foreground",
+              "flex items-center gap-1 border-0 px-3 py-1 font-medium ring-0 transition-colors outline-none focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 cursor-pointer",
+              isAnySecondaryActive ? "text-foreground" : "text-muted-foreground hover:text-foreground",
             ]}
             aria-label="More pages"
           >
@@ -76,7 +76,7 @@ const isAnySecondaryActive = moreNavItems.some((item) => isActive(item.href))
             x-show="open"
             x-transition
             x-cloak
-            class="absolute right-0 mt-1 min-w-[160px] rounded-md border border-border/50 bg-background/80 backdrop-blur-sm shadow-md z-50 p-1 ring-0"
+            class="absolute right-0 mt-1 min-w-40 rounded-md border border-border/50 bg-background/80 backdrop-blur-sm shadow-md z-50 p-1 ring-0"
           >
             <ul>
               {
@@ -85,10 +85,10 @@ const isAnySecondaryActive = moreNavItems.some((item) => isActive(item.href))
                     <a
                       href={item.href}
                       class:list={[
-                        "block px-2 py-1.5 text-sm rounded-sm transition-colors font-medium",
+                        "block px-2 py-1.5 text-sm transition-colors font-medium no-underline",
                         isActive(item.href)
-                          ? "text-foreground bg-accent"
-                          : "text-muted-foreground hover:bg-accent hover:text-foreground",
+                          ? "text-foreground"
+                          : "text-muted-foreground hover:text-foreground",
                       ]}
                     >
                       {item.name}
@@ -99,6 +99,7 @@ const isAnySecondaryActive = moreNavItems.some((item) => isActive(item.href))
             </ul>
           </div>
         </div>
+        )}
 
         {/* Theme Toggle */}
         <ThemeToggle />

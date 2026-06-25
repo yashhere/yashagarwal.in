@@ -22,23 +22,25 @@ const socialLinks = [
     href: "https://www.linkedin.com/in/theyashagarwal/",
     icon: "simple-icons:linkedin",
   },
+  {
+    name: "RSS",
+    href: "/rss.xml",
+    icon: "lucide:rss",
+  },
 ]
 ---
 
-<div class="flex items-center gap-2">
+<div class="flex items-center gap-3">
   {
-    socialLinks.map((social, index) => (
+    socialLinks.map((social, i) => (
       <a
         href={social.href}
-        class:list={[
-          "text-muted-foreground hover:text-accent-foreground hover:bg-accent rounded-md p-2 transition-all duration-200",
-          index === 0 && "-ml-2",
-        ]}
+        class={`text-muted-foreground hover:text-foreground rounded px-1 py-1.5 transition-colors no-underline ${i === 0 ? '-ml-1' : ''}`}
         aria-label={social.name}
         target={social.name === "Email" ? undefined : "_blank"}
         rel={social.name === "Email" ? undefined : "noopener noreferrer"}
       >
-        <Icon name={social.icon} class="h-6 w-6" />
+        <Icon name={social.icon} class="h-4 w-4" />
       </a>
     ))
   }

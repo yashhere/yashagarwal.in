@@ -1,6 +1,5 @@
 ---
 import { Icon } from 'astro-icon/components'
-import SocialLinks from "../components/content/SocialLinks.astro"
 import Heading from "../components/ui/Heading.astro"
 import { siteConfig } from "../config/site"
 import BaseLayout from "../layouts/BaseLayout.astro"
@@ -12,98 +11,68 @@ const recentNotes = notes.slice(0, siteConfig.featuredNotes)
 
 <BaseLayout title="/dev/yash/notes">
     {/* Intro Section */}
-    <div class="mb-10 mt-12">
-      <Heading level="h2" as="h1" class="font-semibold tracking-wide">
-        Yash Agarwal
-      </Heading>
-      <p class="text-muted-foreground mt-2 text-sm">Engineer / Builder / Learner</p>
-    </div>
-    <div class="text-foreground/90 space-y-6 text-base leading-relaxed mt-6">
-      <p>
-        Hey there! <span class="animate-wobble inline-block origin-[70%_70%]">👋</span>
-      </p>
-      <p>
-        Welcome to my corner of the internet. I write code at{" "}
-        <a
-          href="https://netskope.com"
-          target="_blank"
-          class="font-medium underline decoration-muted-foreground/30 underline-offset-4 hover:decoration-foreground transition-all"
-        >
-          Netskope
-        </a>{" "}
-        for a living, building CASB security products that protect businesses' data at rest.
-      </p>
-      <p>
-        Currently, I'm optimizing my{" "}
-        <span class="font-semibold text-heading">homelab</span>{" "}
-        infrastructure, delving into latest trends in{" "}
-        <span class="font-semibold text-heading">LLMs</span>{" "}
-        research, and{" "}
-        <span class="font-semibold text-heading">Backend Systems</span>.
-      </p>
-    </div>
-
-    {/* Social Links */}
     <div class="mt-8">
-      <SocialLinks />
-    </div>
-
-    {/* Decorative Break - Dot variant */}
-    <div class="my-8 flex items-center justify-center">
-      <div class="via-border/80 to-border h-px flex-1 bg-linear-to-r from-transparent"></div>
-      <div class="px-4">
-        <div class="bg-border h-2 w-2 rounded-full shadow-sm"></div>
-      </div>
-      <div class="via-border/80 to-border h-px flex-1 bg-linear-to-l from-transparent"></div>
+      <p>
+        Hi, I'm Yash - a computer nerd by heart and software engineer by profession. I write about my learnings, experiences, thoughts on building things and tinkering with software, technology, and life in general.
+      </p>
+      <p class="mt-2">
+        I am currently building <a href="https://mumsmemories.app" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">Mum's Memories</a> - a minimal baby journaling app.
+      </p>
+      <p class="mt-2">
+        This site is my public brain dump - thoughts, notes, and learnings that I want to share with the world. I hope you find something useful here!
+      </p>
     </div>
 
     {/* Recent Writing Section */}
     <section>
-      <Heading level="h3" as="h2" class="mt-6 mb-2 tracking-wide">
+      <Heading level="h2" as="h2" class="mt-6 mb-3 tracking-wide">
         Recent Writing
       </Heading>
 
-      <div class="flex flex-col justify-start gap-5">
-        <ul class="-mx-3">
-          {
-            recentNotes.map((note) => {
-              // Format date as MM/yy
-              const date = new Date(note.data.createdOn)
-              const dateStr =
-                (date.getMonth() + 1).toString().padStart(2, "0") +
-                "/" +
-                date.getFullYear().toString().slice(-2)
+      <ul>
+        {
+          recentNotes.map((note, i) => {
+            const num = notes.length - i
+            const date = new Date(note.data.createdOn)
+            const dateStr =
+              (date.getMonth() + 1).toString().padStart(2, "0") +
+              "/" +
+              date.getFullYear().toString().slice(-2)
 
-              return (
-                <li>
-                  <a
-                    href={`/notes/${note.slug}`}
-                    class="group hover:bg-accent flex w-full flex-col items-start gap-1 rounded-lg p-3 text-left transition-colors"
-                  >
-                    <div class="flex w-full items-baseline justify-between gap-3">
-                      <span class="text-foreground group-hover:text-primary font-sans text-base font-medium transition-colors">
-                        {note.data.title}
-                      </span>
-                      <span class="text-foreground/70 shrink-0 font-mono text-sm">{dateStr}</span>
-                    </div>
-                    {note.data.description && (
-                      <p class="text-muted-foreground line-clamp-2 max-w-[85%] text-sm leading-relaxed">
-                        {note.data.description}
-                      </p>
-                    )}
-                  </a>
-                </li>
-              )
-            })
-          }
-        </ul>
-        <a
-          href="/notes"
-          class="group hover:text-primary text-md mt-3 inline-flex items-center gap-1 font-semibold transition-colors"
-        >
-          <span>View all notes</span>
-          <Icon name="lucide:chevron-right" class="h-4 w-4 transition-transform duration-200 ease-out group-hover:translate-x-1" />
-        </a>
-      </div>
+            return (
+              <li class="flex items-baseline gap-3 py-1 px-0.5">
+                <span class="text-muted-foreground/40 shrink-0 tabular-nums text-xs w-5 text-right">{num}</span>
+                <a
+                  href={`/notes/${note.slug}`}
+                  class="text-foreground min-w-0 flex-1 no-underline hover:underline"
+                >
+                  {note.data.title}
+                </a>
+                <span class="text-muted-foreground shrink-0 font-mono text-xs">{dateStr}</span>
+              </li>
+            )
+          })
+        }
+      </ul>
+
+      <a
+        href="/notes"
+        class="group hover:text-primary mt-3 inline-flex items-center gap-1 text-sm font-medium transition-colors"
+      >
+        <span>View all notes</span>
+        <Icon name="lucide:chevron-right" class="h-3.5 w-3.5 transition-transform duration-200 ease-out group-hover:translate-x-1" />
+      </a>
+    </section>
+
+    {/* Work Section */}
+    <section>
+      <Heading level="h2" as="h2" class="mt-6 mb-3 tracking-wide">
+        Work
+      </Heading>
+      <p class="text-sm mt-0.5">
+        Staff Software Engineer at{" "}
+        <a href="https://netskope.com" target="_blank" rel="noopener noreferrer">Netskope</a>,{" "}
+        building CASB security products that protect business data at rest.
+      </p>
     </section>
 </BaseLayout>

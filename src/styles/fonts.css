@@ -2,13 +2,5 @@
  * Font Configuration
  *
  * Sans & Mono: System fonts for optimal performance
- * Serif: Signifier by Klim Type Foundry
+ * Serif: System serif fallback
  */
-
-@font-face {
-  font-family: "Signifier";
-  src: url("/fonts/Signifier-Regular.otf") format("opentype");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
