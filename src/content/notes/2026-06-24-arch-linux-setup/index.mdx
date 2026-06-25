@@ -37,19 +37,13 @@ The laptop has a 500 GB SSD with Windows already on it. About 250 GB was free at
 | sda4      | 650M  | Windows recovery     |
 | sda5      | 250G  | New, for Arch        |
 
-I confirmed the plan and the agent created the partition. The agent also asked me for confirmation before any destructive action, which was good. At one point it started to run a command that would delete all partition mappings on the disk. I caught it and stopped it. The agent had temporarily forgotten that Windows partitions existed on the same drive.
+I confirmed the plan and the agent created the partition with `fdisk` and formatted it with btrfs.
 
-## The busy device nightmare
-
-After creating the partition, the agent needed to format it with btrfs. The kernel refused. "Device or resource busy." The agent tried to fix this for far too long.
-
-It tried wiping the device. It tried deleting and recreating the partition. It tried installing strace to see what system call was failing. It tried creating a new device node with mknod. It tried restarting udev. It tried writing zeros to the partition with dd (which worked) and then formatting (which still failed). It tried creating the partition as sda6 instead of sda5. It tried partprobe, blockdev, and btrfs device scan. Nothing worked.
-
-At one point, the agent decided the solution was to reboot the live USB. I had to point out that this was a live USB environment. Rebooting would wipe the SSH setup and we would lose the connection. The agent backed off.
-
-I watched it loop through the same failing approaches several times. Each time it sounded confident that it had found the real cause. Each time it was wrong. Eventually it found that systemd had the device in a "plugged" state. Fixing that did not help either. The kernel was simply stuck. After many attempts, it just worked. I still do not know why.
-
-This was the most frustrating part of the installation. In 2018, I would have rebooted and moved on. The agent does not know when to give up. It kept trying variations of the same thing, burning time.
+```bash
+fdisk /dev/sda
+# created a new partition in the free space
+mkfs.btrfs -f /dev/sda5
+```
 
 ## btrfs subvolumes
 
