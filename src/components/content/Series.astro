@@ -18,16 +18,21 @@ const currentIndex = seriesNotes.findIndex((n) => n.slug === currentSlug)
 const displayIndex = currentIndex + 1
 ---
 
-<div x-data="{ isOpen: false }">
+<div
+  class="border-border rounded-md border p-2.5 text-sm"
+  x-data="{ isOpen: false }"
+>
   <button
-    class="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors cursor-pointer bg-transparent border-0 p-0"
+    class="flex w-full items-center justify-between text-left cursor-pointer bg-transparent border-0 p-0"
     @click="isOpen = !isOpen"
     :aria-expanded="isOpen"
   >
-    <span>{series.title} ({displayIndex}/{seriesNotes.length})</span>
+    <span class="text-foreground font-medium">
+      {series.title} <span class="text-muted-foreground font-normal">({displayIndex}/{seriesNotes.length})</span>
+    </span>
     <Icon
       name="lucide:chevron-down"
-      class="h-3 w-3 transition-transform duration-200"
+      class="text-muted-foreground h-3 w-3 transition-transform duration-200"
       :class="isOpen && 'rotate-180'"
     />
   </button>
@@ -37,12 +42,12 @@ const displayIndex = currentIndex + 1
     :class="isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'"
   >
     <div class="overflow-hidden">
-      <ul class="mt-2 space-y-1">
+      <ul class="border-border mt-2 space-y-1 border-t pt-2">
         {seriesNotes.map((note) => {
           const isCurrent = note.slug === currentSlug
           const isPublished = note.data.status === "published"
           return (
-            <li class="text-sm">
+            <li>
               {isPublished ? (
                 isCurrent ? (
                   <span class="text-foreground">{note.data.title}</span>

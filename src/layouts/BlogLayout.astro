@@ -169,27 +169,25 @@ const breadcrumbItems = [
 </BaseLayout>
 
 <script is:inline>
-  (function() {
+  document.addEventListener('DOMContentLoaded', () => {
     const links = document.querySelectorAll('[data-toc-link]');
     if (!links.length) return;
 
     let activeId: string | null = null;
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
+      for (const entry of entries) {
         if (entry.isIntersecting) activeId = entry.target.id;
-      });
+      }
       links.forEach((link) => {
         const el = link as HTMLElement;
-        if (el.getAttribute('data-toc-link') === activeId) {
-          el.classList.add('text-foreground');
-          el.classList.remove('text-muted-foreground');
-        } else {
-          el.classList.add('text-muted-foreground');
-          el.classList.remove('text-foreground');
-        }
+        const match = el.getAttribute('data-toc-link') === activeId;
+        el.classList.toggle('text-foreground', match);
+        el.classList.toggle('text-muted-foreground', !match);
       });
     }, { rootMargin: '0% 0% -80% 0%' });
 
-    document.querySelectorAll('#article-body h2, #article-body h3').forEach((h) => observer.observe(h));
-  })();
+    document.querySelectorAll('#article-body h2, #article-body h3, #article-body h4').forEach((h) => {
+      if (h.id) observer.observe(h);
+    });
+  });
 </script>
