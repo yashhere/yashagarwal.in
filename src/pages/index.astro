@@ -32,7 +32,7 @@ const recentNotes = notes.slice(0, siteConfig.featuredNotes)
       <ul>
         {
           recentNotes.map((note, i) => {
-            const num = recentNotes.length - i
+            const num = notes.length - i
             const date = new Date(note.data.createdOn)
             const dateStr =
               (date.getMonth() + 1).toString().padStart(2, "0") +
