@@ -3,13 +3,12 @@ import { Icon } from 'astro-icon/components'
 
 import ThemeToggle from "../interactive/ThemeToggle.astro"
 
-const primaryNavItems = [{ name: "Notes", href: "/notes" }]
-
-const moreNavItems = [
+const primaryNavItems = [
+  { name: "Notes", href: "/notes" },
   { name: "Work", href: "/work" },
-  { name: "Tags", href: "/tags" },
-  { name: "Categories", href: "/categories" },
 ]
+
+const moreNavItems: { name: string; href: string }[] = []
 const { pathname } = Astro.url
 const pathSegments = pathname.split("/").filter(Boolean)
 const highlightedPath = pathSegments.length <= 1 ? pathname : `/${pathSegments[0]}`
@@ -54,6 +53,7 @@ const isAnySecondaryActive = moreNavItems.some((item) => isActive(item.href))
         }
 
         {/* More Dropdown - Alpine.js */}
+        {moreNavItems.length > 0 && (
         <div class="relative" x-data="{ open: false }" @click.outside="open = false">
           <button
             @click="open = !open"
@@ -99,6 +99,7 @@ const isAnySecondaryActive = moreNavItems.some((item) => isActive(item.href))
             </ul>
           </div>
         </div>
+        )}
 
         {/* Theme Toggle */}
         <ThemeToggle />
