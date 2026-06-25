@@ -53,7 +53,7 @@ const displayIndex = currentIndex + 1
 
   <div
     class="grid transition-[grid-template-rows] duration-200 ease-in-out"
-    :class="isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'"
+    :class="isOpen ? 'grid-rows-1' : 'grid-rows-0'"
   >
     <div class="overflow-hidden">
       <div
@@ -85,7 +85,7 @@ const displayIndex = currentIndex + 1
                     ) : (
                       <a
                         href={`/notes/${note.slug}`}
-                        class="text-muted-foreground hover:text-primary block py-0.5 transition-colors"
+                        class="text-muted-foreground hover:text-primary block py-0.5 transition-colors no-underline"
                       >
                         {note.data.title}
                       </a>
