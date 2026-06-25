@@ -5,7 +5,7 @@ const headingStyles = {
   fontFamily: "var(--font-serif)",
   fontWeight: 600,
   lineHeight: 1.2,
-  marginTop: "2rem",
+  marginTop: "2.5rem",
   marginBottom: "0.75rem",
   color: "var(--heading)",
 }
@@ -22,10 +22,10 @@ const typographyStyles = {
       color: "var(--foreground)",
       maxWidth: "none",
       fontSize: "1rem", // 16px
-      lineHeight: "1.625rem", // 26px
+      lineHeight: "1.75rem", // 28px
       h1: {
         ...headingStyles,
-        fontSize: "1.5rem",
+        fontSize: "1.625rem",
         marginTop: "0",
         "& > a": {
           color: "inherit",
@@ -38,7 +38,7 @@ const typographyStyles = {
       },
       h2: {
         ...headingStyles,
-        fontSize: "1.25rem",
+        fontSize: "1.375rem",
         "& > a": {
           color: "inherit",
           fontWeight: "inherit",
@@ -50,7 +50,7 @@ const typographyStyles = {
       },
       h3: {
         ...headingStyles,
-        fontSize: "1.1rem",
+        fontSize: "1.125rem",
         "& > a": {
           color: "inherit",
           fontWeight: "inherit",
@@ -84,9 +84,9 @@ const typographyStyles = {
         color: "var(--heading)",
       },
       p: {
-        marginTop: "1.25rem",
-        marginBottom: "1.25rem",
-        lineHeight: "1.625rem", // 26px
+        marginTop: "1.5rem",
+        marginBottom: "1.5rem",
+        lineHeight: "1.75rem", // 28px
       },
       "ul, ol": {
         paddingLeft: "1.25rem",
@@ -94,9 +94,9 @@ const typographyStyles = {
         // marginBottom: "1.25rem",
       },
       li: {
-        marginTop: "0.25rem",
-        marginBottom: "0.25rem",
-        lineHeight: "1.625rem", // 26px
+        marginTop: "0.5rem",
+        marginBottom: "0.5rem",
+        lineHeight: "1.75rem", // 28px
       },
       blockquote: {
         fontFamily: "var(--font-serif)",
