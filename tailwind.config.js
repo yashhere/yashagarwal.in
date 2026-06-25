@@ -120,6 +120,22 @@ const typographyStyles = {
           color: "var(--heading)",
         },
       },
+      thead: {
+        borderBottomWidth: "1px",
+        borderBottomColor: "var(--border)",
+      },
+      "thead th": {
+        color: "var(--foreground)",
+        fontWeight: "600",
+        textAlign: "left",
+        paddingBottom: "0.5rem",
+        paddingRight: "0.75rem",
+      },
+      "tbody td": {
+        paddingTop: "0.5rem",
+        paddingBottom: "0.5rem",
+        paddingRight: "0.75rem",
+      },
       figcaption: {
         fontFamily: "var(--font-serif)",
         fontStyle: "italic",
