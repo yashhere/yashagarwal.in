@@ -1,8 +1,7 @@
 ---
 import GithubSlugger from "github-slugger"
 
-import Breadcrumbs from "../../components/content/Breadcrumbs.astro"
-import Section from "../../components/ui/Section.astro"
+import Heading from "../../components/ui/Heading.astro"
 import BaseLayout from "../../layouts/BaseLayout.astro"
 import { getPreviewNotes } from "../../lib/content"
 
@@ -17,39 +16,22 @@ notes.forEach((note) => {
 
 const sortedCategories = Array.from(categoriesMap.entries()).sort((a, b) => b[1] - a[1])
 const slugger = new GithubSlugger()
-
-const breadcrumbItems = [{ label: "Home", href: "/" }, { label: "Categories" }]
 ---
 
-<BaseLayout title="All Categories" description="Browse content by categories." mainClass="mx-auto w-full max-w-3xl pb-12 px-4 md:px-6">
-    <Section title="Categories" count={sortedCategories.length}>
-      <Breadcrumbs items={breadcrumbItems} class="mb-6" />
+<BaseLayout title="Categories" description="Browse content by categories." mainClass="mx-auto w-full max-w-3xl pb-12 px-4 md:px-6">
+  <Heading level="h2" as="h1" class="mt-6 mb-4">Categories</Heading>
 
-      <div class="space-y-4">
-        <div class="flex flex-wrap gap-2">
-          {
-            sortedCategories.map(([category, count]) => {
-              const slug = slugger.slug(category)
-              return (
-                <a
-                  href={`/categories/${slug}`}
-                  class="border-border bg-background text-muted-foreground hover:border-primary hover:text-primary inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm font-medium transition-colors"
-                >
-                  {category}
-                  <span class="text-muted-foreground bg-muted rounded-full px-1.5 py-0.5 text-xs">
-                    {count}
-                  </span>
-                </a>
-              )
-            })
-          }
-        </div>
-
-        <div class="border-t border-border pt-4">
-          <p class="text-muted-foreground text-center text-xs">
-            {sortedCategories.length} categories across {notes.length} posts
-          </p>
-        </div>
-      </div>
-    </Section>
+  <ul>
+    {sortedCategories.map(([category, count]) => {
+      const slug = slugger.slug(category)
+      return (
+        <li class="flex items-baseline justify-between gap-3 py-1 px-0.5">
+          <a href={`/categories/${slug}`} class="text-foreground truncate flex-1 no-underline">
+            {category}
+          </a>
+          <span class="text-muted-foreground shrink-0 font-mono text-xs">{count}</span>
+        </li>
+      )
+    })}
+  </ul>
 </BaseLayout>
