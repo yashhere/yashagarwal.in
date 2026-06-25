@@ -84,8 +84,8 @@ const typographyStyles = {
         color: "var(--heading)",
       },
       p: {
-        marginTop: "1em",
-        marginBottom: "1em",
+        marginTop: "1.25rem",
+        marginBottom: "1.25rem",
         lineHeight: "1.625rem", // 26px
       },
       "ul, ol": {
@@ -97,6 +97,10 @@ const typographyStyles = {
         marginTop: "0",
         marginBottom: "0",
         lineHeight: "1.625rem", // 26px
+        "& p": {
+          marginTop: "0",
+          marginBottom: "0",
+        },
       },
       blockquote: {
         fontFamily: "var(--font-serif)",
