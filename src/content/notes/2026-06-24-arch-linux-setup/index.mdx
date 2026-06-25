@@ -15,17 +15,15 @@ description: >-
   I let an AI coding agent install Arch Linux on an old HP laptop. It was faster than 2018, but not smooth. Here's what the agent got right, what it got wrong, and why I still needed to stay in control.
 ---
 
-In 2018 I wrote a [two](../2018-01-24-arch-linux-installation-guide-part-1/) [part](../2018-01-26-arch-linux-installation-guide-part-2/) guide on installing Arch Linux. It was a step by step command reference. Every step was manual. I read the wiki, typed the command, and fixed whatever broke.
+In 2018 I wrote a [two](../2018-01-24-arch-linux-installation-guide-part-1/) [part](../2018-01-26-arch-linux-installation-guide-part-2/) guide on installing Arch Linux. It was a step by step command reference. Every step I took then was manual. I read the wiki, typed the command, and fixed whatever broke. It taught me a lot about Arch Linux and Linux in general.
 
-I did it again this week, on the same old HP laptop that I wanted to turn into a headless home server. This time, I did not type most of the commands myself. An AI coding agent called pi did the installation. The experience was faster than 2018, but it was not smooth. The agent made mistakes. Some were harmless. Some were dangerous. And a few things I had to do myself because the agent simply could not.
+I did it again this week, on the same old HP laptop. This time, I wanted to turn this laptop into a headless home server. This time however, I did not type most of the commands myself. An AI coding agent called [Pi](https://pi.dev/) managed the installation for me. The experience was faster than 2018, but it was not smooth. The agent made quite a few mistakes. Some were harmless. Some were dangerous. And a few things I had to do myself because the agent simply could not.
 
-This post covers what happened. Not a polished success story. An honest account of what an AI agent got right, what it got wrong, and where I still needed to be in control.
+This post covers what happened – what the agent got right, what it got wrong, and where I still needed to be in control.
 
 ## The push to start
 
-The agent could not connect to the laptop over SSH at first. I had booted the Arch ISO from a USB drive. The agent tried to SSH in using my public key. That did not work because the live environment did not have my key yet. The agent then tried to install a tool called sshpass on my macOS machine through Homebrew. It did not ask me. I had to stop it and tell it to just use the interactive shell.
-
-I gave the agent the root password. It connected. From that point, it worked over SSH for the rest of the installation.
+I booted the laptop from the Arch ISO, set a root password on the live environment, and used `ssh-copy-id` to copy my SSH key over. From there, the agent connected over SSH and handled the entire installation remotely.
 
 ## Partitioning
 
