@@ -239,7 +239,10 @@
 
   a {
     color: var(--heading);
-    text-decoration: none;
+    text-decoration: underline;
+    text-decoration-color: var(--muted-foreground);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
   }
 
   a:hover {

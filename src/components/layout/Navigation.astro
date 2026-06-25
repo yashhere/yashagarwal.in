@@ -43,7 +43,7 @@ const isAnySecondaryActive = moreNavItems.some((item) => isActive(item.href))
             <a
               href={item.href}
               class:list={[
-                "block px-3 py-1 font-medium transition-colors",
+                "block px-3 py-1 font-medium transition-colors no-underline",
                 isActive(item.href) ? "text-foreground" : "text-muted-foreground hover:text-foreground",
               ]}
             >
@@ -85,7 +85,7 @@ const isAnySecondaryActive = moreNavItems.some((item) => isActive(item.href))
                     <a
                       href={item.href}
                       class:list={[
-                        "block px-2 py-1.5 text-sm transition-colors font-medium",
+                        "block px-2 py-1.5 text-sm transition-colors font-medium no-underline",
                         isActive(item.href)
                           ? "text-foreground"
                           : "text-muted-foreground hover:text-foreground",
