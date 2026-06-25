@@ -34,12 +34,19 @@ const footerLinks = [
       </nav>
 
       {/* Newsletter */}
+      <p class="text-muted-foreground text-sm text-center">Occasional updates on what I'm building and learning.</p>
       <form
         id="subscribe-form"
         action="https://newsletter.yashagarwal.in/api/public/subscription"
         method="POST"
         class="flex w-full max-w-xs gap-2"
       >
+        <input
+          type="text"
+          name="name"
+          placeholder="Name"
+          class="border-border bg-background text-foreground placeholder:text-muted-foreground/50 w-24 rounded border px-3 py-1.5 text-sm outline-none focus:border-foreground/30 transition-colors"
+        />
         <input
           type="email"
           name="email"
@@ -51,7 +58,7 @@ const footerLinks = [
         <input type="hidden" name="l" value="813bf4ef-c08e-4a70-8673-3f8a0fb9e345" />
         <button
           type="submit"
-          class="bg-foreground text-background hover:bg-foreground/80 rounded px-3 py-1.5 text-sm font-medium transition-colors"
+          class="bg-foreground text-background hover:bg-foreground/80 rounded px-3 py-1.5 text-sm font-medium transition-colors shrink-0"
         >
           Subscribe
         </button>
@@ -85,6 +92,7 @@ const footerLinks = [
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: new URLSearchParams({
+          name: (form.querySelector('[name=name]') as HTMLInputElement).value,
           email: (form.querySelector('[name=email]') as HTMLInputElement).value,
           l: (form.querySelector('[name=l]') as HTMLInputElement).value,
         }).toString(),
