@@ -3,31 +3,30 @@ interface Props {
   relatedSlugs?: string[];
 }
 
-import Heading from '../ui/Heading.astro';
 import NotePreview from './NotePreview.astro';
 import { getPreviewNotes } from '../../lib/content';
 
 const { relatedSlugs } = Astro.props;
 
-if (!relatedSlugs || relatedSlugs.length === 0) {
-  return;
-}
+if (!relatedSlugs || relatedSlugs.length === 0) return;
 
 const allNotes = await getPreviewNotes();
 const relatedNotes = allNotes.filter(note => relatedSlugs.includes(note.slug));
 
-if (relatedNotes.length === 0) {
-   return;
-}
+if (relatedNotes.length === 0) return;
 ---
 
-<div class="my-12">
-    <Heading level="h2" class="mb-6">Related Notes</Heading>
-    <ul class="space-y-2">
-        {relatedNotes.map((note) => (
-            <li>
-                <NotePreview note={note} />
-            </li>
-        ))}
+<div class="border-border rounded border p-2 text-sm my-6">
+  <span class="text-muted-foreground text-xs">Related</span>
+  <div class="border-border mt-2 border-t pt-2">
+    <ul>
+      {relatedNotes.map((note) => (
+        <li>
+          <a href={`/notes/${note.slug}`} class="text-foreground block py-0.5 text-xs no-underline hover:underline">
+            {note.data.title}
+          </a>
+        </li>
+      ))}
     </ul>
+  </div>
 </div>

@@ -13,33 +13,24 @@ interface Props {
 
 const { backlinks = [] } = Astro.props;
 
-// Don't render if no backlinks
 if (backlinks.length === 0) {
   return null;
 }
 ---
 
-<div class="border-border bg-background my-6 rounded-md border p-2.5 text-sm">
-  <div class="flex flex-col gap-2">
-    <div class="flex items-center gap-1.5">
-      <Icon name="lucide:waypoints" class="text-muted-foreground h-3 w-3" />
-      <span class="text-muted-foreground text-xs font-medium tracking-wider uppercase">
-        Backlinks ({backlinks.length})
-      </span>
-    </div>
-
-    <div class="border-border space-y-1.5 border-t pt-2">
-      {backlinks.map((link) => (
-        <div class="overflow-hidden text-ellipsis whitespace-nowrap">
-          <a
-            href={link.url}
-            class="text-muted-foreground hover:text-primary block text-xs transition-colors no-underline"
-          >
-            <span class="text-foreground font-medium">{link.type}</span>
-            <span class="ml-1">{link.title}</span>
-          </a>
-        </div>
-      ))}
-    </div>
+<div class="border-border rounded border p-2 text-sm my-6">
+  <div class="flex items-center gap-1.5 mb-2">
+    <Icon name="lucide:waypoints" class="text-muted-foreground h-3 w-3" />
+    <span class="text-muted-foreground text-xs">Backlinks</span>
+  </div>
+  <div class="border-border space-y-1 border-t pt-2">
+    {backlinks.map((link) => (
+      <a
+        href={link.url}
+        class="text-muted-foreground hover:text-foreground block text-xs transition-colors no-underline"
+      >
+        <span class="text-foreground">{link.title}</span>
+      </a>
+    ))}
   </div>
 </div>
