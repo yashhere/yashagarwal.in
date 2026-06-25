@@ -1,10 +1,11 @@
 import typography from "@tailwindcss/typography"
 import animate from "tailwindcss-animate"
 
-const headingStyles = {
+      const headingStyles = {
   fontFamily: "var(--font-serif)",
   fontWeight: 600,
   lineHeight: 1.2,
+  letterSpacing: "0.01em",
   marginTop: "2rem",
   marginBottom: "0.75rem",
   color: "var(--heading)",
@@ -131,7 +132,7 @@ const typographyStyles = {
         backgroundColor: "var(--syntax-bg)",
         borderRadius: "0.375rem",
         overflowX: "auto",
-        fontSize: "1rem",
+        fontSize: "0.875rem",
         padding: "0.75rem",
       },
       code: {
@@ -156,7 +157,7 @@ const typographyStyles = {
 
         // Line numbers and highlighting
         pre: {
-          fontSize: "1rem",
+          fontSize: "0.875rem",
           padding: "0.75rem 0",
         },
         "[data-line]": {
