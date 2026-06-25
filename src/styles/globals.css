@@ -259,23 +259,29 @@
   }
 
   /* Fix for https://github.com/disqus/disqus-react/issues/153 */
-  :root,
-  .comments {
+  .comments,
+  #comments-section {
     background-color: #ffffff !important;
     color: #262626 !important;
+    --heading: #1a1a1a;
+    --foreground: #262626;
+    --muted-foreground: #6b6b6b;
+    --primary: #1a1a1a;
+    --border: #e0e0e0;
+    --background: #ffffff;
+    --muted: #f5f5f5;
   }
 
-  .dark .comments {
+  .dark .comments,
+  .dark #comments-section {
     background-color: #030303 !important;
     color: #d9d9d9 !important;
-  }
-
-  /* Hex fallbacks for Disqus dark mode */
-  .dark .comments {
     --heading: #e5e5e5;
+    --foreground: #d9d9d9;
     --muted-foreground: #9a9a9a;
     --primary: #e5e5e5;
     --border: #333333;
+    --background: #030303;
     --muted: #2a2a2a;
   }
 
