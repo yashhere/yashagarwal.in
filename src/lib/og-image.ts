@@ -74,7 +74,7 @@ export async function generateOGImage(
                       props: {
                         style: {
                           fontSize: "22px",
-                          color: "#666666",
+                          color: "#999999",
                           marginBottom: "16px",
                         },
                         children: date,
@@ -87,7 +87,7 @@ export async function generateOGImage(
                     style: {
                       fontSize: titleFontSize,
                       fontWeight: 700,
-                      color: "#e5e5e5",
+                      color: "#1a1a1a",
                       marginBottom: description ? "20px" : "0",
                       lineHeight: 1.15,
                       letterSpacing: "-0.5px",
@@ -117,7 +117,7 @@ export async function generateOGImage(
             props: {
               style: {
                 fontSize: "22px",
-                color: "#666666",
+                color: "#999999",
               },
               children: "yashagarwal.in",
             },
