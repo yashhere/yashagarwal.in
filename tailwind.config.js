@@ -25,7 +25,7 @@ const typographyStyles = {
       lineHeight: "1.625rem", // 26px
       h1: {
         ...headingStyles,
-        fontSize: "1.625rem",
+        fontSize: "1.75rem",
         marginTop: "0",
         "& > a": {
           color: "inherit",
@@ -38,7 +38,7 @@ const typographyStyles = {
       },
       h2: {
         ...headingStyles,
-        fontSize: "1.375rem",
+        fontSize: "1.5rem",
         "& > a": {
           color: "inherit",
           fontWeight: "inherit",
@@ -50,7 +50,7 @@ const typographyStyles = {
       },
       h3: {
         ...headingStyles,
-        fontSize: "1.125rem",
+        fontSize: "1.25rem",
         "& > a": {
           color: "inherit",
           fontWeight: "inherit",
