@@ -6,21 +6,15 @@ import { format } from 'date-fns';
 import Breadcrumbs from '../components/content/Breadcrumbs.astro';
 import Heading from '../components/ui/Heading.astro';
 import Image from '../components/ui/Image.astro';
-import DecorativeHr from '../components/ui/DecorativeHr.astro';
 import TagList from '../components/content/TagList.astro';
 import Series from '../components/content/Series.astro';
 import RelatedNotes from '../components/content/RelatedNotes.astro';
 import Backlinks from '../components/content/Backlinks.astro';
-import MobileTOC from '../components/content/MobileTOC.astro';
-import MobileActions from '../components/content/MobileActions.astro';
 import Comments from '../components/interactive/Comments.astro';
 import ReadingProgress from '../components/content/ReadingProgress.astro';
-import ViewCount from '../components/content/ViewCount.astro';
 import LikeButton from '../components/content/LikeButton.astro';
 import { Icon } from 'astro-icon/components';
 import type { ImageMetadata } from 'astro';
-
-import GithubSlugger from 'github-slugger';
 
 interface Props {
   title: string;
@@ -64,260 +58,82 @@ const {
 } = Astro.props;
 
 const breadcrumbItems = [
-    { label: "Home", href: "/" },
-    { label: "Notes", href: "/notes" },
+  { label: "Home", href: "/" },
+  { label: "Notes", href: "/notes" },
+  ...(category ? [{ label: category, href: `/categories/${category.toLowerCase().replace(/\s+/g, "-")}` }] : []),
+  { label: title },
 ];
 
-if (category) {
-    const slugger = new GithubSlugger();
-    const categorySlug = slugger.slug(category);
-    breadcrumbItems.push({ label: category, href: `/categories/${categorySlug}` });
-}
-
-breadcrumbItems.push({ label: title, href: '#' });
-
-
-// Encode URL for sharing
 const encodedUrl = encodeURIComponent(`https://yashagarwal.in/notes/${slug}`);
-
 ---
 
 <BaseLayout
     title={title}
     description={description}
     image={image}
-    mainClass="mx-auto grid w-full max-w-screen-2xl grid-cols-1 gap-0 py-4 xl:grid-cols-[16rem_minmax(0,48rem)_16rem] xl:justify-center"
+    mainClass="mx-auto w-full max-w-3xl pb-12 px-4 md:px-6"
 >
   <ReadingProgress targetId="article-body" class="absolute" />
-    {/* Left Column: Sticky TOC (Desktop) */}
-    <aside
-      class="hidden w-56 shrink-0 pl-4 xl:block xl:w-64 xl:pl-6"
-      style="contain: layout style paint;"
-    >
-      <div class="sticky top-24 pb-8">
-          {headings && headings.length > 0 && (
-             <div class="mb-6" x-data="{ open: false }">
-                 <button
-                   @click="open = !open"
-                   class="flex w-full items-center justify-between text-muted-foreground hover:text-foreground text-sm font-medium tracking-wider uppercase transition-colors cursor-pointer bg-transparent border-0 p-0"
-                 >
-                   <span>On this Page</span>
-                   <Icon name="lucide:chevron-down" class="h-4 w-4 transition-transform duration-200" x-bind:class="open ? 'rotate-180' : ''" />
-                 </button>
-                 <div
-                   x-show="open"
-                   x-collapse
-                   class="mt-4 max-h-[calc(100vh-16rem)] overflow-y-auto"
-                 >
-                   <ul class="space-y-1 text-sm flex flex-col" id="toc-list">
-                      {headings.map((heading) => (
-                          <li style={`padding-left: ${0.75 + (heading.depth - 2) * 1}rem`}>
-                              <a
-                                  href={`#${heading.slug}`}
-                                  data-toc-link={heading.slug}
-                                  class="toc-link relative block py-0.5 transition-colors duration-200 text-muted-foreground font-normal hover:text-primary"
-                              >
-                                  {heading.text}
-                              </a>
-                          </li>
-                      ))}
-                   </ul>
-                 </div>
-                 <script is:inline>
-                    function initTOC() {
-                        const linkSelector = '[data-toc-link]';
-                        const headingSelector = '#article-body h1, #article-body h2, #article-body h3, #article-body h4, #article-body h5, #article-body h6';
 
-                        let activeId = null;
-
-                        // Use IntersectionObserver with rootMargin to only highlight headings in top 20% of viewport
-                        // This matches the Next.js implementation behavior
-                        const observer = new IntersectionObserver(
-                            (entries) => {
-                                entries.forEach((entry) => {
-                                    if (entry.isIntersecting) {
-                                        activeId = entry.target.id;
-                                    }
-                                });
-
-                                // Update all links based on activeId
-                                const links = document.querySelectorAll(linkSelector);
-                                links.forEach(link => {
-                                    if (link.getAttribute('data-toc-link') === activeId) {
-                                        link.classList.remove('text-muted-foreground', 'font-normal');
-                                        link.classList.add('text-foreground', 'font-semibold');
-                                    } else {
-                                        link.classList.remove('text-foreground', 'font-semibold');
-                                        link.classList.add('text-muted-foreground', 'font-normal');
-                                    }
-                                });
-                            },
-                            // rootMargin "0% 0% -80% 0%" means:
-                            // Only headings in the top 20% of viewport are considered "intersecting"
-                            // Bottom 80% is excluded via -80% bottom margin
-                            { rootMargin: '0% 0% -80% 0%' }
-                        );
-
-                        const headings = document.querySelectorAll(headingSelector);
-
-                        // On initial page load, if nothing is intersecting yet, highlight the first heading
-                        if (headings.length > 0 && !activeId) {
-                            activeId = headings[0].id;
-                            const links = document.querySelectorAll(linkSelector);
-                            links.forEach(link => {
-                                if (link.getAttribute('data-toc-link') === activeId) {
-                                    link.classList.remove('text-muted-foreground', 'font-normal');
-                                    link.classList.add('text-foreground', 'font-semibold');
-                                }
-                            });
-                        }
-
-                        headings.forEach(heading => {
-                            observer.observe(heading);
-                        });
-                    }
-
-                    // Initialize when page is ready
-                    if (document.readyState === 'loading') {
-                        document.addEventListener('DOMContentLoaded', initTOC);
-                    } else {
-                        // DOM is already loaded
-                        initTOC();
-                    }
-                 </script>
-             </div>
-          )}
-
-          <div class={`pt-4 flex items-center justify-between gap-3 ${headings && headings.length > 0 ? 'border-t border-border' : ''}`}>
-            <LikeButton slug={slug} />
-            <button onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" class="text-muted-foreground hover:text-foreground flex items-center gap-2 text-sm font-medium transition-colors cursor-pointer bg-transparent border-0 p-0">
-              <span class="uppercase">Top</span>
-              <Icon name="lucide:corner-right-up" class="h-3.5 w-3.5" />
-            </button>
-          </div>
-
-          <div class="mt-6">
-                  &larr; Back to Notes
-              </a>
-          </div>
-      </div>
-    </aside>
-
-    {/* Middle Column: Main Content */}
-    <div class="mx-auto flex w-full max-w-3xl min-w-0 flex-col pb-12 px-4 md:px-6">
-      <section class="mb-6 space-y-2">
-        <Breadcrumbs items={breadcrumbItems} />
-        <Heading level="h1" data-pagefind-meta="title">{title}</Heading>
-        <div class="text-foreground/60 flex flex-col gap-1 text-sm sm:flex-row sm:items-center sm:gap-2">
-          <span class="flex items-center gap-1">
-            <Icon name="lucide:calendar" class="h-3.5 w-3.5" />
-            Published on{' '}
-            {format(createdOn, "MMM dd, yyyy")}
-          </span>
-          {updatedOn && (
-            <>
-              <span class="hidden sm:inline">•</span>
-              <span class="flex items-center gap-1">
-                <Icon name="lucide:refresh-cw" class="h-3.5 w-3.5" />
-                Last updated on{' '}
-                {format(updatedOn, "MMM dd, yyyy")}
-              </span>
-            </>
-          )}
-           {readingTime && (
-            <>
-               <span class="hidden sm:inline">•</span>
-               <span class="flex items-center gap-1">
-                    <Icon name="lucide:clock" class="h-3.5 w-3.5" />
-                    {readingTime}
-               </span>
-            </>
-           )}
-           <span class="hidden sm:inline">•</span>
-           <ViewCount slug={slug} />
-        </div>
-
-        <div class="flex items-center gap-3 text-sm mt-3 pt-3 border-t border-border/40">
-
-        </div>
-      </section>
-
-      {headerImage && (
-        <Image
-          src={headerImage}
-          width={1200}
-          height={630}
-          alt={title}
-          class="mb-8 w-full"
-          imageClass="rounded-none object-cover"
-          showSkeleton={true}
-          expandable={false}
-        />
-      )}
-
-      <div class="xl:hidden">
-        <MobileTOC headings={headings ?? []} renderTrigger={false} />
-        <MobileActions postSlug={slug} />
-      </div>
-
-      {series && (
-          <div class="mb-6">
-              <Series series={series} currentSlug={slug} />
-          </div>
-      )}
-
-      <div class="mb-6">
-        <div id="article-body" class="relative prose max-w-none" data-pagefind-body>
-          <slot />
-        </div>
-      </div>
-
-      <DecorativeHr />
-
-      <Backlinks backlinks={backlinks} />
-
-      <RelatedNotes relatedSlugs={related} />
-
-      {tags && tags.length > 0 && (
-        <TagList tags={tags} />
-      )}
-
-      <DecorativeHr />
-
-      <div class="my-6 flex flex-row items-center justify-between space-x-2">
-         <a
-           href={`https://x.com/intent/tweet?text=${encodedUrl}%20via%20%40its_yash_btw`}
-           target="_blank"
-           rel="noopener noreferrer"
-           class="text-base"
-         >
-           <div class="border-border/80 text-foreground/80 hover:text-foreground hover:border-border flex flex-row items-center gap-1 rounded-full border px-4 py-1 text-base">
-             <Icon name="simple-icons:x" class="mr-1 h-4 w-4" />
-             Share
-           </div>
-         </a>
-
-         {/* Go To Top Placeholder */}
-         <button
-            onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
-            class="p-2 text-muted-foreground hover:text-foreground transition-colors"
-            aria-label="Back to top"
-         >
-             &uarr; Top
-         </button>
-      </div>
-
-      <DecorativeHr />
-
-      <div class="mt-6">
-          <Comments url={`https://yashagarwal.in/notes/${slug}`} slug={slug} />
-      </div>
-
+  {/* Header */}
+  <section class="mb-6">
+    <Breadcrumbs items={breadcrumbItems} />
+    <Heading level="h1" data-pagefind-meta="title">{title}</Heading>
+    <div class="text-muted-foreground flex flex-wrap items-center gap-x-3 gap-y-1 mt-2 text-sm">
+      <span>{format(createdOn, "MMM dd, yyyy")}</span>
+      {updatedOn && <span>&middot; Updated {format(updatedOn, "MMM dd, yyyy")}</span>}
+      {readingTime && <span>&middot; {readingTime}</span>}
     </div>
+  </section>
 
-     {/* Right Column: Empty placeholder */}
-    <aside
-      class="hidden w-56 shrink-0 pr-4 xl:block xl:w-64 xl:pr-6"
-      style="contain: layout style paint;"
+  {headerImage && (
+    <Image
+      src={headerImage}
+      width={1200}
+      height={630}
+      alt={title}
+      class="mb-6 w-full"
+      imageClass="rounded-none object-cover"
+      showSkeleton={true}
+      expandable={false}
     />
+  )}
+
+  {series && (
+    <div class="mb-6">
+      <Series series={series} currentSlug={slug} />
+    </div>
+  )}
+
+  {/* Article body */}
+  <div id="article-body" class="prose max-w-none" data-pagefind-body>
+    <slot />
+  </div>
+
+  {backlinks && backlinks.length > 0 && (
+    <div class="mt-8">
+      <Backlinks backlinks={backlinks} />
+    </div>
+  )}
+
+  {related && related.length > 0 && (
+    <RelatedNotes relatedSlugs={related} />
+  )}
+
+  {tags && tags.length > 0 && (
+    <div class="mt-6">
+      <TagList tags={tags} />
+    </div>
+  )}
+
+  <div class="mt-8 flex items-center justify-between">
+    <LikeButton slug={slug} />
+    <a href="/notes" class="text-muted-foreground hover:text-foreground text-sm transition-colors no-underline">
+      &larr; Back to Notes
+    </a>
+  </div>
+
+  <div class="mt-8">
+    <Comments url={`https://yashagarwal.in/notes/${slug}`} slug={slug} />
+  </div>
 </BaseLayout>
