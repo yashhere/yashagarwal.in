@@ -3,7 +3,6 @@ import AnalogClock from '../../components/ui/AnalogClock.astro';
 import SocialLinks from '../../components/content/SocialLinks.astro';
 
 const currentYear = new Date().getFullYear();
-const copyrightYear = currentYear === 2016 ? currentYear : `2016 - ${currentYear}`;
 
 const { pathname } = Astro.url;
 const pathSegments = pathname.split("/").filter(Boolean);
@@ -81,7 +80,7 @@ const footerLinks = [
       {/* Bottom row: clock + copyright */}
       <div class="flex items-center justify-between w-full">
         <p class="text-muted-foreground text-sm">
-          &copy; {copyrightYear} Yash Agarwal
+          &copy; {currentYear} Yash Agarwal
         </p>
         <AnalogClock />
       </div>
