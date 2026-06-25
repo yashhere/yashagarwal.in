@@ -261,8 +261,8 @@
   /* Fix for https://github.com/disqus/disqus-react/issues/153 */
   :root,
   .comments {
-    background-color: #ffffff !important;
-    color: #1a1a1a !important;
+    background-color: var(--background) !important;
+    color: var(--foreground) !important;
   }
 
   /* Hex fallbacks for Disqus (can't parse OKLCH) */
@@ -279,8 +279,8 @@
   /* Dark mode comments - using hex values */
   :root,
   .dark .comments {
-    background-color: #1a1a1a !important;
-    color: #e5e5e5 !important;
+    background-color: var(--background) !important;
+    color: var(--foreground) !important;
   }
 
   /* Hex fallbacks for Disqus dark mode */
