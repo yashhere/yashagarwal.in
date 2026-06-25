@@ -62,77 +62,135 @@ const breadcrumbItems = [
   ...(category ? [{ label: category, href: `/categories/${category.toLowerCase().replace(/\s+/g, "-")}` }] : []),
   { label: title },
 ];
-
-const encodedUrl = encodeURIComponent(`https://yashagarwal.in/notes/${slug}`);
 ---
 
 <BaseLayout
     title={title}
     description={description}
     image={image}
-    mainClass="mx-auto w-full max-w-3xl pb-12 px-4 md:px-6"
+    mainClass="mx-auto grid w-full max-w-screen-2xl grid-cols-1 gap-0 py-4 xl:grid-cols-[14rem_minmax(0,42rem)_14rem] xl:justify-center"
 >
   <ReadingProgress targetId="article-body" class="absolute" />
 
-  {/* Header */}
-  <section class="mb-6">
-    <Breadcrumbs items={breadcrumbItems} />
-    <Heading level="h1" data-pagefind-meta="title">{title}</Heading>
-    <div class="text-muted-foreground flex flex-wrap items-center gap-x-3 gap-y-1 mt-2 text-sm">
-      <span>{format(createdOn, "MMM dd, yyyy")}</span>
-      {updatedOn && <span>&middot; Updated {format(updatedOn, "MMM dd, yyyy")}</span>}
-      {readingTime && <span>&middot; {readingTime}</span>}
+  {/* Left: TOC */}
+  <aside class="hidden xl:block">
+    <div class="sticky top-20">
+      {headings && headings.length > 0 && (
+        <nav>
+          <p class="text-muted-foreground text-xs font-medium tracking-wider uppercase mb-3">On this page</p>
+          <ul class="space-y-1 text-sm" id="toc-list">
+            {headings.map((heading) => (
+              <li style={`padding-left: ${(heading.depth - 2) * 0.75}rem`}>
+                <a
+                  href={`#${heading.slug}`}
+                  data-toc-link={heading.slug}
+                  class="toc-link block py-0.5 text-muted-foreground hover:text-foreground transition-colors no-underline"
+                >
+                  {heading.text}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )}
+
+      <div class="mt-6">
+        <a href="/notes" class="text-muted-foreground hover:text-foreground text-sm transition-colors no-underline">
+          &larr; Notes
+        </a>
+      </div>
     </div>
-  </section>
+  </aside>
 
-  {headerImage && (
-    <Image
-      src={headerImage}
-      width={1200}
-      height={630}
-      alt={title}
-      class="mb-6 w-full"
-      imageClass="rounded-none object-cover"
-      showSkeleton={true}
-      expandable={false}
-    />
-  )}
+  {/* Center: Content */}
+  <div class="mx-auto w-full max-w-3xl min-w-0 px-4 md:px-6">
+    <section class="mb-6">
+      <Breadcrumbs items={breadcrumbItems} />
+      <Heading level="h1" data-pagefind-meta="title">{title}</Heading>
+      <div class="text-muted-foreground flex flex-wrap items-center gap-x-3 gap-y-1 mt-2 text-sm">
+        <span>{format(createdOn, "MMM dd, yyyy")}</span>
+        {updatedOn && <span>&middot; Updated {format(updatedOn, "MMM dd, yyyy")}</span>}
+        {readingTime && <span>&middot; {readingTime}</span>}
+      </div>
+    </section>
 
-  {series && (
-    <div class="mb-6">
-      <Series series={series} currentSlug={slug} />
+    {headerImage && (
+      <Image
+        src={headerImage}
+        width={1200}
+        height={630}
+        alt={title}
+        class="mb-6 w-full"
+        imageClass="rounded-none object-cover"
+        showSkeleton={true}
+        expandable={false}
+      />
+    )}
+
+    {series && (
+      <div class="mb-6">
+        <Series series={series} currentSlug={slug} />
+      </div>
+    )}
+
+    <div id="article-body" class="prose max-w-none" data-pagefind-body>
+      <slot />
     </div>
-  )}
 
-  {/* Article body */}
-  <div id="article-body" class="prose max-w-none" data-pagefind-body>
-    <slot />
-  </div>
+    {backlinks && backlinks.length > 0 && (
+      <div class="mt-8">
+        <Backlinks backlinks={backlinks} />
+      </div>
+    )}
 
-  {backlinks && backlinks.length > 0 && (
+    {related && related.length > 0 && (
+      <RelatedNotes relatedSlugs={related} />
+    )}
+
+    {tags && tags.length > 0 && (
+      <div class="mt-6">
+        <TagList tags={tags} />
+      </div>
+    )}
+
+    <div class="mt-8 flex items-center justify-between">
+      <LikeButton slug={slug} />
+      <a href="/notes" class="text-muted-foreground hover:text-foreground text-sm transition-colors no-underline xl:hidden">
+        &larr; Notes
+      </a>
+    </div>
+
     <div class="mt-8">
-      <Backlinks backlinks={backlinks} />
+      <Comments url={`https://yashagarwal.in/notes/${slug}`} slug={slug} />
     </div>
-  )}
-
-  {related && related.length > 0 && (
-    <RelatedNotes relatedSlugs={related} />
-  )}
-
-  {tags && tags.length > 0 && (
-    <div class="mt-6">
-      <TagList tags={tags} />
-    </div>
-  )}
-
-  <div class="mt-8 flex items-center justify-between">
-    <LikeButton slug={slug} />
-    <a href="/notes" class="text-muted-foreground hover:text-foreground text-sm transition-colors no-underline">
-      &larr; Back to Notes
-    </a>
   </div>
 
-  <div class="mt-8">
-    <Comments url={`https://yashagarwal.in/notes/${slug}`} slug={slug} />
-  </div>
+  {/* Right: placeholder */}
+  <aside class="hidden xl:block" />
 </BaseLayout>
+
+<script is:inline>
+  (function() {
+    const links = document.querySelectorAll('[data-toc-link]');
+    if (!links.length) return;
+
+    let activeId: string | null = null;
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) activeId = entry.target.id;
+      });
+      links.forEach((link) => {
+        const el = link as HTMLElement;
+        if (el.getAttribute('data-toc-link') === activeId) {
+          el.classList.add('text-foreground');
+          el.classList.remove('text-muted-foreground');
+        } else {
+          el.classList.add('text-muted-foreground');
+          el.classList.remove('text-foreground');
+        }
+      });
+    }, { rootMargin: '0% 0% -80% 0%' });
+
+    document.querySelectorAll('#article-body h2, #article-body h3').forEach((h) => observer.observe(h));
+  })();
+</script>
