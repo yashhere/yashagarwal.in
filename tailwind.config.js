@@ -84,8 +84,8 @@ const typographyStyles = {
         color: "var(--heading)",
       },
       p: {
-        marginTop: "1.25rem",
-        marginBottom: "1.25rem",
+        marginTop: "1em",
+        marginBottom: "1em",
         lineHeight: "1.625rem", // 26px
       },
       "ul, ol": {
