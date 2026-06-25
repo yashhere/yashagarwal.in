@@ -33,31 +33,23 @@ const formattedDate = format(note.data.createdOn, 'MM/yy');
     </a>
   </div>
 ) : (
-  <div class="flex">
+  <li>
     <a
       href={`/notes/${note.slug}`}
-      class="hover:bg-accent flex w-full flex-col items-start gap-0 rounded-lg px-4 py-2 transition-all duration-200 select-none md:flex-row md:items-center md:gap-2"
+      class="flex items-baseline justify-between gap-3 rounded-sm py-1 px-0.5"
     >
-      <div class="flex flex-col">
-        <span
-          class="text-foreground hover:text-primary font-sans text-base transition-colors"
-          data-note-title
-          data-note-description={note.data.description || ''}
-          data-note-tags={note.data.tags?.join(' ') || ''}
-          data-note-category={note.data.category || ''}
-        >
-          {note.data.title}
-        </span>
-      </div>
-
       <span
-        class="border-foreground/30 mx-2 h-px flex-1 border-t border-dotted bg-transparent"
-        aria-hidden="true"
-      />
-
-      <span class="text-foreground/70 font-mono text-sm">
+        class="text-foreground truncate"
+        data-note-title
+        data-note-description={note.data.description || ''}
+        data-note-tags={note.data.tags?.join(' ') || ''}
+        data-note-category={note.data.category || ''}
+      >
+        {note.data.title}
+      </span>
+      <span class="text-muted-foreground shrink-0 font-mono text-xs">
         {formattedDate}
       </span>
     </a>
-  </div>
+  </li>
 )}

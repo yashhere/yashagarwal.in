@@ -17,36 +17,22 @@ const breadcrumbItems = [{ label: "Home", href: "/" }, { label: "Notes" }]
 >
 
     <Section title="Notes" count={notes.length}>
-      <Breadcrumbs items={breadcrumbItems} class="mb-6" />
+      <Breadcrumbs items={breadcrumbItems} class="mb-4" />
 
-      <div class="flex flex-col space-y-2">
-        <div class="flex flex-col pb-4">
-          <SearchInput />
-        </div>
+      <div class="pb-3">
+        <SearchInput />
+      </div>
 
-        <section>
-          <ul class="-mx-4" id="notes-list">
-            {
-              notes.map((note) => (
-                <li>
-                  <NotePreview note={note} />
-                </li>
-              ))
-            }
-          </ul>
-
-          <div id="no-results" class="hidden text-center py-12 text-muted-foreground">
-            No notes found matching your search.
-          </div>
-        </section>
-
+      <ul class="-mx-0.5" id="notes-list">
         {
-          notes.length > 0 && (
-            <div class="text-muted-foreground pt-2 text-center text-sm" data-bottom-count>
-              Showing {notes.length} notes
-            </div>
-          )
+          notes.map((note) => (
+            <NotePreview note={note} />
+          ))
         }
+      </ul>
+
+      <div id="no-results" class="hidden py-8 text-center text-muted-foreground text-sm">
+        No notes found matching your search.
       </div>
     </Section>
 </BaseLayout>
@@ -79,10 +65,8 @@ const breadcrumbItems = [{ label: "Home", href: "/" }, { label: "Notes" }]
         if (noResults) noResults.classList.add("hidden")
 
         const countElement = document.querySelector('[data-count]')
-        const bottomCount = document.querySelector('[data-bottom-count]')
         const totalCount = listItems.length
         if (countElement) countElement.textContent = totalCount.toString()
-        if (bottomCount) bottomCount.textContent = `Showing ${totalCount} note${totalCount !== 1 ? 's' : ''}`
         return
       }
 
@@ -113,9 +97,7 @@ const breadcrumbItems = [{ label: "Home", href: "/" }, { label: "Notes" }]
         if (noResults) noResults.classList.toggle("hidden", visibleCount > 0)
 
         const countElement = document.querySelector('[data-count]')
-        const bottomCount = document.querySelector('[data-bottom-count]')
         if (countElement) countElement.textContent = visibleCount.toString()
-        if (bottomCount) bottomCount.textContent = `Showing ${visibleCount} note${visibleCount !== 1 ? 's' : ''}`
       } catch (error) {
         console.error('Pagefind search error:', error)
       }
