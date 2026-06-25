@@ -177,7 +177,10 @@ const breadcrumbItems = [
         const el = link as HTMLElement;
         const match = el.getAttribute('data-toc-link') === activeId;
         el.classList.toggle('text-foreground', match);
+        el.classList.toggle('font-semibold', match);
+        el.classList.toggle('underline', match);
         el.classList.toggle('text-muted-foreground', !match);
+        el.classList.toggle('no-underline', !match);
       });
     }, { rootMargin: '0% 0% -80% 0%' });
 
