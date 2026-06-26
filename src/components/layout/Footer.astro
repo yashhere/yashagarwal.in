@@ -13,10 +13,19 @@ const isActive = (href: string) => {
   return highlightedPath === href;
 };
 
-const footerLinks = [
+const primaryLinks = [
   { name: "Home", href: "/" },
   { name: "Notes", href: "/notes" },
   { name: "Work", href: "/work" },
+  { name: "Now", href: "/now" },
+  { name: "About", href: "/about" },
+  { name: "Uses", href: "/uses" },
+]
+
+const secondaryLinks = [
+  { name: "Books", href: "/books" },
+  { name: "Colophon", href: "/colophon" },
+  { name: "Newsletter", href: "/newsletter" },
   { name: "Tags", href: "/tags" },
   { name: "Categories", href: "/categories" },
 ]
@@ -30,15 +39,27 @@ const footerLinks = [
       <SocialLinks />
 
       {/* Nav Links */}
-      <nav class="flex flex-wrap gap-x-4 gap-y-1">
-        {footerLinks.map((link) => (
-          <a
-            href={link.href}
-            class={`transition-colors no-underline ${isActive(link.href) ? "text-foreground" : "text-muted-foreground hover:text-foreground"}`}
-          >
-            {link.name}
-          </a>
-        ))}
+      <nav class="flex flex-col gap-y-1">
+        <div class="flex flex-wrap gap-x-4 gap-y-1">
+          {primaryLinks.map((link) => (
+            <a
+              href={link.href}
+              class={`transition-colors no-underline ${isActive(link.href) ? "text-foreground" : "text-muted-foreground hover:text-foreground"}`}
+            >
+              {link.name}
+            </a>
+          ))}
+        </div>
+        <div class="flex flex-wrap gap-x-4 gap-y-1">
+          {secondaryLinks.map((link) => (
+            <a
+              href={link.href}
+              class={`transition-colors no-underline ${isActive(link.href) ? "text-foreground" : "text-muted-foreground hover:text-foreground"}`}
+            >
+              {link.name}
+            </a>
+          ))}
+        </div>
       </nav>
 
       {/* Newsletter */}

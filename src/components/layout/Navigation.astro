@@ -8,7 +8,14 @@ const primaryNavItems = [
   { name: "Work", href: "/work" },
 ]
 
-const moreNavItems: { name: string; href: string }[] = []
+const moreNavItems: { name: string; href: string }[] = [
+  { name: "Now", href: "/now" },
+  { name: "About", href: "/about" },
+  { name: "Uses", href: "/uses" },
+  { name: "Books", href: "/books" },
+  { name: "Colophon", href: "/colophon" },
+  { name: "Newsletter", href: "/newsletter" },
+]
 const { pathname } = Astro.url
 const pathSegments = pathname.split("/").filter(Boolean)
 const highlightedPath = pathSegments.length <= 1 ? pathname : `/${pathSegments[0]}`

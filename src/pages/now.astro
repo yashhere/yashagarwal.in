@@ -1,0 +1,68 @@
+---
+import Heading from "../components/ui/Heading.astro"
+import BaseLayout from "../layouts/BaseLayout.astro"
+
+// Update this date when you refresh the page content
+const lastUpdated = "June 2026"
+---
+
+<BaseLayout
+  title="Now"
+  description="What Yash is focused on right now."
+>
+  <Heading level="h2" as="h1" class="mt-6 mb-2">Now</Heading>
+  <p class="text-muted-foreground text-sm mb-6">Last updated: {lastUpdated}</p>
+
+  <div class="space-y-6">
+    <p class="text-muted-foreground text-sm italic">
+      This is a <a href="https://nownownow.com/about" target="_blank" rel="noopener noreferrer">now page</a>.
+      It tells you what I'm focused on at this point in my life.
+    </p>
+
+    <div>
+      <Heading level="h3" as="h2" class="mb-3">Building</Heading>
+      <ul class="space-y-2 list-disc pl-4">
+        <li>
+          <strong>Mum's Memories</strong> — a minimal baby journaling app.
+          Building it for my own use and polishing it for a wider release.
+        </li>
+        <li>
+          <strong>This website</strong> — adding new sections, refining the
+          design, and writing more notes. A personal site is never finished.
+        </li>
+      </ul>
+    </div>
+
+    <div>
+      <Heading level="h3" as="h2" class="mb-3">Working on</Heading>
+      <ul class="space-y-2 list-disc pl-4">
+        <li>
+          Leading technical initiatives for the CASB API product at Netskope.
+        </li>
+        <li>
+          Designing scalable systems that handle API rate limits and large
+          data volumes without breaking.
+        </li>
+      </ul>
+    </div>
+
+    <div>
+      <Heading level="h3" as="h2" class="mb-3">Learning</Heading>
+      <ul class="space-y-2 list-disc pl-4">
+        <li>
+          Deepening my understanding of distributed systems and queueing theory.
+        </li>
+        <li>
+          Exploring how to build and ship mobile apps with a small team (or solo).
+        </li>
+      </ul>
+    </div>
+
+    <div>
+      <Heading level="h3" as="h2" class="mb-3">Reading</Heading>
+      <p>
+        I track my reading on the <a href="/books">books page</a>.
+      </p>
+    </div>
+  </div>
+</BaseLayout>
