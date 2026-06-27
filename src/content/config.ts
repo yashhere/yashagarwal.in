@@ -22,6 +22,16 @@ const notes = defineCollection({
   }),
 })
 
+const rawNotes = defineCollection({
+  type: "content",
+  schema: z.object({
+    title: z.string(),
+    createdOn: z.coerce.date(),
+    status: z.enum(["draft", "published"]).default("draft"),
+  }),
+})
+
 export const collections = {
   notes,
+  scratch_notes: rawNotes,
 }

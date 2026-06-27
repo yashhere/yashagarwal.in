@@ -1,0 +1,135 @@
+---
+import { Icon } from "astro-icon/components"
+import Heading from "../../components/ui/Heading.astro"
+import BaseLayout from "../../layouts/BaseLayout.astro"
+import { getPublishedRawNotes } from "../../lib/scratch-content"
+
+const notes = await getPublishedRawNotes()
+
+function formatDate(d: Date): string {
+  return d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })
+}
+---
+
+<BaseLayout
+  title="Scratch"
+  description="Quick notes, often AI-assisted. Work in progress."
+>
+  <Heading level="h2" as="h1" class="mt-6 mb-2">
+    Scratch
+    <span class="text-muted-foreground text-base font-normal ml-2" data-count>{notes.length}</span>
+  </Heading>
+
+  <p class="text-muted-foreground mb-4">
+    Quick notes about things I figured out. Often written with AI assistance.
+    These are not polished posts. Treat them as work in progress.
+  </p>
+
+  <div class="pb-3">
+    <div class="relative">
+      <Icon name="lucide:search" class="absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground pointer-events-none" />
+      <input
+        type="text"
+        id="search-input"
+        placeholder="Search scratch notes..."
+        class="h-8 w-full rounded border border-foreground/15 bg-background pl-8 pr-3 text-sm outline-none focus:border-foreground/30 transition-colors"
+      />
+    </div>
+  </div>
+
+  {
+    notes.length === 0 && (
+      <p class="text-muted-foreground">No scratch notes yet.</p>
+    )
+  }
+
+  <ul id="notes-list" class="space-y-4">
+    {notes.map((note, i) => (
+      <li class="flex items-baseline gap-3 py-1 px-0.5">
+        <span class="text-muted-foreground shrink-0 tabular-nums text-xs w-5 text-right">
+          {notes.length - i}
+        </span>
+        <a
+          href={`/scratch/${note.slug}`}
+          class="text-foreground min-w-0 flex-1 no-underline hover:underline"
+          data-note-title
+        >
+          {note.data.title}
+        </a>
+        <span class="text-muted-foreground shrink-0 text-xs">
+          {formatDate(note.data.createdOn)}
+        </span>
+      </li>
+    ))}
+  </ul>
+
+  <div id="no-results" class="hidden py-8 text-center text-muted-foreground">
+    No scratch notes found matching your search.
+  </div>
+</BaseLayout>
+
+<script is:inline>
+  window.addEventListener('DOMContentLoaded', async () => {
+    const searchInput = document.getElementById("search-input")
+    const notesList = document.getElementById("notes-list")
+    const noResults = document.getElementById("no-results")
+
+    if (!searchInput || !notesList) return
+
+    let pagefind
+    try {
+      pagefind = await import("/pagefind/pagefind.js")
+      await pagefind.init()
+    } catch (error) {
+      console.error('Failed to load Pagefind:', error)
+      return
+    }
+
+    const listItems = notesList.querySelectorAll("li")
+
+    searchInput.addEventListener("input", async (e) => {
+      const term = e.target.value.trim()
+
+      if (term === "") {
+        listItems.forEach((li) => { li.style.display = "" })
+        if (noResults) noResults.classList.add("hidden")
+
+        const countElement = document.querySelector('[data-count]')
+        if (countElement) countElement.textContent = listItems.length.toString()
+        return
+      }
+
+      try {
+        const search = await pagefind.search(term)
+        const results = await Promise.all(search.results.map(r => r.data()))
+
+        const resultUrls = new Set(
+          results.map((result) => {
+            return result.url.replace(/\/index\.html$/, '').replace(/\/$/, '')
+          })
+        )
+
+        let visibleCount = 0
+        listItems.forEach((li) => {
+          const link = li.querySelector("a")
+          const url = link?.getAttribute("href") || ""
+          const normalizedUrl = url.replace(/\/index\.html$/, '').replace(/\/$/, '')
+
+          if (resultUrls.has(normalizedUrl)) {
+            li.style.display = ""
+            visibleCount++
+          } else {
+            li.style.display = "none"
+          }
+        })
+
+        if (noResults) noResults.classList.toggle("hidden", visibleCount > 0)
+
+        const countElement = document.querySelector('[data-count]')
+        if (countElement) countElement.textContent = visibleCount.toString()
+      } catch (error) {
+        console.error('Pagefind search error:', error)
+      }
+    })
+  })
+</script>
