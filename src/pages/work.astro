@@ -16,7 +16,9 @@ import BaseLayout from "../layouts/BaseLayout.astro"
         <span class="text-muted-foreground shrink-0 text-sm">Apr 2026 - Present</span>
       </div>
       <p class="text-muted-foreground text-sm mt-0.5">Staff Software Engineer</p>
-      <p class="mt-2 text-sm">Promoted to Staff Engineer. Leading technical initiatives across the CASB API product line.</p>
+      <ul class="mt-2 space-y-1 text-sm list-disc pl-4">
+        <li>Recently promoted based on sustained technical impact and project leadership across the CASB API product line.</li>
+      </ul>
     </div>
 
     <div>
@@ -25,7 +27,18 @@ import BaseLayout from "../layouts/BaseLayout.astro"
         <span class="text-muted-foreground shrink-0 text-sm">Apr 2024 - Apr 2026</span>
       </div>
       <p class="text-muted-foreground text-sm mt-0.5">Sr. Software Engineer</p>
-      <p class="mt-2 text-sm">Working on the next-gen CASB API product, maintaining two legacy apps during the transition.</p>
+      <ul class="mt-2 space-y-1 text-sm list-disc pl-4">
+        <li>Identified <strong>two zero-day defects</strong> in the ServiceNow file listing implementation during a critical enterprise escalation. Attended customer calls and resolved the multi-month incident. The customer had no further complaints.</li>
+          <li>Identified a throughput issue in the classic Retroscan implementation. The fix improved throughput by <strong>about 2x</strong>. For large workloads, processing time dropped from <strong>100 seconds to 53 seconds</strong>, a <strong>47% reduction</strong>.</li>
+          <li>Was the <strong>first engineer from the classic product to join the next-generation product's team</strong>.</li>
+          <li>Implemented a Gmail connector feature to <strong>detect phishing links in inbox emails</strong>. Coordinated with several teams on requirements and ran an end-to-end demonstration. The feature is live for select customers.</li>
+          <li>Helped implement the Box connector on the next-generation platform. Found design flaws in the file upload logic, including chunking and multi-part upload handling, and proposed fixes. The team adopted several of the fixes.</li>
+          <li>Helped build the Google Calendar connector. Guided peers through key decisions and led testing before the QA handoff. This <strong>cut the number of bugs QA found</strong>.</li>
+          <li>Took over as <strong>maintainer of the Phoenix local development workspace</strong> when the previous maintainer left. Was chosen based on a year of active contributions, including setting up the workspace for new integrations and fixing issues that blocked the team.</li>
+          <li>Built a notification microservice for the next-generation product: CI/CD pipeline, Helm charts, Kubernetes deployment, logging, and metrics. Rolled it out across all production and compliance environments and continue to maintain it.</li>
+          <li>Led a team of engineers to design and build the <strong>Smartsheet connector</strong>. This was the <strong>first time in a project lead role</strong>.</li>
+          <li>Mentored <strong>4 new hires</strong> from October 2025 to March 2026 on system architecture, framework internals, and testing.</li>
+      </ul>
     </div>
 
     <div>
@@ -35,8 +48,9 @@ import BaseLayout from "../layouts/BaseLayout.astro"
       </div>
       <p class="text-muted-foreground text-sm mt-0.5">Software Engineer II</p>
       <ul class="mt-2 space-y-1 text-sm list-disc pl-4">
-        <li>Built a migration system for customers to next-gen product with zero downtime.</li>
-        <li>Improved file listing performance and added checkpointing to handle API rate limits.</li>
+        <li>Was the <strong>sole point of contact</strong> for the migration infrastructure from classic API Data Protection to the next-generation platform, covering <strong>8+ SaaS integrations</strong> including Box, OneDrive, and SharePoint. Built the policy validation layer and supporting APIs. Delivered <strong>ahead of every deadline</strong>.</li>
+        <li>Took over the ServiceNow connector and fixed a <strong>day-two token renewal bug</strong> within weeks of ownership.</li>
+        <li>Took over the Dropbox connector, fixed file listing bottlenecks, added randomised rate limiting and checkpointing support, and brought test coverage to <strong>80%</strong>.</li>
       </ul>
     </div>
 

@@ -35,7 +35,7 @@ function formatDate(dateStr?: string): string {
   description="Books Yash has read."
 >
   <Heading level="h2" as="h1" class="mt-6 mb-2">Books</Heading>
-  <p class="text-muted-foreground text-sm mb-6">
+  <p class="text-muted-foreground mb-6">
     A list of books I have read.
   </p>
 
@@ -49,6 +49,11 @@ function formatDate(dateStr?: string): string {
       </div>
     )
   }
+
+  <div class="mb-8">
+    <Heading level="h3" as="h2" class="mb-3">Currently Reading</Heading>
+    <p class="text-muted-foreground">Not reading anything currently :(</p>
+  </div>
 
   {readBooks.length > 0 && (
     <div>

@@ -2,7 +2,6 @@
 import Heading from "../components/ui/Heading.astro"
 import BaseLayout from "../layouts/BaseLayout.astro"
 
-// Update this date when you refresh the page content
 const lastUpdated = "June 2026"
 ---
 
@@ -13,35 +12,50 @@ const lastUpdated = "June 2026"
   <Heading level="h2" as="h1" class="mt-6 mb-2">Now</Heading>
   <p class="text-muted-foreground text-sm mb-6">Last updated: {lastUpdated}</p>
 
-  <div class="space-y-6">
-    <p class="text-muted-foreground text-sm italic">
+  <div class="space-y-8">
+    <p class="text-muted-foreground text-sm">
       This is a <a href="https://nownownow.com/about" target="_blank" rel="noopener noreferrer">now page</a>.
-      It tells you what I'm focused on at this point in my life.
+      It tells you what I am focused on at this point in my life.
     </p>
 
     <div>
       <Heading level="h3" as="h2" class="mb-3">Building</Heading>
       <ul class="space-y-2 list-disc pl-4">
         <li>
-          <strong>Mum's Memories</strong> — a minimal baby journaling app.
-          Building it for my own use and polishing it for a wider release.
+          <a href="https://mumsmemories.app" target="_blank" rel="noopener noreferrer">Mum's Memories</a>,
+          a minimal baby journaling app. I am building it for my own use and
+          getting it ready for a wider release.
         </li>
         <li>
-          <strong>This website</strong> — adding new sections, refining the
-          design, and writing more notes. A personal site is never finished.
+          Vidhya AI, a platform to help students prepare for the UPSC exam.
+          It has a mobile app, a web app, and a backend API in one repository.
         </li>
       </ul>
     </div>
 
     <div>
-      <Heading level="h3" as="h2" class="mb-3">Working on</Heading>
+      <Heading level="h3" as="h2" class="mb-3">Homelab</Heading>
       <ul class="space-y-2 list-disc pl-4">
         <li>
-          Leading technical initiatives for the CASB API product at Netskope.
+          I run a homelab with a Raspberry Pi, an OCI VM, and an old HP laptop
+          that runs Arch Linux.
         </li>
         <li>
-          Designing scalable systems that handle API rate limits and large
-          data volumes without breaking.
+          I plan to connect these machines into a single cluster to run services
+          and experiment with distributed systems at small scale.
+        </li>
+      </ul>
+    </div>
+
+    <div>
+      <Heading level="h3" as="h2" class="mb-3">Work</Heading>
+      <ul class="space-y-2 list-disc pl-4">
+        <li>
+          I was promoted to Staff Software Engineer at Netskope in April 2026.
+        </li>
+        <li>
+          I lead technical work on the CASB API product. We build tools that
+          help companies protect their data stored in cloud apps.
         </li>
       </ul>
     </div>
@@ -50,19 +64,23 @@ const lastUpdated = "June 2026"
       <Heading level="h3" as="h2" class="mb-3">Learning</Heading>
       <ul class="space-y-2 list-disc pl-4">
         <li>
-          Deepening my understanding of distributed systems and queueing theory.
+          <a href="https://themlbook.com/" target="_blank" rel="noopener noreferrer">The Hundred-Page Machine Learning Book</a> by Andriy Burkov
         </li>
         <li>
-          Exploring how to build and ship mobile apps with a small team (or solo).
+          <a href="https://anilananthaswamy.com/why-machines-learn" target="_blank" rel="noopener noreferrer">Why Machines Learn</a> by Anil Ananthaswamy
+        </li>
+        <li>
+          <a href="https://tanmoychak.com/llmbook/" target="_blank" rel="noopener noreferrer">Introduction to Large Language Models</a> by Tanmoy Chakraborty
+        </li>
+        <li>
+          I am learning AI engineering by building products on the side.
+        </li>
+        <li>
+          I might take the NPTEL course on
+          <a href="https://nptel.ac.in/courses/106102576" target="_blank" rel="noopener noreferrer">Introduction to Large Language Models</a>,
+          but I have not decided yet.
         </li>
       </ul>
-    </div>
-
-    <div>
-      <Heading level="h3" as="h2" class="mb-3">Reading</Heading>
-      <p>
-        I track my reading on the <a href="/books">books page</a>.
-      </p>
     </div>
   </div>
 </BaseLayout>
