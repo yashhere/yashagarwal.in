@@ -66,33 +66,37 @@ const row2 = footerLinks.slice(5)
           <p class="text-muted-foreground">Receive updates about things I am building or sharing.</p>
           <form
             id="subscribe-form"
-            action="https://newsletter.yashagarwal.in/api/public/subscription"
+            action="https://newsletter.yashagarwal.in/subscription/form"
             method="POST"
-            class="flex flex-col sm:flex-row w-full max-w-xs gap-2 mt-2 mx-auto md:mx-0"
+            class="flex flex-col gap-2 mt-2 max-w-xs mx-auto md:mx-0"
           >
-        <input
-          type="text"
-          name="name"
-          placeholder="Name"
-          class="border-border bg-background text-foreground placeholder:text-muted-foreground/50 sm:w-28 rounded border px-3 py-1.5 text-sm outline-none focus:border-foreground/30 transition-colors"
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="your@email.com"
-          required
-          class="border-border bg-background text-foreground placeholder:text-muted-foreground/50 flex-1 rounded border px-3 py-1.5 text-sm outline-none focus:border-foreground/30 transition-colors"
-        />
-        <input type="text" name="website" tabindex="-1" autocomplete="off" class="absolute opacity-0 pointer-events-none" />
-        <input type="hidden" name="l" value="813bf4ef-c08e-4a70-8673-3f8a0fb9e345" />
-        <button
-          type="submit"
-          class="bg-foreground text-background hover:bg-foreground/80 rounded px-3 py-1.5 text-sm font-medium transition-colors shrink-0"
-        >
-          Subscribe
-        </button>
-      </form>
-      <p id="subscribe-msg" class="text-muted-foreground hidden text-sm"></p>
+            <input type="hidden" name="nonce" />
+            <div class="flex flex-col sm:flex-row gap-2">
+              <input
+                type="text"
+                name="name"
+                placeholder="Name"
+                class="border-border bg-background text-foreground placeholder:text-muted-foreground/50 sm:w-28 rounded border px-3 py-1.5 text-sm outline-none focus:border-foreground/30 transition-colors"
+              />
+              <input
+                type="email"
+                name="email"
+                placeholder="your@email.com"
+                required
+                class="border-border bg-background text-foreground placeholder:text-muted-foreground/50 flex-1 rounded border px-3 py-1.5 text-sm outline-none focus:border-foreground/30 transition-colors"
+              />
+              <input type="text" name="website" tabindex="-1" autocomplete="off" class="absolute opacity-0 pointer-events-none" />
+              <input type="hidden" name="l" value="1706bf84-4ff4-4419-8aea-fcadb21a9d3b" />
+              <button
+                type="submit"
+                class="bg-foreground text-background hover:bg-foreground/80 rounded px-3 py-1.5 text-sm font-medium transition-colors shrink-0"
+              >
+                Subscribe
+              </button>
+            </div>
+            <altcha-widget challengeurl="https://newsletter.yashagarwal.in/api/public/captcha/altcha"></altcha-widget>
+          </form>
+          <script src="https://newsletter.yashagarwal.in/public/static/altcha.umd.js" defer></script>
         </div>
       </div>
 
@@ -107,49 +111,3 @@ const row2 = footerLinks.slice(5)
     </div>
   </div>
 </footer>
-
-<script>
-  document.getElementById('subscribe-form')?.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const form = e.target as HTMLFormElement;
-    const msg = document.getElementById('subscribe-msg');
-    const btn = form.querySelector('button') as HTMLButtonElement;
-
-    btn.disabled = true;
-    btn.textContent = '...';
-
-    try {
-      const res = await fetch(form.action, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams({
-          name: (form.querySelector('[name=name]') as HTMLInputElement).value,
-          email: (form.querySelector('[name=email]') as HTMLInputElement).value,
-          l: (form.querySelector('[name=l]') as HTMLInputElement).value,
-        }).toString(),
-      });
-      const data = await res.json();
-
-      if (msg) {
-        msg.classList.remove('hidden');
-        msg.textContent = res.ok
-          ? 'Subscribed! Check your inbox.'
-          : data.message || 'Something went wrong.';
-        msg.className = res.ok
-          ? 'text-muted-foreground text-sm'
-          : 'text-destructive text-sm';
-      }
-
-      if (res.ok) form.reset();
-    } catch {
-      if (msg) {
-        msg.classList.remove('hidden');
-        msg.textContent = 'Something went wrong.';
-        msg.className = 'text-destructive text-sm';
-      }
-    } finally {
-      btn.disabled = false;
-      btn.textContent = 'Subscribe';
-    }
-  });
-</script>
