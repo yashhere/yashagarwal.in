@@ -10,15 +10,15 @@ const recentNotes = notes.slice(0, siteConfig.featuredNotes)
 
 <BaseLayout title="/dev/yash/notes">
     {/* Intro Section */}
-    <div class="mt-8">
+    <div class="mt-8 space-y-3">
       <p>
-        Hi, I'm Yash - a computer nerd by heart and software engineer by profession. I write about my learnings, experiences, thoughts on building things and tinkering with software, technology, and life in general.
+        Hi, I'm Yash. I am a Staff Software Engineer at Netskope, where I work on API-based data protection for enterprise SaaS.
       </p>
-      <p class="mt-2">
-        I am currently building <a href="https://mumsmemories.app" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">Mum's Memories</a> - a minimal baby journaling app.
+      <p>
+        I write about software engineering, infrastructure, and things I am building. This site is where I keep my notes and share what I am learning.
       </p>
-      <p class="mt-2">
-        This site is my public brain dump - thoughts, notes, and learnings that I want to share with the world. I hope you find something useful here!
+      <p>
+        You can read my recent writing below, see <a href="/now">what I am working on right now</a>, or <a href="/about">learn more about me</a>.
       </p>
     </div>
 
@@ -62,15 +62,4 @@ const recentNotes = notes.slice(0, siteConfig.featuredNotes)
       </a>
     </section>
 
-    {/* Work Section */}
-    <section>
-      <Heading level="h2" as="h2" class="mt-6 mb-3 tracking-wide">
-        Work
-      </Heading>
-      <p class="text-sm mt-0.5">
-        Staff Software Engineer at{" "}
-        <a href="https://netskope.com" target="_blank" rel="noopener noreferrer">Netskope</a>,{" "}
-        building CASB security products that protect business data at rest.
-      </p>
-    </section>
 </BaseLayout>

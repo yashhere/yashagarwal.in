@@ -1,0 +1,86 @@
+---
+import Heading from "../components/ui/Heading.astro"
+import BaseLayout from "../layouts/BaseLayout.astro"
+
+// Book data populated via scripts/import-goodreads.ts (one-time Goodreads export).
+// To add books going forward, edit src/content/books/data.json directly.
+let books: Array<{
+  title: string
+  author: string
+  isbn?: string
+  dateRead?: string
+  rating?: number
+  status: "read" | "reading" | "want-to-read"
+  goodreadsUrl?: string
+}> = []
+
+try {
+  const data = await import("../content/books/data.json")
+  books = data.default
+} catch {
+  // Data file doesn't exist yet — books stays empty
+}
+
+const readBooks = books.filter((b) => b.status === "read")
+
+function formatDate(dateStr?: string): string {
+  if (!dateStr) return ""
+  const d = new Date(dateStr)
+  return d.toLocaleDateString("en-US", { year: "numeric", month: "short" })
+}
+---
+
+<BaseLayout
+  title="Books"
+  description="Books Yash has read."
+>
+  <Heading level="h2" as="h1" class="mt-6 mb-2">Books</Heading>
+  <p class="text-muted-foreground mb-6">
+    A list of books I have read.
+  </p>
+
+  {
+    books.length === 0 && (
+      <div class="border-border bg-muted/30 rounded border p-6 text-center">
+        <p class="text-muted-foreground">
+          No books imported yet. Export your Goodreads library and run:
+        </p>
+        <pre class="mt-3 bg-background border-border inline-block rounded border px-3 py-1.5 text-sm font-mono">bun scripts/import-goodreads.ts</pre>
+      </div>
+    )
+  }
+
+  <div class="mb-8">
+    <Heading level="h3" as="h2" class="mb-3">Currently Reading</Heading>
+    <p class="text-muted-foreground">Not reading anything currently :(</p>
+  </div>
+
+  {readBooks.length > 0 && (
+    <div>
+      <Heading level="h3" as="h2" class="mb-4">
+        Read <span class="text-muted-foreground text-base font-normal">({readBooks.length})</span>
+      </Heading>
+      <ul class="space-y-4">
+        {readBooks.map((book, i) => (
+          <li class="flex gap-3">
+            <span class="text-muted-foreground shrink-0 tabular-nums text-xs mt-0.5 w-5 text-right">
+              {readBooks.length - i}
+            </span>
+            <div class="min-w-0">
+              <div class="font-medium leading-snug">{book.title}</div>
+              <div class="text-muted-foreground text-sm mt-0.5">
+                {book.author}
+                {book.rating && (
+                  <><span class="mx-1.5 text-muted-foreground">·</span>{'★'.repeat(book.rating)}{'☆'.repeat(5 - book.rating)}</>
+                )}
+                {book.dateRead && (
+                  <><span class="mx-1.5 text-muted-foreground">·</span>{formatDate(book.dateRead)}</>
+                )}
+              </div>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )}
+</BaseLayout>

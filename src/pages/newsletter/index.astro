@@ -1,0 +1,103 @@
+---
+import Heading from "../../components/ui/Heading.astro"
+import BaseLayout from "../../layouts/BaseLayout.astro"
+---
+
+<BaseLayout
+  title="Newsletter"
+  description="Occasional updates from Yash about what he is building and thinking about."
+>
+  <Heading level="h2" as="h1" class="mt-6 mb-6">Newsletter</Heading>
+
+  <div class="space-y-8">
+    <div>
+      <Heading level="h3" as="h2" class="mb-3">What you will get</Heading>
+      <p>
+        I send emails when I have something to share. No fixed schedule.
+        I write about software engineering, side projects, and things I am
+        learning.
+      </p>
+    </div>
+
+    <div>
+      <Heading level="h3" as="h2" class="mb-3">Subscribe</Heading>
+      <p class="text-muted-foreground mb-4">You can unsubscribe at any time.</p>
+
+      <form
+        id="subscribe-form"
+        action="https://newsletter.yashagarwal.in/api/public/subscription"
+        method="POST"
+        class="flex flex-col gap-3 max-w-md"
+      >
+        <input
+          type="text"
+          name="name"
+          placeholder="Name"
+          class="border-border bg-background text-foreground placeholder:text-muted-foreground/50 rounded border px-3 py-2 text-sm outline-none focus:border-foreground/30 transition-colors"
+        />
+        <input
+          type="email"
+          name="email"
+          placeholder="your@email.com"
+          required
+          class="border-border bg-background text-foreground placeholder:text-muted-foreground/50 rounded border px-3 py-2 text-sm outline-none focus:border-foreground/30 transition-colors"
+        />
+        <input type="text" name="website" tabindex="-1" autocomplete="off" class="absolute opacity-0 pointer-events-none" />
+        <input type="hidden" name="l" value="813bf4ef-c08e-4a70-8673-3f8a0fb9e345" />
+        <button
+          type="submit"
+          class="bg-foreground text-background hover:bg-foreground/80 rounded px-4 py-2 text-sm font-medium transition-colors self-start"
+        >
+          Subscribe
+        </button>
+      </form>
+      <p id="subscribe-msg" class="text-muted-foreground hidden text-sm mt-3"></p>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  document.getElementById('subscribe-form')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const form = e.target as HTMLFormElement;
+    const msg = document.getElementById('subscribe-msg');
+    const btn = form.querySelector('button') as HTMLButtonElement;
+
+    btn.disabled = true;
+    btn.textContent = '...';
+
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({
+          name: (form.querySelector('[name=name]') as HTMLInputElement).value,
+          email: (form.querySelector('[name=email]') as HTMLInputElement).value,
+          l: (form.querySelector('[name=l]') as HTMLInputElement).value,
+        }).toString(),
+      });
+      const data = await res.json();
+
+      if (msg) {
+        msg.classList.remove('hidden');
+        msg.textContent = res.ok
+          ? 'Subscribed! Check your inbox.'
+          : data.message || 'Something went wrong.';
+        msg.className = res.ok
+          ? 'text-muted-foreground text-sm mt-3'
+          : 'text-destructive text-sm mt-3';
+      }
+
+      if (res.ok) form.reset();
+    } catch {
+      if (msg) {
+        msg.classList.remove('hidden');
+        msg.textContent = 'Something went wrong.';
+        msg.className = 'text-destructive text-sm mt-3';
+      }
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Subscribe';
+    }
+  });
+</script>

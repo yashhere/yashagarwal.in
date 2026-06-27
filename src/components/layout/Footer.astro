@@ -17,34 +17,52 @@ const footerLinks = [
   { name: "Home", href: "/" },
   { name: "Notes", href: "/notes" },
   { name: "Work", href: "/work" },
-  { name: "Tags", href: "/tags" },
-  { name: "Categories", href: "/categories" },
+  { name: "Now", href: "/now" },
+  { name: "About", href: "/about" },
+  { name: "Uses", href: "/uses" },
+  { name: "Books", href: "/books" },
+  { name: "Newsletter", href: "/newsletter" },
 ]
+
+const row1 = footerLinks.slice(0, 4)
+const row2 = footerLinks.slice(4)
 ---
 
 <footer class="border-border bg-background mt-auto w-full border-t">
   <div class="mx-auto max-w-3xl px-4 py-6 md:px-6">
-    <div class="flex flex-col items-center md:items-start gap-4 text-sm">
+    <div class="flex flex-col items-center md:items-start gap-4">
 
       {/* Social Links */}
       <SocialLinks />
 
       {/* Nav Links */}
-      <nav class="flex flex-wrap gap-x-4 gap-y-1">
-        {footerLinks.map((link) => (
-          <a
-            href={link.href}
-            class={`transition-colors no-underline ${isActive(link.href) ? "text-foreground" : "text-muted-foreground hover:text-foreground"}`}
-          >
-            {link.name}
-          </a>
-        ))}
+      <nav class="flex flex-col md:flex-row gap-y-1 md:gap-x-4">
+        <div class="flex flex-wrap justify-center md:justify-start gap-x-4">
+          {row1.map((link) => (
+            <a
+              href={link.href}
+              class={`transition-colors no-underline ${isActive(link.href) ? "text-foreground" : "text-muted-foreground hover:text-foreground"}`}
+            >
+              {link.name}
+            </a>
+          ))}
+        </div>
+        <div class="flex flex-wrap justify-center md:justify-start gap-x-4">
+          {row2.map((link) => (
+            <a
+              href={link.href}
+              class={`transition-colors no-underline ${isActive(link.href) ? "text-foreground" : "text-muted-foreground hover:text-foreground"}`}
+            >
+              {link.name}
+            </a>
+          ))}
+        </div>
       </nav>
 
       {/* Newsletter */}
       <div class="border-y border-border py-4 w-full">
         <div class="md:text-left text-center">
-          <p class="text-muted-foreground text-sm">Occasional updates on what I'm building.</p>
+          <p class="text-muted-foreground">Receive updates about things I am building or sharing.</p>
           <form
             id="subscribe-form"
             action="https://newsletter.yashagarwal.in/api/public/subscription"
@@ -79,7 +97,7 @@ const footerLinks = [
 
       {/* Bottom row: clock + copyright */}
       <div class="flex items-center justify-between w-full mt-1">
-        <p class="text-muted-foreground text-sm">
+        <p class="text-muted-foreground">
           &copy; {currentYear} Yash Agarwal
         </p>
         <AnalogClock />

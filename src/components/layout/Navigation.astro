@@ -1,14 +1,12 @@
 ---
-import { Icon } from 'astro-icon/components'
-
 import ThemeToggle from "../interactive/ThemeToggle.astro"
 
-const primaryNavItems = [
+const navItems = [
   { name: "Notes", href: "/notes" },
+  { name: "Now", href: "/now" },
   { name: "Work", href: "/work" },
 ]
 
-const moreNavItems: { name: string; href: string }[] = []
 const { pathname } = Astro.url
 const pathSegments = pathname.split("/").filter(Boolean)
 const highlightedPath = pathSegments.length <= 1 ? pathname : `/${pathSegments[0]}`
@@ -17,8 +15,6 @@ const isActive = (href: string) => {
   if (href === "/") return pathname === "/"
   return highlightedPath === href
 }
-
-const isAnySecondaryActive = moreNavItems.some((item) => isActive(item.href))
 ---
 
 <aside class="my-4">
@@ -38,70 +34,17 @@ const isAnySecondaryActive = moreNavItems.some((item) => isActive(item.href))
 
       {/* Right: Navigation Links */}
       <div class="flex flex-row items-center gap-1">
-        {
-          primaryNavItems.map((item) => (
-            <a
-              href={item.href}
-              class:list={[
-                "block px-3 py-1 font-medium transition-colors no-underline",
-                isActive(item.href) ? "text-foreground" : "text-muted-foreground hover:text-foreground",
-              ]}
-            >
-              {item.name}
-            </a>
-          ))
-        }
-
-        {/* More Dropdown - Alpine.js */}
-        {moreNavItems.length > 0 && (
-        <div class="relative" x-data="{ open: false }" @click.outside="open = false">
-          <button
-            @click="open = !open"
+        {navItems.map((item) => (
+          <a
+            href={item.href}
             class:list={[
-              "flex items-center gap-1 border-0 px-3 py-1 font-medium ring-0 transition-colors outline-none focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 cursor-pointer",
-              isAnySecondaryActive ? "text-foreground" : "text-muted-foreground hover:text-foreground",
+              "block px-3 py-1 font-medium transition-colors no-underline",
+              isActive(item.href) ? "text-foreground" : "text-muted-foreground hover:text-foreground",
             ]}
-            aria-label="More pages"
           >
-            More
-            <Icon
-              name="lucide:chevron-down"
-              class="w-4 h-4 transition-transform duration-200"
-              :class="open && 'rotate-180'"
-            />
-          </button>
-
-          <!-- Dropdown Menu -->
-          <div
-            x-show="open"
-            x-transition
-            x-cloak
-            class="absolute right-0 mt-1 min-w-40 rounded-md border border-border/50 bg-background/80 backdrop-blur-sm shadow-md z-50 p-1 ring-0"
-          >
-            <ul>
-              {
-                moreNavItems.map((item) => (
-                  <li>
-                    <a
-                      href={item.href}
-                      class:list={[
-                        "block px-2 py-1.5 text-sm transition-colors font-medium no-underline",
-                        isActive(item.href)
-                          ? "text-foreground"
-                          : "text-muted-foreground hover:text-foreground",
-                      ]}
-                    >
-                      {item.name}
-                    </a>
-                  </li>
-                ))
-              }
-            </ul>
-          </div>
-        </div>
-        )}
-
-        {/* Theme Toggle */}
+            {item.name}
+          </a>
+        ))}
         <ThemeToggle />
       </div>
     </nav>

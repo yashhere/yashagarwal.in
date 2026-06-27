@@ -1,0 +1,77 @@
+---
+import Heading from "../components/ui/Heading.astro"
+import BaseLayout from "../layouts/BaseLayout.astro"
+
+const lastUpdated = "June 2026"
+---
+
+<BaseLayout
+  title="Now"
+  description="What Yash is focused on right now."
+>
+  <Heading level="h2" as="h1" class="mt-6 mb-2">Now</Heading>
+  <p class="text-muted-foreground text-sm mb-6">Last updated: {lastUpdated}</p>
+
+  <div class="space-y-8">
+    <p class="text-muted-foreground">
+      This is a <a href="https://nownownow.com/about" target="_blank" rel="noopener noreferrer">now page</a>.
+      It tells you what I am focused on at this point in my life.
+    </p>
+
+    <div>
+      <Heading level="h3" as="h2" class="mb-3">Building</Heading>
+      <ul class="space-y-2 list-disc pl-4">
+        <li>
+          <a href="https://mumsmemories.app" target="_blank" rel="noopener noreferrer">Mum's Memories</a>,
+          a minimal baby journaling app. I am building it for my own use and
+          getting it ready for a wider release.
+        </li>
+        <li>
+          Vidhya AI, a platform to help students prepare for the UPSC exam. Under active development.
+        </li>
+      </ul>
+    </div>
+
+    <div>
+      <Heading level="h3" as="h2" class="mb-3">Homelab</Heading>
+      <ul class="space-y-2 list-disc pl-4">
+        <li>
+          I run a homelab with a Raspberry Pi, an OCI VM, and an old HP laptop
+          that runs Arch Linux.
+        </li>
+        <li>
+          I plan to connect these machines into a single cluster to run services
+          and experiment with distributed systems at small scale.
+        </li>
+      </ul>
+    </div>
+
+    <div>
+      <Heading level="h3" as="h2" class="mb-3">Work</Heading>
+      <ul class="space-y-2 list-disc pl-4">
+        <li>
+          I was promoted to Staff Software Engineer at Netskope in April 2026.
+        </li>
+      </ul>
+    </div>
+
+    <div>
+      <Heading level="h3" as="h2" class="mb-3">Learning</Heading>
+      <ul class="space-y-2 list-disc pl-4">
+        <li>Reading
+          <a href="https://themlbook.com/" target="_blank" rel="noopener noreferrer">The Hundred-Page Machine Learning Book</a> by Andriy Burkov
+        </li>
+        <li>Reading
+          <a href="https://anilananthaswamy.com/why-machines-learn" target="_blank" rel="noopener noreferrer">Why Machines Learn</a> by Anil Ananthaswamy
+        </li>
+        <li>Reading
+          <a href="https://tanmoychak.com/llmbook/" target="_blank" rel="noopener noreferrer">Introduction to Large Language Models</a> by Tanmoy Chakraborty
+        </li>
+        <li>
+          Enrolled into the NPTEL course on
+          <a href="https://nptel.ac.in/courses/106102576" target="_blank" rel="noopener noreferrer">Introduction to Large Language Models</a>.
+        </li>
+      </ul>
+    </div>
+  </div>
+</BaseLayout>
