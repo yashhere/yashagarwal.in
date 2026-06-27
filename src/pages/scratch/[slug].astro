@@ -1,0 +1,44 @@
+---
+import { getCollection } from "astro:content"
+import BaseLayout from "../../layouts/BaseLayout.astro"
+import Heading from "../../components/ui/Heading.astro"
+
+export async function getStaticPaths() {
+  const notes = await getCollection("scratch_notes")
+  return notes.map((note) => ({
+    params: { slug: note.slug },
+    props: { note },
+  }))
+}
+
+const { note } = Astro.props
+const { Content } = await note.render()
+
+function formatDate(d: Date): string {
+  return d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })
+}
+---
+
+<BaseLayout
+  title={note.data.title}
+  description="A scratch note."
+>
+  <div class="mt-6">
+    <a href="/scratch" class="text-muted-foreground hover:text-foreground text-sm no-underline transition-colors">
+      &larr; Scratch
+    </a>
+  </div>
+
+  <Heading level="h2" as="h1" class="mt-4 mb-2">{note.data.title}</Heading>
+  <p class="text-muted-foreground text-sm mb-8">{formatDate(note.data.createdOn)}</p>
+
+  <article class="prose dark:prose-invert max-w-none">
+    <Content />
+  </article>
+
+  <div class="mt-12 pt-6 border-t border-border">
+    <a href="/scratch" class="text-muted-foreground hover:text-foreground text-sm no-underline transition-colors">
+      &larr; All scratch notes
+    </a>
+  </div>
+</BaseLayout>
