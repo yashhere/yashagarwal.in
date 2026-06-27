@@ -94,7 +94,12 @@ const row2 = footerLinks.slice(5)
                 Subscribe
               </button>
             </div>
-            <altcha-widget challengeurl="https://newsletter.yashagarwal.in/api/public/captcha/altcha"></altcha-widget>
+            <altcha-widget
+              challengeurl="https://newsletter.yashagarwal.in/api/public/captcha/altcha"
+              hidefooter hidelogo
+              class="-mx-2"
+              style="--altcha-max-width: 100%; --altcha-border-width: 0; --altcha-border-radius: 0; --altcha-color-base: transparent; --altcha-color-text: var(--foreground); --altcha-color-border: transparent;"
+            ></altcha-widget>
           </form>
           <script src="https://newsletter.yashagarwal.in/public/static/altcha.umd.js" defer></script>
         </div>
