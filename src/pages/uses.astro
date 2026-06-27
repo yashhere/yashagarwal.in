@@ -5,14 +5,13 @@ import BaseLayout from "../layouts/BaseLayout.astro"
 
 <BaseLayout
   title="Uses"
-  description="Hardware, software, and tools that Yash uses for work and play."
+  description="Hardware, software, and tools that Yash uses."
 >
   <Heading level="h2" as="h1" class="mt-6 mb-6">Uses</Heading>
 
   <p class="text-muted-foreground text-sm mb-6">
-    A living list of the tools, hardware, and setup I use daily. Inspired by
-    <a href="https://wesbos.com/uses" target="_blank" rel="noopener noreferrer">Wes Bos' /uses</a>.
-    Last updated when something changes.
+    A list of tools and hardware I own.
+    Inspired by <a href="https://uses.tech/" target="_blank" rel="noopener noreferrer">uses.tech</a>.
   </p>
 
   <div class="space-y-8">
@@ -20,30 +19,38 @@ import BaseLayout from "../layouts/BaseLayout.astro"
       <Heading level="h3" as="h2" class="mb-3">Hardware</Heading>
       <ul class="space-y-2 list-none pl-0">
         <li class="flex items-baseline gap-3">
-          <span class="text-muted-foreground shrink-0 text-sm w-24">Laptop</span>
-          <span>MacBook Pro — workhorse for everything</span>
+          <span class="text-muted-foreground shrink-0 text-sm w-28">Phone</span>
+          <span>Motorola Edge 50 Neo</span>
         </li>
         <li class="flex items-baseline gap-3">
-          <span class="text-muted-foreground shrink-0 text-sm w-24">Phone</span>
-          <span>iPhone — daily driver</span>
+          <span class="text-muted-foreground shrink-0 text-sm w-28">Laptop</span>
+          <span>MacBook Pro M4, work provided. Very powerful. I don't use it for personal projects.</span>
         </li>
         <li class="flex items-baseline gap-3">
-          <span class="text-muted-foreground shrink-0 text-sm w-24">Audio</span>
-          <span>AirPods Pro — meetings, music, and focus time</span>
+          <span class="text-muted-foreground shrink-0 text-sm w-28">Desktop</span>
+          <span>Mac Mini M4, my personal machine for side projects and experiments.</span>
         </li>
         <li class="flex items-baseline gap-3">
-          <span class="text-muted-foreground shrink-0 text-sm w-24">Monitor</span>
-          <span>External 4K display — side-by-side terminal and browser</span>
+          <span class="text-muted-foreground shrink-0 text-sm w-28">Audio</span>
+          <span>Sony WI-XB400</span>
         </li>
         <li class="flex items-baseline gap-3">
-          <span class="text-muted-foreground shrink-0 text-sm w-24">Keyboard</span>
-          <span>Mechanical keyboard — MX switches, tenkeyless</span>
+          <span class="text-muted-foreground shrink-0 text-sm w-28">Monitor</span>
+          <span>LG 27UL550</span>
+        </li>
+        <li class="flex items-baseline gap-3">
+          <span class="text-muted-foreground shrink-0 text-sm w-28">Keyboard</span>
+          <span>Apple Magic Keyboard</span>
+        </li>
+        <li class="flex items-baseline gap-3">
+          <span class="text-muted-foreground shrink-0 text-sm w-28">Mouse</span>
+          <span>Apple Magic Mouse</span>
         </li>
       </ul>
     </div>
 
     <div>
-      <Heading level="h3" as="h2" class="mb-3">Editor & Terminal</Heading>
+      <Heading level="h3" as="h2" class="mb-3">Software</Heading>
       <ul class="space-y-2 list-none pl-0">
         <li class="flex items-baseline gap-3">
           <span class="text-muted-foreground shrink-0 text-sm w-32">Editor</span>
@@ -51,72 +58,25 @@ import BaseLayout from "../layouts/BaseLayout.astro"
         </li>
         <li class="flex items-baseline gap-3">
           <span class="text-muted-foreground shrink-0 text-sm w-32">Terminal</span>
-          <span>iTerm2 + zsh + oh-my-zsh</span>
+          <span>iTerm2 with fish shell</span>
         </li>
         <li class="flex items-baseline gap-3">
           <span class="text-muted-foreground shrink-0 text-sm w-32">Font</span>
-          <span>JetBrains Mono — ligatures, crisp at all sizes</span>
+          <span>JetBrains Mono</span>
         </li>
-        <li class="flex items-baseline gap-3">
-          <span class="text-muted-foreground shrink-0 text-sm w-32">Theme</span>
-          <span>Dark theme, low contrast, no distractions</span>
-        </li>
-      </ul>
-    </div>
-
-    <div>
-      <Heading level="h3" as="h2" class="mb-3">Software & Services</Heading>
-      <ul class="space-y-2 list-none pl-0">
         <li class="flex items-baseline gap-3">
           <span class="text-muted-foreground shrink-0 text-sm w-32">Browser</span>
-          <span>Arc — vertical tabs, spaces, and focus mode</span>
+          <span>Brave</span>
         </li>
         <li class="flex items-baseline gap-3">
           <span class="text-muted-foreground shrink-0 text-sm w-32">Notes</span>
-          <span>Obsidian — plain text, local-first, linked thinking</span>
+          <span>Obsidian, local first, plain text</span>
         </li>
         <li class="flex items-baseline gap-3">
           <span class="text-muted-foreground shrink-0 text-sm w-32">Reading</span>
-          <span>Kindle + physical books</span>
-        </li>
-        <li class="flex items-baseline gap-3">
-          <span class="text-muted-foreground shrink-0 text-sm w-32">Music</span>
-          <span>Spotify — instrumental focus playlists during work</span>
-        </li>
-        <li class="flex items-baseline gap-3">
-          <span class="text-muted-foreground shrink-0 text-sm w-32">Git hosting</span>
-          <span>GitHub — for everything</span>
+          <span>Kindle and physical books</span>
         </li>
       </ul>
-    </div>
-
-    <div>
-      <Heading level="h3" as="h2" class="mb-3">This Site</Heading>
-      <ul class="space-y-2 list-none pl-0">
-        <li class="flex items-baseline gap-3">
-          <span class="text-muted-foreground shrink-0 text-sm w-32">Framework</span>
-          <span>Astro — static site, minimal JS</span>
-        </li>
-        <li class="flex items-baseline gap-3">
-          <span class="text-muted-foreground shrink-0 text-sm w-32">Styling</span>
-          <span>Tailwind CSS v4 — utility-first</span>
-        </li>
-        <li class="flex items-baseline gap-3">
-          <span class="text-muted-foreground shrink-0 text-sm w-32">Hosting</span>
-          <span>Vercel — zero-config deploys</span>
-        </li>
-        <li class="flex items-baseline gap-3">
-          <span class="text-muted-foreground shrink-0 text-sm w-32">Analytics</span>
-          <span>Umami — privacy-first, self-hosted</span>
-        </li>
-        <li class="flex items-baseline gap-3">
-          <span class="text-muted-foreground shrink-0 text-sm w-32">Newsletter</span>
-          <span>Self-hosted — no middleman</span>
-        </li>
-      </ul>
-      <p class="mt-4">
-        More details on the <a href="/colophon">colophon page</a>.
-      </p>
     </div>
   </div>
 </BaseLayout>
