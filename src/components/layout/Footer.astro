@@ -4,8 +4,9 @@ import SocialLinks from '../../components/content/SocialLinks.astro';
 
 const currentYear = new Date().getFullYear();
 
-const { pathname } = Astro.url;
-const pathSegments = pathname.split("/").filter(Boolean);
+const { pathname } = Astro.url
+const isNewsletterPage = pathname === "/newsletter" || pathname === "/newsletter/"
+const pathSegments = pathname.split("/").filter(Boolean)
 const highlightedPath = pathSegments.length <= 1 ? pathname : `/${pathSegments[0]}`;
 
 const isActive = (href: string) => {
@@ -60,7 +61,8 @@ const row2 = footerLinks.slice(5)
         </div>
       </nav>
 
-      {/* Newsletter */}
+      {/* Newsletter — hidden on the newsletter page itself */}
+      {!isNewsletterPage && (
       <div class="border-y border-border py-4 w-full">
         <div class="md:text-left text-center">
           <p class="text-muted-foreground">Receive updates about things I am building or sharing.</p>
@@ -89,7 +91,7 @@ const row2 = footerLinks.slice(5)
               <input type="hidden" name="l" value="1706bf84-4ff4-4419-8aea-fcadb21a9d3b" />
               <button
                 type="submit"
-                class="bg-foreground text-background hover:bg-foreground/80 rounded px-3 py-1.5 text-sm font-medium transition-colors shrink-0"
+                class="bg-foreground text-background hover:bg-foreground/80 rounded px-3 py-1.5 text-sm font-medium transition-colors shrink-0 hidden sm:block"
               >
                 Subscribe
               </button>
@@ -97,13 +99,20 @@ const row2 = footerLinks.slice(5)
             <altcha-widget
               challengeurl="https://newsletter.yashagarwal.in/api/public/captcha/altcha"
               hidefooter hidelogo
-              class="-mx-3 -mt-2"
+              class="-mx-3 -mt-2 self-start"
               style="--altcha-max-width: 100%; --altcha-border-width: 0; --altcha-border-radius: 0; --altcha-color-base: transparent; --altcha-color-text: var(--foreground); --altcha-color-border: transparent;"
             ></altcha-widget>
+            <button
+              type="submit"
+              class="bg-foreground text-background hover:bg-foreground/80 rounded px-3 py-1.5 text-sm font-medium transition-colors sm:hidden w-full"
+            >
+              Subscribe
+            </button>
           </form>
           <script src="https://newsletter.yashagarwal.in/public/static/altcha.umd.js" defer></script>
         </div>
       </div>
+      )}
 
       {/* Bottom row: clock + copyright */}
       <div class="flex items-center justify-between w-full mt-1">
