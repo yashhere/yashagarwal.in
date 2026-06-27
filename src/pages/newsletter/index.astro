@@ -5,27 +5,23 @@ import BaseLayout from "../../layouts/BaseLayout.astro"
 
 <BaseLayout
   title="Newsletter"
-  description="Occasional updates from Yash about what he's building, reading, and thinking about."
+  description="Occasional updates from Yash about what he is building and thinking about."
 >
   <Heading level="h2" as="h1" class="mt-6 mb-6">Newsletter</Heading>
 
   <div class="space-y-8">
     <div>
-      <Heading level="h3" as="h2" class="mb-3">What you'll get</Heading>
+      <Heading level="h3" as="h2" class="mb-3">What you will get</Heading>
       <p>
-        Occasional emails about what I'm building, what I'm reading, and what
-        I'm thinking about. No schedule, no spam — just updates when I have
-        something worth sharing.
-      </p>
-      <p class="mt-2">
-        Topics will include software engineering, infrastructure, side projects,
-        and sometimes books and ideas that have stuck with me.
+        I send emails when I have something to share. No fixed schedule.
+        I write about software engineering, side projects, and things I am
+        learning.
       </p>
     </div>
 
     <div>
       <Heading level="h3" as="h2" class="mb-3">Subscribe</Heading>
-      <p class="text-muted-foreground mb-4">No spam. Unsubscribe anytime.</p>
+      <p class="text-muted-foreground mb-4">You can unsubscribe at any time.</p>
 
       <form
         id="subscribe-form"
@@ -57,19 +53,6 @@ import BaseLayout from "../../layouts/BaseLayout.astro"
       </form>
       <p id="subscribe-msg" class="text-muted-foreground hidden text-sm mt-3"></p>
     </div>
-
-    <!--
-      Future: Add an archive section here once past issues exist
-      <Heading level="h3" as="h2" class="mb-3">Past Issues</Heading>
-      <ul class="space-y-3">
-        <li>
-          <a href="/newsletter/issue-1" class="no-underline hover:underline">
-            Issue #1 — What I'm Building
-          </a>
-          <span class="text-muted-foreground text-sm ml-2">June 2026</span>
-        </li>
-      </ul>
-    -->
   </div>
 </BaseLayout>
 
