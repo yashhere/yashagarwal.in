@@ -45,12 +45,19 @@ import BaseLayout from "../../layouts/BaseLayout.astro"
         />
         <input type="text" name="website" tabindex="-1" autocomplete="off" class="absolute opacity-0 pointer-events-none" />
         <input type="hidden" name="l" value="1706bf84-4ff4-4419-8aea-fcadb21a9d3b" />
-        <altcha-widget
-          challengeurl="/api/altcha"
-          hidefooter hidelogo
-          class="-mx-3 -mt-2 self-start"
-          style="--altcha-max-width: 100%; --altcha-border-width: 0; --altcha-border-radius: 0; --altcha-color-base: transparent; --altcha-color-text: var(--foreground); --altcha-color-border: transparent;"
-        ></altcha-widget>
+        <div style="display: grid; min-height: 44px;">
+          <altcha-widget
+            id="altcha-widget"
+            challengeurl="/api/altcha"
+            hidefooter hidelogo
+            class="-mx-3 -mt-2 self-start"
+            style="--altcha-max-width: 100%; --altcha-border-width: 0; --altcha-border-radius: 0; --altcha-color-base: transparent; --altcha-color-text: var(--foreground); --altcha-color-border: transparent; grid-area: 1/1; visibility: hidden;"
+          ></altcha-widget>
+          <span id="altcha-loading" class="self-start text-muted-foreground flex items-center gap-2" style="grid-area: 1/1;">
+            <span class="inline-block h-4 w-4 animate-spin rounded-full border-2 border-muted-foreground/30 border-t-muted-foreground"></span>
+            Loading verification...
+          </span>
+        </div>
         <button
           type="submit"
           class="bg-foreground text-background hover:bg-foreground/80 rounded px-4 py-2 text-sm font-medium transition-colors self-start"
@@ -59,6 +66,14 @@ import BaseLayout from "../../layouts/BaseLayout.astro"
         </button>
       </form>
       <script src="https://newsletter.yashagarwal.in/public/static/altcha.umd.js" defer></script>
+      <script>
+        customElements.whenDefined('altcha-widget').then(() => {
+          const w = document.getElementById('altcha-widget')
+          const p = document.getElementById('altcha-loading')
+          if (w) w.style.visibility = 'visible'
+          if (p) p.style.display = 'none'
+        })
+      </script>
       <p id="subscribe-msg" class="hidden text-sm mt-3"></p>
     </div>
   </div>
