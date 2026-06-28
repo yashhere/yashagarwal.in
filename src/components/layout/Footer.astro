@@ -70,7 +70,6 @@ const row2 = footerLinks.slice(5)
             id="subscribe-form"
             action="/api/subscribe"
             method="POST"
-            target="subscribe-iframe"
             class="flex flex-col gap-2 mt-2 max-w-xs mx-auto md:mx-0"
           >
             <input type="hidden" name="nonce" />
@@ -111,7 +110,6 @@ const row2 = footerLinks.slice(5)
             </button>
           </form>
           <script src="https://newsletter.yashagarwal.in/public/static/altcha.umd.js" defer></script>
-          <iframe name="subscribe-iframe" class="hidden"></iframe>
           <p id="subscribe-msg" class="hidden text-sm mt-2"></p>
         </div>
       </div>
@@ -131,21 +129,35 @@ const row2 = footerLinks.slice(5)
 
 <script>
   document.querySelectorAll('#subscribe-form').forEach(form => {
-    const iframe = document.querySelector('iframe[name="subscribe-iframe"]')
     const msg = form.parentElement.querySelector('#subscribe-msg')
     const btns = form.querySelectorAll('button[type="submit"]')
 
-    iframe.addEventListener('load', () => {
-      btns.forEach(b => { b.disabled = false; b.style.opacity = ''; b.textContent = 'Subscribe' })
-      msg.classList.remove('hidden')
-      msg.textContent = 'Subscribed! Check your inbox.'
-      msg.className = 'text-muted-foreground text-sm mt-2'
-      form.reset()
-    })
-
-    form.addEventListener('submit', () => {
-      iframe.src = 'about:blank'
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault()
       btns.forEach(b => { b.disabled = true; b.style.opacity = '0.6'; b.textContent = 'Subscribing...' })
+
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+        })
+        msg.classList.remove('hidden')
+        if (res.redirected || res.ok) {
+          msg.textContent = 'Subscribed! Check your inbox.'
+          msg.className = 'text-muted-foreground text-sm mt-2'
+          form.reset()
+        } else {
+          const json = await res.json().catch(() => ({}))
+          msg.textContent = json.message || 'Something went wrong.'
+          msg.className = 'text-destructive text-sm mt-2'
+        }
+      } catch {
+        msg.classList.remove('hidden')
+        msg.textContent = 'Something went wrong.'
+        msg.className = 'text-destructive text-sm mt-2'
+      } finally {
+        btns.forEach(b => { b.disabled = false; b.style.opacity = ''; b.textContent = 'Subscribe' })
+      }
     })
   })
 </script>
