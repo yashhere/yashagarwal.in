@@ -5,9 +5,10 @@
     results: [],
     loading: false,
     selectedIndex: 0,
-    pagefind: null,
+    pagefindReady: false,
 
     init() {
+      this.preloadPagefind()
       this.$watch('open', (v) => {
         if (v) {
           this.$nextTick(() => {
@@ -22,20 +23,29 @@
       })
     },
 
+    async preloadPagefind() {
+      try {
+        const pf = await import('/pagefind/pagefind.js')
+        await pf.init()
+        this.pagefindReady = true
+        window.__pagefind = pf
+      } catch {
+        this.pagefindReady = false
+      }
+    },
+
     async search() {
-      if (!this.query.trim()) { this.results = []; return }
+      if (!this.query.trim() || !this.pagefindReady) { this.results = []; return }
       this.loading = true
       try {
-        if (!this.pagefind) {
-          this.pagefind = await import('/pagefind/pagefind.js')
-          await this.pagefind.init()
-        }
-        const s = await this.pagefind.search(this.query)
+        const s = await window.__pagefind.search(this.query)
         const items = await Promise.all(s.results.map(r => r.data()))
         this.results = items.filter(item =>
           item.url.startsWith('/notes/') || item.url.startsWith('/scratch/')
         ).slice(0, 8)
         this.selectedIndex = 0
+      } catch {
+        this.results = []
       } finally {
         this.loading = false
       }
@@ -98,8 +108,12 @@
         </template>
       </div>
 
-      <div x-show="query && !loading && results.length === 0" class="px-4 py-6 text-center text-muted-foreground text-sm">
+      <div x-show="query && !loading && results.length === 0 && pagefindReady" class="px-4 py-6 text-center text-muted-foreground text-sm">
         No results found.
+      </div>
+
+      <div x-show="query && !loading && !pagefindReady" class="px-4 py-6 text-center text-muted-foreground text-sm">
+        Search is not available right now.
       </div>
 
       <div class="hidden sm:flex items-center gap-4 border-t border-border px-4 py-2 text-xs text-muted-foreground">
