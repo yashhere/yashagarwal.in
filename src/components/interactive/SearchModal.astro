@@ -56,7 +56,8 @@
     },
 
     onKeydown(e) {
-      if (e.key === 'Escape') { this.open = false }
+      if (!this.open) return
+      if (e.key === 'Escape') { this.open = false; return }
       if (e.key === 'ArrowDown') { e.preventDefault(); this.selectedIndex = Math.min(this.selectedIndex + 1, this.results.length - 1) }
       if (e.key === 'ArrowUp') { e.preventDefault(); this.selectedIndex = Math.max(this.selectedIndex - 1, 0) }
       if (e.key === 'Enter' && this.results[this.selectedIndex]) { this.select(this.results[this.selectedIndex].url) }
@@ -65,6 +66,7 @@
   @keydown.window.cmd.k.prevent="open = true"
   @keydown.window.ctrl.k.prevent="open = true"
   @open-search.window="open = true"
+  @keydown.window="onKeydown($event)"
 >
   <div
     x-show="open"
@@ -81,7 +83,7 @@
     @click.outside="open = false"
     x-cloak
   >
-    <div class="rounded-lg border border-border bg-background shadow-2xl" @keydown="onKeydown">
+    <div class="rounded-lg border border-border bg-background shadow-2xl">
       <div class="flex items-center gap-2 border-b border-border px-4 py-3">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-muted-foreground shrink-0"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
         <input
