@@ -12,7 +12,6 @@ import RelatedNotes from '../components/content/RelatedNotes.astro';
 import Backlinks from '../components/content/Backlinks.astro';
 import Comments from '../components/interactive/Comments.astro';
 import ReadingProgress from '../components/content/ReadingProgress.astro';
-import LikeButton from '../components/content/LikeButton.astro';
 import { Icon } from 'astro-icon/components';
 import type { ImageMetadata } from 'astro';
 
@@ -151,7 +150,6 @@ const breadcrumbItems = [
 
     <div class="mt-8 flex items-center justify-between">
       <div class="flex items-center gap-3">
-        <LikeButton slug={slug} />
         <a
           href={`https://x.com/intent/tweet?text=${encodeURIComponent(`https://yashagarwal.in/notes/${slug}`)}`}
           target="_blank"
