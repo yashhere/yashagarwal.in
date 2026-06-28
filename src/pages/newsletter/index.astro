@@ -84,6 +84,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro"
     })
 
     form.addEventListener('submit', () => {
+      iframe.src = 'about:blank'
       btn.disabled = true
       btn.style.opacity = '0.6'
       btn.textContent = 'Subscribing...'

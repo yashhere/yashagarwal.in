@@ -144,6 +144,7 @@ const row2 = footerLinks.slice(5)
     })
 
     form.addEventListener('submit', () => {
+      iframe.src = 'about:blank'
       btns.forEach(b => { b.disabled = true; b.style.opacity = '0.6'; b.textContent = 'Subscribing...' })
     })
   })
