@@ -10,7 +10,6 @@ import TagList from '../components/content/TagList.astro';
 import Series from '../components/content/Series.astro';
 import RelatedNotes from '../components/content/RelatedNotes.astro';
 import Backlinks from '../components/content/Backlinks.astro';
-import Comments from '../components/interactive/Comments.astro';
 import ReadingProgress from '../components/content/ReadingProgress.astro';
 import { Icon } from 'astro-icon/components';
 import type { ImageMetadata } from 'astro';
@@ -171,8 +170,17 @@ const breadcrumbItems = [
       </p>
     </div>
 
-    <div class="mt-8">
-      <Comments url={`https://yashagarwal.in/notes/${slug}`} slug={slug} />
+    <div class="mt-8 pt-6 pb-12 border-t border-border">
+      <p class="text-muted-foreground">
+        Thoughts or feedback?{" "}
+        <a
+          href={`mailto:hello@yashagarwal.in?subject=${encodeURIComponent(`Re: ${title}`)}`}
+          class="text-foreground underline underline-offset-2 hover:text-primary transition-colors"
+        >
+          Reply via email
+        </a>
+        . I read every message.
+      </p>
     </div>
   </div>
 
