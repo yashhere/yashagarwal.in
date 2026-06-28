@@ -1,0 +1,108 @@
+<div
+  x-data="{
+    open: false,
+    query: '',
+    results: [],
+    loading: false,
+    selectedIndex: 0,
+
+    init() {
+      this.$watch('open', (v) => {
+        if (v) {
+          this.$nextTick(() => {
+            const input = this.$el.querySelector('input[type=text]')
+            if (input) input.focus()
+          })
+        } else {
+          this.query = ''
+          this.results = []
+          this.selectedIndex = 0
+        }
+      })
+    },
+
+    async search() {
+      if (!this.query.trim()) { this.results = []; return }
+      this.loading = true
+      try {
+        const pf = await import('/pagefind/pagefind.js')
+        await pf.init()
+        const s = await pf.search(this.query)
+        const items = await Promise.all(s.results.map(r => r.data()))
+        this.results = items.filter(item =>
+          item.url.startsWith('/notes/') || item.url.startsWith('/scratch/')
+        ).slice(0, 8)
+        this.selectedIndex = 0
+      } finally {
+        this.loading = false
+      }
+    },
+
+    select(url) {
+      window.location.href = url
+    },
+
+    onKeydown(e) {
+      if (e.key === 'Escape') { this.open = false }
+      if (e.key === 'ArrowDown') { e.preventDefault(); this.selectedIndex = Math.min(this.selectedIndex + 1, this.results.length - 1) }
+      if (e.key === 'ArrowUp') { e.preventDefault(); this.selectedIndex = Math.max(this.selectedIndex - 1, 0) }
+      if (e.key === 'Enter' && this.results[this.selectedIndex]) { this.select(this.results[this.selectedIndex].url) }
+    }
+  }"
+  @keydown.window.cmd.k.prevent="open = true"
+  @keydown.window.ctrl.k.prevent="open = true"
+>
+  <div
+    x-show="open"
+    x-transition.opacity.duration.200ms
+    class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm"
+    @click="open = false"
+    x-cloak
+  ></div>
+
+  <div
+    x-show="open"
+    x-transition
+    class="fixed inset-x-0 top-[20vh] z-50 mx-auto max-w-lg px-4"
+    @click.outside="open = false"
+    x-cloak
+  >
+    <div class="rounded-lg border border-border bg-background shadow-2xl" @keydown="onKeydown">
+      <div class="flex items-center gap-2 border-b border-border px-4 py-3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-muted-foreground shrink-0"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input
+          type="text"
+          x-model="query"
+          @input.debounce.150ms="search()"
+          placeholder="Search notes..."
+          class="flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground"
+        >
+        <kbd class="hidden sm:inline-flex items-center rounded border border-border bg-muted/50 px-1.5 py-0.5 text-xs text-muted-foreground font-mono">esc</kbd>
+      </div>
+
+      <div x-show="results.length > 0" class="max-h-64 overflow-y-auto py-2">
+        <template x-for="(result, index) in results" :key="result.url">
+          <button
+            @click="select(result.url)"
+            @mouseenter="selectedIndex = index"
+            class="w-full px-4 py-2 text-left text-sm hover:bg-muted/50 transition-colors"
+            :class="{ 'bg-muted/30': index === selectedIndex }"
+          >
+            <div class="text-foreground truncate" x-text="result.meta?.title || result.url"></div>
+            <div class="text-muted-foreground text-xs truncate mt-0.5" x-html="result.excerpt"></div>
+          </button>
+        </template>
+      </div>
+
+      <div x-show="query && !loading && results.length === 0" class="px-4 py-6 text-center text-muted-foreground text-sm">
+        No results found.
+      </div>
+
+      <div class="hidden sm:flex items-center gap-4 border-t border-border px-4 py-2 text-xs text-muted-foreground">
+        <span class="flex items-center gap-1"><kbd class="rounded border border-border bg-muted/50 px-1 font-mono text-xs">&uarr;&darr;</kbd> navigate</span>
+        <span class="flex items-center gap-1"><kbd class="rounded border border-border bg-muted/50 px-1 font-mono text-xs">&crarr;</kbd> open</span>
+        <span class="flex items-center gap-1"><kbd class="rounded border border-border bg-muted/50 px-1 font-mono text-xs">esc</kbd> close</span>
+      </div>
+    </div>
+  </div>
+</div>
