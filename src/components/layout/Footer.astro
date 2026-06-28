@@ -141,13 +141,17 @@ const row2 = footerLinks.slice(5)
           method: 'POST',
           body: new FormData(form),
         })
+        const json = await res.json().catch(() => ({}))
         msg.classList.remove('hidden')
-        if (res.redirected || res.ok) {
+
+        if (json.data?.has_optin) {
+          msg.textContent = 'You are already subscribed.'
+          msg.className = 'text-muted-foreground text-sm mt-2'
+        } else if (res.ok) {
           msg.textContent = 'Subscribed! Check your inbox.'
           msg.className = 'text-muted-foreground text-sm mt-2'
           form.reset()
         } else {
-          const json = await res.json().catch(() => ({}))
           msg.textContent = json.message || 'Something went wrong.'
           msg.className = 'text-destructive text-sm mt-2'
         }

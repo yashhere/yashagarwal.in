@@ -255,7 +255,7 @@
     },
     {
       "source": "/api/subscribe",
-      "destination": "https://newsletter.yashagarwal.in/subscription/form"
+      "destination": "https://newsletter.yashagarwal.in/api/public/subscription"
     }
   ],
   "headers": [
