@@ -5,6 +5,7 @@
     results: [],
     loading: false,
     selectedIndex: 0,
+    pagefind: null,
 
     init() {
       this.$watch('open', (v) => {
@@ -25,9 +26,11 @@
       if (!this.query.trim()) { this.results = []; return }
       this.loading = true
       try {
-        const pf = await import('/pagefind/pagefind.js')
-        await pf.init()
-        const s = await pf.search(this.query)
+        if (!this.pagefind) {
+          this.pagefind = await import('/pagefind/pagefind.js')
+          await this.pagefind.init()
+        }
+        const s = await this.pagefind.search(this.query)
         const items = await Promise.all(s.results.map(r => r.data()))
         this.results = items.filter(item =>
           item.url.startsWith('/notes/') || item.url.startsWith('/scratch/')
@@ -51,6 +54,7 @@
   }"
   @keydown.window.cmd.k.prevent="open = true"
   @keydown.window.ctrl.k.prevent="open = true"
+  @open-search.window="open = true"
 >
   <div
     x-show="open"
@@ -63,7 +67,7 @@
   <div
     x-show="open"
     x-transition
-    class="fixed inset-x-0 top-[20vh] z-50 mx-auto max-w-lg px-4"
+    class="fixed inset-x-0 top-[15vh] z-50 mx-auto max-w-xl px-4"
     @click.outside="open = false"
     x-cloak
   >
