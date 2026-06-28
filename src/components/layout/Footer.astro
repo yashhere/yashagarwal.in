@@ -137,9 +137,12 @@ const row2 = footerLinks.slice(5)
       btns.forEach(b => { b.disabled = true; b.style.opacity = '0.6'; b.textContent = 'Subscribing...' })
 
       try {
+        const fd = new FormData(form)
+        fd.delete('nonce')
+        fd.delete('website')
         const res = await fetch(form.action, {
           method: 'POST',
-          body: new FormData(form),
+          body: fd,
         })
         const json = await res.json().catch(() => ({}))
         msg.classList.remove('hidden')
