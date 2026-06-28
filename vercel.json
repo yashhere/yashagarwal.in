@@ -248,6 +248,12 @@
       "permanent": true
     }
   ],
+  "rewrites": [
+    {
+      "source": "/api/altcha",
+      "destination": "https://newsletter.yashagarwal.in/api/public/captcha/altcha"
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
