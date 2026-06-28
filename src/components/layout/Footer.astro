@@ -4,8 +4,8 @@ import SocialLinks from '../../components/content/SocialLinks.astro';
 
 const currentYear = new Date().getFullYear();
 
-const { pathname } = Astro.url;
-const pathSegments = pathname.split("/").filter(Boolean);
+const { pathname } = Astro.url
+const pathSegments = pathname.split("/").filter(Boolean)
 const highlightedPath = pathSegments.length <= 1 ? pathname : `/${pathSegments[0]}`;
 
 const isActive = (href: string) => {
@@ -60,41 +60,7 @@ const row2 = footerLinks.slice(5)
         </div>
       </nav>
 
-      {/* Newsletter */}
-      <div class="border-y border-border py-4 w-full">
-        <div class="md:text-left text-center">
-          <p class="text-muted-foreground">Receive updates about things I am building or sharing.</p>
-          <form
-            id="subscribe-form"
-            action="https://newsletter.yashagarwal.in/api/public/subscription"
-            method="POST"
-            class="flex flex-col sm:flex-row w-full max-w-xs gap-2 mt-2 mx-auto md:mx-0"
-          >
-        <input
-          type="text"
-          name="name"
-          placeholder="Name"
-          class="border-border bg-background text-foreground placeholder:text-muted-foreground/50 sm:w-28 rounded border px-3 py-1.5 text-sm outline-none focus:border-foreground/30 transition-colors"
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="your@email.com"
-          required
-          class="border-border bg-background text-foreground placeholder:text-muted-foreground/50 flex-1 rounded border px-3 py-1.5 text-sm outline-none focus:border-foreground/30 transition-colors"
-        />
-        <input type="text" name="website" tabindex="-1" autocomplete="off" class="absolute opacity-0 pointer-events-none" />
-        <input type="hidden" name="l" value="813bf4ef-c08e-4a70-8673-3f8a0fb9e345" />
-        <button
-          type="submit"
-          class="bg-foreground text-background hover:bg-foreground/80 rounded px-3 py-1.5 text-sm font-medium transition-colors shrink-0"
-        >
-          Subscribe
-        </button>
-      </form>
-      <p id="subscribe-msg" class="text-muted-foreground hidden text-sm"></p>
-        </div>
-      </div>
+      {/* Newsletter link — form lives on /newsletter page */}
 
       {/* Bottom row: clock + copyright */}
       <div class="flex items-center justify-between w-full mt-1">
@@ -107,49 +73,3 @@ const row2 = footerLinks.slice(5)
     </div>
   </div>
 </footer>
-
-<script>
-  document.getElementById('subscribe-form')?.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const form = e.target as HTMLFormElement;
-    const msg = document.getElementById('subscribe-msg');
-    const btn = form.querySelector('button') as HTMLButtonElement;
-
-    btn.disabled = true;
-    btn.textContent = '...';
-
-    try {
-      const res = await fetch(form.action, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams({
-          name: (form.querySelector('[name=name]') as HTMLInputElement).value,
-          email: (form.querySelector('[name=email]') as HTMLInputElement).value,
-          l: (form.querySelector('[name=l]') as HTMLInputElement).value,
-        }).toString(),
-      });
-      const data = await res.json();
-
-      if (msg) {
-        msg.classList.remove('hidden');
-        msg.textContent = res.ok
-          ? 'Subscribed! Check your inbox.'
-          : data.message || 'Something went wrong.';
-        msg.className = res.ok
-          ? 'text-muted-foreground text-sm'
-          : 'text-destructive text-sm';
-      }
-
-      if (res.ok) form.reset();
-    } catch {
-      if (msg) {
-        msg.classList.remove('hidden');
-        msg.textContent = 'Something went wrong.';
-        msg.className = 'text-destructive text-sm';
-      }
-    } finally {
-      btn.disabled = false;
-      btn.textContent = 'Subscribe';
-    }
-  });
-</script>

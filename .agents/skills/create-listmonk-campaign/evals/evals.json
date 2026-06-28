@@ -1,0 +1,23 @@
+{
+  "skill_name": "create-listmonk-campaign",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I want to send a newsletter to my subscribers about the new /scratch section I added to my site. Keep it short and personal.",
+      "expected_output": "A draft campaign is created via the listmonk API with a markdown body mentioning /scratch, site updates, and matching the example tone. Agent asks user for confirmation before testing and sending.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Create a campaign about my homelab setup. I have a Raspberry Pi, an OCI VM, and an old HP laptop. Also mention I plan to cluster them together.",
+      "expected_output": "Campaign draft created with a markdown body describing the homelab setup, mentioning the specific devices, and written in plain personal style. Agent confirms at each step.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Send a quick update to my mailing list. Subject: 'Site updates'. Content: I added a /now page and a /uses page to my website. Ask me before sending.",
+      "expected_output": "Campaign with subject 'Site updates', body mentioning /now and /uses pages. Agent asks for confirmation before testing and before starting the campaign.",
+      "files": []
+    }
+  ]
+}
