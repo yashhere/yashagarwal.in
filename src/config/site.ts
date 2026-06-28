@@ -1,6 +1,6 @@
 export const siteConfig = {
   name: "Yash Agarwal",
-  description: "Personal blog and portfolio of Yash Agarwal.",
+  description: "Yash Agarwal writes about software engineering, infrastructure, and things he is building.",
   url: "https://yashagarwal.in",
   ogImage: "https://yashagarwal.in/og.jpg",
   featuredNotes: 5,
