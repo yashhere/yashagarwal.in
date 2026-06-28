@@ -68,8 +68,9 @@ const row2 = footerLinks.slice(5)
           <p class="text-muted-foreground">Receive updates about things I am building or sharing.</p>
           <form
             id="subscribe-form"
-            action="https://newsletter.yashagarwal.in/subscription/form"
+            action="/api/subscribe"
             method="POST"
+            target="subscribe-iframe"
             class="flex flex-col gap-2 mt-2 max-w-xs mx-auto md:mx-0"
           >
             <input type="hidden" name="nonce" />
@@ -110,6 +111,7 @@ const row2 = footerLinks.slice(5)
             </button>
           </form>
           <script src="https://newsletter.yashagarwal.in/public/static/altcha.umd.js" defer></script>
+          <iframe name="subscribe-iframe" class="hidden"></iframe>
           <p id="subscribe-msg" class="hidden text-sm mt-2"></p>
         </div>
       </div>
@@ -129,56 +131,20 @@ const row2 = footerLinks.slice(5)
 
 <script>
   document.querySelectorAll('#subscribe-form').forEach(form => {
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault()
-      const msg = form.parentElement.querySelector('#subscribe-msg')
-      const btn = form.querySelectorAll('button[type="submit"]')
-      const visibleBtn = Array.from(btn).find(b => b.offsetParent !== null) || btn[btn.length - 1]
+    const iframe = document.querySelector('iframe[name="subscribe-iframe"]')
+    const msg = form.parentElement.querySelector('#subscribe-msg')
+    const btns = form.querySelectorAll('button[type="submit"]')
 
-      visibleBtn.disabled = true
-      visibleBtn.style.opacity = '0.6'
-      visibleBtn.textContent = 'Subscribing...'
+    iframe.addEventListener('load', () => {
+      btns.forEach(b => { b.disabled = false; b.style.opacity = ''; b.textContent = 'Subscribe' })
+      msg.classList.remove('hidden')
+      msg.textContent = 'Subscribed! Check your inbox.'
+      msg.className = 'text-muted-foreground text-sm mt-2'
+      form.reset()
+    })
 
-      const data = new URLSearchParams()
-      data.set('name', form.querySelector('[name=name]').value)
-      data.set('email', form.querySelector('[name=email]').value)
-      data.set('l', form.querySelector('[name=l]').value)
-      data.set('nonce', form.querySelector('[name=nonce]').value)
-
-      // Include Altcha payload if widget is present
-      const altcha = form.querySelector('altcha-widget')
-      if (altcha && altcha.payload) {
-        data.set('altcha', altcha.payload)
-      }
-
-      try {
-        const res = await fetch(form.action, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: data.toString(),
-        })
-
-        if (res.redirected) {
-          // listmonk redirects on success — treat as success
-          msg.classList.remove('hidden')
-          msg.textContent = 'Subscribed! Check your inbox.'
-          msg.className = 'text-muted-foreground text-sm mt-2'
-          form.reset()
-        } else {
-          const json = await res.json()
-          msg.classList.remove('hidden')
-          msg.textContent = json.message || 'Something went wrong.'
-          msg.className = res.ok ? 'text-muted-foreground text-sm mt-2' : 'text-destructive text-sm mt-2'
-        }
-      } catch {
-        msg.classList.remove('hidden')
-        msg.textContent = 'Something went wrong.'
-        msg.className = 'text-destructive text-sm mt-2'
-      } finally {
-        visibleBtn.disabled = false
-        visibleBtn.style.opacity = ''
-        visibleBtn.textContent = 'Subscribe'
-      }
+    form.addEventListener('submit', () => {
+      btns.forEach(b => { b.disabled = true; b.style.opacity = '0.6'; b.textContent = 'Subscribing...' })
     })
   })
 </script>

@@ -25,8 +25,9 @@ import BaseLayout from "../../layouts/BaseLayout.astro"
 
       <form
         id="subscribe-form"
-        action="https://newsletter.yashagarwal.in/subscription/form"
+        action="/api/subscribe"
         method="POST"
+        target="subscribe-iframe"
         class="flex flex-col gap-3 max-w-md"
       >
         <input type="hidden" name="nonce" />
@@ -59,6 +60,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro"
         </button>
       </form>
       <script src="https://newsletter.yashagarwal.in/public/static/altcha.umd.js" defer></script>
+      <iframe name="subscribe-iframe" class="hidden"></iframe>
       <p id="subscribe-msg" class="hidden text-sm mt-3"></p>
     </div>
   </div>
@@ -67,53 +69,24 @@ import BaseLayout from "../../layouts/BaseLayout.astro"
 <script>
   const form = document.getElementById('subscribe-form')
   if (form) {
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault()
-      const msg = document.getElementById('subscribe-msg')
-      const btn = form.querySelector('button[type="submit"]')
+    const iframe = document.querySelector('iframe[name="subscribe-iframe"]')
+    const msg = document.getElementById('subscribe-msg')
+    const btn = form.querySelector('button[type="submit"]')
 
+    iframe.addEventListener('load', () => {
+      btn.disabled = false
+      btn.style.opacity = ''
+      btn.textContent = 'Subscribe'
+      msg.classList.remove('hidden')
+      msg.textContent = 'Subscribed! Check your inbox.'
+      msg.className = 'text-muted-foreground text-sm mt-3'
+      form.reset()
+    })
+
+    form.addEventListener('submit', () => {
       btn.disabled = true
       btn.style.opacity = '0.6'
       btn.textContent = 'Subscribing...'
-
-      const data = new URLSearchParams()
-      data.set('name', form.querySelector('[name=name]').value)
-      data.set('email', form.querySelector('[name=email]').value)
-      data.set('l', form.querySelector('[name=l]').value)
-      data.set('nonce', form.querySelector('[name=nonce]').value)
-
-      const altcha = form.querySelector('altcha-widget')
-      if (altcha && altcha.payload) {
-        data.set('altcha', altcha.payload)
-      }
-
-      try {
-        const res = await fetch(form.action, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: data.toString(),
-        })
-
-        if (res.redirected) {
-          msg.classList.remove('hidden')
-          msg.textContent = 'Subscribed! Check your inbox.'
-          msg.className = 'text-muted-foreground text-sm mt-3'
-          form.reset()
-        } else {
-          const json = await res.json()
-          msg.classList.remove('hidden')
-          msg.textContent = json.message || 'Something went wrong.'
-          msg.className = res.ok ? 'text-muted-foreground text-sm mt-3' : 'text-destructive text-sm mt-3'
-        }
-      } catch {
-        msg.classList.remove('hidden')
-        msg.textContent = 'Something went wrong.'
-        msg.className = 'text-destructive text-sm mt-3'
-      } finally {
-        btn.disabled = false
-        btn.style.opacity = ''
-        btn.textContent = 'Subscribe'
-      }
     })
   }
 </script>
