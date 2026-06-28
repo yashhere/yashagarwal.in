@@ -5,7 +5,6 @@ import SocialLinks from '../../components/content/SocialLinks.astro';
 const currentYear = new Date().getFullYear();
 
 const { pathname } = Astro.url
-const isNewsletterPage = pathname === "/newsletter" || pathname === "/newsletter/"
 const pathSegments = pathname.split("/").filter(Boolean)
 const highlightedPath = pathSegments.length <= 1 ? pathname : `/${pathSegments[0]}`;
 
@@ -61,59 +60,7 @@ const row2 = footerLinks.slice(5)
         </div>
       </nav>
 
-      {/* Newsletter — hidden on the newsletter page itself */}
-      {!isNewsletterPage && (
-      <div class="border-y border-border py-4 w-full">
-        <div class="md:text-left text-center">
-          <p class="text-muted-foreground">Receive updates about things I am building or sharing.</p>
-          <form
-            id="subscribe-form"
-            action="/api/subscribe"
-            method="POST"
-            class="flex flex-col gap-2 mt-2 max-w-xs mx-auto md:mx-0"
-          >
-            <input type="hidden" name="nonce" />
-            <div class="flex flex-col sm:flex-row gap-2">
-              <input
-                type="text"
-                name="name"
-                placeholder="Name"
-                class="border-border bg-background text-foreground placeholder:text-muted-foreground/50 sm:w-28 rounded border px-3 py-1.5 text-sm outline-none focus:border-foreground/30 transition-colors"
-              />
-              <input
-                type="email"
-                name="email"
-                placeholder="your@email.com"
-                required
-                class="border-border bg-background text-foreground placeholder:text-muted-foreground/50 flex-1 rounded border px-3 py-1.5 text-sm outline-none focus:border-foreground/30 transition-colors"
-              />
-              <input type="text" name="website" tabindex="-1" autocomplete="off" class="absolute opacity-0 pointer-events-none" />
-              <input type="hidden" name="l" value="1706bf84-4ff4-4419-8aea-fcadb21a9d3b" />
-              <button
-                type="submit"
-                class="bg-foreground text-background hover:bg-foreground/80 rounded px-3 py-1.5 text-sm font-medium transition-colors shrink-0 hidden sm:block"
-              >
-                Subscribe
-              </button>
-            </div>
-            <altcha-widget
-              challengeurl="/api/altcha"
-              hidefooter hidelogo
-              class="-mx-3 -mt-2 self-start"
-              style="--altcha-max-width: 100%; --altcha-border-width: 0; --altcha-border-radius: 0; --altcha-color-base: transparent; --altcha-color-text: var(--foreground); --altcha-color-border: transparent;"
-            ></altcha-widget>
-            <button
-              type="submit"
-              class="bg-foreground text-background hover:bg-foreground/80 rounded px-3 py-1.5 text-sm font-medium transition-colors sm:hidden w-full"
-            >
-              Subscribe
-            </button>
-          </form>
-          <script src="https://newsletter.yashagarwal.in/public/static/altcha.umd.js" defer></script>
-          <p id="subscribe-msg" class="hidden text-sm mt-2"></p>
-        </div>
-      </div>
-      )}
+      {/* Newsletter link — form lives on /newsletter page */}
 
       {/* Bottom row: clock + copyright */}
       <div class="flex items-center justify-between w-full mt-1">
@@ -126,45 +73,3 @@ const row2 = footerLinks.slice(5)
     </div>
   </div>
 </footer>
-
-<script>
-  document.querySelectorAll('#subscribe-form').forEach(form => {
-    const msg = form.parentElement.querySelector('#subscribe-msg')
-    const btns = form.querySelectorAll('button[type="submit"]')
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault()
-      btns.forEach(b => { b.disabled = true; b.style.opacity = '0.6'; b.textContent = 'Subscribing...' })
-
-      try {
-        const fd = new FormData(form)
-        fd.delete('nonce')
-        fd.delete('website')
-        const res = await fetch(form.action, {
-          method: 'POST',
-          body: fd,
-        })
-        const json = await res.json().catch(() => ({}))
-        msg.classList.remove('hidden')
-
-        if (json.data?.has_optin) {
-          msg.textContent = 'You are already subscribed.'
-          msg.className = 'text-muted-foreground text-sm mt-2'
-        } else if (res.ok) {
-          msg.textContent = 'Subscribed! Check your inbox.'
-          msg.className = 'text-muted-foreground text-sm mt-2'
-          form.reset()
-        } else {
-          msg.textContent = json.message || 'Something went wrong.'
-          msg.className = 'text-destructive text-sm mt-2'
-        }
-      } catch {
-        msg.classList.remove('hidden')
-        msg.textContent = 'Something went wrong.'
-        msg.className = 'text-destructive text-sm mt-2'
-      } finally {
-        btns.forEach(b => { b.disabled = false; b.style.opacity = ''; b.textContent = 'Subscribe' })
-      }
-    })
-  })
-</script>
