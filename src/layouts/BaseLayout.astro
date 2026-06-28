@@ -5,6 +5,7 @@ import "../styles/tooltip.css"
 
 import Footer from "../components/layout/Footer.astro"
 import Navigation from "../components/layout/Navigation.astro"
+import SearchModal from "../components/interactive/SearchModal.astro"
 import { siteConfig } from "../config/site"
 import { cn } from "../lib/utils"
 
@@ -112,5 +113,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || "https://yashagar
       <slot />
     </main>
     <Footer />
+    <SearchModal />
   </body>
 </html>
