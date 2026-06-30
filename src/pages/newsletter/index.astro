@@ -71,8 +71,51 @@ const isProduction = !!turnstileSiteKey
               Subscribe
             </button>
           </form>
-          <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" defer></script>
+          <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" defer></script>
           <script>
+            // The widget uses the site's theme toggle (not the OS preference)
+            // because data-theme="auto" only reads prefers-color-scheme, and
+            // the iframe is cross-origin so it cannot see the parent's classes.
+            (function () {
+              var ts = document.querySelector('.cf-turnstile')
+              if (!ts) return
+
+              function widgetTheme() {
+                return document.documentElement.classList.contains('dark') ? 'dark' : 'light'
+              }
+
+              function render() {
+                // Clear the previous widget if there is one.
+                var oldWidget = ts.getAttribute('data-widget-id')
+                if (oldWidget && window.turnstile) {
+                  window.turnstile.remove(oldWidget)
+                }
+                ts.setAttribute('data-theme', widgetTheme())
+                var id = window.turnstile.render(ts, {
+                  sitekey: ts.getAttribute('data-sitekey'),
+                  theme: widgetTheme(),
+                  callback: function () { window.onTurnstileVerified() },
+                  'expired-callback': function () { window.onTurnstileExpired() },
+                  'error-callback': function () { window.onTurnstileError() },
+                })
+                ts.setAttribute('data-widget-id', id)
+              }
+
+              if (window.turnstile) {
+                render()
+              } else {
+                // wait for the api script to load
+                var check = setInterval(function () {
+                  if (window.turnstile) { clearInterval(check); render() }
+                }, 50)
+              }
+
+              // When the site theme toggles, re-render the widget.
+              new MutationObserver(function () {
+                if (window.turnstile) render()
+              }).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] })
+            })()
+
             window.onTurnstileVerified = () => {
               const btn = document.getElementById('subscribe-btn')
               if (btn) { btn.disabled = false; btn.classList.remove('opacity-60') }
