@@ -2,11 +2,11 @@
 import Heading from "../../components/ui/Heading.astro"
 import BaseLayout from "../../layouts/BaseLayout.astro"
 
-// Real turnstile site key is only set in the Vercel Production environment.
-// Previews and local dev fall back to the always-pass test key, which works on
-// any hostname. The matching secret is verified server-side by /api/subscribe.
-const turnstileSiteKey =
-  import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || "1x00000000000000000000AA"
+// The Turnstile site key is only set in the Vercel Production environment.
+// When the key is missing, the form is replaced with a message. This stops
+// anyone from subscribing through a preview deployment or a local build.
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY
+const isProduction = !!turnstileSiteKey
 ---
 
 <BaseLayout
@@ -29,127 +29,137 @@ const turnstileSiteKey =
       <Heading level="h3" as="h2" class="mb-3">Subscribe</Heading>
       <p class="text-muted-foreground mb-4">You can unsubscribe at any time.</p>
 
-      <form
-        id="subscribe-form"
-        action="/api/subscribe"
-        method="POST"
-        class="flex flex-col gap-3 max-w-md"
-      >
-        <input type="hidden" name="nonce" />
-        <input
-          type="text"
-          name="name"
-          placeholder="Name"
-          class="border-border bg-background text-foreground placeholder:text-muted-foreground/50 rounded border px-3 py-2 text-sm outline-none focus:border-foreground/30 transition-colors"
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="your@email.com"
-          required
-          class="border-border bg-background text-foreground placeholder:text-muted-foreground/50 rounded border px-3 py-2 text-sm outline-none focus:border-foreground/30 transition-colors"
-        />
-        <input type="text" name="website" tabindex="-1" autocomplete="off" class="absolute opacity-0 pointer-events-none" aria-hidden="true" />
-        <input type="hidden" name="l" value="1706bf84-4ff4-4419-8aea-fcadb21a9d3b" />
-        <div
-          class="cf-turnstile -mx-3"
-          data-sitekey={turnstileSiteKey}
-          data-theme="auto"
-          data-callback="onTurnstileVerified"
-          data-expired-callback="onTurnstileExpired"
-          data-error-callback="onTurnstileError"
-        ></div>
-        <input type="hidden" name="cf-turnstile-response" />
-        <button
-          type="submit"
-          id="subscribe-btn"
-          disabled
-          class="bg-foreground text-background hover:bg-foreground/80 rounded px-4 py-2 text-sm font-medium transition-colors self-start opacity-60"
-        >
-          Subscribe
-        </button>
-      </form>
-      <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" defer></script>
-      <script>
-        window.onTurnstileVerified = () => {
-          const btn = document.getElementById('subscribe-btn')
-          if (btn) { btn.disabled = false; btn.classList.remove('opacity-60') }
-        }
-        window.onTurnstileExpired = window.onTurnstileError = () => {
-          const btn = document.getElementById('subscribe-btn')
-          if (btn) { btn.disabled = true; btn.classList.add('opacity-60') }
-        }
-      </script>
-      <p id="subscribe-msg" class="hidden text-sm mt-3"></p>
+      {isProduction ? (
+        <>
+          <form
+            id="subscribe-form"
+            action="/api/subscribe"
+            method="POST"
+            class="flex flex-col gap-3 max-w-md"
+          >
+            <input type="hidden" name="nonce" />
+            <input
+              type="text"
+              name="name"
+              placeholder="Name"
+              class="border-border bg-background text-foreground placeholder:text-muted-foreground/50 rounded border px-3 py-2 text-sm outline-none focus:border-foreground/30 transition-colors"
+            />
+            <input
+              type="email"
+              name="email"
+              placeholder="your@email.com"
+              required
+              class="border-border bg-background text-foreground placeholder:text-muted-foreground/50 rounded border px-3 py-2 text-sm outline-none focus:border-foreground/30 transition-colors"
+            />
+            <input type="text" name="website" tabindex="-1" autocomplete="off" class="absolute opacity-0 pointer-events-none" aria-hidden="true" />
+            <input type="hidden" name="l" value="1706bf84-4ff4-4419-8aea-fcadb21a9d3b" />
+            <div
+              class="cf-turnstile -mx-3"
+              data-sitekey={turnstileSiteKey}
+              data-theme="auto"
+              data-callback="onTurnstileVerified"
+              data-expired-callback="onTurnstileExpired"
+              data-error-callback="onTurnstileError"
+            ></div>
+            <input type="hidden" name="cf-turnstile-response" />
+            <button
+              type="submit"
+              id="subscribe-btn"
+              disabled
+              class="bg-foreground text-background hover:bg-foreground/80 rounded px-4 py-2 text-sm font-medium transition-colors self-start opacity-60"
+            >
+              Subscribe
+            </button>
+          </form>
+          <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" defer></script>
+          <script>
+            window.onTurnstileVerified = () => {
+              const btn = document.getElementById('subscribe-btn')
+              if (btn) { btn.disabled = false; btn.classList.remove('opacity-60') }
+            }
+            window.onTurnstileExpired = window.onTurnstileError = () => {
+              const btn = document.getElementById('subscribe-btn')
+              if (btn) { btn.disabled = true; btn.classList.add('opacity-60') }
+            }
+          </script>
+          <p id="subscribe-msg" class="hidden text-sm mt-3"></p>
+        </>
+      ) : (
+        <p class="text-muted-foreground text-sm">
+          This form is only available on yashagarwal.in.
+        </p>
+      )}
     </div>
   </div>
 </BaseLayout>
 
-<script>
-  const form = document.getElementById('subscribe-form')
-  if (form) {
-    const msg = document.getElementById('subscribe-msg')
-    const btn = document.getElementById('subscribe-btn')
+{isProduction && (
+  <script>
+    const form = document.getElementById('subscribe-form')
+    if (form) {
+      const msg = document.getElementById('subscribe-msg')
+      const btn = document.getElementById('subscribe-btn')
 
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault()
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault()
 
-      const fd = new FormData(form)
-      const turnstileToken = fd.get('cf-turnstile-response')
+        const fd = new FormData(form)
+        const turnstileToken = fd.get('cf-turnstile-response')
 
-      // Honeypot: real users leave this hidden field empty. Bots that fill
-      // every field are dropped silently.
-      if (fd.get('website')) {
-        msg.classList.remove('hidden')
-        msg.textContent = 'Subscribed! Check your inbox.'
-        msg.className = 'text-muted-foreground text-sm mt-3'
-        form.reset()
-        return
-      }
-
-      if (!turnstileToken) {
-        msg.classList.remove('hidden')
-        msg.textContent = 'Please complete the verification.'
-        msg.className = 'text-destructive text-sm mt-3'
-        return
-      }
-
-      fd.delete('nonce')
-      fd.delete('website')
-      btn.disabled = true
-      btn.classList.add('opacity-60')
-      btn.textContent = 'Subscribing...'
-
-      try {
-        const res = await fetch(form.action, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            name: fd.get('name'),
-            email: fd.get('email'),
-            l: fd.get('l'),
-            turnstileToken,
-          }),
-        })
-        msg.classList.remove('hidden')
-        if (res.ok) {
+        // Honeypot: real users leave this hidden field empty. Bots that fill
+        // every field are dropped silently.
+        if (fd.get('website')) {
+          msg.classList.remove('hidden')
           msg.textContent = 'Subscribed! Check your inbox.'
           msg.className = 'text-muted-foreground text-sm mt-3'
           form.reset()
-        } else {
-          const json = await res.json().catch(() => ({}))
-          msg.textContent = json.message || 'Something went wrong.'
-          msg.className = 'text-destructive text-sm mt-3'
+          return
         }
-      } catch {
-        msg.classList.remove('hidden')
-        msg.textContent = 'Something went wrong.'
-        msg.className = 'text-destructive text-sm mt-3'
-      } finally {
-        btn.disabled = false
-        btn.classList.remove('opacity-60')
-        btn.textContent = 'Subscribe'
-      }
-    })
-  }
-</script>
+
+        if (!turnstileToken) {
+          msg.classList.remove('hidden')
+          msg.textContent = 'Please complete the verification.'
+          msg.className = 'text-destructive text-sm mt-3'
+          return
+        }
+
+        fd.delete('nonce')
+        fd.delete('website')
+        btn.disabled = true
+        btn.classList.add('opacity-60')
+        btn.textContent = 'Subscribing...'
+
+        try {
+          const res = await fetch(form.action, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              name: fd.get('name'),
+              email: fd.get('email'),
+              l: fd.get('l'),
+              turnstileToken,
+            }),
+          })
+          msg.classList.remove('hidden')
+          if (res.ok) {
+            msg.textContent = 'Subscribed! Check your inbox.'
+            msg.className = 'text-muted-foreground text-sm mt-3'
+            form.reset()
+          } else {
+            const json = await res.json().catch(() => ({}))
+            msg.textContent = json.message || 'Something went wrong.'
+            msg.className = 'text-destructive text-sm mt-3'
+          }
+        } catch {
+          msg.classList.remove('hidden')
+          msg.textContent = 'Something went wrong.'
+          msg.className = 'text-destructive text-sm mt-3'
+        } finally {
+          btn.disabled = false
+          btn.classList.remove('opacity-60')
+          btn.textContent = 'Subscribe'
+        }
+      })
+    }
+  </script>
+)}
