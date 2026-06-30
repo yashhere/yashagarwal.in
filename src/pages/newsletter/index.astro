@@ -60,7 +60,9 @@ import BaseLayout from "../../layouts/BaseLayout.astro"
         </div>
         <button
           type="submit"
-          class="bg-foreground text-background hover:bg-foreground/80 rounded px-4 py-2 text-sm font-medium transition-colors self-start"
+          id="subscribe-btn"
+          disabled
+          class="bg-foreground text-background hover:bg-foreground/80 rounded px-4 py-2 text-sm font-medium transition-colors self-start opacity-60"
         >
           Subscribe
         </button>
@@ -72,6 +74,16 @@ import BaseLayout from "../../layouts/BaseLayout.astro"
           const p = document.getElementById('altcha-loading')
           if (w) w.style.visibility = 'visible'
           if (p) p.style.display = 'none'
+          w.addEventListener('statechange', (e) => {
+            const state = e.detail && e.detail.state
+            if (state === 'verified') {
+              w.dataset.verified = 'true'
+              const btn = document.getElementById('subscribe-btn')
+              if (btn) { btn.disabled = false; btn.classList.remove('opacity-60') }
+            } else if (state === 'error' || state === 'expired') {
+              delete w.dataset.verified
+            }
+          })
         })
       </script>
       <p id="subscribe-msg" class="hidden text-sm mt-3"></p>
@@ -83,18 +95,38 @@ import BaseLayout from "../../layouts/BaseLayout.astro"
   const form = document.getElementById('subscribe-form')
   if (form) {
     const msg = document.getElementById('subscribe-msg')
-    const btn = form.querySelector('button[type="submit"]')
+    const btn = document.getElementById('subscribe-btn')
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault()
+
+      const fd = new FormData(form)
+      // Honeypot: real users leave this hidden field empty. Bots that fill
+      // every field are dropped silently.
+      if (fd.get('website')) {
+        msg.classList.remove('hidden')
+        msg.textContent = 'Subscribed! Check your inbox.'
+        msg.className = 'text-muted-foreground text-sm mt-3'
+        form.reset()
+        return
+      }
+
+      // Require the proof-of-work captcha to be solved before sending.
+      const widget = document.getElementById('altcha-widget')
+      if (!widget || widget.dataset.verified !== 'true') {
+        msg.classList.remove('hidden')
+        msg.textContent = 'Please complete the verification.'
+        msg.className = 'text-destructive text-sm mt-3'
+        return
+      }
+
+      fd.delete('nonce')
+      fd.delete('website')
       btn.disabled = true
-      btn.style.opacity = '0.6'
+      btn.classList.add('opacity-60')
       btn.textContent = 'Subscribing...'
 
       try {
-        const fd = new FormData(form)
-        fd.delete('nonce')
-        fd.delete('website')
         const res = await fetch(form.action, {
           method: 'POST',
           body: fd,
@@ -115,7 +147,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro"
         msg.className = 'text-destructive text-sm mt-3'
       } finally {
         btn.disabled = false
-        btn.style.opacity = ''
+        btn.classList.remove('opacity-60')
         btn.textContent = 'Subscribe'
       }
     })
