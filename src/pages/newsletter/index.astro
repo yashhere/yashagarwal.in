@@ -43,21 +43,17 @@ import BaseLayout from "../../layouts/BaseLayout.astro"
           required
           class="border-border bg-background text-foreground placeholder:text-muted-foreground/50 rounded border px-3 py-2 text-sm outline-none focus:border-foreground/30 transition-colors"
         />
-        <input type="text" name="website" tabindex="-1" autocomplete="off" class="absolute opacity-0 pointer-events-none" />
+        <input type="text" name="website" tabindex="-1" autocomplete="off" class="absolute opacity-0 pointer-events-none" aria-hidden="true" />
         <input type="hidden" name="l" value="1706bf84-4ff4-4419-8aea-fcadb21a9d3b" />
-        <div style="display: grid; min-height: 44px;">
-          <altcha-widget
-            id="altcha-widget"
-            challengeurl="/api/altcha"
-            hidefooter hidelogo
-            class="-mx-3 -mt-2 self-start"
-            style="--altcha-max-width: 100%; --altcha-border-width: 0; --altcha-border-radius: 0; --altcha-color-base: transparent; --altcha-color-text: var(--foreground); --altcha-color-border: transparent; grid-area: 1/1; visibility: hidden;"
-          ></altcha-widget>
-          <span id="altcha-loading" class="self-start text-muted-foreground flex items-center gap-2" style="grid-area: 1/1;">
-            <span class="inline-block h-4 w-4 animate-spin rounded-full border-2 border-muted-foreground/30 border-t-muted-foreground"></span>
-            Loading verification...
-          </span>
-        </div>
+        <div
+          class="cf-turnstile -mx-3"
+          data-sitekey="1x00000000000000000000AA"
+          data-theme="auto"
+          data-callback="onTurnstileVerified"
+          data-expired-callback="onTurnstileExpired"
+          data-error-callback="onTurnstileError"
+        ></div>
+        <input type="hidden" name="cf-turnstile-response" />
         <button
           type="submit"
           id="subscribe-btn"
@@ -67,24 +63,16 @@ import BaseLayout from "../../layouts/BaseLayout.astro"
           Subscribe
         </button>
       </form>
-      <script src="https://newsletter.yashagarwal.in/public/static/altcha.umd.js" defer></script>
+      <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" defer></script>
       <script>
-        customElements.whenDefined('altcha-widget').then(() => {
-          const w = document.getElementById('altcha-widget')
-          const p = document.getElementById('altcha-loading')
-          if (w) w.style.visibility = 'visible'
-          if (p) p.style.display = 'none'
-          w.addEventListener('statechange', (e) => {
-            const state = e.detail && e.detail.state
-            if (state === 'verified') {
-              w.dataset.verified = 'true'
-              const btn = document.getElementById('subscribe-btn')
-              if (btn) { btn.disabled = false; btn.classList.remove('opacity-60') }
-            } else if (state === 'error' || state === 'expired') {
-              delete w.dataset.verified
-            }
-          })
-        })
+        window.onTurnstileVerified = () => {
+          const btn = document.getElementById('subscribe-btn')
+          if (btn) { btn.disabled = false; btn.classList.remove('opacity-60') }
+        }
+        window.onTurnstileExpired = window.onTurnstileError = () => {
+          const btn = document.getElementById('subscribe-btn')
+          if (btn) { btn.disabled = true; btn.classList.add('opacity-60') }
+        }
       </script>
       <p id="subscribe-msg" class="hidden text-sm mt-3"></p>
     </div>
@@ -101,6 +89,8 @@ import BaseLayout from "../../layouts/BaseLayout.astro"
       e.preventDefault()
 
       const fd = new FormData(form)
+      const turnstileToken = fd.get('cf-turnstile-response')
+
       // Honeypot: real users leave this hidden field empty. Bots that fill
       // every field are dropped silently.
       if (fd.get('website')) {
@@ -111,9 +101,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro"
         return
       }
 
-      // Require the proof-of-work captcha to be solved before sending.
-      const widget = document.getElementById('altcha-widget')
-      if (!widget || widget.dataset.verified !== 'true') {
+      if (!turnstileToken) {
         msg.classList.remove('hidden')
         msg.textContent = 'Please complete the verification.'
         msg.className = 'text-destructive text-sm mt-3'
@@ -129,7 +117,13 @@ import BaseLayout from "../../layouts/BaseLayout.astro"
       try {
         const res = await fetch(form.action, {
           method: 'POST',
-          body: fd,
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: fd.get('name'),
+            email: fd.get('email'),
+            l: fd.get('l'),
+            turnstileToken,
+          }),
         })
         msg.classList.remove('hidden')
         if (res.ok) {
