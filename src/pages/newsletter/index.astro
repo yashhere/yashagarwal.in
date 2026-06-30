@@ -1,6 +1,12 @@
 ---
 import Heading from "../../components/ui/Heading.astro"
 import BaseLayout from "../../layouts/BaseLayout.astro"
+
+// Real turnstile site key is only set in the Vercel Production environment.
+// Previews and local dev fall back to the always-pass test key, which works on
+// any hostname. The matching secret is verified server-side by /api/subscribe.
+const turnstileSiteKey =
+  import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || "1x00000000000000000000AA"
 ---
 
 <BaseLayout
@@ -47,7 +53,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro"
         <input type="hidden" name="l" value="1706bf84-4ff4-4419-8aea-fcadb21a9d3b" />
         <div
           class="cf-turnstile -mx-3"
-          data-sitekey="0x4AAAAAADtNAy6ksaUHlSH1"
+          data-sitekey={turnstileSiteKey}
           data-theme="auto"
           data-callback="onTurnstileVerified"
           data-expired-callback="onTurnstileExpired"
