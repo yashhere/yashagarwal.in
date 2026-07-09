@@ -446,7 +446,7 @@ svg p {
 }
 
 .img-unblur {
-  animation: img-unblur 0.8s linear;
+  animation: img-unblur 0.6s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -460,7 +460,6 @@ svg p {
   from {
     filter: blur(12px);
   }
-
   to {
     filter: blur(0);
   }

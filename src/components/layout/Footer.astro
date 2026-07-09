@@ -42,7 +42,7 @@ const row2 = footerLinks.slice(5)
           {row1.map((link) => (
             <a
               href={link.href}
-              class={`transition-colors no-underline ${isActive(link.href) ? "text-foreground" : "text-muted-foreground hover:text-foreground"}`}
+              class={`transition-[color,transform] duration-150 active:scale-[0.97] no-underline ${isActive(link.href) ? "text-foreground" : "text-muted-foreground hover:text-foreground"}`}
             >
               {link.name}
             </a>
@@ -52,7 +52,7 @@ const row2 = footerLinks.slice(5)
           {row2.map((link) => (
             <a
               href={link.href}
-              class={`transition-colors no-underline ${isActive(link.href) ? "text-foreground" : "text-muted-foreground hover:text-foreground"}`}
+              class={`transition-[color,transform] duration-150 active:scale-[0.97] no-underline ${isActive(link.href) ? "text-foreground" : "text-muted-foreground hover:text-foreground"}`}
             >
               {link.name}
             </a>
