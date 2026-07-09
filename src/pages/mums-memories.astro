@@ -1,0 +1,120 @@
+---
+import Heading from "../components/ui/Heading.astro"
+import BaseLayout from "../layouts/BaseLayout.astro"
+---
+
+<BaseLayout
+  title="Mum's Memories - Now"
+  description="Progress updates on Mum's Memories, my baby journaling app."
+>
+
+  <Heading level="h2" as="h1" class="mt-6 mb-8">
+    Mum's Memories
+    <a
+      href="https://mumsmemories.app"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="text-muted-foreground/60 hover:text-muted-foreground transition-colors no-underline ml-1.5 inline-flex items-center align-middle"
+      aria-label="Mum's Memories website"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+    </a>
+  </Heading>
+
+  <div class="space-y-10">
+    <section>
+      <Heading level="h3" as="h2" class="mb-3">Summary</Heading>
+      <p>
+        Mum's Memories is a minimal baby journaling app I am building for my own use.
+        Parents can record milestones and write letters to their baby.
+        I am getting it ready for a wider release.
+      </p>
+    </section>
+
+    <section>
+      <Heading level="h3" as="h2" class="mb-4">Updates</Heading>
+
+      <div class="space-y-8">
+        <div>
+          <time
+            datetime="2026-07-08"
+            class="text-sm font-medium text-heading tracking-wide uppercase mb-3 block"
+          >
+            July 8, 2026
+          </time>
+          <ul class="space-y-4">
+            <li class="flex items-start gap-3">
+              <span
+                class="mt-2.5 block h-1.5 w-1.5 shrink-0 rounded-full bg-muted-foreground/40"
+              ></span>
+              <span>
+                Simplified the data model. I collapsed entry types down to just note
+                and milestone. I felt that early types were mostly redundant.
+              </span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span
+                class="mt-2.5 block h-1.5 w-1.5 shrink-0 rounded-full bg-muted-foreground/40"
+              ></span>
+              <span>
+                Merged Timeline and Memories into a single Journal tab with Day and
+                Browse views. This is still a work in progress. I think with more
+                features in the future, I may bring back the navbar tabs.
+              </span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span
+                class="mt-2.5 block h-1.5 w-1.5 shrink-0 rounded-full bg-muted-foreground/40"
+              ></span>
+              <span>
+                Cut onboarding down to 5 screens. Completely removed the premium
+                upsell screens. Now, onboarding can be finished in under 90 seconds.
+              </span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span
+                class="mt-2.5 block h-1.5 w-1.5 shrink-0 rounded-full bg-muted-foreground/40"
+              ></span>
+              <span>
+                Set up a staging Docker Compose stack and wired EAS build profiles
+                to it. Still need to set up staging R2 bucket and domains, but this
+                is a good start. It will let me test new features in a
+                production-like environment before releasing.
+              </span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span
+                class="mt-2.5 block h-1.5 w-1.5 shrink-0 rounded-full bg-muted-foreground/40"
+              ></span>
+              <span>
+                Personalised the writing prompts in the composer screen. They now
+                adapt to the baby name and age. Still no AI, but the prompts feel
+                personal now.
+              </span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span
+                class="mt-2.5 block h-1.5 w-1.5 shrink-0 rounded-full bg-muted-foreground/40"
+              ></span>
+              <span>
+                Added milestone age-at-date stamps and a Firsts index in Browse. It
+                is now easy to see all the firsts of the baby in one place.
+              </span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span
+                class="mt-2.5 block h-1.5 w-1.5 shrink-0 rounded-full bg-muted-foreground/40"
+              ></span>
+              <span>
+                Changed the architecture from per-baby profiles to a blended view
+                throughout the app. It is easy to filter by baby, and the default
+                view shows all babies together. This was a big change, but I think it
+                is the right one.
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
