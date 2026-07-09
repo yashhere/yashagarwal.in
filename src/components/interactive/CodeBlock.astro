@@ -25,8 +25,8 @@ const isCodeBlock = props['data-theme'] || lang;
           <span x-show="!copied">
               <Icon name="lucide:copy" class="h-4 w-4" />
           </span>
-          <span x-show="copied" x-cloak>
-              <Icon name="lucide:check" class="h-4 w-4" />
+          <span x-show="copied" x-cloak x-transition:enter="ease-out duration-150" x-transition:enter-start="scale-0 opacity-0" x-transition:enter-end="scale-100 opacity-100">
+              <Icon name="lucide:check" class="h-4 w-4 text-green-600 dark:text-green-400" />
           </span>
         </button>
 

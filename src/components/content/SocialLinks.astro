@@ -35,7 +35,7 @@ const socialLinks = [
     socialLinks.map((social, i) => (
       <a
         href={social.href}
-        class={`text-muted-foreground hover:text-foreground rounded px-1 py-1.5 transition-colors no-underline ${i === 0 ? '-ml-1' : ''}`}
+        class={`text-muted-foreground hover:text-foreground rounded px-1 py-1.5 transition-[color,transform] duration-200 hover:scale-110 hover:-translate-y-0.5 no-underline ${i === 0 ? '-ml-1' : ''}`}
         aria-label={social.name}
         target={social.name === "Email" ? undefined : "_blank"}
         rel={social.name === "Email" ? undefined : "noopener noreferrer"}

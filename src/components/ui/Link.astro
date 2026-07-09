@@ -18,7 +18,7 @@ const isExternal = !href.startsWith("/") && !href.startsWith("#")
 // Simplified styling based on variant
 // Simplified styling based on variant
 const baseClasses =
-  "inline transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+  "inline transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
 const variantClasses =
   variant === "text"
     ? "underline underline-offset-4 decoration-foreground/50 hover:decoration-foreground"
@@ -27,7 +27,7 @@ const linkClasses = `${baseClasses} ${variantClasses} ${className}`
 
 const anchorClasses = className.includes("anchor")
   ? className
-  : `scroll-m-20 transition-colors text-primary hover:text-primary ${className}`
+  : `scroll-m-20 transition-[color,text-decoration-color,text-underline-offset] text-primary hover:text-primary ${className}`
 ---
 
 {

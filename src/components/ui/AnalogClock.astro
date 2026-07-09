@@ -4,6 +4,7 @@
 <div
   x-data="{
     time: new Date(),
+    sweepReady: false,
 
     getISTTime() {
        const localTime = new Date();
@@ -16,7 +17,9 @@
     },
     init() {
        this.update();
-       setInterval(() => this.update(), 1000);
+       const interval = setInterval(() => this.update(), 1000);
+       // Enable smooth sweep after first render so hands jump to correct time first
+       this.$nextTick(() => requestAnimationFrame(() => { this.sweepReady = true; }));
     },
     get seconds() { return this.time.getSeconds() * 6; },
     get minutes() { return this.time.getMinutes() * 6; },
@@ -46,16 +49,16 @@
           :style="`transform: rotate(${seconds}deg)`"
       ></div>
 
-      <!-- Minute hand -->
+      <!-- Minute hand (sweeps smoothly after init) -->
       <div
           class="absolute bottom-1/2 left-1/2 z-20 h-1.5 w-px origin-bottom rounded-full bg-foreground -translate-x-1/2"
-          :style="`transform: rotate(${minutes}deg)`"
+          :style="`transform: rotate(${minutes}deg); transition: ${sweepReady ? 'transform 60s linear' : 'none'}`"
       ></div>
 
-      <!-- Hour hand -->
+      <!-- Hour hand (sweeps smoothly after init) -->
       <div
           class="absolute bottom-1/2 left-1/2 z-10 h-1 w-px origin-bottom rounded-full bg-foreground -translate-x-1/2"
-          :style="`transform: rotate(${hours}deg)`"
+          :style="`transform: rotate(${hours}deg); transition: ${sweepReady ? 'transform 60s linear' : 'none'}`"
       ></div>
   </div>
 </div>

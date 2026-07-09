@@ -22,7 +22,7 @@ const isActive = (href: string) => {
     <nav class="relative flex flex-row items-center justify-between px-0 pb-0" id="nav">
       {/* Left: Avatar/Logo */}
       <a href="/" class="group block shrink-0 cursor-pointer select-none">
-        <div class="relative w-10 h-10 rounded-full overflow-hidden transition-all duration-200">
+        <div class="relative w-10 h-10 rounded-full overflow-hidden transition-transform duration-200">
           <img
             src="/images/yash/yash-avatar.webp"
             alt="Yash Agarwal"
@@ -38,7 +38,7 @@ const isActive = (href: string) => {
           <a
             href={item.href}
             class:list={[
-              "block px-3 py-1 font-medium transition-colors no-underline",
+              "block px-3 py-1 font-medium transition-[color,transform] duration-150 active:scale-[0.97] no-underline",
               isActive(item.href) ? "text-foreground" : "text-muted-foreground hover:text-foreground",
             ]}
           >
@@ -47,7 +47,7 @@ const isActive = (href: string) => {
         ))}
         <button
           onclick="window.dispatchEvent(new CustomEvent('open-search'))"
-          class="text-muted-foreground hover:text-foreground transition-colors p-1"
+          class="text-muted-foreground hover:text-foreground transition-[color,transform] duration-150 active:scale-[0.97] p-1"
           aria-label="Search (cmd+k)"
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>

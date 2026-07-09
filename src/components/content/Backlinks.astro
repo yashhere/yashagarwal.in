@@ -23,11 +23,12 @@ if (backlinks.length === 0) {
     <Icon name="lucide:waypoints" class="text-muted-foreground h-3 w-3" />
     <span class="text-muted-foreground text-xs">Backlinks</span>
   </div>
-  <div class="border-border space-y-1 border-t pt-2">
-    {backlinks.map((link) => (
+  <div class="border-border space-y-1 border-t pt-2 backlinks-list">
+    {backlinks.map((link, i) => (
       <a
         href={link.url}
         class="text-muted-foreground hover:text-foreground block text-xs transition-colors no-underline"
+        style={`animation: backlink-enter 300ms cubic-bezier(0.23, 1, 0.32, 1) both; animation-delay: ${i * 40}ms`}
       >
         <span class="text-foreground">{link.title}</span>
       </a>

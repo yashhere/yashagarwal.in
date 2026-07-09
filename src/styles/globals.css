@@ -39,6 +39,15 @@
   }
 }
 
+/* Prevent false hover states on touch devices */
+@media (hover: none) and (pointer: coarse) {
+  .group:hover .group-hover\:scale-110,
+  .group-hover\:text-primary:hover,
+  [class*="hover:"]:hover {
+    transform: none !important;
+  }
+}
+
 /* Optimize legibility */
 .optimize-legibility {
   text-rendering: optimizeLegibility;
@@ -243,11 +252,12 @@
     text-decoration-color: var(--muted-foreground);
     text-decoration-thickness: 1px;
     text-underline-offset: 0.3em;
+    transition: text-decoration-color 200ms ease, text-underline-offset 200ms ease;
   }
 
   a:hover {
     text-decoration: underline;
-    text-underline-offset: 0.3em;
+    text-underline-offset: 0.25em;
   }
 
   :focus-visible {
@@ -299,6 +309,28 @@
 
   .animate-shimmer {
     animation: shimmer 2s ease-in-out infinite;
+  }
+
+  @keyframes backlink-enter {
+    from {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes search-result-enter {
+    from {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
   * {
     @apply border-border outline-ring/50;

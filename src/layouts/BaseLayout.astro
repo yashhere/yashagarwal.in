@@ -2,6 +2,7 @@
 import "../styles/globals.css"
 import "../styles/fonts.css"
 import "../styles/tooltip.css"
+import { ViewTransitions } from "astro:transitions"
 
 import Footer from "../components/layout/Footer.astro"
 import Navigation from "../components/layout/Navigation.astro"
@@ -38,6 +39,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || "https://yashagar
     <meta name="generator" content={Astro.generator} />
     <link rel="canonical" href={canonicalURL} />
     <link rel="alternate" type="application/rss+xml" title={siteConfig.name} href="/rss.xml" />
+    <ViewTransitions />
 
     <title>{title}</title>
     <meta name="description" content={description} />

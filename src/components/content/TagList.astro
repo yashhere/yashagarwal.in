@@ -21,7 +21,7 @@ const { tags } = Astro.props;
         return (
           <a
             href={`/tags/${tag_slug}`}
-            class="bg-muted/50 text-muted-foreground hover:bg-muted hover:text-foreground inline-flex items-center rounded px-1.5 py-0.5 text-xs transition-colors no-underline"
+            class="bg-muted/50 text-muted-foreground hover:bg-muted hover:text-foreground inline-flex items-center rounded px-1.5 py-0.5 text-xs transition-[color,transform] duration-150 active:scale-[0.97] no-underline"
           >
             {tag}
           </a>

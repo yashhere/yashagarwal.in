@@ -32,14 +32,15 @@ const displayIndex = currentIndex + 1
     </span>
     <Icon
       name="lucide:chevron-down"
-      class="text-muted-foreground h-3 w-3 transition-transform duration-200"
+      class="text-muted-foreground h-3 w-3 transition-transform duration-200 ease-out"
       :class="isOpen && 'rotate-180'"
     />
   </button>
 
   <div
-    class="grid transition-[grid-template-rows] duration-200 ease-in-out"
+    class="grid transition-[grid-template-rows] duration-200 ease-out"
     :class="isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'"
+    style="will-change: grid-template-rows"
   >
     <div class="overflow-hidden">
       <ul class="border-border mt-2 space-y-1 border-t pt-2">
