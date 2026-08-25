@@ -1,0 +1,159 @@
+---
+title: "Self-hosting Kindle book and article sync with KOReader"
+slug: "self-hosting-kindle-book-and-article-sync"
+createdOn: "2026-08-25T19:15:00+05:30"
+category: Infrastructure
+status: published
+series:
+  order: 6
+  title: Homelab Tales
+tags:
+  - Calibre-Web Automated
+  - Homelab
+  - Kindle
+  - KOReader
+  - Karakeep
+  - Raspberry Pi
+  - Self-hosting
+description: >-
+  How I use KOReader, Calibre-Web Automated, and Karakeep to download books and
+  saved articles over Wi-Fi and sync reading progress on a Kindle.
+---
+
+My reading habit has taken a hit in the past few years. Those who have read this
+blog for the last few
+years know that I used to read a lot before 2022. Then suddenly the reading stopped.
+
+With the introduction of LLMs, I have started relying more and more on these tools. This
+has somewhat impacted my attention and cognitive capabilities in a negative manner. I
+don't think offloading all of my thinking to LLMs is a good idea in the long run.
+
+I have been taking steps to reintroduce a few habits in my routine for the last few months.
+Reading is one of those habits. So, I took my Kindle out of the drawer after a long time
+and decided to set it up for reading.
+
+What started as a small experiment turned into an over-engineered setup in the end. I
+[jailbroke](https://kindlemodding.org/jailbreaking/) my Kindle Paperwhite 3 and
+installed [KOReader](https://koreader.rocks/) on it. While it worked great, the
+abundance of customization gave me occasional panic attacks. I found it difficult to
+figure out which settings I actually wanted to modify and which were best left as
+default. KOReader also provides a built-in SSH server, OPDS client and a RSS News
+Downloader. I wanted to use these features, but I was stuck with Calibre on my Mac.
+
+I wanted three things from my Kindle:
+
+- Pull books onto the device over WiFi without plugging in a USB cable
+- Get articles I'd saved to read later onto the device the same way
+- Have my reading position synced with my Calibre library
+
+I achieved all of these with a few additions to my RPi homelab. I describe the details
+below.
+
+## The stack
+
+- KOReader on the Kindle, jailbroken with
+  [WinterBreak](https://kindlemodding.org/jailbreaking/WinterBreak/). Launched through
+  [KUAL](https://kindlemodding.org/jailbreaking/Legacy/post-jailbreak/installing-kual-mrpi/).
+- Calibre-Web Automated: self-hosted on my Raspberry Pi, serving the Calibre library
+  over OPDS and tracking my reading progress.
+- Karakeep: Also self-hosted on RPi, for read-it-later articles.
+
+## KOReader on the Kindle
+
+My Kindle Paperwhite was running firmware 5.16.2.1.1, which is known to have support for
+jailbreaking. I used WinterBreak to jailbreak the firmware and used KUAL as the
+launcher. I installed `kindlepw2` build of the KOReader on my device.
+
+Once the installation is complete, I used "Start KOReader (no framework)" in KUAL to
+start KOReader, since I don't want the overhead of running Kindle's stock UI in the
+background.
+
+## Calibre-Web Automated on the RPi
+
+CWA runs as a normal Docker Compose stack. The library is mounted as a host volume and
+synced to a cloud-storage platform using custom systemd-timer scripts.
+
+
+```yaml
+services:
+  calibre-web-automated:
+    image: crocodilestick/calibre-web-automated:latest
+    restart: unless-stopped
+    ports:
+      - "8083:8083"
+    volumes:
+      - ./config:/config
+      - ./ingest:/cwa-book-ingest
+      - ./library:/calibre-library
+    environment:
+      - PUID=1000
+      - PGID=1000
+```
+
+## Fetching books over Wifi: OPDS
+
+CWA exposes an
+[OPDS](https://github.com/crocodilestick/calibre-web-automated#calibre-web-quick-start-guide) feed at `/opds` out of the box. KOReader has native OPDS support –
+add a catalog under its file browser, point it at the server, any book in the library
+becomes a couple of taps away. This was the biggest benefit of this setup for me, since this frees me
+from connecting my Kindle to my Mac.
+
+```
+http://<rpi-ip>:8083/opds
+```
+
+## Syncing reading progress: kosync
+
+One interesting thing I noticed while using KOReader was the
+[progress-sync](https://github.com/koreader/koreader/wiki/Progress-sync) feature. It
+required a sync server. While looking for a sync-server implementation, I found out
+that
+CWA itself
+[implements](https://github.com/crocodilestick/calibre-web-automated#koreader-syncing-kosync--1)
+the kosync protocol – the same protocol used by KOReader's own progress-sync
+feature speaks – through a plugin `cwasync.koplugin`, downloadable straight from the
+server:
+
+```
+http://<rpi-ip>:8083/kosync
+```
+
+It tracks position, percent complete, and read/unread/finished status per book, matched
+by a partial MD5 checksum of the file itself. This means the book on the Kindle needs to be exact
+same file as the one in your CWA library, otherwise the progress tracking won't work. As
+long as books arrive on the device through OPDS rather than from some other method, the
+tracking is automated.
+
+## Reading saved articles: Karakeep and News Downloader
+
+I also self-host [Karakeep](https://karakeep.app/) to save the articles I find from various sources. This has the
+same issue - I keep hoarding the links, but never revisit them. In a typical week, I
+save around 5-7 articles. I thought maybe I could transfer these articles to Kindle for
+bedtime reading.
+
+Karakeep supports [RSS feeds](https://docs.karakeep.app/integrations/rss-feeds/) for the
+saved articles. It also allows per-list RSS feeds, so I could curate a list and read those articles on Kindle.
+
+KOReader ships a [News
+downloader](https://github.com/koreader/koreader/wiki/News-downloader) plugin that pulls an RSS feed and turns each entry into
+a document on the device. I pointed it to the Karakeep list's feed URL in
+`koreader/news/feed_config.lua`:
+
+```lua
+return {
+    {
+        "http://<rpi-ip>:<port>/api/v1/rss/lists/<list-id>?token=<token>",
+        limit = 10,
+        download_full_article = true,
+        include_images = true
+    },
+}
+```
+
+Karakeep's feed carries a title and a link per entry, not the article body, so
+`download_full_article = true` matters here – the plugin follows the link and fetches
+the actual page rather than trusting the feed's own content.
+
+Between OPDS, kosync, and News Downloader, the Kindle now behaves the way I wanted: new
+books and new articles both show up without a cable, books reopen at my last reading
+position, and all of it runs on a server I run myself.
